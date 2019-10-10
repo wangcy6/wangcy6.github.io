@@ -1,2 +1,0 @@
-User-agent: *
-Sitemap: https://wangcy6.github.io/sitemap.xml
