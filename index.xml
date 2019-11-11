@@ -6,18 +6,45 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 10 Oct 2019 17:02:43 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 07 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>关于我</title>
-      <link>https://wangcy6.github.io/about/</link>
-      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
+      <title>FQA_server</title>
+      <link>https://wangcy6.github.io/post/FQA_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B2%BB%E7%90%86/</link>
+      <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/about/</guid>
-      <description>一个励志克服恐惧的程序员</description>
+      <guid>https://wangcy6.github.io/post/FQA_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B2%BB%E7%90%86/</guid>
+      <description>衡量指标 分布式系统涵盖的面非常广，具体来说涵盖如下几方面： 服务调度，涉及服务发现、配置管理、弹性伸缩、故障恢复等。 资源调度，涉及对底层资源的</description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>https://wangcy6.github.io/post/nginx/</link>
+      <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/nginx/</guid>
+      <description>基本用法 负载均衡 1 负载均衡概念是什么学习过程： 观看视频 What is Load Balancing? 一句话输出 一致性hash 观看HAProxy相关视频 https://www.youtube.com/watch?v=escR-07yVAs 一句话输出 Virtual IP address ok A virtual IP address</description>
+    </item>
+    
+    <item>
+      <title>算法导论</title>
+      <link>https://wangcy6.github.io/post/book_Algorithms-JeffE-BW/</link>
+      <pubDate>Fri, 11 Oct 2019 17:02:43 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book_Algorithms-JeffE-BW/</guid>
+      <description>这里没有告诉答案是什么？问题就这些 可以j 回溯法 题目1 把皇后问题 &amp;ndash;已经解决 题目 2 Subset Sum &amp;ndash;正在解决 Let’s consider a more complicated problem, called SubsetSum:</description>
+    </item>
+    
+    <item>
+      <title>36-逆序对</title>
+      <link>https://wangcy6.github.io/post/%E5%89%91%E6%8C%87Offer_36_%E9%80%86%E5%BA%8F%E5%AF%B9/</link>
+      <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/%E5%89%91%E6%8C%87Offer_36_%E9%80%86%E5%BA%8F%E5%AF%B9/</guid>
+      <description>一、描述 在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 给你一个数组，求出这个数组中逆序对的总数。 逆序对概括：</description>
     </item>
     
     <item>
@@ -27,6 +54,24 @@
       
       <guid>https://wangcy6.github.io/post/2019-10-10-%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94/</guid>
       <description>阅读推荐 &amp;mdash;被讨厌的勇气 书封 被讨厌的勇气 豆瓣 评分 8.6 万维钢 专栏 解读 本书以“青年”和“哲人”对话的形式，将阿德勒的哲学逐渐渗透于话语之</description>
+    </item>
+    
+    <item>
+      <title>Item 31: Minimize compilation dependencies between files</title>
+      <link>https://wangcy6.github.io/post/Effective-C&#43;&#43;31/</link>
+      <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/Effective-C&#43;&#43;31/</guid>
+      <description>Effective C++ 31：最小化文件之间的编译依赖 分享最实用的经验 ， 希望每一位来访的朋友都能有所收获！ Item 31: Minimize compilation dependencies between files. 曾听老师讲过，每天上班的第一件事就是下载</description>
+    </item>
+    
+    <item>
+      <title>关于我</title>
+      <link>https://wangcy6.github.io/about/</link>
+      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/about/</guid>
+      <description>我是谁 一. 我是谁 努力在提高自控能力，沟通同能力，表达能力的程序员。 二、 我能为你提供什么 通过每日一问，每周一总结方式 提供 c++，操作系统等基础</description>
     </item>
     
   </channel>
