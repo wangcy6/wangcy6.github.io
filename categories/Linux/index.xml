@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/Linux/</link>
+    <description>Recent content in Linux on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 12 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/categories/Linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FQA_Linux</title>
+      <link>https://wangcy6.github.io/post/FQA_Linux/</link>
+      <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/FQA_Linux/</guid>
+      <description>知识卡 一、基础 1、进程vs线程 问1 ：进程间通信方式 进程间通信 2个情况 第一个是 exchange data 传递数据 （跨主机 TPC，不跨主机 IPC） 第二个是 synchronize 同步(内核</description>
+    </item>
+    
+  </channel>
+</rss>

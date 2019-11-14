@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 12 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>FQA_Service_Mesh</title>
+      <link>https://wangcy6.github.io/post/FQA_Service_Mesh/</link>
+      <pubDate>Wed, 13 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/FQA_Service_Mesh/</guid>
+      <description>book 未来架构：从服务化到云原生 业务场景 衡量指标 分布式系统涵盖的面非常广，具体来说涵盖如下几方面： 服务调度，涉及服务发现、配置管理、弹性伸缩、故</description>
+    </item>
     
     <item>
       <title>ARTS_weekly_5</title>
@@ -21,12 +30,12 @@
     </item>
     
     <item>
-      <title>FQA_server</title>
-      <link>https://wangcy6.github.io/post/FQA_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B2%BB%E7%90%86/</link>
-      <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
+      <title>FQA_Linux</title>
+      <link>https://wangcy6.github.io/post/FQA_Linux/</link>
+      <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/FQA_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B2%BB%E7%90%86/</guid>
-      <description>衡量指标 分布式系统涵盖的面非常广，具体来说涵盖如下几方面： 服务调度，涉及服务发现、配置管理、弹性伸缩、故障恢复等。 资源调度，涉及对底层资源的</description>
+      <guid>https://wangcy6.github.io/post/FQA_Linux/</guid>
+      <description>知识卡 一、基础 1、进程vs线程 问1 ：进程间通信方式 进程间通信 2个情况 第一个是 exchange data 传递数据 （跨主机 TPC，不跨主机 IPC） 第二个是 synchronize 同步(内核</description>
     </item>
     
     <item>

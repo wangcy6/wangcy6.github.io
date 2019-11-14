@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FQA on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/FQA/</link>
+    <description>Recent content in FQA on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 13 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/categories/FQA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FQA_Service_Mesh</title>
+      <link>https://wangcy6.github.io/post/FQA_Service_Mesh/</link>
+      <pubDate>Wed, 13 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/FQA_Service_Mesh/</guid>
+      <description>book 未来架构：从服务化到云原生 业务场景 衡量指标 分布式系统涵盖的面非常广，具体来说涵盖如下几方面： 服务调度，涉及服务发现、配置管理、弹性伸缩、故</description>
+    </item>
+    
+  </channel>
+</rss>

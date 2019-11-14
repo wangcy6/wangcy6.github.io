@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>FQA_Linux - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="FQA" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/FQA_Linux/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="FQA_Linux" />
+<meta property="og:description" content="FQA" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/FQA_Linux/" />
+<meta property="article:published_time" content="2019-11-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-12T00:00:00+00:00" />
+<meta itemprop="name" content="FQA_Linux">
+<meta itemprop="description" content="FQA">
+
+
+<meta itemprop="datePublished" content="2019-11-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7562">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="FQA_Linux"/>
+<meta name="twitter:description" content="FQA"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">FQA_Linux</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-12 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Linux/"> Linux </a>
+            </div>
+          <span class="more-meta"> 约 7562 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="知识卡">知识卡</h1>
+
+<p><img src="https://i.loli.net/2019/11/13/iBAcurKQygeSUTD.png" alt="image.png" /></p>
+
+<h1 id="一-基础">一、基础</h1>
+
+<h2 id="1-进程vs线程">1、进程vs线程</h2>
+
+<h3 id="问1-进程间通信方式">问1 ：进程间通信方式</h3>
+
+<blockquote>
+<p>进程间通信 2个情况</p>
+
+<p>第一个是    exchange data  传递数据 （跨主机 TPC，不跨主机 IPC）</p>
+
+<p>第二个是  synchronize  同步(内核，非内核的) 信号灯</p>
+</blockquote>
+
+<h4 id="最常用的socket-tcp-udp">最常用的socket（TCP/UDP）</h4>
+
+<h4 id="信号">信号</h4>
+
+<p>一、 问：有哪2个<strong>信号</strong>不能<strong>被忽略</strong>？</p>
+
+<p>答：</p>
+
+<ol>
+<li>什么是信号：</li>
+</ol>
+
+<p>软中断信号（signal，又简称为信号）用来通知进程发生了异步事件</p>
+
+<p>信号是进程间通信机制中<strong>唯一</strong>的异步通信机制，一个进程不必通过任何操作来<strong>等待</strong>信号的到达</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> 信号与中断的区别：
+（1）中断有优先级，而信号没有优先级，所有的信号都是平等的；
+
+（2）信号处理程序是在用户态下运行的，而中断处理程序是在核心态下运行；
+
+（3）中断响应是及时的，而信号响应通常都有较大的时间延迟。 </pre></td></tr></table>
+</div>
+</div>
+<p>操作系统不会为了处理一个信号而把当前正在运行的进程挂起，因为这样的话资源消耗太大了，如果不是紧急信号，是不会立即处理的，操作系统多选择<strong>在内核态切换回用户态的时候处理信号</strong>。</p>
+
+<p>因为进程有可能在睡眠的时候收到信号，操作系统肯定不愿意切换当前正在运行的进程，于是就得把信号储存在进程唯一的 PCB(task_struct) 当中。</p>
+
+<ol>
+<li><a href="http://kernel.meizu.com/linux-signal.html">信号什么发生的？</a></li>
+</ol>
+
+<p>理解信号异步机制的关键是信号的响应时机，我们对一个进程发送一个信号以后，其实并没有硬中断发生，只是简单把信号挂载到目标进程的信号 pending 队列上去，信号真正得到执行的时机是进程执行完异常/中断返回到用户态的时刻。</p>
+
+<p>让信号看起来是一个异步中断的关键就是，正常的用户进程是会频繁的在用户态和内核态之间切换的（这种切换包括：系统调用、缺页异常、系统中断…），所以信号能很快的能得到执行。</p>
+
+<p>但这也带来了一点问题，内核进程是不响应信号的，除非它刻意的去查询。</p>
+
+<p>所以通常情况下我们无法通过kill命令去杀死一个内核进程。</p>
+
+<p><img src="http://kernel.meizu.com/images/posts/2016/07/signal_ret_to_user.png" alt="img" /></p>
+
+<p><img src="https://i.loli.net/2019/11/12/MBIDfW9HOJ4KoZG.png" alt="信号处理实际" /></p>
+
+<ol>
+<li><strong>被忽略</strong> 进程对信号的三种响应方式之一</li>
+</ol>
+
+<ul>
+<li>忽略信号
+
+<ul>
+<li>不采取任何操作、有两个信号不能被忽略：SIGKILL和SIGSTOP。</li>
+</ul></li>
+<li>捕获并处理信号
+
+<ul>
+<li>内核中断正在执行的代码，转去执行先前注册过的处理程序。</li>
+</ul></li>
+<li>执行默认操作
+
+<ul>
+<li>默认操作通常是终止进程，这取决于被发送的信号。</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>其中<code>SIGKILL</code>和<code>SIGSTOP</code>信号不能被捕获、阻塞或忽略。  还是没有理解  不能被捕获</p>
+</blockquote>
+
+<p>kill -s SIGKILL</p>
+
+<p>这个强大和危险的命令迫使进程在运行时突然终止，</p>
+
+<p>进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。</p>
+
+<p><img src="https://i.loli.net/2019/11/12/Wi1hpb7ZQC6Vqay.png" alt="终止" /></p>
+
+<h4 id="同步">同步</h4>
+
+<p><img src="https://i.loli.net/2019/11/13/ZI1aoBWjLmMykzY.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/13/6vzlwaTFo32kdfE.png" alt="image.png" /></p>
+
+<h3 id="线程">线程</h3>
+
+<h3 id="一-问2-线程同步方式">一. 问2 线程同步方式？</h3>
+
+<blockquote>
+<p>线程并发2个方式 消息传递，共享对象</p>
+</blockquote>
+
+<p>答：</p>
+
+<ul>
+<li>锁</li>
+</ul>
+
+<p>互斥锁</p>
+
+<p>条件变量</p>
+
+<p>读写锁（不推荐）</p>
+
+<p>自旋锁</p>
+
+<p>高级组件</p>
+
+<p>#### 问 rwlock和mutex有什么不同和优劣呢</p>
+
+<h2 id="2-文件系统">2、文件系统</h2>
+
+<h3 id="问2-一次write操作-数据写入内存那个部分">问2 一次write操作，数据写入内存那个部分？</h3>
+
+<p><img src="https://i.loli.net/2019/11/12/JoQmkNVMSRAG7U9.png" alt="image.png" /></p>
+
+<h4 id="一-write文件有那2个方式呀">一.  write文件有那2个方式呀？</h4>
+
+<blockquote>
+<p>我的理解：还用问吗？直接wirte，还有什么方式</p>
+</blockquote>
+
+<h6 id="mmap也被称为zero-copy技术">mmap也被称为zero-copy技术</h6>
+
+<p><a href="https://zh.wikipedia.org/wiki/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6">内存映射文件</a></p>
+
+<p>Memory-mapped I/O uses the same <a href="https://en.wikipedia.org/wiki/Address_space">address space</a> to address both <a href="https://en.wikipedia.org/wiki/Computer_memory">memory</a> and <a href="https://en.wikipedia.org/wiki/I/O_device">I/O devices</a>. The memory and <a href="https://en.wikipedia.org/wiki/Register_(computing)">registers</a> of the I/O devices are mapped to (associated with) address values. So when an address is accessed by the CPU, it may refer to a portion of <a href="https://en.wikipedia.org/wiki/Physical_memory">physical RAM</a>, or it can instead refer to memory of the I/O device.</p>
+
+<blockquote>
+<p>SQLite:</p>
+
+<p>Beginning with <a href="https://www.sqlite.org/releaselog/3_7_17.html">version 3.7.17</a> (2013-05-20), SQLite has the option of accessing disk content directly using memory-mapped I/O and the new xFetch() and xUnfetch() methods on <a href="https://www.sqlite.org/c3ref/io_methods.html">sqlite3_io_methods</a>.</p>
+
+<p><a href="https://www.sqlite.org/mmap.html">https://www.sqlite.org/mmap.html</a></p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/11/13/zQbogWE5VYj7U2N.png" alt="image.png" /></p>
+
+<blockquote>
+<p>MongoDB</p>
+
+<p>The main storage engine in MongoDB is the Memory Mapped Storage Engine or MMAP for short.</p>
+
+<p>The MMAP storage engine uses memory mapped files as its storage engine.</p>
+
+<p><a href="http://learnmongodbthehardway.com/schema/mmap/">http://learnmongodbthehardway.com/schema/mmap/</a></p>
+
+<p>Memory mapped files allow MongoDB to delegate the handling of Virtual Memory to the operating system instead of explicitly managing memory itself.</p>
+</blockquote>
+
+<p>mmap系统调用并不是完全为了用于共享内存而设计的。</p>
+
+<p>它本身提供了不同于一般对普通文件的访问方式，进程可以像读写内存一样对普通文件的操作</p>
+
+<p><strong>常规文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝。</strong></p>
+
+<p><strong>而mmap操控文件，只需要从磁盘到用户主存的一次数据拷贝过程。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-CQL" data-lang="CQL"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CQL" data-lang="CQL"><span class="err">由上文讨论可知，</span><span class="n">mmap优点共有一下几点</span><span class="err">：</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="mf">1</span><span class="err">、对文件的读取操作跨过了页缓存，减少了数据的拷贝次数，用内存读写取代</span><span class="n">I</span><span class="o">/</span><span class="n">O读写</span><span class="err">，提高了文件读取效率。</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="mf">2</span><span class="err">、实现了用户空间和内核空间的高效交互方式。两空间的各自修改操作可以直接反映在映射的区域内，从而被对方空间及时捕捉。</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="mf">3</span><span class="err">、提供进程间共享内存及相互通信的方式。不管是父子进程还是无亲缘关系的进程，都可以将自身用户空间映射到同一个文件或匿名映射到同一片区域。从而通过各自对映射区域的改动，达到进程间通信和进程间共享的目的。</span><span class="w">
+</span><span class="w">
+</span><span class="w">     </span><span class="err">同时，如果进程</span><span class="n">A和进程B都映射了区域C</span><span class="err">，当</span><span class="n">A第一次读取C时通过缺页从磁盘复制文件页到内存中</span><span class="err">；但当</span><span class="n">B再读C的相同页面时</span><span class="err">，虽然也会产生缺页异常，但是不再需要从磁盘中复制文件过来，而可直接使用已经保存在内存中的文件数据。</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="mf">4</span><span class="err">、可用于实现高效的大规模数据传输。内存空间不足，是制约大数据操作的一个方面，解决方案往往是借助硬盘空间协助操作，补充内存的不足。但是进一步会造成大量的文件</span><span class="n">I</span><span class="o">/</span><span class="n">O操作</span><span class="err">，极大影响效率。这个问题可以通过</span><span class="n">mmap映射很好的解决</span><span class="err">。换句话说，但凡是需要用磁盘空间代替内存的时候，</span><span class="n">mmap都可以发挥其功效</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="文件读写基本流程">文件读写基本流程</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">读文件</span>
+
+<span class="mi">1</span><span class="err">、进程调用库函数向内核发起读文件请求；</span>
+
+<span class="mi">2</span><span class="err">、内核通过检查进程的文件描述符定位到虚拟文件系统的已打开文件列表表项；</span>
+
+<span class="mi">3</span><span class="err">、调用该文件可用的系统调用函数</span><span class="n">read</span><span class="p">()</span>
+
+<span class="mi">3</span><span class="err">、</span><span class="n">read</span><span class="p">()</span><span class="err">函数通过文件表项链接到目录项模块，根据传入的文件路径，在目录项模块中检索，找到该文件的</span><span class="n">inode</span><span class="err">；</span>
+
+<span class="mi">4</span><span class="err">、在</span><span class="n">inode中</span><span class="err">，通过文件内容偏移量计算出要读取的页；</span>
+
+<span class="mi">5</span><span class="err">、通过</span><span class="n">inode找到文件对应的address_space</span><span class="err">；</span>
+
+<span class="mi">6</span><span class="err">、在</span><span class="n">address_space中访问该文件的页缓存树</span><span class="err">，查找对应的页缓存结点：</span>
+
+<span class="err">（</span><span class="mi">1</span><span class="err">）如果页缓存命中，那么直接返回文件内容；</span>
+
+<span class="err">（</span><span class="mi">2</span><span class="err">）如果页缓存缺失，那么产生一个页缺失异常，创建一个页缓存页，同时通过</span><span class="n">inode找到文件该页的磁盘地址</span><span class="err">，读取相应的页填充该缓存页；重新进行第</span><span class="mi">6</span><span class="err">步查找页缓存；</span>
+
+<span class="mi">7</span><span class="err">、文件内容读取成功。</span>
+
+ 
+
+<span class="o">**</span><span class="err">写文件</span><span class="o">**</span>
+
+<span class="err">前</span><span class="mi">5</span><span class="err">步和读文件一致，在</span><span class="n">address_space中查询对应页的页缓存是否存在</span><span class="err">：</span>
+
+<span class="mi">6</span><span class="err">、如果页缓存命中，直接把文件内容修改更新在页缓存的页中。写文件就结束了。这时候文件修改位于页缓存，并没有写回到磁盘文件中去。</span>
+
+<span class="mi">7</span><span class="err">、如果页缓存缺失，那么产生一个页缺失异常，创建一个页缓存页，同时通过</span><span class="n">inode找到文件该页的磁盘地址</span><span class="err">，读取相应的页填充该缓存页。此时缓存页命中，进行第</span><span class="mi">6</span><span class="err">步。</span>
+
+<span class="mi">8</span><span class="err">、一个页缓存中的页如果被修改，那么会被标记成脏页。脏页需要写回到磁盘中的文件块。有两种方式可以把脏页写回磁盘：</span>
+
+<span class="err">（</span><span class="mi">1</span><span class="err">）手动调用</span><span class="n">sync</span><span class="p">()</span><span class="err">或者</span><span class="n">fsync</span><span class="p">()</span><span class="err">系统调用把脏页写回</span>
+
+<span class="err">（</span><span class="mi">2</span><span class="err">）</span><span class="n">pdflush进程会定时把脏页写回到磁盘</span>
+
+<span class="err">同时注意，脏页不能被置换出内存，如果脏页正在被写回，那么会被设置写回标记，这时候该页就被上锁，其他写请求被阻塞直到锁释放。</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-网络模块">3 、 网络模块</h2>
+
+<h4 id="问题3-为什么采用epoll">问题3 为什么采用epoll？</h4>
+
+<ul>
+<li>第一步： 同步与阻塞，异步和非阻塞的区别？</li>
+<li>第二步：了解网络模型</li>
+<li>检查：select/epoll 是阻塞（ Block ）还是非阻塞（ Unblock ），同步( (Sync) )还是异步 (Async) ?</li>
+<li>第三步：epoll特点</li>
+<li>第四步：为什么不用现有框架呢 ，自己写干什么
+
+<br /></li>
+</ul>
+
+<p>第一步： 同步与阻塞，异步和非阻塞的区别？</p>
+
+<ul>
+<li><p>别人的答案</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">IO操作其实可以分成两个步骤</span><span class="err">，请求</span><span class="n">IO操作和执行IO操作</span><span class="err">。</span>
+<span class="err">一般的</span><span class="n">IO调用过程是这样的</span><span class="err">：发起</span><span class="n">IO操作的请求</span><span class="err">，执行</span><span class="n">IO操作</span><span class="err">，得到</span><span class="n">IO操作的结果</span><span class="err">，将结果返回给</span><span class="n">IO操作请求</span><span class="err">。</span>
+
+<span class="err">同步和异步同步和异步是一种通信机制，涉及到调用方和被调用方，关注的是</span><span class="n">IO操作的执行过程及结果的返回方式</span><span class="err">，不同点在于双方在这两个方面的行为方式。</span>
+<span class="err">如果调用方需要保持等待直到</span><span class="n">IO操作完成进而通过返回获得结果</span><span class="err">，则是同步的；</span>
+<span class="err">如果调用方在</span><span class="n">IO操作的执行过程中不需要保持等待</span><span class="err">，而是在操作完成后被动的接受（通过消息或回调）被调用方推送的结果，则是异步的。</span>
+
+<span class="err">同步和异步，适合描述执行</span><span class="n">IO操作的情境</span><span class="err">。</span>
+
+<span class="err">阻塞和非阻塞阻塞和非阻塞是一种调用机制，只涉及到调用方，</span>
+<span class="err">关注的是</span><span class="n">IO操作的执行状态</span><span class="err">，不同点在于请求</span><span class="n">IO操作后</span><span class="err">，针对</span><span class="n">IO操作的状态</span><span class="err">，调用方的行为方式。</span>
+
+<span class="err">如果调用方等待</span><span class="n">IO操作完成后返回</span><span class="err">，则是阻塞的；</span>
+<span class="err">如果调用方不需要等待</span><span class="n">IO操作完成就立即返回</span><span class="err">，则是非阻塞的，非阻塞的情况下，常常需要多次调用去</span><span class="n">check</span><span class="err">，才能获得</span><span class="n">IO操作的结果</span><span class="err">。</span>
+<span class="err">阻塞和非阻塞，适合描述发起</span><span class="n">IO操作请求的情境</span><span class="err">。</span>
+
+<span class="err">作者：</span><span class="n">Ownbin</span>
+<span class="err">链接：</span><span class="nl">https</span><span class="p">:</span><span class="c1">//www.zhihu.com/question/19732473/answer/79784104
+</span><span class="c1"></span><span class="err">来源：知乎</span>
+<span class="err">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<p>从操作系统角度考虑 只有AIO，操作才是真正异步</p>
+
+<p>从用户角度  Libevent ,Netty ,确实IO多路复用也是异步的 如何理解？</p>
+
+<blockquote>
+<p><strong>libevent</strong> is a <a href="https://en.wikipedia.org/wiki/Software_library">software library</a> that provides asynchronous event notification.</p>
+
+<p>The libevent <a href="https://en.wikipedia.org/wiki/API">API</a> provides a mechanism to execute a <a href="https://en.wikipedia.org/wiki/Callback_(computer_science)">callback</a> function when a specific event occurs on a <a href="https://en.wikipedia.org/wiki/File_descriptor">file descriptor</a> or after a <a href="https://en.wikipedia.org/wiki/Timeout_(telecommunication)">timeout</a> has been reached. libevent also supports callbacks triggered by <a href="https://en.wikipedia.org/wiki/Signal_(computing)">signals</a> and regular timeouts.</p>
+
+<p>Netty is <em>an asynchronous event-driven network application framework</em>
+for rapid development of maintainable high performance protocol servers &amp; clients.</p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/11/14/4lPTmeKIc7syv1r.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/14/G1ytqCYJOuFXZ9S.png" alt="image.png" /></p>
+
+<h6 id="第二步-了解网络模型">第二步：了解网络模型</h6>
+
+<p><img src="https://i.loli.net/2019/11/14/lgiGow23cjHxMZz.png" alt="image.png" /></p>
+
+<p>假设你即将要为一个重要的大公司开发一个新的关键任务的应用程序。</p>
+
+<p>在第一次会议上，你了解到这个系统必须能无性能损耗地扩展到支持15万个并发用户。这时所有的人都看着你，你会说什么？</p>
+
+<p>NIO（Non-blocking I/O，在Java领域，也称为New I/O），是一种同步非阻塞的I/O模型，也是I/O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连接、I/O处理问题的有效方式</p>
+
+<h6 id="检查-select-epoll-是阻塞-block-还是非阻塞-unblock-同步-sync-还是异步-async">检查：select/epoll 是阻塞（ Block ）还是非阻塞（ Unblock ），同步( (Sync) )还是异步 (Async) ?</h6>
+
+<h6 id="第三步-epoll特点">第三步：epoll特点</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"></code></pre></td></tr></table>
+</div>
+</div>
+<p>epoll</p>
+
+<ul>
+<li>很容易<strong>扩展到</strong>监控大量socket连接</li>
+</ul>
+
+<blockquote>
+<p>scales well to large numbers of  watched file descriptors.</p>
+</blockquote>
+
+<ul>
+<li>大量连接部分活跃情况有优势，比select多了一层异步回调。</li>
+</ul>
+
+<p>几个线程处理上万连接，主要是指有很多不忙的连接的场景，如聊天室服务器</p>
+
+<ul>
+<li><p>单个连接业务处理不能做长时间阻塞操作</p></li>
+
+<li><p>select低效是因为每次它都需要轮询。但低效也是相对的，视情况而定，也可通过良好的设计改善</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">events</span><span class="p">,</span> <span class="n">blocking</span> <span class="n">the</span> <span class="n">calling</span> <span class="kr">thread</span> <span class="k">if</span> <span class="n">no</span> <span class="n">events</span> <span class="n">are</span> <span class="n">currently</span> <span class="n">available</span><span class="p">.</span>
+    
+<span class="cp">#include</span> <span class="cpf">&lt;sys/epoll.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">int</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="kt">int</span> <span class="n">epfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">epoll_event</span> <span class="o">*</span><span class="n">events</span><span class="p">,</span><span class="kt">int</span> <span class="n">maxevents</span><span class="p">,</span> <span class="kt">int</span> <span class="n">timeout</span><span class="p">);</span>
+<span class="n">The</span> <span class="n">call</span> <span class="n">will</span> <span class="n">block</span> <span class="n">until</span> <span class="nl">either</span><span class="p">:</span><span class="err">、</span>
+<span class="o">*</span>  <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">delivers</span> <span class="n">an</span> <span class="n">event</span><span class="p">;</span>
+<span class="n">Q7</span>  <span class="n">If</span> <span class="n">more</span> <span class="n">than</span> <span class="n">one</span> <span class="n">event</span> <span class="n">occurs</span> <span class="n">between</span> <span class="nf">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">calls</span><span class="p">,</span> <span class="n">are</span> <span class="n">they</span> <span class="n">combined</span> <span class="n">or</span> <span class="n">reported</span> <span class="n">separately</span><span class="o">?</span>
+<span class="n">A7</span>  <span class="n">They</span> <span class="n">will</span> <span class="n">be</span> <span class="n">combined</span><span class="p">.</span>
+<span class="o">*</span>  <span class="n">the</span> <span class="n">call</span> <span class="n">is</span> <span class="n">interrupted</span> <span class="n">by</span> <span class="n">a</span> <span class="n">signal</span> <span class="n">handler</span><span class="p">;</span> <span class="n">or</span>
+<span class="o">*</span>  <span class="n">the</span> <span class="n">timeout</span> <span class="n">expires</span><span class="p">.</span>
+    
+<span class="err">不要说</span><span class="n">et模式一定采用break方式读取了</span>
+    
+    
+<span class="mf">9.</span>  <span class="n">Do</span> <span class="n">I</span> <span class="n">need</span> <span class="n">to</span> <span class="n">continuously</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">until</span>
+       <span class="n">EAGAIN</span> <span class="n">when</span> <span class="n">using</span> <span class="n">the</span> <span class="n">EPOLLET</span> <span class="n">flag</span> <span class="p">(</span><span class="n">edge</span><span class="o">-</span><span class="n">triggered</span> <span class="n">behavior</span><span class="p">)</span><span class="o">?</span>
+
+       <span class="n">Receiving</span> <span class="n">an</span> <span class="n">event</span> <span class="n">from</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">should</span> <span class="n">suggest</span> <span class="n">to</span> <span class="n">you</span> <span class="n">that</span>
+       <span class="n">such</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">is</span> <span class="n">ready</span> <span class="k">for</span> <span class="n">the</span> <span class="n">requested</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">operation</span><span class="p">.</span>
+       <span class="n">You</span> <span class="n">must</span> <span class="n">consider</span> <span class="n">it</span> <span class="n">ready</span> <span class="n">until</span> <span class="n">the</span> <span class="n">next</span> <span class="p">(</span><span class="n">nonblocking</span><span class="p">)</span>
+       <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">yields</span> <span class="n">EAGAIN</span><span class="p">.</span>  <span class="n">When</span> <span class="n">and</span> <span class="n">how</span> <span class="n">you</span> <span class="n">will</span> <span class="n">use</span> <span class="n">the</span> <span class="n">file</span>
+       <span class="n">descriptor</span> <span class="n">is</span> <span class="n">entirely</span> <span class="n">up</span> <span class="n">to</span> <span class="n">you</span><span class="p">.</span>
+
+       <span class="n">For</span> <span class="n">packet</span><span class="o">/</span><span class="n">token</span><span class="o">-</span><span class="n">oriented</span> <span class="n">files</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">datagram</span> <span class="n">socket</span><span class="p">,</span> <span class="n">terminal</span>
+       <span class="n">in</span> <span class="n">canonical</span> <span class="n">mode</span><span class="p">),</span> <span class="n">the</span> <span class="n">only</span> <span class="n">way</span> <span class="n">to</span> <span class="n">detect</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span>
+       <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="n">is</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">until</span> <span class="n">EAGAIN</span><span class="p">.</span>
+
+       <span class="n">For</span> <span class="n">stream</span><span class="o">-</span><span class="n">oriented</span> <span class="n">files</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">pipe</span><span class="p">,</span> <span class="n">FIFO</span><span class="p">,</span> <span class="n">stream</span> <span class="n">socket</span><span class="p">),</span> <span class="n">the</span>
+       <span class="n">condition</span> <span class="n">that</span> <span class="n">the</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="n">is</span> <span class="n">exhausted</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span>
+       <span class="n">detected</span> <span class="n">by</span> <span class="n">checking</span> <span class="n">the</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="n">read</span> <span class="n">from</span> <span class="o">/</span> <span class="n">written</span> <span class="n">to</span>
+       <span class="n">the</span> <span class="n">target</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>  <span class="n">For</span> <span class="n">example</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">call</span> <span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">by</span>
+       <span class="n">asking</span> <span class="n">to</span> <span class="n">read</span> <span class="n">a</span> <span class="n">certain</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="n">and</span> <span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">returns</span> <span class="n">a</span>
+       <span class="n">lower</span> <span class="n">number</span> <span class="n">of</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="n">be</span> <span class="n">sure</span> <span class="n">of</span> <span class="n">having</span> <span class="n">exhausted</span> <span class="n">the</span>
+       <span class="n">read</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="k">for</span> <span class="n">the</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>  <span class="n">The</span> <span class="n">same</span> <span class="n">is</span> <span class="nb">true</span> <span class="n">when</span>
+       <span class="n">writing</span> <span class="n">using</span> <span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>  <span class="p">(</span><span class="n">Avoid</span> <span class="n">this</span> <span class="n">latter</span> <span class="n">technique</span> <span class="k">if</span> <span class="n">you</span> <span class="n">can</span><span class="err">‐</span>
+       <span class="n">not</span> <span class="n">guarantee</span> <span class="n">that</span> <span class="n">the</span> <span class="n">monitored</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">always</span> <span class="n">refers</span> <span class="n">to</span>
+       <span class="n">a</span> <span class="n">stream</span><span class="o">-</span><span class="n">oriented</span> <span class="n">file</span><span class="p">.)</span>
+
+ <span class="n">Epoll</span> <span class="n">is</span> <span class="n">relatively</span> <span class="n">young</span><span class="p">.</span> <span class="n">It</span> <span class="n">was</span> <span class="n">created</span> <span class="n">by</span> <span class="n">Davide</span> <span class="n">Libenzi</span> <span class="n">in</span> <span class="mf">2002.</span> 
+ <span class="n">For</span> <span class="nl">comparison</span><span class="p">:</span> <span class="n">Windows</span> <span class="n">did</span> <span class="n">IOCP</span> <span class="n">in</span> <span class="mi">1994</span> <span class="n">and</span> <span class="n">FreeBSD</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">kqueue</span> <span class="n">was</span> <span class="n">introduced</span> <span class="n">in</span> <span class="n">July</span> <span class="mf">2000.</span> 
+<span class="n">Unfortunately</span><span class="p">,</span> <span class="n">even</span> <span class="n">though</span> <span class="n">epoll</span> <span class="n">is</span> <span class="n">the</span> <span class="n">youngest</span> <span class="n">in</span> <span class="n">the</span> <span class="n">advanced</span> <span class="n">IO</span> <span class="n">multiplexing</span> <span class="n">family</span><span class="p">,</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">the</span> <span class="n">worse</span> <span class="n">in</span> <span class="n">the</span> <span class="n">bunch</span><span class="p">.</span>  
+     <span class="n">EPOLLONESHOT</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//www.cnblogs.com/kex1n/p/7451069.html
+</span><span class="c1"></span><span class="err">所以在处理数据时，不需要在</span><span class="n">RECV时不断的循环去读一直读到EAGAIN</span><span class="err">，但如果设置了</span><span class="n">EPOLLONESHOT后</span>
+    
+    
+<span class="err">因为</span> <span class="n">LT</span> <span class="o">&amp;</span> <span class="n">ET</span> <span class="err">触发方式不同，处理事件的逻辑也不同。先看</span> <span class="n">manpage</span> <span class="err">里面的一个例子</span>
+
+<span class="mf">1.</span> <span class="n">The</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">that</span> <span class="n">represents</span> <span class="n">the</span> <span class="n">read</span> <span class="n">side</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pipe</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="n">is</span> <span class="n">registered</span> <span class="n">on</span> <span class="n">the</span> <span class="n">epoll</span> <span class="n">instance</span><span class="p">.</span>
+
+<span class="mf">2.</span> <span class="n">A</span> <span class="n">pipe</span> <span class="n">writer</span> <span class="n">writes</span> <span class="mi">2</span> <span class="n">kB</span> <span class="n">of</span> <span class="n">data</span> <span class="n">on</span> <span class="n">the</span> <span class="n">write</span> <span class="n">side</span> <span class="n">of</span> <span class="n">the</span> <span class="n">pipe</span><span class="p">.</span>
+
+<span class="mf">3.</span> <span class="n">A</span> <span class="n">call</span> <span class="n">to</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">is</span> <span class="n">done</span> <span class="n">that</span> <span class="n">will</span> <span class="k">return</span> <span class="n">rfd</span> <span class="n">as</span> <span class="n">a</span> <span class="n">ready</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>
+
+<span class="mf">4.</span> <span class="n">The</span> <span class="n">pipe</span> <span class="n">reader</span> <span class="n">reads</span> <span class="mi">1</span> <span class="n">kB</span> <span class="n">of</span> <span class="n">data</span> <span class="n">from</span> <span class="n">rfd</span><span class="p">.</span>
+
+<span class="mf">5.</span> <span class="n">A</span> <span class="n">call</span> <span class="n">to</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">is</span> <span class="n">done</span><span class="p">.</span>
+<span class="err">在</span> <span class="n">ET</span> <span class="err">模式下，这种情况可能导致进程一直阻塞。</span>
+
+<span class="err">假设</span> <span class="n">pipe</span> <span class="err">刚开始是空的，</span><span class="n">A端发送</span> <span class="mi">2</span><span class="n">KB</span><span class="err">，然后等待</span><span class="n">B端的响应</span><span class="err">。</span>
+<span class="err">步骤</span><span class="mi">2</span><span class="err">完成后，缓冲区从空变成非空，</span><span class="n">ET</span> <span class="err">会触发</span> <span class="n">EPOLLIN</span> <span class="err">事件</span>
+<span class="err">步骤</span><span class="mi">3</span> <span class="n">epoll_wait</span> <span class="err">正常返回</span>
+<span class="n">B开始读操作</span><span class="err">，但是只从管道读</span> <span class="mi">1</span><span class="n">KB</span> <span class="err">数据</span>
+<span class="err">步骤</span><span class="mi">5</span><span class="err">调用</span> <span class="n">epoll_wait</span> <span class="err">将一直阻塞。因为</span> <span class="n">ET</span> <span class="err">下，缓冲区从空变成非空，才会触发</span> <span class="n">EPOLLIN</span> <span class="err">事件，缓冲区从满变成非满，才会触发</span> <span class="n">EPOLLOUT</span> <span class="err">事件。而当前情况不满足任何触发条件，所以</span> <span class="n">epoll_wait</span> <span class="err">会一直阻塞。</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<p><a href="http://man7.org/linux/man-pages/man7/epoll.7.html">man epoll</a></p>
+
+<p>第四步：为什么不用现有框架呢 ，自己写干什么</p>
+
+<h3 id="问题4-tcp">问题4  tcp</h3>
+
+<h4 id="问-如何消除大量time-wait-状态">问：如何消除大量time_wait 状态？</h4>
+
+<p>回答：</p>
+
+<p>对于服务器来说 一般属于被动关闭一方，一般不会出现多time_wait 状态，并且TCP建立连接，只会消耗更多文件，内存等资源 并不过占用过多的port端口？</p>
+
+<p>画外音：</p>
+
+<blockquote>
+<p>作为客户端，最多可以 使用64512个端口，也就是同一时刻对同一个服务器同一个端口可以创建64512个TCP连接</p>
+
+<p>而对于服务器来说，它没有所谓的“65536”端口数量的限制。可以有多少客户端连接服务器，取决于CPU、内存等资源的大小</p>
+
+<p>一个TCP连接唯一性确定：</p>
+
+<p>ServerIP =&gt; ServerPort &lt;= TCP =&gt; ClientIP =&gt; ClientPort</p>
+</blockquote>
+
+<p>分析一下是什么原因造成的呢？</p>
+
+<ul>
+<li>客户端大量的压测  每秒就会创建400+的连接，1分钟就是2.4万的连接，系统无法及时回收</li>
+</ul>
+
+<p>默认ip_local_port_range是2.8w个</p>
+
+<h6 id="解决方式是">解决方式是：</h6>
+
+<ul>
+<li>当出现大量的time_wait状态时候，首先检查一下当前系统配置参数情况，如果在合理访问内</li>
+</ul>
+
+<p>具体参数是：</p>
+
+<p><code>1.随机端口范围 ip_local_port_range  默认2.8w</code></p>
+
+<p><code>sysctl -a | grep  ip_local_port_range</code>
+<code>net.ipv4.ip_local_port_range = 32768    61000</code></p>
+
+<ol>
+<li><code>系统允许的文件描述符数量 默认6.5w可以调整10w</code></li>
+</ol>
+
+<p><code>cat /proc/sys/fs/file-max</code>
+<code>655360</code></p>
+
+<ol>
+<li><code>心跳检查参数</code></li>
+</ol>
+
+<p><code>sysctl -a | grep  tcp_keepalive_time</code>
+<code>net.ipv4.tcp_keepalive_time = 7200</code></p>
+
+<ul>
+<li><code>tcp_tw_reuse等快速回收 参数 是有风险的不建议启用。</code></li>
+</ul>
+
+<p><strong>TIME_WAIT关闭的危害：</strong></p>
+
+<p>1、 网络情况不好时，如果主动方无TIME_WAIT等待，关闭前个连接后，主动方与被动方又建立起新的TCP连接，这时被动方重传或延时过来的FIN包过来后会直接影响新的TCP连接；</p>
+
+<p>2、 同样网络情况不好并且无TIME_WAIT等待，关闭连接后无新连接，当接收到被动方重传或延迟的FIN包后，会给被动方回一个RST包，可能会影响被动方其它的服务连接。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">ulimit</span> -a
+
+vim /etc/sysctl.conf 
+net.ipv4.tcp_tw_reuse <span class="o">=</span> **1 表示开启重用**。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
+
+net.ipv4.tcp_tw_recycle <span class="o">=</span> <span class="m">1</span> 表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。
+
+netstat -n <span class="p">|</span> awk <span class="s1">&#39;/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}&#39;</span>
+
+sysctl -a <span class="p">|</span> grep <span class="nb">time</span> <span class="p">|</span> grep <span class="nb">wait</span>
+net.netfilter.nf_conntrack_tcp_timeout_close_wait <span class="o">=</span> <span class="m">60</span>
+net.netfilter.nf_conntrack_tcp_timeout_fin_wait <span class="o">=</span> <span class="m">120</span>
+net.netfilter.nf_conntrack_tcp_timeout_time_wait <span class="o">=</span> <span class="m">120</span>
+
+
+更多参数
+<span class="o">[</span>root@aaa1 ~<span class="o">]</span><span class="c1"># vim /etc/sysctl.conf</span>
+
+增加以下几行：（请根据实际需要添加）
+
+net.ipv4.tcp_fin_timeout <span class="o">=</span> <span class="m">30</span>
+
+net.ipv4.tcp_keepalive_time <span class="o">=</span> <span class="m">1200</span>
+
+net.ipv4.tcp_syncookies <span class="o">=</span> <span class="m">1</span>
+
+net.ipv4.tcp_tw_reuse <span class="o">=</span> <span class="m">1</span>
+
+net.ipv4.tcp_tw_recycle <span class="o">=</span> <span class="m">1</span>
+
+net.ipv4.ip_local_port_range <span class="o">=</span> <span class="m">1024</span> <span class="m">65000</span>
+
+net.ipv4.tcp_max_syn_backlog <span class="o">=</span> <span class="m">8192</span>
+
+net.ipv4.tcp_max_tw_buckets <span class="o">=</span> <span class="m">5000</span>
+
+说明：
+
+net.ipv4.tcp_syncookies <span class="o">=</span> <span class="m">1</span> 表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭；
+
+net.ipv4.tcp_tw_reuse <span class="o">=</span> <span class="m">1</span> 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
+
+net.ipv4.tcp_tw_recycle <span class="o">=</span> <span class="m">1</span> 表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。
+
+net.ipv4.tcp_fin_timeout <span class="o">=</span> <span class="m">30</span> 表示如果套接字由本端要求关闭，这个参数决定了它保持在FIN-WAIT-2状态的时间。
+
+net.ipv4.tcp_keepalive_time <span class="o">=</span> <span class="m">1200</span> 表示当keepalive起用的时候，TCP发送keepalive消息的频度。缺省是2小时，改为20分钟。
+
+net.ipv4.ip_local_port_range <span class="o">=</span> <span class="m">1024</span> <span class="m">65000</span> 表示用于向外连接的端口范围。缺省情况下很小：32768到61000，改为1024到65000。
+
+net.ipv4.tcp_max_syn_backlog <span class="o">=</span> <span class="m">8192</span> 表示SYN队列的长度，默认为1024，加大队列长度为8192，可以容纳更多等待连接的网络连接数。
+
+net.ipv4.tcp_max_tw_buckets <span class="o">=</span> 5000表示系统同时保持TIME_WAIT套接字的最大数量，如果超过这个数字，TIME_WAIT套接字将立刻被清除并打印警告信息。默认为180000，改为5000。对于Apache、Nginx等服务器，上几行的参数可以很好地减少TIME_WAIT套接字数量，但是对于Squid，效果却不大。此项参数可以控制TIME_WAIT套接字的最大数量，避免Squid服务器被大量的TIME_WAIT套接字拖死。
+
+
+/etc/sysctl.conf
+sysctl -w fs.file-max<span class="o">=</span><span class="m">10485760</span> <span class="c1">#系统允许的文件描述符数量10m</span>
+sysctl -w net.ipv4.tcp_rmem<span class="o">=</span><span class="m">1024</span> <span class="c1">#每个tcp连接的读取缓冲区1k，一个连接1k</span>
+sysctl -w net.ipv4.tcp_wmem<span class="o">=</span><span class="m">1024</span> <span class="c1">#每个tcp连接的写入缓冲区1k</span>
+<span class="c1">#修改默认的本地端口范围</span>
+sysctl -w net.ipv4.ip_local_port_range<span class="o">=</span><span class="s1">&#39;1024 65535&#39;</span>
+sysctl -w net.ipv4.tcp_tw_recycle<span class="o">=</span><span class="m">1</span>  <span class="c1">#快速回收time_wait的连接</span>
+sysctl -w net.ipv4.tcp_tw_reuse<span class="o">=</span><span class="m">1</span>
+sysctl -w net.ipv4.tcp_timestamps<span class="o">=</span><span class="m">1</span>
+<span class="c1">#用户单进程的最大文件数，用户登录时生效</span>
+<span class="nb">echo</span> <span class="s1">&#39;* soft nofile 1048576&#39;</span> &gt;&gt; /etc/security/limits.conf
+<span class="nb">echo</span> <span class="s1">&#39;* hard nofile 1048576&#39;</span> &gt;&gt; /etc/security/limits.conf
+<span class="nb">ulimit</span> -n <span class="m">1048576</span> <span class="c1">#用户单进程的最大文件描述符数 当前会话生效</span>
+
+TIME_WAIT状态存在的理由：
+<span class="m">1</span>）可靠地实现TCP全双工连接的终止
+   在进行关闭连接四次挥手协议时，最后的ACK是由主动关闭端发出的，如果这个最终的ACK丢失，服务器将重发最终的FIN，
+因此客户端必须维护状态信息允许它重发最终的ACK。如果不维持这个状态信息，那么客户端将响应RST分节，服务器将此分节解释成一个错误（在java中会抛出connection reset的SocketException<span class="o">)</span>。
+因而，要实现TCP全双工连接的正常终止，必须处理终止序列四个分节中任何一个分节的丢失情况，主动关闭的客户端必须维持状态信息进入TIME_WAIT状态。
+ 
+<span class="m">2</span>）允许老的重复分节在网络中消逝 
+TCP分节可能由于路由器异常而“迷途”，在迷途期间，TCP发送端可能因确认超时而重发这个分节，迷途的分节在路由器修复后也会被送到最终目的地，这个原来的迷途分节就称为lost duplicate。
+在关闭一个TCP连接后，马上又重新建立起一个相同的IP地址和端口之间的TCP连接，后一个连接被称为前一个连接的化身（incarnation<span class="o">)</span>，那么有可能出现这种情况，前一个连接的迷途重复分组在前一个连接终止后出现，从而被误解成从属于新的化身。
+为了避免这个情况，TCP不允许处于TIME_WAIT状态的连接启动一个新的化身，因为TIME_WAIT状态持续2MSL，就可以保证当成功建立一个TCP连接的时候，来自连接先前化身的重复分组已经在网络中消逝。</code></pre></td></tr></table>
+</div>
+</div>
+<p>参考：<a href="https://pathbox.github.io/2018/02/06/65535-port-and-concurrent-socket/">百万并发连接、65536和Linux TCP/IP 性能优化</a></p>
+
+<h1 id="二-提升">二、提升</h1>
+
+<h2 id="性能优化">性能优化</h2>
+
+<h3 id="问题4-如果一个c-开发的系统-在生产运行3年后-最后查询越来越慢-如何解决">问题4 如果一个c++开发的系统，在生产运行3年后，最后查询越来越慢 如何解决？</h3>
+
+<blockquote>
+<p>c++ 语言本身 ；和操作系统方面</p>
+
+<p>参考书</p>
+
+<p>性能之巅 洞悉系统、企业与云计算</p>
+
+<p>提高C++性能的编程技术</p>
+
+<p>C++性能优化指南</p>
+
+<p>参考项目：</p>
+
+<p>虽然很重要但是不考虑问题</p>
+
+<p>优化数据库，这个和程序有啥关系</p>
+</blockquote>
+
+<p>#### 回答1  热点函数优化 20%原则</p>
+
+<ul>
+<li><p>能不能内敛</p></li>
+
+<li><p>函数 时间复杂度  减少循环的层次，次数和 循环体非必要函数调用出现的开销（引用避免拷贝）</p></li>
+
+<li><p>函数调用开销</p>
+
+<p>虚函数的另一个问题是编译器难以内联它们</p>
+
+<p>用模板在编译时选择实现</p>
+
+<p>std:bind+std:function取代虚函</p>
+
+<p><a href="https://mp.weixin.qq.com/s/a-vS5iijogedgXzebAfGnw">Effective C++ 35：考虑虚函数的其他替代设计</a></p>
+
+<p>编译选项 o2</p>
+
+<p>提高编译速度</p></li>
+</ul>
+
+<p>#### 回答2 优化数据结构，更好的库</p>
+
+<h3 id="参考资料">参考资料</h3>
+
+<p>[1]  <a href="http://kernel.pursuitofcloud.org/531016">http://kernel.pursuitofcloud.org/531016</a></p>
+
+<p>[2]  <a href="https://www.kancloud.cn/kancloud/understanding-linux-processes/52197">https://www.kancloud.cn/kancloud/understanding-linux-processes/52197</a></p>
+
+<p>[3] <a href="https://www.cnblogs.com/huxiao-tee/p/4657851.html">从内核文件系统看文件读写过程</a> [ok]</p>
+
+<p>[4] <a href="https://www.cnblogs.com/huxiao-tee/p/4660352.html">认真分析mmap：是什么 为什么 怎么用</a></p>
+
+<p>[5] <a href="https://www.zhihu.com/question/48161206">Linux 中 mmap() 函数的内存映射问题理解？</a> [这个很重要，必看]</p>
+
+<p>[6] <a href="https://www.cnblogs.com/daizhj/archive/2011/04/25/mongos_mmap_source_code.html">Mongodb源码分析&ndash;内存文件映射(MMAP)</a></p>
+
+<p>[7] <a href="https://stackoverflow.com/questions/29575420/mmap-storage-engine-in-mongodb">MMAP storage Engine in Mongodb</a></p>
+
+<p>[8]  <a href="https://juejin.im/post/5aeb0e016fb9a07ab7740d90">https://juejin.im/post/5aeb0e016fb9a07ab7740d90</a> 深入理解读写锁ReentrantReadWriteLock</p>
+
+<p>​     <a href="http://blog.guoyb.com/2018/02/11/rwlock/">http://blog.guoyb.com/2018/02/11/rwlock/</a></p>
+
+<p>​     <a href="https://tech.meituan.com/2018/11/15/java-lock.html">https://tech.meituan.com/2018/11/15/java-lock.html</a></p>
+
+<p>【9】 获取自旋锁和禁止中断的时候为什么不能睡眠?</p>
+
+<p>​       <a href="https://www.zhihu.com/question/28821201">https://www.zhihu.com/question/28821201</a></p>
+
+<p>​      <a href="https://www.zhihu.com/question/23995948">https://www.zhihu.com/question/23995948</a></p>
+
+<p><a href="https://segmentfault.com/a/1190000019506505">https://segmentfault.com/a/1190000019506505</a></p>
+
+<p>[10] 网络编程：进程间通信性能比较  <a href="https://zhuanlan.zhihu.com/p/80368714">https://zhuanlan.zhihu.com/p/80368714</a></p>
+
+<p>[11] <a href="https://people.cs.clemson.edu/~dhouse/courses/405/papers/optimize.pdf">https://people.cs.clemson.edu/~dhouse/courses/405/papers/optimize.pdf</a></p>
+
+<p>[12]  <a href="http://oldblog.antirez.com/post/redis-virtual-memory-story.html">http://oldblog.antirez.com/post/redis-virtual-memory-story.html</a></p>
+
+<p>[13]  <a href="https://www.sqlite.org/mmap.html">https://www.sqlite.org/mmap.html</a></p>
+
+<p>[14] What are the advantages and disadvantages of memory-mapped I/O and direct (or port) I/O?</p>
+
+<p>【15】 <a href="https://tech.meituan.com/2016/11/04/nio.html">Java NIO浅析</a></p>
+
+<p>[16] <a href="https://www.cnblogs.com/wujing-hubei/p/6111347.html">socket阻塞与非阻塞，同步与异步、I/O模型，select与poll、epoll比较</a></p>
+
+<p>[17] <a href="https://eklitzke.org/blocking-io-nonblocking-io-and-epoll">Blocking I/O, Nonblocking I/O, And Epoll</a> 【redis作者]</p>
+
+<p>【18】<a href="https://mp.weixin.qq.com/s?src=3&amp;timestamp=1573703798&amp;ver=1&amp;signature=WJm9uHtBrHURp7Oi0fj0HIHf6DqrXluIt6pEncwUr1MJxomfqcbI8WZbF8*AvjKN0u*09abygHHHqDxYIIPXSdRMmr78pQuYAFtDOx4KQbr4Tg-iQ8Twfc-Kw9bFRFoawB*HBoIDqenYqwD2EHGtGA==">浅谈IO的多路复用技术之一(select和epoll实质)</a></p>
+
+<p>​      <a href="https://medium.com/@copyconstruct/the-method-to-epolls-madness-d9d2d6378642">https://medium.com/@copyconstruct/the-method-to-epolls-madness-d9d2d6378642</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-11-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS_Weekly_5/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">ARTS_weekly_5</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/nginx/">
+            <span class="next-text nav-default">nginx</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="http://localhost:1313" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="http://localhost:1313" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-pocket" title="pocket"></a>
+      <a href="http://localhost:1313" class="iconfont icon-tumblr" title="tumblr"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
