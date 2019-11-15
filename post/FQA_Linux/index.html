@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="7562">
+<meta itemprop="wordCount" content="10032">
 
 
 
@@ -135,8 +135,8 @@
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 7562 字 </span>
-          <span class="more-meta"> 预计阅读 16 分钟 </span>
+          <span class="more-meta"> 约 10032 字 </span>
+          <span class="more-meta"> 预计阅读 21 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -144,6 +144,8 @@
     
     <div class="post-content">
       
+
+<h2 id="当你的才华撑不起你的野心时-就应该静下心来好好学习">当你的才华撑不起你的野心时，就应该静下心来好好学习。</h2>
 
 <h1 id="知识卡">知识卡</h1>
 
@@ -256,6 +258,43 @@
 
 <p><img src="https://i.loli.net/2019/11/13/6vzlwaTFo32kdfE.png" alt="image.png" /></p>
 
+<h3 id="区别是什么">区别是什么？</h3>
+
+<p><strong>Linux用户级进程跟内核线程（进程）有什么差别？</strong></p>
+
+<blockquote>
+<p><a href="http://whatbeg.com/2019/06/05/processthread.html">区别</a>：
+1）内核级线程是OS内核可感知的，而用户级线程是OS内核不可感知的。
+2）用户级线程的创建、撤消和调度不需要OS内核的支持，是在语言（如Java）这一级处理的；而内核支持线程的创建、撤消和调度都需OS内核提供支持，而且与进程的创建、撤消和调度大体是相同的。</p>
+
+<p>3）用户级线程执行系统调用指令时将导致其所属进程被中断，而内核支持线程执行系统调用指令时，只导致该线程被中断。</p>
+
+<p>4）在只有用户级线程的系统内，CPU调度还是以进程为单位，处于运行状态的进程中的多个线程，由用户程序控制线程的轮换运行；在有内核支持线程的系统内，CPU调度则以线程为单位，由OS的线程调度程序负责线程的调度。</p>
+
+<p>5）用户级线程的程序实体是运行在用户态下的程序，而内核支持线程的程序实体则是可以运行在任何状态下的程序。</p>
+</blockquote>
+
+<p><strong>为什么要区分用户态和内核态？</strong></p>
+
+<blockquote>
+<p>在CPU的所有指令中，有些指令是非常危险的，如果错用，将导致系统崩溃，比如清内存、设置时钟等。
+如果所有的程序都能使用这些指令，那么系统死机的概率将大大增加。
+所以，CPU将指令分为特权指令和非特权指令，对于那些危险的指令，只允许操作系统及其相关模块使用，普通应用程序只能使用那些不会造成灾难的指令。
+Intel的CPU将特权等级分为4个级别：Ring0~Ring3
+Linux使用Ring3级别运行用户态，Ring0作为内核态。
+Linux的内核是一个有机整体，每个用户进程运行时都好像有一份内核的拷贝。每当用户进程使用系统调用时，都自动地将运行模式从用户级转为内核级（成为陷入内核），此时，进程在内核的地址空间中运行</p>
+</blockquote>
+
+<p><strong>从用户空间到内核空间有以下触发手段？</strong></p>
+
+<blockquote>
+<p>1）系统调用：用户进程通过系统调用申请使用操作系统提供的服务程序来完成工作，比如read()、fork()等。系统调用的机制其核心还是使用了操作系统为用户特别开放的一个中断来实现的。</p>
+
+<p>2）中断：当外围设备完成用户请求的操作后，会向CPU发送中断信号。这时CPU会暂停执行下一条指令（用户态）转而执行与该中断信号对应的中断处理程序（内核态）</p>
+
+<p>3）异常：当CPU在执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会触发由当前运行进程切换到处理此异常的内核相关程序中，也就转到了内核态，比如缺页异常。</p>
+</blockquote>
+
 <h3 id="线程">线程</h3>
 
 <h3 id="一-问2-线程同步方式">一. 问2 线程同步方式？</h3>
@@ -280,7 +319,211 @@
 
 <p>高级组件</p>
 
+<p>线程私有存储（Thread-local storage）:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[共享内存](https://zh.wikipedia.org/wiki/共享内存)函数 </pre></td></tr></table>
+</div>
+</div>
+<p><a href="https://zh.wikipedia.org/wiki/信号量">信号量</a>函数</p>
+
 <p>#### 问 rwlock和mutex有什么不同和优劣呢</p>
+
+<h4 id="大王-你用c-编程-多线程-采用是c-11提供的std-thread吗">大王： 你用c++编程，多线程 采用是c++11提供的std::thread吗？</h4>
+
+<p>小王：不是，<strong>是</strong> Linux操作系统提供的 c语言实现的  <strong>pthreads 库</strong></p>
+
+<blockquote>
+<p>画外音：话题涉及操作系统 和c++ c编程问题</p>
+
+<p>The <a href="http://www.yolinux.com/TUTORIALS/LinuxTutorialPosixThreads.html">POSIX thread libraries</a> are a standards based thread API for C/C++</p>
+
+<p>英语：POSIX Threads，常被缩写为<a href="https://zh.wikipedia.org/wiki/POSIX%E7%BA%BF%E7%A8%8B">Pthreads</a></p>
+
+<p>Pthreads 是 IEEE（电子和电气工程师协会）委员会开发的一组线程接口，负责指定便携式操作系统接口（POSIX）。Pthreads 中的 P 表示 POSIX</p>
+</blockquote>
+
+<p>大王：LinuxThreads的不足，有什么缺点？</p>
+
+<blockquote>
+<p>画外音：</p>
+
+<p>难道这不是完美的吗?还有比它更好的，更方面的，我一直这样用呢？，根本没想过这个问题</p>
+
+<p>字眼缺点 缺点缺点 我不会知道，扩展你擅长核心内容</p>
+
+<p>我第一感觉 java只需要一个类，一个接口好了，超级简单，不需要操作底层api来实现。提供线程池等更加复杂组件</p>
+
+<p>如果不用队列第三方组件，一个线程很难访问另外一个线程栈内 class的对象 ，无法相互串门。只能 通过线程创建时候 参数传入this空间地址，对编程带来不方便，不行不同类直接相互访问呢？</p>
+</blockquote>
+
+<p>小王：</p>
+
+<ul>
+<li>pthread实现基于<a href="https://www.ibm.com/developerworks/cn/linux/kernel/l-thread/index.html">一对一的线程模型</a>，运行要完全依靠liunx操作内核调度， <a href="https://software.intel.com/zh-cn/articles/threading-models-for-high-performance-computing-pthreads-or-openmp">无法跨平台</a>
+
+<br /></li>
+</ul>
+
+<blockquote>
+<p>The most common implementation is 1-to-1 mapping where each user-level thread has a corresponding thread that is scheduled by the kernel.</p>
+
+<p>由Xavier Leroy (Xavier.Leroy@inria.fr)负责开发完成，并已绑定在GLIBC中发行。它所实现的就是基于核心轻量级进程的&rdquo;一对一&rdquo;线程模型，一个线程实体对应一个核心轻量级进程，而线程之间的管理在核外函数库中实现。</p>
+
+<p>在Linux内核2.6出现之前进程是(最小)可调度的对象，[当时的Linux不真正支持线程]()。但是Linux内核有一个<a href="https://zh.wikipedia.org/wiki/系统调用">系统调用</a>指令clone()，这个指令产生一个调用调用的进程的复件，而且这个复件与原进程使用同一地址空间。LinuxThreads计划使用这个系统调用来提供一个内核级的线程支持。</p>
+
+<p>但是这个解决方法与真正的POSIX标准有一些不兼容的地方，尤其是在信号处理、进程调度和进程间同步原语方面。</p>
+
+<p>要提高LinuxThreads的效应很明显需要提供内核支持以及必须重写线程函数库</p>
+
+<p>从第3版开始NPTL是Red Hat Enterprise Linux的一部分，从Linux内核2.6开始它被纳入内核。当前它完全被结合入<a href="https://zh.wikipedia.org/wiki/GNU_C_函式庫">GNU C 库</a></p>
+</blockquote>
+
+<ul>
+<li>pthread线程的创建</li>
+</ul>
+
+<blockquote>
+<p>Linux内核并不支持真正意义上的线程，</p>
+
+<p>Linux Threads是用与普通进程具有同样内核调度视图的轻量级进程来实现线程支持的。</p>
+
+<p>每个Linux Threads线程都同时具有线程id和进程id，其中进程id就是内核所维护的进程号，</p>
+
+<p>而线程id则由Linux Threads分配和维护。</p>
+</blockquote>
+
+<p><a href="http://www.cppblog.com/Solstice/archive/2010/08/21/124241.aspx">http://www.cppblog.com/Solstice/archive/2010/08/21/124241.aspx</a></p>
+
+<p>大王：c++的成员函数可以是多线程的函数吗？</p>
+
+<blockquote>
+<p>我根本不理解这个题目什么意思</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">dns_down_connect</span><span class="o">::</span><span class="n">start</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">m_thread</span> <span class="o">=</span> <span class="n">st_thread_create</span><span class="p">(</span><span class="n">connect_thread_fun</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="n">0</span><span class="p">);</span>
+	<span class="n">m_thread_heart</span> <span class="o">=</span> <span class="n">st_thread_create</span><span class="p">(</span><span class="n">heart_thread_fun</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="n">0</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="o">*</span> <span class="n">connect_thread_fun</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span> <span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">dns_down_connect</span> <span class="o">*</span><span class="n">pthis</span> <span class="o">=</span> <span class="p">(</span><span class="n">dns_down_connect</span> <span class="o">*</span><span class="p">)</span><span class="n">arg</span><span class="p">;</span>
+<span class="p">}</span>
+ <span class="kt">void</span> <span class="o">*</span>  <span class="n">heart_thread_fun</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span> <span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">dns_down_connect</span> <span class="o">*</span> <span class="n">pthis</span> <span class="o">=</span> <span class="p">(</span><span class="n">dns_down_connect</span> <span class="o">*</span><span class="p">)</span><span class="n">arg</span><span class="p">;</span>   
+ <span class="p">}</span>
+
+
+<span class="kd">class</span> <span class="nf">MyThread</span> <span class="kd">implements</span> <span class="nf">Runnable</span><span class="p">{</span>  
+    <span class="kd">private</span> <span class="nf">int</span> <span class="n">ticket</span> <span class="o">=</span> <span class="n">5</span><span class="p">;</span>  
+    <span class="kd">public</span> <span class="nf">void</span> <span class="n">run</span><span class="p">(){</span>  
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span><span class="o">=</span><span class="n">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">10</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>  
+        <span class="p">{</span>  
+            <span class="k">if</span><span class="p">(</span><span class="n">ticket</span> <span class="o">&gt;</span> <span class="n">0</span><span class="p">){</span>  
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;ticket = &#34;</span> <span class="o">+</span> <span class="n">ticket</span><span class="o">--</span><span class="p">);</span>  
+            <span class="p">}</span>  
+        <span class="p">}</span>  
+    <span class="p">}</span>  
+<span class="p">}</span>  
+
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">RunnableDemo1</span> <span class="p">{</span>
+	 <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">){</span>  
+	        <span class="n">MyThread</span> <span class="nf">my</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyThread</span><span class="p">();</span>  
+	        <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="n">my</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>  
+	        <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="n">my</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>  
+	        <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="n">my</span><span class="p">).</span><span class="na">start</span><span class="p">();</span>  
+	    <span class="p">}</span>  
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>大王：那还有其他方式吗？</p>
+
+<p>小王：携程：</p>
+
+<p>大王：实现原理是什么？</p>
+
+<p>小王：想了想太难了，我不清楚。</p>
+
+<table>
+<thead>
+<tr>
+<th>协程库</th>
+<th>语言</th>
+<th>开发者</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>state threads library</td>
+<td>3000行<a href="https://github.com/wangcy6/reading_code_note/tree/master/liunx/st">C代码</a></td>
+<td><a href="https://coolshell.cn/articles/12012.html">历史渊源</a></td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>ST本质上仍然是基于<a href="https://coolshell.cn/articles/12012.html">EDSM模型</a>，但旨在取代传统的异步<a href="https://www.cnblogs.com/NerdWill/p/6166220.html">回调</a>方式</strong> ,<strong>为<a href="https://github.com/zfengzhen/Blog/blob/master/article/%E4%B8%BA%E4%BA%92%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%80%8C%E7%94%9F%E7%9A%84State%20Threads%5B%E5%B8%B8%E8%A7%81%E5%90%8E%E5%8F%B0%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90%5D.md">互联网应用程序</a>而生的State Threads</strong></p>
+
+<p>用<a href="http://linux.die.net/man/3/getcontext">setcontext()</a>和<a href="http://linux.die.net/man/3/getcontext">getcontext()</a>来实现单个进程内的用户空间线程.</p>
+
+<p><a href="https://linux.die.net/man/3/getcontext">https://linux.die.net/man/3/getcontext</a></p>
+
+<p>st_thread_create</p>
 
 <h2 id="2-文件系统">2、文件系统</h2>
 
@@ -1030,6 +1273,8 @@ TCP分节可能由于路由器异常而“迷途”，在迷途期间，TCP发�
 <p>【18】<a href="https://mp.weixin.qq.com/s?src=3&amp;timestamp=1573703798&amp;ver=1&amp;signature=WJm9uHtBrHURp7Oi0fj0HIHf6DqrXluIt6pEncwUr1MJxomfqcbI8WZbF8*AvjKN0u*09abygHHHqDxYIIPXSdRMmr78pQuYAFtDOx4KQbr4Tg-iQ8Twfc-Kw9bFRFoawB*HBoIDqenYqwD2EHGtGA==">浅谈IO的多路复用技术之一(select和epoll实质)</a></p>
 
 <p>​      <a href="https://medium.com/@copyconstruct/the-method-to-epolls-madness-d9d2d6378642">https://medium.com/@copyconstruct/the-method-to-epolls-madness-d9d2d6378642</a></p>
+
+<p>[19] <a href="http://whatbeg.com/2019/06/05/processthread.html">进程线程常见基础问题</a></p>
 
     </div>
 

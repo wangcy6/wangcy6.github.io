@@ -100,13 +100,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/Book/</loc>
-    <lastmod>2019-10-11T17:02:43+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/tags/Leetcode/</loc>
     <lastmod>2019-10-11T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -136,6 +129,13 @@
   
   <url>
     <loc>https://wangcy6.github.io/tags/array/</loc>
+    <lastmod>2019-10-10T17:02:43+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/book/</loc>
     <lastmod>2019-10-10T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

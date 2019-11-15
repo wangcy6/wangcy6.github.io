@@ -17,7 +17,7 @@
       <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/FQA_Linux/</guid>
-      <description>知识卡 一、基础 1、进程vs线程 问1 ：进程间通信方式 进程间通信 2个情况 第一个是 exchange data 传递数据 （跨主机 TPC，不跨主机 IPC） 第二个是 synchronize 同步(内核</description>
+      <description>当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 一、基础 1、进程vs线程 问1 ：进程间通信方式 进程间通信 2个情况 第一个是 exchange data 传递数据</description>
     </item>
     
   </channel>
