@@ -42,15 +42,15 @@
 <meta property="og:description" content="FQA" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/FQA_Linux/" />
-<meta property="article:published_time" content="2019-11-12T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-11-12T00:00:00+00:00" />
+<meta property="article:published_time" content="2019-11-16T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-16T00:00:00+00:00" />
 <meta itemprop="name" content="FQA_Linux">
 <meta itemprop="description" content="FQA">
 
 
-<meta itemprop="datePublished" content="2019-11-12T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-11-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="10032">
+<meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="16505">
 
 
 
@@ -131,12 +131,12 @@
       <h1 class="post-title">FQA_Linux</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-11-12 00:00 </span>
+        <span class="post-time"> 2019-11-16 00:00 </span>
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 10032 字 </span>
-          <span class="more-meta"> 预计阅读 21 分钟 </span>
+          <span class="more-meta"> 约 16505 字 </span>
+          <span class="more-meta"> 预计阅读 33 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -295,6 +295,257 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p>3）异常：当CPU在执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会触发由当前运行进程切换到处理此异常的内核相关程序中，也就转到了内核态，比如缺页异常。</p>
 </blockquote>
 
+<h4 id="liunx">liunx</h4>
+
+<ul>
+<li>线程就是一段代码 和普通的代码没有区别</li>
+</ul>
+
+<p>Threads in Linux are nothing but a flow of execution of the process. A process containing multiple execution flows is known as multi-threaded process.</p>
+
+<p>For a non multi-threaded process there is only execution flow that is the main execution flow and hence it is also known as single threaded process. For Linux kernel , t<strong>here is no concept of thread. Each thread is viewed by kernel as a separate process</strong> but these processes are somewhat different from other normal processes. I will explain the difference in following paragraphs.</p>
+
+<p>Threads are often mixed with the term Light Weight Processes or LWPs. The reason dates back to those times when <strong>Linux supported threads at user level only</strong>. This means that even a multi-threaded application was viewed by kernel as a single process only. This posed big challenges for the library that managed these user level threads because it had to take care of cases that a thread execution did not hinder if any other thread issued a blocking call</p>
+
+<ul>
+<li><a href="https://www.thegeekstuff.com/2013/11/linux-process-and-threads/">LWP</a>  是内核层面 ，thread是用户层面 不是同一个事情<br /></li>
+</ul>
+
+<p>Threads are often mixed with the term Light Weight Processes or LWPs. The reason dates back to those times when Linux supported threads at user level only. This means that even a multi-threaded application was viewed by kernel as a single process only. This posed big challenges for the library that managed these user level threads because it had to take care of cases that a thread execution did not hinder if any other thread issued a blocking call</p>
+
+<blockquote>
+<p>So, effectively we can say that threads and light weight processes are same. It’s just that thread is a term that is used at user level while light weight process is a term used at kernel level.</p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/11/16/RUSwTZaedrMYEGO.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/6izUwnchu3sC2oK.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/2VmnPiINjyHgJUz.png" alt="image.png" /></p>
+
+<p><strong>用户空间线程模型（M : 1）</strong></p>
+
+<p><img src="https://i.loli.net/2019/11/16/YoBe1xCbSrINyw9.png" alt="image.png" /></p>
+
+<p>每个线程由内核调度器独立的调度，所以如果一个线程阻塞则不影响其他的线程。然而，创建、终止和同步线程都会发生在内核地址空间，这可能会带来较大的性能问题</p>
+
+<p><img src="https://i.loli.net/2019/11/16/Qkt8x6YHhcIzM7g.png" alt="image.png" /></p>
+
+<p>本质上是多个线程被绑定到了多个内核线程上，这使得大部分的线程上下文切换都发生在用户空间，而多个内核线程又可以充分利用处理器资源，模型图如下： [不明白] [不明白] [不明白]</p>
+
+<p><img src="https://i.loli.net/2019/11/16/jRtqXchgI5lpAvz.png" alt="image.png" /></p>
+
+<blockquote>
+<p>jvm 线程实现相关研究，发现 java 线程的问题其实是基于 C++ 和 pthread 线程库的问题</p>
+
+<p><a href="https://crazyfzw.github.io/2018/06/19/thred-model/">https://crazyfzw.github.io/2018/06/19/thred-model/</a></p>
+
+<h2 id="java的线程模型">Java的线程模型</h2>
+
+<p><strong>一句话总结：Java 的线程是映射到操作系统的原生线程之上的。</strong></p>
+
+<p>JVM 没有限定 Java 线程需要使用哪种线程模型来实现， JVM 只是封装了底层操作系统的差异，而不同的操作系统可能使用不同的线程模型，例如 Linux 和 windows 可能使用了一对一模型，solaris 和 unix 某些版本可能使用多对多模型。所以一谈到 Java 语言的多线程模型，需要针对具体 JVM 实现。</p>
+</blockquote>
+
+<p><a href="https://stackoverflow.com/questions/10392800/how-does-pthread-implemented-in-linux-kernel-3-2">https://stackoverflow.com/questions/10392800/how-does-pthread-implemented-in-linux-kernel-3-2</a></p>
+
+<p><a href="https://www.cnblogs.com/wanglulu/p/5522809.html">用户线程和内核线程的区别</a></p>
+
+<p>1 .内核级线程:切换由内核控制，当线程进行切换的时候，由用户态转化为内核态。切换完毕要从内核态返回用户态；可以很好的利用smp，即利用多核cpu。windows线程就是这样的。</p>
+
+<ol>
+<li>用户级线程内核的切换由用户态程序自己控制内核切换,不需要内核干涉，少了进出内核态的消耗，但不能很好的利用多核Cpu,目前Linux pthread大体是这么做的。</li>
+</ol>
+
+<h5 id="clone">clone</h5>
+
+<p><a href="https://linux.die.net/man/2/clone">https://linux.die.net/man/2/clone</a></p>
+
+<h5 id="windows">Windows</h5>
+
+<ul>
+<li>线程</li>
+</ul>
+
+<p>在 Windows 中，线程是基本的执行单位。在进程的上下文中会有一个或多个线程在运行。</p>
+
+<p>调度代码在内核中实现。</p>
+
+<p>【线程是基本调度单位是window下概念不是liunx下概念呀】</p>
+
+<p>Linux 内核使用的是进程模型，而不是线程模型。</p>
+
+<p>Linux 内核提供了一个轻量级进程框架来创建线程；实际的线程在用户 空间中实现。</p>
+
+<blockquote>
+<p>在 Linux 中有多种可用的线程库（LinuxThreads、NGPT、NPTL 等等）。本文中的资料基于 LinuxThreads 库</p>
+</blockquote>
+
+<p>进程</p>
+
+<blockquote>
+<p>Windows 中和 Linux 中的基本执行单位是不同的。在 Windows 中，线程是基本执行单位，进程是一个容纳线程的容器。</p>
+
+<p>在Mac、Windows NT等采用微内核结构的操作系统中，进程的功能发生了变化：它只是资源分配的单位，而不再是调度运行的单位。在微内核系统中，真正调度运行的基本单位是线程。因此，实现并发功能的单位是线程。</p>
+</blockquote>
+
+<p><a href="https://zh.wikipedia.org/wiki/IOCP">https://zh.wikipedia.org/wiki/IOCP</a></p>
+
+<p>IOCP特别适合C/S模式网络服务器端模型。因为，让每一个socket有一个线程负责同步（阻塞）数据处理，one-thread-per-client的缺点是：一是如果连入的客户多了，就需要同样多的线程；二是不同的socket的数据处理都要线程切换的代价。</p>
+
+<h2 id="原理-编辑-https-zh-wikipedia-org-w-index-php-title-iocp-action-edit-section-1">原理[<a href="https://zh.wikipedia.org/w/index.php?title=IOCP&amp;action=edit&amp;section=1">编辑</a>]</h2>
+
+<p>通常的办法是，<strong>线程池中的工作线程的数量与CPU内核数量相同</strong>，以此来最小化线程切换代价。</p>
+
+<p>一个IOCP对象，在操作系统中可关联着多个Socket和（或）文件控制端。</p>
+
+<p>IOCP对象内部有一个先进先出（FIFO）队列，用于存放IOCP所关联的输入输出端的服务请求完成消息。</p>
+
+<p>请求输入输出服务的进程不接收IO服务完成通知，而是检查IOCP的消息队列以确定IO请求的状态。 （线程池中的）多个线程负责从IOCP消息队列中取走完成通知并执行数据处理；</p>
+
+<p>如果队列中没有消息，那么线程阻塞挂起在该队列。这些线程从而实现了负载均衡。</p>
+
+<h2 id="那如何优化呢">那如何优化呢？</h2>
+
+<p>NIO（Non-blocking I/O）</p>
+
+<p><img src="https://user-gold-cdn.xitu.io/2018/9/5/165a723ae2b8fb2a?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img" /></p>
+
+<h3 id="单reactor单线程">单Reactor单线程</h3>
+
+<p><img src="https://i.loli.net/2019/11/16/LBpFqrHIbzlPnGY.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/yZDCF1TM9usvQlh.png" alt="image.png" /></p>
+
+<blockquote>
+<p>但由于是一个线程，对多核 CPU 利用率不高，一旦有大量的客户端连接上来性能必然下降，甚至会有大量请求无法响应。</p>
+
+<p>最坏的情况是一旦这个线程哪里没有处理好进入了死循环那整个服务都将不可用！</p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/11/16/EGHlBwNjAqmF4ki.png" alt=" https://juejin.im/post/5be00763e51d453d4a5cf289 " /></p>
+
+<h3 id="单reactor多线程">单Reactor多线程</h3>
+
+<p><img src="https://i.loli.net/2019/11/16/dPjG9Na3Wl2RLEB.png" alt=" https://tech.meituan.com/2016/11/04/nio.html " /></p>
+
+<p><img src="https://user-gold-cdn.xitu.io/2018/9/5/165a723ae74362df?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="单Reactor多线程" /></p>
+
+<ol>
+<li>事件分发器，单线程选择就绪的事件。</li>
+<li>I/O处理器，包括connect、read、write等，这种纯CPU操作，一般开启CPU核心个线程就可以。</li>
+<li>业务线程，在处理完I/O后</li>
+</ol>
+
+<p><strong>方案说明</strong></p>
+
+<ul>
+<li>Reactor对象通过select监控客户端请求事件，收到事件后通过dispatch进行分发</li>
+<li>如果是建立连接请求事件，则由Acceptor通过accept处理连接请求，然后创建一个Handler对象处理连接完成后的续各种事件</li>
+<li>如果不是建立连接事件，则Reactor会分发调用连接对应的Handler来响应</li>
+<li>Handler只负责响应事件，不做具体业务处理，通过read读取数据后，会分发给后面的Worker线程池进行业务处理</li>
+<li>Worker线程池会分配独立的线程完成真正的业务处理，如何将响应结果发给Handler进行处理</li>
+<li>Handler收到响应结果后通过send将响应结果返回给client</li>
+</ul>
+
+<p><strong>优点</strong> 可以充分利用多核CPU的处理能力</p>
+
+<p><strong>缺点</strong></p>
+
+<ul>
+<li>多线程数据共享和访问比较复杂</li>
+<li>Reactor承担所有事件的监听和响应，在单线程中运行，高并发场景下容易成为性能瓶颈</li>
+</ul>
+
+<h3 id="主从reactor多线程">主从Reactor多线程</h3>
+
+<p><img src="https://i.loli.net/2019/11/16/zcy6UDeOw8KHFqY.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/kKEAgv5l1BnhL9d.png" alt="image.png" /></p>
+
+<p><strong>方案说明</strong></p>
+
+<ul>
+<li>Reactor主线程MainReactor对象通过select监控建立连接事件，收到事件后通过Acceptor接收，处理建立连接事件</li>
+<li>Accepto处理建立连接事件后，MainReactor将连接分配Reactor子线程给SubReactor进行处理</li>
+<li>SubReactor将连接加入连接队列进行监听，并创建一个Handler用于处理各种连接事件</li>
+<li>当有新的事件发生时，SubReactor会调用连接对应的Handler进行响应</li>
+<li>Handler通过read读取数据后，会分发给后面的Worker线程池进行业务处理</li>
+<li>Worker线程池会分配独立的线程完成真正的业务处理，如何将响应结果发给Handler进行处理</li>
+<li>Handler收到响应结果后通过send将响应结果返回给client</li>
+</ul>
+
+<p><strong>优点</strong></p>
+
+<ul>
+<li>父线程与子线程的数据交互简单职责明确，父线程只需要接收新连接，子线程完成后续的业务处理</li>
+<li>父线程与子线程的数据交互简单，Reactor主线程只需要把新连接传给子线程，子线程无需返回数据</li>
+</ul>
+
+<blockquote>
+<p>这种模型在许多项目中广泛使用，包括Nginx主从Reactor多进程模型，</p>
+
+<p>Memcached主从多线程，Netty主从多线程模型的支持</p>
+</blockquote>
+
+<p>作者：贝聊科技链接：<a href="https://juejin.im/post/5b8f23b96fb9a019ec6a133d">https://juejin.im/post/5b8f23b96fb9a019ec6a133d</a></p>
+
+<p>来源：掘金著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+<h2 id="多reactor多线程模型">多Reactor多线程模型</h2>
+
+<p><img src="https://i.loli.net/2019/11/16/fdPGXNtvTVIULeO.png" alt="image.png" /></p>
+
+<h4 id="在reactor中实现读">在Reactor中实现读</h4>
+
+<ul>
+<li>注册读就绪事件和相应的事件处理器。</li>
+<li>事件分发器等待事件。</li>
+<li>事件到来，激活分发器，分发器调用事件对应的处理器。</li>
+<li>事件处理器完成实际的读操作，处理读到的数据，注册新的事件，然后返还控制权。</li>
+</ul>
+
+<p>操作系统-&gt;事件分发器-&gt;【处理器】 -&gt;操作系统-&gt;事件分发器</p>
+
+<h4 id="在proactor中实现读">在Proactor中实现读：</h4>
+
+<ul>
+<li>处理器发起异步读操作（注意：操作系统必须支持异步IO）。在这种情况下，<strong>处理器无视IO就绪事件</strong>，它关注的是完成事件。</li>
+<li>事件分发器等待操作完成事件。</li>
+<li>在分发器等待过程中，操作系统利用并行的内核线程执行实际的读操作，并将结果数据存入用户自定义缓冲区，<strong>最后通知事件分发器读操作完成</strong>。</li>
+<li>事件分发器呼唤处理器。</li>
+<li>事件处理器处理用户自定义缓冲区中的数据，然后启动一个新的异步操作，并将控制权返回事件分发器。</li>
+</ul>
+
+<p>【处理器】 &ndash;&gt;操作系统&ndash;&gt;事件分发器&ndash;&gt;处理器-&gt;事件分发器</p>
+
+<blockquote>
+<p>当回调handler时，表示I/O操作已经完成  1, 2  ；</p>
+
+<p>同步情况下（Reactor)，回调handler时，表示I/O设备可以进行某个操作（can read 或 can write)  1 -&gt; 2 。</p>
+</blockquote>
+
+<h4 id="标准-典型的reactor">标准/典型的Reactor：</h4>
+
+<ul>
+<li>步骤1：等待事件到来（Reactor负责）。</li>
+<li>步骤2：将读就绪事件分发给用户定义的处理器（Reactor负责）。</li>
+<li>步骤3：读数据（用户处理器负责）。</li>
+<li>步骤4：处理数据（用户处理器负责）。</li>
+</ul>
+
+<h4 id="改进实现的模拟proactor">改进实现的模拟Proactor：</h4>
+
+<ul>
+<li><p>步骤1：等待事件到来（Proactor负责）。</p></li>
+
+<li><p>步骤2：得到读就绪事件，执行读数据（现在由Proactor负责）。</p></li>
+
+<li><p>步骤3：将读完成事件分发给用户处理器（Proactor负责）。</p></li>
+
+<li><p>步骤4：处理数据（用户处理器负责）。</p></li>
+</ul>
+
 <h3 id="线程">线程</h3>
 
 <h3 id="一-问2-线程同步方式">一. 问2 线程同步方式？</h3>
@@ -332,6 +583,18 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <p>#### 问 rwlock和mutex有什么不同和优劣呢</p>
 
+<h4 id="大王-你平时用c比较多-还是c-比较多">大王： 你平时用c比较多，还是c++比较多？</h4>
+
+<p>小王心里：这个还用回答吗？是或者不是，么有任何难度。</p>
+
+<blockquote>
+<p>这个问题比较坑，如果是回答c++，关于c++的问题 你每次都100%回答不上来。c++对象模型，设计模式</p>
+
+<p>等你回答不上来,如果c这个我没遇到什么情况。</p>
+</blockquote>
+
+<p>小王： 用c++比较多，但是涉基本组件TCP，线程采用c提供原始接口，没有使用boost lievent这样开源的库。</p>
+
 <h4 id="大王-你用c-编程-多线程-采用是c-11提供的std-thread吗">大王： 你用c++编程，多线程 采用是c++11提供的std::thread吗？</h4>
 
 <p>小王：不是，<strong>是</strong> Linux操作系统提供的 c语言实现的  <strong>pthreads 库</strong></p>
@@ -345,6 +608,16 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <p>Pthreads 是 IEEE（电子和电气工程师协会）委员会开发的一组线程接口，负责指定便携式操作系统接口（POSIX）。Pthreads 中的 P 表示 POSIX</p>
 </blockquote>
+
+<h3 id="核心资源">核心资源：</h3>
+
+<p><a href="https://web.fe.up.pt/~jmcruz/etc/threads/linuxthreads-faq.html">LinuxThreads Frequently Asked Questions</a></p>
+
+<p><a href="https://www.ibm.com/developerworks/cn/linux/kernel/l-thread/index.html">Linux 线程实现机制分析</a></p>
+
+<p><a href="https://www.lix.polytechnique.fr/~liberti/public/computing/parallel/threads/linuxthreads/linuxthreads-index.html">The LinuxThreads library</a></p>
+
+<p>For more information, see the <a href="https://www.lix.polytechnique.fr/~liberti/public/computing/parallel/threads/linuxthreads/README">LinuxThreads README</a> and the <a href="https://www.lix.polytechnique.fr/~liberti/public/computing/parallel/threads/linuxthreads/faq.html">LinuxThreads Frequently Asked Questions</a>.</p>
 
 <p>大王：LinuxThreads的不足，有什么缺点？</p>
 
@@ -363,7 +636,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p>小王：</p>
 
 <ul>
-<li>pthread实现基于<a href="https://www.ibm.com/developerworks/cn/linux/kernel/l-thread/index.html">一对一的线程模型</a>，运行要完全依靠liunx操作内核调度， <a href="https://software.intel.com/zh-cn/articles/threading-models-for-high-performance-computing-pthreads-or-openmp">无法跨平台</a>
+<li>###### pthread实现基于<a href="https://www.ibm.com/developerworks/cn/linux/kernel/l-thread/index.html">一对一的线程模型</a>，运行要完全依靠liunx操作内核调度， <a href="https://software.intel.com/zh-cn/articles/threading-models-for-high-performance-computing-pthreads-or-openmp">无法跨平台</a>
 
 <br /></li>
 </ul>
@@ -383,10 +656,24 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </blockquote>
 
 <ul>
-<li>pthread线程的创建</li>
+<li>LWP就是用户线程</li>
 </ul>
 
 <blockquote>
+<p>轻量级线程(LWP)是一种由内核支持的用户线程。它是基于内核线程的高级抽象，因此只有先支持内核线程，才能有LWP。每一个进程有一个或多个LWPs，每个LWP由一个内核线程支持。这种模型实际上就是恐龙书上所提到的一对一线程模型。在这种实现的操作系统中，LWP就是用户线程。</p>
+
+<p>轻量级进程具有局限性。首先，大多数LWP的操作，如建立、析构以及同步，都需要进行系统调用。系统调用的代价相对较高：需要在user mode和kernel mode中切换。</p>
+
+<p>其次，每个LWP都需要有一个内核线程支持，因此LWP要消耗内核资源（内核线程的栈空间）。因此一个系统不能支持大量的LWP。</p>
+</blockquote>
+
+<h4 id="小王-创建一个概念上用户线程-就需要创建一个lwp-chone-共享-就消耗内存栈和id资源-系统资源有限-一个系统不能支持大量的lwp-不会创建线程">小王：创建一个概念上用户线程，就需要创建一个LWP（chone 共享），就消耗内存栈和id资源，系统资源有限，一个系统不能支持大量的LWP，不会创建线程。</h4>
+
+<blockquote>
+<p>所实现的就是基于核心轻量级进程的&rdquo;一对一&rdquo;线程模型，一个线程实体对应一个核心轻量级进程，而线程之间的管理在核外函数库（我们常用的pthread库）中实现。</p>
+
+<p>一直以来, linux内核并没有线程的概念. 每一个执行实体都是一个task_struct结构, 通常称之为进程.</p>
+
 <p>Linux内核并不支持真正意义上的线程，</p>
 
 <p>Linux Threads是用与普通进程具有同样内核调度视图的轻量级进程来实现线程支持的。</p>
@@ -394,9 +681,144 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p>每个Linux Threads线程都同时具有线程id和进程id，其中进程id就是内核所维护的进程号，</p>
 
 <p>而线程id则由Linux Threads分配和维护。</p>
+
+<p><a href="https://www.zhihu.com/question/64685291">unable to create new native thread</a></p>
+
+<p>用户态线程由pthread库实现，使用pthread以后,</p>
+
+<p>在用户看来, 每一个task_struct就对应一个线程, 而一组线程以及它们所共同引用的一组资源就是一个进程.　　</p>
+
+<p>但是, <strong>一组线程并不仅仅是引用同一组资源就够了, 它们还必须被视为一个整体</strong>.</p>
+
+<p><a href="https://www.cnblogs.com/zhaoyl/p/3620204.html">https://www.cnblogs.com/zhaoyl/p/3620204.html</a></p>
+
+<p><a href="https://stackoverflow.com/questions/9305992/if-threads-share-the-same-pid-how-can-they-be-identified">If threads share the same PID, how can they be identified?</a></p>
+
+<p>Threads are identified using PIDs and TGID (Thread group id)</p>
+
+<h1 id="linux-内核进程管理之进程id-https-www-cnblogs-com-hazir-p-linux-kernel-pid-html"><a href="https://www.cnblogs.com/hazir/p/linux_kernel_pid.html">Linux 内核进程管理之进程ID</a></h1>
+
+<p>命名空间是为操作系统层面的虚拟化机制提供支撑，目前实现的有六种不同的命名空间，分别为mount命名空间、UTS命名空间、IPC命名空间、用户命名空间、PID命名空间、网络命名空间。命名空间简单来说提供的是对全局资源的一种抽象，将资源放到不同的容器中</p>
 </blockquote>
 
-<p><a href="http://www.cppblog.com/Solstice/archive/2010/08/21/124241.aspx">http://www.cppblog.com/Solstice/archive/2010/08/21/124241.aspx</a></p>
+<p><img src="https://i.loli.net/2019/11/16/WDF6Q8oKYO2vEA5.png" alt="image.png" /></p>
+
+<ul>
+<li>多对一线程模型</li>
+</ul>
+
+<blockquote>
+<p>其缺点是一个用户线程如果阻塞在系统调用中，则整个进程都将会阻塞</p>
+
+<p>LWP虽然本质上属于用户线程，但LWP线程库是建立在内核之上的，LWP的许多操作都要进行系统调用，因此效率不高。</p>
+
+<p>而这里的用户线程指的是完全建立在用户空间的线程库，用户线程的建立，同步，销毁，调度完全在用户空间完成，不需要内核的帮助。因此这种线程的操作是极其快速的且低消耗</p>
+</blockquote>
+
+<p><img src="http://www.cnitblog.com/images/cnitblog_com/tarius.wu/Uthread1.JPG" alt="Uthread1.JPG" /></p>
+
+<ul>
+<li><strong>加强版的用户线程——用户线程+LWP</strong><br /></li>
+</ul>
+
+<blockquote>
+<p>因此进程中某个用户线程的阻塞不会影响整个进程的执行</p>
+
+<p>用户线程库将建立的用户线程关联到 LWP 上</p>
+
+<p>LWP 与用户线程的数量不一定一致。当内核调度到某个 LWP 上时，此时与该 LWP 关联的用户线程就被执行</p>
+</blockquote>
+
+<p><img src="http://www.cnitblog.com/images/cnitblog_com/tarius.wu/Uthread2.JPG" alt="Uthread2.JPG" /></p>
+
+<p>概念错误纠正：</p>
+
+<p>很多文献中都认为轻量级进程就是线程，实际上这种说法并不完全正确，从前面的分析中可以看到，<a href="https://www.cnblogs.com/zhaoyl/p/3620204.html">只有在用户线程完全由轻量级进程构成时</a>，才可以说轻量级进程就是线程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">                     USER VIEW
+ &lt;-- PID <span class="m">43</span> --&gt; &lt;----------------- PID <span class="m">42</span> -----------------&gt;
+                     +---------+
+                     <span class="p">|</span> process <span class="p">|</span>
+                    _<span class="p">|</span> <span class="nv">pid</span><span class="o">=</span><span class="m">42</span>  <span class="p">|</span>_
+                  _/ <span class="p">|</span> <span class="nv">tgid</span><span class="o">=</span><span class="m">42</span> <span class="p">|</span> <span class="se">\_</span> <span class="o">(</span>new thread<span class="o">)</span> _
+       _ <span class="o">(</span>fork<span class="o">)</span> _/   +---------+                  <span class="se">\
+</span><span class="se"></span>      /                                        +---------+
++---------+                                    <span class="p">|</span> process <span class="p">|</span>
+<span class="p">|</span> process <span class="p">|</span>                                    <span class="p">|</span> <span class="nv">pid</span><span class="o">=</span><span class="m">44</span>  <span class="p">|</span>
+<span class="p">|</span> <span class="nv">pid</span><span class="o">=</span><span class="m">43</span>  <span class="p">|</span>                                    <span class="p">|</span> <span class="nv">tgid</span><span class="o">=</span><span class="m">42</span> <span class="p">|</span>
+<span class="p">|</span> <span class="nv">tgid</span><span class="o">=</span><span class="m">43</span> <span class="p">|</span>                                    +---------+
++---------+
+ &lt;-- PID <span class="m">43</span> --&gt; &lt;--------- PID <span class="m">42</span> --------&gt; &lt;--- PID <span class="m">44</span> ---&gt;
+                     KERNEL VIEW
+                     
+                     
+  </code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><p>从用户视角出发，在pid 42中产生的tid 44线程，属于tgid(线程组leader的进程ID) 42。甚至用ps和top的默认参数，你都无法看到tid 44线程。</p></li>
+
+<li><p>从内核视角出发，tid 42和tid 44是独立的调度单元，可以把他们视为&rdquo;pid 42&rdquo;和&rdquo;pid 44&rdquo;。</p></li>
+</ol>
+
+<blockquote>
+<p><strong>线程共享资源包括：</strong></p>
+</blockquote>
+
+<p>1.进程代码段</p>
+
+<p>2.进程的公有数据(利用这些共享的数据，线程很容易的实现相互之间的通讯)</p>
+
+<p>3.进程打开的文件描述符、信号的处理器、进程的当前目录和进程用户ID与进程组ID。</p>
+
+<blockquote>
+<p>线程独立资源包括：</p>
+</blockquote>
+
+<p>1.线程ID</p>
+
+<p>每个线程都有自己的线程ID，这个ID在本进程中是唯一的。进程用此来标识线程。</p>
+
+<p>2.寄存器组的值</p>
+
+<p>由于线程间是并发运行的，每个线程有自己不同的运行线索，当从一个线程切换到另一个线程上 时，必须将原有的线程的寄存器集合的状态保存，以便将来该线程在被重新切换到时能得以恢复。</p>
+
+<p>3.线程的堆栈</p>
+
+<p>堆栈是保证线程独立运行所必须的。线程函数可以调用函数，而被调用函数中又是可以层层嵌套的，所以线程必须拥有自己的函数堆栈， 使得函数调用可以正常执行，不受其他线程的影响。</p>
+
+<p>4.错误返回码</p>
+
+<p>由于同一个进程中有很多个线程在同时运行，可能某个线程进行系统调用后设置了errno值，而在该 线程还没有处理这个错误，另外一个线程就在此时被调度器投入运行，这样错误值就有可能被修改。所以，不同的线程应该拥有自己的错误返回码变量。</p>
+
+<p>5.线程的信号屏蔽码</p>
+
+<p>由于每个线程所感兴趣的信号不同，所以线程的信号屏蔽码应该由线程自己管理。但所有的线程都 共享同样的信号处理器。</p>
+
+<p>6.线程的优先级</p>
+
+<p>由于线程需要像进程那样能够被调度，那么就必须要有可供调度使用的参数，这个参数就是线程的优先级。</p>
 
 <p>大王：c++的成员函数可以是多线程的函数吗？</p>
 
@@ -479,6 +901,23 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div>
+<p>小王：不能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"> <span class="n">F</span><span class="mf">.2</span><span class="o">:</span> <span class="n">I</span><span class="err">&#39;</span><span class="n">m</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">use</span> <span class="n">LinuxThreads</span> <span class="n">from</span> <span class="n">a</span> <span class="n">C</span><span class="o">++</span> <span class="n">program</span><span class="p">,</span> <span class="n">and</span> <span class="n">the</span> <span class="n">compiler</span> <span class="n">complains</span> <span class="n">about</span> <span class="n">the</span> <span class="n">third</span> <span class="n">argument</span> <span class="n">to</span> <span class="err">`</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">`</span> <span class="o">!</span>
+
+<span class="n">You</span><span class="err">&#39;</span><span class="n">re</span> <span class="n">probably</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">pass</span> <span class="n">a</span> <span class="n">class</span> <span class="n">member</span> <span class="n">function</span> <span class="n">or</span> <span class="n">some</span> <span class="n">other</span> <span class="n">C</span><span class="o">++</span> <span class="n">thing</span> <span class="n">as</span> <span class="n">third</span> <span class="n">argument</span> <span class="n">to</span> <span class="err">`</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">``</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">`</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><a href="https://www.cnblogs.com/shijingxiang/articles/5389294.html">类成员函数作为pthread_create函数参数</a></p>
+
+<h1 id="在c-类中创建线程函数-https-tnie-github-io-2016-11-03-multithread"><a href="https://tnie.github.io/2016/11/03/multiThread/">在C++类中创建线程函数</a></h1>
+
 <p>大王：那还有其他方式吗？</p>
 
 <p>小王：携程：</p>
@@ -601,6 +1040,14 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </div>
 </div>
 <h5 id="文件读写基本流程">文件读写基本流程</h5>
+
+<p><img src="https://i.loli.net/2019/11/16/e7RLjgAIrOTWN1z.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/bZ5Jeurm6Ia9Npd.png" alt="vfs对象" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/PVifNu2XOQFIWlo.png" alt="文件名字查找" /></p>
+
+<p><img src="https://i.loli.net/2019/11/16/eHqQT2F4M8lxor1.png" alt="image.png" /></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
@@ -699,10 +1146,13 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <br /></li>
 </ul>
 
-<p>第一步： 同步与阻塞，异步和非阻塞的区别？</p>
+<h6 id="第一步-同步与阻塞-异步和非阻塞的区别">第一步： 同步与阻塞，异步和非阻塞的区别？</h6>
 
 <ul>
-<li><p>别人的答案</p>
+<li>别人的答案</li>
+</ul>
+
+<p>怎样理解阻塞非阻塞与同步异步的区别？</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
@@ -736,7 +1186,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <span class="err">同步和异步，适合描述执行</span><span class="n">IO操作的情境</span><span class="err">。</span>
 
-<span class="err">阻塞和非阻塞阻塞和非阻塞是一种调用机制，只涉及到调用方，</span>
+ <span class="err">阻塞和非阻塞阻塞和非阻塞是一种调用机制，只涉及到调用方，</span>
 <span class="err">关注的是</span><span class="n">IO操作的执行状态</span><span class="err">，不同点在于请求</span><span class="n">IO操作后</span><span class="err">，针对</span><span class="n">IO操作的状态</span><span class="err">，调用方的行为方式。</span>
 
 <span class="err">如果调用方等待</span><span class="n">IO操作完成后返回</span><span class="err">，则是阻塞的；</span>
@@ -748,9 +1198,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="c1"></span><span class="err">来源：知乎</span>
 <span class="err">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span></code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
+</div>
 <p>从操作系统角度考虑 只有AIO，操作才是真正异步</p>
 
 <p>从用户角度  Libevent ,Netty ,确实IO多路复用也是异步的 如何理解？</p>
@@ -780,23 +1228,19 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 
 <h6 id="检查-select-epoll-是阻塞-block-还是非阻塞-unblock-同步-sync-还是异步-async">检查：select/epoll 是阻塞（ Block ）还是非阻塞（ Unblock ），同步( (Sync) )还是异步 (Async) ?</h6>
 
+<p><img src="https://pic3.zhimg.com/80/7d3eb389b7724878bd7e12ebc6dbcdb5_hd.jpg" alt="img" /></p>
+
 <h6 id="第三步-epoll特点">第三步：epoll特点</h6>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"></code></pre></td></tr></table>
-</div>
-</div>
-<p>epoll</p>
+
+<h6 id="小王-我从使用角度考虑">小王：我从使用角度考虑</h6>
 
 <ul>
-<li>很容易<strong>扩展到</strong>监控大量socket连接</li>
+<li><p>epoll 单节点很容易扩展到大量TCP连接（ concurrency ）并发的情况，摆脱最原始的一个连接一个线程处理，系统打开最大线程数量的限制。</p></li>
+
+<li><p>epoll虽然是基于事件触发来轮询处理的（同步处理），但是与全局变量（redis），消息队列，多进程（Nginx ）/多线程（Memcached）达到异步非阻塞效果(信号是进程间通信机制中<strong>唯一</strong>的异步通信机制)。</p></li>
 </ul>
 
-<blockquote>
-<p>scales well to large numbers of  watched file descriptors.</p>
-</blockquote>
+<p>​      select低效是因为每次它都需要轮询。但低效也是相对的，视情况而定，也可通过良好的设计改善</p>
 
 <ul>
 <li>大量连接部分活跃情况有优势，比select多了一层异步回调。</li>
@@ -804,10 +1248,54 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 
 <p>几个线程处理上万连接，主要是指有很多不忙的连接的场景，如聊天室服务器</p>
 
-<ul>
-<li><p>单个连接业务处理不能做长时间阻塞操作</p></li>
+<p>分析过程：</p>
 
-<li><p>select低效是因为每次它都需要轮询。但低效也是相对的，视情况而定，也可通过良好的设计改善</p>
+<p><a href="https://cloud.tencent.com/developer/article/1182398">nginx,memcached,redis网络模型总结</a></p>
+
+<p><img src="https://i.loli.net/2019/11/16/hXqMYSa12GbPHxT.png" alt="nginx" /></p>
+
+<p><strong>这种进程模型的好处:</strong></p>
+
+<ol>
+<li>每个worker进程相互独立，<strong>无需加锁</strong>，省掉锁的开销</li>
+<li>多个worker进程互相不影响，提高稳定性</li>
+<li>多进程提供性能</li>
+</ol>
+
+<p>nginx利用<code>多进程+非阻塞</code>的模型，能轻松处理上万连接。其处理请求的大致过程为：</p>
+
+<ul>
+<li>一个连接请求过来，worker进程的监听套接字可读（这里涉及到<code>惊群现象</code>）</li>
+<li>处理监听套接字可读事件，accept该连接</li>
+<li>worker进程开始读取请求，解析请求，处理请求，回复数据，断开连接的流程</li>
+</ul>
+
+<h3 id="memcached总结"><strong>Memcached总结</strong></h3>
+
+<h4 id="网络模型"><strong>网络模型</strong></h4>
+
+<p>memcached是一款服务器缓存软件，基于<code>libvent</code>开发，使用的多线程模型，主线程listen\accept，工作线程处理消息。</p>
+
+<p><strong>主要流程是：</strong></p>
+
+<ol>
+<li>创建主线程和若干个工作线程；</li>
+<li>主线程监听、接受连接；</li>
+<li>然后将连接信息分发（求余）到工作线程，每个工作线程有一个conn_queue处理队列；</li>
+<li>工作线程从conn_queue中取连接，处理用户的命令请求并返回数据；</li>
+</ol>
+
+<p><img src="https://i.loli.net/2019/11/16/D8uVnXWr2YCGRsd.png" alt="image.png" /></p>
+
+<h3 id="redis-https-cloud-tencent-com-product-crs-from-10680-事件模型"><a href="https://cloud.tencent.com/product/crs?from=10680"><strong>Redis</strong></a><strong>事件模型</strong></h3>
+
+<p>Redis采用<code>单线程模型</code>，通过<code>IO多路复用</code>来监听多个连接，非阻塞IO，同时单线程避免了不必要的锁的开销。</p>
+
+<p>Redis同时处理文件事件和时间事件</p>
+
+<p><a href="https://www.zhihu.com/question/30772664">现在 epoll 单机（4G内存）并发量最大能达到多少？</a></p>
+
+<p><a href="https://www.zhihu.com/question/34957059/answer/115823715">epoll非阻塞服务器，在20k并发测试结束产生大量establish状态假连接，可能原因</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
@@ -880,47 +1368,47 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="cp">#include</span> <span class="cpf">&lt;sys/epoll.h&gt;</span><span class="cp">
 </span><span class="cp"></span><span class="kt">int</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="kt">int</span> <span class="n">epfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">epoll_event</span> <span class="o">*</span><span class="n">events</span><span class="p">,</span><span class="kt">int</span> <span class="n">maxevents</span><span class="p">,</span> <span class="kt">int</span> <span class="n">timeout</span><span class="p">);</span>
 <span class="n">The</span> <span class="n">call</span> <span class="n">will</span> <span class="n">block</span> <span class="n">until</span> <span class="nl">either</span><span class="p">:</span><span class="err">、</span>
-<span class="o">*</span>  <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">delivers</span> <span class="n">an</span> <span class="n">event</span><span class="p">;</span>
-<span class="n">Q7</span>  <span class="n">If</span> <span class="n">more</span> <span class="n">than</span> <span class="n">one</span> <span class="n">event</span> <span class="n">occurs</span> <span class="n">between</span> <span class="nf">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">calls</span><span class="p">,</span> <span class="n">are</span> <span class="n">they</span> <span class="n">combined</span> <span class="n">or</span> <span class="n">reported</span> <span class="n">separately</span><span class="o">?</span>
-<span class="n">A7</span>  <span class="n">They</span> <span class="n">will</span> <span class="n">be</span> <span class="n">combined</span><span class="p">.</span>
+ <span class="o">*</span>  <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">delivers</span> <span class="n">an</span> <span class="n">event</span><span class="p">;</span>
+  <span class="n">Q7</span>  <span class="n">If</span> <span class="n">more</span> <span class="n">than</span> <span class="n">one</span> <span class="n">event</span> <span class="n">occurs</span> <span class="n">between</span> <span class="nf">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">calls</span><span class="p">,</span> <span class="n">are</span> <span class="n">they</span> <span class="n">combined</span> <span class="n">or</span> <span class="n">reported</span> <span class="n">separately</span><span class="o">?</span>
+ <span class="n">A7</span>  <span class="n">They</span> <span class="n">will</span> <span class="n">be</span> <span class="n">combined</span><span class="p">.</span>
 <span class="o">*</span>  <span class="n">the</span> <span class="n">call</span> <span class="n">is</span> <span class="n">interrupted</span> <span class="n">by</span> <span class="n">a</span> <span class="n">signal</span> <span class="n">handler</span><span class="p">;</span> <span class="n">or</span>
-<span class="o">*</span>  <span class="n">the</span> <span class="n">timeout</span> <span class="n">expires</span><span class="p">.</span>
+ <span class="o">*</span>  <span class="n">the</span> <span class="n">timeout</span> <span class="n">expires</span><span class="p">.</span>
     
 <span class="err">不要说</span><span class="n">et模式一定采用break方式读取了</span>
     
     
-<span class="mf">9.</span>  <span class="n">Do</span> <span class="n">I</span> <span class="n">need</span> <span class="n">to</span> <span class="n">continuously</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">until</span>
-       <span class="n">EAGAIN</span> <span class="n">when</span> <span class="n">using</span> <span class="n">the</span> <span class="n">EPOLLET</span> <span class="n">flag</span> <span class="p">(</span><span class="n">edge</span><span class="o">-</span><span class="n">triggered</span> <span class="n">behavior</span><span class="p">)</span><span class="o">?</span>
+    <span class="mf">9.</span>  <span class="n">Do</span> <span class="n">I</span> <span class="n">need</span> <span class="n">to</span> <span class="n">continuously</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">until</span>
+           <span class="n">EAGAIN</span> <span class="n">when</span> <span class="n">using</span> <span class="n">the</span> <span class="n">EPOLLET</span> <span class="n">flag</span> <span class="p">(</span><span class="n">edge</span><span class="o">-</span><span class="n">triggered</span> <span class="n">behavior</span><span class="p">)</span><span class="o">?</span>
 
-       <span class="n">Receiving</span> <span class="n">an</span> <span class="n">event</span> <span class="n">from</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">should</span> <span class="n">suggest</span> <span class="n">to</span> <span class="n">you</span> <span class="n">that</span>
-       <span class="n">such</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">is</span> <span class="n">ready</span> <span class="k">for</span> <span class="n">the</span> <span class="n">requested</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">operation</span><span class="p">.</span>
-       <span class="n">You</span> <span class="n">must</span> <span class="n">consider</span> <span class="n">it</span> <span class="n">ready</span> <span class="n">until</span> <span class="n">the</span> <span class="n">next</span> <span class="p">(</span><span class="n">nonblocking</span><span class="p">)</span>
-       <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">yields</span> <span class="n">EAGAIN</span><span class="p">.</span>  <span class="n">When</span> <span class="n">and</span> <span class="n">how</span> <span class="n">you</span> <span class="n">will</span> <span class="n">use</span> <span class="n">the</span> <span class="n">file</span>
-       <span class="n">descriptor</span> <span class="n">is</span> <span class="n">entirely</span> <span class="n">up</span> <span class="n">to</span> <span class="n">you</span><span class="p">.</span>
+           <span class="n">Receiving</span> <span class="n">an</span> <span class="n">event</span> <span class="n">from</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">should</span> <span class="n">suggest</span> <span class="n">to</span> <span class="n">you</span> <span class="n">that</span>
+           <span class="n">such</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">is</span> <span class="n">ready</span> <span class="k">for</span> <span class="n">the</span> <span class="n">requested</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">operation</span><span class="p">.</span>
+           <span class="n">You</span> <span class="n">must</span> <span class="n">consider</span> <span class="n">it</span> <span class="n">ready</span> <span class="n">until</span> <span class="n">the</span> <span class="n">next</span> <span class="p">(</span><span class="n">nonblocking</span><span class="p">)</span>
+           <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">yields</span> <span class="n">EAGAIN</span><span class="p">.</span>  <span class="n">When</span> <span class="n">and</span> <span class="n">how</span> <span class="n">you</span> <span class="n">will</span> <span class="n">use</span> <span class="n">the</span> <span class="n">file</span>
+           <span class="n">descriptor</span> <span class="n">is</span> <span class="n">entirely</span> <span class="n">up</span> <span class="n">to</span> <span class="n">you</span><span class="p">.</span>
 
-       <span class="n">For</span> <span class="n">packet</span><span class="o">/</span><span class="n">token</span><span class="o">-</span><span class="n">oriented</span> <span class="n">files</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">datagram</span> <span class="n">socket</span><span class="p">,</span> <span class="n">terminal</span>
-       <span class="n">in</span> <span class="n">canonical</span> <span class="n">mode</span><span class="p">),</span> <span class="n">the</span> <span class="n">only</span> <span class="n">way</span> <span class="n">to</span> <span class="n">detect</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span>
-       <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="n">is</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">until</span> <span class="n">EAGAIN</span><span class="p">.</span>
+           <span class="n">For</span> <span class="n">packet</span><span class="o">/</span><span class="n">token</span><span class="o">-</span><span class="n">oriented</span> <span class="n">files</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">datagram</span> <span class="n">socket</span><span class="p">,</span> <span class="n">terminal</span>
+           <span class="n">in</span> <span class="n">canonical</span> <span class="n">mode</span><span class="p">),</span> <span class="n">the</span> <span class="n">only</span> <span class="n">way</span> <span class="n">to</span> <span class="n">detect</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span>
+           <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="n">is</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">to</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">until</span> <span class="n">EAGAIN</span><span class="p">.</span>
 
-       <span class="n">For</span> <span class="n">stream</span><span class="o">-</span><span class="n">oriented</span> <span class="n">files</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">pipe</span><span class="p">,</span> <span class="n">FIFO</span><span class="p">,</span> <span class="n">stream</span> <span class="n">socket</span><span class="p">),</span> <span class="n">the</span>
-       <span class="n">condition</span> <span class="n">that</span> <span class="n">the</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="n">is</span> <span class="n">exhausted</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span>
-       <span class="n">detected</span> <span class="n">by</span> <span class="n">checking</span> <span class="n">the</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="n">read</span> <span class="n">from</span> <span class="o">/</span> <span class="n">written</span> <span class="n">to</span>
-       <span class="n">the</span> <span class="n">target</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>  <span class="n">For</span> <span class="n">example</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">call</span> <span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">by</span>
-       <span class="n">asking</span> <span class="n">to</span> <span class="n">read</span> <span class="n">a</span> <span class="n">certain</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="n">and</span> <span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">returns</span> <span class="n">a</span>
-       <span class="n">lower</span> <span class="n">number</span> <span class="n">of</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="n">be</span> <span class="n">sure</span> <span class="n">of</span> <span class="n">having</span> <span class="n">exhausted</span> <span class="n">the</span>
-       <span class="n">read</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="k">for</span> <span class="n">the</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>  <span class="n">The</span> <span class="n">same</span> <span class="n">is</span> <span class="nb">true</span> <span class="n">when</span>
-       <span class="n">writing</span> <span class="n">using</span> <span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>  <span class="p">(</span><span class="n">Avoid</span> <span class="n">this</span> <span class="n">latter</span> <span class="n">technique</span> <span class="k">if</span> <span class="n">you</span> <span class="n">can</span><span class="err">‐</span>
-       <span class="n">not</span> <span class="n">guarantee</span> <span class="n">that</span> <span class="n">the</span> <span class="n">monitored</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">always</span> <span class="n">refers</span> <span class="n">to</span>
-       <span class="n">a</span> <span class="n">stream</span><span class="o">-</span><span class="n">oriented</span> <span class="n">file</span><span class="p">.)</span>
+           <span class="n">For</span> <span class="n">stream</span><span class="o">-</span><span class="n">oriented</span> <span class="n">files</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">pipe</span><span class="p">,</span> <span class="n">FIFO</span><span class="p">,</span> <span class="n">stream</span> <span class="n">socket</span><span class="p">),</span> <span class="n">the</span>
+           <span class="n">condition</span> <span class="n">that</span> <span class="n">the</span> <span class="n">read</span><span class="o">/</span><span class="n">write</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="n">is</span> <span class="n">exhausted</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span>
+           <span class="n">detected</span> <span class="n">by</span> <span class="n">checking</span> <span class="n">the</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="n">read</span> <span class="n">from</span> <span class="o">/</span> <span class="n">written</span> <span class="n">to</span>
+           <span class="n">the</span> <span class="n">target</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>  <span class="n">For</span> <span class="n">example</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">call</span> <span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">by</span>
+           <span class="n">asking</span> <span class="n">to</span> <span class="n">read</span> <span class="n">a</span> <span class="n">certain</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">data</span> <span class="n">and</span> <span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">returns</span> <span class="n">a</span>
+           <span class="n">lower</span> <span class="n">number</span> <span class="n">of</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="n">be</span> <span class="n">sure</span> <span class="n">of</span> <span class="n">having</span> <span class="n">exhausted</span> <span class="n">the</span>
+           <span class="n">read</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">space</span> <span class="k">for</span> <span class="n">the</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>  <span class="n">The</span> <span class="n">same</span> <span class="n">is</span> <span class="nb">true</span> <span class="n">when</span>
+           <span class="n">writing</span> <span class="n">using</span> <span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>  <span class="p">(</span><span class="n">Avoid</span> <span class="n">this</span> <span class="n">latter</span> <span class="n">technique</span> <span class="k">if</span> <span class="n">you</span> <span class="n">can</span><span class="err">‐</span>
+           <span class="n">not</span> <span class="n">guarantee</span> <span class="n">that</span> <span class="n">the</span> <span class="n">monitored</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">always</span> <span class="n">refers</span> <span class="n">to</span>
+           <span class="n">a</span> <span class="n">stream</span><span class="o">-</span><span class="n">oriented</span> <span class="n">file</span><span class="p">.)</span>
 
- <span class="n">Epoll</span> <span class="n">is</span> <span class="n">relatively</span> <span class="n">young</span><span class="p">.</span> <span class="n">It</span> <span class="n">was</span> <span class="n">created</span> <span class="n">by</span> <span class="n">Davide</span> <span class="n">Libenzi</span> <span class="n">in</span> <span class="mf">2002.</span> 
- <span class="n">For</span> <span class="nl">comparison</span><span class="p">:</span> <span class="n">Windows</span> <span class="n">did</span> <span class="n">IOCP</span> <span class="n">in</span> <span class="mi">1994</span> <span class="n">and</span> <span class="n">FreeBSD</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">kqueue</span> <span class="n">was</span> <span class="n">introduced</span> <span class="n">in</span> <span class="n">July</span> <span class="mf">2000.</span> 
-<span class="n">Unfortunately</span><span class="p">,</span> <span class="n">even</span> <span class="n">though</span> <span class="n">epoll</span> <span class="n">is</span> <span class="n">the</span> <span class="n">youngest</span> <span class="n">in</span> <span class="n">the</span> <span class="n">advanced</span> <span class="n">IO</span> <span class="n">multiplexing</span> <span class="n">family</span><span class="p">,</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">the</span> <span class="n">worse</span> <span class="n">in</span> <span class="n">the</span> <span class="n">bunch</span><span class="p">.</span>  
-     <span class="n">EPOLLONESHOT</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//www.cnblogs.com/kex1n/p/7451069.html
+     <span class="n">Epoll</span> <span class="n">is</span> <span class="n">relatively</span> <span class="n">young</span><span class="p">.</span> <span class="n">It</span> <span class="n">was</span> <span class="n">created</span> <span class="n">by</span> <span class="n">Davide</span> <span class="n">Libenzi</span> <span class="n">in</span> <span class="mf">2002.</span> 
+     <span class="n">For</span> <span class="nl">comparison</span><span class="p">:</span> <span class="n">Windows</span> <span class="n">did</span> <span class="n">IOCP</span> <span class="n">in</span> <span class="mi">1994</span> <span class="n">and</span> <span class="n">FreeBSD</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">kqueue</span> <span class="n">was</span> <span class="n">introduced</span> <span class="n">in</span> <span class="n">July</span> <span class="mf">2000.</span> 
+ <span class="n">Unfortunately</span><span class="p">,</span> <span class="n">even</span> <span class="n">though</span> <span class="n">epoll</span> <span class="n">is</span> <span class="n">the</span> <span class="n">youngest</span> <span class="n">in</span> <span class="n">the</span> <span class="n">advanced</span> <span class="n">IO</span> <span class="n">multiplexing</span> <span class="n">family</span><span class="p">,</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">the</span> <span class="n">worse</span> <span class="n">in</span> <span class="n">the</span> <span class="n">bunch</span><span class="p">.</span>  
+         <span class="n">EPOLLONESHOT</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//www.cnblogs.com/kex1n/p/7451069.html
 </span><span class="c1"></span><span class="err">所以在处理数据时，不需要在</span><span class="n">RECV时不断的循环去读一直读到EAGAIN</span><span class="err">，但如果设置了</span><span class="n">EPOLLONESHOT后</span>
     
     
-<span class="err">因为</span> <span class="n">LT</span> <span class="o">&amp;</span> <span class="n">ET</span> <span class="err">触发方式不同，处理事件的逻辑也不同。先看</span> <span class="n">manpage</span> <span class="err">里面的一个例子</span>
+  <span class="err">因为</span> <span class="n">LT</span> <span class="o">&amp;</span> <span class="n">ET</span> <span class="err">触发方式不同，处理事件的逻辑也不同。先看</span> <span class="n">manpage</span> <span class="err">里面的一个例子</span>
 
 <span class="mf">1.</span> <span class="n">The</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">that</span> <span class="n">represents</span> <span class="n">the</span> <span class="n">read</span> <span class="n">side</span> <span class="n">of</span> <span class="n">a</span> <span class="n">pipe</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="n">is</span> <span class="n">registered</span> <span class="n">on</span> <span class="n">the</span> <span class="n">epoll</span> <span class="n">instance</span><span class="p">.</span>
 
@@ -939,9 +1427,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <span class="n">B开始读操作</span><span class="err">，但是只从管道读</span> <span class="mi">1</span><span class="n">KB</span> <span class="err">数据</span>
 <span class="err">步骤</span><span class="mi">5</span><span class="err">调用</span> <span class="n">epoll_wait</span> <span class="err">将一直阻塞。因为</span> <span class="n">ET</span> <span class="err">下，缓冲区从空变成非空，才会触发</span> <span class="n">EPOLLIN</span> <span class="err">事件，缓冲区从满变成非满，才会触发</span> <span class="n">EPOLLOUT</span> <span class="err">事件。而当前情况不满足任何触发条件，所以</span> <span class="n">epoll_wait</span> <span class="err">会一直阻塞。</span></code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
+</div>
 <p><a href="http://man7.org/linux/man-pages/man7/epoll.7.html">man epoll</a></p>
 
 <p>第四步：为什么不用现有框架呢 ，自己写干什么</p>
@@ -1286,7 +1772,7 @@ TCP分节可能由于路由器异常而“迷途”，在迷途期间，TCP发�
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2019-11-12 00:00
+        2019-11-16 00:00
         
     </span>
   </p>
@@ -1299,13 +1785,9 @@ TCP分节可能由于路由器异常而“迷途”，在迷途期间，TCP发�
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/ARTS_Weekly_5/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">ARTS_weekly_5</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/nginx/">
-            <span class="next-text nav-default">nginx</span>
+        
+        <a class="next" href="/post/FQA_Redis/">
+            <span class="next-text nav-default">Redis.5.0</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
