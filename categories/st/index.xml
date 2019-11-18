@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>st on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/st/</link>
+    <description>Recent content in st on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/categories/st/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>协程库</title>
+      <link>https://wangcy6.github.io/post/st/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/st/</guid>
+      <description>走神一会 你生而有翼，为何竟愿一生匍匐前进，形如虫蚁？ 「学而不思则罔、思而不学则殆」的意思是： 想顺利的学会「内思」要与「关系」思考方式结合起来</description>
+    </item>
+    
+  </channel>
+</rss>

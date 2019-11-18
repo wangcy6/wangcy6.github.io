@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="16505">
+<meta itemprop="wordCount" content="17884">
 
 
 
@@ -135,8 +135,8 @@
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 16505 字 </span>
-          <span class="more-meta"> 预计阅读 33 分钟 </span>
+          <span class="more-meta"> 约 17884 字 </span>
+          <span class="more-meta"> 预计阅读 36 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -392,6 +392,16 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p><a href="https://zh.wikipedia.org/wiki/IOCP">https://zh.wikipedia.org/wiki/IOCP</a></p>
 
 <p>IOCP特别适合C/S模式网络服务器端模型。因为，让每一个socket有一个线程负责同步（阻塞）数据处理，one-thread-per-client的缺点是：一是如果连入的客户多了，就需要同样多的线程；二是不同的socket的数据处理都要线程切换的代价。</p>
+
+<p>线程的出现，是为了分离进程的两个功能：资源分配和系统调度。让更细粒度、更轻量的线程来承担调度，减轻调度带来的开销。</p>
+
+<p>但线程还是不够轻量，因为调度是在内核空间进行的，每次线程切换都需要陷入内核，这个开销还是不可忽视的。协程则是把调度逻辑在用户空间里实现，通过自己（编译器运行时系统/程序员）模拟控制权的交接，来达到更加细粒度的控制。</p>
+
+<p>线程的出现，是为了分离进程的两个功能：资源分配和系统调度。</p>
+
+<p>线程的出现，是为了分离进程的两个功能：资源分配和系统调度。</p>
+
+<p>线程的出现，是为了分离进程的两个功能：资源分配和系统调度。</p>
 
 <h2 id="原理-编辑-https-zh-wikipedia-org-w-index-php-title-iocp-action-edit-section-1">原理[<a href="https://zh.wikipedia.org/w/index.php?title=IOCP&amp;action=edit&amp;section=1">编辑</a>]</h2>
 
@@ -916,7 +926,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </div>
 <p><a href="https://www.cnblogs.com/shijingxiang/articles/5389294.html">类成员函数作为pthread_create函数参数</a></p>
 
-<h1 id="在c-类中创建线程函数-https-tnie-github-io-2016-11-03-multithread"><a href="https://tnie.github.io/2016/11/03/multiThread/">在C++类中创建线程函数</a></h1>
+<p><a href="https://tnie.github.io/2016/11/03/multiThread/">在C++类中创建线程函数</a></p>
 
 <p>大王：那还有其他方式吗？</p>
 
@@ -1132,7 +1142,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <span class="err">同时注意，脏页不能被置换出内存，如果脏页正在被写回，那么会被设置写回标记，这时候该页就被上锁，其他写请求被阻塞直到锁释放。</span></code></pre></td></tr></table>
 </div>
 </div>
-<h2 id="3-网络模块">3 、 网络模块</h2>
+<h1 id="3-网络模块">3 、 网络模块</h1>
 
 <h4 id="问题3-为什么采用epoll">问题3 为什么采用epoll？</h4>
 
@@ -1148,11 +1158,37 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <h6 id="第一步-同步与阻塞-异步和非阻塞的区别">第一步： 同步与阻塞，异步和非阻塞的区别？</h6>
 
+<p>～～～～～～～～～～～～～～～～～～～～华丽分隔符～～～～～～～～～～～～～～</p>
+
 <ul>
 <li>别人的答案</li>
 </ul>
 
+<p><a href="https://blog.csdn.net/wingter92/article/details/80080737">https://blog.csdn.net/wingter92/article/details/80080737</a></p>
+
+<p>对于设备文件，我们可以用阻塞和非阻塞的方式读写。</p>
+
+<p>在阻塞方式下，若设备不可读写，则该进程休眠，释放CPU资源；若设备文件可读写，则对设备文件进行读写。</p>
+
+<p>在非阻塞方式下，若设备不可读写，进程放弃读写，继续向下执行；若设备文件可读写，则对设备文件进行读写。</p>
+
+<p><img src="https://i.loli.net/2019/11/18/NcKZlpJCVa7DxG4.png" alt="image.png" /></p>
+
+<p>协程切换和内核线程的上下文切换相同，也需要有机制来保存当前上下文，恢复目标上下文。在POSIX系统上，getcontext/makecontext/swapcontext等可以用来做这件事。</p>
+
+<p>协程带来的最大的好处就是可以用同步的方式来写异步的程序。比如协程A，B：A是工作协程，B是网络IO协程(这种模型下，实际工作协程会比网络IO协程多)，A发送一个包时只需要将包push到A和B之间的一个channel，然后就可以主动放弃CPU，让出CPU给其它协程运行，B从channel中pop出将要发送的包，接收到包响应后，将结果放到A能拿到的地方，然后将A标识为ready状态，放入可运行队列等待调度，A下次被调度器调度就可以拿到结果继续做后面的事情。如果是基于线程的模型，A和B都是线程，通常基于回调的方式，1. A阻塞在某个队列Q上，B接受到响应包回调A传给B的回调函数f，回调函数f将响应包push到Q中，A可以取到响应包继续干活，如果阻塞基于cond等机制，则会被OS调度出去，如果忙等，则耗费CPU。2. A可以不阻塞在Q上，而是继续做别的事情，可以定期过来取结果。 这种情况下，线程模型业务逻辑其实被打乱了，发包和取包响应的过程被隔离开了。</p>
+
+<p>实现协程库的基本思路很简单，每个线程一个调度器，就是一个循环，不断的从可运行队列中取出协程，并且利用swapcontext恢复协程的上下文从而继续执行协程。当一个协程放弃CPU时，通过swapcontext恢复调度器上下文从而将控制权归还给调度器，调度器从可运行队列选择下一个协程。每个协程初始化通过getcontext和makecontext，需要的栈空间从堆上分配即可</p>
+
 <p>怎样理解阻塞非阻塞与同步异步的区别？</p>
+
+<p>为什么不要阻塞你的事件轮询（或是工作线程池）？</p>
+
+<p>Node 有两种类型的线程：一个事件循环线程和 <code>k</code> 个工作线程。</p>
+
+<p>事件循环负责 JavaScript 回调和非阻塞 I/O，工作线程执行与 C++ 代码对应的、完成异步请求的任务，包括阻塞 I/O 和 CPU 密集型工作。</p>
+
+<p>这两种类型的线程一次都只能处理一个活动。 如果任意一个回调或任务需要很长时间，则运行它的线程将被 *阻塞*。 如果你的应用程序发起阻塞的回调或任务，在好的情况下这可能只会导致吞吐量下降（客户端/秒），而在最坏情况下可能会导致完全拒绝服务。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
@@ -1229,6 +1265,8 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <h6 id="检查-select-epoll-是阻塞-block-还是非阻塞-unblock-同步-sync-还是异步-async">检查：select/epoll 是阻塞（ Block ）还是非阻塞（ Unblock ），同步( (Sync) )还是异步 (Async) ?</h6>
 
 <p><img src="https://pic3.zhimg.com/80/7d3eb389b7724878bd7e12ebc6dbcdb5_hd.jpg" alt="img" /></p>
+
+<p>～～～～～～～～～～～～～～～～～～～～华丽分隔符～～～～～～～～～～～～～～</p>
 
 <h6 id="第三步-epoll特点">第三步：epoll特点</h6>
 
@@ -1785,7 +1823,11 @@ TCP分节可能由于路由器异常而“迷途”，在迷途期间，TCP发�
 <footer class="post-footer">
       
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/st/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">协程库</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/FQA_Redis/">
             <span class="next-text nav-default">Redis.5.0</span>
             <span class="next-text nav-mobile">下一篇</span>

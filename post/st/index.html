@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>协程库 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="高性能可扩展服务" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/st/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="协程库" />
+<meta property="og:description" content="高性能可扩展服务" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/st/" />
+<meta property="article:published_time" content="2019-11-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-18T00:00:00+00:00" />
+<meta itemprop="name" content="协程库">
+<meta itemprop="description" content="高性能可扩展服务">
+
+
+<meta itemprop="datePublished" content="2019-11-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1209">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="协程库"/>
+<meta name="twitter:description" content="高性能可扩展服务"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">协程库</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-11-18 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/st/"> st </a>
+            </div>
+          <span class="more-meta"> 约 1209 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="走神一会">走神一会</h1>
+
+<p>你生而有翼，为何竟愿一生匍匐前进，形如虫蚁？</p>
+
+<p><strong>「学而不思则罔、思而不学则殆」</strong>的意思是：</p>
+
+<p>想顺利的学会<strong>「内思」</strong>要与<strong>「关系」</strong>思考方式结合起来练。</p>
+
+<p>否则，直接学<strong>「内思」</strong>，初学者会陷入练习的困境，这就是<strong>罔</strong>。</p>
+
+<p>而只依靠<strong>「关系」</strong>思考方式，又会带来很大的危害，这就是<strong>殆</strong>。
+作者：心智玩家的简书链接：<a href="https://www.jianshu.com/p/2940cf732b94来源">https://www.jianshu.com/p/2940cf732b94来源</a></p>
+
+<p><strong>「内思」</strong>，用元神意识直接「看」意识影像，是需要经过一段时间的练习以后，才能达到的状态。没有经过练习，不容易做到。</p>
+
+<p><strong>历史渊源</strong></p>
+
+<p>首先介绍一下这个库的历史渊源，从代码贡献者来看，ST不是个人作品，而是有着雄厚的商业支持和应用背景，比如服务器领域，在<a href="http://state-threads.sourceforge.net/news.html">这里</a>你可以看到ST曾作为Apache的多核应用模块发布。</p>
+
+<p>其诞生最初是由网景（Netscape）公司的MSPR（Netscape Portable Runtime library）项目中剥离出来，后由SGI（Silicon Graphic Inc）还有Yahoo!公司（前者是主力）开发维护的独立线程库。</p>
+
+<p>版本方面，作为<a href="http://sourceforge.net/projects/state-threads/files/">SourceForge</a>上开源项目，</p>
+
+<p>由2001年发布v1.0以来一直到2009年v1.9稳定版后未再变动。</p>
+
+<p>在平台移植方面，从Makefile的配置选项中可知ST支持多种Unix-like平台，还有专门针对Win32的源码改写。</p>
+
+<p>源码例子中，提供了web server、proxy以及dns三种编程实例供参考。</p>
+
+<p><strong>可以说代码质量应该是相当的稳定和可靠的。</strong></p>
+
+<h1 id="卡片">卡片</h1>
+
+<table>
+<thead>
+<tr>
+<th>协程库</th>
+<th>语言</th>
+<th>开发者</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="https://github.com/ossrs/state-threads">state threads library</a></td>
+<td>3000行<a href="https://github.com/wangcy6/reading_code_note/tree/master/liunx/st">C代码</a></td>
+<td><a href="https://coolshell.cn/articles/12012.html">历史渊源</a></td>
+</tr>
+
+<tr>
+<td><a href="https://swtch.com/libtask/"><strong>Libtask</strong></a></td>
+<td><strong>a Coroutine Library for C and Unix</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="学习记录">学习记录</h1>
+
+<h2 id="一-doc">一、doc</h2>
+
+<h4 id="阅读文档1-累计盘茄次数-5-耗时-130分钟">阅读文档1 ，累计盘茄次数 5    耗时 130分钟</h4>
+
+<p>理解 <strong>ST本质上仍然是基于<a href="https://coolshell.cn/articles/12012.html">EDSM模型</a>，但旨在取代传统的异步回调方式</strong> ,<strong>为<a href="https://github.com/zfengzhen/Blog/blob/master/article/%E4%B8%BA%E4%BA%92%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%80%8C%E7%94%9F%E7%9A%84State%20Threads%5B%E5%B8%B8%E8%A7%81%E5%90%8E%E5%8F%B0%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90%5D.md">互联网应用程</a>序而生<a href="https://www.cnblogs.com/NerdWill/p/6166220.html">的State Threads</a></strong></p>
+
+<p>涉及内容</p>
+
+<p><strong>State Threads Library Documentation</strong></p>
+
+<ul>
+<li><a href="http://state-threads.sourceforge.net/docs/st.html"><strong>Introductory paper</strong></a></li>
+<li><a href="http://state-threads.sourceforge.net/docs/reference.html"><strong>Complete reference</strong></a></li>
+<li><a href="http://state-threads.sourceforge.net/docs/notes.html"><strong>Programming notes</strong></a></li>
+<li><a href="http://state-threads.sourceforge.net/docs/faq.html"><strong>Frequently Asked Questions and answers (FAQ)</strong></a></li>
+</ul>
+
+<p>关键词：</p>
+
+<ul>
+<li>ST scheduler （不懂）</li>
+</ul>
+
+<blockquote>
+<p>the ST scheduler is hidden inside the library and invisible to an application writer.</p>
+</blockquote>
+
+<ul>
+<li>traditional EDSM (不懂)</li>
+</ul>
+
+<blockquote>
+<p>event-driven state machines (EDSM)</p>
+</blockquote>
+
+<ul>
+<li>virtual processor (不懂)</li>
+</ul>
+
+<blockquote>
+<p>ST的多核架构</p>
+</blockquote>
+
+<ul>
+<li>，<strong>ST的threads可以并发地线性地处理I/O事件</strong> （不懂）</li>
+
+<li><p>execute state   event wait queue</p></li>
+
+<li><p>setjmp/longjmp （不懂）</p></li>
+
+<li><p>看了一下代码和运行一个例子 懂了</p></li>
+</ul>
+
+<p><img src="https://i.loli.net/2019/11/18/wscU78RMAI6ZDmf.png" alt="image.png" /></p>
+
+<ul>
+<li><h1 id="the-go-scheduler-http-morsmachine-dk-go-scheduler"><a href="http://morsmachine.dk/go-scheduler">The Go scheduler</a></h1></li>
+
+<li><p>TCP-Finite-State-Machine <a href="https://github.com/wangcy6/weekly/blob/master/daily-interview/5.%E6%89%8B%E7%BB%98tcp%E7%8A%B6%E6%80%81_home.md">TCP 有限状态机</a></p></li>
+</ul>
+
+<h3 id="阅读文档2-累计盘茄次数-3-耗时-100分钟">阅读文档2   ，累计盘茄次数 3    耗时 100分钟</h3>
+
+<p>理解  <strong>Libtask: a Coroutine Library for C and Unix</strong>  含义</p>
+
+<p>涉及内容</p>
+
+<ul>
+<li><a href="http://swtch.com/libtask/">http://swtch.com/libtask/</a></li>
+</ul>
+
+<h2 id="二-code">二、 code</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="o">*</span><span class="nf">_st_idle_thread_start</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">_st_thread_t</span> <span class="o">*</span><span class="n">me</span> <span class="o">=</span> <span class="n">_ST_CURRENT_THREAD</span><span class="p">();</span>
+ 
+    <span class="k">while</span> <span class="p">(</span><span class="n">_st_active_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* Idle vp till I/O is ready or the smallest timeout expired */</span>
+        <span class="n">_ST_VP_IDLE</span><span class="p">();</span>
+ 
+        <span class="cm">/* Check sleep queue for expired threads */</span>
+        <span class="n">_st_vp_check_clock</span><span class="p">();</span>
+ 
+        <span class="n">me</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">=</span> <span class="n">_ST_ST_RUNNABLE</span><span class="p">;</span>
+        <span class="n">_ST_SWITCH_CONTEXT</span><span class="p">(</span><span class="n">me</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="cm">/* No more threads */</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+ 
+    <span class="cm">/* NOTREACHED */</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*
+</span><span class="cm"> * Switch away from the current thread context by saving its state 
+</span><span class="cm"> * and calling the thread scheduler
+</span><span class="cm"> */</span>
+<span class="cp">#define _ST_SWITCH_CONTEXT(_thread)       \
+</span><span class="cp">    ST_BEGIN_MACRO                        \
+</span><span class="cp">    if (!MD_SETJMP((_thread)-&gt;context)) { \
+</span><span class="cp">      _st_vp_schedule();                  \
+</span><span class="cp">    }                                     \
+</span><span class="cp">    ST_END_MACRO
+</span><span class="cp"></span> 
+<span class="cm">/*
+</span><span class="cm"> * Restore a thread context that was saved by _ST_SWITCH_CONTEXT 
+</span><span class="cm"> * or initialized by _ST_INIT_CONTEXT
+</span><span class="cm"> */</span>
+<span class="cp">#define _ST_RESTORE_CONTEXT(_thread)   \
+</span><span class="cp">    ST_BEGIN_MACRO                     \
+</span><span class="cp">    _ST_SET_CURRENT_THREAD(_thread);   \
+</span><span class="cp">    MD_LONGJMP((_thread)-&gt;context, 1); \
+</span><span class="cp">    ST_END_MACRO
+</span><span class="cp"></span> 
+<span class="kt">void</span> <span class="nf">_st_vp_schedule</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">_st_thread_t</span> <span class="o">*</span><span class="kr">thread</span><span class="p">;</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="n">_ST_RUNQ</span><span class="p">.</span><span class="n">next</span> <span class="o">!=</span> <span class="o">&amp;</span><span class="n">_ST_RUNQ</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* Pull thread off of the run queue */</span>
+        <span class="kr">thread</span> <span class="o">=</span> <span class="n">_ST_THREAD_PTR</span><span class="p">(</span><span class="n">_ST_RUNQ</span><span class="p">.</span><span class="n">next</span><span class="p">);</span>
+        <span class="n">_ST_DEL_RUNQ</span><span class="p">(</span><span class="kr">thread</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/* If there are no threads to run, switch to the idle thread */</span>
+        <span class="kr">thread</span> <span class="o">=</span> <span class="n">_st_this_vp</span><span class="p">.</span><span class="n">idle_thread</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">ST_ASSERT</span><span class="p">(</span><span class="kr">thread</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">==</span> <span class="n">_ST_ST_RUNNABLE</span><span class="p">);</span>
+ 
+    <span class="cm">/* Resume the thread */</span>
+    <span class="kr">thread</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">=</span> <span class="n">_ST_ST_RUNNING</span><span class="p">;</span>
+    <span class="n">_ST_RESTORE_CONTEXT</span><span class="p">(</span><span class="kr">thread</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="三-talk">三、talk</h2>
+
+<ul>
+<li><p>task 编译成动态库和静态库 30分钟</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">git</span> <span class="n">clone</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/wangcy6/state-threads.git
+</span><span class="c1"></span><span class="n">cd</span> <span class="n">state</span><span class="o">-</span><span class="n">threads</span>
+<span class="n">make</span> <span class="n">linux</span><span class="o">-</span><span class="n">debug</span> <span class="c1">//不同平台
+</span><span class="c1"></span><span class="n">state</span><span class="o">-</span><span class="n">threads</span><span class="o">/</span><span class="n">obj</span><span class="o">/</span>
+<span class="n">libst</span><span class="p">.</span><span class="n">so</span><span class="mf">.1.9</span>
+<span class="n">libst</span><span class="p">.</span><span class="n">a</span>
+
+<span class="n">cd</span> <span class="n">examples</span><span class="o">/</span>
+<span class="n">make</span> <span class="n">linux</span><span class="o">-</span><span class="n">debug</span> <span class="c1">//不同平台
+</span><span class="c1"></span><span class="n">EXAMPLES</span>    <span class="o">=</span> <span class="err">$</span><span class="p">(</span><span class="n">OBJDIR</span><span class="p">)</span><span class="o">/</span><span class="n">lookupdns</span> <span class="err">$</span><span class="p">(</span><span class="n">OBJDIR</span><span class="p">)</span><span class="o">/</span><span class="n">proxy</span> <span class="err">$</span><span class="p">(</span><span class="n">OBJDIR</span><span class="p">)</span><span class="o">/</span><span class="n">server</span>  
+    
+    
+<span class="p">.</span><span class="o">/</span><span class="n">lookupdns</span> <span class="n">www</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span>  <span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span>  <span class="n">www</span><span class="p">.</span><span class="n">bing</span><span class="p">.</span><span class="n">com</span>
+    </code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h1 id="项目应用">项目应用</h1>
+
+<p>暂无</p>
+
+<p>参考</p>
+
+<ul>
+<li><p><a href="http://morsmachine.dk/go-scheduler">http://morsmachine.dk/go-scheduler</a></p></li>
+
+<li><p><a href="https://jingwei.link/2019/02/13/linux-process-thread-schedule-2.html">https://jingwei.link/2019/02/13/linux-process-thread-schedule-2.html</a></p></li>
+
+<li><p><a href="https://wudaijun.com/2018/11/scheduler-blabla/">https://wudaijun.com/2018/11/scheduler-blabla/</a></p></li>
+
+<li><p><a href="https://app.yinxiang.com/shard/s39/nl/8226829/8eae84ea-a1ca-4e0e-94c6-cfb3661f913a">https://app.yinxiang.com/shard/s39/nl/8226829/8eae84ea-a1ca-4e0e-94c6-cfb3661f913a</a></p></li>
+
+<li><p>The C10K problem  <a href="http://www.kegel.com/c10k.html">http://www.kegel.com/c10k.html</a></p></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-11-18 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/FQA_Linux/">
+            <span class="next-text nav-default">FQA_Linux</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="http://localhost:1313" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="http://localhost:1313" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-pocket" title="pocket"></a>
+      <a href="http://localhost:1313" class="iconfont icon-tumblr" title="tumblr"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
