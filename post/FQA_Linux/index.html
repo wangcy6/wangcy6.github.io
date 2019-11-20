@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="17884">
+<meta itemprop="wordCount" content="19575">
 
 
 
@@ -135,8 +135,8 @@
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 17884 字 </span>
-          <span class="more-meta"> 预计阅读 36 分钟 </span>
+          <span class="more-meta"> 约 19575 字 </span>
+          <span class="more-meta"> 预计阅读 40 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -1156,9 +1156,178 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <br /></li>
 </ul>
 
-<h6 id="第一步-同步与阻塞-异步和非阻塞的区别">第一步： 同步与阻塞，异步和非阻塞的区别？</h6>
+<h5 id="第一步-同步与阻塞-异步和非阻塞的区别">第一步： 同步与阻塞，异步和非阻塞的区别？</h5>
+
+<p>阻塞和非阻塞区别是什么？</p>
+
+<p>第一感觉：</p>
+
+<ul>
+<li><p>阻塞和非阻塞本身没有区别，只是调用资源属性是阻塞的还是非阻塞的？</p></li>
+
+<li><p>阻塞和非阻塞区是否立即返回？</p></li>
+
+<li><p>阻塞和非阻塞在进程有没有放入调度阻塞队列</p></li>
+
+<li><p>都不同意</p></li>
+</ul>
+
+<p>小王 第三次回答</p>
+
+<p>同步和异步区别是调用进程是否阻塞， 什么阻塞 就是不占用cpu</p>
+
+<p>非阻塞和异步区别 返回时候数据在用户缓冲还是内核缓冲区。</p>
+
+<p>同步与阻塞区别：同步可以不阻塞进程。后者一定是。</p>
+
+<h6 id="小王-第二次回答">小王 第二次回答</h6>
+
+<p>阻塞和非阻塞在用法区别，</p>
+
+<p>阻塞和非阻塞区别是：继续等待还是离开返回。</p>
+
+<p>在io读写操作中，是当内核缓冲区数据null或者满时候，是否继续等待 阻塞进程，还是离开返回。</p>
+
+<p>其他都一样。</p>
+
+<p>概念区别我不知道</p>
+
+<p>非阻塞 和异步区别</p>
+
+<ul>
+<li>当获取事件通知时候，非阻塞数据依然在内核缓冲区，异步数据在用户缓冲区。</li>
+</ul>
+
+<h6 id="小王-第一次回答-感觉不好自己都写不下去来哦">小王 第一次回答 感觉不好自己都写不下去来哦</h6>
+
+<p>阻塞和非阻塞只是系统调用（铺垫，具体来说同步）</p>
+
+<p>如果访问的资源是阻塞，（意识说跟调用接口没关系，内核处理方式有关系），进程加入等待队列。</p>
+
+<p>等到内核处理程序， i0操作满足完成指定条件 然后 copy用户缓冲区 ，返回结果，唤醒进程读取数据，&mdash;什么是阻塞</p>
+
+<p>如果访问的资源是非阻塞，（意识说跟调用接口没关系，内核处理方式有关系），</p>
+
+<p>不加入等待队列，直接返回当前io处理结果。 如果大于0 代表读取到数据，如果小于零 error是EAGAIN</p>
+
+<p>阻塞和非阻塞用法上区别应该是资源的属性，如果非最赛，遇到错误时候，返回EAGAIN。 这个是最大区别吗</p>
+
+<p>&ndash;应该不是</p>
+
+<p>阻塞非阻塞的意思很明显，就是用户程序调用系统调用后，操作系统会不会把该用户进程放入等待队列，如果放入等待队列则为阻塞，否则为非阻塞</p>
+
+<blockquote>
+<p>i0操作 read wite</p>
+</blockquote>
+
+<p>an input operation:</p>
+
+<ul>
+<li><p>Waiting for the data to be ready</p></li>
+
+<li><p>Copying the data from the kernel to the process</p></li>
+</ul>
+
+<h4 id="遗漏任务-一次read-write-内核处理过程是什么-如果不清楚很难回答上面问题">遗漏任务：一次read/write 内核处理过程是什么,如果不清楚很难回答上面问题？</h4>
 
 <p>～～～～～～～～～～～～～～～～～～～～华丽分隔符～～～～～～～～～～～～～～</p>
+
+<ul>
+<li><p><a href="https://www.cnblogs.com/xiehongfeng100/p/4619451.html">https://www.cnblogs.com/xiehongfeng100/p/4619451.html</a></p>
+
+<p>Chapter 3. Sockets Introduction</p></li>
+
+<li><p>阻塞IO比非阻塞IO慢的主要原因是线程切换的开销，尤其是请求数过大时，线程切换开销是没法忽略的。</p></li>
+
+<li><p><a href="http://blog.chinaunix.net/uid-27105712-id-3270102.html">漫谈linux文件IO</a></p></li>
+</ul>
+
+<p><img src="http://blog.chinaunix.net/attachment/201207/11/27105712_13419741441gpp.gif" alt="" /></p>
+
+<ul>
+<li>阻塞（Block）这个概念</li>
+</ul>
+
+<p>现在明确一下阻塞（Block）这个概念。当进程调用一个阻塞的系统函数时，该进程被置于睡眠（Sleep）状态，这时内核调度其它进程运行，直到该进程等待的事件发生了（比如网络上接收到数据包，或者调用sleep指定的睡眠时间到了）它才有可能继续运行。与睡眠状态相对的是运行（Running）状态，在Linux内核中，处于运行状态的进程分为两种情况：</p>
+
+<p><a href="https://cloud.tencent.com/developer/article/1008816">https://cloud.tencent.com/developer/article/1008816</a></p>
+
+<ul>
+<li><p>fcntl 函数   <a href="http://man7.org/linux/man-pages/man2/fcntl.2.html">http://man7.org/linux/man-pages/man2/fcntl.2.html</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-SAS" data-lang="SAS"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-SAS" data-lang="SAS">If the
+     O_NONBLOCK flag is not enabled, then the system call is blocked until
+     the lock is removed or converted to a mode that is compatible with
+     the access.  If the O_NONBLOCK flag is enabled, then the system call
+     fails with the error EAGAIN.
+         
+         </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>read返回值是什么？</p></li>
+</ul>
+
+<p>解阻塞与非阻塞recv返回值没有区分，都是</p>
+
+<p>&lt;0 出错</p>
+
+<p>=0 连接关闭 errno</p>
+
+<p>&gt;0 接收到数据大小，</p>
+
+<p>特别：返回值&lt;0时并且(errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)的情况下认为连接是正常的，继续接收。</p>
+
+<p>只是阻塞模式下recv会阻塞着接收数据，非阻塞模式下如果没有数据会返回，不会阻塞着读，因此需要循环读取）。</p>
+
+<p>返回说明：<br />
+成功执行时，返回接收到的字节数。另一端已关闭则返回0。失败返回-1，errno被设为以下的某个值</p>
+
+<blockquote>
+<p><a href="https://www.cnblogs.com/xiehongfeng100/p/4619451.html">https://www.cnblogs.com/xiehongfeng100/p/4619451.html</a></p>
+</blockquote>
+
+<p>几个重要的结论：</p>
+
+<p>　　<strong>1. read总是在接收缓冲区有数据时立即返回，而不是等到给定的read buffer填满时返回</strong></p>
+
+<p>​         <strong>只有当receive buffer为空时，blocking模式才会等待</strong>，</p>
+
+<p>​         而nonblock模式下会立即返回-1（errno = EAGAIN或EWOULDBLOCK）</p>
+
+<p>​     <strong>注：</strong>阻塞模式下，当对方socket关闭时，read会返回0。</p>
+
+<p><strong>2. blocking的write只有在缓冲区足以放下整个buffer时才返回</strong>（与blocking read并不相同）</p>
+
+<p>　　<strong>nonblock write则是返回能够放下的字节数</strong>，之后调用则返回-1（errno = EAGAIN或EWOULDBLOCK）</p>
+
+<p><img src="https://i.loli.net/2019/11/19/uOEQ73XjG1nFSmh.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/19/Iy86NpHQkvAimoc.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/19/Iy86NpHQkvAimoc.png" alt="image.png" /></p>
+
+<blockquote>
+<p><a href="http://www.pulpcode.cn/2017/02/01/user-buffer-and-kernel-buffer/">http://www.pulpcode.cn/2017/02/01/user-buffer-and-kernel-buffer/</a></p>
+</blockquote>
+
+<p>对比阻塞和非阻塞，在阻塞io中，直到数据从内核缓冲区拷贝到用户缓冲区才通知用户进程调用完成并唤醒，而非阻塞，在轮训得知数据准备好后，数据还是在内核缓冲区中，等你去读取，这也就是说数据准备好，并不代表已经读好可以使用。当然也不代表一定能读。</p>
+
+<p>POSIX defines these two terms as follows:
+ A synchronous I/O operation causes the requesting process to be blocked until that
+I/O operation completes.</p>
+
+<p> An asynchronous I/O operation does not cause the requesting process to be blocked</p>
 
 <ul>
 <li>别人的答案</li>
