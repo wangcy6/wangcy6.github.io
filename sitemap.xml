@@ -3,14 +3,70 @@
   
   <url>
     <loc>https://wangcy6.github.io/categories/</loc>
-    <lastmod>2019-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/FQA/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/FQA_Linux_one/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/kernel/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/Linux/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/simpread-mmap-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94-read_write-%E5%BF%AB-%E5%85%BC%E8%AE%BA-buffercache-%E5%92%8C-pagecache-%E4%BB%8E%E5%86%85%E6%A0%B8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9C%8B%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E8%BF%87%E7%A8%8B/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/post/</loc>
-    <lastmod>2019-11-20T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -24,13 +80,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/post/FQA_Redis/</loc>
-    <lastmod>2019-11-20T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/</loc>
     <lastmod>2019-11-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -52,13 +101,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/post/FQA_Linux/</loc>
-    <lastmod>2019-11-16T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/Linux/</loc>
     <lastmod>2019-11-16T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -87,13 +129,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/tags/reading/</loc>
-    <lastmod>2019-11-13T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/tags/</loc>
     <lastmod>2019-11-13T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -198,14 +233,14 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/tags/Memcached/</loc>
+    <loc>https://wangcy6.github.io/categories/Memcached/</loc>
     <lastmod>2019-10-10T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/Memcached/</loc>
+    <loc>https://wangcy6.github.io/tags/Memcached/</loc>
     <lastmod>2019-10-10T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -237,6 +272,16 @@
     <lastmod>2017-08-28T21:41:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/file/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/product/RocketMQ/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
