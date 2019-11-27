@@ -142,7 +142,145 @@
       </div>
     </header>
 
-    
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#当你的才华撑不起你的野心时-就应该静下心来好好学习">当你的才华撑不起你的野心时，就应该静下心来好好学习。</a></li>
+</ul></li>
+<li><a href="#知识卡">知识卡</a></li>
+<li><a href="#一-基础">一、基础</a>
+<ul>
+<li><a href="#1-进程vs线程">1、进程vs线程</a>
+<ul>
+<li><a href="#问1-进程间通信方式">问1 ：进程间通信方式</a>
+<ul>
+<li><a href="#最常用的socket-tcp-udp">最常用的socket（TCP/UDP）</a></li>
+<li><a href="#信号">信号</a></li>
+<li><a href="#同步">同步</a></li>
+</ul></li>
+<li><a href="#区别是什么">区别是什么？</a>
+<ul>
+<li><a href="#liunx">liunx</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#java的线程模型">Java的线程模型</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#clone">clone</a></li>
+<li><a href="#windows">Windows</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#原理-编辑-https-zh-wikipedia-org-w-index-php-title-iocp-action-edit-section-1">原理[<a href="https://zh.wikipedia.org/w/index.php?title=IOCP&amp;action=edit&amp;section=1">编辑</a>]</a></li>
+<li><a href="#那如何优化呢">那如何优化呢？</a>
+<ul>
+<li><a href="#单reactor单线程">单Reactor单线程</a></li>
+<li><a href="#单reactor多线程">单Reactor多线程</a></li>
+<li><a href="#主从reactor多线程">主从Reactor多线程</a></li>
+</ul></li>
+<li><a href="#多reactor多线程模型">多Reactor多线程模型</a>
+<ul>
+<li>
+<ul>
+<li><a href="#在reactor中实现读">在Reactor中实现读</a></li>
+<li><a href="#在proactor中实现读">在Proactor中实现读：</a></li>
+<li><a href="#标准-典型的reactor">标准/典型的Reactor：</a></li>
+<li><a href="#改进实现的模拟proactor">改进实现的模拟Proactor：</a></li>
+</ul></li>
+<li><a href="#框架是什么">框架是什么？</a></li>
+</ul></li>
+<li><a href="#netty">Netty</a>
+<ul>
+<li><a href="#线程">线程</a></li>
+<li><a href="#一-问2-线程同步方式">一. 问2 线程同步方式？</a>
+<ul>
+<li><a href="#大王-你平时用c比较多-还是c-比较多">大王： 你平时用c比较多，还是c++比较多？</a></li>
+<li><a href="#大王-你用c-编程-多线程-采用是c-11提供的std-thread吗">大王： 你用c++编程，多线程 采用是c++11提供的std::thread吗？</a></li>
+</ul></li>
+<li><a href="#核心资源">核心资源：</a>
+<ul>
+<li><a href="#小王-创建一个概念上用户线程-就需要创建一个lwp-chone-共享-就消耗内存栈和id资源-系统资源有限-一个系统不能支持大量的lwp-不会创建线程">小王：创建一个概念上用户线程，就需要创建一个LWP（chone 共享），就消耗内存栈和id资源，系统资源有限，一个系统不能支持大量的LWP，不会创建线程。</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#linux-内核进程管理之进程id-https-www-cnblogs-com-hazir-p-linux-kernel-pid-html"><a href="https://www.cnblogs.com/hazir/p/linux_kernel_pid.html">Linux 内核进程管理之进程ID</a></a>
+<ul>
+<li><a href="#2-文件系统">2、文件系统</a>
+<ul>
+<li><a href="#问2-一次write操作-数据写入内存那个部分">问2 一次write操作，数据写入内存那个部分？</a>
+<ul>
+<li><a href="#一-write文件有那2个方式呀">一.  write文件有那2个方式呀？</a>
+<ul>
+<li>
+<ul>
+<li><a href="#mmap也被称为zero-copy技术">mmap也被称为zero-copy技术</a></li>
+</ul></li>
+<li><a href="#文件读写基本流程">文件读写基本流程</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#3-网络模块">3 、 网络模块</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#问题3-为什么采用epoll">问题3 为什么采用epoll？</a>
+<ul>
+<li><a href="#第一步-同步与阻塞-异步和非阻塞的区别">第一步： 同步与阻塞，异步和非阻塞的区别？</a>
+<ul>
+<li><a href="#小王-第二次回答">小王 第二次回答</a></li>
+<li><a href="#小王-第一次回答-感觉不好自己都写不下去来哦">小王 第一次回答 感觉不好自己都写不下去来哦</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#遗漏任务-一次read-write-内核处理过程是什么-如果不清楚很难回答上面问题">遗漏任务：一次read/write 内核处理过程是什么,如果不清楚很难回答上面问题？</a>
+<ul>
+<li>
+<ul>
+<li><a href="#第二步-了解网络模型">第二步：了解网络模型</a></li>
+<li><a href="#检查-select-epoll-是阻塞-block-还是非阻塞-unblock-同步-sync-还是异步-async">检查：select/epoll 是阻塞（ Block ）还是非阻塞（ Unblock ），同步( (Sync) )还是异步 (Async) ?</a></li>
+<li><a href="#第三步-epoll特点">第三步：epoll特点</a></li>
+<li><a href="#小王-我从使用角度考虑">小王：我从使用角度考虑</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#memcached总结"><strong>Memcached总结</strong></a>
+<ul>
+<li><a href="#网络模型"><strong>网络模型</strong></a></li>
+</ul></li>
+<li><a href="#redis-https-cloud-tencent-com-product-crs-from-10680-事件模型"><a href="https://cloud.tencent.com/product/crs?from=10680"><strong>Redis</strong></a><strong>事件模型</strong></a></li>
+<li><a href="#问题4-tcp">问题4  tcp</a>
+<ul>
+<li><a href="#问-如何消除大量time-wait-状态">问：如何消除大量time_wait 状态？</a>
+<ul>
+<li>
+<ul>
+<li><a href="#解决方式是">解决方式是：</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#二-提升">二、提升</a>
+<ul>
+<li><a href="#性能优化">性能优化</a>
+<ul>
+<li><a href="#问题4-如果一个c-开发的系统-在生产运行3年后-最后查询越来越慢-如何解决">问题4 如果一个c++开发的系统，在生产运行3年后，最后查询越来越慢 如何解决？</a></li>
+<li><a href="#参考资料">参考资料</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
     <div class="post-content">
       
 

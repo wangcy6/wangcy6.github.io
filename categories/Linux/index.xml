@@ -17,7 +17,7 @@
       <pubDate>Tue, 26 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/FQA_Linux_one/</guid>
-      <description>当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 问题1 为什么采用epoll？ 第一步： 同步与阻塞，异步和非阻塞的区别？ 第二步：了解网</description>
+      <description>当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 问题1 epoll这样方式有什么缺点？ 第一步： 同步与阻塞，异步和非阻塞的区别？ 第二步</description>
     </item>
     
     <item>

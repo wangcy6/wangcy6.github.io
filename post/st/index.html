@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-18T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-18T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1209">
+<meta itemprop="wordCount" content="2239">
 
 
 
@@ -136,13 +136,54 @@
         <div class="post-category">
             <a href="/categories/st/"> st </a>
             </div>
-          <span class="more-meta"> 约 1209 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 2239 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
 
-    
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#走神一会">走神一会</a></li>
+<li><a href="#卡片">卡片</a></li>
+<li><a href="#学习记录">学习记录</a>
+<ul>
+<li><a href="#一-doc">一、doc</a>
+<ul>
+<li>
+<ul>
+<li><a href="#阅读文档1-累计盘茄次数-5-耗时-130分钟">阅读文档1 ，累计盘茄次数 5    耗时 130分钟</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#the-go-scheduler-http-morsmachine-dk-go-scheduler"><a href="http://morsmachine.dk/go-scheduler">The Go scheduler</a></a>
+<ul>
+<li>
+<ul>
+<li><a href="#阅读文档2-累计盘茄次数-3-耗时-100分钟">阅读文档2   ，累计盘茄次数 3    耗时 100分钟</a></li>
+</ul></li>
+<li><a href="#二-code">二、 code</a>
+<ul>
+<li>
+<ul>
+<li><a href="#数据结构">数据结构</a></li>
+<li><a href="#线程接口">线程接口</a>
+<ul>
+<li><a href="#非阻塞io操作接口">非阻塞IO操作接口</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#三-talk">三、talk</a></li>
+</ul></li>
+<li><a href="#项目应用">项目应用</a></li>
+<li><a href="#fqa">FQA</a></li>
+</ul>
+</nav>
+  </div>
+</div>
     <div class="post-content">
       
 
@@ -225,6 +266,34 @@
 <p>关键词：</p>
 
 <ul>
+<li><a href="http://state-threads.sourceforge.net/docs/faq.html">普通线程缺点</a></li>
+</ul>
+
+<p><a href="http://state-threads.sourceforge.net/docs/faq.html">http://state-threads.sourceforge.net/docs/faq.html</a></p>
+
+<p><img src="https://i.loli.net/2019/11/27/Zry5i8tC71vh3bx.png" alt="线程同步" /></p>
+
+<p>Is the kernel 100% reentrant?  no</p>
+
+<p>Are Linux threads the same as other implementations? no</p>
+
+<blockquote>
+<p>They are better &ndash; while mostly keeping the same API. As stated above,</p>
+
+<p>most multi threaded OS define a thread <strong>separately</strong> from processes</p>
+
+<p>是2个事情</p>
+</blockquote>
+
+<p>Does Linux support threads?  Yes</p>
+
+<p>What are the common problems with threads?</p>
+
+<p><a href="http://www.tldp.org/FAQ/Threads-FAQ/Types.html">http://www.tldp.org/FAQ/Threads-FAQ/Types.html</a></p>
+
+<p><a href="https://www.drdobbs.com/tools/avoiding-classic-threading-problems/231000499?pgno=2">https://www.drdobbs.com/tools/avoiding-classic-threading-problems/231000499?pgno=2</a></p>
+
+<ul>
 <li>ST scheduler （不懂）</li>
 </ul>
 
@@ -249,13 +318,27 @@
 </blockquote>
 
 <ul>
-<li>，<strong>ST的threads可以并发地线性地处理I/O事件</strong> （不懂）</li>
+<li><p>，<strong>ST的threads可以并发地线性地处理I/O事件</strong> （不懂）</p></li>
 
 <li><p>execute state   event wait queue</p></li>
 
 <li><p>setjmp/longjmp （不懂）</p></li>
+</ul>
 
-<li><p>看了一下代码和运行一个例子 懂了</p></li>
+<p>the context switch overhead is a cost of doing <code>_setjmp()/_longjmp()</code> (no system calls are involved).</p>
+
+<p>并发不是并行，只要不让cpu闲着就行 这就是好的设计，例如多线程，多进程。</p>
+
+<p>whenever a thread needs to wait for a specific event to occur, it saves its execution state and puts itself on an event wait queue &ndash; this is equivalent to registering a callback in traditional EDSMs.</p>
+
+<p>Then the scheduler is executed. It pulls the first thread from the run queue and restores its execution state &ndash; this is equivalent to invoking a callback in traditional EDSMs.</p>
+
+<p>If there are no runnable threads (the run queue is empty), the scheduler waits for I/O or timing events using <code>select()</code>, <code>poll()</code> or possibly other exotic mechanism available on that OS.</p>
+
+<p>When events occur, the scheduler &ldquo;wakes up&rdquo; threads waiting for those events by putting them on the run queue. Then it restores the execution state of the first runnable thread. The cycle is complete.</p>
+
+<ul>
+<li>看了一下代码和运行一个例子 懂了</li>
 </ul>
 
 <p><img src="https://i.loli.net/2019/11/18/wscU78RMAI6ZDmf.png" alt="image.png" /></p>
@@ -277,6 +360,65 @@
 </ul>
 
 <h2 id="二-code">二、 code</h2>
+
+<p>重要参考</p>
+
+<p><a href="https://cloud.tencent.com/developer/article/1197338">SRS开源直播服务 - StateThreads微线程框架学习</a></p>
+
+<h4 id="数据结构">数据结构</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_st_vp</span> <span class="p">{</span>
+  <span class="n">_st_thread_t</span> <span class="o">*</span><span class="n">idle_thread</span><span class="p">;</span> <span class="cm">/* Idle thread for this vp */</span>
+  <span class="n">st_utime_t</span> <span class="n">last_clock</span><span class="p">;</span>     <span class="cm">/* The last time we went into vp_check_clock() */</span>
+
+  <span class="n">_st_clist_t</span> <span class="n">run_q</span><span class="p">;</span>    <span class="cm">/* run queue for this vp */</span>
+  <span class="n">_st_clist_t</span> <span class="n">io_q</span><span class="p">;</span>     <span class="cm">/* io queue for this vp */</span>
+  <span class="n">_st_clist_t</span> <span class="n">zombie_q</span><span class="p">;</span> <span class="cm">/* zombie queue for this vp */</span>
+<span class="cp">#ifdef DEBUG
+</span><span class="cp"></span>  <span class="n">_st_clist_t</span> <span class="n">thread_q</span><span class="p">;</span> <span class="cm">/* all threads of this vp */</span>
+<span class="cp">#endif
+</span><span class="cp"></span>  <span class="kt">int</span> <span class="n">pagesize</span><span class="p">;</span>
+
+  <span class="n">_st_thread_t</span> <span class="o">*</span><span class="n">sleep_q</span><span class="p">;</span> <span class="cm">/* sleep queue for this vp */</span>
+  <span class="kt">int</span> <span class="n">sleepq_size</span><span class="p">;</span>       <span class="cm">/* number of threads on sleep queue */</span>
+
+<span class="cp">#ifdef ST_SWITCH_CB
+</span><span class="cp"></span>  <span class="n">st_switch_cb_t</span> <span class="n">switch_out_cb</span><span class="p">;</span> <span class="cm">/* called when a thread is switched out */</span>
+  <span class="n">st_switch_cb_t</span> <span class="n">switch_in_cb</span><span class="p">;</span>  <span class="cm">/* called when a thread is switched in */</span>
+<span class="cp">#endif
+</span><span class="cp"></span><span class="p">}</span> <span class="n">_st_vp_t</span><span class="p">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>互斥锁</li>
+</ul>
+
+<p><img src="https://i.loli.net/2019/11/27/KNq3wBW5y6M7OYv.png" alt="image.png" /></p>
+
+<h4 id="线程接口">线程接口</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt"> 1
@@ -406,6 +548,209 @@
 </code></pre></td></tr></table>
 </div>
 </div>
+<h5 id="非阻塞io操作接口">非阻塞IO操作接口</h5>
+
+<blockquote>
+<p>io.c</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// 从tcp连接套接字中读数据
+</span><span class="c1"></span><span class="n">ssize_t</span> <span class="nf">st_read</span><span class="p">(</span><span class="n">_st_netfd_t</span> <span class="o">*</span><span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">nbyte</span><span class="p">,</span> <span class="n">st_utime_t</span> <span class="n">timeout</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ssize_t</span> <span class="n">n</span><span class="p">;</span>
+    <span class="c1">// 先尝试读，如果没有读到数据，才调用st_netfd_poll等待套接字变为可读
+</span><span class="c1"></span>    <span class="k">while</span> <span class="p">((</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="o">-&gt;</span><span class="n">osfd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbyte</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">SocketErrno</span> <span class="o">==</span> <span class="n">PORT_IO_EINTR</span><span class="p">)</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_IO_NOT_READY_ERROR</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">st_netfd_poll</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">POLLIN</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 等待单个套接字fd上的IO事件
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">st_netfd_poll</span><span class="p">(</span><span class="n">_st_netfd_t</span> <span class="o">*</span><span class="n">fd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">how</span><span class="p">,</span> <span class="n">st_utime_t</span> <span class="n">timeout</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">pollfd</span> <span class="n">pd</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="n">pd</span><span class="p">.</span><span class="n">fd</span> <span class="o">=</span> <span class="n">fd</span><span class="o">-&gt;</span><span class="n">osfd</span><span class="p">;</span>
+    <span class="n">pd</span><span class="p">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">(</span><span class="kt">short</span><span class="p">)</span><span class="n">how</span><span class="p">;</span>
+    <span class="n">pd</span><span class="p">.</span><span class="n">revents</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">n</span> <span class="o">=</span> <span class="n">st_poll</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pd</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">timeout</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* Timed out */</span>
+        <span class="n">errno</span> <span class="o">=</span> <span class="n">ETIME</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pd</span><span class="p">.</span><span class="n">revents</span> <span class="o">&amp;</span> <span class="n">POLLNVAL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">errno</span> <span class="o">=</span> <span class="n">EBADF</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 允许同时等待多个套接字的IO事件
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">st_poll</span><span class="p">(</span><span class="k">struct</span> <span class="n">pollfd</span> <span class="o">*</span><span class="n">pds</span><span class="p">,</span> <span class="kt">int</span> <span class="n">npds</span><span class="p">,</span> <span class="n">st_utime_t</span> <span class="n">timeout</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">pollfd</span> <span class="o">*</span><span class="n">pd</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">pollfd</span> <span class="o">*</span><span class="n">epd</span> <span class="o">=</span> <span class="n">pds</span> <span class="o">+</span> <span class="n">npds</span><span class="p">;</span>
+    <span class="n">_st_pollq_t</span> <span class="n">pq</span><span class="p">;</span>
+    <span class="n">_st_thread_t</span> <span class="o">*</span><span class="n">me</span> <span class="o">=</span> <span class="n">_ST_CURRENT_THREAD</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">_ST_FL_INTERRUPT</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">me</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">_ST_FL_INTERRUPT</span><span class="p">;</span>
+        <span class="n">errno</span> <span class="o">=</span> <span class="n">EINTR</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 将数组中fd关注的IO事件添加到epoll中
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="n">_st_eventsys</span><span class="o">-&gt;</span><span class="n">pollset_add</span><span class="p">)(</span><span class="n">pds</span><span class="p">,</span> <span class="n">npds</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">pq</span><span class="p">.</span><span class="n">pds</span> <span class="o">=</span> <span class="n">pds</span><span class="p">;</span>
+    <span class="n">pq</span><span class="p">.</span><span class="n">npds</span> <span class="o">=</span> <span class="n">npds</span><span class="p">;</span>
+    <span class="n">pq</span><span class="p">.</span><span class="kr">thread</span> <span class="o">=</span> <span class="n">me</span><span class="p">;</span>
+    <span class="n">pq</span><span class="p">.</span><span class="n">on_ioq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">// 将调用微线程添加到IO等待队列中
+</span><span class="c1"></span>    <span class="n">_ST_ADD_IOQ</span><span class="p">(</span><span class="n">pq</span><span class="p">);</span>
+    <span class="c1">// 如果设置了超时时间，就加入到sleep队列中
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">timeout</span> <span class="o">!=</span> <span class="n">ST_UTIME_NO_TIMEOUT</span><span class="p">)</span>
+        <span class="n">_ST_ADD_SLEEPQ</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">timeout</span><span class="p">);</span>
+    <span class="n">me</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">=</span> <span class="n">_ST_ST_IO_WAIT</span><span class="p">;</span>
+    <span class="c1">// 交出执行权，并调度其他微线程运行，等到关注的任何一个fd上发生了关注的IO事件时，
+</span><span class="c1"></span>    <span class="c1">// 会从这里返回
+</span><span class="c1"></span>    <span class="n">_ST_SWITCH_CONTEXT</span><span class="p">(</span><span class="n">me</span><span class="p">);</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pq</span><span class="p">.</span><span class="n">on_ioq</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 超时情况，从IO等待队列中就移除
+</span><span class="c1"></span>        <span class="n">_ST_DEL_IOQ</span><span class="p">(</span><span class="n">pq</span><span class="p">);</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">_st_eventsys</span><span class="o">-&gt;</span><span class="n">pollset_del</span><span class="p">)(</span><span class="n">pds</span><span class="p">,</span> <span class="n">npds</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 计算发生IO事件的fd数，这里没有把发生IO事件的fd组织成一个数组
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="n">pd</span> <span class="o">=</span> <span class="n">pds</span><span class="p">;</span> <span class="n">pd</span> <span class="o">&lt;</span> <span class="n">epd</span><span class="p">;</span> <span class="n">pd</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">revents</span><span class="p">)</span>
+                <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">me</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">_ST_FL_INTERRUPT</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">me</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">_ST_FL_INTERRUPT</span><span class="p">;</span>
+        <span class="n">errno</span> <span class="o">=</span> <span class="n">EINTR</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
 <h2 id="三-talk">三、talk</h2>
 
 <ul>
@@ -449,6 +794,12 @@
 <h1 id="项目应用">项目应用</h1>
 
 <p>暂无</p>
+
+<h1 id="fqa">FQA</h1>
+
+<ul>
+<li>st 调用 epoll_wait 处理 就是阻塞调用，这个系统马上切换出去了，根本不对呀？不理解</li>
+</ul>
 
 <p>参考</p>
 
