@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Memcached - Troy的网络博客</title>
+  <title>多进程多线程篇 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="提问的艺术" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.58.3 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/post/Memcached/" />
+<link rel="canonical" href="https://wangcy6.github.io/post/thread/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Memcached" />
-<meta property="og:description" content="提问的艺术" />
+<meta property="og:title" content="多进程多线程篇" />
+<meta property="og:description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangcy6.github.io/post/Memcached/" />
-<meta property="article:published_time" content="2019-10-10T17:02:43+08:00" />
-<meta property="article:modified_time" content="2019-10-10T17:02:43+08:00" />
-<meta itemprop="name" content="Memcached">
-<meta itemprop="description" content="提问的艺术">
+<meta property="og:url" content="https://wangcy6.github.io/post/thread/" />
+<meta property="article:published_time" content="2019-11-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-29T00:00:00+00:00" />
+<meta itemprop="name" content="多进程多线程篇">
+<meta itemprop="description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr">
 
 
-<meta itemprop="datePublished" content="2019-10-10T17:02:43&#43;08:00" />
-<meta itemprop="dateModified" content="2019-10-10T17:02:43&#43;08:00" />
-<meta itemprop="wordCount" content="5">
+<meta itemprop="datePublished" content="2019-11-29T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-29T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="595">
 
 
 
-<meta itemprop="keywords" content="Memcached,reading," />
+<meta itemprop="keywords" content="book," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Memcached"/>
-<meta name="twitter:description" content="提问的艺术"/>
+<meta name="twitter:title" content="多进程多线程篇"/>
+<meta name="twitter:description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -129,15 +129,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Memcached</h1>
+      <h1 class="post-title">多进程多线程篇</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-10-10 17:02 </span>
+        <span class="post-time"> 2019-11-29 00:00 </span>
         <div class="post-category">
-            <a href="/categories/Memcached/"> Memcached </a>
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/"> 操作系统原理 </a>
             </div>
-          <span class="more-meta"> 约 5 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 595 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -147,7 +147,24 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#提问的艺术">提问的艺术</a></li>
+<li><a href="#相关问题">相关问题</a></li>
+<li><a href="#知识图谱">知识图谱</a>
+<ul>
+<li><a href="#线程">线程</a>
+<ul>
+<li><a href="#线程的创建">线程的创建</a></li>
+</ul></li>
+<li><a href="#进程">进程</a>
+<ul>
+<li><a href="#linux进程的创建-execve">Linux进程的创建(execve)</a>
+<ul>
+<li>
+<ul>
+<li><a href="#close-on-exec-用法">close on exec 用法</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
 </nav>
   </div>
@@ -155,7 +172,68 @@
     <div class="post-content">
       
 
-<h1 id="提问的艺术">提问的艺术</h1>
+<h1 id="相关问题">相关问题</h1>
+
+<ul>
+<li>Linux中fork子进程后再exec新程序时文件描述符的问题？</li>
+<li>关于linux进程间的<a href="https://cloud.tencent.com/developer/article/1177094">close-on-exec</a>机制</li>
+<li><a href="https://xnerv.wang/linux-process-kernel-and-file-system-summary/">LinuxThreads的不足</a></li>
+<li>TCP listening sockets created without FD_CLOEXEC flag</li>
+<li>为什么使用execve创建远程shell不会覆盖文件描述符和套接字？</li>
+</ul>
+
+<h1 id="知识图谱">知识图谱</h1>
+
+<h2 id="线程">线程</h2>
+
+<h3 id="线程的创建">线程的创建</h3>
+
+<p>pthread_atfork 函数解决多线程多进程死锁问题</p>
+
+<blockquote>
+<p>With pthread_atfork, we can install up to three functions to help clean up the
+locks.</p>
+
+<p>pthread_atfork()在<code>fork()之前</code>调用。</p>
+
+<p>当调用fork时，内部<code>创建子进程前</code>在父进程中会调用prepare，内部<code>创建子进程成功后</code>，父进程会调用parent ，子进程会调用child。</p>
+</blockquote>
+
+<h2 id="进程">进程</h2>
+
+<h3 id="linux进程的创建-execve">Linux进程的创建(execve)</h3>
+
+<p>启动程序一般都是在命令行中，其实是在与<code>shell</code>打交道，然后<code>shell</code>帮我们启动程序</p>
+
+<p>参考</p>
+
+<p><a href="https://github.com/gatieme/LDD-LinuxDeviceDrivers/tree/master/study/kernel/01-process/03-execute/01-do_execve">Linux进程启动过程分析do_execve(可执行程序的加载和运行)</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">strace</span> <span class="p">.</span><span class="o">/</span><span class="n">a</span><span class="p">.</span><span class="n">out</span>
+<span class="n">execve</span><span class="p">(</span><span class="s">&#34;./a.out&#34;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#34;./a.out&#34;</span><span class="p">],</span> <span class="p">[</span><span class="cm">/* 30 vars */</span><span class="p">])</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">brk</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span>                               <span class="o">=</span> <span class="mh">0xd9e000</span>
+<span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7f52dcaaa000</span>
+    
+<span class="n">The</span>  <span class="n">exec</span><span class="p">()</span>  <span class="n">family</span> <span class="n">of</span> <span class="n">functions</span> <span class="n">replaces</span> <span class="n">the</span> <span class="n">current</span> <span class="n">process</span> <span class="n">image</span> <span class="n">with</span> <span class="n">a</span> <span class="k">new</span> <span class="n">process</span> <span class="n">image</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="close-on-exec-用法">close on exec 用法</h5>
+
+<p>如果对描述符设置了FD_CLOEXEC，在使用execl调用执行的程序里，此描述符将在子进程中会被自动关闭，不能使用了。但是在父进程中仍然可以使用</p>
+
+<p>Linux系统的open函数，其中flags参数可以传入O_CLOEXEC标记，即可自动设置上FD_CLOEXEC标记，但Linux内核版本2.6.23才开始支持此标记。</p>
+
+<p>来源：<a href="http://blogs.360.cn/post/nginx%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%B3%84%E9%9C%B2%EF%BC%9F%E6%B5%85%E6%9E%90fd_cloexec%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%A0%87%E5%BF%97.html">Nginx文件描述符泄露？浅析FD_CLOEXEC文件描述符标志</a></p>
 
     </div>
 
@@ -167,7 +245,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2019-10-10 17:02
+        2019-11-29 00:00
         
     </span>
   </p>
@@ -179,17 +257,12 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/Memcached/">Memcached</a>
-          <a href="/tags/reading/">reading</a>
+          <a href="/tags/book/">book</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/book_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Linux内核设计与实现</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/book_%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/">
-            <span class="next-text nav-default">算法导论</span>
+        
+        <a class="next" href="/post/%E8%AE%BE%E8%AE%A1%E4%B9%8B%E7%A6%85/">
+            <span class="next-text nav-default">设计之禅</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

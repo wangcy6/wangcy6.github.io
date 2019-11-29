@@ -26,7 +26,7 @@
       <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/FQA_Linux/</guid>
-      <description>当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 一、基础 1、进程vs线程 问1 ：进程间通信方式 进程间通信 2个情况 第一个是 exchange data 传递数据</description>
+      <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、基础 1、进程 execve 函数使用过程中注意事项 Linux中fork子进程</description>
     </item>
     
   </channel>

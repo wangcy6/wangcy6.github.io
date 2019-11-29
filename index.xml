@@ -6,10 +6,19 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>多进程多线程篇</title>
+      <link>https://wangcy6.github.io/post/thread/</link>
+      <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/thread/</guid>
+      <description>相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr</description>
+    </item>
     
     <item>
       <title>设计之禅</title>
@@ -62,7 +71,7 @@
       <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/FQA_Linux/</guid>
-      <description>当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 一、基础 1、进程vs线程 问1 ：进程间通信方式 进程间通信 2个情况 第一个是 exchange data 传递数据</description>
+      <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、基础 1、进程 execve 函数使用过程中注意事项 Linux中fork子进程</description>
     </item>
     
     <item>
@@ -126,6 +135,15 @@
       
       <guid>https://wangcy6.github.io/post/Effective-C&#43;&#43;31/</guid>
       <description>Effective C++ 31：最小化文件之间的编译依赖 分享最实用的经验 ， 希望每一位来访的朋友都能有所收获！ Item 31: Minimize compilation dependencies between files. 曾听老师讲过，每天上班的第一件事就是下载</description>
+    </item>
+    
+    <item>
+      <title>Linux内核设计与实现</title>
+      <link>https://wangcy6.github.io/post/book_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/</guid>
+      <description>中断与锁（第7 ，8，9，10 章节） 1. 延迟处理机制 中断特点 中断处理程序不是可重入的。因为屏蔽了中断，根本不会发生切换。同类自旋锁是不可重入的 中</description>
     </item>
     
     <item>

@@ -6,10 +6,19 @@
     <description>Recent content in book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>多进程多线程篇</title>
+      <link>https://wangcy6.github.io/post/thread/</link>
+      <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/thread/</guid>
+      <description>相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr</description>
+    </item>
     
     <item>
       <title>设计之禅</title>

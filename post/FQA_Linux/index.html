@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="19635">
+<meta itemprop="wordCount" content="21534">
 
 
 
@@ -136,8 +136,8 @@
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 19635 字 </span>
-          <span class="more-meta"> 预计阅读 40 分钟 </span>
+          <span class="more-meta"> 约 21534 字 </span>
+          <span class="more-meta"> 预计阅读 43 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -154,12 +154,42 @@
 <li><a href="#知识卡">知识卡</a></li>
 <li><a href="#一-基础">一、基础</a>
 <ul>
-<li><a href="#1-进程vs线程">1、进程vs线程</a>
+<li><a href="#1-进程">1、进程</a>
+<ul>
+<li><a href="#execve-函数使用过程中注意事项">execve 函数使用过程中注意事项</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#linux中fork子进程后再exec新程序时文件描述符的问题">Linux中fork子进程后再exec新程序时文件描述符的问题？</a>
+<ul>
+<li>
 <ul>
 <li><a href="#问1-进程间通信方式">问1 ：进程间通信方式</a>
 <ul>
 <li><a href="#最常用的socket-tcp-udp">最常用的socket（TCP/UDP）</a></li>
-<li><a href="#信号">信号</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#信号">信号</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#信号种类">信号种类</a>
+<ul>
+<li><a href="#不可重入函数">不可重入函数</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#经验-3">经验 3</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#异步可重入函数与线程安全函数等价吗-30分钟">异步可重入函数与线程安全函数等价吗？ 30分钟</a></li>
+<li><a href="#printf-等系统库函数是如何实现的">printf()等系统库函数是如何实现的？</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
 <li><a href="#同步">同步</a></li>
 </ul></li>
 <li><a href="#区别是什么">区别是什么？</a>
@@ -196,9 +226,12 @@
 </ul></li>
 <li><a href="#框架是什么">框架是什么？</a></li>
 </ul></li>
-<li><a href="#netty">Netty</a>
+<li><a href="#netty">Netty</a></li>
+</ul></li>
+<li><a href="#线程">线程</a>
 <ul>
-<li><a href="#线程">线程</a></li>
+<li>
+<ul>
 <li><a href="#一-问2-线程同步方式">一. 问2 线程同步方式？</a>
 <ul>
 <li><a href="#大王-你平时用c比较多-还是c-比较多">大王： 你平时用c比较多，还是c++比较多？</a></li>
@@ -284,16 +317,166 @@
     <div class="post-content">
       
 
+<blockquote>
+<p>修改日期 2019-11-29</p>
+</blockquote>
+
 <h2 id="当你的才华撑不起你的野心时-就应该静下心来好好学习">当你的才华撑不起你的野心时，就应该静下心来好好学习。</h2>
 
 <h1 id="知识卡">知识卡</h1>
 
 <p><img src="https://i.loli.net/2019/11/13/iBAcurKQygeSUTD.png" alt="image.png" /></p>
 
+<p>书籍</p>
+
+<ol>
+<li><a href="http://www.apuebook.com/">http://www.apuebook.com/</a></li>
+<li></li>
+</ol>
+
 <h1 id="一-基础">一、基础</h1>
 
-<h2 id="1-进程vs线程">1、进程vs线程</h2>
+<h2 id="1-进程">1、进程</h2>
 
+<h3 id="execve-函数使用过程中注意事项">execve 函数使用过程中注意事项</h3>
+
+<h1 id="linux中fork子进程后再exec新程序时文件描述符的问题">Linux中fork子进程后再exec新程序时文件描述符的问题？</h1>
+
+<blockquote>
+<p>小王回答：</p>
+</blockquote>
+
+<p>假如进程A 400w，文件描述符，</p>
+
+<p>for进程B后，进程占用400w相同描述符。</p>
+
+<p>执行exec后，默认 对代码段，数据段，堆栈进行替换。因此 进程B 的占用内存空间 没有了，</p>
+
+<p>但是类似指针替换一样，内核依然记录，该文件被进程B占用，但是进程B ，已经替换成进程C了，</p>
+
+<p>会出现一些黑洞情况。需要执行</p>
+
+<p>主进程在申请资源时候 采用 close-on-exec机制。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef WIN32
+</span><span class="cp"></span>	<span class="n">SOCKET</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="cp">#else
+</span><span class="cp"></span>	<span class="n">SOCKET</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span> <span class="o">|</span> <span class="n">SOCK_CLOEXEC</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="cp">#endif
+</span><span class="cp"></span>
+<span class="err">文件：</span>
+<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">foo</span><span class="p">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span><span class="n">O_RDONLY</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">fcntl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">F_GETFD</span><span class="p">);</span>
+<span class="n">flags</span> <span class="o">|=</span> <span class="n">FD_CLOEXEC</span><span class="p">;</span>
+<span class="n">fcntl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">F_SETFD</span><span class="p">,</span> <span class="n">flags</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">foo</span><span class="p">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span><span class="n">O_RDONLY</span> <span class="o">|</span> <span class="n">O_CLOEXEC</span><span class="p">);</span>
+
+
+ <span class="n">O_CLOEXEC</span> <span class="p">(</span><span class="n">since</span> <span class="n">Linux</span> <span class="mf">2.6.23</span><span class="p">)</span>
+              <span class="n">Enable</span> <span class="n">the</span> <span class="n">close</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">exec</span> <span class="n">flag</span> <span class="k">for</span> <span class="n">the</span> <span class="n">new</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>
+              <span class="n">Specifying</span> <span class="n">this</span> <span class="n">flag</span> <span class="n">permits</span> <span class="n">a</span> <span class="n">program</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">additional</span>
+              <span class="n">fcntl</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">F_SETFD</span> <span class="n">operations</span> <span class="n">to</span> <span class="n">set</span> <span class="n">the</span> <span class="n">FD_CLOEXEC</span> <span class="n">flag</span><span class="p">.</span>
+
+              <span class="n">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">this</span> <span class="n">flag</span> <span class="n">is</span> <span class="n">essential</span> <span class="n">in</span> <span class="n">some</span>
+              <span class="n">multithreaded</span> <span class="n">programs</span><span class="p">,</span> <span class="n">because</span> <span class="n">using</span> <span class="n">a</span> <span class="n">separate</span> <span class="n">fcntl</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+              <span class="n">F_SETFD</span> <span class="n">operation</span> <span class="n">to</span> <span class="n">set</span> <span class="n">the</span> <span class="n">FD_CLOEXEC</span> <span class="n">flag</span> <span class="n">does</span> <span class="n">not</span> <span class="n">suffice</span>
+              <span class="n">to</span> <span class="n">avoid</span> <span class="n">race</span> <span class="n">conditions</span> <span class="n">where</span> <span class="n">one</span> <span class="kr">thread</span> <span class="n">opens</span> <span class="n">a</span> <span class="n">file</span>
+              <span class="n">descriptor</span> <span class="n">and</span> <span class="n">attempts</span> <span class="n">to</span> <span class="n">set</span> <span class="n">its</span> <span class="n">close</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">exec</span> <span class="n">flag</span> <span class="n">using</span>
+              <span class="n">fcntl</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">at</span> <span class="n">the</span> <span class="n">same</span> <span class="n">time</span> <span class="n">as</span> <span class="n">another</span> <span class="kr">thread</span> <span class="n">does</span> <span class="n">a</span> <span class="n">fork</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+              <span class="n">plus</span> <span class="n">execve</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>  <span class="n">Depending</span> <span class="n">on</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">execution</span><span class="p">,</span> <span class="n">the</span> <span class="n">race</span>
+              <span class="n">may</span> <span class="n">lead</span> <span class="n">to</span> <span class="n">the</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">returned</span> <span class="n">by</span> <span class="n">open</span><span class="p">()</span> <span class="n">being</span>
+              <span class="n">unintentionally</span> <span class="n">leaked</span> <span class="n">to</span> <span class="n">the</span> <span class="n">program</span> <span class="n">executed</span> <span class="n">by</span> <span class="n">the</span> <span class="n">child</span>
+              <span class="n">process</span> <span class="n">created</span> <span class="n">by</span> <span class="n">fork</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>  <span class="p">(</span><span class="n">This</span> <span class="n">kind</span> <span class="n">of</span> <span class="n">race</span> <span class="n">is</span> <span class="n">in</span>
+              <span class="n">principle</span> <span class="n">possible</span> <span class="k">for</span> <span class="n">any</span> <span class="n">system</span> <span class="n">call</span> <span class="n">that</span> <span class="n">creates</span> <span class="n">a</span> <span class="n">file</span>
+              <span class="n">descriptor</span> <span class="n">whose</span> <span class="n">close</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">exec</span> <span class="n">flag</span> <span class="n">should</span> <span class="n">be</span> <span class="n">set</span><span class="p">,</span> <span class="n">and</span> <span class="n">various</span>
+              <span class="n">other</span> <span class="n">Linux</span> <span class="n">system</span> <span class="n">calls</span> <span class="n">provide</span> <span class="n">an</span> <span class="n">equivalent</span> <span class="n">of</span> <span class="n">the</span>
+              <span class="n">O_CLOEXEC</span> <span class="n">flag</span> <span class="n">to</span> <span class="n">deal</span> <span class="n">with</span> <span class="n">this</span> <span class="n">problem</span><span class="p">.)</span>
+                  
+   <span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="cp"></span>   <span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+   <span class="n">pid_t</span> <span class="n">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+ <span class="n">After</span> <span class="n">a</span> <span class="n">fork</span><span class="p">()</span> <span class="n">in</span> <span class="n">a</span> <span class="n">multithreaded</span> <span class="n">program</span><span class="p">,</span> <span class="n">the</span> <span class="n">child</span> <span class="n">can</span> <span class="n">safely</span>
+          <span class="n">call</span> <span class="n">only</span> <span class="n">async</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">safe</span> <span class="n">functions</span> <span class="p">(</span><span class="n">see</span> <span class="n">signal</span><span class="o">-</span><span class="n">safety</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span> <span class="n">until</span>
+          <span class="n">such</span> <span class="n">time</span> <span class="n">as</span> <span class="n">it</span> <span class="n">calls</span> <span class="n">execve</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>
+<span class="n">CLONE_FILES</span> <span class="p">(</span><span class="n">since</span> <span class="n">Linux</span> <span class="mf">2.0</span><span class="p">)</span>
+              <span class="n">If</span> <span class="n">CLONE_FILES</span> <span class="n">is</span> <span class="n">set</span><span class="p">,</span> <span class="n">the</span> <span class="n">calling</span> <span class="n">process</span> <span class="n">and</span> <span class="n">the</span> <span class="n">child</span>
+              <span class="n">process</span> <span class="n">share</span> <span class="n">the</span> <span class="n">same</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">table</span><span class="p">.</span>  <span class="n">Any</span> <span class="n">file</span>
+              <span class="n">descriptor</span> <span class="n">created</span> <span class="n">by</span> <span class="n">the</span> <span class="n">calling</span> <span class="n">process</span> <span class="n">or</span> <span class="n">by</span> <span class="n">the</span> <span class="n">child</span>
+              <span class="n">process</span> <span class="n">is</span> <span class="n">also</span> <span class="n">valid</span> <span class="n">in</span> <span class="n">the</span> <span class="n">other</span> <span class="n">process</span><span class="p">.</span>  <span class="n">Similarly</span><span class="p">,</span> <span class="k">if</span> <span class="n">one</span>
+              <span class="n">of</span> <span class="n">the</span> <span class="n">processes</span> <span class="n">closes</span> <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">,</span> <span class="n">or</span> <span class="n">changes</span> <span class="n">its</span>
+              <span class="n">associated</span> <span class="n">flags</span> <span class="p">(</span><span class="n">using</span> <span class="n">the</span> <span class="n">fcntl</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">F_SETFD</span> <span class="n">operation</span><span class="p">),</span> <span class="n">the</span>
+              <span class="n">other</span> <span class="n">process</span> <span class="n">is</span> <span class="n">also</span> <span class="n">affected</span><span class="p">.</span>  <span class="n">If</span> <span class="n">a</span> <span class="n">process</span> <span class="n">sharing</span> <span class="n">a</span> <span class="n">file</span>
+              <span class="n">descriptor</span> <span class="n">table</span> <span class="n">calls</span> <span class="n">execve</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">its</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">table</span> <span class="n">is</span>
+              <span class="n">duplicated</span> <span class="p">(</span><span class="n">unshared</span><span class="p">)</span>
+                  
+ <span class="n">The</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">table</span> <span class="n">is</span> <span class="n">unshared</span><span class="p">,</span> <span class="n">undoing</span> <span class="n">the</span> <span class="n">effect</span> <span class="n">of</span> <span class="n">the</span>
+          <span class="n">CLONE_FILES</span> <span class="n">flag</span> <span class="n">of</span> <span class="n">clone</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>
+               </code></pre></td></tr></table>
+</div>
+</div>
 <h3 id="问1-进程间通信方式">问1 ：进程间通信方式</h3>
 
 <blockquote>
@@ -306,7 +489,7 @@
 
 <h4 id="最常用的socket-tcp-udp">最常用的socket（TCP/UDP）</h4>
 
-<h4 id="信号">信号</h4>
+<h2 id="信号">信号</h2>
 
 <p>一、 问：有哪2个<strong>信号</strong>不能<strong>被忽略</strong>？</p>
 
@@ -319,6 +502,10 @@
 <p>软中断信号（signal，又简称为信号）用来通知进程发生了异步事件</p>
 
 <p>信号是进程间通信机制中<strong>唯一</strong>的异步通信机制，一个进程不必通过任何操作来<strong>等待</strong>信号的到达</p>
+
+<p>Signals are software interrupts</p>
+
+<p>信号的异步性意味着，应用程序不用等待事件的发生，当信号发生时应用程序自动陷入到对应的信号处理函数中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt">1
@@ -362,17 +549,24 @@
 </ol>
 
 <ul>
-<li>忽略信号
+<li><p>忽略信号</p>
 
 <ul>
-<li>不采取任何操作、有两个信号不能被忽略：SIGKILL和SIGSTOP。</li>
-</ul></li>
-<li>捕获并处理信号
+<li>不采取任何操作、有两个信号不能被忽略：SIGKILL和SIGSTOP。
+<br /></li>
+</ul>
+
+<p>Ignore the signal. This works for most signals, but two signals can never be
+ignored: SIGKILL and SIGSTOP.</p></li>
+
+<li><p>捕获并处理信号</p>
 
 <ul>
-<li>内核中断正在执行的代码，转去执行先前注册过的处理程序。</li>
+<li>内核中断正在执行的代码，转去执行先前注册过的处理程序。
+<br /></li>
 </ul></li>
-<li>执行默认操作
+
+<li><p>执行默认操作</p>
 
 <ul>
 <li>默认操作通常是终止进程，这取决于被发送的信号。</li>
@@ -390,6 +584,110 @@
 <p>进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。</p>
 
 <p><img src="https://i.loli.net/2019/11/12/Wi1hpb7ZQC6Vqay.png" alt="终止" /></p>
+
+<h5 id="信号种类">信号种类</h5>
+
+<p>Linux 3.2.0 each support 31 different signals</p>
+
+<p>signal.h</p>
+
+<table>
+<thead>
+<tr>
+<th>SIGHUP</th>
+<th>1</th>
+<th>终端挂起或控制进程终止。当用户退出Shell时，由该进程启动的所有进程都会收到这个信号，默认动作为终止进程。</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h6 id="不可重入函数">不可重入函数</h6>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">http</span><span class="p">:</span><span class="c1">//man7.org/linux/man-pages/man7/signal-safety.7.html       
+</span><span class="c1"></span><span class="n">signal</span><span class="o">-</span><span class="n">safety</span> <span class="o">-</span> <span class="n">async</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">safe</span> <span class="n">functions</span>
+           
+           <span class="n">An</span> <span class="n">async</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">safe</span> <span class="n">function</span> <span class="n">is</span> <span class="n">one</span> <span class="n">that</span> <span class="n">can</span> <span class="n">be</span> <span class="n">safely</span> <span class="n">called</span> <span class="n">from</span>
+       <span class="n">within</span> <span class="n">a</span> <span class="n">signal</span> <span class="n">handler</span><span class="p">.</span>  <span class="n">Many</span> <span class="n">functions</span> <span class="n">are</span> <span class="n">not</span> <span class="n">async</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">safe</span><span class="p">.</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="https://i.loli.net/2019/11/29/rL2UiPIm3bv4doO.png" alt="image.png" /></p>
+
+<p>使用可重入函数进行更安全的信号处理(回顾历史)</p>
+
+<p><a href="https://www.ibm.com/developerworks/cn/linux/l-reent.html">https://www.ibm.com/developerworks/cn/linux/l-reent.html</a></p>
+
+<blockquote>
+<p>在早期的编程中，不可重入性对程序员并不构成威胁；</p>
+
+<p>函数不会有并发访问，也没有中断。</p>
+
+<p>在很多较老的 C 语言实现中，函数被认为是在单线程进程的环境中运行。</p>
+</blockquote>
+
+<p>可重入函数：</p>
+
+<ul>
+<li>不为连续的调用持有静态数据。</li>
+<li>不返回指向静态数据的指针；所有数据都由函数的调用者提供。</li>
+<li>使用本地数据，或者通过制作全局数据的本地拷贝来保护全局数据。</li>
+<li>绝不调用任何不可重入函数</li>
+</ul>
+
+<p>出于以下任意某个原因，其余函数是不可重入的：</p>
+
+<ul>
+<li>它们调用了 <code>malloc</code> 或 <code>free</code>。</li>
+<li>众所周知它们使用了静态数据结构体。</li>
+<li>它们是标准 I/O 程序库的一部分</li>
+</ul>
+
+<p><a href="https://www.ibm.com/developerworks/cn/linux/l-reent.html">https://www.ibm.com/developerworks/cn/linux/l-reent.html</a></p>
+
+<p>现在，在信号处理器中您并不知道信号被捕获时进程正在执行什么内容。如果当进程正在使用 <code>malloc</code> 在它的堆上分配额外的内存时，您通过信号处理器调用 <code>malloc</code>，那会怎样？或者，调用了正在处理全局数据结构的某个函数，而 在信号处理器中又调用了同一个函数。如果是调用 <code>malloc</code>，则进程会 被严重破坏，因为 <code>malloc</code> 通常会为所有它所分配的区域维持一个链表，而它又 可能正在修改那个链表。</p>
+
+<p><a href="https://murphypei.github.io/blog/2019/07/thread-safe-reentrant-function">线程安全和可重入函数</a> 阅读 20分钟</p>
+
+<p>当使用流（stream）进行 I/O 时会出现类似的情况。</p>
+
+<p>假定信号处理器使用 <code>fprintf</code> 打印一条消息，而当信号发出时程序正在使用同一个流进行 <code>fprintf</code> 调用。</p>
+
+<p>信号处理器的消息和程序的数据都会被破坏，因为两个调用操作了同一数据结构：流本身。</p>
+
+<h3 id="经验-3">经验 3</h3>
+
+<p>在大部分系统中，<code>malloc</code> 和 <code>free</code> 都不是可重入的， 因为它们使用静态数据结构来记录哪些内存块是空闲的。实际上，任何分配或释放内存的库函数都是不可重入的。这也包括分配空间存储结果的函数。</p>
+
+<p>Linux 中可重入这个概念一般只有在 signal 的场景下有意义，叫 async-signal-safe。
+很多线程安全的函数都是不可重入的，例如 malloc。
+可重入的函数一般也是线程安全的，虽然据说有反例，但我没见过。
+Posix中大多数函数都是线程安全的，但只有少数是 async-signal-safe。
+见《Linux多线程服务端编程》第4.2节和第4.10节。</p>
+
+<h1 id="异步可重入函数与线程安全函数等价吗-30分钟">异步可重入函数与线程安全函数等价吗？ 30分钟</h1>
+
+<p><a href="https://www.zhihu.com/question/21526405">https://www.zhihu.com/question/21526405</a></p>
+
+<h1 id="printf-等系统库函数是如何实现的">printf()等系统库函数是如何实现的？</h1>
+
+<p><a href="https://www.zhihu.com/question/28749911">https://www.zhihu.com/question/28749911</a></p>
+
+<p><strong>库函数/系统调用</strong></p>
 
 <h4 id="同步">同步</h4>
 
@@ -709,7 +1007,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <p>Google Protocol Buffer</p>
 
-<h3 id="线程">线程</h3>
+<h1 id="线程">线程</h1>
 
 <h3 id="一-问2-线程同步方式">一. 问2 线程同步方式？</h3>
 
@@ -744,7 +1042,15 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </div>
 <p><a href="https://zh.wikipedia.org/wiki/信号量">信号量</a>函数</p>
 
-<p>#### 问 rwlock和mutex有什么不同和优劣呢</p>
+<p>···················································华丽分隔符 补充基础知识········································</p>
+
+<p><img src="https://i.loli.net/2019/11/29/A3bCfKp4WuUD6lR.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/29/QNGcgYfb9X2e8DH.png" alt="image.png" /></p>
+
+<p>···················································华丽分隔符 补充基础知识········································</p>
+
+<p>### 问 rwlock和mutex有什么不同和优劣呢</p>
 
 <h4 id="大王-你平时用c比较多-还是c-比较多">大王： 你平时用c比较多，还是c++比较多？</h4>
 
