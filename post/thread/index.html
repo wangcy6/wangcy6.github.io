@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="多进程多线程篇" />
-<meta property="og:description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr" />
+<meta property="og:description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/thread/" />
 <meta property="article:published_time" content="2019-11-29T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-11-29T00:00:00+00:00" />
 <meta itemprop="name" content="多进程多线程篇">
-<meta itemprop="description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr">
+<meta itemprop="description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在">
 
 
 <meta itemprop="datePublished" content="2019-11-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="595">
+<meta itemprop="wordCount" content="1744">
 
 
 
 <meta itemprop="keywords" content="book," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多进程多线程篇"/>
-<meta name="twitter:description" content="相关问题 Linux中fork子进程后再exec新程序时文件描述符的问题？ 关于linux进程间的close-on-exec机制 LinuxThr"/>
+<meta name="twitter:description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -136,8 +136,8 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/"> 操作系统原理 </a>
             </div>
-          <span class="more-meta"> 约 595 字 </span>
-          <span class="more-meta"> 预计阅读 2 分钟 </span>
+          <span class="more-meta"> 约 1744 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -152,17 +152,17 @@
 <ul>
 <li><a href="#线程">线程</a>
 <ul>
-<li><a href="#线程的创建">线程的创建</a></li>
+<li><a href="#线程的创建过程">线程的创建过程</a></li>
+<li><a href="#线程的销毁过程">线程的销毁过程</a></li>
 </ul></li>
 <li><a href="#进程">进程</a>
 <ul>
-<li><a href="#linux进程的创建-execve">Linux进程的创建(execve)</a>
+<li><a href="#一-进程创建方式">一. 进程创建方式</a>
 <ul>
-<li>
-<ul>
-<li><a href="#close-on-exec-用法">close on exec 用法</a></li>
+<li><a href="#运行应用程序-由fork-exec对完成">运行应用程序( 由fork / exec对完成 )</a></li>
+<li><a href="#close-on-exec-机制">close_on_exec 机制</a></li>
 </ul></li>
-</ul></li>
+<li><a href="#二-进程的销毁">二、 进程的销毁</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -172,6 +172,22 @@
     <div class="post-content">
       
 
+<p><strong>你所寻找的东西正在寻找你。-鲁米</strong></p>
+
+<p>What you seek is seeking you.</p>
+
+<p>你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米**</p>
+
+<p>You were born with wings. Why prefer to crawl through life?</p>
+
+<p><strong>你不是一滴水在海洋中。你是整个海洋在一滴水中。 – 鲁米</strong></p>
+
+<p>You are not a drop in the ocean. You are the entire ocean in a drop.</p>
+
+<p><strong>在你的提问中寻找答案。-鲁米</strong></p>
+
+<p>Look for the answer inside your question.</p>
+
 <h1 id="相关问题">相关问题</h1>
 
 <ul>
@@ -180,13 +196,14 @@
 <li><a href="https://xnerv.wang/linux-process-kernel-and-file-system-summary/">LinuxThreads的不足</a></li>
 <li>TCP listening sockets created without FD_CLOEXEC flag</li>
 <li>为什么使用execve创建远程shell不会覆盖文件描述符和套接字？</li>
+<li>C 和 Golang 真的有千丝万缕的联系，比如 <code>atexit()</code> 与 <code>defer func(){}</code></li>
 </ul>
 
 <h1 id="知识图谱">知识图谱</h1>
 
 <h2 id="线程">线程</h2>
 
-<h3 id="线程的创建">线程的创建</h3>
+<h3 id="线程的创建过程">线程的创建过程</h3>
 
 <p>pthread_atfork 函数解决多线程多进程死锁问题</p>
 
@@ -199,23 +216,62 @@ locks.</p>
 <p>当调用fork时，内部<code>创建子进程前</code>在父进程中会调用prepare，内部<code>创建子进程成功后</code>，父进程会调用parent ，子进程会调用child。</p>
 </blockquote>
 
+<h3 id="线程的销毁过程">线程的销毁过程</h3>
+
 <h2 id="进程">进程</h2>
 
-<h3 id="linux进程的创建-execve">Linux进程的创建(execve)</h3>
+<h3 id="一-进程创建方式">一. 进程创建方式</h3>
+
+<ul>
+<li>Linux进程创建： 通过fork()系统调用创建进程</li>
+<li>Linux用户级线程创建：通过pthread库中的pthread_create()创建线程</li>
+<li>Linux内核线程创建： 通过kthread_create()</li>
+</ul>
+
+<p>fork, vfork, clone根据不同参数调用do_fork</p>
+
+<ul>
+<li>pthread_create: flags参数为 CLONE_VM, CLONE_FS, CLONE_FILES, CLONE_SIGHAND</li>
+<li>fork: flags参数为 SIGCHLD</li>
+<li>vfork: flags参数为 CLONE_VFORK, CLONE_VM, SIGCHLD</li>
+</ul>
+
+<p><img src="http://gityuan.com/images/linux/process/clone_flags.jpg" alt="clone_flags" /></p>
+
+<h4 id="运行应用程序-由fork-exec对完成">运行应用程序( 由fork / exec对完成 )</h4>
 
 <p>启动程序一般都是在命令行中，其实是在与<code>shell</code>打交道，然后<code>shell</code>帮我们启动程序</p>
 
+<blockquote>
+<p>shell 每次执行指令， 需要 fork 出一个子进程来执行，然后将子进程的镜像替换成目标指令，</p>
+
+<p>这又会用到 exec 函数。比如下面这条简单的指令</p>
+</blockquote>
+
 <p>参考</p>
+
+<p><a href="https://juejin.im/post/5bc98b36f265da0af93b34c6">一个小小的 Shell 管道符，内部实现可真不简单！</a></p>
 
 <p><a href="https://github.com/gatieme/LDD-LinuxDeviceDrivers/tree/master/study/kernel/01-process/03-execute/01-do_execve">Linux进程启动过程分析do_execve(可执行程序的加载和运行)</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">strace</span> <span class="p">.</span><span class="o">/</span><span class="n">a</span><span class="p">.</span><span class="n">out</span>
@@ -224,16 +280,194 @@ locks.</p>
 <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7f52dcaaa000</span>
     
 <span class="n">The</span>  <span class="n">exec</span><span class="p">()</span>  <span class="n">family</span> <span class="n">of</span> <span class="n">functions</span> <span class="n">replaces</span> <span class="n">the</span> <span class="n">current</span> <span class="n">process</span> <span class="n">image</span> <span class="n">with</span> <span class="n">a</span> <span class="k">new</span> <span class="n">process</span> <span class="n">image</span>
+    
+    
+<span class="n">strace</span> <span class="n">ls</span>
+<span class="n">execve</span><span class="p">(</span><span class="s">&#34;/bin/ls&#34;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#34;ls&#34;</span><span class="p">],</span> <span class="p">[</span><span class="cm">/* 29 vars */</span><span class="p">])</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">brk</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span>                               <span class="o">=</span> <span class="mh">0x19aa000</span>
+<span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7fc7e7ad6000</span>
+<span class="n">access</span><span class="p">(</span><span class="s">&#34;/etc/ld.so.preload&#34;</span><span class="p">,</span> <span class="n">R_OK</span><span class="p">)</span>      <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s">&#34;tls/x86_64/libselinux.so.1&#34;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s">&#34;tls/libselinux.so.1&#34;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s">&#34;x86_64/libselinux.so.1&#34;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>
+<span class="n">open</span><span class="p">(</span><span class="s">&#34;libselinux.so.1&#34;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="o">|</span><span class="n">O_CLOEXEC</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>    
 </code></pre></td></tr></table>
 </div>
 </div>
-<h5 id="close-on-exec-用法">close on exec 用法</h5>
+<h4 id="close-on-exec-机制">close_on_exec 机制</h4>
+
+<blockquote>
+<p>陈咬金的三板斧 来了</p>
+</blockquote>
+
+<ul>
+<li>背后原理是什么</li>
+</ul>
+
+<p><img src="https://i.loli.net/2019/11/30/YjhLt2KDZiylzvW.png" alt="image.png" /></p>
+
+<p><a href="https://en.wikipedia.org/wiki/File_descriptor#Operations_on_the_file_descriptor_table"><strong>文件描述符</strong></a>（File descriptor）是计算机科学中的一个术语，是一个用于表述指向<a href="https://zh.wikipedia.org/wiki/文件">文件</a>的引用的抽象化概念。</p>
+
+<p><a href="https://vvl.me/2019/06/file-descriptor-statistical-method-under-linux/">Linux 下文件描述符的统计方法</a></p>
+
+<p>fork 后，子进程会获得父进程的文件描述符（更具体地说，Linux 下是未设置 <code>CLONE_FILES</code> flag 的系统调用 <code>clone()</code>）。</p>
+
+<p>子进程执行 exec 的后，内核不再保留原有的 fdtable，无法再根据文件描述符操作文件</p>
+
+<p>exec 流程</p>
+
+<ol>
+<li>fork</li>
+<li>销毁</li>
+<li>替换</li>
+</ol>
+
+<ul>
+<li>能解决什么问题
+
+<br /></li>
+</ul>
+
+<p>​       进程/线程 因为存在 Too many open files（端口也是文件） ，造成创建失败</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">sysctl -a | grep file-max
+fs.file-max = 655360</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>如何解决的</li>
+</ul>
+
+<p><a href="https://blog.csdn.net/cywosp/article/details/38965239">文件描述符标志</a>（即，close-on-exec）为进程和文件描述符所私有。</p>
+
+<p>对这一标志的修改将不会影响同一进程或不同进程中的其他文件描述符</p>
 
 <p>如果对描述符设置了FD_CLOEXEC，在使用execl调用执行的程序里，此描述符将在子进程中会被自动关闭，不能使用了。但是在父进程中仍然可以使用</p>
 
 <p>Linux系统的open函数，其中flags参数可以传入O_CLOEXEC标记，即可自动设置上FD_CLOEXEC标记，但Linux内核版本2.6.23才开始支持此标记。</p>
 
 <p>来源：<a href="http://blogs.360.cn/post/nginx%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%B3%84%E9%9C%B2%EF%BC%9F%E6%B5%85%E6%9E%90fd_cloexec%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%A0%87%E5%BF%97.html">Nginx文件描述符泄露？浅析FD_CLOEXEC文件描述符标志</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="nl">TCP</span><span class="p">:</span>
+<span class="cp">#ifdef WIN32
+</span><span class="cp"></span>	<span class="n">SOCKET</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="cp">#else
+</span><span class="cp"></span>	<span class="n">SOCKET</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span> <span class="o">|</span> <span class="n">SOCK_CLOEXEC</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="cp">#endif
+</span><span class="cp"></span>
+<span class="err">文件：</span>
+<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">foo</span><span class="p">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span><span class="n">O_RDONLY</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">fcntl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">F_GETFD</span><span class="p">);</span>
+<span class="n">flags</span> <span class="o">|=</span> <span class="n">FD_CLOEXEC</span><span class="p">;</span>
+<span class="n">fcntl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">F_SETFD</span><span class="p">,</span> <span class="n">flags</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">foo</span><span class="p">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span><span class="n">O_RDONLY</span> <span class="o">|</span> <span class="n">O_CLOEXEC</span><span class="p">);</span>
+
+
+ <span class="n">O_CLOEXEC</span> <span class="p">(</span><span class="n">since</span> <span class="n">Linux</span> <span class="mf">2.6.23</span><span class="p">)</span>
+              <span class="n">Enable</span> <span class="n">the</span> <span class="n">close</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">exec</span> <span class="n">flag</span> <span class="k">for</span> <span class="n">the</span> <span class="k">new</span> <span class="n">file</span> <span class="n">descriptor</span><span class="p">.</span>
+              <span class="n">Specifying</span> <span class="k">this</span> <span class="n">flag</span> <span class="n">permits</span> <span class="n">a</span> <span class="n">program</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">additional</span>
+              <span class="n">fcntl</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">F_SETFD</span> <span class="n">operations</span> <span class="n">to</span> <span class="n">set</span> <span class="n">the</span> <span class="n">FD_CLOEXEC</span> <span class="n">flag</span><span class="p">.</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>### <a href="https://www.thinbug.com/q/9583845">为什么close_on_exec不是默认配置？</a></li>
+</ul>
+
+<p>因为在UNIX上，最常用的功能之一是进程之间的管道流 - 如果设置了CLOEXEC标志，则不能这样做标准I/O</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">整数值</th>
+<th align="center">名称</th>
+<th align="center"><a href="https://zh.wikipedia.org/wiki/Unistd.h">unistd.h</a></th>
+<th align="center">文件流</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center"><a href="https://zh.wikipedia.org/wiki/Stdin">Standard input</a></td>
+<td align="center">STDIN_FILENO</td>
+<td align="center">stdin</td>
+</tr>
+
+<tr>
+<td align="center">1</td>
+<td align="center"><a href="https://zh.wikipedia.org/wiki/Stdout">Standard output</a></td>
+<td align="center">STDOUT_FILENO</td>
+<td align="center">stdout</td>
+</tr>
+
+<tr>
+<td align="center">2</td>
+<td align="center"><a href="https://zh.wikipedia.org/wiki/Stderr">Standard error</a></td>
+<td align="center">STDERR_FILENO</td>
+<td align="center">stderr</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="二-进程的销毁">二、 进程的销毁</h3>
+
+<blockquote>
+<p>陈咬金的三板斧 来了</p>
+
+<p>第一斧：技术本质是什么？</p>
+
+<p>第二斧：解决了什么问题？</p>
+
+<p>第三斧：如何使用？</p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/11/30/JVsLgbNcoDPwFIy.png" alt="image.png" /></p>
+
+<p><img src="https://i.loli.net/2019/11/30/CQ9bs74IjiomLTO.png" alt="image.png" /></p>
+
+<p>what-would-you-use-an-exit-handler-</p>
+
+<p>不同语言类比(c/golang/python/java)</p>
+
+<blockquote>
+<p>python  The <a href="https://docs.python.org/3/library/atexit.html#module-atexit"><code>atexit</code></a> module defines functions to register and unregister cleanup functions</p>
+
+<p>golang  <a href="https://gobyexample.com/defer"><em>Defer</em> i</a>s used to ensure that a function call is performed later in a program’s execution, usually for purposes of cleanup</p>
+
+<p>java  hooks</p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/11/30/9rzlZ34KDHLfeY2.png" alt="image.png" /></p>
 
     </div>
 
