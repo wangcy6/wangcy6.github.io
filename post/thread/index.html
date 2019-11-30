@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="多进程多线程篇" />
-<meta property="og:description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在" />
+<meta property="og:description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/thread/" />
 <meta property="article:published_time" content="2019-11-29T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-11-29T00:00:00+00:00" />
 <meta itemprop="name" content="多进程多线程篇">
-<meta itemprop="description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在">
+<meta itemprop="description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴">
 
 
 <meta itemprop="datePublished" content="2019-11-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1744">
+<meta itemprop="wordCount" content="2334">
 
 
 
 <meta itemprop="keywords" content="book," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多进程多线程篇"/>
-<meta name="twitter:description" content="你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米** You were born with wings. Why prefer to crawl through life? 你不是一滴水在"/>
+<meta name="twitter:description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -136,8 +136,8 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/"> 操作系统原理 </a>
             </div>
-          <span class="more-meta"> 约 1744 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 2334 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -147,13 +147,20 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#相关问题">相关问题</a></li>
+<li><a href="#走神一会">走神一会</a></li>
+<li><a href="#book">book</a></li>
 <li><a href="#知识图谱">知识图谱</a>
 <ul>
 <li><a href="#线程">线程</a>
 <ul>
-<li><a href="#线程的创建过程">线程的创建过程</a></li>
-<li><a href="#线程的销毁过程">线程的销毁过程</a></li>
+<li><a href="#1-线程的创建过程">1.  线程的创建过程</a></li>
+<li><a href="#2-线程的销毁过程">2. 线程的销毁过程</a></li>
+<li><a href="#3-线程安全">3.线程安全</a>
+<ul>
+<li><a href="#第一斧-技术本质是什么">第一斧：技术本质是什么？</a></li>
+<li><a href="#第二斧-考虑哪些问题">第二斧：考虑哪些问题？</a></li>
+<li><a href="#第三斧-如何使用">第三斧：如何使用？</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#进程">进程</a>
 <ul>
@@ -165,6 +172,7 @@
 <li><a href="#二-进程的销毁">二、 进程的销毁</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#相关问题">相关问题</a></li>
 </ul>
 </nav>
   </div>
@@ -172,11 +180,13 @@
     <div class="post-content">
       
 
+<h1 id="走神一会">走神一会</h1>
+
 <p><strong>你所寻找的东西正在寻找你。-鲁米</strong></p>
 
 <p>What you seek is seeking you.</p>
 
-<p>你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米**</p>
+<p><strong>你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米</strong></p>
 
 <p>You were born with wings. Why prefer to crawl through life?</p>
 
@@ -188,22 +198,15 @@
 
 <p>Look for the answer inside your question.</p>
 
-<h1 id="相关问题">相关问题</h1>
+<h1 id="book">book</h1>
 
-<ul>
-<li>Linux中fork子进程后再exec新程序时文件描述符的问题？</li>
-<li>关于linux进程间的<a href="https://cloud.tencent.com/developer/article/1177094">close-on-exec</a>机制</li>
-<li><a href="https://xnerv.wang/linux-process-kernel-and-file-system-summary/">LinuxThreads的不足</a></li>
-<li>TCP listening sockets created without FD_CLOEXEC flag</li>
-<li>为什么使用execve创建远程shell不会覆盖文件描述符和套接字？</li>
-<li>C 和 Golang 真的有千丝万缕的联系，比如 <code>atexit()</code> 与 <code>defer func(){}</code></li>
-</ul>
+<p><img src="https://i.loli.net/2019/11/30/7jliopUsPdcItS8.png" alt="image.png" /></p>
 
 <h1 id="知识图谱">知识图谱</h1>
 
 <h2 id="线程">线程</h2>
 
-<h3 id="线程的创建过程">线程的创建过程</h3>
+<h3 id="1-线程的创建过程">1.  线程的创建过程</h3>
 
 <p>pthread_atfork 函数解决多线程多进程死锁问题</p>
 
@@ -216,7 +219,97 @@ locks.</p>
 <p>当调用fork时，内部<code>创建子进程前</code>在父进程中会调用prepare，内部<code>创建子进程成功后</code>，父进程会调用parent ，子进程会调用child。</p>
 </blockquote>
 
-<h3 id="线程的销毁过程">线程的销毁过程</h3>
+<h3 id="2-线程的销毁过程">2. 线程的销毁过程</h3>
+
+<blockquote>
+<p>问题 1 什么场景下使用 join ，什么场景下使用 detach ?</p>
+</blockquote>
+
+<p>Detaching is not a no-no. It’s legal, a lot of high-quality production code have it,</p>
+
+<p>it just might be dangerous. So, think carefully when choosing between join and detach.</p>
+
+<p>Whether an <code>std::thread</code> object <strong>is</strong> or <strong>is not</strong> <em>joinable</em> determines whether you <strong>may</strong> or <strong>may not</strong> <em>join</em> or <em>detach</em> it.</p>
+
+<p>it up to you</p>
+
+<p>it up to you</p>
+
+<blockquote>
+<p>小王：第一次尝试回答</p>
+</blockquote>
+
+<ul>
+<li><p>If at any point the object is <em>joined</em> (by calling <code>*join()*</code>), the parent thread will wait there for the child to complete its job.</p></li>
+
+<li><p>If it’s <em>detached</em> (by calling <code>*detach()*</code>), it will keep running in the background and the parent thread won’t wait for it to finish.</p></li>
+</ul>
+
+<blockquote>
+<p>老王：不懂 不懂 不懂，我问什么时候该设置 join /detach，什么时候不该什么设置join /detach，</p>
+
+<p>你回答用法.不符合题目要求，你考虑下main函数是如何离开的？</p>
+</blockquote>
+
+<p>This answer is aimed at answering question in the title（ when should <code>std::thread::detach</code> should be used? ）, rather than explaining the difference between <code>join</code> and <code>detach</code>.</p>
+
+<blockquote>
+<p>小王一头雾水，表示 还能怎么分析，没有思路,</p>
+</blockquote>
+
+<ul>
+<li>man pthread_detach<br /></li>
+</ul>
+
+<p><a href="http://man7.org/linux/man-pages/man3/pthread_detach.3.html">http://man7.org/linux/man-pages/man3/pthread_detach.3.html</a></p>
+
+<p><img src="https://i.loli.net/2019/11/30/R38sZjhMDom4ULn.png" alt="man" /></p>
+
+<p>The detached attribute merely determines the behavior of the system when the thread terminates; it does not prevent the thread from being terminated  if  the process terminates using exit(3) (or equivalently, if the main thread returns).</p>
+
+<p>一个线程异常，整个进程退出（正确）</p>
+
+<p>一个线程退出，整个进程结束（错误）</p>
+
+<p>主进程退出，整个进程结束（正确）</p>
+
+<p>main函数都退出了，整个进程空间都消失了，不管什么样方式进程 都会别被销毁的。</p>
+
+<p>为工作线程执行时间长短不确定（即使非阻塞，或者sleep 来控制，还有cpu调度因素考虑）</p>
+
+<p>这就是我理解必须通过join方式阻塞main线程。</p>
+
+<p><a href="http://man7.org/linux/man-pages/man3/pthread_detach.3.html">http://man7.org/linux/man-pages/man3/pthread_detach.3.html</a></p>
+
+<p><a href="https://www.youtube.com/watch?v=q3-5sDe6lzg">https://www.youtube.com/watch?v=q3-5sDe6lzg</a></p>
+
+<p><a href="https://stackoverflow.com/questions/6042970/pthread-detach-question">https://stackoverflow.com/questions/6042970/pthread-detach-question</a></p>
+
+<p><a href="https://medium.com/@vgasparyan1995/let-me-detach-those-threads-for-you-2de014b26394">https://medium.com/@vgasparyan1995/let-me-detach-those-threads-for-you-2de014b26394</a></p>
+
+<h3 id="3-线程安全">3.线程安全</h3>
+
+<blockquote>
+<p>陈咬金的三板斧 来了</p>
+
+<p>第一斧：技术本质是什么？</p>
+
+<p>第二斧：考虑哪些问题？</p>
+
+<p>第三斧：如何使用？</p>
+</blockquote>
+
+<h4 id="第一斧-技术本质是什么">第一斧：技术本质是什么？</h4>
+
+<h4 id="第二斧-考虑哪些问题">第二斧：考虑哪些问题？</h4>
+
+<ul>
+<li>线程可重入</li>
+<li>线程与信号</li>
+<li>线程与fork</li>
+</ul>
+
+<h4 id="第三斧-如何使用">第三斧：如何使用？</h4>
 
 <h2 id="进程">进程</h2>
 
@@ -233,10 +326,12 @@ locks.</p>
 <ul>
 <li>pthread_create: flags参数为 CLONE_VM, CLONE_FS, CLONE_FILES, CLONE_SIGHAND</li>
 <li>fork: flags参数为 SIGCHLD</li>
-<li>vfork: flags参数为 CLONE_VFORK, CLONE_VM, SIGCHLD</li>
-</ul>
+<li>vfork: flags参数为 CLONE_VFORK, CLONE_VM, SIGCHLD
 
-<p><img src="http://gityuan.com/images/linux/process/clone_flags.jpg" alt="clone_flags" /></p>
+
+
+<br /></li>
+</ul>
 
 <h4 id="运行应用程序-由fork-exec对完成">运行应用程序( 由fork / exec对完成 )</h4>
 
@@ -246,7 +341,11 @@ locks.</p>
 <p>shell 每次执行指令， 需要 fork 出一个子进程来执行，然后将子进程的镜像替换成目标指令，</p>
 
 <p>这又会用到 exec 函数。比如下面这条简单的指令</p>
+
+<p>putty工具登录</p>
 </blockquote>
+
+<p><img src="https://i.loli.net/2019/11/30/fvt5JX4mZ3AUOFB.png" alt="image.png" /></p>
 
 <p>参考</p>
 
@@ -468,6 +567,17 @@ fs.file-max = 655360</pre></td></tr></table>
 </blockquote>
 
 <p><img src="https://i.loli.net/2019/11/30/9rzlZ34KDHLfeY2.png" alt="image.png" /></p>
+
+<h1 id="相关问题">相关问题</h1>
+
+<ul>
+<li>Linux中fork子进程后再exec新程序时文件描述符的问题？</li>
+<li>关于linux进程间的<a href="https://cloud.tencent.com/developer/article/1177094">close-on-exec</a>机制</li>
+<li><a href="https://xnerv.wang/linux-process-kernel-and-file-system-summary/">LinuxThreads的不足</a></li>
+<li>TCP listening sockets created without FD_CLOEXEC flag</li>
+<li>为什么使用execve创建远程shell不会覆盖文件描述符和套接字？</li>
+<li>C 和 Golang 真的有千丝万缕的联系，比如 <code>atexit()</code> 与 <code>defer func(){}</code></li>
+</ul>
 
     </div>
 
