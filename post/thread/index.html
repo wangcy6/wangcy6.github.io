@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="这里主要记录学习和探索过程。来验证正确方法才能有正确的结果。 走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="多进程多线程篇" />
-<meta property="og:description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴" />
+<meta property="og:description" content="这里主要记录学习和探索过程。来验证正确方法才能有正确的结果。 走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/thread/" />
 <meta property="article:published_time" content="2019-11-29T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-11-29T00:00:00+00:00" />
 <meta itemprop="name" content="多进程多线程篇">
-<meta itemprop="description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴">
+<meta itemprop="description" content="这里主要记录学习和探索过程。来验证正确方法才能有正确的结果。 走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更">
 
 
 <meta itemprop="datePublished" content="2019-11-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2334">
+<meta itemprop="wordCount" content="3269">
 
 
 
 <meta itemprop="keywords" content="book," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多进程多线程篇"/>
-<meta name="twitter:description" content="走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更喜欢一边爬行一边生活？– 鲁米 You were born with wings. Why prefer to crawl through life? 你不是一滴"/>
+<meta name="twitter:description" content="这里主要记录学习和探索过程。来验证正确方法才能有正确的结果。 走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -136,8 +136,8 @@
         <div class="post-category">
             <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/"> 操作系统原理 </a>
             </div>
-          <span class="more-meta"> 约 2334 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 3269 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -154,7 +154,15 @@
 <li><a href="#线程">线程</a>
 <ul>
 <li><a href="#1-线程的创建过程">1.  线程的创建过程</a></li>
-<li><a href="#2-线程的销毁过程">2. 线程的销毁过程</a></li>
+<li><a href="#2-线程的销毁过程">2. 线程的销毁过程</a>
+<ul>
+<li>
+<ul>
+<li><a href="#man-pthread-detach">man pthread_detach</a></li>
+<li><a href="#man-pthread-exit">man pthread_exit</a></li>
+<li><a href="#man-exit">man exit</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#3-线程安全">3.线程安全</a>
 <ul>
 <li><a href="#第一斧-技术本质是什么">第一斧：技术本质是什么？</a></li>
@@ -179,6 +187,10 @@
 </div>
     <div class="post-content">
       
+
+<blockquote>
+<p>这里主要记录学习和探索过程。来验证正确方法才能有正确的结果。</p>
+</blockquote>
 
 <h1 id="走神一会">走神一会</h1>
 
@@ -227,13 +239,17 @@ locks.</p>
 
 <p>Detaching is not a no-no. It’s legal, a lot of high-quality production code have it,</p>
 
-<p>it just might be dangerous. So, think carefully when choosing between join and detach.</p>
+<p>it just might be <strong>dangerous</strong>. (一方面提倡使用，一方面说危险，哪里危险了，给出三个例子，因为工作线程无论是简单业务逻辑还是异步处理 执行时间在多线程环境下是不可预估的。一切无法控制的，这多线程危险)</p>
+
+<p>So, think carefully when choosing between join and detach.</p>
 
 <p>Whether an <code>std::thread</code> object <strong>is</strong> or <strong>is not</strong> <em>joinable</em> determines whether you <strong>may</strong> or <strong>may not</strong> <em>join</em> or <em>detach</em> it.</p>
 
 <p>it up to you</p>
 
 <p>it up to you</p>
+
+<p>（我哪里知道？？）</p>
 
 <blockquote>
 <p>小王：第一次尝试回答</p>
@@ -257,15 +273,15 @@ locks.</p>
 <p>小王一头雾水，表示 还能怎么分析，没有思路,</p>
 </blockquote>
 
-<ul>
-<li>man pthread_detach<br /></li>
-</ul>
+<h5 id="man-pthread-detach">man pthread_detach</h5>
 
 <p><a href="http://man7.org/linux/man-pages/man3/pthread_detach.3.html">http://man7.org/linux/man-pages/man3/pthread_detach.3.html</a></p>
 
 <p><img src="https://i.loli.net/2019/11/30/R38sZjhMDom4ULn.png" alt="man" /></p>
 
-<p>The detached attribute merely determines the behavior of the system when the thread terminates; it does not prevent the thread from being terminated  if  the process terminates using exit(3) (or equivalently, if the main thread returns).</p>
+<p>The detached attribute merely determines the behavior of the system when the thread terminates; it does not prevent the thread from being terminated</p>
+
+<p>if  the process terminates <strong>using exit(3) (or equivalently, if the main thread returns).</strong></p>
 
 <p>一个线程异常，整个进程退出（正确）</p>
 
@@ -279,6 +295,208 @@ locks.</p>
 
 <p>这就是我理解必须通过join方式阻塞main线程。</p>
 
+<h5 id="man-pthread-exit">man pthread_exit</h5>
+
+<p>在notes 最重要的一句话</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">To</span> <span class="n">allow</span> <span class="n">other</span> <span class="n">threads</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">execution</span><span class="p">,</span> 
+<span class="n">the</span> <span class="n">main</span> <span class="kr">thread</span> <span class="n">should</span> <span class="n">terminate</span> <span class="n">by</span> <span class="n">calling</span> <span class="n">pthread_exit</span><span class="p">()</span> <span class="n">rather</span> <span class="n">than</span> <span class="n">exit</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>解释：</p>
+
+<ul>
+<li><p>pthread_exit 作用就是只终止调用线程，就是自己(这个我知道了，exit就是推出)</p></li>
+
+<li><p>pthread_exit 只清楚自己的数据(这个我知道了，exit就是推出)</p></li>
+
+<li><p>pthread_exit 不清理全局共享的数据，通过atexit()方式注册的销毁数据方式，不被执行（atexit是进程退出执行）</p></li>
+
+<li><p>如果终止是最后一个线程。真个进程调用exit退出，销毁整个进程。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">http</span><span class="p">:</span><span class="c1">//man7.org/linux/man-pages/man3/pthread_exit.3.html 
+</span><span class="c1"></span><span class="n">NAME</span>  
+   <span class="kt">void</span> <span class="n">pthread_exit</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">retval</span><span class="p">);</span>
+<span class="n">DESCRIPTION</span>        
+    
+   <span class="n">The</span> <span class="nf">pthread_exit</span><span class="p">()</span> <span class="n">function</span> <span class="n">terminates</span> <span class="n">the</span> <span class="n">calling</span> <span class="kr">thread</span> <span class="n">and</span> <span class="n">returns</span>
+   <span class="n">a</span> <span class="n">value</span> <span class="n">via</span> <span class="n">retval</span> <span class="n">that</span> <span class="p">(</span><span class="k">if</span> <span class="n">the</span> <span class="kr">thread</span> <span class="n">is</span> <span class="n">joinable</span><span class="p">)</span> <span class="n">is</span> <span class="n">available</span> <span class="n">to</span>
+   <span class="n">another</span> <span class="kr">thread</span> <span class="n">in</span> <span class="n">the</span> <span class="n">same</span> <span class="n">process</span> <span class="n">that</span> <span class="n">calls</span> <span class="n">pthread_join</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span>
+
+   <span class="n">Any</span> <span class="n">clean</span><span class="o">-</span><span class="n">up</span> <span class="n">handlers</span> <span class="n">established</span> <span class="n">by</span> <span class="n">pthread_cleanup_push</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">that</span>
+   <span class="n">have</span> <span class="n">not</span> <span class="n">yet</span> <span class="n">been</span> <span class="n">popped</span><span class="p">,</span> <span class="n">are</span> <span class="n">popped</span> <span class="p">(</span><span class="n">in</span> <span class="n">the</span> <span class="n">reverse</span> <span class="n">of</span> <span class="n">the</span> <span class="n">order</span> <span class="n">in</span>
+   <span class="n">which</span> <span class="n">they</span> <span class="n">were</span> <span class="n">pushed</span><span class="p">)</span> <span class="n">and</span> <span class="n">executed</span><span class="p">.</span>  <span class="n">If</span> <span class="n">the</span> <span class="kr">thread</span> <span class="n">has</span> <span class="n">any</span> <span class="kr">thread</span><span class="o">-</span>
+   <span class="n">specific</span> <span class="n">data</span><span class="p">,</span> <span class="n">then</span><span class="p">,</span> <span class="n">after</span> <span class="n">the</span> <span class="n">clean</span><span class="o">-</span><span class="n">up</span> <span class="n">handlers</span> <span class="n">have</span> <span class="n">been</span> <span class="n">executed</span><span class="p">,</span>
+   <span class="n">the</span> <span class="n">corresponding</span> <span class="n">destructor</span> <span class="n">functions</span> <span class="n">are</span> <span class="n">called</span><span class="p">,</span> <span class="n">in</span> <span class="n">an</span> <span class="n">unspecified</span>
+   <span class="n">order</span><span class="p">.</span>
+
+   <span class="n">When</span> <span class="n">a</span> <span class="kr">thread</span> <span class="n">terminates</span><span class="p">,</span> <span class="n">process</span><span class="o">-</span><span class="n">shared</span> <span class="n">resources</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span> <span class="n">mutexes</span><span class="p">,</span>
+   <span class="n">condition</span> <span class="n">variables</span><span class="p">,</span> <span class="n">semaphores</span><span class="p">,</span> <span class="n">and</span> <span class="n">file</span> <span class="n">descriptors</span><span class="p">)</span> <span class="n">are</span> <span class="n">not</span>
+   <span class="n">released</span><span class="p">,</span> <span class="n">and</span> <span class="n">functions</span> <span class="n">registered</span> <span class="n">using</span> <span class="n">atexit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">are</span> <span class="n">not</span> <span class="n">called</span><span class="p">.</span>
+
+   <span class="n">After</span> <span class="n">the</span> <span class="n">last</span> <span class="kr">thread</span> <span class="n">in</span> <span class="n">a</span> <span class="n">process</span> <span class="n">terminates</span><span class="p">,</span> <span class="n">the</span> <span class="n">process</span> <span class="n">terminates</span>
+   <span class="n">as</span> <span class="n">by</span> <span class="n">calling</span> <span class="n">exit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">with</span> <span class="n">an</span> <span class="n">exit</span> <span class="n">status</span> <span class="n">of</span> <span class="n">zero</span><span class="p">;</span> <span class="n">thus</span><span class="p">,</span> <span class="n">process</span><span class="o">-</span>
+   <span class="n">shared</span> <span class="n">resources</span> <span class="n">are</span> <span class="n">releas</span>
+<span class="n">NOTES</span>       
+           
+   <span class="n">Performing</span> <span class="n">a</span> <span class="k">return</span> <span class="n">from</span> <span class="n">the</span> <span class="n">start</span> <span class="n">function</span> <span class="n">of</span> <span class="n">any</span> <span class="kr">thread</span> <span class="n">other</span> <span class="n">than</span>
+   <span class="n">the</span> <span class="n">main</span> <span class="kr">thread</span> <span class="n">results</span> <span class="n">in</span> <span class="n">an</span> <span class="n">implicit</span> <span class="n">call</span> <span class="n">to</span> <span class="n">pthread_exit</span><span class="p">(),</span> <span class="n">using</span>
+   <span class="n">the</span> <span class="n">function</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">return</span> <span class="n">value</span> <span class="n">as</span> <span class="n">the</span> <span class="kr">thread</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">exit</span> <span class="n">status</span><span class="p">.</span>
+
+   <span class="n">To</span> <span class="n">allow</span> <span class="n">other</span> <span class="n">threads</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">execution</span><span class="p">,</span> <span class="n">the</span> <span class="n">main</span> <span class="kr">thread</span> <span class="n">should</span>
+   <span class="n">terminate</span> <span class="n">by</span> <span class="n">calling</span> <span class="n">pthread_exit</span><span class="p">()</span> <span class="n">rather</span> <span class="n">than</span> <span class="n">exit</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span>
+
+   <span class="n">The</span> <span class="n">value</span> <span class="n">pointed</span> <span class="n">to</span> <span class="n">by</span> <span class="n">retval</span> <span class="n">should</span> <span class="n">not</span> <span class="n">be</span> <span class="n">located</span> <span class="n">on</span> <span class="n">the</span> <span class="n">calling</span>
+   <span class="kr">thread</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">stack</span><span class="p">,</span> <span class="n">since</span> <span class="n">the</span> <span class="n">contents</span> <span class="n">of</span> <span class="n">that</span> <span class="n">stack</span> <span class="n">are</span> <span class="n">undefined</span> <span class="n">after</span>
+   <span class="n">the</span> <span class="kr">thread</span> <span class="n">terminates</span><span class="p">.</span>
+           </code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h5 id="man-exit">man exit</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">exit - cause normal process termination
+
+ The exit() function causes normal process termination and the value
+       of status &amp; 0377 is returned to the parent (see wait(2)).
+  看进程的销毁图片         
+  All functions registered with atexit(3) and on_exit(3) are called, in
+       the reverse order of their registration.
+
+  
+  NOTE
+ 进程销毁 上下都要打点
+ 
+   After exit(), the exit status must be transmitted to the parent
+       process.  There are three cases:
+
+       ·  If the parent has set SA_NOCLDWAIT, or has set the SIGCHLD handler
+          to SIG_IGN, the status is discarded and the child dies
+          immediately.
+
+       ·  If the parent was waiting on the child, it is notified of the exit
+          status and the child dies immediately.
+
+       ·  Otherwise, the child becomes a &#34;zombie&#34; process: most of the
+          process resources are recycled, but a slot containing minimal
+          information about the child process (termination status, resource
+          usage statistics) is retained in process table.  This allows the
+          parent to subsequently use waitpid(2) (or similar) to learn the
+          termination status of the child; at that point the zombie process
+          slot is released.
+
+       If the implementation supports the SIGCHLD signal, this signal is
+       sent to the parent.  If the parent has set SA_NOCLDWAIT, it is
+       undefined whether a SIGCHLD signal is sent.
+
+   Signals sent to other processes
+       If the exiting process is a session leader and its controlling
+       terminal is the controlling terminal of the session, then each
+       process in the foreground process group of this controlling terminal
+       is sent a SIGHUP signal, and the terminal is disassociated from this
+       session, allowing it to be acquired by a new controlling process.
+
+       If the exit of the process causes a process group to become orphaned,
+       and if any member of the newly orphaned process group is stopped,
+       then a SIGHUP signal followed by a SIGCONT signal will be sent to
+       each process in this process group.  See setpgid(2) for an
+       explanation of orphaned process groups.</pre></td></tr></table>
+</div>
+</div>
 <p><a href="http://man7.org/linux/man-pages/man3/pthread_detach.3.html">http://man7.org/linux/man-pages/man3/pthread_detach.3.html</a></p>
 
 <p><a href="https://www.youtube.com/watch?v=q3-5sDe6lzg">https://www.youtube.com/watch?v=q3-5sDe6lzg</a></p>
