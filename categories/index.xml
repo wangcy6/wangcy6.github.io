@@ -6,10 +6,28 @@
     <description>Recent content in Categories on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 29 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>tool</title>
+      <link>https://wangcy6.github.io/categories/tool/</link>
+      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/tool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>每周阅读一本书</title>
+      <link>https://wangcy6.github.io/categories/%E6%AF%8F%E5%91%A8%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/</link>
+      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/%E6%AF%8F%E5%91%A8%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>操作系统原理</title>
@@ -94,19 +112,19 @@
     
     <item>
       <title>Book</title>
-      <link>https://wangcy6.github.io/categories/Book/</link>
+      <link></link>
       <pubDate>Fri, 11 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid>https://wangcy6.github.io/categories/Book/</guid>
+      <guid></guid>
       <description></description>
     </item>
     
     <item>
       <title>book</title>
-      <link></link>
+      <link>https://wangcy6.github.io/categories/book/</link>
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid></guid>
+      <guid>https://wangcy6.github.io/categories/book/</guid>
       <description></description>
     </item>
     

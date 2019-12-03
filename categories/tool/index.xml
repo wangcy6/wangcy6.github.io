@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tool on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/tool/</link>
+    <description>Recent content in tool on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 02 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/categories/tool/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>提高工作效率的几个工具</title>
+      <link>https://wangcy6.github.io/post/%E4%BD%BF%E7%94%A8Samba%E6%88%96NFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/</link>
+      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/%E4%BD%BF%E7%94%A8Samba%E6%88%96NFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/</guid>
+      <description>代码提交工具 一. 文件共享利器——Samba 安装配置 1 2 3 4 5 6 yum install -y samba cd /etc/samba 启动samba服务 systemctl restart smb journalctl -xe 检查错误日志</description>
+    </item>
+    
+  </channel>
+</rss>
