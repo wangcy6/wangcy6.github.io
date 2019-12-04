@@ -22,11 +22,11 @@
     
     <item>
       <title>提高工作效率的几个工具</title>
-      <link>https://wangcy6.github.io/post/%E4%BD%BF%E7%94%A8Samba%E6%88%96NFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/</link>
+      <link>https://wangcy6.github.io/post/%E6%8F%90%E9%AB%98%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/%E4%BD%BF%E7%94%A8Samba%E6%88%96NFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/</guid>
-      <description>代码提交工具 一. 文件共享利器——Samba 安装配置 1 2 3 4 5 6 7 8 9 yum install -y samba cd /etc/samba 启动samba服务 systemctl restart smb 检查错误日志 systemctl status smb.service journalctl -xe 错误日志： Process: 26568</description>
+      <guid>https://wangcy6.github.io/post/%E6%8F%90%E9%AB%98%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B7%A5%E5%85%B7/</guid>
+      <description>代码提交工具 一. 文件共享利器——Samba 安装配置 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45</description>
     </item>
     
     <item>
