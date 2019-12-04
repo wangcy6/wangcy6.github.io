@@ -17,7 +17,7 @@
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/%E4%BD%BF%E7%94%A8Samba%E6%88%96NFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/</guid>
-      <description>代码提交工具 一. 文件共享利器——Samba 安装配置 1 2 3 4 5 6 yum install -y samba cd /etc/samba 启动samba服务 systemctl restart smb journalctl -xe 检查错误日志</description>
+      <description>代码提交工具 一. 文件共享利器——Samba 安装配置 1 2 3 4 5 6 7 8 9 yum install -y samba cd /etc/samba 启动samba服务 systemctl restart smb 检查错误日志 systemctl status smb.service journalctl -xe 错误日志： Process: 26568</description>
     </item>
     
   </channel>

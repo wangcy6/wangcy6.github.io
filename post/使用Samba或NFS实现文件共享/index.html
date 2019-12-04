@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="57">
+<meta itemprop="wordCount" content="87">
 
 
 
@@ -136,7 +136,7 @@
         <div class="post-category">
             <a href="/categories/tool/"> tool </a>
             </div>
-          <span class="more-meta"> 约 57 字 </span>
+          <span class="more-meta"> 约 87 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -174,6 +174,9 @@
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">yum install -y samba
@@ -181,9 +184,20 @@
 
 启动samba服务
 systemctl restart smb
-journalctl -xe 检查错误日志</code></pre></td></tr></table>
+
+检查错误日志
+systemctl status smb.service
+journalctl -xe</code></pre></td></tr></table>
 </div>
 </div>
+<p>错误日志：</p>
+
+<p>Process: 26568 ExecStart=/usr/sbin/smbd &ndash;foreground &ndash;no-process-group $SMBDOPTIONS (code=exited, status=1/FAILURE)</p>
+
+<p>关键词：</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Process_group">Process group</a>  <a href="https://yifei.me/note/482/">进程组</a>   <a href="http://man7.org/linux/man-pages/man7/daemon.7.html">background process</a></p>
+
     </div>
 
     <div class="post-copyright">
