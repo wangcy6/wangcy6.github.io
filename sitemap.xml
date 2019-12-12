@@ -9,7 +9,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/book_thing_cpp/</loc>
+    <loc>https://wangcy6.github.io/post/book_thingin_c&#43;&#43;/</loc>
     <lastmod>2019-12-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -23,7 +23,42 @@
   </url>
   
   <url>
+    <loc>https://wangcy6.github.io/categories/liunx/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/man/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/Linux/man/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/post/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/redis/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/DataBase/server_redis/</loc>
     <lastmod>2019-12-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -59,6 +94,13 @@
   
   <url>
     <loc>https://wangcy6.github.io/tags/%E6%95%88%E7%8E%87%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2019-12-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2019-12-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -121,7 +163,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/FQA_Linux_one/</loc>
+    <loc>https://wangcy6.github.io/post/FQA/FQA_Linux_one/</loc>
     <lastmod>2019-11-26T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -163,7 +205,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/FQA_Redis/</loc>
+    <loc>https://wangcy6.github.io/post/FQA/FQA_Redis/</loc>
     <lastmod>2019-11-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -184,7 +226,14 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/FQA_Linux/</loc>
+    <loc>https://wangcy6.github.io/post/FQA/FQA_Linux/</loc>
+    <lastmod>2019-11-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</loc>
     <lastmod>2019-11-16T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -198,7 +247,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/FQA_Service_Mesh/</loc>
+    <loc>https://wangcy6.github.io/post/FQA/FQA_Service_Mesh/</loc>
     <lastmod>2019-11-13T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -275,7 +324,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/%E5%89%91%E6%8C%87Offer_36_%E9%80%86%E5%BA%8F%E5%AF%B9/</loc>
+    <loc>https://wangcy6.github.io/post/leetcode/%E5%89%91%E6%8C%87Offer_36_%E9%80%86%E5%BA%8F%E5%AF%B9/</loc>
     <lastmod>2019-10-10T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -310,14 +359,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/book_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/</loc>
-    <lastmod>2019-10-10T17:02:43+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/Memcached/</loc>
+    <loc>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_book/</loc>
     <lastmod>2019-10-10T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -325,6 +367,13 @@
   
   <url>
     <loc>https://wangcy6.github.io/tags/Memcached/</loc>
+    <lastmod>2019-10-10T17:02:43+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/Memcached/</loc>
     <lastmod>2019-10-10T17:02:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

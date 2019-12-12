@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redis on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/redis/</link>
+    <description>Recent content in redis on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 02 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>redis必须掌握几个知识点</title>
+      <link>https://wangcy6.github.io/post/DataBase/server_redis/</link>
+      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/DataBase/server_redis/</guid>
+      <description>版本 最新特性是什么 版本 发布日期 其中一个特性 Redis2.8 2013年11月22 一个key的类型和编码类型是什么？ Redis3.0（里程碑） 2015年4月1</description>
+    </item>
+    
+  </channel>
+</rss>
