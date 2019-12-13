@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>xmind · Troy的网络博客</title>
+  <title>Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -26,9 +26,9 @@
 <meta name="generator" content="Hugo 0.58.3 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/categories/xmind/" />
-  <link href="https://wangcy6.github.io/categories/xmind/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
-  <link href="https://wangcy6.github.io/categories/xmind/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="canonical" href="https://wangcy6.github.io/" />
+  <link href="https://wangcy6.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
+  <link href="https://wangcy6.github.io/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,17 +40,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="xmind" />
+<meta property="og:title" content="Troy的网络博客" />
 <meta property="og:description" content="Troy&#39;s Blog" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://wangcy6.github.io/categories/xmind/" />
+<meta property="og:url" content="https://wangcy6.github.io/" />
 
 <meta property="og:updated_time" content="2019-12-12T00:00:00+00:00" />
-<meta itemprop="name" content="xmind">
+<meta itemprop="name" content="Troy的网络博客">
 <meta itemprop="description" content="Troy&#39;s Blog">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="xmind"/>
+<meta name="twitter:title" content="Troy的网络博客"/>
 <meta name="twitter:description" content="Troy&#39;s Blog"/>
 
 <!--[if lte IE 9]>
@@ -120,36 +120,50 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="archive" class="archive">
-  <div class="archive-title category">
-        <h2 class="archive-name">xmind</h2>
-      </div>
-
-  <div class="archive-post">
-      <span class="archive-post-time">
-        2019-12-12 00:00
-      </span>
-      <span class="archive-post-title">
-        <a href="/post/ToDo/courses/" class="archive-post-link">
-          学习课程
-        </a>
-      </span>
-    </div><div class="archive-post">
-      <span class="archive-post-time">
-        2019-12-12 00:00
-      </span>
-      <span class="archive-post-title">
-        <a href="/post/Mind/%E5%A4%A7%E8%84%91%E7%9A%84%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/" class="archive-post-link">
-          大脑的维修艺术
-        </a>
-      </span>
+          <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/file/"></a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 0001-01-01 00:00 </span>
+      
+        <span class="more-meta"> 约 1425 字 </span>
+        <span class="more-meta"> 预计阅读 7 分钟 </span>
     </div>
-</section>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      文件系统-知识地图 知识卡 https://github.com/wangcy6/weekly/blob/master/KM/01%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86/file.md
+阅读相关书籍  Linux 0.11内核完全注释 Linux内核设计与实现(第三版中文高清带目录) Linux设备驱动程序. Understanding the Linux Kernel, 3rd Editio Linux.Kernel.Cache MySQL技术内幕(InnoDB存储引擎)第2版. 性能之巅 洞悉系统、企业与云计算(完整版)  找不到电子版book
+第一性原理  mysql 有b+作为索引，为什么liunx文件系统不用b+索引结构，采用inode下面一个固定大小数组来表示？
+ 为什么需要进行“格式化”呢
+ ls -i 显示inode 就是 long 类型的编号 还有什么呀？
+ 文件存储在哪里呀？内存还是磁盘
+ 什么是缓存呀
+ cache和buffer dentry objects and inode object 都在内存里有啥 区别？
+  概念理解  缓存  文件系统 在 Linux 中一切皆文件。不仅普通的文件和目录，就连块设备、套接字、管道等，也都要通过统一的文件系统来管理。
+Linux 下的文件系统主要可分为三大块：
+一是上层的文件系统的系统调用，
+二是虚拟文件系统 VFS(Virtual Filesystem Switch)，
+三是挂载到 VFS 中的各实际文件系统
+第一个问题：文件系统类型有哪些？  字符设备、块设备、网络设备
+    </div>
+    <div class="read-more">
+      <a href="/post/file/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
 
-<nav class="pagination">
+    </section>
   
-  
-</nav>
+  <nav class="pagination">
+    <a class="prev" href="/page/5/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    
+  </nav>
         </div>
         
 
@@ -200,6 +214,13 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 
