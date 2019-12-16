@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="21534">
+<meta itemprop="wordCount" content="21537">
 
 
 
@@ -136,7 +136,7 @@
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 21534 字 </span>
+          <span class="more-meta"> 约 21537 字 </span>
           <span class="more-meta"> 预计阅读 43 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -152,17 +152,11 @@
 <li><a href="#当你的才华撑不起你的野心时-就应该静下心来好好学习">当你的才华撑不起你的野心时，就应该静下心来好好学习。</a></li>
 </ul></li>
 <li><a href="#知识卡">知识卡</a></li>
-<li><a href="#一-基础">一、基础</a>
+<li><a href="#一-进程">一、进程</a>
 <ul>
-<li><a href="#1-进程">1、进程</a>
+<li><a href="#问题1-1-execve-函数使用过程中注意事项">问题1.1  execve 函数使用过程中注意事项</a>
 <ul>
-<li><a href="#execve-函数使用过程中注意事项">execve 函数使用过程中注意事项</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#linux中fork子进程后再exec新程序时文件描述符的问题">Linux中fork子进程后再exec新程序时文件描述符的问题？</a>
-<ul>
-<li>
-<ul>
+<li><a href="#linux中fork子进程后再exec新程序时文件描述符的问题">Linux中fork子进程后再exec新程序时文件描述符的问题？</a></li>
 <li><a href="#问1-进程间通信方式">问1 ：进程间通信方式</a>
 <ul>
 <li><a href="#最常用的socket-tcp-udp">最常用的socket（TCP/UDP）</a></li>
@@ -228,26 +222,31 @@
 </ul></li>
 <li><a href="#netty">Netty</a></li>
 </ul></li>
-<li><a href="#线程">线程</a>
+<li><a href="#二-线程">二、线程</a>
+<ul>
+<li><a href="#问2-1-什么是线程">问2.1 什么是线程？</a>
 <ul>
 <li>
-<ul>
-<li><a href="#一-问2-线程同步方式">一. 问2 线程同步方式？</a>
 <ul>
 <li><a href="#大王-你平时用c比较多-还是c-比较多">大王： 你平时用c比较多，还是c++比较多？</a></li>
 <li><a href="#大王-你用c-编程-多线程-采用是c-11提供的std-thread吗">大王： 你用c++编程，多线程 采用是c++11提供的std::thread吗？</a></li>
 </ul></li>
-<li><a href="#核心资源">核心资源：</a>
+<li><a href="#核心资源">核心资源：</a></li>
+</ul></li>
+<li><a href="#问2-2大王-linuxthreads有什不足">问2.2大王：LinuxThreads有什不足？</a>
+<ul>
+<li>
 <ul>
 <li><a href="#小王-创建一个概念上用户线程-就需要创建一个lwp-chone-共享-就消耗内存栈和id资源-系统资源有限-一个系统不能支持大量的lwp-不会创建线程">小王：创建一个概念上用户线程，就需要创建一个LWP（chone 共享），就消耗内存栈和id资源，系统资源有限，一个系统不能支持大量的LWP，不会创建线程。</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
-<li><a href="#linux-内核进程管理之进程id-https-www-cnblogs-com-hazir-p-linux-kernel-pid-html"><a href="https://www.cnblogs.com/hazir/p/linux_kernel_pid.html">Linux 内核进程管理之进程ID</a></a>
+<li><a href="#linux-内核进程管理之进程id-https-www-cnblogs-com-hazir-p-linux-kernel-pid-html"><a href="https://www.cnblogs.com/hazir/p/linux_kernel_pid.html">Linux 内核进程管理之进程ID</a></a></li>
+<li><a href="#三-文件系统">三、文件系统</a>
 <ul>
-<li><a href="#2-文件系统">2、文件系统</a>
+<li><a href="#问3-1-一次write操作-数据写入内存那个部分">问3.1 一次write操作，数据写入内存那个部分？</a>
 <ul>
-<li><a href="#问2-一次write操作-数据写入内存那个部分">问2 一次write操作，数据写入内存那个部分？</a>
+<li>
 <ul>
 <li><a href="#一-write文件有那2个方式呀">一.  write文件有那2个方式呀？</a>
 <ul>
@@ -334,13 +333,11 @@
 <li></li>
 </ol>
 
-<h1 id="一-基础">一、基础</h1>
+<h1 id="一-进程">一、进程</h1>
 
-<h2 id="1-进程">1、进程</h2>
+<h2 id="问题1-1-execve-函数使用过程中注意事项">问题1.1  execve 函数使用过程中注意事项</h2>
 
-<h3 id="execve-函数使用过程中注意事项">execve 函数使用过程中注意事项</h3>
-
-<h1 id="linux中fork子进程后再exec新程序时文件描述符的问题">Linux中fork子进程后再exec新程序时文件描述符的问题？</h1>
+<h3 id="linux中fork子进程后再exec新程序时文件描述符的问题">Linux中fork子进程后再exec新程序时文件描述符的问题？</h3>
 
 <blockquote>
 <p>小王回答：</p>
@@ -1007,9 +1004,9 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <p>Google Protocol Buffer</p>
 
-<h1 id="线程">线程</h1>
+<h1 id="二-线程">二、线程</h1>
 
-<h3 id="一-问2-线程同步方式">一. 问2 线程同步方式？</h3>
+<h2 id="问2-1-什么是线程">问2.1 什么是线程？</h2>
 
 <blockquote>
 <p>线程并发2个方式 消息传递，共享对象</p>
@@ -1088,7 +1085,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <p>For more information, see the <a href="https://www.lix.polytechnique.fr/~liberti/public/computing/parallel/threads/linuxthreads/README">LinuxThreads README</a> and the <a href="https://www.lix.polytechnique.fr/~liberti/public/computing/parallel/threads/linuxthreads/faq.html">LinuxThreads Frequently Asked Questions</a>.</p>
 
-<p>大王：LinuxThreads的不足，有什么缺点？</p>
+<h2 id="问2-2大王-linuxthreads有什不足">问2.2大王：LinuxThreads有什不足？</h2>
 
 <blockquote>
 <p>画外音：</p>
@@ -1433,9 +1430,9 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 
 <p>st_thread_create</p>
 
-<h2 id="2-文件系统">2、文件系统</h2>
+<h1 id="三-文件系统">三、文件系统</h1>
 
-<h3 id="问2-一次write操作-数据写入内存那个部分">问2 一次write操作，数据写入内存那个部分？</h3>
+<h2 id="问3-1-一次write操作-数据写入内存那个部分">问3.1 一次write操作，数据写入内存那个部分？</h2>
 
 <p><img src="https://i.loli.net/2019/11/12/JoQmkNVMSRAG7U9.png" alt="image.png" /></p>
 
