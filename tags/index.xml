@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GTD</title>
+      <link>https://wangcy6.github.io/tags/GTD/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/GTD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>work</title>
+      <link>https://wangcy6.github.io/tags/work/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/work/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>eat</title>
+      <link>https://wangcy6.github.io/tags/eat/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/eat/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>English</title>
@@ -17,6 +44,24 @@
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/tags/English/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raft</title>
+      <link>https://wangcy6.github.io/tags/raft/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/raft/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://wangcy6.github.io/tags/golang/</link>
+      <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/golang/</guid>
       <description></description>
     </item>
     
@@ -107,24 +152,6 @@
       <pubDate>Wed, 13 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/tags/reading/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GTD</title>
-      <link>https://wangcy6.github.io/tags/GTD/</link>
-      <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/GTD/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>work</title>
-      <link>https://wangcy6.github.io/tags/work/</link>
-      <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/work/</guid>
       <description></description>
     </item>
     
