@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2891">
+<meta itemprop="wordCount" content="3346">
 
 
 
@@ -136,8 +136,8 @@
         <div class="post-category">
             <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
             </div>
-          <span class="more-meta"> 约 2891 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+          <span class="more-meta"> 约 3346 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -172,6 +172,7 @@
 <li><a href="#1-fail状态">1 FAIL状态</a></li>
 <li><a href="#2-slave-发起投票条件">2 slave 发起投票条件</a></li>
 <li><a href="#3-主节点投票条件">3 主节点投票条件</a></li>
+<li><a href="#4-redis-cluster数据分片机制">4. Redis Cluster数据分片机制</a></li>
 <li><a href="#2-陈咬金第二斧-clustercron-过程">#2 陈咬金第二斧  clusterCron 过程</a>
 <ul>
 <li>
@@ -181,9 +182,23 @@
 </ul></li>
 </ul></li>
 </ul></li>
-<li><a href="#第二天-what-is-clustercron">第二天：what is clusterCron</a></li>
-<li><a href="#第三天-有限状态机">第三天 ：有限状态机</a>
+<li><a href="#第二天-what-is-clustercron">第二天：what is clusterCron</a>
 <ul>
+<li>
+<ul>
+<li><a href="#a-学习资料">A 学习资料：</a></li>
+<li><a href="#b-学习输出-有限状态机">B 学习输出：有限状态机</a>
+<ul>
+<li>
+<ul>
+<li><a href="#陈咬金第一斧-模型什么">#陈咬金第一斧  模型什么</a></li>
+<li><a href="#陈咬金第二斧-状态状态是什么">#陈咬金第二斧  状态状态是什么</a></li>
+<li><a href="#陈咬金第三斧-有什么用">#陈咬金第三斧  有什么用</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#第三天-内存模型-对象的类型与编码">第三天： 内存模型（对象的类型与编码）</a></li>
+<li><a href="#第四天-发布-订阅-publish-subscribe">第四天： <strong>发布-订阅（Publish-Subscribe）</strong></a></li>
 <li><a href="#参考">参考</a></li>
 </ul></li>
 </ul>
@@ -554,6 +569,38 @@ This <span class="nb">time</span> is user configurable.</code></pre></td></tr></
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div>
+<h3 id="4-redis-cluster数据分片机制">4. Redis Cluster数据分片机制</h3>
+
+<p>A 问题（读三遍）：Redis的数据如何平滑扩容?</p>
+
+<p>关键词：扩容，还有平滑</p>
+
+<p>为了使得集群能够水平扩展，首要解决的问题就是如何将整个数据集按照一定的规则分配到多个节点上，</p>
+
+<p>平滑扩容是一种<a href="https://help.aliyun.com/document_detail/52132.html?spm=a2c4g.11186623.4.2.527e5096Ac5fpB">在线水平扩容方式</a>，既把原有的分库平滑迁移到新添加的 RDS 实例上</p>
+
+<p>扩展 ：nginx，Strom等其他任何一个服务上</p>
+
+<p>B 思考：</p>
+
+<p>常用的数据分片的方法有：范围分片，哈希分片，<a href="https://yikun.github.io/2016/06/09/%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%9E%E8%B7%B5/">一致性哈希算法</a>和<strong>虚拟哈希槽</strong>等</p>
+
+<p>范围分片:一旦固定，范围就无法改变</p>
+
+<p>哈希分片，如果想增加一个节点，整个集群的数据完全打破，这就是问题</p>
+
+<p>Redis Cluster 采用<a href="https://www.cnblogs.com/lowmanisbusy/p/10993748.html">虚拟哈希槽分区</a>，所有的键根据哈希函数映射到 0 ~ 16383 整数槽内，计算公式：slot = CRC16(key) &amp; 16383。</p>
+
+<p>每一个节点负责维护一部分槽以及槽所映射的键值数据</p>
+
+<p>c 回答</p>
+
+<ul>
+<li><p>一个大数据拆分不同小数据，slot，分批迁移。</p></li>
+
+<li><p>集群状态，清楚知道每个sloat位置</p></li>
+</ul>
+
 <h3 id="2-陈咬金第二斧-clustercron-过程">#2 陈咬金第二斧  clusterCron 过程</h3>
 
 <p>每间隔 100 毫秒执行一次</p>
@@ -696,7 +743,13 @@ This <span class="nb">time</span> is user configurable.</code></pre></td></tr></
 
 <h1 id="第二天-what-is-clustercron">第二天：what is clusterCron</h1>
 
-<h1 id="第三天-有限状态机">第三天 ：有限状态机</h1>
+<h3 id="a-学习资料">A 学习资料：</h3>
+
+<blockquote>
+<p>clusterCron</p>
+</blockquote>
+
+<h3 id="b-学习输出-有限状态机">B 学习输出：有限状态机</h3>
 
 <p>有限状态机是个十分有用的模型，可以用来模拟世界上大部分的事物，其有三个特征：</p>
 
@@ -717,6 +770,18 @@ This <span class="nb">time</span> is user configurable.</code></pre></td></tr></
 <p><a href="https://www.youtube.com/watch?v=Qa6csfkK7_I">https://www.youtube.com/watch?v=Qa6csfkK7_I</a></p>
 
 <p><img src="http://www.tcpipguide.com/free/diagrams/tcpfsm.png" alt="" /></p>
+
+<h5 id="陈咬金第一斧-模型什么">#陈咬金第一斧  模型什么</h5>
+
+<h5 id="陈咬金第二斧-状态状态是什么">#陈咬金第二斧  状态状态是什么</h5>
+
+<h5 id="陈咬金第三斧-有什么用">#陈咬金第三斧  有什么用</h5>
+
+<h2 id="第三天-内存模型-对象的类型与编码">第三天： 内存模型（对象的类型与编码）</h2>
+
+<p><img src="../images/95JQiMS2gUjWVsN.png" alt="image.png" /></p>
+
+<h2 id="第四天-发布-订阅-publish-subscribe">第四天： <strong>发布-订阅（Publish-Subscribe）</strong></h2>
 
 <h2 id="参考">参考</h2>
 

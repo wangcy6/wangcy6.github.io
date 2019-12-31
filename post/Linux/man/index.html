@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1096">
+<meta itemprop="wordCount" content="1477">
 
 
 
@@ -136,7 +136,7 @@
         <div class="post-category">
             <a href="/categories/liunx/"> liunx </a>
             </div>
-          <span class="more-meta"> 约 1096 字 </span>
+          <span class="more-meta"> 约 1477 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -156,6 +156,11 @@
 <li><a href="#定义">定义</a></li>
 <li><a href="#3-malloc-trim-release-free-memory-from-the-top-of-the-heap">3 malloc_trim - release free memory from the top of the heap</a></li>
 <li><a href="#4-man-brk">4  man brk</a></li>
+</ul></li>
+<li><a href="#锁">锁</a>
+<ul>
+<li><a href="#pthread-rwlock-unlock">pthread_rwlock_unlock</a></li>
+<li><a href="#pthread-rwlock-wrlock">pthread_rwlock_wrlock</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -259,6 +264,101 @@
 
 <h3 id="4-man-brk">4  man brk</h3>
 
+<h2 id="锁">锁</h2>
+
+<h3 id="pthread-rwlock-unlock">pthread_rwlock_unlock</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   int pthread_rwlock_unlock(pthread_rwlock_t *rwlock);</pre></td></tr></table>
+</div>
+</div>
+<p>DESCRIPTION
+       The  pthread_rwlock_unlock() function shall release <strong>a lock</strong> held on the read-write lock object referenced
+       by rwlock.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   If this function is called to release a read lock from the read-write lock object and  there  are  other
+   read locks currently held on this read-write lock object, the read-write lock object remains in the read
+   locked state. 
+
+   If this function releases the last read lock for this read-write lock  object,  the  read-
+   write lock object shall be put in the unlocked state with no owners.
+
+
+
+   If  this function is called to release a write lock for this read-write lock object, the read-write lock
+   object shall be put in the unlocked state.
+
+   If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
+   mine  which  thread(s)  shall acquire the lock.  If the Thread Execution Scheduling option is supported,
+   when threads executing with the scheduling policies SCHED_FIFO, SCHED_RR, or SCHED_SPORADIC are  waiting
+   on  the  lock,  they shall acquire the lock in priority order when the lock becomes available. For equal
+   priority threads, write locks shall take precedence over read locks.  If the Thread Execution Scheduling
+   option  is  not  supported,  it  is implementation-defined whether write locks take precedence over read
+   locks.</pre></td></tr></table>
+</div>
+</div>
+<h3 id="pthread-rwlock-wrlock">pthread_rwlock_wrlock</h3>
+
+<p>key::whether  a  read  or  write lock deadlock</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">()</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
+   
+The calling thread acquires the write lock <span class="k">if</span> no other thread <span class="o">(</span>reader or writer<span class="o">)</span> holds the read-write  lock  rwlock. <span class="o">(</span>获取成功，没有任何其他锁<span class="o">)</span>
+   
+    Otherwise, the thread shall block <span class="k">until</span> it can acquire the lock. 
+    
+ The calling thread may deadlock 
+ <span class="k">if</span> at the <span class="nb">time</span> the call is made it holds the read-write  lock  <span class="o">(</span>whether  a  <span class="nb">read</span>  or  write lock<span class="o">)</span>.<span class="o">(</span>占用不释放<span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>ERRORS
+       The pthread_rwlock_trywrlock() function shall fail if:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   EBUSY  The read-write lock could not be acquired for writing because it was already locked  for  reading
+          or writing.</pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
