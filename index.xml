@@ -44,7 +44,7 @@
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/habit/Good-Morning/</guid>
-      <description>当你目标设定早起读书时候，你注定了失败,你任务这艰巨任务，自然无法完成 Week 51, 2019 week Put down your phone Review Give a stretch Dressing clothes Relax Monday 22:30 23: 43 6: 12 8: 10 no Tuesday 21: 00 0: 30 7: 00 7: 30 no Wednesday</description>
+      <description>当你目标设定早起读书时候，你注定了失败,你任务这艰巨任务，自然无法完成 Week 51, 2019 week Put down your phone Keep Give a stretch Dressing clothes Reading Monday 22:30 23: 43 6: 12 8: 10 no Tuesday 21: 00 0: 30 7: 00 7: 30 no Wednesday</description>
     </item>
     
     <item>
@@ -63,6 +63,15 @@
       
       <guid>https://wangcy6.github.io/post/go/courses_night-reading-go/</guid>
       <description>标题 播放地址 是否完成 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61</description>
+    </item>
+    
+    <item>
+      <title>song of englis</title>
+      <link>https://wangcy6.github.io/post/English/song_englis/</link>
+      <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/English/song_englis/</guid>
+      <description>Try Everything I messed up tonight, I lost another fight 今晚簡直一團亂，又輸了一場戰 I still mess up but I&amp;rsquo;ll just start again 依舊亂糟糟，就重新開始 I keep falling down, I keep on hitting the ground 跌跌撞撞，挫折接踵而來 I always get up now</description>
     </item>
     
     <item>
@@ -89,7 +98,7 @@
       <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ToDo/courses/</guid>
-      <description>udacity Name Process Start End Note Introduction to Operating Systems c5 2019-12-13</description>
+      <description>udacity Name Process Start End Note Introduction to Operating Systems c5 2019-12-13 c++ Name Address cs1070 https://people.cs.clemson.edu/~rlowe/cs1070/notes/ Go 夜读 标题 播放地址 是否完成 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41</description>
     </item>
     
     <item>
@@ -202,20 +211,20 @@
     
     <item>
       <title>FQA_Linux</title>
+      <link>https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</guid>
+      <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、基础 1、进程 execve 函数使用过程中注意事项 Linux中fork子进程</description>
+    </item>
+    
+    <item>
+      <title>FQA_Linux</title>
       <link>https://wangcy6.github.io/post/FQA/FQA_Linux/</link>
       <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/FQA/FQA_Linux/</guid>
       <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、进程 问题1.1 execve 函数使用过程中注意事项 Linux中fork子进</description>
-    </item>
-    
-    <item>
-      <title>FQA_Linux</title>
-      <link>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</link>
-      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</guid>
-      <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、基础 1、进程 execve 函数使用过程中注意事项 Linux中fork子进程</description>
     </item>
     
     <item>
@@ -283,10 +292,10 @@
     
     <item>
       <title>Linux内核设计与实现</title>
-      <link>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_book/</link>
+      <link>https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_book/</link>
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_book/</guid>
+      <guid>https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_book/</guid>
       <description>中断与锁（第7 ，8，9，10 章节） 1. 延迟处理机制 中断特点 中断处理程序不是可重入的。因为屏蔽了中断，根本不会发生切换。同类自旋锁是不可重入的 中</description>
     </item>
     
@@ -301,10 +310,10 @@
     
     <item>
       <title>算法导论</title>
-      <link>https://wangcy6.github.io/post/book/book_%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/</link>
+      <link>https://wangcy6.github.io/post/book/book_Algorithms-JeffE/</link>
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid>https://wangcy6.github.io/post/book/book_%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/</guid>
+      <guid>https://wangcy6.github.io/post/book/book_Algorithms-JeffE/</guid>
       <description>算法导论 递归 题目1 sort 题目2 Recursion Trees 回溯法 题目1 八皇后问题 &amp;ndash;已经解决 来源： 题目 2 Subset Sum &amp;ndash;正在解决 Let’s consider a more complicated problem, called SubsetSum : Given</description>
     </item>
     

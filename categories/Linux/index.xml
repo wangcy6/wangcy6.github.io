@@ -22,20 +22,20 @@
     
     <item>
       <title>FQA_Linux</title>
+      <link>https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</guid>
+      <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、基础 1、进程 execve 函数使用过程中注意事项 Linux中fork子进程</description>
+    </item>
+    
+    <item>
+      <title>FQA_Linux</title>
       <link>https://wangcy6.github.io/post/FQA/FQA_Linux/</link>
       <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/FQA/FQA_Linux/</guid>
       <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、进程 问题1.1 execve 函数使用过程中注意事项 Linux中fork子进</description>
-    </item>
-    
-    <item>
-      <title>FQA_Linux</title>
-      <link>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</link>
-      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_FQA_Linux/</guid>
-      <description>修改日期 2019-11-29 当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 书籍 http://www.apuebook.com/ 一、基础 1、进程 execve 函数使用过程中注意事项 Linux中fork子进程</description>
     </item>
     
   </channel>
