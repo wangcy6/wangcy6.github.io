@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1477">
+<meta itemprop="wordCount" content="2129">
 
 
 
@@ -136,8 +136,8 @@
         <div class="post-category">
             <a href="/categories/liunx/"> liunx </a>
             </div>
-          <span class="more-meta"> 约 1477 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 2129 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -162,6 +162,13 @@
 <li><a href="#pthread-rwlock-unlock">pthread_rwlock_unlock</a></li>
 <li><a href="#pthread-rwlock-wrlock">pthread_rwlock_wrlock</a></li>
 </ul></li>
+<li><a href="#网络">网络</a>
+<ul>
+<li><a href="#send">send</a></li>
+<li><a href="#https-linux-die-net-man-2-recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></a></li>
+<li><a href="#man-2-read">man 2 read</a></li>
+</ul></li>
+<li><a href="#epoll">epoll</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -280,25 +287,12 @@
        by rwlock.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">   If this function is called to release a read lock from the read-write lock object and  there  are  other
@@ -306,14 +300,25 @@
    locked state. 
 
    If this function releases the last read lock for this read-write lock  object,  the  read-
-   write lock object shall be put in the unlocked state with no owners.
-
-
-
-   If  this function is called to release a write lock for this read-write lock object, the read-write lock
-   object shall be put in the unlocked state.
-
-   If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
+   write lock object shall be put in the unlocked state with no owners.</pre></td></tr></table>
+</div>
+</div>
+<p>​<br />
+​<br />
+       If  this function is called to release a write lock for this read-write lock object, the read-write lock
+       object shall be put in the unlocked state.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
    mine  which  thread(s)  shall acquire the lock.  If the Thread Execution Scheduling option is supported,
    when threads executing with the scheduling policies SCHED_FIFO, SCHED_RR, or SCHED_SPORADIC are  waiting
    on  the  lock,  they shall acquire the lock in priority order when the lock becomes available. For equal
@@ -322,6 +327,8 @@
    locks.</pre></td></tr></table>
 </div>
 </div>
+<p>​</p>
+
 <h3 id="pthread-rwlock-wrlock">pthread_rwlock_wrlock</h3>
 
 <p>key::whether  a  read  or  write lock deadlock</p>
@@ -359,6 +366,220 @@ The calling thread acquires the write lock <span class="k">if</span> no other th
           or writing.</pre></td></tr></table>
 </div>
 </div>
+<h2 id="网络">网络</h2>
+
+<h3 id="send">send</h3>
+
+<p>send  send a message on a socket</p>
+
+<p>send(sockfd, buf, len, flags);</p>
+
+<ul>
+<li><p>ERRORS</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">EAGAIN or EWOULDBLOCK
+      The socket is marked nonblocking and the requested operation would block.   POSIX.1-2001  allows  either
+      error  to  be  returned <span class="k">for</span> this <span class="k">case</span>, and does not require these constants to have the same value, so a
+      portable application should check <span class="k">for</span> both possibilities.
+
+EBADF  An invalid descriptor was specified.
+
+ECONNRESET
+      Connection reset by peer.
+
+EDESTADDRREQ
+      The socket is not connection-mode, and no peer address is set.
+
+EFAULT An invalid user space address was specified <span class="k">for</span> an argument.
+
+EINTR  A signal occurred before any data was transmitted<span class="p">;</span> see signal<span class="o">(</span><span class="m">7</span><span class="o">)</span>.
+
+EINVAL Invalid argument passed.
+
+https://stackoverflow.com/questions/3081952/with-c-tcp-sockets-can-send-return-zero
+
+On success, these calls <span class="k">return</span> the number of bytes sent.  On error,
+   -1 is returned, and errno is <span class="nb">set</span> appropriately.
+       
+&gt;0
+&lt;<span class="m">0</span><span class="o">(</span>-1<span class="o">)</span>
+<span class="o">=</span><span class="m">0</span> 在这种情况下，从内存中，远程 TCP 栈缓冲区已经填满，栈通知本地端，它将延迟到一些空间被清空，本地缓冲区也已经填满。</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h3 id="https-linux-die-net-man-2-recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">Return Value
+
+These calls <span class="k">return</span> the number of bytes received, 
+or -1 <span class="k">if</span> an error occurred. 
+
+The <span class="k">return</span> value will be <span class="m">0</span> when the peer has performed an orderly shutdown.
+
+Errors
+These are some standard errors generated by the socket layer. Additional errors may be generated and returned from the underlying protocol modules<span class="p">;</span> see their manual pages.
+
+EAGAIN or EWOULDBLOCK
+The socket is marked nonblocking and the receive operation would block, or a receive timeout had been <span class="nb">set</span> and the timeout expired before data was received. POSIX.1-2001 allows either error to be returned <span class="k">for</span> this <span class="k">case</span>, and does not require these constants to have the same value, so a portable application should check <span class="k">for</span> both possibilities.
+EBADF
+The argument sockfd is an invalid descriptor.
+
+ECONNREFUSED
+A remote host refused to allow the network connection <span class="o">(</span>typically because it is not running the requested service<span class="o">)</span>.
+EFAULT
+The receive buffer pointer<span class="o">(</span>s<span class="o">)</span> point outside the process<span class="err">&#39;</span>s address space.
+
+EINTR
+
+The receive was interrupted by delivery of a signal before any data were available<span class="p">;</span> see signal<span class="o">(</span><span class="m">7</span><span class="o">)</span>.
+
+EINVAL
+
+Invalid argument passed.
+
+ENOMEM
+
+Could not allocate memory <span class="k">for</span> recvmsg<span class="o">()</span>.
+
+ENOTCONN
+The socket is associated with a connection-oriented protocol and has not been connected <span class="o">(</span>see connect<span class="o">(</span><span class="m">2</span><span class="o">)</span> and accept<span class="o">(</span><span class="m">2</span><span class="o">))</span>.
+ENOTSOCK
+The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="man-2-read">man 2 read</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* myread() 函数的一部分，在 while (1) 大循环里 */</span>
+<span class="k">if</span> <span class="p">((</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;EINTR&#34;</span><span class="p">);</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;read error&#34;</span><span class="p">);</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* main() 函数中 */</span>
+<span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">sig_alrm</span><span class="p">);</span>
+<span class="n">alarm</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">myread</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">MAX</span><span class="p">);</span>
+
+<span class="cm">/* sig_alrm() 函数 */</span>
+<span class="kt">void</span> <span class="nf">sig_alrm</span><span class="p">(</span><span class="n">ing</span> <span class="n">signo</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nl">http</span><span class="p">:</span><span class="c1">//yungkcx.github.io/jekyll/update/2016/09/16/read()-and-EINTR.html
+</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">stackoverflow</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">questions</span><span class="o">/</span><span class="mi">48959061</span><span class="o">/</span><span class="n">tcp</span><span class="o">-</span><span class="n">socket</span><span class="o">-</span><span class="n">can</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="n">still</span><span class="o">-</span><span class="n">fail</span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">eintr</span><span class="o">-</span><span class="n">when</span><span class="o">-</span><span class="n">select</span><span class="o">-</span><span class="n">indicates</span><span class="o">-</span><span class="n">there</span><span class="o">-</span><span class="n">are</span><span class="o">-</span><span class="n">d</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="epoll">epoll</h2>
+
+<p>Edge Triggered (ET) 边沿触发
+.socket的接收缓冲区状态变化时触发读事件，即空的接收缓冲区刚接收到数据时触发读事件
+.socket的发送缓冲区状态变化时触发写事件，即满的缓冲区刚空出空间时触发读事件</p>
+
     </div>
 
     <div class="post-copyright">
@@ -441,7 +662,7 @@ The calling thread acquires the write lock <span class="k">if</span> no other th
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
