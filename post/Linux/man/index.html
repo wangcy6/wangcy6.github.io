@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2129">
+<meta itemprop="wordCount" content="2286">
 
 
 
@@ -136,7 +136,7 @@
         <div class="post-category">
             <a href="/categories/liunx/"> liunx </a>
             </div>
-          <span class="more-meta"> 约 2129 字 </span>
+          <span class="more-meta"> 约 2286 字 </span>
           <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -170,6 +170,7 @@
 </ul></li>
 <li><a href="#epoll">epoll</a></li>
 </ul></li>
+<li><a href="#进程">进程</a></li>
 </ul>
 </nav>
   </div>
@@ -305,28 +306,17 @@
 </div>
 <p>​<br />
 ​<br />
-       If  this function is called to release a write lock for this read-write lock object, the read-write lock
-       object shall be put in the unlocked state.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">   If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
-   mine  which  thread(s)  shall acquire the lock.  If the Thread Execution Scheduling option is supported,
-   when threads executing with the scheduling policies SCHED_FIFO, SCHED_RR, or SCHED_SPORADIC are  waiting
-   on  the  lock,  they shall acquire the lock in priority order when the lock becomes available. For equal
-   priority threads, write locks shall take precedence over read locks.  If the Thread Execution Scheduling
-   option  is  not  supported,  it  is implementation-defined whether write locks take precedence over read
-   locks.</pre></td></tr></table>
-</div>
-</div>
+​       If  this function is called to release a write lock for this read-write lock object, the read-write lock
+​       object shall be put in the unlocked state.
+​<br />
+       If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
+       mine  which  thread(s)  shall acquire the lock.  If the Thread Execution Scheduling option is supported,
+       when threads executing with the scheduling policies SCHED_FIFO, SCHED_RR, or SCHED_SPORADIC are  waiting
+       on  the  lock,  they shall acquire the lock in priority order when the lock becomes available. For equal
+       priority threads, write locks shall take precedence over read locks.  If the Thread Execution Scheduling
+       option  is  not  supported,  it  is implementation-defined whether write locks take precedence over read
+       locks.</p>
+
 <p>​</p>
 
 <h3 id="pthread-rwlock-wrlock">pthread_rwlock_wrlock</h3>
@@ -579,6 +569,44 @@ The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
 <p>Edge Triggered (ET) 边沿触发
 .socket的接收缓冲区状态变化时触发读事件，即空的接收缓冲区刚接收到数据时触发读事件
 .socket的发送缓冲区状态变化时触发写事件，即满的缓冲区刚空出空间时触发读事件</p>
+
+<h1 id="进程">进程</h1>
+
+<ul>
+<li>man pthread_exit</li>
+</ul>
+
+<p>DESCRIPTION
+       The pthread_exit() function terminates the calling thread and returns a value via retval that (if the thread is
+       joinable) is available to another thread in the same process that calls pthread_join(3).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   Any clean-up handlers established by pthread_cleanup_push(3) that have not yet been popped, are popped (in  the
+   reverse  of  the  order  in  which they were pushed) and executed.  If the thread has any thread-specific data,
+   then, after the clean-up handlers have been executed, the corresponding destructor functions are called, in  an
+   unspecified order.
+
+   When  a  thread  terminates, process-shared resources (e.g., mutexes, condition variables, semaphores, and file
+   descriptors) are not released, and functions registered using atexit(3) are not called.
+
+   After the last thread in a process terminates, the process terminates as by calling exit(3) with an exit status
+   of zero; thus, process-shared resources are released and functions registered using atexit(3) are called.</pre></td></tr></table>
+</div>
+</div>
+<p>ERRORS
+       This function always succeeds.</p>
 
     </div>
 

@@ -123,52 +123,31 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/file/"></a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 0001-01-01 00:00 </span>
-      
-        <span class="more-meta"> 约 1425 字 </span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      文件系统-知识地图 知识卡 https://github.com/wangcy6/weekly/blob/master/KM/01%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86/file.md
-阅读相关书籍  Linux 0.11内核完全注释 Linux内核设计与实现(第三版中文高清带目录) Linux设备驱动程序. Understanding the Linux Kernel, 3rd Editio Linux.Kernel.Cache MySQL技术内幕(InnoDB存储引擎)第2版. 性能之巅 洞悉系统、企业与云计算(完整版)  找不到电子版book
-第一性原理  mysql 有b+作为索引，为什么liunx文件系统不用b+索引结构，采用inode下面一个固定大小数组来表示？
- 为什么需要进行“格式化”呢
- ls -i 显示inode 就是 long 类型的编号 还有什么呀？
- 文件存储在哪里呀？内存还是磁盘
- 什么是缓存呀
- cache和buffer dentry objects and inode object 都在内存里有啥 区别？
-  概念理解  缓存  文件系统 在 Linux 中一切皆文件。不仅普通的文件和目录，就连块设备、套接字、管道等，也都要通过统一的文件系统来管理。
-Linux 下的文件系统主要可分为三大块：
-一是上层的文件系统的系统调用，
-二是虚拟文件系统 VFS(Virtual Filesystem Switch)，
-三是挂载到 VFS 中的各实际文件系统
-第一个问题：文件系统类型有哪些？  字符设备、块设备、网络设备
-    </div>
-    <div class="read-more">
-      <a href="/post/file/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/habit/worklog/"></a></h1>
     <div class="post-meta">
       <span class="post-time"> 0001-01-01 00:00 </span>
       
-        <span class="more-meta"> 约 72 字 </span>
+        <span class="more-meta"> 约 100 字 </span>
         <span class="more-meta"> 预计阅读 1 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      day2 2020年1月2日
+      day3
+回顾
+今天完成了对单例模式的总结的回归，
+然后看了订阅模式，这个考点 我还是不很清楚，这个和智能指针关系是什么
+这里需要后面分析
+今天分析epoll处理大文件 最后重点靠近的非阻塞处理上， select 处理 对conneed也能监控。并且 消耗你下午时间你看了shen ，
+我确实不知道，app缓冲区 和内核缓冲区 大小不确定，一次read是不能完成的
+更重要什么时候人read 和send 依靠epoll处理
+今天又看了调表结构和b的结果 从底层开始的，但是tree的高度和链表告诉控制方面不一样
+【m/2 m-1】.概率学应用，赢概率来解决问题。redis重要因果。
+明天：
+epoll的扩张回归 liebent
+今天code 忘记实现了，这个晚上回去补充处理。
+day2 2020年1月2日
  看了一天的的auto_ptr ，问题入门都没有解决。 从上午到下午，你不停记录无用的，具体是什么问题 你都不清楚。 没有集中问题核心，如果不是核心，你马上舍去。 如果不是问题的核心，马上舍去，你根本不需要补充基础知识  day1 2020年1月1日 15:19:57
  对历史题目进行复习阶段 这个耗时一个一个上午，一个下午3：30 并且中午睡觉看视频了。这个总结25分钟可以完成的。 http回顾 你一天时间，本来计划25分钟完成。
  下午着急安装部署的东西，转眼间你忘记一干二净，然后根本不用【手 远离 安装部署事情 】
@@ -176,15 +155,6 @@ Linux 下的文件系统主要可分为三大块：
   2019年12月31日 11:57:01
  对历史题目进行复习阶段 这个耗时一个上午，超时。 下午三个小时趁机浏览器和电脑中 没有任何规划和思考。心理一点不高兴【回复30分钟】   2019年最后一周
  今天你在步骤1思考 上午4个小时，  在步骤2 行动和 步骤3 反馈上 0，
-结果：
-你精力消耗殆尽
-不停大脑消耗你能量，自动屏幕，自动关闭屏幕 是切断思考转换行动的第一步
- 最近3天担心转码失败问题，已经定位清楚，服务器校验失败，但是具体为什么失败这个不清楚，我们3天时间考虑php的，根本无法解决 然后移交别人。  最后严重 最后给别人问题退还回来事情没有发送，原来客户端上传视频，还有其他的入口，自己一直挺立gvs上传失败，事情不这样的，和别人说不一样样，
-我开始反复询问，最后还有其他的入口。
-2019-12-18 11:26:24
-晚上6点到 9点
- 2019年12月19日 15:28:17 你在看st libco实现过程 ，有帮助
- 6：00 去吃饭
     </div>
     <div class="read-more">
       <a href="/post/habit/worklog/" class="read-more-link">阅读更多</a>
