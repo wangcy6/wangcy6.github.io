@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>128. 最长连续序列</title>
+      <link>https://wangcy6.github.io/post/leetcode/128.-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/128.-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/</guid>
+      <description>题目信息 链接：128. 最长连续序列 来源：LeetCode 难度：Hard 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可</description>
+    </item>
     
     <item>
       <title>27-二叉搜索树与双向链表</title>
@@ -26,7 +35,7 @@
       <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ARTS/ARTS_2020_02_weekly/</guid>
-      <description>打卡GTD践行第10周（2020第2周） 一周记录 一. ARTS的初衷 周一 周二 周三 周四 周五 周六 周日 Algorithm Review Review/Tip Share 1.Algorithm 主要是为了编程训练和学习。每周至少做</description>
+      <description>打卡GTD践行第10周（2020第2周） 一周记录 越少越具体说明有可能做到， 说一大堆，看似很好，自动很懂 其实 一个一个做不到，给你一万年也做不到</description>
     </item>
     
     <item>
@@ -207,15 +216,6 @@
       
       <guid>https://wangcy6.github.io/post/simpread-mmap-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94-read_write-%E5%BF%AB-%E5%85%BC%E8%AE%BA-buffercache-%E5%92%8C-pagecache-%E4%BB%8E%E5%86%85%E6%A0%B8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9C%8B%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E8%BF%87%E7%A8%8B/</guid>
       <description>参考文献： 《从内核文件系统看文件读写过程》http://www.cnblogs.com/huxiao-tee/p/4660352.html?</description>
-    </item>
-    
-    <item>
-      <title>Redis.5.0</title>
-      <link>https://wangcy6.github.io/post/book/FQA/FQA_Redis/</link>
-      <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/book/FQA/FQA_Redis/</guid>
-      <description>知识卡(redis.5.0) 源码阅读 参考redis-3.0-annotated-huangz1990 内容 对象的类型和编码 1 2 3 4 5 6 7 8 9 10</description>
     </item>
     
     <item>

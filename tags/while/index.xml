@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>while on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/while/</link>
+    <description>Recent content in while on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/tags/while/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>128. 最长连续序列</title>
+      <link>https://wangcy6.github.io/post/leetcode/128.-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/128.-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/</guid>
+      <description>题目信息 链接：128. 最长连续序列 来源：LeetCode 难度：Hard 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可</description>
+    </item>
+    
+  </channel>
+</rss>
