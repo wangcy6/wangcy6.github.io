@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Troy的网络博客</title>
@@ -6,10 +6,28 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>协程库</title>
+      <link>https://wangcy6.github.io/post/2020/st/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/st/</guid>
+      <description>卡片 协程库 语言 开发者 state threads library 3000行C代码 历史渊源 摘要 今日理解。 一、一个普通的应用程序，假如采用st库，那么这个应用具备2个特点 highly scalable appl</description>
+    </item>
+    
+    <item>
+      <title>协程库</title>
+      <link>https://wangcy6.github.io/post/st/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/st/</guid>
+      <description>卡片 协程库 语言 开发者 state threads library 3000行C代码 历史渊源 摘要 今日理解。 一、一个普通的应用程序，假如采用st库，那么这个应用具备2个特点 highly scalable appl</description>
+    </item>
     
     <item>
       <title>128. 最长连续序列</title>
@@ -103,11 +121,11 @@
     
     <item>
       <title>大脑的维修艺术</title>
-      <link>https://wangcy6.github.io/post/Mind/%E5%A4%A7%E8%84%91%E7%9A%84%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/</link>
+      <link>https://wangcy6.github.io/post/book/%E5%A4%A7%E8%84%91%E7%9A%84%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/</link>
       <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/Mind/%E5%A4%A7%E8%84%91%E7%9A%84%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/</guid>
-      <description>正念 #1 大脑的维修意识小程序课程 #2 四念处修行要领 Directory Check Cost 四念处修行要领 (30&amp;frasl;44) &amp;ndash; 空海 one 四念处修行要领 (32&amp;frasl;44) &amp;ndash; 空海 23 电影</description>
+      <guid>https://wangcy6.github.io/post/book/%E5%A4%A7%E8%84%91%E7%9A%84%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/</guid>
+      <description>正念 #1 大脑的维修意识小程序课程 #2 四念处修行要领 Directory Check Cost 四念处修行要领 (30/44) &amp;ndash; 空海 one 四念处修行要领 (32/44) &amp;ndash; 空海 23 电影</description>
     </item>
     
     <item>
@@ -125,7 +143,7 @@
       <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ToDo/courses/</guid>
-      <description>ted Ted Address 是否完成 1 風格，決定你的人格 udacity Name Process Start End Note Introduction to Operating Systems c5 概念 2019-12-13 2020年1月 3 OK P6L2 线程 2020年1月 3 2020年1月6日 OK P2L3: Threads Case Study: PThreads OK OK OK 课</description>
+      <description>ted Ted Address 分类 是否完成 是否直播 1 神奇能量姿势 自我激励 已经下载 违禁 udacity Name Process Start End Note Introduction to Operating Systems c5 概念 2019-12-13 2020年1月 3 OK P6L2 线程 2020年1月 3 2020年1</description>
     </item>
     
     <item>
@@ -134,7 +152,7 @@
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/book/book_thingin_c&#43;&#43;/</guid>
-      <description>来源： [c++编程思想（两卷合订本）]() 提问的方式 Q1 动态转换和静态转换的区别是什么？ 小王第一次回答 一头雾水呀，平时没有自己用过， 唯一有印象</description>
+      <description>来源： c++编程思想（两卷合订本） 提问的方式 Q1 动态转换和静态转换的区别是什么？ 小王第一次回答 一头雾水呀，平时没有自己用过， 唯一有印象的是写线</description>
     </item>
     
     <item>
@@ -143,25 +161,16 @@
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/book_thingin_c&#43;&#43;/</guid>
-      <description>来源： [c++编程思想（两卷合订本）]() 提问的方式 Q1 动态转换和静态转换的区别是什么？ 小王第一次回答 一头雾水呀，平时没有自己用过， 唯一有印象</description>
+      <description>来源： c++编程思想（两卷合订本） 提问的方式 Q1 动态转换和静态转换的区别是什么？ 小王第一次回答 一头雾水呀，平时没有自己用过， 唯一有印象的是写线</description>
     </item>
     
     <item>
       <title>man</title>
-      <link>https://wangcy6.github.io/post/Linux/man/</link>
+      <link>https://wangcy6.github.io/post/book/man/</link>
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/Linux/man/</guid>
+      <guid>https://wangcy6.github.io/post/book/man/</guid>
       <description>帮助文档 内存管理 1 man malloc http://man7.org/linux/man-pages/man3/malloc.3.html Thread safety （多个线程可以同时执行） arena 1 2 3 4 5 To scalably handle memory allocation in multithreaded applications, glibc creates additional memory allocation arenas if mutex contention is detected. Each arena is a large region of memory that is internally allocated by the system (using brk(2) or mmap(2)),</description>
-    </item>
-    
-    <item>
-      <title>redis必须掌握几个知识点</title>
-      <link>https://wangcy6.github.io/post/DataBase/server_redis/</link>
-      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/DataBase/server_redis/</guid>
-      <description>版本 最新特性是什么 版本 发布日期 其中一个特性 Redis2.8 2013年11月22 一个key的类型和编码类型是什么？ Redis3.0（里程碑） 2015年4月1</description>
     </item>
     
     <item>
@@ -220,20 +229,11 @@
     
     <item>
       <title>Redis.5.0</title>
-      <link>https://wangcy6.github.io/post/DataBase/FQA_Redis/</link>
+      <link>https://wangcy6.github.io/post/2020/FQA_Redis/</link>
       <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/DataBase/FQA_Redis/</guid>
+      <guid>https://wangcy6.github.io/post/2020/FQA_Redis/</guid>
       <description>知识卡(redis.5.0) 源码阅读 参考redis-3.0-annotated-huangz1990 内容 对象的类型和编码 1 2 3 4 5 6 7 8 9 10</description>
-    </item>
-    
-    <item>
-      <title>协程库</title>
-      <link>https://wangcy6.github.io/post/st/</link>
-      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/st/</guid>
-      <description>走神一会 你生而有翼，为何竟愿一生匍匐前进，形如虫蚁？ 「学而不思则罔、思而不学则殆」的意思是： 想顺利的学会「内思」要与「关系」思考方式结合起来</description>
     </item>
     
     <item>
@@ -327,6 +327,15 @@
     </item>
     
     <item>
+      <title>智力题</title>
+      <link>https://wangcy6.github.io/post/leetcode/%E6%B1%BD%E6%B0%B4%E7%93%B6/</link>
+      <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/%E6%B1%BD%E6%B0%B4%E7%93%B6/</guid>
+      <description>题目信息 链接：汽水瓶 来源：nowcoder 难度：2颗星 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可要小心了 我目的是</description>
+    </item>
+    
+    <item>
       <title>算法导论</title>
       <link>https://wangcy6.github.io/post/book/book_Algorithms-JeffE/</link>
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
@@ -362,18 +371,16 @@ Most of what&amp;rsquo;s written in this blog post is already described in the o
       <guid>https://wangcy6.github.io/post/file/</guid>
       <description>文件系统-知识地图 知识卡 https://github.com/wangcy6/weekly/blob/master/KM/01%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86/file.md
 阅读相关书籍  Linux 0.11内核完全注释 Linux内核设计与实现(第三版中文高清带目录) Linux设备驱动程序. Understanding the Linux Kernel, 3rd Editio Linux.Kernel.Cache MySQL技术内幕(InnoDB存储引擎)第2版. 性能之巅 洞悉系统、企业与云计算(完整版)  找不到电子版book
-第一性原理  mysql 有b+作为索引，为什么liunx文件系统不用b+索引结构，采用inode下面一个固定大小数组来表示？
- 为什么需要进行“格式化”呢
- ls -i 显示inode 就是 long 类型的编号 还有什么呀？
- 文件存储在哪里呀？内存还是磁盘
- 什么是缓存呀
- cache和buffer dentry objects and inode object 都在内存里有啥 区别？
+第一性原理   mysql 有b+作为索引，为什么liunx文件系统不用b+索引结构，采用inode下面一个固定大小数组来表示？
+  为什么需要进行“格式化”呢
+  ls -i 显示inode 就是 long 类型的编号 还有什么呀？
+  文件存储在哪里呀？内存还是磁盘
+  什么是缓存呀
+  cache和buffer dentry objects and inode object 都在内存里有啥 区别？
   概念理解  缓存  文件系统 在 Linux 中一切皆文件。不仅普通的文件和目录，就连块设备、套接字、管道等，也都要通过统一的文件系统来管理。
 Linux 下的文件系统主要可分为三大块：
 一是上层的文件系统的系统调用，
-二是虚拟文件系统 VFS(Virtual Filesystem Switch)，
-三是挂载到 VFS 中的各实际文件系统
-第一个问题：文件系统类型有哪些？  字符设备、块设备、网络设备</description>
+二是虚拟文件系统 VFS(Virtual Filesystem Switch)，</description>
     </item>
     
     <item>
@@ -392,6 +399,15 @@ Linux 下的文件系统主要可分为三大块：
       
       <guid>https://wangcy6.github.io/product/thrift.apache/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>redis必须掌握几个知识点</title>
+      <link>https://wangcy6.github.io/post/2020/server_redis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/server_redis/</guid>
+      <description>版本 最新特性是什么 版本 发布日期 其中一个特性 Redis2.8 2013年11月22 一个key的类型和编码类型是什么？ Redis3.0（里程碑） 2015年4月1</description>
     </item>
     
   </channel>

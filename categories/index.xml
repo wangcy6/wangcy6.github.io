@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Troy的网络博客</title>
@@ -6,10 +6,19 @@
     <description>Recent content in Categories on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>code_reading</title>
+      <link>https://wangcy6.github.io/categories/code_reading/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/code_reading/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Leetcode</title>
@@ -93,15 +102,6 @@
     </item>
     
     <item>
-      <title>数据库</title>
-      <link>https://wangcy6.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
-      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>每周阅读一本书</title>
       <link>https://wangcy6.github.io/categories/%E6%AF%8F%E5%91%A8%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/</link>
       <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
@@ -156,15 +156,6 @@
     </item>
     
     <item>
-      <title>st</title>
-      <link>https://wangcy6.github.io/categories/st/</link>
-      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/st/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>FQA</title>
       <link>https://wangcy6.github.io/categories/FQA/</link>
       <pubDate>Wed, 13 Nov 2019 00:00:00 +0000</pubDate>
@@ -184,19 +175,19 @@
     
     <item>
       <title>Book</title>
-      <link></link>
+      <link>https://wangcy6.github.io/categories/Book/</link>
       <pubDate>Fri, 11 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid></guid>
+      <guid>https://wangcy6.github.io/categories/Book/</guid>
       <description></description>
     </item>
     
     <item>
       <title>book</title>
-      <link>https://wangcy6.github.io/categories/book/</link>
+      <link></link>
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid>https://wangcy6.github.io/categories/book/</guid>
+      <guid></guid>
       <description></description>
     </item>
     
@@ -224,6 +215,15 @@
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
       <guid>https://wangcy6.github.io/categories/%E5%89%91%E6%8C%87Offer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数据库</title>
+      <link>https://wangcy6.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
       <description></description>
     </item>
     

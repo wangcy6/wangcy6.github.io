@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.58.3 with theme even" />
+<meta name="generator" content="Hugo 0.64.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/Linux/man/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-12-02T00:00:00+00:00" />
 <meta itemprop="name" content="man">
 <meta itemprop="description" content="帮助文档 内存管理 1 man malloc http://man7.org/linux/man-pages/man3/malloc.3.html Thread safety （多个线程可以同时执行） arena 1 2 3 4 5 To scalably handle memory allocation in multithreaded applications, glibc creates additional memory allocation arenas if mutex contention is detected. Each arena is a large region of memory that is internally allocated by the system (using brk(2) or mmap(2)),">
-
-
 <meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2286">
+<meta itemprop="wordCount" content="2281">
 
 
 
-<meta itemprop="keywords" content="man," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="man," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="man"/>
 <meta name="twitter:description" content="帮助文档 内存管理 1 man malloc http://man7.org/linux/man-pages/man3/malloc.3.html Thread safety （多个线程可以同时执行） arena 1 2 3 4 5 To scalably handle memory allocation in multithreaded applications, glibc creates additional memory allocation arenas if mutex contention is detected. Each arena is a large region of memory that is internally allocated by the system (using brk(2) or mmap(2)),"/>
 
@@ -136,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/liunx/"> liunx </a>
             </div>
-          <span class="more-meta"> 约 2286 字 </span>
+          <span class="more-meta"> 约 2281 字 </span>
           <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -146,185 +143,146 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#帮助文档">帮助文档</a>
-<ul>
-<li><a href="#内存管理">内存管理</a>
-<ul>
-<li><a href="#1-man-malloc">1 man malloc</a></li>
-<li><a href="#2-man-mmap">2 man mmap</a></li>
-<li><a href="#定义">定义</a></li>
-<li><a href="#3-malloc-trim-release-free-memory-from-the-top-of-the-heap">3 malloc_trim - release free memory from the top of the heap</a></li>
-<li><a href="#4-man-brk">4  man brk</a></li>
-</ul></li>
-<li><a href="#锁">锁</a>
-<ul>
-<li><a href="#pthread-rwlock-unlock">pthread_rwlock_unlock</a></li>
-<li><a href="#pthread-rwlock-wrlock">pthread_rwlock_wrlock</a></li>
-</ul></li>
-<li><a href="#网络">网络</a>
-<ul>
-<li><a href="#send">send</a></li>
-<li><a href="#https-linux-die-net-man-2-recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></a></li>
-<li><a href="#man-2-read">man 2 read</a></li>
-</ul></li>
-<li><a href="#epoll">epoll</a></li>
-</ul></li>
-<li><a href="#进程">进程</a></li>
-</ul>
+  <ul>
+    <li><a href="#内存管理">内存管理</a>
+      <ul>
+        <li><a href="#1-man-malloc">1 man malloc</a></li>
+        <li><a href="#2-man-mmap">2 man mmap</a></li>
+        <li><a href="#定义">定义</a></li>
+        <li><a href="#3-malloc_trim---release-free-memory-from-the-top-of-the-heap">3 malloc_trim - release free memory from the top of the heap</a></li>
+      </ul>
+    </li>
+    <li><a href="#heading"></a>
+      <ul>
+        <li><a href="#4--man-brk">4  man brk</a></li>
+      </ul>
+    </li>
+    <li><a href="#锁">锁</a>
+      <ul>
+        <li><a href="#pthread_rwlock_unlock">pthread_rwlock_unlock</a></li>
+        <li><a href="#pthread_rwlock_wrlock">pthread_rwlock_wrlock</a></li>
+      </ul>
+    </li>
+    <li><a href="#网络">网络</a>
+      <ul>
+        <li><a href="#send">send</a></li>
+        <li><a href="#httpslinuxdienetman2recv"></a></li>
+        <li><a href="#man-2-read">man 2 read</a></li>
+      </ul>
+    </li>
+    <li><a href="#epoll">epoll</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="帮助文档">帮助文档</h1>
-
+      <h1 id="帮助文档">帮助文档</h1>
 <h2 id="内存管理">内存管理</h2>
-
 <h3 id="1-man-malloc">1 man malloc</h3>
-
 <p><a href="http://man7.org/linux/man-pages/man3/malloc.3.html">http://man7.org/linux/man-pages/man3/malloc.3.html</a></p>
-
 <ul>
-<li><p>Thread safety （多个线程可以同时执行） arena</p>
+<li>Thread safety （多个线程可以同时执行） arena</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">To</span> <span class="nt">scalably</span> <span class="nt">handle</span> <span class="nt">memory</span> <span class="nt">allocation</span> <span class="nt">in</span>
-   <span class="nt">multithreaded</span> <span class="nt">applications</span><span class="o">,</span> <span class="nt">glibc</span> <span class="nt">creates</span> <span class="nt">additional</span> <span class="nt">memory</span>
-   <span class="nt">allocation</span> <span class="nt">arenas</span> <span class="nt">if</span> <span class="nt">mutex</span> <span class="nt">contention</span> <span class="nt">is</span> <span class="nt">detected</span><span class="nc">.</span>  <span class="nt">Each</span> <span class="nt">arena</span> <span class="nt">is</span> <span class="nt">a</span>
-   <span class="nt">large</span> <span class="nt">region</span> <span class="nt">of</span> <span class="nt">memory</span> <span class="nt">that</span> <span class="nt">is</span> <span class="nt">internally</span> <span class="nt">allocated</span> <span class="nt">by</span> <span class="nt">the</span> <span class="nt">system</span>
-   <span class="o">(</span><span class="nt">using</span> <span class="nt">brk</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="nt">or</span> <span class="nt">mmap</span><span class="o">(</span><span class="nt">2</span><span class="o">)),</span> <span class="nt">and</span> <span class="nt">managed</span> <span class="nt">with</span> <span class="nt">its</span> <span class="nt">own</span> <span class="nt">mutexes</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">To</span> <span class="nt">scalably</span> <span class="nt">handle</span> <span class="nt">memory</span> <span class="nt">allocation</span> <span class="nt">in</span><span class="err"></span>
+       <span class="nt">multithreaded</span> <span class="nt">applications</span><span class="o">,</span> <span class="nt">glibc</span> <span class="nt">creates</span> <span class="nt">additional</span> <span class="nt">memory</span><span class="err"></span>
+       <span class="nt">allocation</span> <span class="nt">arenas</span> <span class="nt">if</span> <span class="nt">mutex</span> <span class="nt">contention</span> <span class="nt">is</span> <span class="nt">detected</span><span class="nc">.</span>  <span class="nt">Each</span> <span class="nt">arena</span> <span class="nt">is</span> <span class="nt">a</span><span class="err"></span>
+       <span class="nt">large</span> <span class="nt">region</span> <span class="nt">of</span> <span class="nt">memory</span> <span class="nt">that</span> <span class="nt">is</span> <span class="nt">internally</span> <span class="nt">allocated</span> <span class="nt">by</span> <span class="nt">the</span> <span class="nt">system</span><span class="err"></span>
+       <span class="o">(</span><span class="nt">using</span> <span class="nt">brk</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="nt">or</span> <span class="nt">mmap</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="nt">and</span> <span class="nt">managed</span> <span class="nt">with</span> <span class="nt">its</span> <span class="nt">own</span> <span class="nt">mutexes</span><span class="err"></span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-
-<li><p>runtime （free）</p></li>
+</div><ul>
+<li>runtime （free）</li>
 </ul>
-
 <blockquote>
 <p>Usually, all it can do is allow a later call to <code>malloc</code> to reuse the space. In the meantime, the space remains in your program as part of a free-list used internally by <code>malloc</code>.</p>
 </blockquote>
-
 <p>：Linux下谷歌有个 tcmalloc 能做到立刻释放到OS，或者malloc_trim(0)</p>
-
 <h3 id="2-man-mmap">2 man mmap</h3>
-
 <h3 id="定义">定义</h3>
-
 <p>mmap, munmap - map or unmap files or devices into memory</p>
-
 <p>mmap分配的内存，等于是直接从物理内存中映射了一块过来。释放这块内存时，可以直接归还给OS</p>
-
 <p><a href="https://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html">https://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html</a></p>
-
 <ol>
-<li><p>brk(sbrk)，性能损耗少; mmap相对而言，性能损耗大</p></li>
-
-<li><p>mmap不存在内存碎片(是物理页对齐的，整页映射和释放); brk(sbrk)可能存在内存碎片(由于new和delete的顺序不同，可能存在空洞，又称为碎片)</p></li>
-</ol>
-
+<li>
+<p>brk(sbrk)，性能损耗少; mmap相对而言，性能损耗大</p>
+</li>
+<li>
+<p>mmap不存在内存碎片(是物理页对齐的，整页映射和释放); brk(sbrk)可能存在内存碎片(由于new和delete的顺序不同，可能存在空洞，又称为碎片)</p>
 <p><a href="https://cloud.tencent.com/developer/article/1138651">Glibc内存分配算法</a></p>
-
+</li>
+</ol>
 <p>glibc采用的是dlmalloc。为了避免频繁调用系统调用，它内部维护了一个内存池，方便reuse，又称为free-list或bins</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">DEFAULT_MXFAST</span>             <span class="mi">64</span> <span class="p">(</span><span class="k">for</span> <span class="mi">32</span><span class="nx">bit</span><span class="p">),</span> <span class="mi">128</span> <span class="p">(</span><span class="k">for</span> <span class="mi">64</span><span class="nx">bit</span><span class="p">)</span> <span class="c1">// free-list(fastbin)最大内存块
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">DEFAULT_MXFAST</span>             <span class="mi">64</span> <span class="p">(</span><span class="k">for</span> <span class="mi">32</span><span class="nx">bit</span><span class="p">)</span><span class="p">,</span> <span class="mi">128</span> <span class="p">(</span><span class="k">for</span> <span class="mi">64</span><span class="nx">bit</span><span class="p">)</span> <span class="c1">// free-list(fastbin)最大内存块
 </span><span class="c1"></span><span class="nx">DEFAULT_TRIM_THRESHOLD</span>     <span class="mi">128</span> <span class="o">*</span> <span class="mi">1024</span> <span class="c1">// malloc_trim的门槛值 128k
 </span><span class="c1"></span><span class="nx">DEFAULT_TOP_PAD</span>            <span class="mi">0</span>
 <span class="nx">DEFAULT_MMAP_THRESHOLD</span>     <span class="mi">128</span> <span class="o">*</span> <span class="mi">1024</span> <span class="c1">// 使用mmap分配内存的门槛值 128k
 </span><span class="c1"></span><span class="nx">DEFAULT_MMAP_MAX</span>           <span class="mi">65536</span> <span class="c1">// mmap的最大数量
 </span></code></pre></td></tr></table>
 </div>
-</div>
-<p>glibc中，设置了默认进行malloc_trim的threshhold为128K，也就是说当dlmalloc管理的内存池中最大可用内存&gt;128K时，就会执行malloc_trim操作，归还部分内存给操作系统；</p>
-
+</div><p>glibc中，设置了默认进行malloc_trim的threshhold为128K，也就是说当dlmalloc管理的内存池中最大可用内存&gt;128K时，就会执行malloc_trim操作，归还部分内存给操作系统；</p>
 <p>而在可用内存&lt;=128K时，及时程序中delete了这部分内存，这些内存也是不会归还给操作系统的。</p>
-
 <p>表现为：调用delete之后，进程占用的内存并没有减少。</p>
-
 <p>测试：</p>
-
 <ol>
 <li>循环new分配64K * 2048的内存空间，写入脏数据后，循环调用delete释放。top看进程依然使用131M内存，没有释放。 —— 此时用brk</li>
 <li>循环new分配128K * 2048的内存空间，写入脏数据后，循环调用delete释放。top看进程使用，2960字节内存，完全释放。 —— 此时用mmap</li>
 <li>设置M_MMAP_THRESHOLD 256k，循环new分配128k * 2048 的内存空间，写入脏数据后，循环调用delete释放，而后调用malloc_trim(0)。top看进程使用，2348字节，完全释放。 ——此时用brk</li>
 </ol>
-
-<h3 id="3-malloc-trim-release-free-memory-from-the-top-of-the-heap">3 malloc_trim - release free memory from the top of the heap</h3>
-
-<p>当我调用了<strong>malloc_trim(0)</strong>以后，我发现堆中全部的空余内存全部被归还给系统了，包括那些洞。不过，free list bing/fast bin中依然维护着这些内存地址，当再次需要申请小内存块时，总是前面的洞被再次从系统中“要”回来，然后分给调用者。这一点显得<strong>malloc_trim(0)</strong>很高级</p>
-
+<h3 id="3-malloc_trim---release-free-memory-from-the-top-of-the-heap">3 malloc_trim - release free memory from the top of the heap</h3>
+<p>当我调用了**malloc_trim(0)<strong>以后，我发现堆中全部的空余内存全部被归还给系统了，包括那些洞。不过，free list bing/fast bin中依然维护着这些内存地址，当再次需要申请小内存块时，总是前面的洞被再次从系统中“要”回来，然后分给调用者。这一点显得</strong>malloc_trim(0)**很高级</p>
+<h2 id="heading"></h2>
 <p><a href="https://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html">https://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html</a></p>
-
-<h3 id="4-man-brk">4  man brk</h3>
-
+<h3 id="4--man-brk">4  man brk</h3>
 <h2 id="锁">锁</h2>
-
-<h3 id="pthread-rwlock-unlock">pthread_rwlock_unlock</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">   int pthread_rwlock_unlock(pthread_rwlock_t *rwlock);</pre></td></tr></table>
-</div>
-</div>
+<h3 id="pthread_rwlock_unlock">pthread_rwlock_unlock</h3>
+<pre><code>   int pthread_rwlock_unlock(pthread_rwlock_t *rwlock);
+</code></pre>
 <p>DESCRIPTION
-       The  pthread_rwlock_unlock() function shall release <strong>a lock</strong> held on the read-write lock object referenced
-       by rwlock.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">   If this function is called to release a read lock from the read-write lock object and  there  are  other
+The  pthread_rwlock_unlock() function shall release <strong>a lock</strong> held on the read-write lock object referenced
+by rwlock.</p>
+<pre><code>   If this function is called to release a read lock from the read-write lock object and  there  are  other
    read locks currently held on this read-write lock object, the read-write lock object remains in the read
    locked state. 
-
+   
    If this function releases the last read lock for this read-write lock  object,  the  read-
-   write lock object shall be put in the unlocked state with no owners.</pre></td></tr></table>
-</div>
-</div>
-<p>​<br />
-​<br />
+   write lock object shall be put in the unlocked state with no owners.
+</code></pre>
+<p>​    <br>
+​ <br>
 ​       If  this function is called to release a write lock for this read-write lock object, the read-write lock
 ​       object shall be put in the unlocked state.
-​<br />
-       If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
-       mine  which  thread(s)  shall acquire the lock.  If the Thread Execution Scheduling option is supported,
-       when threads executing with the scheduling policies SCHED_FIFO, SCHED_RR, or SCHED_SPORADIC are  waiting
-       on  the  lock,  they shall acquire the lock in priority order when the lock becomes available. For equal
-       priority threads, write locks shall take precedence over read locks.  If the Thread Execution Scheduling
-       option  is  not  supported,  it  is implementation-defined whether write locks take precedence over read
-       locks.</p>
-
+​ <br>
+​       If there are threads blocked on the lock when it becomes available, the scheduling policy  shall  deter‐
+​       mine  which  thread(s)  shall acquire the lock.  If the Thread Execution Scheduling option is supported,
+​       when threads executing with the scheduling policies SCHED_FIFO, SCHED_RR, or SCHED_SPORADIC are  waiting
+​       on  the  lock,  they shall acquire the lock in priority order when the lock becomes available. For equal
+​       priority threads, write locks shall take precedence over read locks.  If the Thread Execution Scheduling
+​       option  is  not  supported,  it  is implementation-defined whether write locks take precedence over read
+​       locks.</p>
 <p>​</p>
-
-<h3 id="pthread-rwlock-wrlock">pthread_rwlock_wrlock</h3>
-
+<h3 id="pthread_rwlock_wrlock">pthread_rwlock_wrlock</h3>
 <p>key::whether  a  read  or  write lock deadlock</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -334,41 +292,31 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">()</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
+<pre class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">(</span><span class="o">)</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
    
 The calling thread acquires the write lock <span class="k">if</span> no other thread <span class="o">(</span>reader or writer<span class="o">)</span> holds the read-write  lock  rwlock. <span class="o">(</span>获取成功，没有任何其他锁<span class="o">)</span>
    
     Otherwise, the thread shall block <span class="k">until</span> it can acquire the lock. 
     
  The calling thread may deadlock 
- <span class="k">if</span> at the <span class="nb">time</span> the call is made it holds the read-write  lock  <span class="o">(</span>whether  a  <span class="nb">read</span>  or  write lock<span class="o">)</span>.<span class="o">(</span>占用不释放<span class="o">)</span></code></pre></td></tr></table>
+ <span class="k">if</span> at the <span class="nb">time</span> the call is made it holds the read-write  lock  <span class="o">(</span>whether  a  <span class="nb">read</span>  or  write lock<span class="o">)</span>.<span class="o">(</span>占用不释放<span class="o">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>ERRORS
-       The pthread_rwlock_trywrlock() function shall fail if:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">   EBUSY  The read-write lock could not be acquired for writing because it was already locked  for  reading
-          or writing.</pre></td></tr></table>
-</div>
-</div>
+</div><p>ERRORS
+The pthread_rwlock_trywrlock() function shall fail if:</p>
+<pre><code>   EBUSY  The read-write lock could not be acquired for writing because it was already locked  for  reading
+          or writing.
+</code></pre>
 <h2 id="网络">网络</h2>
-
 <h3 id="send">send</h3>
-
 <p>send  send a message on a socket</p>
-
 <p>send(sockfd, buf, len, flags);</p>
-
 <ul>
-<li><p>ERRORS</p>
+<li>ERRORS</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -395,43 +343,45 @@ The calling thread acquires the write lock <span class="k">if</span> no other th
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">EAGAIN or EWOULDBLOCK
-      The socket is marked nonblocking and the requested operation would block.   POSIX.1-2001  allows  either
-      error  to  be  returned <span class="k">for</span> this <span class="k">case</span>, and does not require these constants to have the same value, so a
-      portable application should check <span class="k">for</span> both possibilities.
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 
-EBADF  An invalid descriptor was specified.
+   EAGAIN or EWOULDBLOCK
+          The socket is marked nonblocking and the requested operation would block.   POSIX.1-2001  allows  either
+          error  to  be  returned <span class="k">for</span> this <span class="k">case</span>, and does not require these constants to have the same value, so a
+          portable application should check <span class="k">for</span> both possibilities.
 
-ECONNRESET
-      Connection reset by peer.
+   EBADF  An invalid descriptor was specified.
 
-EDESTADDRREQ
-      The socket is not connection-mode, and no peer address is set.
+   ECONNRESET
+          Connection reset by peer.
 
-EFAULT An invalid user space address was specified <span class="k">for</span> an argument.
+   EDESTADDRREQ
+          The socket is not connection-mode, and no peer address is set.
 
-EINTR  A signal occurred before any data was transmitted<span class="p">;</span> see signal<span class="o">(</span><span class="m">7</span><span class="o">)</span>.
+   EFAULT An invalid user space address was specified <span class="k">for</span> an argument.
 
-EINVAL Invalid argument passed.
+   EINTR  A signal occurred before any data was transmitted<span class="p">;</span> see signal<span class="o">(</span>7<span class="o">)</span>.
+
+   EINVAL Invalid argument passed.
 
 https://stackoverflow.com/questions/3081952/with-c-tcp-sockets-can-send-return-zero
 
 On success, these calls <span class="k">return</span> the number of bytes sent.  On error,
-   -1 is returned, and errno is <span class="nb">set</span> appropriately.
+       -1 is returned, and errno is <span class="nb">set</span> appropriately.
        
-&gt;0
-&lt;<span class="m">0</span><span class="o">(</span>-1<span class="o">)</span>
-<span class="o">=</span><span class="m">0</span> 在这种情况下，从内存中，远程 TCP 栈缓冲区已经填满，栈通知本地端，它将延迟到一些空间被清空，本地缓冲区也已经填满。</code></pre></td></tr></table>
+   &gt;0
+   &lt;0<span class="o">(</span>-1<span class="o">)</span>
+   <span class="o">=</span><span class="m">0</span> 在这种情况下，从内存中，远程 TCP 栈缓冲区已经填满，栈通知本地端，它将延迟到一些空间被清空，本地缓冲区也已经填满。
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<h3 id="https-linux-die-net-man-2-recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></h3>
+</div><h3 id="httpslinuxdienetman2recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -467,9 +417,11 @@ On success, these calls <span class="k">return</span> the number of bytes sent. 
 </span><span class="lnt">34
 </span><span class="lnt">35
 </span><span class="lnt">36
+</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">Return Value
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+Return Value
 
 These calls <span class="k">return</span> the number of bytes received, 
 or -1 <span class="k">if</span> an error occurred. 
@@ -491,7 +443,7 @@ The receive buffer pointer<span class="o">(</span>s<span class="o">)</span> poin
 
 EINTR
 
-The receive was interrupted by delivery of a signal before any data were available<span class="p">;</span> see signal<span class="o">(</span><span class="m">7</span><span class="o">)</span>.
+The receive was interrupted by delivery of a signal before any data were available<span class="p">;</span> see signal<span class="o">(</span>7<span class="o">)</span>.
 
 EINVAL
 
@@ -499,18 +451,18 @@ Invalid argument passed.
 
 ENOMEM
 
-Could not allocate memory <span class="k">for</span> recvmsg<span class="o">()</span>.
+Could not allocate memory <span class="k">for</span> recvmsg<span class="o">(</span><span class="o">)</span>.
 
 ENOTCONN
-The socket is associated with a connection-oriented protocol and has not been connected <span class="o">(</span>see connect<span class="o">(</span><span class="m">2</span><span class="o">)</span> and accept<span class="o">(</span><span class="m">2</span><span class="o">))</span>.
+The socket is associated with a connection-oriented protocol and has not been connected <span class="o">(</span>see connect<span class="o">(</span>2<span class="o">)</span> and accept<span class="o">(</span>2<span class="o">)</span><span class="o">)</span>.
 ENOTSOCK
-The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
+The argument sockfd does not refer to a socket.
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="man-2-read">man 2 read</h3>
+</div><h3 id="man-2-read">man 2 read</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -538,12 +490,12 @@ The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* myread() 函数的一部分，在 while (1) 大循环里 */</span>
-<span class="k">if</span> <span class="p">((</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;EINTR&#34;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">)</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">=</span><span class="o">=</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">EINTR</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
 		<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;read error&#34;</span><span class="p">);</span>
+		<span class="n">perror</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">read error</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
 		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 	<span class="p">}</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -551,9 +503,9 @@ The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
 <span class="p">}</span>
 
 <span class="cm">/* main() 函数中 */</span>
-<span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">sig_alrm</span><span class="p">);</span>
-<span class="n">alarm</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="n">myread</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">MAX</span><span class="p">);</span>
+<span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">sig_alrm</span><span class="p">)</span><span class="p">;</span>
+<span class="n">alarm</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+<span class="n">myread</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span><span class="p">;</span>
 
 <span class="cm">/* sig_alrm() 函数 */</span>
 <span class="kt">void</span> <span class="nf">sig_alrm</span><span class="p">(</span><span class="n">ing</span> <span class="n">signo</span><span class="p">)</span>
@@ -561,39 +513,21 @@ The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
 	<span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="nl">http</span><span class="p">:</span><span class="c1">//yungkcx.github.io/jekyll/update/2016/09/16/read()-and-EINTR.html
-</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">stackoverflow</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">questions</span><span class="o">/</span><span class="mi">48959061</span><span class="o">/</span><span class="n">tcp</span><span class="o">-</span><span class="n">socket</span><span class="o">-</span><span class="n">can</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="n">still</span><span class="o">-</span><span class="n">fail</span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">eintr</span><span class="o">-</span><span class="n">when</span><span class="o">-</span><span class="n">select</span><span class="o">-</span><span class="n">indicates</span><span class="o">-</span><span class="n">there</span><span class="o">-</span><span class="n">are</span><span class="o">-</span><span class="n">d</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="c1">//stackoverflow.com/questions/48959061/tcp-socket-can-read-still-fail-with-eintr-when-select-indicates-there-are-d
+</span></code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="epoll">epoll</h2>
-
+</div><h2 id="epoll">epoll</h2>
 <p>Edge Triggered (ET) 边沿触发
 .socket的接收缓冲区状态变化时触发读事件，即空的接收缓冲区刚接收到数据时触发读事件
 .socket的发送缓冲区状态变化时触发写事件，即满的缓冲区刚空出空间时触发读事件</p>
-
 <h1 id="进程">进程</h1>
-
 <ul>
 <li>man pthread_exit</li>
 </ul>
-
 <p>DESCRIPTION
-       The pthread_exit() function terminates the calling thread and returns a value via retval that (if the thread is
-       joinable) is available to another thread in the same process that calls pthread_join(3).</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">   Any clean-up handlers established by pthread_cleanup_push(3) that have not yet been popped, are popped (in  the
+The pthread_exit() function terminates the calling thread and returns a value via retval that (if the thread is
+joinable) is available to another thread in the same process that calls pthread_join(3).</p>
+<pre><code>   Any clean-up handlers established by pthread_cleanup_push(3) that have not yet been popped, are popped (in  the
    reverse  of  the  order  in  which they were pushed) and executed.  If the thread has any thread-specific data,
    then, after the clean-up handlers have been executed, the corresponding destructor functions are called, in  an
    unspecified order.
@@ -602,11 +536,10 @@ The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
    descriptors) are not released, and functions registered using atexit(3) are not called.
 
    After the last thread in a process terminates, the process terminates as by calling exit(3) with an exit status
-   of zero; thus, process-shared resources are released and functions registered using atexit(3) are called.</pre></td></tr></table>
-</div>
-</div>
+   of zero; thus, process-shared resources are released and functions registered using atexit(3) are called.
+</code></pre>
 <p>ERRORS
-       This function always succeeds.</p>
+This function always succeeds.</p>
 
     </div>
 
@@ -638,8 +571,8 @@ The argument sockfd does not refer to a socket.</code></pre></td></tr></table>
             <span class="prev-text nav-default">c&#43;&#43;编程思想</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/DataBase/server_redis/">
-            <span class="next-text nav-default">redis必须掌握几个知识点</span>
+        <a class="next" href="/post/%E6%8F%90%E9%AB%98%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B7%A5%E5%85%B7/">
+            <span class="next-text nav-default">提高工作效率的几个工具</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

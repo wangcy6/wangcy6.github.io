@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.58.3 with theme even" />
+<meta name="generator" content="Hugo 0.64.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/leetcode/%E5%89%91%E6%8C%87Offer_36_%E9%80%86%E5%BA%8F%E5%AF%B9/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-10-10T17:02:43+08:00" />
 <meta itemprop="name" content="36-逆序对">
 <meta itemprop="description" content="一、描述 在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 给你一个数组，求出这个数组中逆序对的总数。 逆序对概括：">
-
-
 <meta itemprop="datePublished" content="2019-10-10T17:02:43&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-10T17:02:43&#43;08:00" />
-<meta itemprop="wordCount" content="1238">
+<meta itemprop="wordCount" content="1240">
 
 
 
-<meta itemprop="keywords" content="array,sort," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="array,sort," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="36-逆序对"/>
 <meta name="twitter:description" content="一、描述 在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。 给你一个数组，求出这个数组中逆序对的总数。 逆序对概括："/>
 
@@ -136,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/%E5%89%91%E6%8C%87Offer/"> 剑指Offer </a>
             </div>
-          <span class="more-meta"> 约 1238 字 </span>
+          <span class="more-meta"> 约 1240 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -146,41 +143,32 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#一-描述">一、描述</a></li>
-<li><a href="#二-测试">二、测试</a></li>
-<li><a href="#三-想法">三、想法</a></li>
-<li><a href="#四-talk">四、talk</a></li>
-<li><a href="#五-code">五、code</a></li>
-<li><a href="#六-扩展">六、 扩展</a></li>
-<li><a href="#ref">ref</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一描述">一、描述</a></li>
+        <li><a href="#二测试">二、测试</a></li>
+        <li><a href="#三想法">三、想法</a></li>
+        <li><a href="#四talk">四、talk</a></li>
+        <li><a href="#五code">五、code</a></li>
+        <li><a href="#六-扩展">六、 扩展</a></li>
+        <li><a href="#ref">ref</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h3 id="一-描述">一、描述</h3>
-
+      <h3 id="一描述">一、描述</h3>
 <p>在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。</p>
-
 <p>给你一个数组，求出这个数组中逆序对的总数。</p>
-
 <p>逆序对概括：</p>
-
 <p>如果a[i] &gt; a[j] 且 i &lt; j， a[i] 和 a[j] 构成一个逆序对。</p>
-
-<h3 id="二-测试">二、测试</h3>
+<h3 id="二测试">二、测试</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-tiki wiki" data-lang="tiki wiki"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -194,7 +182,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-tiki wiki" data-lang="tiki wiki">样例1
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">样例1
 
 输入: A = [2, 4, 1, 3, 5]
 输出: 3
@@ -205,17 +193,15 @@
 输入: A = [1, 2, 3, 4]
 输出: 0
 解释:没有逆序对
-https://www.lintcode.com/problem/reverse-pairs/description</code></pre></td></tr></table>
+https://www.lintcode.com/problem/reverse-pairs/description
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="三-想法">三、想法</h3>
-
-<p><img src="https://i.loli.net/2019/10/17/X8cu9KgRkeQxmjA.png" alt="相邻比较" /></p>
-
-<p><img src="https://i.loli.net/2019/10/17/X3GzAEaOT1MtWLg.png" alt="合并2个有序数组" /></p>
+</div><h3 id="三想法">三、想法</h3>
+<p><img src="https://i.loli.net/2019/10/17/X8cu9KgRkeQxmjA.png" alt="相邻比较"></p>
+<p><img src="https://i.loli.net/2019/10/17/X3GzAEaOT1MtWLg.png" alt="合并2个有序数组"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -237,9 +223,12 @@ https://www.lintcode.com/problem/reverse-pairs/description</code></pre></td></tr
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span></pre></td>
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">例如7,5,4,6可以划分为两段7,5  和   4,6两个子数组
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+例如7,5,4,6可以划分为两段7,5  和   4,6两个子数组
 (长度为1的2个数组如何求逆序，然后合并)
 1. 在7,5中求出逆序对，因为7大于5所以 有1对  total=1
 2. 在6,4中求出逆序对，因为6大于4所以逆序对再加1，为2,total=2
@@ -260,68 +249,50 @@ https://www.lintcode.com/problem/reverse-pairs/description</code></pre></td></tr
  
  辅助数组此时为4,5,6,7.逆序对为5
  
-2个有序数组的合并逻辑</pre></td></tr></table>
-</div>
-</div>
-<p>细心你发现 这个合并和平时理解不一样，一般都是从到大合并就不能统计逆序对了吗？</p>
+2个有序数组的合并逻辑
 
+</code></pre></td></tr></table>
+</div>
+</div><p>细心你发现 这个合并和平时理解不一样，一般都是从到大合并就不能统计逆序对了吗？</p>
 <p>也可以</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="mf">4.</span> <span class="err">设置两个指针分别指向两个子数组中的最小值，</span><span class="n">p1指向5</span><span class="err">，</span><span class="n">p2指向4</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="mf">4.</span> <span class="err">设</span><span class="err">置</span><span class="err">两</span><span class="err">个</span><span class="err">指</span><span class="err">针</span><span class="err">分</span><span class="err">别</span><span class="err">指</span><span class="err">向</span><span class="err">两</span><span class="err">个</span><span class="err">子</span><span class="err">数</span><span class="err">组</span><span class="err">中</span><span class="err">的</span><span class="err">最</span><span class="err">小</span><span class="err">值</span><span class="err">，</span><span class="n">p1指向5</span><span class="err">，</span><span class="n">p2指向4</span>
 
-<span class="mf">5.</span> <span class="err">比较</span><span class="n">p1和p2指向的值</span><span class="err">，如果</span><span class="n">P1大于p2</span> <span class="p">(</span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">)</span><span class="err">，因为</span><span class="n">p1指向的是最小值</span><span class="err">，所以第二个子数组中有几个元素就有几对逆序对</span> <span class="mi">5</span><span class="err">和</span><span class="mi">7</span>  <span class="err">（</span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="o">&gt;</span><span class="mi">4</span> <span class="err">）</span>
-   <span class="err">比较完之后将</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="err">指向的值放入辅助数组里，辅助数组里现在有一个数字</span><span class="mi">4</span><span class="err">，然后将</span><span class="n">p2向前移动一位指向</span>
-<span class="mf">6.</span> <span class="err">再次判断</span><span class="n">p1和p2指向的值</span><span class="err">，</span><span class="n">p1小于p2</span>  <span class="mi">5</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">,</span><span class="err">这次移动是</span><span class="mi">5</span><span class="err">，没有逆序</span>
+<span class="mf">5.</span> <span class="err">比</span><span class="err">较</span><span class="n">p1和p2指向的值</span><span class="err">，</span><span class="err">如</span><span class="err">果</span><span class="n">P1大于p2</span> <span class="p">(</span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">)</span><span class="err">，</span><span class="err">因</span><span class="err">为</span><span class="n">p1指向的是最小值</span><span class="err">，</span><span class="err">所</span><span class="err">以</span><span class="err">第</span><span class="err">二</span><span class="err">个</span><span class="err">子</span><span class="err">数</span><span class="err">组</span><span class="err">中</span><span class="err">有</span><span class="err">几</span><span class="err">个</span><span class="err">元</span><span class="err">素</span><span class="err">就</span><span class="err">有</span><span class="err">几</span><span class="err">对</span><span class="err">逆</span><span class="err">序</span><span class="err">对</span> <span class="mi">5</span><span class="err">和</span><span class="mi">7</span>  <span class="err">（</span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="o">&gt;</span><span class="mi">4</span> <span class="err">）</span>
+   <span class="err">比</span><span class="err">较</span><span class="err">完</span><span class="err">之</span><span class="err">后</span><span class="err">将</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span><span class="err">指</span><span class="err">向</span><span class="err">的</span><span class="err">值</span><span class="err">放</span><span class="err">入</span><span class="err">辅</span><span class="err">助</span><span class="err">数</span><span class="err">组</span><span class="err">里</span><span class="err">，</span><span class="err">辅</span><span class="err">助</span><span class="err">数</span><span class="err">组</span><span class="err">里</span><span class="err">现</span><span class="err">在</span><span class="err">有</span><span class="err">一</span><span class="err">个</span><span class="err">数</span><span class="err">字</span><span class="mi">4</span><span class="err">，</span><span class="err">然</span><span class="err">后</span><span class="err">将</span><span class="n">p2向前移动一位指向</span>
+<span class="mf">6.</span> <span class="err">再</span><span class="err">次</span><span class="err">判</span><span class="err">断</span><span class="n">p1和p2指向的值</span><span class="err">，</span><span class="n">p1小于p2</span>  <span class="mi">5</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">,</span><span class="err">这</span><span class="err">次</span><span class="err">移</span><span class="err">动</span><span class="err">是</span><span class="mi">5</span><span class="err">，</span><span class="err">没</span><span class="err">有</span><span class="err">逆</span><span class="err">序</span>
 </code></pre></td></tr></table>
 </div>
-</div>
-<p><img src="https://i.loli.net/2019/10/18/ALlbDIftYTwNWEJ.png" alt="image.png" /></p>
-
-<h3 id="四-talk">四、talk</h3>
-
+</div><p><img src="https://i.loli.net/2019/10/18/ALlbDIftYTwNWEJ.png" alt="image.png"></p>
+<h3 id="四talk">四、talk</h3>
 <p>统计逆序对，整个排序过程没有任何影响。这个一般和难想到。</p>
-
 <p>尤其是统计逆序对，建立有序基础上。</p>
-
 <ul>
 <li>如果最大值都小于我，肯定前面都小于我（正向）</li>
 <li>如果最小值都大于我，肯定后面的都大于我（逆向）</li>
 </ul>
-
 <p>优化：</p>
-
 <p>归并排序 采用方式递归 分治，最小单位是遇到只有1个记录时候就返回。</p>
-
 <p>在链表合并过程中需要依赖额外空间。建立公共遍历性能提高5ms</p>
-
 <p>时间复杂度o(logn),空间复杂度是o(n)</p>
-
-<h3 id="五-code">五、code</h3>
-
-<p><img src="https://i.loli.net/2019/10/17/buoJiFKr7vDmeBg.png" alt="超时" /></p>
-
-<p><img src="https://i.loli.net/2019/10/18/ev1TQagkzrJByRd.png" alt="50ms" /></p>
-
+<h3 id="五code">五、code</h3>
+<p><img src="https://i.loli.net/2019/10/17/buoJiFKr7vDmeBg.png" alt="超时"></p>
+<p><img src="https://i.loli.net/2019/10/18/ev1TQagkzrJByRd.png" alt="50ms"></p>
 <h3 id="六-扩展">六、 扩展</h3>
-
 <blockquote>
 <p>分享最实用的经验 ， 希望每一位来访的朋友都能有所收获！</p>
 </blockquote>
-
 <h3 id="ref">ref</h3>
-
 <ul>
-<li><a href="https://www.cnblogs.com/chengxiao/p/6194356.html">https://www.cnblogs.com/chengxiao/p/6194356.html</a>
-
-<br /></li>
+<li><a href="https://www.cnblogs.com/chengxiao/p/6194356.html">https://www.cnblogs.com/chengxiao/p/6194356.html</a></li>
 </ul>
 
     </div>
