@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>code_reading on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/code_reading/</link>
+    <description>Recent content in code_reading on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/categories/code_reading/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>协程库</title>
+      <link>https://wangcy6.github.io/post/st/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/st/</guid>
+      <description>卡片 协程库 语言 开发者 state threads library 3000行C代码 历史渊源 摘要 今日理解。 一、一个普通的应用程序，假如采用st库，那么这个应用具备2个特点 highly scalable appl</description>
+    </item>
+    
+  </channel>
+</rss>
