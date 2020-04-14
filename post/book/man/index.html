@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.64.0 with theme even" />
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/book/man/" />
@@ -166,7 +166,7 @@
     <li><a href="#网络">网络</a>
       <ul>
         <li><a href="#send">send</a></li>
-        <li><a href="#httpslinuxdienetman2recv"></a></li>
+        <li><a href="#httpslinuxdienetman2recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></a></li>
         <li><a href="#man-2-read">man 2 read</a></li>
       </ul>
     </li>
@@ -196,7 +196,7 @@
        <span class="nt">multithreaded</span> <span class="nt">applications</span><span class="o">,</span> <span class="nt">glibc</span> <span class="nt">creates</span> <span class="nt">additional</span> <span class="nt">memory</span><span class="err"></span>
        <span class="nt">allocation</span> <span class="nt">arenas</span> <span class="nt">if</span> <span class="nt">mutex</span> <span class="nt">contention</span> <span class="nt">is</span> <span class="nt">detected</span><span class="nc">.</span>  <span class="nt">Each</span> <span class="nt">arena</span> <span class="nt">is</span> <span class="nt">a</span><span class="err"></span>
        <span class="nt">large</span> <span class="nt">region</span> <span class="nt">of</span> <span class="nt">memory</span> <span class="nt">that</span> <span class="nt">is</span> <span class="nt">internally</span> <span class="nt">allocated</span> <span class="nt">by</span> <span class="nt">the</span> <span class="nt">system</span><span class="err"></span>
-       <span class="o">(</span><span class="nt">using</span> <span class="nt">brk</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="nt">or</span> <span class="nt">mmap</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span><span class="o">)</span><span class="o">,</span> <span class="nt">and</span> <span class="nt">managed</span> <span class="nt">with</span> <span class="nt">its</span> <span class="nt">own</span> <span class="nt">mutexes</span><span class="err"></span>
+       <span class="o">(</span><span class="nt">using</span> <span class="nt">brk</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="nt">or</span> <span class="nt">mmap</span><span class="o">(</span><span class="nt">2</span><span class="o">)),</span> <span class="nt">and</span> <span class="nt">managed</span> <span class="nt">with</span> <span class="nt">its</span> <span class="nt">own</span> <span class="nt">mutexes</span><span class="err"></span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -230,7 +230,7 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">DEFAULT_MXFAST</span>             <span class="mi">64</span> <span class="p">(</span><span class="k">for</span> <span class="mi">32</span><span class="nx">bit</span><span class="p">)</span><span class="p">,</span> <span class="mi">128</span> <span class="p">(</span><span class="k">for</span> <span class="mi">64</span><span class="nx">bit</span><span class="p">)</span> <span class="c1">// free-list(fastbin)最大内存块
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">DEFAULT_MXFAST</span>             <span class="mi">64</span> <span class="p">(</span><span class="k">for</span> <span class="mi">32</span><span class="nx">bit</span><span class="p">),</span> <span class="mi">128</span> <span class="p">(</span><span class="k">for</span> <span class="mi">64</span><span class="nx">bit</span><span class="p">)</span> <span class="c1">// free-list(fastbin)最大内存块
 </span><span class="c1"></span><span class="nx">DEFAULT_TRIM_THRESHOLD</span>     <span class="mi">128</span> <span class="o">*</span> <span class="mi">1024</span> <span class="c1">// malloc_trim的门槛值 128k
 </span><span class="c1"></span><span class="nx">DEFAULT_TOP_PAD</span>            <span class="mi">0</span>
 <span class="nx">DEFAULT_MMAP_THRESHOLD</span>     <span class="mi">128</span> <span class="o">*</span> <span class="mi">1024</span> <span class="c1">// 使用mmap分配内存的门槛值 128k
@@ -292,7 +292,7 @@ by rwlock.</p>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">(</span><span class="o">)</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
+<pre class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">()</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
    
 The calling thread acquires the write lock <span class="k">if</span> no other thread <span class="o">(</span>reader or writer<span class="o">)</span> holds the read-write  lock  rwlock. <span class="o">(</span>获取成功，没有任何其他锁<span class="o">)</span>
    
@@ -451,10 +451,10 @@ Invalid argument passed.
 
 ENOMEM
 
-Could not allocate memory <span class="k">for</span> recvmsg<span class="o">(</span><span class="o">)</span>.
+Could not allocate memory <span class="k">for</span> recvmsg<span class="o">()</span>.
 
 ENOTCONN
-The socket is associated with a connection-oriented protocol and has not been connected <span class="o">(</span>see connect<span class="o">(</span>2<span class="o">)</span> and accept<span class="o">(</span>2<span class="o">)</span><span class="o">)</span>.
+The socket is associated with a connection-oriented protocol and has not been connected <span class="o">(</span>see connect<span class="o">(</span>2<span class="o">)</span> and accept<span class="o">(</span>2<span class="o">))</span>.
 ENOTSOCK
 The argument sockfd does not refer to a socket.
 </code></pre></td></tr></table>
@@ -490,12 +490,12 @@ The argument sockfd does not refer to a socket.
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* myread() 函数的一部分，在 while (1) 大循环里 */</span>
-<span class="k">if</span> <span class="p">(</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">)</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">=</span><span class="o">=</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">perror</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">EINTR</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">((</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;EINTR&#34;</span><span class="p">);</span>
 		<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-		<span class="n">perror</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">read error</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;read error&#34;</span><span class="p">);</span>
 		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 	<span class="p">}</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -503,9 +503,9 @@ The argument sockfd does not refer to a socket.
 <span class="p">}</span>
 
 <span class="cm">/* main() 函数中 */</span>
-<span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">sig_alrm</span><span class="p">)</span><span class="p">;</span>
-<span class="n">alarm</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
-<span class="n">myread</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span><span class="p">;</span>
+<span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">sig_alrm</span><span class="p">);</span>
+<span class="n">alarm</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">myread</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">MAX</span><span class="p">);</span>
 
 <span class="cm">/* sig_alrm() 函数 */</span>
 <span class="kt">void</span> <span class="nf">sig_alrm</span><span class="p">(</span><span class="n">ing</span> <span class="n">signo</span><span class="p">)</span>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.64.0 with theme even" />
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/leetcode/027-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/" />
@@ -185,14 +185,14 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">输</span><span class="err">入</span><span class="o">:</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">输入</span><span class="o">:</span>
 	    <span class="mi">4</span>
 	   <span class="o">/</span> <span class="err">\</span>
 	  <span class="mi">2</span>   <span class="mi">5</span>
 	 <span class="o">/</span> <span class="err">\</span>
 	<span class="mi">1</span>   <span class="mi">3</span>		
 
-<span class="err">输</span><span class="err">出</span><span class="o">:</span> <span class="mi">1</span><span class="o">&lt;</span><span class="o">-</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;</span><span class="o">-</span><span class="o">&gt;</span><span class="mi">3</span><span class="o">&lt;</span><span class="o">-</span><span class="o">&gt;</span><span class="mi">4</span><span class="o">&lt;</span><span class="o">-</span><span class="o">&gt;</span><span class="mi">5</span>
+<span class="err">输出</span><span class="o">:</span> <span class="mi">1</span><span class="o">&lt;-&gt;</span><span class="mi">2</span><span class="o">&lt;-&gt;</span><span class="mi">3</span><span class="o">&lt;-&gt;</span><span class="mi">4</span><span class="o">&lt;-&gt;</span><span class="mi">5</span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="三想法">三、想法</h3>
@@ -423,8 +423,8 @@
 </span><span class="lnt">184
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp"></span><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;stack&gt;</span><span class="cp">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stack&gt;</span><span class="cp">
 </span><span class="cp"></span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
@@ -434,33 +434,33 @@
     <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">left</span><span class="p">;</span>
     <span class="k">struct</span> <span class="nc">TreeNode</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
     <span class="n">TreeNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">val</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="p">,</span> <span class="n">left</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span><span class="p">,</span> <span class="n">right</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">val</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">left</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span> <span class="n">right</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span>
     <span class="p">{</span>
     <span class="p">}</span>
-    <span class="n">TreeNode</span><span class="p">(</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">val</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="p">,</span> <span class="n">left</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span><span class="p">,</span> <span class="n">right</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span>
+    <span class="n">TreeNode</span><span class="p">()</span>
+        <span class="o">:</span> <span class="n">val</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">left</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span> <span class="n">right</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span>
     <span class="p">{</span>
     <span class="p">}</span>
-<span class="p">}</span><span class="p">;</span>
+<span class="p">};</span>
 <span class="c1">//非递归中顺遍历
 </span><span class="c1"></span><span class="kt">void</span> <span class="nf">InOrderTraverse</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*</span><span class="o">&gt;</span> <span class="n">path</span><span class="p">;</span>
+    <span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*&gt;</span> <span class="n">path</span><span class="p">;</span>
     <span class="n">TreeNode</span><span class="o">*</span> <span class="n">pcur</span> <span class="o">=</span><span class="n">root</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">pcur</span><span class="o">!</span><span class="o">=</span><span class="nb">NULL</span> <span class="o">|</span><span class="o">|</span> <span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="p">)</span> <span class="o">=</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">pcur</span><span class="o">!=</span><span class="nb">NULL</span> <span class="o">||</span> <span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">==</span><span class="nb">false</span><span class="p">)</span>
     <span class="p">{</span>
-         <span class="k">while</span> <span class="p">(</span><span class="n">pcur</span> <span class="o">!</span><span class="o">=</span><span class="nb">NULL</span><span class="p">)</span>
+         <span class="k">while</span> <span class="p">(</span><span class="n">pcur</span> <span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span>
          <span class="p">{</span>
-            <span class="n">path</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">pcur</span><span class="p">)</span><span class="p">;</span>
-            <span class="n">pcur</span> <span class="o">=</span><span class="n">pcur</span><span class="o">-</span><span class="o">&gt;</span><span class="n">left</span><span class="p">;</span>
+            <span class="n">path</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">pcur</span><span class="p">);</span>
+            <span class="n">pcur</span> <span class="o">=</span><span class="n">pcur</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
          <span class="p">}</span>
-         <span class="k">if</span> <span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="p">)</span> <span class="o">=</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+         <span class="k">if</span> <span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">==</span><span class="nb">false</span><span class="p">)</span>
          <span class="p">{</span>
-            <span class="n">pcur</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">top</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-            <span class="n">cout</span><span class="o">&lt;</span><span class="o">&lt;</span> <span class="sa"></span><span class="s">&#34;</span><span class="s">pop= </span><span class="s">&#34;</span><span class="o">&lt;</span><span class="o">&lt;</span><span class="n">pcur</span><span class="o">-</span><span class="o">&gt;</span><span class="n">val</span><span class="o">&lt;</span><span class="o">&lt;</span><span class="n">endl</span><span class="p">;</span> 
-            <span class="n">path</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+            <span class="n">pcur</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+            <span class="n">cout</span><span class="o">&lt;&lt;</span> <span class="s">&#34;pop= &#34;</span><span class="o">&lt;&lt;</span><span class="n">pcur</span><span class="o">-&gt;</span><span class="n">val</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span> 
+            <span class="n">path</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
 
-            <span class="n">pcur</span> <span class="o">=</span><span class="n">pcur</span><span class="o">-</span><span class="o">&gt;</span><span class="n">right</span><span class="p">;</span>
+            <span class="n">pcur</span> <span class="o">=</span><span class="n">pcur</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
          <span class="p">}</span>
          
     <span class="p">}</span>
@@ -484,47 +484,47 @@
 </span><span class="cm">     */</span>
     <span class="n">TreeNode</span><span class="o">*</span> <span class="n">ConvertByStack</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">pRootOfTree</span><span class="p">)</span>
     <span class="p">{</span>
-         <span class="k">if</span> <span class="p">(</span><span class="nb">NULL</span> <span class="o">=</span><span class="o">=</span> <span class="n">pRootOfTree</span><span class="p">)</span>
+         <span class="k">if</span> <span class="p">(</span><span class="nb">NULL</span> <span class="o">==</span> <span class="n">pRootOfTree</span><span class="p">)</span>
          <span class="p">{</span>
              <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
          <span class="p">}</span>
    
         
-        <span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*</span><span class="o">&gt;</span> <span class="n">path</span><span class="p">;</span>
+        <span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">*&gt;</span> <span class="n">path</span><span class="p">;</span>
         <span class="n">TreeNode</span><span class="o">*</span> <span class="n">currNode</span> <span class="o">=</span><span class="n">pRootOfTree</span><span class="p">;</span>
         
         <span class="n">TreeNode</span><span class="o">*</span> <span class="n">preNode</span> <span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
         <span class="n">TreeNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
         
-        <span class="k">while</span> <span class="p">(</span><span class="n">currNode</span> <span class="o">!</span><span class="o">=</span><span class="nb">NULL</span> <span class="o">|</span><span class="o">|</span> <span class="o">!</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">currNode</span> <span class="o">!=</span><span class="nb">NULL</span> <span class="o">||</span> <span class="o">!</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
         <span class="p">{</span>
-            <span class="k">while</span> <span class="p">(</span><span class="n">currNode</span> <span class="o">!</span><span class="o">=</span><span class="nb">NULL</span><span class="p">)</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">currNode</span> <span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span>
             <span class="p">{</span>
-               <span class="n">path</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">currNode</span><span class="p">)</span><span class="p">;</span>
-               <span class="n">currNode</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">left</span><span class="p">;</span>
+               <span class="n">path</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">currNode</span><span class="p">);</span>
+               <span class="n">currNode</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
             <span class="p">}</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="p">)</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
             <span class="p">{</span>
-                <span class="n">currNode</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">top</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-                <span class="n">path</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="p">)</span><span class="p">;</span> 
+                <span class="n">currNode</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+                <span class="n">path</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span> 
                 <span class="c1">// 当前节点左子tree为null，当前节点pop,
 </span><span class="c1"></span>                <span class="c1">//当前currNode-&gt;right为null，currNode 上一个节点Pop
 </span><span class="c1"></span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">preNode</span> <span class="o">=</span><span class="o">=</span> <span class="nb">NULL</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">preNode</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
                 <span class="p">{</span>  <span class="c1">//fist node
 </span><span class="c1"></span>                   <span class="n">head</span> <span class="o">=</span> <span class="n">currNode</span><span class="p">;</span>
                 <span class="p">}</span>
                 <span class="k">else</span>
                 <span class="p">{</span>
                     <span class="c1">//swap
-</span><span class="c1"></span>                    <span class="n">preNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">right</span> <span class="o">=</span><span class="n">currNode</span><span class="p">;</span>
-                    <span class="n">currNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">left</span> <span class="o">=</span><span class="n">preNode</span><span class="p">;</span>
+</span><span class="c1"></span>                    <span class="n">preNode</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span><span class="n">currNode</span><span class="p">;</span>
+                    <span class="n">currNode</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span><span class="n">preNode</span><span class="p">;</span>
 
                 <span class="p">}</span>
                 
                 <span class="n">preNode</span> <span class="o">=</span><span class="n">currNode</span><span class="p">;</span><span class="c1">//change
-</span><span class="c1"></span>                <span class="n">currNode</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">right</span><span class="p">;</span><span class="c1">//change
+</span><span class="c1"></span>                <span class="n">currNode</span> <span class="o">=</span> <span class="n">currNode</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span><span class="c1">//change
 </span><span class="c1"></span>            <span class="p">}</span>
             
             
@@ -541,9 +541,9 @@
 </span><span class="cm">     * @param     root                     [当前递归的二叉排序树的根节点]
 </span><span class="cm">     * @param     pLastNode                [中序遍历中指向前一个节点的指针]
 </span><span class="cm">     */</span>
-    <span class="kt">void</span> <span class="nf">ConvertRecursion</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="o">*</span><span class="n">pLastNode</span><span class="p">)</span>
+    <span class="kt">void</span> <span class="nf">ConvertRecursion</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">**</span><span class="n">pLastNode</span><span class="p">)</span>
     <span class="p">{</span>
-       <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">=</span><span class="o">=</span> <span class="nb">NULL</span><span class="p">)</span>
+       <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
        <span class="p">{</span>
           <span class="k">return</span> <span class="p">;</span>
        <span class="p">}</span>
@@ -555,16 +555,16 @@
 </span><span class="c1"></span>        <span class="c1">//////////////////////////
 </span><span class="c1"></span>       <span class="c1">// if(pCurrNode-&gt;left != NULL)
 </span><span class="c1"></span>        <span class="c1">//{
-</span><span class="c1"></span>            <span class="n">ConvertRecursion</span><span class="p">(</span><span class="n">pCurrNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">pLastNode</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>            <span class="n">ConvertRecursion</span><span class="p">(</span><span class="n">pCurrNode</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">pLastNode</span><span class="p">);</span>
        <span class="c1">// }
 </span><span class="c1"></span>        
-        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">pLastNode</span> <span class="o">=</span><span class="o">=</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">pLastNode</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="c1">//第一个节点
 </span><span class="c1"></span>        <span class="p">}</span><span class="k">else</span>
         <span class="p">{</span>
-             <span class="p">(</span><span class="o">*</span><span class="n">pLastNode</span><span class="p">)</span><span class="o">-</span><span class="o">&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">pCurrNode</span><span class="p">;</span>
-              <span class="n">pCurrNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="o">*</span><span class="n">pLastNode</span><span class="p">;</span>
+             <span class="p">(</span><span class="o">*</span><span class="n">pLastNode</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">pCurrNode</span><span class="p">;</span>
+              <span class="n">pCurrNode</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="o">*</span><span class="n">pLastNode</span><span class="p">;</span>
         <span class="p">}</span>
         
         
@@ -578,34 +578,34 @@
 
         <span class="c1">//if(pCurrNode-&gt;right != NULL)
 </span><span class="c1"></span>       <span class="c1">// {
-</span><span class="c1"></span>            <span class="n">ConvertRecursion</span><span class="p">(</span><span class="n">pCurrNode</span><span class="o">-</span><span class="o">&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">pLastNode</span><span class="p">)</span><span class="p">;</span>
+</span><span class="c1"></span>            <span class="n">ConvertRecursion</span><span class="p">(</span><span class="n">pCurrNode</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">pLastNode</span><span class="p">);</span>
         <span class="c1">//}
 </span><span class="c1"></span>       
     <span class="p">}</span>
-<span class="p">}</span><span class="p">;</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span>
+<span class="p">};</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">//    4
 </span><span class="c1"></span>    <span class="c1">//  3   5
 </span><span class="c1"></span>    <span class="c1">//2
-</span><span class="c1"></span>    <span class="n">TreeNode</span> <span class="n">tree</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="c1"></span>    <span class="n">TreeNode</span> <span class="n">tree</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">val</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">left</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">right</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">val</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">left</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">val</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">left</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">val</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">left</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">tree</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 
-    <span class="n">InOrderTraverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">InOrderTraverse</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 
     <span class="n">Solution</span> <span class="n">so</span><span class="p">;</span>
-    <span class="n">so</span><span class="p">.</span><span class="n">ConvertByStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">so</span><span class="p">.</span><span class="n">ConvertByStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>

@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2020 14:39:31 +0800</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>future</title>
+      <link>https://wangcy6.github.io/tags/future/</link>
+      <pubDate>Mon, 13 Apr 2020 14:39:31 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/future/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GTD</title>
+      <link>https://wangcy6.github.io/tags/GTD/</link>
+      <pubDate>Wed, 26 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/GTD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>work</title>
+      <link>https://wangcy6.github.io/tags/work/</link>
+      <pubDate>Wed, 26 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/work/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>array</title>
@@ -35,24 +62,6 @@
       <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/tags/Backtracking/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GTD</title>
-      <link>https://wangcy6.github.io/tags/GTD/</link>
-      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/GTD/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>work</title>
-      <link>https://wangcy6.github.io/tags/work/</link>
-      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/work/</guid>
       <description></description>
     </item>
     

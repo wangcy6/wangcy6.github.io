@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.64.0 with theme even" />
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/Effective-C&#43;&#43;31/" />
@@ -186,13 +186,13 @@
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Person</span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="c1">// 外部接口
-</span><span class="c1"></span>    <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">string</span> <span class="nf">name</span><span class="p">(</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+</span><span class="c1"></span>    <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
+    <span class="n">string</span> <span class="nf">name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="c1">// 内部实现
 </span><span class="c1"></span>    <span class="n">string</span> <span class="n">_name</span><span class="p">;</span>
     <span class="n">Date</span> <span class="n">_birthday</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
+<span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>基于Person的内部实现，它的类定义文件中应该包含这样的代码：</p>
@@ -216,8 +216,8 @@
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">string</span><span class="p">;</span>
 <span class="k">class</span> <span class="nc">Date</span><span class="p">;</span>
 <span class="k">class</span> <span class="nc">Person</span><span class="p">{</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-<span class="p">}</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">};</span>
 <span class="n">Person</span> <span class="n">p</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
@@ -240,7 +240,7 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Date</span><span class="p">;</span>
 <span class="k">class</span> <span class="nc">Person</span><span class="p">{</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
+    <span class="p">...</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="n">Date</span><span class="o">*</span> <span class="n">_birthday</span><span class="p">;</span>
 <span class="p">}</span>
@@ -276,8 +276,8 @@ void func(Date d);
 
 <span class="c1">// file: date.h
 </span><span class="c1"></span><span class="k">class</span> <span class="nc">Date</span><span class="p">{</span>
-    <span class="p">.</span><span class="p">.</span><span class="p">.</span>
-<span class="p">}</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>我们在Person中include&quot;datefwd.h&quot;即可，这样解除Person和Date内部实现（定义在date.h中）之间的编译依赖。</p>
@@ -300,14 +300,14 @@ void func(Date d);
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Person</span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-    <span class="n">Person</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span><span class="p">;</span>
-    <span class="n">string</span> <span class="nf">name</span><span class="p">(</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">Person</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
+    <span class="n">string</span> <span class="nf">name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">PersonImpl</span><span class="o">&gt;</span> <span class="n">pImpl</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
-<span class="n">Person</span><span class="o">:</span><span class="o">:</span><span class="n">Person</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span><span class="o">:</span> <span class="n">pImpl</span><span class="p">(</span><span class="k">new</span> <span class="n">PersonImpl</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="p">)</span><span class="p">{</span><span class="p">}</span>
-<span class="n">string</span> <span class="n">Person</span><span class="o">:</span><span class="o">:</span><span class="n">name</span><span class="p">(</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">return</span> <span class="n">pImpl</span><span class="o">-</span><span class="o">&gt;</span><span class="n">name</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">Person</span><span class="o">::</span><span class="n">Person</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span><span class="o">:</span> <span class="n">pImpl</span><span class="p">(</span><span class="k">new</span> <span class="n">PersonImpl</span><span class="p">(</span><span class="n">name</span><span class="p">)){}</span>
+<span class="n">string</span> <span class="n">Person</span><span class="o">::</span><span class="n">name</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="n">pImpl</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
@@ -328,10 +328,10 @@ void func(Date d);
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Person</span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-    <span class="k">virtual</span> <span class="o">~</span><span class="n">Person</span><span class="p">(</span><span class="p">)</span><span class="p">;</span>
-    <span class="k">virtual</span> <span class="n">string</span> <span class="nf">name</span><span class="p">(</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">virtual</span> <span class="n">string</span> <span class="nf">birthday</span><span class="p">(</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Person</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="n">string</span> <span class="nf">name</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="n">string</span> <span class="nf">birthday</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>接口类中的成员函数定义为纯虚函数即可，因为接口类中我们当然不打算放一个方法的实现进去。</p>
@@ -355,13 +355,13 @@ void func(Date d);
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Person</span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-    <span class="k">static</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">create</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
-<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">Person</span><span class="o">:</span><span class="o">:</span><span class="n">create</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span><span class="p">{</span>
-    <span class="k">return</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">RealPerson</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">create</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">Person</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">RealPerson</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
 <span class="p">}</span>
-<span class="p">.</span><span class="p">.</span><span class="p">.</span>
-<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">(</span><span class="n">Person</span><span class="o">:</span><span class="o">:</span><span class="n">create</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">alice</span><span class="s">&#34;</span><span class="p">)</span><span class="p">)</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">(</span><span class="n">Person</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&#34;alice&#34;</span><span class="p">));</span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="总结">总结</h3>

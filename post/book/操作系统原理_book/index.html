@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.64.0 with theme even" />
+<meta name="generator" content="Hugo 0.68.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/book/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86_book/" />
@@ -233,8 +233,8 @@ root        <span class="m">59</span>     <span class="m">2</span>  <span class=
 <span class="k">struct</span> <span class="n">softirq_action</span>
 <span class="p">{</span>
     <span class="cm">/* 软中断的处理函数 */</span>        
-    <span class="kt">void</span>    <span class="p">(</span><span class="o">*</span><span class="n">action</span><span class="p">)</span><span class="p">(</span><span class="k">struct</span> <span class="n">softirq_action</span> <span class="o">*</span><span class="p">)</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
+    <span class="kt">void</span>    <span class="p">(</span><span class="o">*</span><span class="n">action</span><span class="p">)(</span><span class="k">struct</span> <span class="n">softirq_action</span> <span class="o">*</span><span class="p">);</span>
+<span class="p">};</span>
 
 <span class="cm">/* 6个软中断描述符都保存在此数组 */</span>
 <span class="k">static</span> <span class="k">struct</span> <span class="n">softirq_action</span> <span class="n">softirq_vec</span><span class="p">[</span><span class="n">NR_SOFTIRQS</span><span class="p">]</span> <span class="n">__cacheline_aligned_in_smp</span><span class="p">;</span>
@@ -247,13 +247,13 @@ root        <span class="m">59</span>     <span class="m">2</span>  <span class=
                                       <span class="cm">/* _STATE_RUN表示正在运行*/</span>
     <span class="n">atomic_t</span> <span class="n">count</span><span class="p">;</span>                   <span class="cm">/* 禁止计数器，调用tasklet_disable()会增加此数，tasklet*/</span>
                                       <span class="cm">/* enable()减少此数 */</span>
-    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="p">;</span>      <span class="cm">/* 处理函数 */</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">);</span>      <span class="cm">/* 处理函数 */</span>
     <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">data</span><span class="p">;</span>               <span class="cm">/* 处理函数使用的数据 */</span>
-<span class="p">}</span><span class="p">;</span>
+<span class="p">};</span>
 <span class="k">struct</span> <span class="n">tasklet_head</span> <span class="p">{</span>
     <span class="k">struct</span> <span class="n">tasklet_struct</span> <span class="o">*</span><span class="n">head</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="n">tasklet_struct</span> <span class="o">*</span><span class="o">*</span><span class="n">tail</span><span class="p">;</span>
-<span class="p">}</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">tasklet_struct</span> <span class="o">**</span><span class="n">tail</span><span class="p">;</span>
+<span class="p">};</span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="2-锁">2. 锁</h3>
@@ -327,27 +327,27 @@ root        <span class="m">59</span>     <span class="m">2</span>  <span class=
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpinLock</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">AtomicReference</span><span class="o">&lt;</span><span class="n">Thread</span><span class="o">&gt;</span> <span class="n">owner</span> <span class="o">=</span><span class="k">new</span> <span class="n">AtomicReference</span><span class="o">&lt;</span><span class="o">&gt;</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">AtomicReference</span><span class="o">&lt;</span><span class="n">Thread</span><span class="o">&gt;</span> <span class="n">owner</span> <span class="o">=</span><span class="k">new</span> <span class="n">AtomicReference</span><span class="o">&lt;&gt;();</span>
     <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span><span class="n">0</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lock</span><span class="o">(</span><span class="o">)</span><span class="o">{</span>
-        <span class="n">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">=</span><span class="o">=</span><span class="n">owner</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="o">)</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">count</span><span class="o">+</span><span class="o">+</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lock</span><span class="o">(){</span>
+        <span class="n">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">==</span><span class="n">owner</span><span class="o">.</span><span class="na">get</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">count</span><span class="o">++;</span>
             <span class="k">return</span> <span class="o">;</span>
         <span class="o">}</span>
         <span class="c1">//compareAndSet(Thread expect, Thread update)
 </span><span class="c1"></span>        <span class="c1">//自旋锁的自旋就是体现在这里
-</span><span class="c1"></span>        <span class="k">while</span><span class="o">(</span><span class="o">!</span><span class="n">owner</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">current</span><span class="o">)</span><span class="o">)</span><span class="o">{</span>
+</span><span class="c1"></span>        <span class="k">while</span><span class="o">(!</span><span class="n">owner</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">current</span><span class="o">)){</span>
 
         <span class="o">}</span>
     <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">unlock</span> <span class="o">(</span><span class="o">)</span><span class="o">{</span>
-        <span class="n">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">(</span><span class="o">)</span><span class="o">;</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">=</span><span class="o">=</span><span class="n">owner</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="o">)</span><span class="o">)</span><span class="o">{</span>
-            <span class="k">if</span><span class="o">(</span><span class="n">count</span><span class="o">!</span><span class="o">=</span><span class="n">0</span><span class="o">)</span><span class="o">{</span>
-                <span class="n">count</span><span class="o">-</span><span class="o">-</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">unlock</span> <span class="o">(){</span>
+        <span class="n">Thread</span> <span class="n">current</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">==</span><span class="n">owner</span><span class="o">.</span><span class="na">get</span><span class="o">()){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">count</span><span class="o">!=</span><span class="n">0</span><span class="o">){</span>
+                <span class="n">count</span><span class="o">--;</span>
             <span class="o">}</span><span class="k">else</span><span class="o">{</span>
-                <span class="n">owner</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="kc">null</span><span class="o">)</span><span class="o">;</span>
+                <span class="n">owner</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
             <span class="o">}</span>
 
         <span class="o">}</span>
