@@ -65,6 +65,20 @@
   </url>
   
   <url>
+    <loc>https://wangcy6.github.io/tags/FQA/</loc>
+    <lastmod>2020-04-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2020/Memcached/</loc>
+    <lastmod>2020-04-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/post/2020/zooKeeper/</loc>
     <lastmod>2020-04-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -452,13 +466,6 @@
   <url>
     <loc>https://wangcy6.github.io/post/%E6%A8%A1%E6%9D%BF/</loc>
     <lastmod>2019-11-27T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/tags/FQA/</loc>
-    <lastmod>2019-11-26T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

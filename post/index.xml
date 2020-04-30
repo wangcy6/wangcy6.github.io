@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Memcached使用场景</title>
+      <link>https://wangcy6.github.io/post/2020/Memcached/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/Memcached/</guid>
+      <description>提问的艺术 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 https://memcached.org/ intended for use in speeding up dynamic web applications by alleviating database load. 常被用来加速应用程序的处理 ， 二、</description>
+    </item>
+    
+    <item>
       <title>zooKeeper</title>
       <link>https://wangcy6.github.io/post/2020/zooKeeper/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
