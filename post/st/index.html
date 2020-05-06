@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/st/" />
@@ -522,23 +522,23 @@
 </span><span class="cm"> * and calling the thread scheduler
 </span><span class="cm"> */</span>
 <span class="cp">#define _ST_SWITCH_CONTEXT(_thread)       \
-</span><span class="cp"></span>    <span class="n">ST_BEGIN_MACRO</span>                        <span class="err">\</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">MD_SETJMP</span><span class="p">((</span><span class="n">_thread</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">context</span><span class="p">))</span> <span class="p">{</span> <span class="err">\</span>
-      <span class="n">_st_vp_schedule</span><span class="p">();</span>                  <span class="err">\</span>
-    <span class="p">}</span>                                     <span class="err">\</span>
-    <span class="n">ST_END_MACRO</span>
- 
+</span><span class="cp">    ST_BEGIN_MACRO                        \
+</span><span class="cp">    if (!MD_SETJMP((_thread)-&gt;context)) { \
+</span><span class="cp">      _st_vp_schedule();                  \
+</span><span class="cp">    }                                     \
+</span><span class="cp">    ST_END_MACRO
+</span><span class="cp"></span> 
 <span class="cm">/*
 </span><span class="cm"> * Restore a thread context that was saved by _ST_SWITCH_CONTEXT 
 </span><span class="cm"> * or initialized by _ST_INIT_CONTEXT
 </span><span class="cm"> */</span>
 <span class="cp">#define _ST_RESTORE_CONTEXT(_thread)   \
-</span><span class="cp"></span>    <span class="n">ST_BEGIN_MACRO</span>                     <span class="err">\</span>
-    <span class="n">_ST_SET_CURRENT_THREAD</span><span class="p">(</span><span class="n">_thread</span><span class="p">);</span>   <span class="err">\</span>
-    <span class="n">MD_LONGJMP</span><span class="p">((</span><span class="n">_thread</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">context</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="err">\</span>
-    <span class="n">ST_END_MACRO</span>
- 
-<span class="kt">void</span> <span class="n">_st_vp_schedule</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class="cp">    ST_BEGIN_MACRO                     \
+</span><span class="cp">    _ST_SET_CURRENT_THREAD(_thread);   \
+</span><span class="cp">    MD_LONGJMP((_thread)-&gt;context, 1); \
+</span><span class="cp">    ST_END_MACRO
+</span><span class="cp"></span> 
+<span class="kt">void</span> <span class="nf">_st_vp_schedule</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">_st_thread_t</span> <span class="o">*</span><span class="kr">thread</span><span class="p">;</span>
  

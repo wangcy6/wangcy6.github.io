@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/book/man/" />
@@ -192,11 +192,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">To</span> <span class="nt">scalably</span> <span class="nt">handle</span> <span class="nt">memory</span> <span class="nt">allocation</span> <span class="nt">in</span><span class="err"></span>
-       <span class="nt">multithreaded</span> <span class="nt">applications</span><span class="o">,</span> <span class="nt">glibc</span> <span class="nt">creates</span> <span class="nt">additional</span> <span class="nt">memory</span><span class="err"></span>
-       <span class="nt">allocation</span> <span class="nt">arenas</span> <span class="nt">if</span> <span class="nt">mutex</span> <span class="nt">contention</span> <span class="nt">is</span> <span class="nt">detected</span><span class="nc">.</span>  <span class="nt">Each</span> <span class="nt">arena</span> <span class="nt">is</span> <span class="nt">a</span><span class="err"></span>
-       <span class="nt">large</span> <span class="nt">region</span> <span class="nt">of</span> <span class="nt">memory</span> <span class="nt">that</span> <span class="nt">is</span> <span class="nt">internally</span> <span class="nt">allocated</span> <span class="nt">by</span> <span class="nt">the</span> <span class="nt">system</span><span class="err"></span>
-       <span class="o">(</span><span class="nt">using</span> <span class="nt">brk</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="nt">or</span> <span class="nt">mmap</span><span class="o">(</span><span class="nt">2</span><span class="o">)),</span> <span class="nt">and</span> <span class="nt">managed</span> <span class="nt">with</span> <span class="nt">its</span> <span class="nt">own</span> <span class="nt">mutexes</span><span class="err"></span>
+<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">To</span> <span class="nt">scalably</span> <span class="nt">handle</span> <span class="nt">memory</span> <span class="nt">allocation</span> <span class="nt">in</span>
+       <span class="nt">multithreaded</span> <span class="nt">applications</span><span class="o">,</span> <span class="nt">glibc</span> <span class="nt">creates</span> <span class="nt">additional</span> <span class="nt">memory</span>
+       <span class="nt">allocation</span> <span class="nt">arenas</span> <span class="nt">if</span> <span class="nt">mutex</span> <span class="nt">contention</span> <span class="nt">is</span> <span class="nt">detected</span><span class="nc">.</span>  <span class="nt">Each</span> <span class="nt">arena</span> <span class="nt">is</span> <span class="nt">a</span>
+       <span class="nt">large</span> <span class="nt">region</span> <span class="nt">of</span> <span class="nt">memory</span> <span class="nt">that</span> <span class="nt">is</span> <span class="nt">internally</span> <span class="nt">allocated</span> <span class="nt">by</span> <span class="nt">the</span> <span class="nt">system</span>
+       <span class="o">(</span><span class="nt">using</span> <span class="nt">brk</span><span class="o">(</span><span class="nt">2</span><span class="o">)</span> <span class="nt">or</span> <span class="nt">mmap</span><span class="o">(</span><span class="nt">2</span><span class="o">)),</span> <span class="nt">and</span> <span class="nt">managed</span> <span class="nt">with</span> <span class="nt">its</span> <span class="nt">own</span> <span class="nt">mutexes</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>

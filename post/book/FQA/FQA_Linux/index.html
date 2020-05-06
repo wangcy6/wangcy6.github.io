@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/book/FQA/FQA_Linux/" />
@@ -48,7 +48,7 @@
 <meta itemprop="description" content="FQA">
 <meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="21487">
+<meta itemprop="wordCount" content="21486">
 
 
 
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/Linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 21487 字 </span>
+          <span class="more-meta"> 约 21486 字 </span>
           <span class="more-meta"> 预计阅读 43 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -355,9 +355,9 @@
               <span class="n">other</span> <span class="n">Linux</span> <span class="n">system</span> <span class="n">calls</span> <span class="n">provide</span> <span class="n">an</span> <span class="n">equivalent</span> <span class="n">of</span> <span class="n">the</span>
               <span class="n">O_CLOEXEC</span> <span class="n">flag</span> <span class="n">to</span> <span class="n">deal</span> <span class="n">with</span> <span class="n">this</span> <span class="n">problem</span><span class="p">.)</span>
                   
-   <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">sys</span><span class="o">/</span><span class="n">types</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-   <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">unistd</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
-
+   <span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="cp"></span>   <span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
    <span class="n">pid_t</span> <span class="n">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 
  <span class="n">After</span> <span class="n">a</span> <span class="n">fork</span><span class="p">()</span> <span class="n">in</span> <span class="n">a</span> <span class="n">multithreaded</span> <span class="n">program</span><span class="p">,</span> <span class="n">the</span> <span class="n">child</span> <span class="n">can</span> <span class="n">safely</span>
@@ -893,8 +893,8 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
                      <span class="p">|</span> process <span class="p">|</span>
                     _<span class="p">|</span> <span class="nv">pid</span><span class="o">=</span><span class="m">42</span>  <span class="p">|</span>_
                   _/ <span class="p">|</span> <span class="nv">tgid</span><span class="o">=</span><span class="m">42</span> <span class="p">|</span> <span class="se">\_</span> <span class="o">(</span>new thread<span class="o">)</span> _
-       _ <span class="o">(</span>fork<span class="o">)</span> _/   +---------+                  <span class="se">\</span>
-      /                                        +---------+
+       _ <span class="o">(</span>fork<span class="o">)</span> _/   +---------+                  <span class="se">\
+</span><span class="se"></span>      /                                        +---------+
 +---------+                                    <span class="p">|</span> process <span class="p">|</span>
 <span class="p">|</span> process <span class="p">|</span>                                    <span class="p">|</span> <span class="nv">pid</span><span class="o">=</span><span class="m">44</span>  <span class="p">|</span>
 <span class="p">|</span> <span class="nv">pid</span><span class="o">=</span><span class="m">43</span>  <span class="p">|</span>                                    <span class="p">|</span> <span class="nv">tgid</span><span class="o">=</span><span class="m">42</span> <span class="p">|</span>
@@ -1306,11 +1306,11 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">If the
-       O_NONBLOCK flag is not enabled, then the system call is blocked until
-       the lock is removed or converted to a mode that is compatible with
-       the access.  If the O_NONBLOCK flag is enabled, then the system call
-       fails with the error EAGAIN.
+<pre class="chroma"><code class="language-SAS" data-lang="SAS"><span class="k">If</span> the
+       O_NONBLOCK flag is <span class="k">not</span> enabled, <span class="k">then</span> the system <span class="k">call</span> is blocked <span class="k">until</span>
+       the lock is removed <span class="k">or</span> converted to a mode that is compatible with
+       the access.  <span class="k">If</span> the O_NONBLOCK flag is enabled, <span class="k">then</span> the system <span class="k">call</span>
+       fails with the <span class="k">error</span> EAGAIN.
          
          
 </code></pre></td></tr></table>
@@ -1548,7 +1548,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">events</span><span class="p">,</span> <span class="n">blocking</span> <span class="n">the</span> <span class="n">calling</span> <span class="kr">thread</span> <span class="k">if</span> <span class="n">no</span> <span class="n">events</span> <span class="n">are</span> <span class="n">currently</span> <span class="n">available</span><span class="p">.</span>
     
-<span class="cp">#include</span> <span class="cpf">&lt;sys/epoll.h&gt;</span><span class="cp">
+<span class="cp">#include</span> <span class="cpf">&lt;sys/epoll.h&gt;</span><span class="cp">
 </span><span class="cp"></span><span class="kt">int</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="kt">int</span> <span class="n">epfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">epoll_event</span> <span class="o">*</span><span class="n">events</span><span class="p">,</span><span class="kt">int</span> <span class="n">maxevents</span><span class="p">,</span> <span class="kt">int</span> <span class="n">timeout</span><span class="p">);</span>
 <span class="n">The</span> <span class="n">call</span> <span class="n">will</span> <span class="n">block</span> <span class="n">until</span> <span class="nl">either</span><span class="p">:</span><span class="err">、</span>
  <span class="o">*</span>  <span class="n">a</span> <span class="n">file</span> <span class="n">descriptor</span> <span class="n">delivers</span> <span class="n">an</span> <span class="n">event</span><span class="p">;</span>
@@ -1746,9 +1746,9 @@ net.ipv4.tcp_tw_recycle <span class="o">=</span> <span class="m">1</span> 表示
 netstat -n <span class="p">|</span> awk <span class="s1">&#39;/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}&#39;</span>
 
 sysctl -a <span class="p">|</span> grep <span class="nb">time</span> <span class="p">|</span> grep <span class="nb">wait</span>
-net.netfilter.nf_conntrack_tcp_timeout_close_wait <span class="o">=</span> 60
-net.netfilter.nf_conntrack_tcp_timeout_fin_wait <span class="o">=</span> 120
-net.netfilter.nf_conntrack_tcp_timeout_time_wait <span class="o">=</span> 120
+net.netfilter.nf_conntrack_tcp_timeout_close_wait <span class="o">=</span> <span class="m">60</span>
+net.netfilter.nf_conntrack_tcp_timeout_fin_wait <span class="o">=</span> <span class="m">120</span>
+net.netfilter.nf_conntrack_tcp_timeout_time_wait <span class="o">=</span> <span class="m">120</span>
 
 
 更多参数
@@ -1756,21 +1756,21 @@ net.netfilter.nf_conntrack_tcp_timeout_time_wait <span class="o">=</span> 120
 
 增加以下几行：（请根据实际需要添加）
 
-net.ipv4.tcp_fin_timeout <span class="o">=</span> 30
+net.ipv4.tcp_fin_timeout <span class="o">=</span> <span class="m">30</span>
 
-net.ipv4.tcp_keepalive_time <span class="o">=</span> 1200
+net.ipv4.tcp_keepalive_time <span class="o">=</span> <span class="m">1200</span>
 
-net.ipv4.tcp_syncookies <span class="o">=</span> 1
+net.ipv4.tcp_syncookies <span class="o">=</span> <span class="m">1</span>
 
-net.ipv4.tcp_tw_reuse <span class="o">=</span> 1
+net.ipv4.tcp_tw_reuse <span class="o">=</span> <span class="m">1</span>
 
-net.ipv4.tcp_tw_recycle <span class="o">=</span> 1
+net.ipv4.tcp_tw_recycle <span class="o">=</span> <span class="m">1</span>
 
-net.ipv4.ip_local_port_range <span class="o">=</span> <span class="m">1024</span> 65000
+net.ipv4.ip_local_port_range <span class="o">=</span> <span class="m">1024</span> <span class="m">65000</span>
 
-net.ipv4.tcp_max_syn_backlog <span class="o">=</span> 8192
+net.ipv4.tcp_max_syn_backlog <span class="o">=</span> <span class="m">8192</span>
 
-net.ipv4.tcp_max_tw_buckets <span class="o">=</span> 5000
+net.ipv4.tcp_max_tw_buckets <span class="o">=</span> <span class="m">5000</span>
 
 说明：
 
@@ -1798,8 +1798,8 @@ sysctl -w net.ipv4.tcp_wmem<span class="o">=</span><span class="m">1024</span> <
 <span class="c1">#修改默认的本地端口范围</span>
 sysctl -w net.ipv4.ip_local_port_range<span class="o">=</span><span class="s1">&#39;1024 65535&#39;</span>
 sysctl -w net.ipv4.tcp_tw_recycle<span class="o">=</span><span class="m">1</span>  <span class="c1">#快速回收time_wait的连接</span>
-sysctl -w net.ipv4.tcp_tw_reuse<span class="o">=</span>1
-sysctl -w net.ipv4.tcp_timestamps<span class="o">=</span>1
+sysctl -w net.ipv4.tcp_tw_reuse<span class="o">=</span><span class="m">1</span>
+sysctl -w net.ipv4.tcp_timestamps<span class="o">=</span><span class="m">1</span>
 <span class="c1">#用户单进程的最大文件数，用户登录时生效</span>
 <span class="nb">echo</span> <span class="s1">&#39;* soft nofile 1048576&#39;</span> &gt;&gt; /etc/security/limits.conf
 <span class="nb">echo</span> <span class="s1">&#39;* hard nofile 1048576&#39;</span> &gt;&gt; /etc/security/limits.conf

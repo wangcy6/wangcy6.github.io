@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.68.1 with theme even" />
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/nginx/" />
@@ -528,23 +528,23 @@ Firefox 49.0, two packets: NO
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c" data-lang="c"><span class="n">vhost</span> <span class="n">__defaultVhost__</span> <span class="p">{</span>
-    <span class="err">#</span> <span class="n">the</span> <span class="n">mode</span> <span class="n">of</span> <span class="n">vhost</span><span class="p">,</span> <span class="n">local</span> <span class="n">or</span> <span class="n">remote</span><span class="p">.</span>
-    <span class="err">#</span>       <span class="nl">local</span><span class="p">:</span> <span class="n">vhost</span> <span class="n">is</span> <span class="n">origin</span> <span class="n">vhost</span><span class="p">,</span> <span class="n">which</span> <span class="n">provides</span> <span class="n">stream</span> <span class="n">source</span><span class="p">.</span>
-    <span class="err">#</span>       <span class="nl">remote</span><span class="p">:</span> <span class="n">vhost</span> <span class="n">is</span> <span class="n">edge</span> <span class="n">vhost</span><span class="p">,</span> <span class="n">which</span> <span class="n">pull</span><span class="o">/</span><span class="n">push</span> <span class="n">to</span> <span class="n">origin</span><span class="p">.</span>
-    <span class="err">#</span> <span class="k">default</span><span class="o">:</span> <span class="n">local</span>
-    <span class="n">mode</span>            <span class="n">remote</span><span class="p">;</span>
-    <span class="err">#</span> <span class="k">for</span> <span class="n">edge</span><span class="p">(</span><span class="n">remote</span> <span class="n">mode</span><span class="p">),</span> <span class="n">user</span> <span class="n">must</span> <span class="n">specifies</span> <span class="n">the</span> <span class="n">origin</span> <span class="n">server</span>
-    <span class="err">#</span> <span class="n">format</span> <span class="nl">as</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">|</span><span class="n">ip</span><span class="o">&gt;</span><span class="p">[</span><span class="o">:</span><span class="n">port</span><span class="p">]</span>
-    <span class="err">#</span> <span class="err">@</span><span class="n">remark</span> <span class="n">user</span> <span class="n">can</span> <span class="n">specifies</span> <span class="n">multiple</span> <span class="n">origin</span> <span class="k">for</span> <span class="n">error</span> <span class="n">backup</span><span class="p">,</span> <span class="n">by</span> <span class="n">space</span><span class="p">,</span>
-    <span class="err">#</span> <span class="k">for</span> <span class="n">example</span><span class="p">,</span> <span class="mf">192.168.1.100</span><span class="o">:</span><span class="mi">1935</span> <span class="mf">192.168.1.101</span><span class="o">:</span><span class="mi">1935</span> <span class="mf">192.168.1.102</span><span class="o">:</span><span class="mi">1935</span>
-    <span class="n">origin</span>          <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">1935</span> <span class="nl">localhost</span><span class="p">:</span><span class="mi">1935</span><span class="p">;</span>
-    <span class="err">#</span> <span class="k">for</span> <span class="n">edge</span><span class="p">,</span> <span class="n">whether</span> <span class="n">open</span> <span class="n">the</span> <span class="n">token</span> <span class="n">traverse</span> <span class="n">mode</span><span class="p">,</span>
-    <span class="err">#</span> <span class="k">if</span> <span class="n">token</span> <span class="n">traverse</span> <span class="n">on</span><span class="p">,</span> <span class="n">all</span> <span class="n">connections</span> <span class="n">of</span> <span class="n">edge</span> <span class="n">will</span> <span class="n">forward</span> <span class="n">to</span> <span class="n">origin</span> <span class="n">to</span> <span class="n">check</span><span class="p">(</span><span class="n">auth</span><span class="p">),</span>
-    <span class="err">#</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">very</span> <span class="n">important</span> <span class="k">for</span> <span class="n">the</span> <span class="n">edge</span> <span class="n">to</span> <span class="k">do</span> <span class="n">the</span> <span class="n">token</span> <span class="n">auth</span><span class="p">.</span>
-    <span class="err">#</span> <span class="n">the</span> <span class="n">better</span> <span class="n">way</span> <span class="n">is</span> <span class="n">use</span> <span class="n">http</span> <span class="n">callback</span> <span class="n">to</span> <span class="k">do</span> <span class="n">the</span> <span class="n">token</span> <span class="n">auth</span> <span class="n">by</span> <span class="n">the</span> <span class="n">edge</span><span class="p">,</span>
-    <span class="err">#</span> <span class="n">but</span> <span class="k">if</span> <span class="n">user</span> <span class="n">prefer</span> <span class="n">origin</span> <span class="n">check</span><span class="p">(</span><span class="n">auth</span><span class="p">),</span> <span class="n">the</span> <span class="n">token_traverse</span> <span class="k">if</span> <span class="n">better</span> <span class="n">solution</span><span class="p">.</span>
-    <span class="err">#</span> <span class="k">default</span><span class="o">:</span> <span class="n">off</span>
-    <span class="n">token_traverse</span>  <span class="n">off</span><span class="p">;</span>
+    <span class="cp"># the mode of vhost, local or remote.
+</span><span class="cp"></span>    <span class="cp">#       local: vhost is origin vhost, which provides stream source.
+</span><span class="cp"></span>    <span class="cp">#       remote: vhost is edge vhost, which pull/push to origin.
+</span><span class="cp"></span>    <span class="cp"># default: local
+</span><span class="cp"></span>    <span class="n">mode</span>            <span class="n">remote</span><span class="p">;</span>
+    <span class="cp"># for edge(remote mode), user must specifies the origin server
+</span><span class="cp"></span>    <span class="cp"># format as: &lt;server_name|ip&gt;[:port]
+</span><span class="cp"></span>    <span class="cp"># @remark user can specifies multiple origin for error backup, by space,
+</span><span class="cp"></span>    <span class="cp"># for example, 192.168.1.100:1935 192.168.1.101:1935 192.168.1.102:1935
+</span><span class="cp"></span>    <span class="n">origin</span>          <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">1935</span> <span class="nl">localhost</span><span class="p">:</span><span class="mi">1935</span><span class="p">;</span>
+    <span class="cp"># for edge, whether open the token traverse mode,
+</span><span class="cp"></span>    <span class="cp"># if token traverse on, all connections of edge will forward to origin to check(auth),
+</span><span class="cp"></span>    <span class="cp"># it&#39;s very important for the edge to do the token auth.
+</span><span class="cp"></span>    <span class="cp"># the better way is use http callback to do the token auth by the edge,
+</span><span class="cp"></span>    <span class="cp"># but if user prefer origin check(auth), the token_traverse if better solution.
+</span><span class="cp"></span>    <span class="cp"># default: off
+</span><span class="cp"></span>    <span class="n">token_traverse</span>  <span class="n">off</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
