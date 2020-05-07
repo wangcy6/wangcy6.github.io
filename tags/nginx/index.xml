@@ -17,7 +17,7 @@
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/nginx%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86100%E8%AE%B2/</guid>
-      <description>下面重要概念记录 FQA-1 如何不影响服务情况下升级 FQA-2 为什么需要共享内存</description>
+      <description>下面重要概念记录 nginx核心知识100讲课件@陶辉 FQA-1 如何不影响服务情况下升级 FQA-2 为什么需要共享内存 FQA-3 如何优化 TCP消息的发送 10个步骤 了解下</description>
     </item>
     
   </channel>
