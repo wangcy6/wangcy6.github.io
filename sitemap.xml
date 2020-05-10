@@ -3,7 +3,42 @@
   
   <url>
     <loc>https://wangcy6.github.io/categories/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/MySQL/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -17,27 +52,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/post/2020/nginx%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86100%E8%AE%B2/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/post/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/tags/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</loc>
     <lastmod>2020-04-29T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
