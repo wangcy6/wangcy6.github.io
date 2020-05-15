@@ -6,17 +6,26 @@
     <description>Recent content in Tags on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 10 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>MySQL</title>
-      <link>https://wangcy6.github.io/tags/MySQL/</link>
-      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+      <title>mysql</title>
+      <link>https://wangcy6.github.io/tags/mysql/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/tags/MySQL/</guid>
+      <guid>https://wangcy6.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>https://wangcy6.github.io/tags/redis/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/redis/</guid>
       <description></description>
     </item>
     
@@ -242,15 +251,6 @@
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
       <guid>https://wangcy6.github.io/tags/sort/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>redis</title>
-      <link>https://wangcy6.github.io/tags/redis/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/redis/</guid>
       <description></description>
     </item>
     
