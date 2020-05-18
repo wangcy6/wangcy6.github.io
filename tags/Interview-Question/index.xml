@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Interview Question on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/Interview-Question/</link>
+    <description>Recent content in Interview Question on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/tags/Interview-Question/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>1450. 在既定时间做作业的学生人数</title>
+      <link>https://wangcy6.github.io/post/leetcode/lc1450/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/lc1450/</guid>
+      <description>一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点.</description>
+    </item>
+    
+    <item>
+      <title>template</title>
+      <link>https://wangcy6.github.io/post/leetcode/template/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/template/</guid>
+      <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、题目描述 算法是问题求解过程的一种描述，</description>
+    </item>
+    
+  </channel>
+</rss>

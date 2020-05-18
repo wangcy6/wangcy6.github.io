@@ -6,10 +6,37 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>1450. 在既定时间做作业的学生人数</title>
+      <link>https://wangcy6.github.io/post/leetcode/lc1450/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/lc1450/</guid>
+      <description>一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点.</description>
+    </item>
+    
+    <item>
+      <title>template</title>
+      <link>https://wangcy6.github.io/post/leetcode/template/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/template/</guid>
+      <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、题目描述 算法是问题求解过程的一种描述，</description>
+    </item>
+    
+    <item>
+      <title>MySQL实战45讲</title>
+      <link>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2-%E5%8A%A8%E6%89%8B%E5%AE%9E%E9%AA%8C/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2-%E5%8A%A8%E6%89%8B%E5%AE%9E%E9%AA%8C/</guid>
+      <description>问题： 假如公司没有大量业务？假如公司不重视mysql ？你就不学习了吗？ 回答：记录Mysql 学习过程。日供一卒 对于公司来说，业务，架构，甚至管</description>
+    </item>
     
     <item>
       <title>MySQL实战45讲</title>
@@ -27,6 +54,15 @@
       
       <guid>https://wangcy6.github.io/post/2020/server_redis/</guid>
       <description>问题： reids成为后端开发人员必备技能，你对他了解多少？ 像电信公司 根本不用redis,其他公司之间拿过来使用 满足业务了， 你改如何学习，很简</description>
+    </item>
+    
+    <item>
+      <title>ARTS_2020_weekly_18</title>
+      <link>https://wangcy6.github.io/post/ARTS/ARTS_2020_18_weekly/</link>
+      <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/ARTS_2020_18_weekly/</guid>
+      <description>GTD践行第18周（2020第18周） 一周记录 目标清晰吗？行动果断吗？还是在做白日梦，想想而已，感悟和后悔毫无价值 和别人相比，感觉什么都没做</description>
     </item>
     
     <item>
