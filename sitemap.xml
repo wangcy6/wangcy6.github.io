@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangcy6.github.io/categories/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/FQA/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2020/%E6%8A%80%E5%B7%A7_word%E5%86%99%E7%AE%80%E5%8E%86/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2020/FQA-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/post/leetcode/lc1450/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -23,13 +58,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/tags/GTD/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -45,13 +73,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/categories/Leetcode/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/post/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -585,13 +606,6 @@
   <url>
     <loc>https://wangcy6.github.io/post/book/FQA/FQA_Linux/</loc>
     <lastmod>2019-11-16T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/FQA/</loc>
-    <lastmod>2019-11-13T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
