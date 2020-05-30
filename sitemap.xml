@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangcy6.github.io/categories/ARTS/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/categories/</loc>
     <lastmod>2020-05-29T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -37,14 +44,14 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/leetcode/lc1450/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
+    <loc>https://wangcy6.github.io/post/ARTS/month/</loc>
+    <lastmod>2020-05-29T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/ARTS/</loc>
+    <loc>https://wangcy6.github.io/post/leetcode/lc1450/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
