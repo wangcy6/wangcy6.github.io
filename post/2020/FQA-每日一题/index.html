@@ -48,7 +48,7 @@
 <meta itemprop="description" content="每日一题">
 <meta itemprop="datePublished" content="2020-05-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1925">
+<meta itemprop="wordCount" content="2216">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/FQA/"> FQA </a>
             </div>
-          <span class="more-meta"> 约 1925 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 2216 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -146,6 +146,7 @@
   <ul>
     <li>
       <ul>
+        <li><a href="#假如redis里面有1亿个key其中有10w个key是以某个固定的已知的前缀开头的如何将它们全部找出来">假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如何将它们全部找出来？</a></li>
         <li><a href="#第二题主从数据库不一致如何解决群员面试题">第二题：主从数据库不一致如何解决?（群员面试题）</a></li>
         <li><a href="#第一题-redis怎么保证高可用高可用模式有那些对比下优缺点">第一题 redis怎么保证高可用，高可用模式有那些?对比下优缺点?</a></li>
       </ul>
@@ -183,6 +184,14 @@
 甚至有错别字，语句不通顺，代表我理解有问题，不能更少语言说清楚。</p>
 </blockquote>
 <h1 id="2020年五月">2020年五月</h1>
+<h3 id="假如redis里面有1亿个key其中有10w个key是以某个固定的已知的前缀开头的如何将它们全部找出来">假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如何将它们全部找出来？</h3>
+<p>使用keys指令可以扫出指定模式的key列表。
+对方接着追问：如果这个redis正在给线上的业务提供服务，那使用keys指令会有什么问题？
+这个时候你要回答redis关键的一个特性：
+redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。
+这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，
+但是整体所花费的时间会比直接用keys指令长。</p>
+<p><a href="http://doc.redisfans.com/key/scan.html">http://doc.redisfans.com/key/scan.html</a> [游标]</p>
 <h3 id="第二题主从数据库不一致如何解决群员面试题">第二题：主从数据库不一致如何解决?（群员面试题）</h3>
 <ul>
 <li>我的回答：</li>
