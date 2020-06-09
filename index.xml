@@ -12,6 +12,24 @@
     
     
     <item>
+      <title>system-design</title>
+      <link>https://wangcy6.github.io/post/2020/system-design-primer/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/system-design-primer/</guid>
+      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-09 持续更新 直接开始 第一题 有1000亿条记录，每条记录由url,ip,时间组成，设计一个系统能够快速查询以下</description>
+    </item>
+    
+    <item>
+      <title>Tidb学习记录</title>
+      <link>https://wangcy6.github.io/post/2020/study_tidb/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/study_tidb/</guid>
+      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-09 持续更新 资料 文档 https://github.com/pingcap/docs-cn FQA 关注个子模块 https://asktug.com/c/qa/TiDB https://asktug.com/c/qa/sql FQA 了解细节 架构是什么，我了解他有什么用？ 假如你遇到下面问题 MySQL</description>
+    </item>
+    
+    <item>
       <title>ARTS_2020_weekly_19</title>
       <link>https://wangcy6.github.io/post/ARTS/ARTS_2020_19_weekly/</link>
       <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>

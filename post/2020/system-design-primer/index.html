@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Troy的网络博客</title>
+  <title>system-design - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="Troy&#39;s Blog" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="系统设计题" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,9 +26,7 @@
 <meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/" />
-  <link href="https://wangcy6.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
-  <link href="https://wangcy6.github.io/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="canonical" href="https://wangcy6.github.io/post/2020/system-design-primer/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,15 +38,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Troy的网络博客" />
-<meta property="og:description" content="Troy&#39;s Blog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wangcy6.github.io/" />
-<meta property="og:updated_time" content="2017-08-20T21:38:52+08:00" />
-<meta itemprop="name" content="Troy的网络博客">
-<meta itemprop="description" content="Troy&#39;s Blog"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Troy的网络博客"/>
-<meta name="twitter:description" content="Troy&#39;s Blog"/>
+<meta property="og:title" content="system-design" />
+<meta property="og:description" content="系统设计题" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/2020/system-design-primer/" />
+<meta property="article:published_time" content="2020-06-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-09T00:00:00+00:00" />
+<meta itemprop="name" content="system-design">
+<meta itemprop="description" content="系统设计题">
+<meta itemprop="datePublished" content="2020-06-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="141">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="system-design"/>
+<meta name="twitter:description" content="系统设计题"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -117,136 +123,125 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/ARTS/ARTS_2020_02_weekly/">ARTS_2012_weekly_2</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-01-10 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/ARTS/"> ARTS </a>
-          </div>
-        <span class="more-meta"> 约 3352 字 </span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      打卡GTD践行第10周（2020第2周） 一周记录 越少越具体说明有可能做到， 说一大堆，看似很好，自动很懂 其实 一个一个做不到，给你一万年也做不到
-    </div>
-    <div class="read-more">
-      <a href="/post/ARTS/ARTS_2020_02_weekly/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">system-design</h1>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/ARTS/ARTS_weekly-7/">ARTS_weekly_7</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-19 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/ARTS/"> ARTS </a>
-          </div>
-        <span class="more-meta"> 约 3298 字 </span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      打卡GTD践行第七周（2019-12-11） 一周记录 本周主要问题，没有科学工作和沟通方法，和计划安排。 导致一直在迷茫中 一. ARTS的初衷 周一
-    </div>
-    <div class="read-more">
-      <a href="/post/ARTS/ARTS_weekly-7/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-09 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/FQA/"> FQA </a>
+            </div>
+          <span class="more-meta"> 约 141 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/paper/FQA_Raft/">raft学习记录</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-16 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/paper/"> paper </a>
-          </div>
-        <span class="more-meta"> 约 1489 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      FAQ 选举过程中，候选人如果意识到自己选举失败？ study day1 日志复制 raft 是基于复制状态机(replicated state machine) 一致性算法。 什么是状态机， 什么是复制状态
-    </div>
-    <div class="read-more">
-      <a href="/post/paper/FQA_Raft/" class="read-more-link">阅读更多</a>
-    </div>
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#直接开始">直接开始</a>
+      <ul>
+        <li><a href="#第一题">第一题</a></li>
+        <li><a href="#巨人的肩膀">巨人的肩膀</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
-</article>
+</div>
+    <div class="post-content">
+      <h1 id="更新日志">更新日志</h1>
+<table>
+<thead>
+<tr>
+<th>开始日期</th>
+<th>更新日期</th>
+<th>更新内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020-06-09</td>
+<td>2020-06-09</td>
+<td>持续更新</td>
+</tr>
+</tbody>
+</table>
+<h2 id="直接开始">直接开始</h2>
+<h3 id="第一题">第一题</h3>
+<p>有1000亿条记录，每条记录由url,ip,时间组成，设计一个系统能够快速查询以下内容</p>
+<ol>
+<li>给定url和时间段（精确到分钟）统计url的访问次数</li>
+<li>给定ip和时间段（精确到分钟）统计ip的访问次数</li>
+</ol>
+<h3 id="巨人的肩膀">巨人的肩膀</h3>
+<ul>
+<li><a href="https://github.com/donnemartin/system-design-primer">https://github.com/donnemartin/system-design-primer</a></li>
+<li><a href="https://github.com/donnemartin/system-design-primer/blob/master/README-zh-Hans.md">https://github.com/donnemartin/system-design-primer/blob/master/README-zh-Hans.md</a></li>
+<li><a href="https://www.1point3acres.com/bbs/forum.php?mod=forumdisplay&amp;fid=323&amp;filter=typeid&amp;typeid=1025">https://www.1point3acres.com/bbs/forum.php?mod=forumdisplay&amp;fid=323&amp;filter=typeid&amp;typeid=1025</a></li>
+<li><a href="http://www.meetqun.net/forum-83-1.html">http://www.meetqun.net/forum-83-1.html</a></li>
+<li><a href="https://www.zhihu.com/question/61594143">https://www.zhihu.com/question/61594143</a>
+-https://github.com/soulmachine/system-design</li>
+<li><a href="https://soulmachine.gitbooks.io/system-design/content/cn/distributed-id-generator.html">https://soulmachine.gitbooks.io/system-design/content/cn/distributed-id-generator.html</a></li>
+</ul>
+<p>-https://www.nowcoder.com/</p>
+<ul>
+<li><a href="https://lxia.gitbooks.io/summary-of-learning/5_shejimoshi/scalability,_availability_&amp;_stability_patterns.html">https://lxia.gitbooks.io/summary-of-learning/5_shejimoshi/scalability,_availability_&amp;_stability_patterns.html</a>
+<a href="https://github.com/binhnguyennus/awesome-scalability">https://github.com/binhnguyennus/awesome-scalability</a></li>
+<li><a href="https://wizardforcel.gitbooks.io/the-art-of-programming-by-july/content/08.03.html">编程之法</a></li>
+</ul>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/habit/eat_regularly/">reat regularly</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-16 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/habit/"> habit </a>
-          </div>
-        <span class="more-meta"> 约 142 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
     </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Week 52, 2019 week Breakfast（6：30-7：30） Lunch(11:30-12:30) Dinner(5:30-6:30) Monday forget forget forget Tuesday forget forget forget Wednesday delay on time on time Thursday Friday Saturday Sunday Week 51, 2019 week Breakfast（6：30-7：30） Lunch(11:30-12:30) Dinner(5:30-6:30)
-    </div>
-    <div class="read-more">
-      <a href="/post/habit/eat_regularly/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/habit/Good-Morning/">reat regularly</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-16 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/habit/"> habit </a>
-          </div>
-        <span class="more-meta"> 约 198 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-06-09 00:00
+        
+    </span>
+  </p>
   
-  <div class="post-content">
-    <div class="post-summary">
-      当你目标设定早起读书时候，你注定了失败,你任务这艰巨任务，自然无法完成 Week 52, 2019 week Put down your phone Keep Give a stretch Dressing clothes Reading Monday forget forget forget forget no Tuesday forget forget forget forget no Wednesday 21 :00 23: 50 6： 15
-    </div>
-    <div class="read-more">
-      <a href="/post/habit/Good-Morning/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    <a class="prev" href="/page/5/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/page/7/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020/study_tidb/">
+            <span class="next-text nav-default">Tidb学习记录</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
 
       </div>
     </main>
