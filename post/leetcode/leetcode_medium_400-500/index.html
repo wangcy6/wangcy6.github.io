@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Troy的网络博客</title>
+  <title>leetcode_medium_300-400 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="Troy&#39;s Blog" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,9 +26,7 @@
 <meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/" />
-  <link href="https://wangcy6.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
-  <link href="https://wangcy6.github.io/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/leetcode_medium_400-500/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,15 +38,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Troy的网络博客" />
-<meta property="og:description" content="Troy&#39;s Blog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wangcy6.github.io/" />
-<meta property="og:updated_time" content="2017-08-20T21:38:52+08:00" />
-<meta itemprop="name" content="Troy的网络博客">
-<meta itemprop="description" content="Troy&#39;s Blog"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Troy的网络博客"/>
-<meta name="twitter:description" content="Troy&#39;s Blog"/>
+<meta property="og:title" content="leetcode_medium_300-400" />
+<meta property="og:description" content="开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/leetcode_medium_400-500/" />
+<meta property="article:published_time" content="2020-05-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-18T00:00:00+00:00" />
+<meta itemprop="name" content="leetcode_medium_300-400">
+<meta itemprop="description" content="开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K">
+<meta itemprop="datePublished" content="2020-05-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="254">
+
+
+
+<meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="leetcode_medium_300-400"/>
+<meta name="twitter:description" content="开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -117,136 +123,142 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/lc1450/">1450. 在既定时间做作业的学生人数</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-05-18 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Leetcode/"> Leetcode </a>
-          </div>
-        <span class="more-meta"> 约 1594 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点.
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/lc1450/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">leetcode_medium_300-400</h1>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/ARTS/ARTS_2020_15_weekly/">ARTS_2012_weekly_5</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-05-18 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/ARTS/"> ARTS </a>
-          </div>
-        <span class="more-meta"> 约 3221 字 </span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      GTD践行第18周（2020第18周） 一周记录 目标清晰吗？行动果断吗？还是在做白日梦，想想而已，感悟和后悔毫无价值 一. ARTS的初衷 周一 周二
-    </div>
-    <div class="read-more">
-      <a href="/post/ARTS/ARTS_2020_15_weekly/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-18 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Leetcode/"> Leetcode </a>
+            </div>
+          <span class="more-meta"> 约 254 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/leetcode_medium_0-100/">leetcode_medium_100-200</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-05-18 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Leetcode/"> Leetcode </a>
-          </div>
-        <span class="more-meta"> 约 254 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/leetcode_medium_0-100/" class="read-more-link">阅读更多</a>
-    </div>
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#378-有序矩阵中第k小的元素">378. 有序矩阵中第K小的元素</a>
+      <ul>
+        <li><a href="#一题目信息">一、<strong>题目信息</strong></a></li>
+        <li><a href="#二题目描述">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三">五、举一反三</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
-</article>
+</div>
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>开始日期</th>
+<th>更新日期</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020-6-10</td>
+<td>2020-6-10</td>
+<td>300-400中等难度总结</td>
+</tr>
+</tbody>
+</table>
+<h1 id="题目汇总">题目汇总</h1>
+<ul>
+<li>寻找两个有序数组的中位数  </li>
+<li><a href="https://www.lintcode.com/problem/median-of-k-sorted-arrays/description">K个有序数组的中位数</a></li>
+<li>有序矩阵中第K小的元素</li>
+</ul>
+<h2 id="378-有序矩阵中第k小的元素">378. 有序矩阵中第K小的元素</h2>
+<h3 id="一题目信息">一、<strong>题目信息</strong></h3>
+<p>今天来做这个题目，主要考察的xxx</p>
+<blockquote>
+<ul>
+<li>链接：玻璃球</li>
+<li>来源：Interview Question</li>
+<li>难度：Hard</li>
+</ul>
+</blockquote>
+<h3 id="二题目描述">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<h3 id="三算法描述">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<h3 id="四参考代码">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<h3 id="五举一反三">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/leetcode_medium_100-200/">leetcode_medium_100-200</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-05-18 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Leetcode/"> Leetcode </a>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-18 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Interview-Question/">Interview Question</a>
           </div>
-        <span class="more-meta"> 约 254 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/leetcode_medium_100-200/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/leetcode_medium_400-500/">leetcode_medium_300-400</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-05-18 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Leetcode/"> Leetcode </a>
-          </div>
-        <span class="more-meta"> 约 254 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 有序矩阵中第K小的元素 378. 有序矩阵中第K
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/leetcode_medium_400-500/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    <a class="prev" href="/page/2/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/page/4/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode/leetcode_medium_100-200/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">leetcode_medium_100-200</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/leetcode/template/">
+            <span class="next-text nav-default">template</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
 
       </div>
     </main>
