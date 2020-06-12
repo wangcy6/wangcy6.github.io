@@ -26,7 +26,7 @@
       <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/system-design-primer/</guid>
-      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-09 持续更新 直接开始 第一题 有1000亿条记录，每条记录由url,ip,时间组成，设计一个系统能够快速查询以下</description>
+      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-09 持续更新 直接开始 第二题:如何设计一个短网址服务(TinyURL)？ 我的回答 历史经验 如何对mdb数据库占用</description>
     </item>
     
     <item>
