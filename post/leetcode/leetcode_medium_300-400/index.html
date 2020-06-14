@@ -48,7 +48,7 @@
 <meta itemprop="description" content="开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 m个有序数组求第k小的数字 有序矩阵中第">
 <meta itemprop="datePublished" content="2020-06-10T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-10T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1635">
+<meta itemprop="wordCount" content="2990">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/Leetcode/"> Leetcode </a>
             </div>
-          <span class="more-meta"> 约 1635 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 2990 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -144,14 +144,32 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#378-有序矩阵中第k小的元素">378. 有序矩阵中第K小的元素</a>
+    <li><a href="#375-猜数字大小-ii">[375] 猜数字大小 II</a>
       <ul>
         <li><a href="#一题目信息">一、<strong>题目信息</strong></a></li>
         <li><a href="#二题目描述">二、<strong>题目描述</strong></a></li>
-        <li><a href="#二题目描述-1">二、<strong>题目描述</strong></a></li>
         <li><a href="#三算法描述">三、<strong>算法描述</strong></a></li>
         <li><a href="#四参考代码">四、<strong>参考代码</strong></a></li>
         <li><a href="#五举一反三">五、举一反三</a></li>
+      </ul>
+    </li>
+    <li><a href="#377-组合总和-">[377] 组合总和 Ⅳ</a>
+      <ul>
+        <li><a href="#一题目信息-1">一、<strong>题目信息</strong></a></li>
+        <li><a href="#二题目描述-1">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述-1">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码-1">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三-1">五、举一反三</a></li>
+      </ul>
+    </li>
+    <li><a href="#378-有序矩阵中第k小的元素">378. 有序矩阵中第K小的元素</a>
+      <ul>
+        <li><a href="#一题目信息-2">一、<strong>题目信息</strong></a></li>
+        <li><a href="#二题目描述-2">二、<strong>题目描述</strong></a></li>
+        <li><a href="#二题目描述-3">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述-2">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码-2">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三-2">五、举一反三</a></li>
       </ul>
     </li>
   </ul>
@@ -177,36 +195,288 @@
 </table>
 <h1 id="题目汇总">题目汇总</h1>
 <ul>
-<li>
-<p>寻找两个有序数组的中位数  </p>
-</li>
-<li>
-<p><a href="https://www.lintcode.com/problem/median-of-k-sorted-arrays/description">K个有序数组的中位数</a></p>
-</li>
-<li>
-<p><a href="https://www.1point3acres.com/bbs/thread-283988-1-1.html">m个有序数组求第k小的数字</a></p>
-</li>
-<li>
-<p><a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/">有序矩阵中第K小的元素</a></p>
-</li>
+<li>寻找两个有序数组的中位数  </li>
+<li><a href="https://www.lintcode.com/problem/median-of-k-sorted-arrays/description">K个有序数组的中位数</a></li>
+<li><a href="https://www.1point3acres.com/bbs/thread-283988-1-1.html">m个有序数组求第k小的数字</a></li>
+<li><a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/">有序矩阵中第K小的元素</a></li>
+<li>[375] 猜数字大小 II</li>
 <li>
 <ol start="240">
 <li>搜索二维矩阵 II</li>
 </ol>
 </li>
 </ul>
-<h2 id="378-有序矩阵中第k小的元素">378. 有序矩阵中第K小的元素</h2>
+<h2 id="375-猜数字大小-ii">[375] 猜数字大小 II</h2>
 <h3 id="一题目信息">一、<strong>题目信息</strong></h3>
-<p>今天来做这个题目，主要有3个思路，二分查找，虽然巧妙，但是理解不了，我没有做出来。</p>
+<p>今天来做这个题目，主要考察的xxx</p>
+<blockquote>
+<ul>
+<li>链接：玻璃球</li>
+<li>来源：Interview Question</li>
+<li>难度：Hard</li>
+</ul>
+</blockquote>
 <h3 id="二题目描述">二、<strong>题目描述</strong></h3>
 <blockquote>
 <p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
 </blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> * 我们正在玩一个猜数游戏，游戏规则如下：
+ * 
+ * 我从 1 到 n 之间选择一个数字，你来猜我选了哪个数字。
+ * 
+ * 每次你猜错了，我都会告诉你，我选的数字比你的大了或者小了。
+ * 
+ * 然而，当你猜了数字 x 并且猜错了的时候，你需要支付金额为 x 的现金。直到你猜到我选的数字，你才算赢得了这个游戏。
+ * 
+ * 示例:
+ * 
+ * n = 10, 我选择了8.
+ * 
+ * 第一轮: 你猜我选择的数字是5，我会告诉你，我的数字更大一些，然后你需要支付5块。
+ * 第二轮: 你猜是7，我告诉你，我的数字更大一些，你支付7块。
+ * 第三轮: 你猜是9，我告诉你，我的数字更小一些，你支付9块。
+ * 
+ * 游戏结束。8 就是我选的数字。
+ * 
+ * 你最终要支付 5 + 7 + 9 = 21 块钱。
+ * 
+ * 
+ * 给定 n ≥ 1，计算你至少需要拥有多少现金才能确保你能赢得这个游戏。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="三算法描述">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<h3 id="四参考代码">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<h3 id="五举一反三">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+<h2 id="377-组合总和-">[377] 组合总和 Ⅳ</h2>
+<h3 id="一题目信息-1">一、<strong>题目信息</strong></h3>
+<p>这个是一个经典题目,</p>
+<ul>
+<li>
+<p>第一次实现用递归回溯，参考组合排序,区别 不需要判断历史记录是否访问，虽然做了剪彩。结果超时、</p>
+</li>
+<li>
+<p>第二次实现，根据当target=1000时候，很多重复，采用vector<!-- raw HTML omitted -->dp(target+1,-1)) ,map&lt;int,int&gt;dp
+虽然dp节省空间，但是依然耗时增加了</p>
+</li>
+<li>
+<p>第三次实现，动态规划。和递归相比，递归是中间结果 防止过度计算。
+动态规划是vector<!-- raw HTML omitted -->dp(target+1,0))，每个节点从小到大计算一次。
+变化公式target-array[i]</p>
+</li>
+<li>
+<p>总结，动态规划是每个target都要计算一次。
+每个target如何计算和回溯一样，target-array[i]。
+这样一比较 时间复杂度是降低的，但是递归浪费更多空间。</p>
+</li>
+</ul>
 <h3 id="二题目描述-1">二、<strong>题目描述</strong></h3>
 <blockquote>
 <p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
 </blockquote>
-<h3 id="三算法描述">三、<strong>算法描述</strong></h3>
+<p>给出一个都是正整数的数组 nums，其中没有重复的数。从中找出所有的和为 target 的组合个数</p>
+<h3 id="三算法描述-1">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<ul>
+<li>Solution1  递归回溯&ndash;当n过大时超时
+<img src="https://i.loli.net/2020/06/14/IpgnfK91PHJrBVq.png" alt="递归回溯&ndash;当n过大时超时"></li>
+</ul>
+<h3 id="四参考代码-1">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+class Solution
+{
+public:
+    int combinationSum4(vector&lt;int&gt; &amp;nums, int target)
+    {
+        vector&lt;unsigned int&gt; dp(target + 1, 0); //默认为0
+        dp[0] = 1;                              // target=4 集合{4} 4-4=0;
+
+        //动态规划，从小到大每个Indextarget都要计算,全部要计算。
+        for (int targetIndex = 1; targetIndex &lt;= target; targetIndex++)
+        {
+            //分叉
+            for (int j = 0; j &lt; nums.size(); j++)
+            {
+                //和为给定目标正整数的组合
+                if (targetIndex &gt;= nums[j])
+                {
+                    dp[targetIndex] += dp[targetIndex - nums[j]];
+                }
+            }
+        }
+
+        return dp[target];
+    }
+};
+
+
+//@lc code=start
+// 用map代替vector 虽然节省空间，但是时间增加了
+// 40 ms  8.2 MB
+class Solution4
+{
+private:
+    unordered_map&lt;int, int&gt; map;
+
+public:
+    //驱动点
+    int combinationSum4(vector&lt;int&gt; &amp;nums, int target)
+    {
+        if (target &lt; 0 || nums.empty())
+            return 0;
+
+        if (target == 0)
+        {
+            return 1;
+        }
+
+        if (map.count(target))
+        {
+            return map[target];
+        }
+        int count = 0;
+        for (int i = 0; i &lt; nums.size(); i++)
+        {
+            if (target &gt;= nums[i])
+            {
+                cout &lt;&lt; &#34;-------------&#34; &lt;&lt; count &lt;&lt; endl;
+                count += combinationSum4(nums, target - nums[i]);
+            }
+        }
+
+        map[target] = count;
+        cout &lt;&lt; target &lt;&lt; &#34;:&#34; &lt;&lt; count &lt;&lt; endl;
+        return count;
+    }
+};
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="五举一反三-1">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+<h2 id="378-有序矩阵中第k小的元素">378. 有序矩阵中第K小的元素</h2>
+<h3 id="一题目信息-2">一、<strong>题目信息</strong></h3>
+<p>今天来做这个题目，主要有3个思路，二分查找，虽然巧妙，但是理解不了，我没有做出来。</p>
+<h3 id="二题目描述-2">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<h3 id="二题目描述-3">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<h3 id="三算法描述-2">三、<strong>算法描述</strong></h3>
 <blockquote>
 <p>能说出基本思想即可,实在不行动手画个流程图把。</p>
 </blockquote>
@@ -218,7 +488,7 @@
 <p>每次取出一个元素，根据元素是哪一行的，再将其所在行的下一个元素加入</p>
 <p>执行k次出队列操作，即可得到结果</p>
 <p>队列中每个元素为pair&lt;int,pair&lt;int,int&raquo;，外层pair的int表示矩阵中的值，内层pair的first表示第几行，内层pair的second表示该行的第几列</p>
-<h3 id="四参考代码">四、<strong>参考代码</strong></h3>
+<h3 id="四参考代码-2">四、<strong>参考代码</strong></h3>
 <blockquote>
 <p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
 </blockquote>
@@ -508,7 +778,7 @@ public:
 };
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="五举一反三">五、举一反三</h3>
+</div><h3 id="五举一反三-2">五、举一反三</h3>
 <blockquote>
 <p>别人最佳答案并不重要，关键是自己理解。</p>
 </blockquote>
