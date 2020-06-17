@@ -17,7 +17,7 @@
       <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/leetcode_medium_300-400/</guid>
-      <description>开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 寻找两个有序数组的中位数 K个有序数组的中位数 m个有序数组求第k小的数字 有序矩阵中第</description>
+      <description>开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 查找和最小的K对数字 合并K个排序链表 寻找两个有序数组的中位数 K个有序数组的中位数 m</description>
     </item>
     
     <item>
@@ -152,7 +152,7 @@
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/template/</guid>
-      <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、题目描述 算法是问题求解过程的一种描述，</description>
+      <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、思路描述 能说出基本思想即可,实在不行动</description>
     </item>
     
     <item>
@@ -621,6 +621,15 @@
       
       <guid>https://wangcy6.github.io/post/plan/2020_04_toddo/</guid>
       <description>项目实战 项目名称 描述 周期 平均每天 思考与行动 身边公司相关人士是谁 如何设计一个高可用，易扩展的视频服务 无法实现 废弃，还没开始接要夭折吗？ 分布式x</description>
+    </item>
+    
+    <item>
+      <title>leetcode_easy_200-300</title>
+      <link>https://wangcy6.github.io/post/leetcode/leetcod_easy_200-300./</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/leetcod_easy_200-300./</guid>
+      <description>开始日期 更新日期 备注 2020-6-17 2020-6-17 leetcode_easy_200-300 题目汇总 [290] 单词规律 [290] 单词规律 一、题目信息 二、题目描述 算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。 三、</description>
     </item>
     
   </channel>
