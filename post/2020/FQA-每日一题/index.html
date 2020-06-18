@@ -48,7 +48,7 @@
 <meta itemprop="description" content="每日一题">
 <meta itemprop="datePublished" content="2020-05-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2313">
+<meta itemprop="wordCount" content="3228">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/FQA/"> FQA </a>
             </div>
-          <span class="more-meta"> 约 2313 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 3228 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -146,6 +146,7 @@
   <ul>
     <li>
       <ul>
+        <li><a href="#第7天-618">第7天 6.18</a></li>
         <li><a href="#5">5</a></li>
         <li><a href="#字节跳动面试官请你实现一个大文件上传和断点续传httpsjuejinimpost5dff8a26e51d4558105420ed">字节跳动面试官：<a href="https://juejin.im/post/5dff8a26e51d4558105420ed">请你实现一个大文件上传和断点续传</a></a></li>
         <li><a href="#今天每日一题redis支持的数据类型快手">今天每日一题：Redis支持的数据类型？（快手）</a></li>
@@ -187,7 +188,86 @@
 甚至有错别字，语句不通顺，代表我理解有问题，不能更少语言说清楚。</p>
 </blockquote>
 <h1 id="每日一题">每日一题</h1>
-<h3 id="5">5</h3>
+<h3 id="第7天-618">第7天 6.18</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">昨天每日一题：红锁的设计思想？
+
+参考答案如下：
+一、锁丢失
+Redis的master节点上拿到了锁；
+但是这个加锁的key还没有同步到slave节点；
+master故障，发生故障转移，slave节点升级为master节点；
+导致锁丢失。
+
+二、持有同一把锁（竞态模型场景）
+为了避免Redis宕机引起锁服务不可用, 需要为Redis实例(master)增加热备(slave)，如果master不可用则将slave提升为master。这种主从的配置方式存在一定的安全风险，由于Redis的主从复制是异步进行的， 可能会发生多个客户端同时持有一个锁的现象。
+
+竞态模型：
+1、Client A 获得在master节点获得了锁
+2、在master将key备份到slave节点之前，master宕机
+3、slave 被提升为master
+4、Client B 在新的master节点处获得了锁，Client A也持有这个锁。
+
+三、脑裂问题
+
+
+四、解决方案，算法如下：
+
+简单来说是过半机制。
+
+一个客户端需要做如下操作来获取锁：
+1、获取当前时间（单位是毫秒）。
+2、轮流用相同的key和随机值在N个节点上请求锁，在这一步里，客户端在每个master上请求锁时，会有一个和总的锁释放时间相比小的多的超时时间。比如如果锁自动释放时间是10秒钟，那每个节点锁请求的超时时间可能是5-50毫秒的范围，这个可以防止一个客户端在某个宕掉的master节点上阻塞过长时间，如果一个master节点不可用了，我们应该尽快尝试下一个master节点。
+3、客户端计算第二步中获取锁所花的时间，只有当客户端在大多数master节点上成功获取了锁（在这里是3个），而且总共消耗的时间不超过锁释放时间，这个锁就认为是获取成功了。
+4、如果锁获取成功了，那现在锁自动释放时间就是最初的锁释放时间减去之前获取锁所消耗的时间。
+5、如果锁获取失败了，不管是因为获取成功的锁不超过一半（N/2+1)还是因为总消耗时间超过了锁释放时间，客户端都会到每个master节点上释放锁，即便是那些他认为没有获取成功的锁。
+
+https://user.qzone.qq.com/3182319461/blog/1592348430
+
+今天每日一题：ZK的分布式锁怎么实现？（快手）
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5">5</h3>
 <p>1000桶水，其中一桶有毒，猪喝毒水后会在15分钟内死去，
 想用一个小时找到这桶毒水，至少需要几头猪？
 <a href="https://www.zhihu.com/question/60227816/answer/1274071217">https://www.zhihu.com/question/60227816/answer/1274071217</a></p>
