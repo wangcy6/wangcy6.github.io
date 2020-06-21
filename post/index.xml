@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>hard</title>
+      <link>https://wangcy6.github.io/post/leetcode/lc_hard/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/lc_hard/</guid>
+      <description>题目列表 [23] 合并K个排序链表 一、题目 二、思路 能说出基本思想即可,实在不行动手画个流程图把。 三、算法 算法是问题求解过程的一种描述,有清晰的操作步</description>
+    </item>
     
     <item>
       <title>leetcode_medium_300-400</title>
@@ -152,7 +161,7 @@
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/template/</guid>
-      <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、思路描述 能说出基本思想即可,实在不行动</description>
+      <description>一、题目 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、思路 能说出基本思想即可,实在不行动手画个流</description>
     </item>
     
     <item>
