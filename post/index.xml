@@ -44,7 +44,7 @@
       <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/system-design-primer/</guid>
-      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-20 系统设计 直接开始 第五题：实时输出最近一个小时内访问频率最高的10个IP 1.实时输出 2.从当前时间向前数的</description>
+      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-20 系统设计 直接开始 第六题：Design the Twitter timeline and search 来源： https://github.com/donnemartin/system-design-primer#real-world-architectures https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md 第五题：实时输出最近一个小时内访问频率最高的10</description>
     </item>
     
     <item>
