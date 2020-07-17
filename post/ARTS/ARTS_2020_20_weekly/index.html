@@ -48,7 +48,7 @@
 <meta itemprop="description" content="GTD践行20第周">
 <meta itemprop="datePublished" content="2020-06-03T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-03T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1296">
+<meta itemprop="wordCount" content="981">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/ARTS/"> ARTS </a>
             </div>
-          <span class="more-meta"> 约 1296 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 981 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -163,7 +163,6 @@
 PDCA具体包含着四个循环反复的步骤，计划（Plan）、 执行（Do）、检查（Check）、处理（Act）</p>
 </blockquote>
 <h1 id="本周视图">本周视图</h1>
-<p><img src="https://imgkr.cn-bj.ufileos.com/b4ba2c55-083c-4cb0-af29-9bf427cdddce.jpg" alt="作息不好"></p>
 <h1 id="一-arts的初衷">一. <strong>ARTS的初衷</strong></h1>
 <p><img src="https://i.loli.net/2020/01/20/Wes4hOCzgJjIvTa.png" alt="image.png"></p>
 <table>
@@ -203,55 +202,15 @@ PDCA具体包含着四个循环反复的步骤，计划（Plan）、 执行（Do
 <blockquote>
 <p>主要是为了学习英文，如果你的英文不行，你基本上无缘技术高手。所以，需要你阅读并点评至少一篇英文技术文章，我个人最喜欢去的地方是<a href="https://link.zhihu.com/?target=http%3A//Medium.com">http://Medium.com</a></p>
 </blockquote>
-<ul>
-<li>
-<p>深入理解 malloc Understanding glibc malloc
-<a href="https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/">https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/</a>
-翻译：https://hanfeng.ink/post/understand_glibc_malloc/
-翻译：http://eternalsakura13.com/2018/02/27/heap1/</p>
-</li>
-<li>
-<p>设计数据密集型应用 - 中文翻译
-<a href="https://github.com/Vonng/ddia">https://github.com/Vonng/ddia</a>
-<a href="https://asktug.com/t/topic/33907">https://asktug.com/t/topic/33907</a></p>
-</li>
-<li>
-<p><input disabled="" type="checkbox"> 阅读valgrind技术手册,累计耗时4小时。</p>
-</li>
-</ul>
+<h4 id="to-do-学习-raft-参考资源-httpsraftgithubio-预计耗时-6小时">TO DO 学习 raft 参考资源 <a href="https://raft.github.io/">https://raft.github.io/</a> 预计耗时 6小时</h4>
 <ol>
-<li>自己过去3个星期搜索搜索中，Valgrind 没有找到有用的信息，都是copy ，没有自己一点理解，因此你必须看官方文档来获取信息。
-很多实用技巧，从官方文档获取，不是各种网上 ！！！！！！！！！！！！！！！！！！
-<a href="https://www.valgrind.org/docs/manual/manual-core.html#manual-core.whatdoes">https://www.valgrind.org/docs/manual/manual-core.html#manual-core.whatdoes</a></li>
-<li>相关设计原理 <a href="https://www.valgrind.org/docs/pubs.html">https://www.valgrind.org/docs/pubs.html</a></li>
+<li>状态机思想 state machine</li>
 </ol>
-<p><a href="https://www.valgrind.org/docs/muehlenfeld2006.pdf">https://www.valgrind.org/docs/muehlenfeld2006.pdf</a>
-Fault Detection in Multi-Threaded C++ Server Applications
-多线程C ++服务器应用程序中的故障检测</p>
-<p><a href="https://www.slideserve.com/niles/valgrind-a-framework-for-heavyweight-dynamic-binary-instrumentation">https://www.slideserve.com/niles/valgrind-a-framework-for-heavyweight-dynamic-binary-instrumentation</a></p>
 <ul>
-<li>输出：</li>
+<li>epoll事件驱动</li>
+<li>这里是start -&gt;follower-&gt;candidate-&gt;leader-&gt;follower</li>
 </ul>
-<p>即使监控多线程的程序，valgrind本身执行依然是一个线程？</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://stackoverflow.com/questions/29365611/does-running-valgrind-slow-down-my-application
-This is both because Valgrind is serialising the threads, and because the code runs so much slower than normal.
-
-(gdb) info thread  
-* 1 process 13943  vgModuleLocal_do_syscall_for_client_WRK () at m_syswrap/syscall-amd64-linux.S:147
-
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="3-tip">3. Tip</h3>
+<h3 id="3-tip">3. Tip</h3>
 <blockquote>
 <p>主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。</p>
 <p>你在工作中遇到的问题，踩过的坑，学习的点滴知识。</p>
