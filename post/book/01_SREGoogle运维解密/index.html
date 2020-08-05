@@ -48,7 +48,7 @@
 <meta itemprop="description" content="SRE：Google运维解密 第三期笔记 第 23 章 管理关键状态：利用分布式共识来提高可靠性 246~272 假如你写一个服务，如何提高该服务可靠性，你考虑哪些因素">
 <meta itemprop="datePublished" content="2020-08-04T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-08-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="265">
+<meta itemprop="wordCount" content="510">
 
 
 
@@ -131,8 +131,8 @@
       <div class="post-meta">
         <span class="post-time"> 2020-08-04 00:00 </span>
         
-          <span class="more-meta"> 约 265 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 510 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -164,7 +164,7 @@
 <li>ACID  ,CAP,BASE</li>
 </ul>
 <ol start="2">
-<li>真实案例 例子太简单</li>
+<li>真实案例 例子太简单，可能我没看懂</li>
 </ol>
 <ul>
 <li>通过简单的超时判断选举造成脑裂问题。</li>
@@ -179,9 +179,42 @@
 <li>部署时候考虑同时迁移造成带宽不足问题</li>
 </ul>
 <h2 id="第-24-章分布式周期性任务系统-273283">第 24 章　分布式周期性任务系统 273~283</h2>
+<blockquote>
+<p>假如让你开发一个cron服务，你该注意什么问题</p>
+</blockquote>
+<ol>
+<li>单机故障cron命令无法执行，重启后配置丢失怎么办？（可靠性）</li>
+</ol>
+<ul>
+<li>简单模型2个个机器远程启动 ssh</li>
+</ul>
+<ol start="2">
+<li>任务是可重复执行吗？（远程必须考虑的，任务如不能重复执行呢）</li>
+<li>大规划扩展怎么办？千分之概率失败也不允许的</li>
+</ol>
+<ul>
+<li>发现一个机器故障需要时间，迁移进程也需要消耗时间 热备任务</li>
+</ul>
+<ol start="4">
+<li>隔离性</li>
+</ol>
+<blockquote>
+<p>cron 服务 Cloud Scheduler 怎么做的</p>
+</blockquote>
+<ol>
+<li>分布式文件存储任务状态信息</li>
+<li>采用paxos协议同步多副本关于任务状态信息。</li>
+<li>为了判断rpc操作发送成功 ，内部提供状态查询，实现客户端幂等操作</li>
+</ol>
+<ul>
+<li>选举过后才能提供服务</li>
+</ul>
 <h2 id="第-25-章数据处理流水线-284294">第 25 章　数据处理流水线 284~294</h2>
 <h2 id="第-26-章数据完整性读写一致-295321">第 26 章　数据完整性：读写一致 295~321</h2>
 <h2 id="第-27-章可靠地进行产品的大规模发布-322338">第 27 章　可靠地进行产品的大规模发布 322~338</h2>
+<blockquote>
+<p><a href="https://shimo.im/sheets/erAdPgw6LNfYwPAG/jNYjU">https://shimo.im/sheets/erAdPgw6LNfYwPAG/jNYjU</a></p>
+</blockquote>
 
     </div>
 
