@@ -62,7 +62,7 @@
       <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/system-design-primer/</guid>
-      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-20 系统设计 直接开始 第七题：单机如何实现管理百万主机的心跳服务 第六题：Design the Twitter timeline and search 来源： https://github.com/donnemartin/system-design-primer#real-world-architectures https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md 第五题</description>
+      <description>更新日志 开始日期 更新日期 更新内容 2020-06-09 2020-06-20 系统设计 直接开始 第七题：单机如何实现管理百万主机的心跳服务 一个连接占用内存4K,百万连接占用38G,用一</description>
     </item>
     
     <item>
@@ -229,10 +229,10 @@
     
     <item>
       <title>MySQL实战45讲</title>
-      <link>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</link>
+      <link>https://wangcy6.github.io/post/book/02_MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</link>
       <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</guid>
+      <guid>https://wangcy6.github.io/post/book/02_MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</guid>
       <description>问题： 假如公司没有大量业务？假如公司不重视mysql ？你就不学习了吗？ 回答：记录Mysql 学习过程。日供一卒 对于公司来说，业务，架构，甚至管</description>
     </item>
     
