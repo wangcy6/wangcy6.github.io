@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TiDB on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/TiDB/</link>
+    <description>Recent content in TiDB on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 19 Sep 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangcy6.github.io/categories/TiDB/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>High Performance TiDB</title>
+      <link>https://wangcy6.github.io/post/2020/tidb_lession_07/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/tidb_lession_07/</guid>
+      <description>预习 https://www.youtube.com/watch?v=A46VE3aUTKo 45分钟 https://asktug.com/t/topic/1495 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 type Session interface { sessionctx.Context Status() uint16 // Flag of current status, such as autocommit. LastInsertID() uint64 // LastInsertID is the last inserted</description>
+    </item>
+    
+    <item>
+      <title>High Performance TiDB Lesson 04：Execution 性能优化</title>
+      <link>https://wangcy6.github.io/post/2020/tidb_lesson_04/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/tidb_lesson_04/</guid>
+      <description>预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 实现 测试 TestInsertOnDuplicateKey</description>
+    </item>
+    
+  </channel>
+</rss>

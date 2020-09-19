@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Troy的网络博客</title>
+  <title>High Performance TiDB Lesson 04：Execution 性能优化 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="Troy&#39;s Blog" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 实现 测试 TestInsertOnDuplicateKey" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,9 +26,7 @@
 <meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/" />
-  <link href="https://wangcy6.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
-  <link href="https://wangcy6.github.io/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="canonical" href="https://wangcy6.github.io/post/2020/tidb_lesson_04/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,15 +38,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Troy的网络博客" />
-<meta property="og:description" content="Troy&#39;s Blog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wangcy6.github.io/" />
-<meta property="og:updated_time" content="2017-08-20T21:38:52+08:00" />
-<meta itemprop="name" content="Troy的网络博客">
-<meta itemprop="description" content="Troy&#39;s Blog"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Troy的网络博客"/>
-<meta name="twitter:description" content="Troy&#39;s Blog"/>
+<meta property="og:title" content="High Performance TiDB Lesson 04：Execution 性能优化" />
+<meta property="og:description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 实现 测试 TestInsertOnDuplicateKey" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/2020/tidb_lesson_04/" />
+<meta property="article:published_time" content="2020-09-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-09-19T00:00:00+00:00" />
+<meta itemprop="name" content="High Performance TiDB Lesson 04：Execution 性能优化">
+<meta itemprop="description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 实现 测试 TestInsertOnDuplicateKey">
+<meta itemprop="datePublished" content="2020-09-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-09-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="32">
+
+
+
+<meta itemprop="keywords" content="TiDB," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="High Performance TiDB Lesson 04：Execution 性能优化"/>
+<meta name="twitter:description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 实现 测试 TestInsertOnDuplicateKey"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -117,136 +123,109 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/book/book_04_%E8%AE%BE%E8%AE%A1%E4%B9%8B%E7%A6%85/">设计之禅</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-27 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/%E5%A4%A7%E8%AF%9D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 大话设计模式 </a>
-          </div>
-        <span class="more-meta"> 约 1332 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      书籍 设计模式：可复用面向对象软件的基础 领域驱动设计 重构&ndash;改善既有代码的设计 设计模式精解－GoF 23 种设计模式解析附 C++实现源码 代
-    </div>
-    <div class="read-more">
-      <a href="/post/book/book_04_%E8%AE%BE%E8%AE%A1%E4%B9%8B%E7%A6%85/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">High Performance TiDB Lesson 04：Execution 性能优化</h1>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/%E6%A8%A1%E6%9D%BF/">设计之禅</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-27 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/%E5%A4%A7%E8%AF%9D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 大话设计模式 </a>
-          </div>
-        <span class="more-meta"> 约 0 字 </span>
-        <span class="more-meta"> 预计阅读 0 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      
-    </div>
-    <div class="read-more">
-      <a href="/post/%E6%A8%A1%E6%9D%BF/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-19 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/TiDB/"> TiDB </a>
+            </div>
+          <span class="more-meta"> 约 32 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/book/FQA/FQA_Linux_one/">FQA_Linux_one</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-26 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Linux/"> Linux </a>
-          </div>
-        <span class="more-meta"> 约 491 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      当你的才华撑不起你的野心时，就应该静下心来好好学习。 知识卡 问题1 epoll这样方式有什么缺点？ 第一步： 同步与阻塞，异步和非阻塞的区别？ 第二步
-    </div>
-    <div class="read-more">
-      <a href="/post/book/FQA/FQA_Linux_one/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#预习">预习</a></li>
+      </ul>
+    </li>
+  </ul>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/simpread-mmap-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94-read_write-%E5%BF%AB-%E5%85%BC%E8%AE%BA-buffercache-%E5%92%8C-pagecache-%E4%BB%8E%E5%86%85%E6%A0%B8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9C%8B%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E8%BF%87%E7%A8%8B/">mmap 为什么比 read/write 快</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-26 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
-          </div>
-        <span class="more-meta"> 约 1590 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      参考文献： 《从内核文件系统看文件读写过程》http://www.cnblogs.com/huxiao-tee/p/4660352.html?
-    </div>
-    <div class="read-more">
-      <a href="/post/simpread-mmap-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94-read_write-%E5%BF%AB-%E5%85%BC%E8%AE%BA-buffercache-%E5%92%8C-pagecache-%E4%BB%8E%E5%86%85%E6%A0%B8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9C%8B%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E8%BF%87%E7%A8%8B/" class="read-more-link">阅读更多</a>
-    </div>
+  <ul>
+    <li><a href="#17824">17824</a>
+      <ul>
+        <li><a href="#思路">思路</a></li>
+        <li><a href="#实现">实现</a></li>
+        <li><a href="#测试">测试</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
   </div>
-</article>
+</div>
+    <div class="post-content">
+      <h3 id="预习">预习</h3>
+<p>w</p>
+<h1 id="issue">issue</h1>
+<h2 id="17824">17824</h2>
+<h3 id="思路">思路</h3>
+<p>What is the meaning of  Warning in mysql about#17824 ,and I can not find the coding by debug in Execution</p>
+<h3 id="实现">实现</h3>
+<h3 id="测试">测试</h3>
+<p>TestInsertOnDuplicateKey</p>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/FQA_Redis/">Redis.5.0</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-20 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Redis.5.0/"> Redis.5.0 </a>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-09-19 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/TiDB/">TiDB</a>
           </div>
-        <span class="more-meta"> 约 3853 字 </span>
-        <span class="more-meta"> 预计阅读 8 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      知识卡(redis.5.0) 源码阅读 参考redis-3.0-annotated-huangz1990 内容 对象的类型和编码 1 2 3 4 5 6 7 8 9 10
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/FQA_Redis/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    <a class="prev" href="/page/11/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/page/13/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020/tidb_lession_07/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">High Performance TiDB</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/book/tiDB/">
+            <span class="next-text nav-default"> High Performance TiDB</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
 
       </div>
     </main>
