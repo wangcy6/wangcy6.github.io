@@ -6,10 +6,19 @@
     <description>Recent content in TiDB on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 19 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/categories/TiDB/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>High Performance TiDB Lesson 05：DDL 性能优化</title>
+      <link>https://wangcy6.github.io/post/2020/tidb_lesson_05_ddl/</link>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/tidb_lesson_05_ddl/</guid>
+      <description>人人都知道贵人重要，但是不是你想贵人指点，然后在那个时间那个地点那个贵人就出现了， 而且贵人一般都很忙，凭什么他就高看你一眼，哭着喊着贴上来指</description>
+    </item>
     
     <item>
       <title>High Performance TiDB</title>
@@ -26,7 +35,7 @@
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/tidb_lesson_04/</guid>
-      <description>预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 实现 测试 TestInsertOnDuplicateKey</description>
+      <description>预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey</description>
     </item>
     
   </channel>
