@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title> High Performance TiDB - Troy的网络博客</title>
+  <title>High Performance TiDB Lesson 04：Execution 性能优化 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 12天了解 Tidb 第一周： 预习 12 个课时成为分布式数据库高阶人才？High Performance TiDB 课程了解一下！ https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw 欢迎报名参加 High Performance TiDB 课程学习！辛苦先仔细阅读下群公告并" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了吗？ https://pingcap.com/blog-cn/reconstruct-built-in-function/" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.69.2 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/post/book/tiDB/" />
+<link rel="canonical" href="https://wangcy6.github.io/post/2020/tidb_04_execution/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,23 +38,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content=" High Performance TiDB" />
-<meta property="og:description" content="https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 12天了解 Tidb 第一周： 预习 12 个课时成为分布式数据库高阶人才？High Performance TiDB 课程了解一下！ https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw 欢迎报名参加 High Performance TiDB 课程学习！辛苦先仔细阅读下群公告并" />
+<meta property="og:title" content="High Performance TiDB Lesson 04：Execution 性能优化" />
+<meta property="og:description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了吗？ https://pingcap.com/blog-cn/reconstruct-built-in-function/" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangcy6.github.io/post/book/tiDB/" />
-<meta property="article:published_time" content="2020-08-10T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-08-10T00:00:00+00:00" />
-<meta itemprop="name" content=" High Performance TiDB">
-<meta itemprop="description" content="https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 12天了解 Tidb 第一周： 预习 12 个课时成为分布式数据库高阶人才？High Performance TiDB 课程了解一下！ https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw 欢迎报名参加 High Performance TiDB 课程学习！辛苦先仔细阅读下群公告并">
-<meta itemprop="datePublished" content="2020-08-10T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-08-10T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="433">
+<meta property="og:url" content="https://wangcy6.github.io/post/2020/tidb_04_execution/" />
+<meta property="article:published_time" content="2020-09-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-09-19T00:00:00+00:00" />
+<meta itemprop="name" content="High Performance TiDB Lesson 04：Execution 性能优化">
+<meta itemprop="description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了吗？ https://pingcap.com/blog-cn/reconstruct-built-in-function/">
+<meta itemprop="datePublished" content="2020-09-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-09-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="60">
 
 
 
-<meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=" High Performance TiDB"/>
-<meta name="twitter:description" content="https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 12天了解 Tidb 第一周： 预习 12 个课时成为分布式数据库高阶人才？High Performance TiDB 课程了解一下！ https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw 欢迎报名参加 High Performance TiDB 课程学习！辛苦先仔细阅读下群公告并"/>
+<meta itemprop="keywords" content="TiDB," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="High Performance TiDB Lesson 04：Execution 性能优化"/>
+<meta name="twitter:description" content="预习 w issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了吗？ https://pingcap.com/blog-cn/reconstruct-built-in-function/"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -126,14 +126,14 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title"> High Performance TiDB</h1>
+      <h1 class="post-title">High Performance TiDB Lesson 04：Execution 性能优化</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-08-10 00:00 </span>
+        <span class="post-time"> 2020-09-19 00:00 </span>
         <div class="post-category">
-            <a href="/categories/book/"> book </a>
+            <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 433 字 </span>
+          <span class="more-meta"> 约 60 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -144,49 +144,39 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#12天了解-tidb">12天了解 Tidb</a></li>
-    <li><a href="#第一周">第一周：</a>
+    <li>
       <ul>
         <li><a href="#预习">预习</a></li>
-        <li><a href="#视频">视频：</a></li>
-        <li><a href="#作业">作业</a></li>
       </ul>
     </li>
+  </ul>
+
+  <ul>
+    <li><a href="#17824-思路">17824 思路</a></li>
+    <li><a href="#实现">实现</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <p><a href="https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2">https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2</a></p>
-<h2 id="12天了解-tidb">12天了解 Tidb</h2>
-<h2 id="第一周">第一周：</h2>
-<h3 id="预习">预习</h3>
-<p>12 个课时成为分布式数据库高阶人才？High Performance TiDB 课程了解一下！
-<a href="https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw">https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw</a></p>
-<p>欢迎报名参加 High Performance TiDB 课程学习！辛苦先仔细阅读下群公告并将群昵称修改为：（在职人员）姓名@公司，（在校学生）姓名 @学校</p>
-<p>为了保证课程质量，我们会提前录制好当周的课程，并于每周三下午 6:00 准时上线，视频支持回看</p>
-<p>第一期课程主题为 TiDB 总体架构，将于本周三（8.12）正式上线，课前学习资料为：</p>
-<ol>
-<li>How we build TiDB  <a href="https://pingcap.com/blog-cn/how-do-we-build-tidb/">https://pingcap.com/blog-cn/how-do-we-build-tidb/</a></li>
-<li>三篇文章了解 TiDB 技术内幕 - 说存储  <a href="https://pingcap.com/blog-cn/tidb-internal-1/">https://pingcap.com/blog-cn/tidb-internal-1/</a></li>
-<li>三篇文章了解 TiDB 技术内幕 - 说计算 <a href="https://pingcap.com/blog-cn/tidb-internal-2/">https://pingcap.com/blog-cn/tidb-internal-2/</a></li>
-<li>三篇文章了解 TiDB 技术内幕 - 谈调度](<a href="https://pingcap.com/blog-cn/tidb-internal-3/">https://pingcap.com/blog-cn/tidb-internal-3/</a></li>
-</ol>
-<h3 id="视频">视频：</h3>
-<p><a href="https://www.bilibili.com/video/BV17K411T7Kd">https://www.bilibili.com/video/BV17K411T7Kd</a></p>
-<h3 id="作业">作业</h3>
-<p>分值：200</p>
-<p>题目描述：</p>
-<p>本地下载 TiDB，TiKV，PD 源代码，改写源码并编译部署以下环境：</p>
+      <h3 id="预习">预习</h3>
+<p>w</p>
+<h1 id="issue">issue</h1>
+<h2 id="17824-思路">17824 思路</h2>
+<p>What is the meaning of  Warning in mysql about#17824 ,and I can not find the coding by debug in Execution
+可以看一下 <a href="https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215">https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215</a>
+expression/builtin_cast.go:215
+type castAsDecimalFunctionClass struct {</p>
+<p><a href="https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204">https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204</a>
+expression/builtin_cast.go:1204
+type builtinCastStringAsDecimalSig struct {</p>
+<h2 id="实现">实现</h2>
+<p>TestInsertOnDuplicateKey</p>
+<h1 id="塔山">塔山</h1>
 <ul>
-<li>1 TiDB</li>
-<li>1 PD</li>
-<li>3 TiKV</li>
+<li>别人例子 我看懂了吗？
+<a href="https://pingcap.com/blog-cn/reconstruct-built-in-function/">https://pingcap.com/blog-cn/reconstruct-built-in-function/</a></li>
 </ul>
-<p>改写后：使得 TiDB 启动事务时，能打印出一个 “hello transaction” 的 日志</p>
-<p>输出：一篇文章介绍以上过程</p>
-<p>截止时间：本周日 24:00:00（逾期不给分）
-作业提交方式：提交至个人 github ，将链接发送给 <a href="mailto:talent-plan@tidb.io">talent-plan@tidb.io</a></p>
 
     </div>
 
@@ -198,7 +188,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-08-10 00:00
+        2020-09-19 00:00
         
     </span>
   </p>
@@ -210,16 +200,16 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/book/">book</a>
+          <a href="/tags/TiDB/">TiDB</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/2020/tidb_04_execution/">
+        <a class="prev" href="/post/2020/tidb_lession_07/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">High Performance TiDB Lesson 04：Execution 性能优化</span>
+            <span class="prev-text nav-default">High Performance TiDB</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/book/01_SREGoogle%E8%BF%90%E7%BB%B4%E8%A7%A3%E5%AF%86/">
-            <span class="next-text nav-default">SRE：Google运维解密</span>
+        <a class="next" href="/post/book/tiDB/">
+            <span class="next-text nav-default"> High Performance TiDB</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
