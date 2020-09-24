@@ -919,12 +919,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/2020/tidb_lesson_04/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/English/The-Go-scheduler/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

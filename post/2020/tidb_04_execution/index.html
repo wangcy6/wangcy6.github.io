@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="预习 代码阅读 sql入口： func (cc *clientConn) handleQuery issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,22 +39,22 @@
 
 
 <meta property="og:title" content="High Performance TiDB Lesson 04：Execution 性能优化" />
-<meta property="og:description" content="预习 代码阅读 sql入口： func (cc *clientConn) handleQuery issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了" />
+<meta property="og:description" content="预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/tidb_04_execution/" />
 <meta property="article:published_time" content="2020-09-19T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-09-19T00:00:00+00:00" />
 <meta itemprop="name" content="High Performance TiDB Lesson 04：Execution 性能优化">
-<meta itemprop="description" content="预习 代码阅读 sql入口： func (cc *clientConn) handleQuery issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了">
+<meta itemprop="description" content="预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe">
 <meta itemprop="datePublished" content="2020-09-19T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-19T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="92">
+<meta itemprop="wordCount" content="394">
 
 
 
 <meta itemprop="keywords" content="TiDB," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="High Performance TiDB Lesson 04：Execution 性能优化"/>
-<meta name="twitter:description" content="预习 代码阅读 sql入口： func (cc *clientConn) handleQuery issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了"/>
+<meta name="twitter:description" content="预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 92 字 </span>
+          <span class="more-meta"> 约 394 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -144,16 +144,13 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#sql入口">sql入口：</a></li>
-      </ul>
-    </li>
+    <li><a href="#fqa1-sql入口">FQA1 sql入口：</a></li>
   </ul>
 
   <ul>
     <li><a href="#17824-思路">17824 思路</a></li>
     <li><a href="#实现">实现</a></li>
+    <li><a href="#测试">测试</a></li>
   </ul>
 </nav>
   </div>
@@ -161,8 +158,19 @@
     <div class="post-content">
       <h1 id="预习">预习</h1>
 <h1 id="代码阅读">代码阅读</h1>
-<h3 id="sql入口">sql入口：</h3>
-<p>func (cc *clientConn) handleQuery</p>
+<h2 id="fqa1-sql入口">FQA1 sql入口：</h2>
+<p><a href="https://asktug.com/t/topic/36992/2">https://asktug.com/t/topic/36992/2</a></p>
+<p>func (cc *clientConn) handleQuery
+func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode)</p>
+<p>问:跟踪一个查询sql 如何执行的
+eg:
+select binary col0 = 1101002 from t7;   
+select count(*) from t7;  </p>
+<p>我在session.go 跟踪 ExecuteStmt函数，查看函数调用关系。
+单步跟踪到 count(*) ，binary col0 = 1101002，类型转换，这些算子 执行过程
+请问 这需要在哪里看到呢？ 这个很难和 Lesson 04：Execution 性能优化 结合起来呢？</p>
+<p>回答：
+<a href="https://www.v2ex.com/t/623882?__cf_chl_jschl_tk__=c7d569261072546440759d8d48190a43864264dd-1600939887-0-AV0ef1ySdL99g8p1Brp0Bv844Fcs8Im4G_iWgz2tuysYSZjhvzaz1RaaHep2bj8MRmNIULceWU7-wF95C5T-gpMvd0mDc1zjAFrhMfiwHx4hUSs0iVVB6BPo6Uw7Z2TDDOg-_aaGWes8vbo_ChkERvDSbI0RU4Q3x_n0J9pJkkuoIBFZc3FSulEVzso03Aq1xl64jzNNcCDluGWmSjXm6F7JFuwukFU_SkLS91jf2I7rJUzxamETm3_NfiAHPDNTWWIyz3frM6Ob-ta8Z7Ety-kok-AsgGEs9s2xANCbRJx2PvWLZkE10Ubt4C4QrIupCggaosnDwsUo513bRu4sOlw">https://www.v2ex.com/t/623882?__cf_chl_jschl_tk__=c7d569261072546440759d8d48190a43864264dd-1600939887-0-AV0ef1ySdL99g8p1Brp0Bv844Fcs8Im4G_iWgz2tuysYSZjhvzaz1RaaHep2bj8MRmNIULceWU7-wF95C5T-gpMvd0mDc1zjAFrhMfiwHx4hUSs0iVVB6BPo6Uw7Z2TDDOg-_aaGWes8vbo_ChkERvDSbI0RU4Q3x_n0J9pJkkuoIBFZc3FSulEVzso03Aq1xl64jzNNcCDluGWmSjXm6F7JFuwukFU_SkLS91jf2I7rJUzxamETm3_NfiAHPDNTWWIyz3frM6Ob-ta8Z7Ety-kok-AsgGEs9s2xANCbRJx2PvWLZkE10Ubt4C4QrIupCggaosnDwsUo513bRu4sOlw</a></p>
 <h1 id="issue">issue</h1>
 <h2 id="17824-思路">17824 思路</h2>
 <p>What is the meaning of  Warning in mysql about#17824 ,and I can not find the coding by debug in Execution
@@ -174,7 +182,62 @@ expression/builtin_cast.go:1204
 type builtinCastStringAsDecimalSig struct {</p>
 <h2 id="实现">实现</h2>
 <p>TestInsertOnDuplicateKey</p>
-<h1 id="塔山">塔山</h1>
+<h2 id="测试">测试</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">select binary col0 = 1101002 from t7;  
+
+select * from t7;
+select binary col0 = 1101002 from t7;  
+
+select * from from test.t7;
+select binary col0 = 1101001 from t7;  
+
+insert into t7 values (&#39;1101001&#39;, &#39;1000-01-02 00:00:00&#39;, &#39;9223372036854775807&#39;, &#39;1ee46528-2b9a-4b3f-9042-8c5d061c2f26&#39;, &#39;-614.0876077308573&#39;);
+
+
+
+CREATE TABLE `t7` (
+  `col0` binary(63) DEFAULT NULL,
+  `col1` datetime DEFAULT NULL,
+  `col2` bigint(20) DEFAULT NULL,
+  `col3` varchar(300) DEFAULT NULL,
+  `col4` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin
+
+
+explain  select max(a) from t;
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="塔山">塔山</h1>
 <ul>
 <li>
 <p>别人例子 我看懂了吗？
@@ -184,7 +247,13 @@ type builtinCastStringAsDecimalSig struct {</p>
 <p>TiDB 源码阅读系列文章（三）SQL 的一生</p>
 </li>
 </ul>
-<p><a href="https://pingcap.com/blog-cn/tidb-source-code-reading-3/">https://pingcap.com/blog-cn/tidb-source-code-reading-3/</a></p>
+<p><a href="https://pingcap.com/blog-cn/tidb-source-code-reading-3/">https://pingcap.com/blog-cn/tidb-source-code-reading-3/</a>
+<a href="http://blog.minifish.org/posts/tidb4/">http://blog.minifish.org/posts/tidb4/</a></p>
+<ul>
+<li>任务 阅读 TiDB 源码阅读系列文章（六）Select 语句概览 进展：0% 拷贝了，你意味掌握 太天真了。
+<a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a>
+<a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a></li>
+</ul>
 
     </div>
 

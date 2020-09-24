@@ -35,7 +35,7 @@
       <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/tidb_04_execution/</guid>
-      <description>预习 代码阅读 sql入口： func (cc *clientConn) handleQuery issue 17824 思路 What is the meaning of Warning in mysql about#17824 ,and I can not find the coding by debug in Execution 可以看一下 https://github.com/pingcap/tidb/blob/b99376b521e6faaa1a3ec17ca99505caedca751a/expression/builtin_cast.go#L215 expression/builtin_cast.go:215 type castAsDecimalFunctionClass struct { https://github.com/pingcap/tidb/blob/9c2d7c2663dbdc0dab739d3c5e4e3b87bf90328e/expression/builtin_cast.go#L1204 expression/builtin_cast.go:1204 type builtinCastStringAsDecimalSig struct { 实现 TestInsertOnDuplicateKey 塔山 别人例子 我看懂了</description>
+      <description>预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe</description>
     </item>
     
     <item>
@@ -657,15 +657,6 @@
       
       <guid>https://wangcy6.github.io/post/book/book_Algorithms-JeffE/</guid>
       <description>算法导论 递归 题目1 sort 题目2 Recursion Trees 回溯法 题目1 八皇后问题 &amp;ndash;已经解决 来源： 题目 2 Subset Sum &amp;ndash;正在解决 Let’s consider a more complicated problem, called SubsetSum : Given</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wangcy6.github.io/post/2020/tidb_lesson_04/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2020/tidb_lesson_04/</guid>
-      <description></description>
     </item>
     
     <item>
