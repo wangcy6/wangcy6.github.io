@@ -6,10 +6,19 @@
     <description>Recent content in TiDB on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 20 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/tags/TiDB/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>High Performance TiDB 6 Planner</title>
+      <link>https://wangcy6.github.io/post/2020/tidb_06_plan/</link>
+      <pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/tidb_06_plan/</guid>
+      <description>人人都知道贵人重要，但是不是你想贵人指点，然后在那个时间那个地点那个贵人就出现了， 而且贵人一般都很忙，凭什么他就高看你一眼，哭着喊着贴上来指</description>
+    </item>
     
     <item>
       <title>High Performance TiDB Lesson 05：DDL 性能优化</title>
@@ -27,6 +36,15 @@
       
       <guid>https://wangcy6.github.io/post/2020/tidb_lession_07/</guid>
       <description>预习 https://www.youtube.com/watch?v=A46VE3aUTKo 45分钟 https://asktug.com/t/topic/1495 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 type Session interface { sessionctx.Context Status() uint16 // Flag of current status, such as autocommit. LastInsertID() uint64 // LastInsertID is the last inserted</description>
+    </item>
+    
+    <item>
+      <title>High Performance TiDB Lesson 03：通过工具寻找 TiDB 瓶颈</title>
+      <link>https://wangcy6.github.io/post/2020/tidb_03/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/tidb_03/</guid>
+      <description>测试 1 2 3 4 5 cd /data/tidb/src/github.com/pingcap/go-ycsb ./bin/go-ycsb load mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 ./bin/go-ycsb run mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 问题 解决方案 巨人的肩膀 http://stormluke.me/ycsb-hbase-readme/ 进展 0% https://asktug.com/t/topic/2641 进展 0% https://pingcap.com/blog-cn/pcp-report-202002/ 进展 0%</description>
     </item>
     
     <item>
