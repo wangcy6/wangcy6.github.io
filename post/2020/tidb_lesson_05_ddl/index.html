@@ -48,7 +48,7 @@
 <meta itemprop="description" content="人人都知道贵人重要，但是不是你想贵人指点，然后在那个时间那个地点那个贵人就出现了， 而且贵人一般都很忙，凭什么他就高看你一眼，哭着喊着贴上来指">
 <meta itemprop="datePublished" content="2020-09-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1271">
+<meta itemprop="wordCount" content="1359">
 
 
 
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 1271 字 </span>
+          <span class="more-meta"> 约 1359 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -191,7 +191,34 @@ func (n *CreateTableStmt) Restore</li>
 </ul>
 <p>找tidb目录上修改代码</p>
 <p>&ndash;<a href="https://www.imooc.com/article/290717">https://www.imooc.com/article/290717</a></p>
-<h1 id="三输出">三、输出</h1>
+<h1 id="测试">测试</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+CREATE INDEX `` ON t11 (a)
+select * from t11;
+create table t11 (a int );
+
+create table t (a int, index ``(a));
+
+if n.IsEmptyIndex {
+			ctx.WriteKeyWord(&#34;``&#34;)
+		}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="三输出">三、输出</h1>
 <ul>
 <li>命令</li>
 </ul>
@@ -330,13 +357,35 @@ pingcap/parser
 </span><span class="lnt">107
 </span><span class="lnt">108
 </span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">
 
+修改：parse.y   CreateIndexStmt
+
 CreateIndexStmt增加成员：IsEmptyIndex bool // Used for Check
 
+mysql代码
 
+create table t1 (i int, index `` (i));
+ERROR 42000: Incorrect index name &#39;&#39;
+
+
+
+if n.IsEmptyIndex {
+			ctx.WriteKeyWord(&#34;``&#34;)
+		}
 
 // CreateTableStmt is a statement to create a table.
 // See https://dev.mysql.com/doc/refman/5.7/en/create-table.html
