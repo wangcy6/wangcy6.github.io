@@ -48,7 +48,7 @@
 <meta itemprop="description" content="人人都知道贵人重要，但是不是你想贵人指点，然后在那个时间那个地点那个贵人就出现了， 而且贵人一般都很忙，凭什么他就高看你一眼，哭着喊着贴上来指">
 <meta itemprop="datePublished" content="2020-09-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1359">
+<meta itemprop="wordCount" content="1838">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 1359 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 1838 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -171,14 +171,52 @@
 </ol>
 <h1 id="二-issue">二、 issue</h1>
 <h2 id="21-18149-思路沟通">2.1 18149 思路沟通</h2>
-<p>问题：tidb从parer返回StmtNode ast.StmtNode到DDL ast.CreateTableStmt转变过程在哪里？
-我单步跟踪好像直接映射出来了。</p>
+<ul>
+<li>FQA2:</li>
+</ul>
+<p>小王：</p>
+<p>help:</p>
+<ol>
+<li>
+<p>How to use a IndexName of token  to represent nullptr in #issues/18149?
+<a href="https://github.com/pingcap/parser/blob/master/parser.y#L4940">https://github.com/pingcap/parser/blob/master/parser.y#L4940</a>
+<a href="https://github.com/mysql/mysql-server/blob/8.0/sql/sql_yacc.yy#L7456">https://github.com/mysql/mysql-server/blob/8.0/sql/sql_yacc.yy#L7456</a></p>
+</li>
+<li>
+<p>IndexName，属于<!-- raw HTML omitted -->类型，是字符串类型，无法表示nil，我对比mysql的，mysql是自定义字符串类自己区分了。https://github.com/mysql/mysql-server/blob/8.0/sql/sql_yacc.yy#L7456。 ，问：用&quot;nullptr&quot;字符串表示nil，发现影响其他测试用例。IndexName 属于ident&gt;类型，是字符串类型不能用nill表示？</p>
+</li>
+</ol>
+<p>老王：</p>
+<ol>
+<li>
+<p>How about define a struct NullIndexName like sql.NullString :
+type NullString struct {
+String string 
+Valid  bool // Valid is true if String is not NULL
+}</p>
+</li>
+<li>
+<p>We can use a struct or a nil pointer to represent a empty index to distinguish from a anonymous index. 
+To record this message to AST, a new type like ConstraintEmptyIndex can be added to ConstraintType .
+Then TiDB can throw the error (1280, &ldquo;Incorrect index name &lsquo;'&quot;) at the time of handling constraints.</p>
+</li>
+<li></li>
+</ol>
+<p>所以, 这个地方有两种出路, 一个是改变indexName的返回值, 你返回些别的信息, 一个结构体什么的, 但是得改所有相关处
+另一个是就用类似的字符串方式, 使用某个保留关键字之类的做当作nil, 也就是不允许作为IndexName的关键字&hellip; 这样改动比较少一点, 但是关键字得好好选</p>
+<ul>
+<li>FQA 1 
+小王：tidb从parer返回StmtNode ast.StmtNode到DDL ast.CreateTableStmt转变过程在哪里？
+我单步跟踪好像直接映射出来了。</li>
+</ul>
+<p>老王：</p>
 <p>构建出 ast.CreateTableStmt 是在 parser.go 里面完成的，ast.StmtNode 是一个接口(interface)，ast.CreateTableStmt 是它的一个实现(implementation)</p>
 <p>1.parser.go完整路径是这个吗pingcap\tidb\cmd\importer\parser.go实现， 我阅读以下，看看是否在这里修。2 pingcap/parser 后面继续看，估计需要一段时间。</p>
 <p>不是。。就在 pingcap/parser
 这个文件是通过 parser.y 自动生成的，语法可以参考 yacc 的文档
 <a href="https://www.gnu.org/software/bison/manual/html_node/index.html">https://www.gnu.org/software/bison/manual/html_node/index.html</a> (</p>
 <h2 id="21-18149-coding">2.1 18149 coding</h2>
+<p>go test -check.f TestDDL</p>
 <p>func checkIndexInfo(indexName string
 func checkConstraintNames(constraints []*ast.Constraint) 
 func (d *ddl) CreateTable(ctx sessionctx.Context, s *ast.CreateTableStmt)
@@ -192,6 +230,14 @@ func (n *CreateTableStmt) Restore</li>
 <p>找tidb目录上修改代码</p>
 <p>&ndash;<a href="https://www.imooc.com/article/290717">https://www.imooc.com/article/290717</a></p>
 <h1 id="测试">测试</h1>
+<ul>
+<li>
+<p>parser.y:2890:6: IndexOptionList has no declared type</p>
+</li>
+<li>
+<p>Panic: interface conversion: interface {} is *ast.NullString, not string (PC=0x435CF5)</p>
+</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
