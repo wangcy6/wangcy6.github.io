@@ -48,7 +48,7 @@
 <meta itemprop="description" content="人人都知道贵人重要，但是不是你想贵人指点，然后在那个时间那个地点那个贵人就出现了， 而且贵人一般都很忙，凭什么他就高看你一眼，哭着喊着贴上来指">
 <meta itemprop="datePublished" content="2020-09-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1838">
+<meta itemprop="wordCount" content="2120">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 1838 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 2120 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -144,7 +144,11 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#21-18149-思路沟通">2.1 18149 思路沟通</a></li>
+    <li><a href="#21-18149-思路沟通">2.1 18149 思路沟通</a>
+      <ul>
+        <li><a href="#fqa3">FQA3</a></li>
+      </ul>
+    </li>
     <li><a href="#21-18149-coding">2.1 18149 coding</a></li>
   </ul>
 </nav>
@@ -171,6 +175,18 @@
 </ol>
 <h1 id="二-issue">二、 issue</h1>
 <h2 id="21-18149-思路沟通">2.1 18149 思路沟通</h2>
+<h3 id="fqa3">FQA3</h3>
+<ul>
+<li>小王：How to update parser for TiDB
+<a href="https://asktug.com/t/topic/37203">https://asktug.com/t/topic/37203</a>
+问个小问题：怎么go.mod 引入本地包，而非远程的。c++ makefile都是本地的golang不懂了</li>
+<li>老王：</li>
+</ul>
+<blockquote>
+<p>画外音：
+你对 go module 根本不懂，需要花时间学习，弄明白里面原理
+<a href="https://juejin.im/post/6844903798658301960">https://juejin.im/post/6844903798658301960</a></p>
+</blockquote>
 <ul>
 <li>FQA2:</li>
 </ul>
@@ -216,20 +232,36 @@ Then TiDB can throw the error (1280, &ldquo;Incorrect index name &lsquo;'&quot;)
 这个文件是通过 parser.y 自动生成的，语法可以参考 yacc 的文档
 <a href="https://www.gnu.org/software/bison/manual/html_node/index.html">https://www.gnu.org/software/bison/manual/html_node/index.html</a> (</p>
 <h2 id="21-18149-coding">2.1 18149 coding</h2>
-<p>go test -check.f TestDDL</p>
-<p>func checkIndexInfo(indexName string
-func checkConstraintNames(constraints []*ast.Constraint) 
-func (d *ddl) CreateTable(ctx sessionctx.Context, s *ast.CreateTableStmt)
-func checkTableInfoValidExtra(tbInfo *model.TableInfo) error</p>
+<p>go test -check.f TestDDL
+go test -check.f TestCreateTable
+go test -check.f TestValidator
+func checkConstraintNames(constraints []*ast.Constraint) &mdash;&gt;buildTableInfoWithStmt &ndash;&gt;func (d *ddl) CreateTable</p>
 <p>return ddl.ErrWrongNameForIndex.GenWithStackByArgs(indexName)</p>
 <p>return ddl.ErrWrongNameForIndex.GenWithStackByArgs(indexName)</p>
-<ul>
-<li>恢复sql
-func (n *CreateTableStmt) Restore</li>
-</ul>
-<p>找tidb目录上修改代码</p>
-<p>&ndash;<a href="https://www.imooc.com/article/290717">https://www.imooc.com/article/290717</a></p>
+<p>func (p *preprocessor) checkCreateTableGrammar</p>
 <h1 id="测试">测试</h1>
+<p>go test -check.f TestValidator
+go test -check.f TestCreateTable</p>
+<ul>
+<li></li>
+</ul>
+<p>go test -check.f TestValidator
+fatal error: runtime: out of memory</p>
+<ul>
+<li>都是copy 惹的问题，单词拼写不正确</li>
+</ul>
+<p>IsEmptyIndex not IfEmptyIndex 【偷懒 ，依靠过去记忆，根本不去思考问题这原因，总想copy别人的不去思考】
+/ddl_api.go:1185:33: constr.IsEmptyIndex undefined (type *ast.Constraint has no field or method IsEmptyIndex)</p>
+<blockquote>
+<p>教训：耗时：60分钟。如果仔细看看错误信息1分钟就能解决。大脑总喜欢偷懒。
+go list -m all 检查遗漏配置是否生效</p>
+</blockquote>
+<p>func (s *testSerialDBSuite) TestCreateTable(c *C) {
+{&ldquo;alter table t add index <code>primary</code> (i)&quot;, true, errors.New(&quot;[ddl:1280]Incorrect index name &lsquo;primary&rsquo;&quot;)},</p>
+<p>// test
+tk.MustExec(&ldquo;use test&rdquo;)
+failSQL = &ldquo;create table t (a int, index <code>(a));&quot; tk.MustGetErrCode(failSQL, errno.ErrWrongNameForIndex) _, err = tk.Exec(&quot;create table t (a int, index </code>(a));&quot;)
+c.Assert(err.Error(), Equals, &ldquo;[types:1291]Column &lsquo;a&rsquo; has duplicated value &lsquo;ß&rsquo; in ENUM&rdquo;)</p>
 <ul>
 <li>
 <p>parser.y:2890:6: IndexOptionList has no declared type</p>
