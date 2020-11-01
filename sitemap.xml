@@ -945,18 +945,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/product/RocketMQ/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/product/thrift.apache/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/plan/2020_04_toddo/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -964,12 +952,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/post/leetcode/leetcod_easy_200-300./</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/product/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
