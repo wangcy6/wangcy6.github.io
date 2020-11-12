@@ -48,7 +48,7 @@
 <meta itemprop="description" content="预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe">
 <meta itemprop="datePublished" content="2020-09-19T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-19T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="495">
+<meta itemprop="wordCount" content="581">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 495 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 581 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -151,6 +151,14 @@
     <li><a href="#17824-思路">17824 思路</a></li>
     <li><a href="#实现">实现</a></li>
     <li><a href="#测试">测试</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#2020-11-12">2020-11-12</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
@@ -258,6 +266,67 @@ explain  select max(a) from t;
 <a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a>
 <a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a></li>
 </ul>
+<h3 id="2020-11-12">2020-11-12</h3>
+<blockquote>
+<ol>
+<li>任务要求：</li>
+</ol>
+</blockquote>
+<ul>
+<li>
+<p><a href="https://github.com/pingcap/tidb/issues/20838">https://github.com/pingcap/tidb/issues/20838</a></p>
+</li>
+<li>
+<p><a href="https://github.com/pingcap/tidb/issues/20843">https://github.com/pingcap/tidb/issues/20843</a></p>
+</li>
+<li>
+<p><a href="https://github.com/pingcap/tidb/pull/20969">https://github.com/pingcap/tidb/pull/20969</a></p>
+</li>
+</ul>
+<blockquote>
+<ol start="2">
+<li>完成该任务需要最少知识：</li>
+</ol>
+</blockquote>
+<ul>
+<li><a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a></li>
+<li><a href="https://pingcap.com/blog-cn/tidb-source-code-reading-5/">https://pingcap.com/blog-cn/tidb-source-code-reading-5/</a></li>
+<li><a href="https://pingcap.com/blog-cn/tidb-source-code-reading-3/">https://pingcap.com/blog-cn/tidb-source-code-reading-3/</a></li>
+</ul>
+<blockquote>
+<ol start="3">
+<li>完成该任务需要最少代码：</li>
+</ol>
+</blockquote>
+<p>// Next implements Exec Next interface.</p>
+<ul>
+<li>
+<p>func (e *IndexLookUpExecutor) Next(ctx context.Context, req *chunk.Chunk)</p>
+</li>
+<li>
+<p>func (w *tableWorker) executeTask(ctx context.Context, task *lookupTableTask)</p>
+</li>
+<li>
+<p>func (e *IndexLookUpExecutor) startWorkers(ctx context.Context, initBatchSize int)</p>
+</li>
+<li>
+<p>func (s *testSuite3) BenchmarkIndexLookUpGetResultChunk</p>
+</li>
+<li>
+<p>func (s *testSuite3) TestPushLimitDownIndexLookUpReader</p>
+</li>
+<li>
+<p>func BenchmarkSelectResponseChunk_BigResponse</p>
+</li>
+</ul>
+<p><a href="https://github.com/pingcap/tidb/tree/master/executor/distsql.go#L67-L70">https://github.com/pingcap/tidb/tree/master/executor/distsql.go#L67-L70</a></p>
+<p><a href="https://github.com/pingcap/tidb/blob/master/executor/distsql.go#L1139-L1141">https://github.com/pingcap/tidb/blob/master/executor/distsql.go#L1139-L1141</a></p>
+<blockquote>
+<ol start="4">
+<li>任务完成结果：</li>
+</ol>
+</blockquote>
+<p>go test -check.f TestIndexLookUpGetResultChunk</p>
 
     </div>
 
