@@ -48,7 +48,7 @@
 <meta itemprop="description" content="预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe">
 <meta itemprop="datePublished" content="2020-09-19T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-19T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="630">
+<meta itemprop="wordCount" content="746">
 
 
 
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 630 字 </span>
+          <span class="more-meta"> 约 746 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -326,17 +326,82 @@ explain  select max(a) from t;
 <li>任务完成结果：</li>
 </ol>
 </blockquote>
-<p>go test -check.f TestIndexLookUpGetResultChunk</p>
-<p>make check
-make test
-sudo launchctl limit maxfiles 1024 unlimited
-<a href="https://blog.51cto.com/chennanrun/1901815">https://blog.51cto.com/chennanrun/1901815</a></p>
-<p>git 本地分支 提交到远程分支
-git push &ndash;set-upstream origin v587
-git 获取远程分支
-it commit -m &ldquo;hptc ycsb-worloade: Implement AppendRows for Chunk (#20838)&rdquo;
-tiup cluster stop tidb-test</p>
+<p><a href="https://github.com/pingcap/tidb/pull/21057">https://github.com/pingcap/tidb/pull/21057</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">go test -check.f TestIndexLookUpGetResultChunk
 
+make fmt
+go mod tidy
+make check
+make test
+diff 检查差异 包括代码格式
+@ti-srebot /run-all-tests
+
+1. 提交代码之前 必须更新代码：
+git pull --rebase upstream master
+
+2. 如果有冲突，手工修改冲突：接受双方改变
+  git status
+
+3. 标记修改完成
+ Git add xxx
+
+4.   git rebase --continue
+
+
+本地分支只更新远程分支：
+
+git branch --set-upstream-to=origin/v587 v587
+
+git pull
+
+
+本地分支提交远程分支：
+
+git push --set-upstream origin dev_study
+git push --set-upstream origin v587
+it commit -m &#34;hptc ycsb-worloade: Implement AppendRows for Chunk (#20838)&#34;
+tiup cluster stop tidb-test
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
