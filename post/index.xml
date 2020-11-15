@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 25 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>High Performance TiDB Lesson 04：Execution 性能优化</title>
+      <link>https://wangcy6.github.io/post/2020/tidb_04_execution/</link>
+      <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/tidb_04_execution/</guid>
+      <description>预习 Executor 对不同的 SQL 操作，tidb 定义了许多 Executor 来执行，例如：SelectionExec、DeleteExec、DDLExec等等。 代码阅读 FQA1 sq</description>
+    </item>
     
     <item>
       <title>High Performance TiDB 6 Planner</title>
@@ -45,15 +54,6 @@
       
       <guid>https://wangcy6.github.io/post/2020/tidb_03/</guid>
       <description>测试 1 2 3 4 5 cd /data/tidb/src/github.com/pingcap/go-ycsb ./bin/go-ycsb load mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 ./bin/go-ycsb run mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 问题 解决方案 巨人的肩膀 http://stormluke.me/ycsb-hbase-readme/ 进展 0% https://asktug.com/t/topic/2641 进展 0% https://pingcap.com/blog-cn/pcp-report-202002/ 进展 0%</description>
-    </item>
-    
-    <item>
-      <title>High Performance TiDB Lesson 04：Execution 性能优化</title>
-      <link>https://wangcy6.github.io/post/2020/tidb_04_execution/</link>
-      <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2020/tidb_04_execution/</guid>
-      <description>预习 代码阅读 FQA1 sql入口： https://asktug.com/t/topic/36992/2 func (cc *clientConn) handleQuery func (s *session) ExecuteStmt(ctx context.Context, stmtNode ast.StmtNode) 问:跟踪一个查询sql 如何执行的 eg: select binary col0 = 1101002 from t7; select count(*) from t7; 我在session.go 跟踪 Exe</description>
     </item>
     
     <item>
