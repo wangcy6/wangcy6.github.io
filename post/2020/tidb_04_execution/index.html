@@ -48,7 +48,7 @@
 <meta itemprop="description" content="预习 Executor 对不同的 SQL 操作，tidb 定义了许多 Executor 来执行，例如：SelectionExec、DeleteExec、DDLExec等等。 代码阅读 FQA1 sq">
 <meta itemprop="datePublished" content="2020-11-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-11-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="817">
+<meta itemprop="wordCount" content="867">
 
 
 
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 817 字 </span>
+          <span class="more-meta"> 约 867 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -276,8 +276,10 @@ explain  select max(a) from t;
 </blockquote>
 <ul>
 <li>
-<p><a href="https://github.com/pingcap/tidb/issues/20838">https://github.com/pingcap/tidb/issues/20838</a>
-<a href="https://github.com/pingcap/tidb/issues/20841">https://github.com/pingcap/tidb/issues/20841</a></p>
+<p><a href="https://github.com/pingcap/tidb/issues/20838">https://github.com/pingcap/tidb/issues/20838</a></p>
+</li>
+<li>
+<p><a href="https://github.com/pingcap/tidb/issues/20841">https://github.com/pingcap/tidb/issues/20841</a></p>
 </li>
 <li>
 <p><a href="https://github.com/pingcap/tidb/issues/20843">https://github.com/pingcap/tidb/issues/20843</a></p>
@@ -334,6 +336,8 @@ Executor</li>
 </ol>
 </blockquote>
 <p><a href="https://github.com/pingcap/tidb/pull/21057">https://github.com/pingcap/tidb/pull/21057</a></p>
+<p>教训：
+如果make test make dev通过证明你写代码没有问题。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -370,10 +374,12 @@ Executor</li>
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
+</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">go test -check.f TestIndexLookUpGetResultChunk
-
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">make test_part_2
+go test -check.f TestIndexLookUpGetResultChunk
+make dev
 make fmt
 go mod tidy
 make check
@@ -408,7 +414,16 @@ it commit -m &#34;hptc ycsb-worloade: Implement AppendRows for Chunk (#20838)&#3
 tiup cluster stop tidb-test
 </code></pre></td></tr></table>
 </div>
-</div>
+</div><blockquote>
+<ol start="5">
+<li>FQA</li>
+</ol>
+</blockquote>
+<ul>
+<li><a href="https://asktug.com/t/topic/63633">https://asktug.com/t/topic/63633</a></li>
+<li>What will happen if resultTask.cursor &gt;= len(resultTask.rows)? It will cause an endless loop?</li>
+</ul>
+
     </div>
 
     <div class="post-copyright">
