@@ -48,7 +48,7 @@
 <meta itemprop="description" content="预习 Executor 对不同的 SQL 操作，tidb 定义了许多 Executor 来执行，例如：SelectionExec、DeleteExec、DDLExec等等。 代码阅读 FQA1 sq">
 <meta itemprop="datePublished" content="2020-11-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-11-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="867">
+<meta itemprop="wordCount" content="869">
 
 
 
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 867 字 </span>
+          <span class="more-meta"> 约 869 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -151,14 +151,6 @@
     <li><a href="#17824-思路">17824 思路</a></li>
     <li><a href="#实现">实现</a></li>
     <li><a href="#测试">测试</a></li>
-  </ul>
-
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#2020-11-12">2020-11-12</a></li>
-      </ul>
-    </li>
   </ul>
 </nav>
   </div>
@@ -268,7 +260,7 @@ explain  select max(a) from t;
 <a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a>
 <a href="https://pingcap.com/blog-cn/tidb-source-code-reading-6/">https://pingcap.com/blog-cn/tidb-source-code-reading-6/</a></li>
 </ul>
-<h3 id="2020-11-12">2020-11-12</h3>
+<h1 id="2020-11-12">2020-11-12</h1>
 <blockquote>
 <ol>
 <li>任务要求：</li>
@@ -420,8 +412,18 @@ tiup cluster stop tidb-test
 </ol>
 </blockquote>
 <ul>
-<li><a href="https://asktug.com/t/topic/63633">https://asktug.com/t/topic/63633</a></li>
-<li>What will happen if resultTask.cursor &gt;= len(resultTask.rows)? It will cause an endless loop?</li>
+<li>
+<p><a href="https://github.com/pingcap/tiup/issues/919">https://github.com/pingcap/tiup/issues/919</a></p>
+</li>
+<li>
+<p><a href="https://asktug.com/t/topic/63679/4">https://asktug.com/t/topic/63679/4</a></p>
+</li>
+<li>
+<p><a href="https://asktug.com/t/topic/63633">https://asktug.com/t/topic/63633</a></p>
+</li>
+<li>
+<p>What will happen if resultTask.cursor &gt;= len(resultTask.rows)? It will cause an endless loop?</p>
+</li>
 </ul>
 
     </div>
