@@ -48,7 +48,7 @@
 <meta itemprop="description" content="预习 Executor 对不同的 SQL 操作，tidb 定义了许多 Executor 来执行，例如：SelectionExec、DeleteExec、DDLExec等等。 代码阅读 FQA1 sq">
 <meta itemprop="datePublished" content="2020-11-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-11-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="869">
+<meta itemprop="wordCount" content="962">
 
 
 
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/TiDB/"> TiDB </a>
             </div>
-          <span class="more-meta"> 约 869 字 </span>
+          <span class="more-meta"> 约 962 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -367,9 +367,31 @@ Executor</li>
 </span><span class="lnt">33
 </span><span class="lnt">34
 </span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">make test_part_2
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://book.tidb.io/session2/chapter1/tiup-intro.html
+tiup list ${component}：查看某个组件有哪些版本可以安装
+tiup list tidb
+tiup list tikv //从服务器获取 TiKV 所有可安装版本组件列表
+tiup cluster destroy tidb
+tiup cluster deploy wangchuanyi  nightly  ./topology2.yaml  --user root -p 
+WBjEB8PFNYbFsrZ8Z3dVrxLC
+tiup cluster start wangchuanyi
+tiup cluster list
+
+tiup cluster start tidb-test
+make test_part_2
 go test -check.f TestIndexLookUpGetResultChunk
 make dev
 make fmt
