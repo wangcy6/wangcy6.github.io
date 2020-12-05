@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="2002-12-05 完成 3. 无重复字符的最长子串 1、算法描述 能说出基本思想即可,实在不行动手画个流程图把。 time:o(n) space o(n) n=128; 2、参考代码 放轻松，虽然是c&#43;&#43;实现，我们一贯" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,22 +39,22 @@
 
 
 <meta property="og:title" content="字符串总结" />
-<meta property="og:description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都" />
+<meta property="og:description" content="2002-12-05 完成 3. 无重复字符的最长子串 1、算法描述 能说出基本思想即可,实在不行动手画个流程图把。 time:o(n) space o(n) n=128; 2、参考代码 放轻松，虽然是c&#43;&#43;实现，我们一贯" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/leetcode/leetcode_string/" />
 <meta property="article:published_time" content="2020-06-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2020-06-02T00:00:00+00:00" />
 <meta itemprop="name" content="字符串总结">
-<meta itemprop="description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都">
+<meta itemprop="description" content="2002-12-05 完成 3. 无重复字符的最长子串 1、算法描述 能说出基本思想即可,实在不行动手画个流程图把。 time:o(n) space o(n) n=128; 2、参考代码 放轻松，虽然是c&#43;&#43;实现，我们一贯">
 <meta itemprop="datePublished" content="2020-06-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-06-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1799">
+<meta itemprop="wordCount" content="1914">
 
 
 
 <meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="字符串总结"/>
-<meta name="twitter:description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都"/>
+<meta name="twitter:description" content="2002-12-05 完成 3. 无重复字符的最长子串 1、算法描述 能说出基本思想即可,实在不行动手画个流程图把。 time:o(n) space o(n) n=128; 2、参考代码 放轻松，虽然是c&#43;&#43;实现，我们一贯"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -133,7 +133,7 @@
         <div class="post-category">
             <a href="/categories/Leetcode/"> Leetcode </a>
             </div>
-          <span class="more-meta"> 约 1799 字 </span>
+          <span class="more-meta"> 约 1914 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -143,6 +143,14 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#2002-12-05-完成-3-无重复字符的最长子串">2002-12-05 完成 3. 无重复字符的最长子串</a></li>
+      </ul>
+    </li>
+  </ul>
+
   <ul>
     <li>
       <ul>
@@ -181,7 +189,22 @@
   </div>
 </div>
     <div class="post-content">
-      <h1 id="第一题-387-字符串中的第一个唯一字符">第一题 387. 字符串中的第一个唯一字符</h1>
+      <h3 id="2002-12-05-完成-3-无重复字符的最长子串">2002-12-05 完成 3. 无重复字符的最长子串</h3>
+<p>1、<strong>算法描述</strong></p>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<p>time:o(n) space o(n) n=128;</p>
+<p>2、<strong>参考代码</strong></p>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<p>3 五、举一反三</p>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+<hr>
+<h1 id="第一题-387-字符串中的第一个唯一字符">第一题 387. 字符串中的第一个唯一字符</h1>
 <h3 id="一题目信息">一、<strong>题目信息</strong></h3>
 <p>今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都不具备维持原有输入顺序,
 map做排序的，hash是无序的。怎么办，马上想到数组,vector这样结果，
