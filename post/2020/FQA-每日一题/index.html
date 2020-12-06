@@ -48,7 +48,7 @@
 <meta itemprop="description" content="每日一题">
 <meta itemprop="datePublished" content="2020-05-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3425">
+<meta itemprop="wordCount" content="3671">
 
 
 
@@ -133,8 +133,8 @@
         <div class="post-category">
             <a href="/categories/FQA/"> FQA </a>
             </div>
-          <span class="more-meta"> 约 3425 字 </span>
-          <span class="more-meta"> 预计阅读 7 分钟 </span>
+          <span class="more-meta"> 约 3671 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -146,6 +146,7 @@
   <ul>
     <li>
       <ul>
+        <li><a href="#第12天">第12天：</a></li>
         <li><a href="#第11天">第11天</a></li>
         <li><a href="#第10天">第10天</a></li>
         <li><a href="#用户连续登录天数0707">用户连续登录天数（07.07）</a></li>
@@ -190,13 +191,29 @@
 <p>考试是对实践经验其中一个片段，进行复盘总结，如同黑客帝国中镜像学习一样反复练习 ，以始为终，去发现 在大棒加胡萝卜奖励驱动下，自己看不到的的错误</p>
 </blockquote>
 <h1 id="每日一题">每日一题</h1>
+<h3 id="第12天">第12天：</h3>
+<ul>
+<li>问：在c++11内存模型模型中，规定内存访问顺序来保证线程同步，请问有那三个顺序？</li>
+</ul>
+<p>回答：
+std:atomic
+Relaxed ordering：只线程之间保证原子性，不保证线程之间同步性
+acquire-release ordering：保证线程之间变量的 &ldquo;可见行&rdquo;，大体意思是规定变量写入内存，不允许延迟写，读取变量不允许提前读取。
+Sequentially-consistent ordering：顺序执行，多线程变单线程</p>
+<ul>
+<li>help
+<a href="http://senlinzhan.github.io/2017/12/04/cpp-memory-order/">http://senlinzhan.github.io/2017/12/04/cpp-memory-order/</a></li>
+</ul>
 <h3 id="第11天">第11天</h3>
-<p>位操作有几种？位运算符效率更高为什么？
-~~
-<a href="https://leetcode-cn.com/problems/power-of-two/solution/power-of-two-er-jin-zhi-ji-jian-by-jyd/">https://leetcode-cn.com/problems/power-of-two/solution/power-of-two-er-jin-zhi-ji-jian-by-jyd/</a>
-<a href="https://www.zhihu.com/question/38206659">https://www.zhihu.com/question/38206659</a>
-<a href="https://www.runoob.com/w3cnote/bit-operation.html">https://www.runoob.com/w3cnote/bit-operation.html</a>
-<a href="http://www.matrix67.com/blog/archives/263">http://www.matrix67.com/blog/archives/263</a>
+<ul>
+<li>问：位操作有几种？运算符优先级顺序是什么？</li>
+</ul>
+<p>~~
+<a href="https://wdxtub.com/interview/14520595848890.html">https://wdxtub.com/interview/14520595848890.html</a></p>
+<p>基本的优先级需要记住：
+简单记就是：！ &gt; 算术运算符 &gt;后移位运算 &gt; 关系运算符 &gt; &amp;&amp; &gt; || &gt; 赋值运算符
+请特别注意：1 &laquo; 3 + 2 &amp; 7等价于 (1 &laquo; (3 + 2))&amp;7.</p>
+<p>6
 ~~</p>
 <h3 id="第10天">第10天</h3>
 <p>今天每日一题：从 innodb 的索引结构分析，为什么索引的 key 长度不能太长？(阿里）</p>
