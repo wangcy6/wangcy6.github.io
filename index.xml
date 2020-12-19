@@ -12,6 +12,70 @@
     
     
     <item>
+      <title>避免使用虚函数作为动态库的接口</title>
+      <link>https://wangcy6.github.io/post/2020/2020-12-13_do-not-use-virtual-function-as-dynamic-lib-interface/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/2020-12-13_do-not-use-virtual-function-as-dynamic-lib-interface/</guid>
+      <description>&lt;p&gt;阅读c++对象模型，在最后一章提到虽然c++实现上兼容c的高效，
+但是缺乏灵活性 ，下面对应原文 描述更加准确。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dynamically shared libraries&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;理想情况下:动态库自动加载正确版本，不需要使用者重编&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a new release of a dynamically linked shared library should just &amp;ldquo;drop in.&amp;rdquo; That is,
+the next time an application is run, it transparently picks up the new library version.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The library release is noninvasive in that the application does not need to be rebuil&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;实际情况：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is because the size of the class and the offset location of each of its direct and inherited members is fixed at compile time (except for virtually inherited members).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This results in efficient but inflexible binaries; a change in the object layout requires recompilation.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;shared memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;理想情况:runtime linker&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When a shared library is dynamically loaded, its placement in memory is handled by a runtime linker and generally is of no concern to the executing process.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;实际情况：可能会core&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;under the C++ Object Model when a class object supported by a dynamically shared library and containing virtual functions is placed in shared memory.
+The likely result is either a segment fault or bus error. T&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;distributed objects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;然后寻找 避免使用虚函数作为动态库的接口 相关方法 开始&lt;/p&gt;
+&lt;p&gt;文章来源：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/yingshin/yingshin.github.io/blob/master/_posts/2016-12-3-do-not-use-virtual-function-as-dynamic-lib-interface.markdown&#34;&gt;2016-12-3-do-not-use-virtual-function-as-dynamic-lib-interface&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Google关于使用静态库or动态库的习惯。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;另外，出于Google的习惯（C++亦是如此），
+Go语言默认采用static linking的方式生成binary。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这意味着部署的时候无需担心服务器上是否有外部依赖的动态链接库，&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;只需一个binary一切搞定。&lt;/p&gt;
+&lt;p&gt;一方面我们享受着动态库升级带来的便利，比如Qt，随处可见的各种dll，
+另一方面又因为so的改动而带来二进制不兼容的问题。&lt;/p&gt;
+&lt;p&gt;今天想说的是：muduo作者&lt;a href=&#34;https://www.cnblogs.com/Solstice/archive/2011/03/13/1982563.html&#34;&gt;陈硕&lt;/a&gt;提到的 “避免使用虚函数作为库的接口”。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;采用 pimpl 多了一道 forward 的手续，带来的好处是可扩展性与二进制兼容性，通常是划算的。pimpl 扮演了编译器防火墙的作用
+如果要加入新的功能，不必通过继承来扩展，可以原地修改，且保持二进制兼容&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
       <title>High Performance TiDB Lesson 04：Execution 性能优化</title>
       <link>https://wangcy6.github.io/post/2020/tidb_04_execution/</link>
       <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>

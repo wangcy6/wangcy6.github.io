@@ -120,6 +120,84 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/2020/2020-12-13_do-not-use-virtual-function-as-dynamic-lib-interface/">避免使用虚函数作为动态库的接口</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-12-13 00:00 </span>
+      <div class="post-category">
+          <a href="/categories/c&#43;&#43;/"> c&#43;&#43; </a>
+          </div>
+        <span class="more-meta"> 约 3767 字 </span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>阅读c++对象模型，在最后一章提到虽然c++实现上兼容c的高效，
+但是缺乏灵活性 ，下面对应原文 描述更加准确。</p>
+<ul>
+<li>dynamically shared libraries</li>
+</ul>
+<p>理想情况下:动态库自动加载正确版本，不需要使用者重编</p>
+<blockquote>
+<p>a new release of a dynamically linked shared library should just &ldquo;drop in.&rdquo; That is,
+the next time an application is run, it transparently picks up the new library version.</p>
+</blockquote>
+<blockquote>
+<p>The library release is noninvasive in that the application does not need to be rebuil</p>
+</blockquote>
+<p>实际情况：</p>
+<blockquote>
+<p>This is because the size of the class and the offset location of each of its direct and inherited members is fixed at compile time (except for virtually inherited members).</p>
+</blockquote>
+<blockquote>
+<p>This results in efficient but inflexible binaries; a change in the object layout requires recompilation.</p>
+</blockquote>
+<ul>
+<li>shared memory</li>
+</ul>
+<p>理想情况:runtime linker</p>
+<blockquote>
+<p>When a shared library is dynamically loaded, its placement in memory is handled by a runtime linker and generally is of no concern to the executing process.</p>
+</blockquote>
+<p>实际情况：可能会core</p>
+<blockquote>
+<p>under the C++ Object Model when a class object supported by a dynamically shared library and containing virtual functions is placed in shared memory.
+The likely result is either a segment fault or bus error. T</p>
+</blockquote>
+<ul>
+<li>distributed objects</li>
+</ul>
+<p>然后寻找 避免使用虚函数作为动态库的接口 相关方法 开始</p>
+<p>文章来源：</p>
+<p><a href="https://github.com/yingshin/yingshin.github.io/blob/master/_posts/2016-12-3-do-not-use-virtual-function-as-dynamic-lib-interface.markdown">2016-12-3-do-not-use-virtual-function-as-dynamic-lib-interface</a></p>
+<ul>
+<li>Google关于使用静态库or动态库的习惯。</li>
+</ul>
+<blockquote>
+<p>另外，出于Google的习惯（C++亦是如此），
+Go语言默认采用static linking的方式生成binary。</p>
+</blockquote>
+<blockquote>
+<p>这意味着部署的时候无需担心服务器上是否有外部依赖的动态链接库，</p>
+</blockquote>
+<p>只需一个binary一切搞定。</p>
+<p>一方面我们享受着动态库升级带来的便利，比如Qt，随处可见的各种dll，
+另一方面又因为so的改动而带来二进制不兼容的问题。</p>
+<p>今天想说的是：muduo作者<a href="https://www.cnblogs.com/Solstice/archive/2011/03/13/1982563.html">陈硕</a>提到的 “避免使用虚函数作为库的接口”。</p>
+<blockquote>
+<p>采用 pimpl 多了一道 forward 的手续，带来的好处是可扩展性与二进制兼容性，通常是划算的。pimpl 扮演了编译器防火墙的作用
+如果要加入新的功能，不必通过继承来扩展，可以原地修改，且保持二进制兼容</p>
+</blockquote>
+    </div>
+    <div class="read-more">
+      <a href="/post/2020/2020-12-13_do-not-use-virtual-function-as-dynamic-lib-interface/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/2020/tidb_04_execution/">High Performance TiDB Lesson 04：Execution 性能优化</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-11-11 00:00 </span>
@@ -206,29 +284,6 @@
     </div>
     <div class="read-more">
       <a href="/post/2020/tidb_lession_07/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/tidb_03/">High Performance TiDB Lesson 03：通过工具寻找 TiDB 瓶颈</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-09-19 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/TiDB/"> TiDB </a>
-          </div>
-        <span class="more-meta"> 约 215 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      测试 1 2 3 4 5 cd /data/tidb/src/github.com/pingcap/go-ycsb ./bin/go-ycsb load mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 ./bin/go-ycsb run mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 问题 解决方案 巨人的肩膀 http://stormluke.me/ycsb-hbase-readme/ 进展 0% https://asktug.com/t/topic/2641 进展 0% https://pingcap.com/blog-cn/pcp-report-202002/ 进展 0%
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/tidb_03/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

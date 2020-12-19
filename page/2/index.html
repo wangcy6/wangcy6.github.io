@@ -120,6 +120,29 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/2020/tidb_03/">High Performance TiDB Lesson 03：通过工具寻找 TiDB 瓶颈</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-09-19 00:00 </span>
+      <div class="post-category">
+          <a href="/categories/TiDB/"> TiDB </a>
+          </div>
+        <span class="more-meta"> 约 215 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      测试 1 2 3 4 5 cd /data/tidb/src/github.com/pingcap/go-ycsb ./bin/go-ycsb load mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 ./bin/go-ycsb run mysql -P ./workloads/workloade -p recordcount=300000 -p mysql.host=127.0.0.1 -p mysql.port=4000 -p mysql.user=root -p mysql.password=123456 -p mysql.db=test --threads 3 问题 解决方案 巨人的肩膀 http://stormluke.me/ycsb-hbase-readme/ 进展 0% https://asktug.com/t/topic/2641 进展 0% https://pingcap.com/blog-cn/pcp-report-202002/ 进展 0%
+    </div>
+    <div class="read-more">
+      <a href="/post/2020/tidb_03/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/book/tiDB/"> High Performance TiDB</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-08-10 00:00 </span>
@@ -204,29 +227,6 @@
     </div>
     <div class="read-more">
       <a href="/post/leetcode/leetcode_medium/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/%E6%8A%80%E8%83%BD01-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">systems_performance</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-06-10 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/FQA/"> FQA </a>
-          </div>
-        <span class="more-meta"> 约 172 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      开始日期 更新日期 更新内容 2020-06-10 2020-06-10 一共分为四个部分 看看图片，自己掌握多少。 性能优化书籍：《性能之巅：洞悉系统、企业与云计算&raquo; Systems Performance: Enterprise and the
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/%E6%8A%80%E8%83%BD01-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
