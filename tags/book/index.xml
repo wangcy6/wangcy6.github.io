@@ -6,36 +6,23 @@
     <description>Recent content in book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 10 Aug 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title> High Performance TiDB</title>
-      <link>https://wangcy6.github.io/post/book/tiDB/</link>
-      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/book/tiDB/</guid>
-      <description>https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 12天了解 Tidb 第一周： 预习 12 个课时成为分布式数据库高阶人才？High Performance TiDB 课程了解一下！ https://mp.weixin.qq.com/s/Bwp9RctFojDIWOEv_wnWhw 欢迎报名参加 High Performance TiDB 课程学习！辛苦先仔细阅读下群公告并</description>
-    </item>
-    
-    <item>
-      <title>SRE：Google运维解密</title>
-      <link>https://wangcy6.github.io/post/book/01_SREGoogle%E8%BF%90%E7%BB%B4%E8%A7%A3%E5%AF%86/</link>
-      <pubDate>Tue, 04 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/book/01_SREGoogle%E8%BF%90%E7%BB%B4%E8%A7%A3%E5%AF%86/</guid>
-      <description>https://shimo.im/sheets/erAdPgw6LNfYwPAG/jNYjU SRE：Google运维解密 第三期笔记 第 23 章 管理关键状态：利用分布式共识来提高可靠性 246~272 假如你写一个服务，如何提高该服务可靠性，你考虑哪些因</description>
-    </item>
-    
+    <lastBuildDate>Fri, 29 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>多进程多线程篇</title>
-      <link>https://wangcy6.github.io/post/thread/</link>
+      <link>https://wangcy6.github.io/post/2020/thread/</link>
       <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/thread/</guid>
+      <guid>https://wangcy6.github.io/post/2020/thread/</guid>
       <description>这里主要记录学习和探索过程。来验证正确方法才能有正确的结果。 走神一会 你所寻找的东西正在寻找你。-鲁米 What you seek is seeking you. 你生来就有一对翅膀。为什么更</description>
+    </item>
+    
+    <item>
+      <title>设计之禅</title>
+      <link>https://wangcy6.github.io/post/2020/%E6%A8%A1%E6%9D%BF/</link>
+      <pubDate>Wed, 27 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/%E6%A8%A1%E6%9D%BF/</guid>
+      <description>陈咬金的三板斧 第一斧：技术本质是什么？ 第二斧：解决了什么问题？ 第三斧：如何使用？</description>
     </item>
     
     <item>
@@ -48,29 +35,20 @@
     </item>
     
     <item>
-      <title>设计之禅</title>
-      <link>https://wangcy6.github.io/post/%E6%A8%A1%E6%9D%BF/</link>
-      <pubDate>Wed, 27 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/%E6%A8%A1%E6%9D%BF/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>FQA_Service_Mesh</title>
-      <link>https://wangcy6.github.io/post/book/FQA/FQA_Service_Mesh/</link>
+      <link>https://wangcy6.github.io/post/2020/FQA_Service_Mesh/</link>
       <pubDate>Wed, 13 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/book/FQA/FQA_Service_Mesh/</guid>
+      <guid>https://wangcy6.github.io/post/2020/FQA_Service_Mesh/</guid>
       <description>book 未来架构：从服务化到云原生 分布式缓存，从原理到实践 分布式系统：从概念到设计 第五版 深入理解Linux内核中文第三版 第五章 内核同步 distributed-systems-theory-for-the-distributed-systems-engineer 业务场景 衡</description>
     </item>
     
     <item>
       <title>[每周阅读一本书]被讨厌的勇气</title>
-      <link>https://wangcy6.github.io/post/2019-10-10-%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94/</link>
+      <link>https://wangcy6.github.io/post/2020/2019-10-10-%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94/</link>
       <pubDate>Thu, 10 Oct 2019 17:02:43 +0800</pubDate>
       
-      <guid>https://wangcy6.github.io/post/2019-10-10-%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94/</guid>
+      <guid>https://wangcy6.github.io/post/2020/2019-10-10-%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94/</guid>
       <description>阅读推荐 &amp;mdash;被讨厌的勇气 书封 被讨厌的勇气 豆瓣 评分 8.6 万维钢 专栏 解读 本书以“青年”和“哲人”对话的形式，将阿德勒的哲学逐渐渗透于话语之</description>
     </item>
     

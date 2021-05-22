@@ -6,11 +6,7 @@
     <description>Recent content in 中间件 on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://wangcy6.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL实战45讲</title>
       <link>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2-%E5%8A%A8%E6%89%8B%E5%AE%9E%E9%AA%8C/</link>
@@ -22,10 +18,10 @@
     
     <item>
       <title>MySQL实战45讲</title>
-      <link>https://wangcy6.github.io/post/book/02_MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</link>
+      <link>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</link>
       <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/book/02_MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</guid>
+      <guid>https://wangcy6.github.io/post/2020/MySQL%E5%AE%9E%E6%88%9845%E8%AE%B2/</guid>
       <description>问题： 假如公司没有大量业务？假如公司不重视mysql ？你就不学习了吗？ 回答：记录Mysql 学习过程。日供一卒 对于公司来说，业务，架构，甚至管</description>
     </item>
     
@@ -45,15 +41,6 @@
       
       <guid>https://wangcy6.github.io/post/2020/nginx%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86100%E8%AE%B2/</guid>
       <description>下面重要概念记录 nginx核心知识100讲课件@陶辉 FQA-1 如何不影响服务情况下升级 FQA-2 为什么需要共享内存 FQA-3 如何优化 TCP消息的发送 10个步骤 了解下</description>
-    </item>
-    
-    <item>
-      <title>Memcached使用场景</title>
-      <link>https://wangcy6.github.io/post/2020/Memcached/</link>
-      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2020/Memcached/</guid>
-      <description>提问的艺术 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 https://memcached.org/ intended for use in speeding up dynamic web applications by alleviating database load. 常被用来加速应用程序的处理 ， 二、</description>
     </item>
     
   </channel>

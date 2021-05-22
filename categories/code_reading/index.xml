@@ -6,26 +6,13 @@
     <description>Recent content in code_reading on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://wangcy6.github.io/categories/code_reading/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/code_reading/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>协程库</title>
       <link>https://wangcy6.github.io/post/2020/st/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/st/</guid>
-      <description>卡片 协程库 语言 开发者 state threads library 3000行C代码 历史渊源 摘要 协程的工作流程，感觉这东西实在太抽象了，不是三言两语能描述清楚，只看源码和资料也是不够</description>
-    </item>
-    
-    <item>
-      <title>协程库</title>
-      <link>https://wangcy6.github.io/post/st/</link>
-      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/st/</guid>
       <description>卡片 协程库 语言 开发者 state threads library 3000行C代码 历史渊源 摘要 今日理解。 一、一个普通的应用程序，假如采用st库，那么这个应用具备2个特点 highly scalable appl</description>
     </item>
     

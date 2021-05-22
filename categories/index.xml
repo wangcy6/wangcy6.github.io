@@ -6,53 +6,22 @@
     <description>Recent content in Categories on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://wangcy6.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>c&#43;&#43;</title>
-      <link>https://wangcy6.github.io/categories/c&#43;&#43;/</link>
-      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>TiDB</title>
-      <link>https://wangcy6.github.io/categories/TiDB/</link>
-      <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/TiDB/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>book</title>
-      <link>https://wangcy6.github.io/categories/book/</link>
-      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/book/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Leetcode</title>
-      <link>https://wangcy6.github.io/categories/Leetcode/</link>
-      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/Leetcode/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>FQA</title>
       <link>https://wangcy6.github.io/categories/FQA/</link>
       <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/categories/FQA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Leetcode</title>
+      <link>https://wangcy6.github.io/categories/Leetcode/</link>
+      <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/Leetcode/</guid>
       <description></description>
     </item>
     
@@ -98,15 +67,6 @@
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/categories/habit/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>paper</title>
-      <link>https://wangcy6.github.io/categories/paper/</link>
-      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/paper/</guid>
       <description></description>
     </item>
     
@@ -165,15 +125,6 @@
     </item>
     
     <item>
-      <title>操作系统</title>
-      <link>https://wangcy6.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>操作系统原理</title>
       <link>https://wangcy6.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/</link>
       <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
@@ -201,6 +152,15 @@
     </item>
     
     <item>
+      <title>操作系统</title>
+      <link>https://wangcy6.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Tue, 26 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Redis.5.0</title>
       <link>https://wangcy6.github.io/categories/Redis.5.0/</link>
       <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
@@ -215,6 +175,15 @@
       <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>book</title>
+      <link>https://wangcy6.github.io/categories/book/</link>
+      <pubDate>Fri, 11 Oct 2019 17:02:43 +0800</pubDate>
+      
+      <guid>https://wangcy6.github.io/categories/book/</guid>
       <description></description>
     </item>
     

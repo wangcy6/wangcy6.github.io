@@ -6,27 +6,14 @@
     <description>Recent content in Interview Question on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://wangcy6.github.io/tags/Interview-Question/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>hard</title>
-      <link>https://wangcy6.github.io/post/leetcode/lc_hard/</link>
-      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/leetcode/lc_hard/</guid>
-      <description>题目列表 [51] N 皇后 ok [4] 寻找两个正序数组的中位数 [23] 合并K个排序链表 ok 一、题目 二、思路 能说出基本思想即可,实在不行动手画个流程图把。 三、算法 算法是</description>
-    </item>
-    
+    <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Interview-Question/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>leetcode_medium_300-400</title>
-      <link>https://wangcy6.github.io/post/leetcode/leetcode_medium/</link>
+      <link>https://wangcy6.github.io/post/leetcode/leetcode_medium_300-400/</link>
       <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/leetcode/leetcode_medium/</guid>
-      <description>开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 二叉树的完全性检验 &amp;ndash;ok 查找和最小的K对数字 合并K个排序链表 寻找两个有序数组的中位数 K</description>
+      <guid>https://wangcy6.github.io/post/leetcode/leetcode_medium_300-400/</guid>
+      <description>开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 查找和最小的K对数字 合并K个排序链表 寻找两个有序数组的中位数 K个有序数组的中位数 m</description>
     </item>
     
     <item>
@@ -35,7 +22,7 @@
       <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/leetcode_string/</guid>
-      <description>2002-12-05 完成 3. 无重复字符的最长子串 1、算法描述 能说出基本思想即可,实在不行动手画个流程图把。 time:o(n) space o(n) n=128; 2、参考代码 放轻松，虽然是c++实现，我们一贯</description>
+      <description>第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都</description>
     </item>
     
     <item>
@@ -80,7 +67,7 @@
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/template/</guid>
-      <description>一、题目 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、思路 能说出基本思想即可,实在不行动手画个流</description>
+      <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、思路描述 能说出基本思想即可,实在不行动</description>
     </item>
     
     <item>
@@ -89,7 +76,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/leetcod_easy_200-300./</guid>
-      <description>开始日期 更新日期 备注 2020-6-17 2020-6-17 leetcode_easy_200-300 题目汇总 [299] 猜数字游戏 [290] 单词规律 [290] 单词规律 一、题目信息 二、题目描述 算法是问题求解过程的一种描述，看看这个题目是怎么描</description>
+      <description>开始日期 更新日期 备注 2020-6-17 2020-6-17 leetcode_easy_200-300 题目汇总 [290] 单词规律 [290] 单词规律 一、题目信息 二、题目描述 算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。 三、</description>
     </item>
     
   </channel>
