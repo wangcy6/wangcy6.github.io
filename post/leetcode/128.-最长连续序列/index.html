@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>128. 最长连续序列 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="题目信息 链接：128. 最长连续序列 来源：LeetCode 难度：Hard 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/128.-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="128. 最长连续序列" />
+<meta property="og:description" content="题目信息 链接：128. 最长连续序列 来源：LeetCode 难度：Hard 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/128.-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-01-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-01-20T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="128. 最长连续序列">
+<meta itemprop="description" content="题目信息 链接：128. 最长连续序列 来源：LeetCode 难度：Hard 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可"><meta itemprop="datePublished" content="2020-01-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-01-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1996">
+<meta itemprop="keywords" content="array,while," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="128. 最长连续序列"/>
+<meta name="twitter:description" content="题目信息 链接：128. 最长连续序列 来源：LeetCode 难度：Hard 一、描述 只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">128. 最长连续序列</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-20 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Leetcode/"> Leetcode </a>
+            </div>
+          <span class="more-meta"> 约 1996 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目信息">题目信息</a>
+      <ul>
+        <li><a href="#一描述">一、描述</a></li>
+        <li><a href="#二举例">二、举例</a></li>
+        <li><a href="#三思路">三、思路</a></li>
+        <li><a href="#四实现">四、实现</a></li>
+        <li><a href="#第一次分析代码-超时">第一次分析代码 【超时】</a></li>
+        <li><a href="#五回顾">五、回顾</a></li>
+        <li><a href="#六--举一反三">六、  举一反三</a></li>
+      </ul>
+    </li>
+    <li><a href="#七-塔山">七、 塔山</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2020-01-20T00:00:00" title="January 20, 2020">January 20, 2020</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h2 id="题目信息">题目信息</h2>
+<blockquote>
+<ul>
+<li>链接：<a href="https://leetcode-cn.com/problems/longest-consecutive-sequence/">128. 最长连续序列</a></li>
+<li>来源：LeetCode</li>
+<li>难度：Hard</li>
+</ul>
+</blockquote>
+<h3 id="一描述">一、描述</h3>
+<blockquote>
+<p>只有题目理解到位，你可能进入下面一个环节，如果不熟悉场景，你可要小心了</p>
+</blockquote>
+<ul>
+<li>我目的是训练动手和清晰思路。</li>
+<li>从简单类型的题目开始。</li>
+<li>提问是沟通的开始：敢于提问</li>
+</ul>
+<p>给定一个整数数组，找出最长<strong>连续</strong>序列的长度。</p>
+<p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.</p>
+<p>Your algorithm should run in O(<em>n</em>) complexity.</p>
+<p>这个题目我确实没看明白，</p>
+<p>连续序列就是 1 2 3 4 是这样递增序列呀？</p>
+<p>怎么还提到排序呢?  顶多连续序列变成 4 3 21 递减的</p>
+<p>看下面例子，</p>
+<p><strong>连续 不一定相邻，更不是顺序不变</strong></p>
+<h3 id="二举例">二、举例</h3>
+<blockquote>
+<p>在思路之前和实现之后都用到,基本情况，最好情况，和最坏情况3种。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">Input</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nx">Output</span><span class="p">:</span> <span class="mi">4</span>
+
+<span class="nx">Explanation</span><span class="p">:</span> 
+
+<span class="nx">The</span> <span class="nx">longest</span> <span class="nx">consecutive</span> <span class="nx">elements</span> <span class="nx">sequence</span> <span class="nx">is</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">].</span> 
+<span class="nx">Therefore</span> <span class="nx">its</span> <span class="nx">length</span> <span class="nx">is</span> <span class="mf">4.</span>
+
+<span class="nx">https</span><span class="p">:</span><span class="c1">//leetcode.com/problems/longest-consecutive-sequence/
+</span><span class="c1"></span>
+<span class="kd">func</span> <span class="nf">longestConsecutive</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> 
+
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="三思路">三、思路</h3>
+<blockquote>
+<p>为了形成你思路，并且把思路转换成步骤描述。请按照下面准备</p>
+</blockquote>
+<ul>
+<li>
+<p>关闭一切浏览器网页查看分析</p>
+</li>
+<li>
+<p>关闭一切当前处理任务</p>
+</li>
+<li>
+<p>关闭一切要学习的任务。</p>
+</li>
+<li>
+<p>放下：太简单和太难这样预判。真实判断是什么 这是 关键</p>
+</li>
+<li>
+<p>说出思路才能决定能否沟通下去。</p>
+</li>
+</ul>
+<h4 id="第一次分析-超时">第一次分析： 【超时】</h4>
+<blockquote>
+<ol>
+<li>
+<p>有清晰思路和然后正确运行结果验证你思路。</p>
+</li>
+<li>
+<p>不考虑时间空间复杂度，不考虑各种技巧。对题目要求装作看不见。这个很关键</p>
+</li>
+<li>
+<p>20分钟内完成。Action</p>
+</li>
+</ol>
+</blockquote>
+<p><strong>直觉</strong></p>
+<p>连续序列就是相差为1的序列</p>
+<p><strong>描述</strong></p>
+<ol>
+<li>
+<p>不进行排序，用map存储全部记录</p>
+</li>
+<li>
+<p>遍历数组，然后判断当前记录是否在map中，</p>
+<p>如果存在 继续+1判断下个元素。</p>
+<p>如果不存在，继续下一个元素</p>
+</li>
+<li>
+<p>重复步骤2</p>
+</li>
+</ol>
+<blockquote>
+<p>66 / 68 个通过测试用例 ,在45分钟内完成。</p>
+</blockquote>
+<p>$$
+时间复杂度：O(n^2)   ,</p>
+<p>空间复杂度：O(n)
+$$</p>
+<h4 id="第二次分析-超时">第二次分析： 【超时】</h4>
+<blockquote>
+<ol>
+<li>
+<p>本题入手突破点是什么？别指望用脑子想出来奇思妙想这是大忌&mdash;动手绘制流程。</p>
+</li>
+<li>
+<p>有什么通过模型吗？ 如果没有 不考虑时间空间复杂度，不考虑各种技巧。</p>
+</li>
+<li>
+<p>30分钟内完成。Action</p>
+</li>
+</ol>
+</blockquote>
+<p><strong>直觉</strong></p>
+<p>因为一个序列可能在 <code>nums</code> 数组的任意一个数字开始，我们可以枚举每个数字作为序列的第一个数字，搜索所有的可能性。</p>
+<ul>
+<li>
+<p>假如第I个元素是有序的</p>
+</li>
+<li>
+<p>下一个元素从剩余n-1个元素选取（元素不重复）</p>
+</li>
+</ul>
+<p><strong>描述</strong></p>
+<ol>
+<li>遍历数组，假如当前元素是i for</li>
+<li>从整个元素中，寻找i下个元素 for</li>
+<li>如果寻找到 ，继续寻找，i的第三个元素 for</li>
+<li>重复 1 2 3。</li>
+</ol>
+<p>$$
+时间复杂度：O(n^3)   ,</p>
+<p>空间复杂度：O(1) 和上面没有区别。都是继续寻找下一个元素
+$$</p>
+<h4 id="第三次分析-set减少计算次数">第三次分析： [set减少计算次数]</h4>
+<blockquote>
+<ol>
+<li>
+<p>本题入手突破点是什么？别指望用脑子想出来奇思妙想这是大忌&mdash;动手绘制流程。</p>
+</li>
+<li>
+<p>有什么通过模型吗？ 如果没有 不考虑时间空间复杂度，不考虑各种技巧。</p>
+</li>
+<li>
+<p>30分钟内完成。Action</p>
+</li>
+</ol>
+</blockquote>
+<p>对第一次 第二次进行分析</p>
+<p>为了获取从i开始的最长连续序列，</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续</td>
+<td>6</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>计算次数</td>
+<td>1</td>
+<td>1(重复)</td>
+<td>1(重复)</td>
+<td>1(重复)</td>
+<td>1(重复)</td>
+<td>1(重复)</td>
+</tr>
+</tbody>
+</table>
+<p>每个一个点都要重复计算一次，</p>
+<p>1 计算一次，</p>
+<p>2计算一次，</p>
+<p>3要计算一次，</p>
+<p>4计算一次，</p>
+<p>n个长度，</p>
+<p>计算n次。</p>
+<p>其实我一眼看出就是 1 2 3 4 5 6 7 后面的 2 3 4 5 67根本不需要计算&mdash;如何不计算呢？</p>
+<p>有前驱的不计算了。</p>
+<blockquote>
+<p>元素寻找 set。</p>
+<p>如果数据有前驱，就不需要计算了。</p>
+</blockquote>
+<p>描述:</p>
+<ol>
+<li>unordered_set   存储每个元素，用来判断该元素存在不存在</li>
+<li>遍历input数组。 if 当前元素有前驱(-1)，不需要计算。</li>
+<li>如果元素有后继(+1),继续寻找。知道不存在未知</li>
+<li>重复步骤 2</li>
+</ol>
+<h3 id="四实现">四、实现</h3>
+<blockquote>
+<p>你可以实现。你可以做到</p>
+</blockquote>
+<ul>
+<li>
+<p>你按照你理解，就用最笨方法，你要写出来。其他高级技巧，我不懂，我也会。</p>
+</li>
+<li>
+<p>不要因为不是最佳，最巧妙，最完美。不符合别人网上流程标准解法 就停止写</p>
+<p>通过写，来验证你步骤描述是否正确，你分析是否正确，必须去。</p>
+</li>
+<li>
+<p>在没有写出来之前，拒绝一切总结，写文档，还有告诉别人。</p>
+<p>自己做不到，不清楚事情，你告诉别人，鬼才信呢！</p>
+<h3 id="第一次分析代码-超时">第一次分析代码 【超时】</h3>
+<p><img src="https://i.loli.net/2020/01/16/T74Ffa2QoOeshHu.png" alt="image.png"></p>
+</li>
+<li>
+<p>测算用例 <a href="https://leetcode-cn.com/submissions/detail/43833838/testcase/">https://leetcode-cn.com/submissions/detail/43833838/testcase/</a></p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">longestConsecutive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="kt">int</span> <span class="n">maxLength</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">flag</span> <span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+           <span class="kt">int</span> <span class="n">currentNum</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+           <span class="kt">int</span> <span class="n">currentLen</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+           <span class="k">do</span>
+           <span class="p">{</span>   
+               <span class="n">flag</span> <span class="o">=</span><span class="nb">false</span><span class="p">;</span> <span class="c1">//每次元素都不相同
+</span><span class="c1"></span>               <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+               <span class="p">{</span>
+                 <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span><span class="n">currentNum</span><span class="p">)</span>
+                 <span class="p">{</span>
+                     <span class="n">flag</span> <span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+                     <span class="k">break</span><span class="p">;</span>
+                 <span class="p">}</span>
+               <span class="p">}</span>
+               <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span><span class="nb">true</span><span class="p">)</span>
+               <span class="p">{</span>
+                    <span class="n">currentNum</span> <span class="o">++</span><span class="p">;</span>
+                    <span class="n">currentLen</span><span class="o">++</span><span class="p">;</span>
+
+               <span class="p">}</span>
+              
+           <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="n">flag</span><span class="p">);</span>
+
+           <span class="n">maxLength</span> <span class="o">=</span><span class="n">max</span><span class="p">(</span><span class="n">maxLength</span><span class="p">,</span><span class="n">currentLen</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">maxLength</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第三次分析 代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">longestConsecutive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+        
+       <span class="n">unordered_set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">data</span><span class="p">(</span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+       <span class="kt">int</span> <span class="n">path</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+       <span class="kt">int</span> <span class="n">curLongestPath</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+       <span class="kt">int</span> <span class="n">curElement</span> <span class="o">=</span><span class="mi">0</span> <span class="p">;</span>
+    
+       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+       <span class="p">{</span>   
+           <span class="n">curElement</span> <span class="o">=</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+           <span class="n">curLongestPath</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+           <span class="k">if</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">curElement</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+           <span class="p">{</span>
+             <span class="k">continue</span><span class="p">;</span> <span class="c1">//减少计算次数
+</span><span class="c1"></span>           <span class="p">}</span>
+          
+          <span class="k">do</span>
+          <span class="p">{</span>  
+             <span class="n">curLongestPath</span><span class="o">++</span><span class="p">;</span>
+             <span class="n">curElement</span><span class="o">++</span><span class="p">;</span>
+
+          <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">curElement</span><span class="p">)</span> <span class="o">==</span><span class="mi">1</span><span class="p">);</span>
+
+          <span class="n">path</span> <span class="o">=</span><span class="n">max</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">curLongestPath</span><span class="p">);</span>
+          
+
+       <span class="p">}</span>
+       
+ <span class="k">return</span> <span class="n">path</span><span class="p">;</span>
+
+
+
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="五回顾">五、回顾</h3>
+<ul>
+<li>耗时统计</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>分钟</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开题目</td>
+<td>30</td>
+<td>都看什么了</td>
+</tr>
+<tr>
+<td>分析题目</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>实现题目</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>查看答案</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>开始：2020年1月16日 09:55:14</p>
+<p>结束：2020年1月20日 16:17:12</p>
+<ul>
+<li>思路回顾</li>
+</ul>
+<p>1.第一个疑问就是正序，和倒叙都是连续，你怎么判断？在意识中 和例子中默认都是根据从小到大判断的[你这样考虑隐藏一个bug，倒序数据超时]</p>
+<ol start="2">
+<li>
+<p>第二个问题，因为是无须，如何寻找下一个元素。全部遍历或者set</p>
+</li>
+<li>
+<p>第三个拦路虎 是1和2解决，怎么还是超时。如何 1 2 3 4 ，如果1=2-1，1计算过了，2不需要计算，2=3-1，如果fun(2),不计算fun(3)</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续</td>
+<td>6</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>计算次数</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h3 id="六--举一反三">六、  举一反三</h3>
+<blockquote>
+<p>换个马甲就不认识了。</p>
+</blockquote>
+<p>300.最长上升子序列</p>
+<p><a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/">https://leetcode-cn.com/problems/longest-increasing-subsequence/</a></p>
+<p>298(Binary Tree Longest Consecutive Sequence)</p>
+<h2 id="七-塔山">七、 塔山</h2>
+<p><a href="https://leetcode.com/problems/longest-consecutive-sequence/discuss/41060/A-simple-C%2B%2Bsolution-using-unordered_set.And-simple-consideration-about-this-problem">https://leetcode.com/problems/longest-consecutive-sequence/discuss/41060/A-simple-C%2B%2Bsolution-using-unordered_set.And-simple-consideration-about-this-problem</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-20 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/array/">array</a>
+          <a href="/tags/while/">while</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/ARTS_2020_13_weekly/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">ARTS_2012_weekly_5</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/leetcode/027-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/">
+            <span class="next-text nav-default">27-二叉搜索树与双向链表</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

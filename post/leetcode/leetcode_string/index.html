@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>字符串总结 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/leetcode_string/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="字符串总结" />
+<meta property="og:description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/leetcode_string/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-06-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-06-02T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="字符串总结">
+<meta itemprop="description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都"><meta itemprop="datePublished" content="2020-06-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1799">
+<meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="字符串总结"/>
+<meta name="twitter:description" content="第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">字符串总结</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-02 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Leetcode/"> Leetcode </a>
+            </div>
+          <span class="more-meta"> 约 1799 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一题目信息">一、<strong>题目信息</strong></a></li>
+        <li><a href="#二题目描述">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三">五、举一反三</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#二题目描述-1">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述-1">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码-1">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三-1">五、举一反三</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一题目信息-1">一、<strong>题目信息</strong></a></li>
+        <li><a href="#二题目描述-2">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述-2">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码-2">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三-2">五、举一反三</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="第一题-387-字符串中的第一个唯一字符">第一题 387. 字符串中的第一个唯一字符</h1>
+<h3 id="一题目信息">一、<strong>题目信息</strong></h3>
+<p>今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都不具备维持原有输入顺序,
+map做排序的，hash是无序的。怎么办，马上想到数组,vector这样结果，
+因此我自己构造了一个数组为位置每个字符的出现顺序。</p>
+<p>缺没想到 输入条件 就是数组，顺序遍历 就获取第一次。只不过这个有重复元素的。
+自己反复思索，根本无法想到这一点。这个题目不容易。</p>
+<blockquote>
+<p>更没体会到unorder_map 精髓就是无序的，因此需要你通过遍历原始数据。必须制定查询条件。</p>
+</blockquote>
+<ol start="387">
+<li>字符串中的第一个唯一字符
+<a href="https://leetcode.com/problems/first-unique-character-in-a-string/">https://leetcode.com/problems/first-unique-character-in-a-string/</a></li>
+</ol>
+<h3 id="二题目描述">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<h3 id="三算法描述">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<h3 id="四参考代码">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">class Solution {
+public:
+     /**
+      * 1  统计字符出现次数，你马上想到就是key/value，就是散列表。
+      *  为什么不是map呢因为我不太清楚，https://www.youtube.com/watch?v=ncHmEUmJZf4 C++性能优化指南.pdf 大约消耗4个小时阅读。
+      * 
+      * 2. 返回第一个唯一字符索引,马上想到顺序遍历string，下标从0开始，这个是连续的。注意遍历不是hash表
+      * 3. 为什么不用排序，排序后原始位置发送改变。
+      */
+    int firstUniqChar(string s) {
+
+      //01 n=26 数据量很少,此时数组性能高于hashmap
+      int hash[26]={0}; 
+      for(auto temp:s)
+      {
+          hash[temp-&#39;a&#39;]++; //假如当前是&#39;a&#39;-&#39;a&#39;=0, 第一个字母放到第一个位置
+      }
+
+      //02 遍历hash遇到第一个不是期望的结果
+      for(int i=0;i&lt;s.size();i++)
+      {
+           if( hash[s[i]-&#39;a&#39;] == 1)
+           {
+               return i;
+           }
+      }
+     return -1;
+    }
+};
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="五举一反三">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+<h1 id="第二题-389-找不同">第二题 [389] 找不同</h1>
+<p>[389] 找不同</p>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/find-the-difference/description/">https://leetcode-cn.com/problems/find-the-difference/description/</a></li>
+</ul>
+<h3 id="二题目描述-1">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<p>今天来做这个题目，自己注意力完全被 给2个字符串限制住了，
+和hash有什么关系，开始想的为每个字符串 建立各自hash。来避免单个字符o(n)查找。
+最后做不下去来了。给我2个hash，我无法比较呀，只能从第一个位置开始比较.
+你有，我也有，你有我没有，这个不知道如何描述了。
+过去经验比较字符串大小 是否相等 忘记了 返回值 三个情况。
+这是数学问题。</p>
+<h3 id="三算法描述-1">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<ol>
+<li>字符串无论多长，均有26个字符组成，定义全局遍历数组hash,下标代表 位置，内容表示个数</li>
+<li>因为t比s多一个字符,有限统计t hash[t[i] - &lsquo;a&rsquo;]++;</li>
+<li>遍历s, s出现一次，在t中减去一次。  hash[s[i] - &lsquo;a&rsquo;]&ndash;;
+最后结果二个情况 等于0 ，等于1</li>
+<li>判断hash中等于1的位置。</li>
+</ol>
+<h3 id="四参考代码-1">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// @lc code=start
+class Solution
+{
+public:
+    /***
+     *  随机重排，然后在随机位置添加一个字母 说明跟顺序无关系，采用hash存储
+     * */
+    char findTheDifference(string s, string t)
+    {
+
+        int hash[26] = {0}; //用数组替代哈希表,一般来说元素位置和规模无关系。
+
+        //统计字符s出现次数
+        for (int i = 0; i &lt; s.size(); i++)
+        {
+            hash[s[i] - &#39;a&#39;]++;
+        }
+
+        //减去字符t出现的次数，三个情况 都不存在 0-0=0 ，都存在 i-i=0,t比s多一个单词 0-1=-1
+        for (int i = 0; i &lt; t.size(); i++)
+        {
+
+            hash[t[i] - &#39;a&#39;]--;
+            if (-1 == hash[t[i] - &#39;a&#39;])
+            {
+                return t[i]; //这个可以马上返回，无需遍历全部。理想情况[b c] [a b c ]
+            }
+        }
+
+        return -1;
+    }
+};
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="五举一反三-1">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+<h1 id="第三题--distribute-candies">第三题  distribute-candies</h1>
+<h3 id="一题目信息-1">一、<strong>题目信息</strong></h3>
+<p>今天来做这个题目
+[575] 分糖果 <a href="https://leetcode-cn.com/problems/distribute-candies/description/">https://leetcode-cn.com/problems/distribute-candies/description/</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 输入: candies = [1,1,2,2,3,3]
+ * 输出: 3
+ * 解析: 一共有三种种类的糖果，每一种都有两个。
+ * ⁠    最优分配方案：妹妹获得[1,2,3],弟弟也获得[1,2,3]。这样使妹妹获得糖果的种类数最多。
+ * 
+ * 
+ * 示例 2 :
+ * 
+ * 
+ * 输入: candies = [1,1,2,3]
+ * 输出: 2
+ * 解析: 妹妹获得糖果[2,3],弟弟获得糖果[1,1]，妹妹有两种不同的糖果，弟弟只有一种。这样使得妹妹可以获得的糖果种类数最多。
+ * 
+ * 
+ * 注意:
+ * 
+ * 
+ * 数组的长度为[2, 10,000]，并且确定为偶数。
+ * 数组中数字的大小在范围[-100,000, 100,000]内。
+ * 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="二题目描述-2">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<h3 id="三算法描述-2">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<h3 id="四参考代码-2">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<h3 id="五举一反三-2">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-06-02 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Interview-Question/">Interview Question</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/ARTS_2020_19_weekly/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">ARTS_2020_weekly_19</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%B0%8F%E7%8E%8B%E6%97%A5%E5%B8%B8%E8%A1%8C%E4%B8%BA%E6%B5%81%E7%A8%8B/">
+            <span class="next-text nav-default">程序员小王的日常规范流程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

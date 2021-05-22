@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>1450. 在既定时间做作业的学生人数 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点." /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/lc1450/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="1450. 在既定时间做作业的学生人数" />
+<meta property="og:description" content="一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/lc1450/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-05-18T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-05-18T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="1450. 在既定时间做作业的学生人数">
+<meta itemprop="description" content="一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点."><meta itemprop="datePublished" content="2020-05-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1594">
+<meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="1450. 在既定时间做作业的学生人数"/>
+<meta name="twitter:description" content="一、题目信息 今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1) 如果能用方法1实现，说明能把时间抽象成一个点."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">1450. 在既定时间做作业的学生人数</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-18 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Leetcode/"> Leetcode </a>
+            </div>
+          <span class="more-meta"> 约 1594 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一题目信息">一、<strong>题目信息</strong></a></li>
+        <li><a href="#二题目描述">二、<strong>题目描述</strong></a></li>
+        <li><a href="#三算法描述">三、<strong>算法描述</strong></a></li>
+        <li><a href="#四参考代码">四、<strong>参考代码</strong></a></li>
+        <li><a href="#五举一反三">五、举一反三</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2020-05-18T00:00:00" title="May 18, 2020">May 18, 2020</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h3 id="一题目信息">一、<strong>题目信息</strong></h3>
+<p>今天来做450这个题目把，主要考察的利用空间换时间，查询从o(n),优化到o(1)</p>
+<ul>
+<li>
+<p>如果能用方法1实现，说明能把时间抽象成一个点.而不是一个间距。我刚开始就疑惑为啥root房间问题直接给出开始时间和结束时间，而是给出2个vector，多此一举。
+目的告诉你查询 queryTime也是一个时间点。我纠结在一天24小时，一小时 60分钟，有一分钟 60秒，毫秒，无穷无尽呀！
+startTime[i] &lt;= endTime[i] &lt;= 1000</p>
+</li>
+<li>
+<p>如果能用方法2实现，说明理解了多个非线性点在空间上分布，就是离线的，推荐一本书 &laquo;离散数学及其应用&raquo;。
+做什么事情都讲究概率的。例如身高服从正态分布(泊松分布),财富分配二八定律(幂律分布)，扯远了。
+提示 queryTime &lt;= 1000，空间也是有限的。</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>链接：1450. 在既定时间做作业的学生人数</li>
+<li>来源：Interview Question</li>
+<li>难度：Easy</li>
+</ul>
+</blockquote>
+<h3 id="二题目描述">二、<strong>题目描述</strong></h3>
+<blockquote>
+<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">提示
+
+startTime.length == endTime.length
+1 &lt;= startTime.length &lt;= 100
+1 &lt;= startTime[i] &lt;= endTime[i] &lt;= 1000
+1 &lt;= queryTime &lt;= 1000
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="三算法描述">三、<strong>算法描述</strong></h3>
+<blockquote>
+<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
+</blockquote>
+<ul>
+<li>For multiple queries:
+<img src="https://i.loli.net/2020/05/18/oq2kJ9RGrIPlOh1.png" alt="image.png">
+<img src="https://i.loli.net/2020/05/18/dUHwi573BJTD6F1.png" alt="image.png"></li>
+</ul>
+<h3 id="四参考代码">四、<strong>参考代码</strong></h3>
+<blockquote>
+<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
+</blockquote>
+<h4 id="c">c++</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">class Solution {
+public:
+
+    /***
+     1 解题思路1：
+       正确理解题意，查询[startTime[i], endTime[i]]内 包含queryTime有多个区间。
+       我上来被题目描述看这么多字，然后放弃了。
+     2.算法描述：
+      一次性那遍历，判断queryTime &gt;= startTime[i] &amp;&amp; queryTime &lt;= endTime[i]个数。
+
+     3.复杂度：时间 O(N),空间O(1)
+    ***/
+    int busyStudent(vector&lt;int&gt;&amp; startTime, vector&lt;int&gt;&amp; endTime, int queryTime) {
+      
+      int length=startTime.size(); //题目给出条件  startTime.length == endTime.length
+      
+      int res =0;//时间 抽象成一个整数 例如时间戳， 查询时间也是时间戳。不考虑时间段问题。
+      //queryTime 处于区间 [startTime[i], endTime[i]]（含）的学生人数。
+
+      for(int i=0;i&lt;length;i++)
+      {
+        if (queryTime &gt;= startTime[i] &amp;&amp; queryTime &lt;= endTime[i])
+        {
+           res++;
+        }
+      }
+      return res;
+
+    }
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">class Solution
+{
+public:
+
+    /***
+     1 解题思路2：
+       因为查询时间点，是有限的，开始时间和结束时间也是有点的 不超过1000个
+       直接计算[0-1001]个点直接 全部同时学习的学生。
+       For multiple queries:
+       We can calculate the overlapping intervals at any time by maintaining an array that contains the intervals of all the students. 
+       Doing this requires O(maxm_element + numberOfStudents) time.
+     2.算法描述：
+       1. 用开始时间，作为数组下标，遍历开始时间数组。count[start] += 1;
+       2. 用结束时间，作为数组下标，遍历结束时间数组。 count[end + 1] -= 1;
+       3. 累加：count[i] += count[i - 1];
+     3.复杂度：时间 O(N),空间O(N)
+    int busyStudent(vector&lt;int&gt; &amp;startTime, vector&lt;int&gt; &amp;endTime, int queryTime)
+    {
+
+        //作为一个服务,这里假如每次查询 startTime,endTime固定不变，变化的queryTime.
+        // 如果每次startTime，endTime都是变化的，这个算法浪费空间了.
+        vector&lt;int&gt; count(1002, 0); //key 时间点，value 10002是防止end+1越界，[0--1001]
+
+        for (auto start : startTime)
+        {
+            count[start] += 1;
+        }
+
+        for (auto end : endTime)
+        {
+            count[end + 1] -= 1;
+        }
+        //[1,100],[2,100],[3,100],[4,100] 在4点，100点同时多少个学生在学习,答案就是4.在101点呢，都结束了。
+        for (int i = 1; i &lt; 1002; i++)
+        {
+            count[i] += count[i - 1];
+        }
+
+        return count[queryTime];
+    }
+};
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="go">go</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">func busyStudent(startTime []int, endTime []int, queryTime int) int {
+ 
+    length:=len(startTime)
+    res:=0
+    for i:=0;i&lt;length;i++{
+       if queryTime&gt;=startTime[i] &amp;&amp;  queryTime &lt;=endTime[i] {
+           res++
+       }
+    }
+
+    return res;
+
+}
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">class Solution {
+
+public:
+    int busyStudent(vector&lt;int&gt;&amp; startTime, vector&lt;int&gt;&amp; endTime, int queryTime) {
+      
+      //作为一个服务,这里假如每次查询 startTime,endTime固定不变，变化的queryTime.
+      // 如果每次startTime，endTime都是变化的，这个算法浪费空间了.
+      vector&lt;int&gt;count(1002,0);//key 时间点，value 10002是防止end+1越界，[0--1001]
+
+      for(auto start:startTime)
+      {
+        count[start]+=1;
+      }
+
+      for(auto end:endTime)
+      {
+        count[end+1]-=1;
+      }
+      //[1,100],[2,100],[3,100],[4,100] 在4点，100点同时多少个学生在学习,答案就是4.在101点呢，都结束了。
+      for(int i=1;i&lt;1002;i++)
+      {
+        count[i]+=count[i-1];
+      }
+
+
+      return count[queryTime];
+    }
+
+    
+};
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="五举一反三">五、举一反三</h3>
+<blockquote>
+<p>别人最佳答案并不重要，关键是自己理解。</p>
+</blockquote>
+<p><a href="https://www.lintcode.com/problem/meeting-rooms-ii/description">1897-meeting-room-ii</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">输入: intervals = [(0,30),(5,10),(15,20)]
+输出: 2
+解释:
+需要两个会议室
+会议室1:(0,30)
+会议室2:(5,10),(15,20)
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-18 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Interview-Question/">Interview Question</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/month/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">每月复盘</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/ARTS_2020_15_weekly/">
+            <span class="next-text nav-default">ARTS_2012_weekly_5</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
