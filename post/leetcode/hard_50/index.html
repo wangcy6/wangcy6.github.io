@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>leetcode_hard_0-60 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="开始日期 结束日期 备注 2021-6-1 前言：换个马甲你不认识了。 当面试问过上学时候，有没有学习数据结构? 后记：自己心里轻视，这么简单问题，还为 例如排序，数组" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/hard_50/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="leetcode_hard_0-60" />
+<meta property="og:description" content="开始日期 结束日期 备注 2021-6-1 前言：换个马甲你不认识了。 当面试问过上学时候，有没有学习数据结构? 后记：自己心里轻视，这么简单问题，还为 例如排序，数组" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/hard_50/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-01T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-01T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="leetcode_hard_0-60">
+<meta itemprop="description" content="开始日期 结束日期 备注 2021-6-1 前言：换个马甲你不认识了。 当面试问过上学时候，有没有学习数据结构? 后记：自己心里轻视，这么简单问题，还为 例如排序，数组"><meta itemprop="datePublished" content="2021-06-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1201">
+<meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="leetcode_hard_0-60"/>
+<meta name="twitter:description" content="开始日期 结束日期 备注 2021-6-1 前言：换个马甲你不认识了。 当面试问过上学时候，有没有学习数据结构? 后记：自己心里轻视，这么简单问题，还为 例如排序，数组"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">leetcode_hard_0-60</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-01 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Leetcode/"> Leetcode </a>
+            </div>
+          <span class="more-meta"> 约 1201 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言换个马甲你不认识了">前言：换个马甲你不认识了。</a></li>
+    <li><a href="#容易混淆的认知当你决策时候傻傻分不清楚">容易混淆的认知，当你决策时候傻傻分不清楚</a></li>
+    <li><a href="#23合并k个升序链表">23.合并K个升序链表</a>
+      <ul>
+        <li><a href="#数据模型">数据模型:</a></li>
+        <li><a href="#数据结构定义">数据结构：定义</a></li>
+        <li><a href="#算法描述">算法描述</a></li>
+        <li><a href="#举一反三">举一反三</a></li>
+        <li><a href="#塔山之石">塔山之石</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>开始日期</th>
+<th>结束日期</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2021-6-1</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="前言换个马甲你不认识了">前言：换个马甲你不认识了。</h2>
+<ul>
+<li>当面试问过上学时候，有没有学习数据结构?</li>
+</ul>
+<blockquote>
+<p>后记：自己心里轻视，这么简单问题，还为 例如排序，数组，链表 tree 图特点
+我已经完全掌握了,100%失败。</p>
+</blockquote>
+<ul>
+<li>
+<p>他考察范围课本上知识，确实你根本回答不上来</p>
+</li>
+<li>
+<p>因此基本知识自己没想清楚。出现错误理解，浅显理解等 混淆理解，你完全卡在这里了。</p>
+</li>
+</ul>
+<h2 id="容易混淆的认知当你决策时候傻傻分不清楚">容易混淆的认知，当你决策时候傻傻分不清楚</h2>
+<blockquote>
+<p>容易混淆的认知，当你决策时候傻傻分不清楚</p>
+</blockquote>
+<h2 id="23合并k个升序链表">23.合并K个升序链表</h2>
+<h3 id="数据模型">数据模型:</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tex" data-lang="tex">输入：lists = [[1,4,5],[1,3,4],[2,6]]
+输出：[1,1,2,3,4,4,5,6]
+解释：链表数组如下：
+[
+  1-&gt;4-&gt;5,
+  1-&gt;3-&gt;4,
+  2-&gt;6
+]
+将它们合并到一个有序链表中得到。
+1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>脑洞大开：</p>
+</blockquote>
+<ul>
+<li>把链表想象成堆</li>
+</ul>
+<p>横着看多个升序链表，竖着看就是堆</p>
+<p><img src="https://gitee.com/alan-tang-tt/yuan/raw/master/%E6%AD%BB%E7%A3%95%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B3%BB%E5%88%97/resource/heap3.png" alt=""></p>
+<blockquote>
+<p>计算机问题：top k</p>
+</blockquote>
+<ul>
+<li>从多个有序链表 看出一个堆</li>
+<li>从无序数据中构建堆，</li>
+</ul>
+<h3 id="数据结构定义">数据结构：定义</h3>
+<ul>
+<li>
+<h5 id="priority-queue--不是二叉排序树概念不要混了递归折半查找算法是错误的">Priority Queue  不是二叉排序树，概念不要混了，递归折半查找算法是错误的。</h5>
+</li>
+<li>
+<p>Priority Queue   是<strong>完全二叉树(Complete Binary Tree)</strong>，特点叶子在n n-1层。这个在堆上发挥重要优势。例如查找最小值</p>
+</li>
+<li>
+<p>Priority Queue 不是层次遍历，上层数据一定大于下层，是当前节点 和子节点关系。</p>
+</li>
+<li>
+<p>关注路径 从root到叶子节点 有什么特点，是不是像单链表。</p>
+</li>
+<li>
+<p>top k 不要从海量归并排序，利用并发实现，我就从最简单数据结构开始，妙不可言。</p>
+</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/9790c1d9-a6a7-4b45-8e5a-f9118bc82c71.png" alt=""></p>
+<p>heap order</p>
+<p>This implies that as you follow any path from a leaf to the root the keys
+appear in (nonstrict) increasing order.
+Notice that this implies that the root is necessarily the largest
+element</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="nl">https</span><span class="p">:</span><span class="c1">//leetcode.com/problems/merge-k-sorted-lists/discuss/10528/A-java-solution-based-on-Priority-Queue
+</span><span class="c1"></span><span class="n">java看着很舒服并且比c</span><span class="o">++</span><span class="err">难度降低</span><span class="mi">90</span><span class="o">%</span><span class="err">。思路更加清晰了。</span>
+
+   <span class="k">public</span> <span class="n">ListNode</span> <span class="n">mergeKLists</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">&gt;</span> <span class="n">lists</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lists</span><span class="o">==</span><span class="n">null</span><span class="o">||</span><span class="n">lists</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">null</span><span class="p">;</span>
+        
+        <span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lists</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="k">new</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">&gt;</span><span class="p">(){</span>
+            <span class="err">@</span><span class="n">Override</span>
+            <span class="k">public</span> <span class="kt">int</span> <span class="n">compare</span><span class="p">(</span><span class="n">ListNode</span> <span class="n">o1</span><span class="p">,</span><span class="n">ListNode</span> <span class="n">o2</span><span class="p">){</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">o1</span><span class="p">.</span><span class="n">val</span><span class="o">&lt;</span><span class="n">o2</span><span class="p">.</span><span class="n">val</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+                <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">o1</span><span class="p">.</span><span class="n">val</span><span class="o">==</span><span class="n">o2</span><span class="p">.</span><span class="n">val</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="k">else</span> 
+                    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+        
+        <span class="n">ListNode</span> <span class="n">dummy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="n">ListNode</span> <span class="n">tail</span><span class="o">=</span><span class="n">dummy</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="n">ListNode</span> <span class="nl">node</span><span class="p">:</span><span class="n">lists</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">!=</span><span class="n">null</span><span class="p">)</span>
+                <span class="n">queue</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+            
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">()){</span>
+            <span class="n">tail</span><span class="p">.</span><span class="n">next</span><span class="o">=</span><span class="n">queue</span><span class="p">.</span><span class="n">poll</span><span class="p">();</span>
+            <span class="n">tail</span><span class="o">=</span><span class="n">tail</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="n">tail</span><span class="p">.</span><span class="n">next</span><span class="o">!=</span><span class="n">null</span><span class="p">)</span>
+                <span class="n">queue</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tail</span><span class="p">.</span><span class="n">next</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//leetcode-cn.com/submissions/detail/165996284/ c++ 同样思路
+</span><span class="c1"></span>
+<span class="n">Kth</span> <span class="n">Least</span> <span class="n">Element</span> <span class="n">in</span> <span class="n">a</span> <span class="n">Min</span> <span class="n">Heap</span> <span class="n">in</span> <span class="n">C</span><span class="o">++</span>  <span class="err">这写的很巧妙</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//www.tutorialspoint.com/compile_cpp_online.php
+</span><span class="c1"></span><span class="k">struct</span> <span class="nc">Heap</span> <span class="p">{</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">elemets</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+
+	<span class="n">Heap</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">:</span> <span class="n">n</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">elemets</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kr">inline</span> <span class="kt">int</span> <span class="nf">leftIndex</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">inline</span> <span class="kt">int</span> <span class="nf">rightIndex</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">findKthGreatestElement</span><span class="p">(</span><span class="n">Heap</span> <span class="o">&amp;</span><span class="n">heap</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+	 <span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="n">greater</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;&gt;</span><span class="n">queue</span><span class="p">;</span>
+	 <span class="n">queue</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="n">elemets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">));</span>
+
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kt">int</span> <span class="n">node</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">second</span><span class="p">;</span>
+		<span class="n">queue</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+		<span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">leftIndex</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="n">right</span> <span class="o">=</span> <span class="n">rightIndex</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">heap</span><span class="p">.</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">queue</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="n">elemets</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="n">left</span><span class="p">));</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&lt;</span> <span class="n">heap</span><span class="p">.</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">queue</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">heap</span><span class="p">.</span><span class="n">elemets</span><span class="p">[</span><span class="n">right</span><span class="p">],</span> <span class="n">right</span><span class="p">));</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="n">queue</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">first</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nl">https</span><span class="p">:</span><span class="c1">//editor.mdnice.com/?outId=053e7962091542a98ace1cc9cbecf3dd
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="算法描述">算法描述</h3>
+<p>K-th Greatest Element in a Max-Heap in C++ 【查找算法，不修改原来值】</p>
+<p>In this tutorial, we are going to write a program that finds the <strong>k-th</strong> largest element from the max-heap.</p>
+<p>We will use priority queue to solve the problem. Let&rsquo;s see the steps to complete the program.</p>
+<ul>
+<li>Initialise the max-heap with correct values.  建堆的时间复杂度就是O(n)。</li>
+<li>Create a priority queue and insert the root node of the max-heap.</li>
+<li>Write a loop that iterates k - 1 times.  0（k）
+<ul>
+<li>Pop the greatest element from the queue. 0（1）</li>
+<li>Add the left and right nodes of the above node into the priority queue. o（k）</li>
+</ul>
+</li>
+<li>The greatest element in priority queue is the k-th greatest element now. o（1）</li>
+<li>Return i</li>
+</ul>
+<h4 id="time-complexity">Time Complexity</h4>
+<p>The complexity of the build_heap is O(N).</p>
+<p>down_heapify() function has complexity logN a</p>
+<p>nd the build_heap functions run only N/2 times,</p>
+<p>but the amortized complexity for this function is actually linear i.e. O(N)
+For more details, you can refer to <a href="http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">this</a>.</p>
+<h3 id="举一反三">举一反三</h3>
+<ul>
+<li>有序<em>矩阵</em>中第K小的元素堆<em>topK</em></li>
+<li>K-th Greatest Element in a Max-Heap in C++</li>
+</ul>
+<h3 id="塔山之石">塔山之石</h3>
+<ol>
+<li>拜托，面试别再问我堆（排序）了！</li>
+</ol>
+<ul>
+<li><a href="https://www.cnblogs.com/tong-yuan/p/Heap.html">https://www.cnblogs.com/tong-yuan/p/Heap.html</a></li>
+<li>每个字都看，看三遍，可以培养你耐心。</li>
+<li>即使你懂了也看。更加培养你耐心</li>
+<li>输出：开始中&ndash;</li>
+</ul>
+<ol start="2">
+<li>刷题理解</li>
+</ol>
+<ul>
+<li><a href="https://afteracademy.com/tech-interview/ds-algo-concepts/">https://afteracademy.com/tech-interview/ds-algo-concepts/</a></li>
+</ul>
+<ol start="3">
+<li>完整课程</li>
+</ol>
+<ul>
+<li>
+<p><a href="http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysi">http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysi</a>
+s-part.pdf</p>
+</li>
+<li>
+<p><a href="http://www.cs.umd.edu/~meesh/351/mount/lectures/">http://www.cs.umd.edu/~meesh/351/mount/lectures/</a></p>
+</li>
+<li></li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/f93b6aca-937a-4e75-8ad0-887b1dfc4c10.png" alt=""></p>
+<ol start="4">
+<li>刻意练习：ok</li>
+</ol>
+<ul>
+<li>
+<p>资料：
+<a href="https://www.tutorialspoint.com/convert-min-heap-to-max-heap-in-cplusplus">https://www.tutorialspoint.com/convert-min-heap-to-max-heap-in-cplusplus</a></p>
+</li>
+<li>
+<p>你一定每个题目做一次。</p>
+</li>
+<li>
+<p>输出：开始中&ndash;完成。</p>
+</li>
+</ul>
+<ol>
+<li><a href="https://www.tutorialspoint.com/minimum-element-in-a-max-heap-in-cplusplus">https://www.tutorialspoint.com/minimum-element-in-a-max-heap-in-cplusplus</a> 完成
+<a href="http://tpcg.io/Te9Xc4e8">http://tpcg.io/Te9Xc4e8</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-01 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Interview-Question/">Interview Question</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/class/6.824/">
+            <span class="next-text nav-default">MIT 6.824 Distributed Systems 2020 Spring</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
