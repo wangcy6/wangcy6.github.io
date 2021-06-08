@@ -48,7 +48,7 @@
 <meta itemprop="name" content="leetcode_hard_0-60">
 <meta itemprop="description" content="开始日期 结束日期 备注 2021-6-1 前言：换个马甲你不认识了。 当面试问过上学时候，有没有学习数据结构? 后记：自己心里轻视，这么简单问题，还为 例如排序，数组"><meta itemprop="datePublished" content="2021-06-01T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-01T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1201">
+<meta itemprop="wordCount" content="1559">
 <meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="leetcode_hard_0-60"/>
 <meta name="twitter:description" content="开始日期 结束日期 备注 2021-6-1 前言：换个马甲你不认识了。 当面试问过上学时候，有没有学习数据结构? 后记：自己心里轻视，这么简单问题，还为 例如排序，数组"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/Leetcode/"> Leetcode </a>
             </div>
-          <span class="more-meta"> 约 1201 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 1559 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -148,6 +148,8 @@
         <li><a href="#数据模型">数据模型:</a></li>
         <li><a href="#数据结构定义">数据结构：定义</a></li>
         <li><a href="#算法描述">算法描述</a></li>
+        <li><a href="#第k小数time-complexity-ok--log-k">第k小数。<strong>Time Complexity: O(k * log k)</strong></a></li>
+        <li><a href="#最小">最小：</a></li>
         <li><a href="#举一反三">举一反三</a></li>
         <li><a href="#塔山之石">塔山之石</a></li>
       </ul>
@@ -255,6 +257,9 @@
 </li>
 </ul>
 <p><img src="https://files.mdnice.com/user/5197/9790c1d9-a6a7-4b45-8e5a-f9118bc82c71.png" alt=""></p>
+<ul>
+<li>This implies that as you follow any path from a leaf to the root the keys appear in (nonstrict) increasing order</li>
+</ul>
 <p>heap order</p>
 <p>This implies that as you follow any path from a leaf to the root the keys
 appear in (nonstrict) increasing order.
@@ -339,6 +344,8 @@ element</p>
 </span><span class="lnt">75
 </span><span class="lnt">76
 </span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++">
@@ -418,9 +425,23 @@ element</p>
 
 <span class="nl">https</span><span class="p">:</span><span class="c1">//editor.mdnice.com/?outId=053e7962091542a98ace1cc9cbecf3dd
 </span><span class="c1"></span>
+
+
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="算法描述">算法描述</h3>
+<ul>
+<li>
+<p>求top 看，如果是无序数组 ，time：k*n，一次遍历选择最小1个，选择k个。</p>
+</li>
+<li>
+<p>求top 看，如果是堆。time：k*logn  ，破坏原来结构。</p>
+</li>
+<li>
+<p>求top 看，如果是堆。time：k * log k ，heap保持不看，增加一个堆，k个有序链表。</p>
+</li>
+</ul>
+<h3 id="第k小数time-complexity-ok--log-k">第k小数。<strong>Time Complexity: O(k * log k)</strong></h3>
 <p>K-th Greatest Element in a Max-Heap in C++ 【查找算法，不修改原来值】</p>
 <p>In this tutorial, we are going to write a program that finds the <strong>k-th</strong> largest element from the max-heap.</p>
 <p>We will use priority queue to solve the problem. Let&rsquo;s see the steps to complete the program.</p>
@@ -436,16 +457,71 @@ element</p>
 <li>The greatest element in priority queue is the k-th greatest element now. o（1）</li>
 <li>Return i</li>
 </ul>
-<h4 id="time-complexity">Time Complexity</h4>
+<p>补充：堆排序</p>
+<p><a href="https://afteracademy.com/blog/heap-building-and-heap-sort">https://afteracademy.com/blog/heap-building-and-heap-sort</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">T<span class="o">(</span>Heap Sort<span class="o">)</span> <span class="o">=</span> T<span class="o">(</span>build Heap<span class="o">)</span> + <span class="o">(</span>N-1<span class="o">)</span>*T<span class="o">(</span>down_heapify<span class="o">)</span>
+             <span class="o">=</span> O<span class="o">(</span>N<span class="o">)</span> + <span class="o">(</span>N-1<span class="o">)</span>*O<span class="o">(</span>logN<span class="o">)</span>
+             <span class="o">=</span> O<span class="o">(</span>N<span class="o">)</span> + O<span class="o">(</span>NlogN<span class="o">)</span>
+             <span class="o">=</span> O<span class="o">(</span>NlogN<span class="o">)</span>
+
+https://www.geeksforgeeks.org/kth-least-element-in-a-min-heap/
+
+K’th Least Element in a Min-Heap
+https://www.tutorialspoint.com/minimum-element-in-a-max-heap-in-cplusplus
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="time-complexity">Time Complexity</h4>
 <p>The complexity of the build_heap is O(N).</p>
 <p>down_heapify() function has complexity logN a</p>
 <p>nd the build_heap functions run only N/2 times,</p>
 <p>but the amortized complexity for this function is actually linear i.e. O(N)
 For more details, you can refer to <a href="http://www.cs.umd.edu/~meesh/351/mount/lectures/lect14-heapsort-analysis-part.pdf">this</a>.</p>
-<h3 id="举一反三">举一反三</h3>
+<h3 id="最小">最小：</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://www.tutorialspoint.com/minimum-element-in-a-max-heap-in-cplusplus
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="举一反三">举一反三</h3>
 <ul>
 <li>有序<em>矩阵</em>中第K小的元素堆<em>topK</em></li>
 <li>K-th Greatest Element in a Max-Heap in C++</li>
+</ul>
+<blockquote>
+<p>思路：约束条件：max heap  已经给出。</p>
+<p><a href="https://www.tutorialspoint.com/k-th-least-element-in-a-min-heap-in-cplusplus">https://www.tutorialspoint.com/k-th-least-element-in-a-min-heap-in-cplusplus</a></p>
+</blockquote>
+<ul>
+<li>
+<h4 id="373-查找和最小的k对数字httpsleetcode-cncomproblemsfind-k-pairs-with-smallest-sums"><a href="https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/">373. 查找和最小的K对数字</a></h4>
+<blockquote>
+<p>思路：2个数组&ndash;一个矩阵&mdash;n个有序链表&mdash;top k问题。</p>
+<p><a href="https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/solution/cha-zhao-he-zui-xiao-de-kdui-shu-zi-by-lenn123/">https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/solution/cha-zhao-he-zui-xiao-de-kdui-shu-zi-by-lenn123/</a></p>
+<p>忽视就被挨打：换个马甲自己不认识了。</p>
+<p>过去无数次面试，从n个有序数组选择top k，矩阵到自己总结了，3个月过去了。自己忘记了。堆才就是背后的n个生序的链表。</p>
+<p>其实还是不会</p>
+</blockquote>
+</li>
 </ul>
 <h3 id="塔山之石">塔山之石</h3>
 <ol>
@@ -522,7 +598,11 @@ s-part.pdf</p>
           <a href="/tags/Interview-Question/">Interview Question</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/ARTS/100_life/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">日常生活记录第100周</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/class/6.824/">
             <span class="next-text nav-default">MIT 6.824 Distributed Systems 2020 Spring</span>
             <span class="next-text nav-mobile">下一篇</span>
