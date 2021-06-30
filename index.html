@@ -126,14 +126,14 @@
       <div class="post-category">
           <a href="/categories/code_reading/"> code_reading </a>
           </div>
-        <span class="more-meta"> 约 2802 字 </span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span class="more-meta"> 约 3139 字 </span>
+        <span class="more-meta"> 预计阅读 7 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      前提条件： mac+docker 单节点运行搭建完毕 掌握gdb原理 查看1号线程 1 2 3 4 5 6 Thread 1 (Thread 0x7f292e84a340 (LWP 59)): #0 0x00007f292d519d98 in nanosleep () from /lib64/libc.so.6 #1 0x00007f292d519c9e in sleep () from /lib64/libc.so.6 #2 0x000000000870f998 in oceanbase::observer::ObServer::wait() () #3 0x00000000024c1443 in main () 程序入口 main.cpp observer/ob_service.h
+      预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步骤2
     </div>
     <div class="read-more">
       <a href="/post/plan/oceanbase_day1/" class="read-more-link">阅读更多</a>
