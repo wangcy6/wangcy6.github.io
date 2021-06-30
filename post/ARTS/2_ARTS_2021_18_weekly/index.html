@@ -48,7 +48,7 @@
 <meta itemprop="name" content="02_ARTS_2021_weekly">
 <meta itemprop="description" content="GTD践行第2周"><meta itemprop="datePublished" content="2021-06-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4319">
+<meta itemprop="wordCount" content="4927">
 <meta itemprop="keywords" content="GTD," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="02_ARTS_2021_weekly"/>
 <meta name="twitter:description" content="GTD践行第2周"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/ARTS/"> ARTS </a>
             </div>
-          <span class="more-meta"> 约 4319 字 </span>
-          <span class="more-meta"> 预计阅读 9 分钟 </span>
+          <span class="more-meta"> 约 4927 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -252,17 +252,56 @@
 <blockquote>
 <p>累计阅读英文文章：2 篇, 输出理解0 篇</p>
 </blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="3-tip">3. Tip</h3>
+<h4 id="第一篇comparing-two-high-performance-io-design-patterns">第一篇：Comparing Two High-Performance I/O Design Patterns</h4>
+<p>英文地址：https://www.artima.com/articles/comparing-two-high-performance-io-design-patterns</p>
+<p>中文地址：https://mp.weixin.qq.com/s/CKp_nvuIyl7J6k8LSY72aQ</p>
+<p>摘要：</p>
+<ol>
+<li>
+<p>为什么会出现2个不同模型，既然出现了肯定解决了之前无法解决的问题？ 一般io过程是（基础） accetp&ndash;&gt;while:  &mdash;epoll_wait_read&ndash;<strong>deal(data这个阻赛怎么办)-</strong>-&gt;write   &ndash;多线程处理</p>
+</li>
+<li>
+<p>技术点：<strong>Kernel Asynchronous I/O (AIO) Support for Linux</strong> ？</p>
+</li>
+</ol>
+<p>Standard/classic Reactor:</p>
+<ul>
+<li>Step 1) wait for event (Reactor job)</li>
+<li>Step 2) dispatch &ldquo;Ready-to-Read&rdquo; event to user handler (Reactor job)</li>
+<li>Step 3) read data (user handler job)</li>
+<li>Step 4) process data (user handler job)</li>
+</ul>
+<p>Proposed emulated Proactor:</p>
+<ul>
+<li>Step 1) wait for event (Proactor job)</li>
+<li>Step 2) read data (now Proactor job)</li>
+<li>Step 3) dispatch &ldquo;Read-Completed&rdquo; event to user handler (Proactor job)</li>
+<li>Step 4) process data (user handler job)</li>
+</ul>
+<ol start="3">
+<li>
+<p>非阻塞异步方法提供了最好的可扩展性和性能。 Aio ？</p>
+<p><strong>Kqueue: A generic and scalable event notification facility</strong> 【Kqueue redis nginx】</p>
+</li>
+</ol>
+<p>​    nginx/redis针对不同的操作系统，有不同的事件模型</p>
+<p>linux建议epoll，如果跑在FreeBSD上面，就用kqueue模型</p>
+<h4 id="第二篇c10k">第二篇：c10k</h4>
+<p>英文地址：http://www.kegel.com/c10k.html</p>
+<p><a href="https://www.yumpu.com/en/document/read/31080762/round-3-aio-vs-dev-epoll">https://www.yumpu.com/en/document/read/31080762/round-3-aio-vs-dev-epoll</a></p>
+<p>摘要：</p>
+<ol>
+<li>针对大量连接，有三个方式，这三个方式有什么区别？</li>
+</ol>
+<ul>
+<li>
+<p><strong>kqueue()</strong> This is the recommended edge-triggered poll replacement for FreeBSD (and, soon, NetBSD) why?【ET】</p>
+</li>
+<li>
+<p>Serve many clients with each server thread, and use asynchronous I/O 【AIO】</p>
+</li>
+</ul>
+<h3 id="3-tip">3. Tip</h3>
 <blockquote>
 <p>主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。</p>
 <p>你在工作中遇到的问题，踩过的坑，学习的点滴知识。</p>
@@ -285,7 +324,10 @@
 <p>删除元文件，还是软连接文件互不影响。</p>
 <p>硬连接 一般用在重要文件，不同文件名字，但是相同inode节点（真正文件唯一表示），删除其中一个文件名，inode硬连接的个数大于0，文件还存在。</p>
 <ol start="2">
-<li>ln -s make symbolic links instead of hard links</li>
+<li>
+<p>ln -s make symbolic links instead of hard links</p>
+<p>软连接 数据快：存储的是其他文件的路径。通过路径寻找具体的文件。</p>
+</li>
 </ol>
 <p><img src="https://static001.geekbang.org/resource/image/45/7b/45a6cfdd9d45e30dc2f38f0d2572be7b.jpeg" alt=""></p>
 </li>

@@ -6,7 +6,43 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 16 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>oceanbase源码阅读（1）程序启动</title>
+      <link>https://wangcy6.github.io/post/plan/oceanbase_day1/</link>
+      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/plan/oceanbase_day1/</guid>
+      <description>前提条件： mac+docker 单节点运行搭建完毕 掌握gdb原理 查看1号线程 1 2 3 4 5 6 Thread 1 (Thread 0x7f292e84a340 (LWP 59)): #0 0x00007f292d519d98 in nanosleep () from /lib64/libc.so.6 #1 0x00007f292d519c9e in sleep () from /lib64/libc.so.6 #2 0x000000000870f998 in oceanbase::observer::ObServer::wait() () #3 0x00000000024c1443 in main () 程序入口 main.cpp observer/ob_service.h</description>
+    </item>
+    
+    <item>
+      <title>Linux内核之旅社区</title>
+      <link>https://wangcy6.github.io/post/plan/02_kernel/</link>
+      <pubDate>Mon, 21 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/plan/02_kernel/</guid>
+      <description>资料 Linux内核之旅开源社区实验代码管理 https://github.com/linuxkerneltravel/LearningLinuxKernel 网站入口：http://kerneltravel.net/ 十多年前，陈老师和她的学生康华、陈逸飞</description>
+    </item>
+    
+    <item>
+      <title>从零开始k8s</title>
+      <link>https://wangcy6.github.io/post/2020/kubernetes_base/</link>
+      <pubDate>Sun, 20 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/kubernetes_base/</guid>
+      <description>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有</description>
+    </item>
+    
+    <item>
+      <title>庖丁解牛之LevelDB</title>
+      <link>https://wangcy6.github.io/post/2020/leveldb/</link>
+      <pubDate>Sun, 20 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/leveldb/</guid>
+      <description>LevelDB LevelDB是Google传奇工程师Jeff Dean和Sanjay Ghemawat开源的KV存储引擎 无论从设计还是代码上都可以用精致优雅</description>
+    </item>
+    
     <item>
       <title>english</title>
       <link>https://wangcy6.github.io/post/English/01_word/</link>
@@ -36,11 +72,11 @@
     
     <item>
       <title> OceanBase 开源社区</title>
-      <link>https://wangcy6.github.io/post/plan/oceanbase_day1/</link>
+      <link>https://wangcy6.github.io/post/plan/oceanbase_read_01/</link>
       <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/plan/oceanbase_day1/</guid>
-      <description>day1 todo：我是新手 ，我从哪里开始 就看这个文档 https://open.oceanbase.com/community/organization 1 2 3 开源地址: https://gitee.com/oceanbase/oceanbase https://github.com/oceanbase/oceanbase 源码编译 需要x天 就看这个文档：https://open.oceanbas</description>
+      <guid>https://wangcy6.github.io/post/plan/oceanbase_read_01/</guid>
+      <description>day1 总结：Mac:使用 OBD 部署 OceanBase 数据库 参考文档：https://github.com/oceanbase/obdeploy 预备知识： OceanBase 不支持ma</description>
     </item>
     
     <item>
@@ -275,6 +311,15 @@
       
       <guid>https://wangcy6.github.io/post/2020/plan04/</guid>
       <description>力个flag 学习中关键一步是什么 就一个办法 像公司的大牛学习，你能从他们身上学到高度，就是未来的高度 不要抱怨你环境，请从电信外包，各种小公司，</description>
+    </item>
+    
+    <item>
+      <title>zooKeeper</title>
+      <link>https://wangcy6.github.io/post/2020/k8s/</link>
+      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/k8s/</guid>
+      <description>协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master</description>
     </item>
     
     <item>

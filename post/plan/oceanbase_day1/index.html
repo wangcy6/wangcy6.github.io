@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title> OceanBase 开源社区 - Troy的网络博客</title>
+  <title>oceanbase源码阅读（1）程序启动 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="入门教程" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="OceanBase代码阅读第一天：程序启动" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -38,20 +38,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content=" OceanBase 开源社区" />
-<meta property="og:description" content="入门教程" />
+<meta property="og:title" content="oceanbase源码阅读（1）程序启动" />
+<meta property="og:description" content="OceanBase代码阅读第一天：程序启动" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/plan/oceanbase_day1/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-03T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-06-03T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-06-22T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-22T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content=" OceanBase 开源社区">
-<meta itemprop="description" content="入门教程"><meta itemprop="datePublished" content="2021-06-03T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-03T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="961">
-<meta itemprop="keywords" content="GTD," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=" OceanBase 开源社区"/>
-<meta name="twitter:description" content="入门教程"/>
+<meta itemprop="name" content="oceanbase源码阅读（1）程序启动">
+<meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-22T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2802">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="oceanbase源码阅读（1）程序启动"/>
+<meta name="twitter:description" content="OceanBase代码阅读第一天：程序启动"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -123,15 +123,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title"> OceanBase 开源社区</h1>
+      <h1 class="post-title">oceanbase源码阅读（1）程序启动</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2021-06-03 00:00 </span>
+        <span class="post-time"> 2021-06-22 00:00 </span>
         <div class="post-category">
-            <a href="/categories/coding/"> coding </a>
+            <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 961 字 </span>
-          <span class="more-meta"> 预计阅读 2 分钟 </span>
+          <span class="more-meta"> 约 2802 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -141,261 +141,349 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#todo我是新手-我从哪里开始">todo：我是新手 ，我从哪里开始</a>
+    <li><a href="#前提条件">前提条件：</a></li>
+    <li><a href="#查看1号线程">查看1号线程</a>
       <ul>
-        <li><a href="#就看这个文档-httpsopenoceanbasecomcommunityorganization">就看这个文档 <a href="https://open.oceanbase.com/community/organization">https://open.oceanbase.com/community/organization</a></a></li>
-        <li><a href="#挑战01--直接使用镜像使用-docker-镜像在-mac-平台上部署-oceanbase-试用版">挑战01&ndash;:直接使用镜像：<strong>使用 Docker 镜像在 Mac 平台上部署 OceanBase 试用版</strong></a></li>
-        <li><a href="#阅读oceanbase-数据库概览-需要-x天">阅读：OceanBase 数据库概览 需要 x天</a></li>
+        <li><a href="#程序入口">程序入口</a></li>
       </ul>
     </li>
+    <li><a href="#看2号线程">看2号线程</a></li>
+    <li><a href="#暂停-没看懂">暂停 没看懂</a></li>
+    <li><a href="#存储引擎">存储引擎</a></li>
+    <li><a href="#sql-引擎">SQL 引擎</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="day1">day1</h1>
-<h2 id="todo我是新手-我从哪里开始">todo：我是新手 ，我从哪里开始</h2>
-<h3 id="就看这个文档-httpsopenoceanbasecomcommunityorganization">就看这个文档 <a href="https://open.oceanbase.com/community/organization">https://open.oceanbase.com/community/organization</a></h3>
+      <h2 id="前提条件">前提条件：</h2>
+<ul>
+<li>
+<p>mac+docker <a href="https://wangcy6.github.io/post/plan/oceanbase_day1/">单节点运行搭建完毕</a></p>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/G8Rj0C5KuCpeCsWDxcY5Rg">掌握gdb原理</a></p>
+</li>
+</ul>
+<h2 id="查看1号线程">查看1号线程</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">开源地址:
-https://gitee.com/oceanbase/oceanbase
-https://github.com/oceanbase/oceanbase
+<pre class="chroma"><code class="language-shell" data-lang="shell">Thread <span class="m">1</span> <span class="o">(</span>Thread 0x7f292e84a340 <span class="o">(</span>LWP 59<span class="o">))</span>:
+<span class="c1">#0  0x00007f292d519d98 in nanosleep () from /lib64/libc.so.6</span>
+<span class="c1">#1  0x00007f292d519c9e in sleep () from /lib64/libc.so.6</span>
+<span class="c1">#2  0x000000000870f998 in oceanbase::observer::ObServer::wait() ()</span>
+<span class="c1">#3  0x00000000024c1443 in main ()</span>
+
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div><h3 id="程序入口">程序入口</h3>
+<ul>
 <li>
-<p>源码编译 需要x天</p>
-<p>就看这个文档：https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/get-the-oceanbase-database-by-using-source-code</p>
+<p>main.cpp</p>
+</li>
+<li>
+<p>observer/ob_service.h</p>
+</li>
+<li>
+<p>observer/ob_service.cpp</p>
 </li>
 </ul>
-<p>根据官网说明，只能在centos上编译，因此在mac使用docker编译</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
-</span><span class="lnt">  2
-</span><span class="lnt">  3
-</span><span class="lnt">  4
-</span><span class="lnt">  5
-</span><span class="lnt">  6
-</span><span class="lnt">  7
-</span><span class="lnt">  8
-</span><span class="lnt">  9
-</span><span class="lnt"> 10
-</span><span class="lnt"> 11
-</span><span class="lnt"> 12
-</span><span class="lnt"> 13
-</span><span class="lnt"> 14
-</span><span class="lnt"> 15
-</span><span class="lnt"> 16
-</span><span class="lnt"> 17
-</span><span class="lnt"> 18
-</span><span class="lnt"> 19
-</span><span class="lnt"> 20
-</span><span class="lnt"> 21
-</span><span class="lnt"> 22
-</span><span class="lnt"> 23
-</span><span class="lnt"> 24
-</span><span class="lnt"> 25
-</span><span class="lnt"> 26
-</span><span class="lnt"> 27
-</span><span class="lnt"> 28
-</span><span class="lnt"> 29
-</span><span class="lnt"> 30
-</span><span class="lnt"> 31
-</span><span class="lnt"> 32
-</span><span class="lnt"> 33
-</span><span class="lnt"> 34
-</span><span class="lnt"> 35
-</span><span class="lnt"> 36
-</span><span class="lnt"> 37
-</span><span class="lnt"> 38
-</span><span class="lnt"> 39
-</span><span class="lnt"> 40
-</span><span class="lnt"> 41
-</span><span class="lnt"> 42
-</span><span class="lnt"> 43
-</span><span class="lnt"> 44
-</span><span class="lnt"> 45
-</span><span class="lnt"> 46
-</span><span class="lnt"> 47
-</span><span class="lnt"> 48
-</span><span class="lnt"> 49
-</span><span class="lnt"> 50
-</span><span class="lnt"> 51
-</span><span class="lnt"> 52
-</span><span class="lnt"> 53
-</span><span class="lnt"> 54
-</span><span class="lnt"> 55
-</span><span class="lnt"> 56
-</span><span class="lnt"> 57
-</span><span class="lnt"> 58
-</span><span class="lnt"> 59
-</span><span class="lnt"> 60
-</span><span class="lnt"> 61
-</span><span class="lnt"> 62
-</span><span class="lnt"> 63
-</span><span class="lnt"> 64
-</span><span class="lnt"> 65
-</span><span class="lnt"> 66
-</span><span class="lnt"> 67
-</span><span class="lnt"> 68
-</span><span class="lnt"> 69
-</span><span class="lnt"> 70
-</span><span class="lnt"> 71
-</span><span class="lnt"> 72
-</span><span class="lnt"> 73
-</span><span class="lnt"> 74
-</span><span class="lnt"> 75
-</span><span class="lnt"> 76
-</span><span class="lnt"> 77
-</span><span class="lnt"> 78
-</span><span class="lnt"> 79
-</span><span class="lnt"> 80
-</span><span class="lnt"> 81
-</span><span class="lnt"> 82
-</span><span class="lnt"> 83
-</span><span class="lnt"> 84
-</span><span class="lnt"> 85
-</span><span class="lnt"> 86
-</span><span class="lnt"> 87
-</span><span class="lnt"> 88
-</span><span class="lnt"> 89
-</span><span class="lnt"> 90
-</span><span class="lnt"> 91
-</span><span class="lnt"> 92
-</span><span class="lnt"> 93
-</span><span class="lnt"> 94
-</span><span class="lnt"> 95
-</span><span class="lnt"> 96
-</span><span class="lnt"> 97
-</span><span class="lnt"> 98
-</span><span class="lnt"> 99
-</span><span class="lnt">100
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="err">使用源码构建</span> <span class="n">OceanBase</span> <span class="err">数据库</span>
-  <span class="nl">https</span><span class="p">:</span><span class="c1">//open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/get-the-oceanbase-database-by-using-source-code
-</span><span class="c1"></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">centos</span>
-<span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">itd</span>  <span class="o">--</span><span class="n">name</span> <span class="n">oceanbase</span>  <span class="o">--</span><span class="n">privileged</span> <span class="n">centos</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
-<span class="n">docker</span> <span class="n">attach</span> <span class="mi">56</span><span class="n">bd78306b21</span>  <span class="c1">//进入容器
-</span><span class="c1"></span><span class="n">docker</span> <span class="n">update</span> <span class="o">--</span><span class="n">memory</span> <span class="mi">8</span><span class="n">G</span> <span class="o">--</span><span class="n">memory</span><span class="o">-</span><span class="n">swap</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">56</span><span class="n">bd78306b21</span>
-  <span class="n">docker</span> <span class="n">start</span> <span class="mi">56</span><span class="n">bd78306b21</span> 
-  <span class="n">docker</span> <span class="n">attach</span> <span class="mi">56</span><span class="n">bd78306b21</span> 
-<span class="n">cd</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">data</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">ObWorker</span> <span class="n">worker</span><span class="p">;</span>
 
-<span class="n">git</span> <span class="n">clone</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/watchpoints/oceanbase.git //因为github环境太慢
-</span><span class="c1"></span><span class="err">改为：</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//gitee.com/wang_cyi/oceanbase.git
-</span><span class="c1"></span>
+<span class="n">ObServer</span><span class="o">&amp;</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">ObServer</span><span class="o">::</span><span class="n">get_instance</span><span class="p">();</span> <span class="c1">//单例模式 返回observer static对象 --认识：了解
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">log_cfg</span><span class="p">)))</span> <span class="p">{</span> <span class="c1">//初始化配置过程复杂：---认识： 知道有这个函数，运行出错可查看
+</span><span class="c1"></span>  <span class="n">LOG_ERROR</span><span class="p">(</span><span class="s">&#34;observer init fail&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+<span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">start</span><span class="p">()))</span> <span class="p">{</span> <span class="c1">//初始化配置过程复杂：---认识： 知道有这个函数，运行出错可查看
+</span><span class="c1"></span>  <span class="n">LOG_ERROR</span><span class="p">(</span><span class="s">&#34;observer start fail&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+<span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">wait</span><span class="p">()))</span> <span class="p">{</span> <span class="c1">//处理客户端连接------认识： 知道有这个函数 
+</span><span class="c1"></span>  <span class="n">LOG_ERROR</span><span class="p">(</span><span class="s">&#34;observer wait fail&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+<span class="p">}</span>
 
-<span class="cp"># 进入代码根目录
-</span><span class="cp"></span><span class="n">cd</span> <span class="n">oceanbase</span>
-<span class="cp"># 执行build.sh脚本并传入init参数
-</span><span class="cp"></span><span class="n">sh</span> <span class="n">build</span><span class="p">.</span><span class="n">sh</span> <span class="n">init</span>
-<span class="n">sh</span> <span class="n">build</span><span class="p">.</span><span class="n">sh</span> <span class="n">debug</span>
-
-<span class="n">DEBUG</span> <span class="err">构建</span>
-
-<span class="cp"># 在源码目录下执行debug版的预制构建命令
-</span><span class="cp"></span><span class="n">sh</span> <span class="n">build</span><span class="p">.</span><span class="n">sh</span> <span class="n">debug</span>
-
-<span class="cp"># 进入生成的 debug 构建目录
-</span><span class="cp"></span><span class="n">cd</span> <span class="n">build_debug</span>
-
-<span class="cp"># 进行构建
-</span><span class="cp"></span><span class="n">make</span> <span class="o">-</span><span class="n">j3</span> <span class="n">observer</span>
-<span class="n">make</span>  <span class="n">observer</span>
-
-<span class="cp"># 查看构建产物
-</span><span class="cp"></span><span class="n">stat</span> <span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">observe</span>
-
-<span class="err">其他安装文档：</span>
-<span class="nl">https</span><span class="p">:</span><span class="c1">//gw.alipayobjects.com/os/bmw-prod/518c88ac-e4d2-4a2d-8428-11d3671f397f.pdf
-</span><span class="c1"></span>
-<span class="err">使用</span> <span class="n">OBD</span> <span class="err">部署</span> <span class="n">OceanBase</span> <span class="err">数据库</span>
-<span class="nl">https</span><span class="p">:</span><span class="c1">//open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/deploy-the-oceanbase-database-by-using-obd
-</span><span class="c1"></span>
-
-<span class="cp"># 安装 OBD
-</span><span class="cp"></span> <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/oceanbase/obdeploy/blob/master/README-CN.md
-</span><span class="c1"></span>
-<span class="cp"># 什么是 OceanBase Client
-</span><span class="cp"></span><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/oceanbase/obclient/blob/master/README.md
-</span><span class="c1"></span><span class="err">安装</span> <span class="n">OBClient</span>
-<span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">obclient</span>
-
- <span class="n">docker</span> <span class="n">update</span> <span class="o">--</span><span class="n">memory</span> <span class="mi">8</span><span class="n">G</span> <span class="o">--</span><span class="n">memory</span><span class="o">-</span><span class="n">swap</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">57577713</span><span class="n">a6ef</span>
-
-  
-<span class="n">docker</span> <span class="n">attach</span> <span class="mi">56</span><span class="n">bd78306b21</span>
-<span class="err">如果您采用本地安装，即中控机器和目标机器是同一台机器</span>
-
-<span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/oceanbase/obdeploy/blob/master/example/mini-local-example.yaml
-</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="c1">//open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/deploy-the-oceanbase-database-by-using-obd
-</span><span class="c1"></span>
-<span class="cp"># 修改 home_path， 这是 OceanBase 数据库的工作目录。
-</span><span class="cp"># 修改 mysql_port，这是 OceanBase 数据库 SQL 服务协议端口号。后续将使用此端口连接数据库。
-</span><span class="cp"># 修改 rpc_port，这是 OceanBase 数据库集群内部通信的端口号。
-</span><span class="cp"></span>
-<span class="err">启动</span> <span class="n">OceanBase</span> <span class="err">数据库</span>
-<span class="err">运行以下命令部署集群：</span>
-
-<span class="n">obd</span> <span class="n">cluster</span> <span class="n">destroy</span> <span class="n">obtest</span>
-<span class="n">obd</span> <span class="n">cluster</span> <span class="n">deploy</span> <span class="n">obtest</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mini</span><span class="o">-</span><span class="n">local</span><span class="o">-</span><span class="n">example</span><span class="p">.</span><span class="n">yaml</span> 
-
- <span class="err">运行以下命令启动集群：</span>
-
-<span class="n">obd</span> <span class="n">cluster</span> <span class="n">start</span> <span class="n">obtest</span> <span class="o">-</span><span class="n">v</span>
-
-<span class="n">obd</span> <span class="n">cluster</span> <span class="n">edit</span><span class="o">-</span><span class="n">config</span> <span class="n">obtest</span>
-<span class="n">obd</span> <span class="n">cluster</span> <span class="n">redeploy</span> <span class="n">obtest</span>
-  
-  <span class="err">运行以下命令查看集群状态：</span>
-
-
-  <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/oceanbase/obdeploy
-</span><span class="c1"></span>
-  
-
-<span class="cp"># 遇到问题
-</span><span class="cp"></span>  <span class="nl">error</span><span class="p">:</span> <span class="n">RPC</span> <span class="n">failed</span><span class="p">;</span> <span class="n">curl</span> <span class="mi">18</span> <span class="n">transfer</span> <span class="n">closed</span> <span class="n">with</span> <span class="n">outstanding</span> <span class="n">read</span> <span class="n">data</span> <span class="n">remaining</span>
-    <span class="nl">error</span><span class="p">:</span> <span class="n">RPC</span> <span class="n">failed</span><span class="p">;</span> <span class="n">curl</span> <span class="mi">18</span> <span class="n">transfer</span> <span class="n">closed</span> <span class="n">with</span> <span class="n">outstanding</span> <span class="n">read</span> <span class="n">data</span> <span class="n">remaining</span>
-  
-  <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/oceanbase/oceanbase/issues/19
-</span><span class="c1"></span>
-
-<span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="mi">56</span><span class="n">bd78306b21</span> <span class="n">etc</span><span class="p">]</span><span class="err">#</span> <span class="n">obd</span> <span class="n">cluster</span> <span class="n">start</span> <span class="n">obtest</span>
-<span class="n">Get</span> <span class="n">local</span> <span class="n">repositories</span> <span class="n">and</span> <span class="n">plugins</span> <span class="n">ok</span>
-<span class="p">[</span><span class="n">WARN</span><span class="p">]</span> <span class="p">(</span><span class="mf">127.0.0.1</span><span class="p">)</span> <span class="n">not</span> <span class="n">enough</span> <span class="n">memory</span>
-<span class="n">Start</span> <span class="n">observer</span> <span class="n">ok</span>
-<span class="n">observer</span> <span class="n">program</span> <span class="n">health</span> <span class="n">check</span> <span class="n">x</span>
-<span class="p">[</span><span class="n">WARN</span><span class="p">]</span> <span class="n">failed</span> <span class="n">to</span> <span class="n">start</span> <span class="mf">127.0.0.1</span> <span class="n">observer</span>
-<span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="n">oceanbase</span><span class="o">-</span><span class="n">ce</span> <span class="n">start</span> <span class="n">failed</span>
-<span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="mi">56</span><span class="n">bd78306b21</span> <span class="n">etc</span><span class="p">]</span><span class="err">#</span> <span class="n">ls</span>
+<span class="k">class</span> <span class="nc">ObServer</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="n">ObServer</span><span class="o">&amp;</span> <span class="n">get_instance</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="nf">init</span><span class="p">(</span><span class="k">const</span> <span class="n">ObServerOptions</span><span class="o">&amp;</span> <span class="n">opts</span><span class="p">,</span> <span class="k">const</span> <span class="n">ObPLogWriterCfg</span><span class="o">&amp;</span> <span class="n">log_cfg</span><span class="p">);</span>
+  <span class="c1">// Start OceanBase server, this function is blocked after invoking
+</span><span class="c1"></span>  <span class="c1">// until the server itself stops it.
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="nf">start</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="nf">wait</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="nf">set_stop</span><span class="p">();</span>
+  <span class="p">}</span>
 
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li><a href="https://github.com/oceanbase/oceanbase/issues/92">https://github.com/oceanbase/oceanbase/issues/92</a></li>
+</div><h2 id="看2号线程">看2号线程</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Thread 2 (Thread 0x7f29277a1700 (LWP 60)):
+
+\#0 0x00007f292dba664a in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+
+\#1 0x0000000008241539 in bool tbutil::Cond::timedWaitImpl&lt;tbutil::Mutex&gt;(tbutil::Mutex const&amp;, tbutil::Time const&amp;) const ()
+
+\#2 0x00000000090377f9 in oceanbase::common::ObTimer::run1() ()
+
+\#3 0x0000000002a5346f in oceanbase::lib::ThreadPool::run0() ()
+
+\#4 0x0000000002a58724 in std::_Function_handler&lt;void (), oceanbase::lib::CoKThreadTemp&lt;oceanbase::lib::CoUserThreadTemp&lt;oceanbase::lib::CoSetSched&gt; &gt;::start()::{lambda()#1}&gt;::_M_invoke(std::_Any_data const&amp;) ()
+
+\#5 0x0000000008ebf005 in oceanbase::lib::CoSetSched::Worker::run() ()
+
+\#6 0x0000000008ebc9de in oceanbase::lib::CoRoutine::__start(boost::context::detail::transfer_t) ()
+
+\#7 0x0000000008eb727f in make_fcontext ()
+
+\#8 0x0000000000000000 in ?? ()
+
+\~~~
+
+\- 文件：lib/signal/ob_signal_worker.h
+
+//我是个线程池 sig_worker_.wait();
+
+class ObSignalWorker : public lib::ThreadPool {
+
+public:
+
+ObSignalWorker();
+
+~ObSignalWorker();
+
+void run1() override;
+
+int start() override;
+
+void stop() override;
+
+void wait() override;//
+
+};
+
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><h2 id="暂停-没看懂">暂停 没看懂</h2>
+<p>问题：通过观察线程 无法找到sql执行过程 ？</p>
+<p>解决办法：通过看日志方式解决，最后聚焦到stmt</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+
+tail -f observer.log
+
+parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span> <span class="o">[</span>31620<span class="o">][</span>438<span class="o">][</span>YB427F000001-0005C57D39B7B24E<span class="o">]</span>
+
+sql<span class="se">\p</span>arser<span class="se">\o</span>b_parser.cpp
+
+int ObParser::parse_sql<span class="o">(</span>const ObString<span class="p">&amp;</span> stmt, ParseResult<span class="p">&amp;</span> parse_result<span class="o">)</span>
+
+
+
+int parse_sql<span class="o">(</span>ParseResult* p, const char* buf, size_t len<span class="o">)</span>
+
+sql<span class="se">\p</span>arser、sql_parser_mysql_mode.y
+
+/* only preparable statement will <span class="nb">set</span> question mark size */
+
+stmt:
+
+  select_stmt       <span class="o">{</span> <span class="nv">$$</span> <span class="o">=</span> <span class="nv">$1</span><span class="p">;</span> question_mark_issue<span class="o">(</span><span class="nv">$$</span>, result<span class="o">)</span><span class="p">;</span> <span class="o">}</span>
+
+ <span class="p">|</span> insert_stmt       <span class="o">{</span> <span class="nv">$$</span> <span class="o">=</span> <span class="nv">$1</span><span class="p">;</span> question_mark_issue<span class="o">(</span><span class="nv">$$</span>, result<span class="o">)</span><span class="p">;</span> <span class="o">}</span>
+
+ <span class="p">|</span> create_table_stmt    <span class="o">{</span> <span class="nv">$$</span> <span class="o">=</span> <span class="nv">$1</span><span class="p">;</span>
+
+parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><p>任务1：Lex-and-Yacc【sql解析基础知识必须掌握】！！！</p>
+<p>动手练习：yum -y install flex bison</p>
+<ul>
+<li><a href="https://berthub.eu/lex-yacc/cvs/output/lexyacc.html">https://berthub.eu/lex-yacc/cvs/output/lexyacc.html</a></li>
+<li><a href="https://github.com/konieshadow/lex-yacc-examples">https://github.com/konieshadow/lex-yacc-examples</a></li>
+<li><a href="https://gitee.com/wan3574489/Lex-and-Yacc">https://gitee.com/wan3574489/Lex-and-Yacc</a></li>
+<li><a href="http://dinosaur.compilertools.net/">http://dinosaur.compilertools.net/</a></li>
 </ul>
-<h3 id="挑战01--直接使用镜像使用-docker-镜像在-mac-平台上部署-oceanbase-试用版">挑战01&ndash;:直接使用镜像：<strong>使用 Docker 镜像在 Mac 平台上部署 OceanBase 试用版</strong></h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://www.yuque.com/oceanbase-site/oceanbase2.2.50-trial/gp7hkg 测试没有问题耗时一天
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="挑战02--直接镜像自己搭建单机版的">挑战02&ndash;:直接镜像：自己搭建单机版的。</h4>
-<h3 id="阅读oceanbase-数据库概览-需要-x天">阅读：OceanBase 数据库概览 需要 x天</h3>
-<p>就看这个文档：https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/cluster-management</p>
+<p>理论：</p>
+<ul>
+<li>通过lex分析定义的词；(词是构建语法的最基本单元，语法是建立在词的基础之上)</li>
+<li>通过yacc分析语法，构建语法树。</li>
+<li>通过对语法树的分析，生成或计算出我们想要的结果。</li>
+</ul>
+<p>任务2：pingcap/parser【很直观，必须掌握】</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/321360679">https://zhuanlan.zhihu.com/p/321360679</a></li>
+<li><a href="https://pingcap.com/blog-cn/tidb-source-code-reading-5">https://pingcap.com/blog-cn/tidb-source-code-reading-5/</a></li>
+</ul>
+<p>任务3：MySQL解析——MySQL内核源码解读【后面需要，必须掌握】</p>
+<ul>
+<li><a href="https://github.com/mysql/mysql-server/blob/8.0/sql/sql_yacc.yy">https://github.com/mysql/mysql-server/blob/8.0/sql/sql_yacc.yy</a></li>
+</ul>
+<p><a href="https://www.oceanbase.com/docs/oceanbase-database/oceanbase-database/V3.1.2/system-architecture">https://www.oceanbase.com/docs/oceanbase-database/oceanbase-database/V3.1.2/system-architecture</a></p>
+<ul>
+<li><a href="https://github.com/oceanbase/obdeploy">https://github.com/oceanbase/obdeploy</a></li>
+</ul>
+<h2 id="存储引擎">存储引擎</h2>
+<p>OceanBase 数据库的存储引擎采用了基于 LSM-Tree 的架构，把基线数据和增量数据分别保存在磁盘（SSTable）和内存（MemTable）中，具备读写分离的特点。对数据的修改都是增量数据，只写内存。所以 DML 是完全的内存操作，性能非常高。读的时候，数据可能会在内存里有更新过的版本，在持久化存储里有基线版本，需要把两个版本进行合并，获得一个最新版本。</p>
+<p><img src="https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/0724019951/p148328.png" alt="image.png"></p>
+<p>如上图所示，在内存中针对不同的数据访问行为，OceanBase 数据库设计了多种缓存结构。除了常见的数据块缓存之外，也会对行进行缓存，行缓存会极大加速对单行的查询性能。为了避免对不存在行的空查，OceanBase 数据库对行缓存构建了布隆过滤器，并对布隆过滤器进行缓存。OLTP 业务大部分操作为小查询，通过小查询优化，OceanBase 数据库避免了传统数据库解析整个数据块的开销，达到了接近内存数据库的性能。当内存的增量数据达到一定规模的时候，会触发增量数据和基线数据的合并，把增量数据落盘。同时每天晚上的空闲时刻，系统也会启动每日合并。另外，由于基线是只读数据，而且内部采用连续存储的方式，OceanBase 数据库可以根据不同特点的数据采用不同的压缩算法，既能做到高压缩比，又不影响查询性能，大大降低了成本。</p>
+<h2 id="sql-引擎">SQL 引擎</h2>
+<p>OceanBase 数据库的 SQL 引擎是整个数据库的数据计算中枢，和传统数据库类似，整个引擎分为解析器、优化器、执行器三部分。当 SQL 引擎接受到了 SQL 请求后，经过语法解析、语义分析、查询重写、查询优化等一系列过程后，再由执行器来负责执行。所不同的是，在分布式数据库里，查询优化器会依据数据的分布信息生成分布式的执行计划。如果查询涉及的数据在多台服务器，需要走分布式计划，这是分布式数据库 SQL 引擎的一个重要特点，也是十分考验查询优化器能力的场景。OceanBase 数据库查询优化器做了很多优化，诸如算子下推、智能连接、分区裁剪等。如果 SQL 语句涉及的数据量很大，OceanBase 数据库的查询执行引擎也做了并行处理、任务拆分、动态分区、流水调度、任务裁剪、子任务结果合并、并发限制等优化技术。</p>
+<p>下图描述了一条 SQL 语句的执行过程，并列出了 SQL 引擎中各个模块之间的关系。</p>
+<p><img src="https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/2623077161/p167218.png" alt="请求流程"></p>
+<ul>
+<li>
+<p>Parser（词法/语法解析模块）</p>
+<p>Parser 是整个 SQL 执行引擎的词法或语法解析器，在收到用户发送的 SQL 请求串后，Parser 会将字符串分成一个个的单词，并根据预先设定好的语法规则解析整个请求，将 SQL 请求字符串转换成带有语法结构信息的内存数据结构，称为语法树（Syntax Tree）。</p>
+<p>为了加速 SQL 请求的处理速度，OceanBase 数据库对 SQL 请求采用了特有的快速参数化，以加速查找执行计划的速度。</p>
+</li>
+<li>
+<p>Resolver（语义解析模块）</p>
+<p>当生成语法树之后，Resolver 会进一步将该语法树转换为带有数据库语义信息的内部数据结构。在这一过程中，Resolver 将根据数据库元信息将 SQL 请求中的 token 翻译成对应的对象（例如库、表、列、索引等），生成语句树。</p>
+</li>
+<li>
+<p>Transfomer（逻辑改写模块）</p>
+<p>在查询优化中，经常利用等价改写的方式，将用户 SQL 转换为与之等价的另一条 SQL，以便于优化器生成最佳的执行计划，这一过程称为查询改写。Transformer 在 Resolver 之后，分析用户 SQL 的语义，并根据内部的规则或代价模型，将用户 SQL改写为与之等价的其他形式，并将其提供给后续的优化器做进一步的优化。Transformer 的工作方式是在原 Statement Tree 上做等价变换，变换的结果仍然是一棵语句树。</p>
+</li>
+<li>
+<p>Optimizer（优化器）</p>
+<p>优化器是整个 SQL 优化的核心，其作用是为 SQL 请求生成最佳的执行计划。在优化过程中，优化器需要综合考虑 SQL 请求的语义、对象数据特征、对象物理分布等多方面因素，解决访问路径选择、联接顺序选择、联接算法选择、分布式计划生成等多个核心问题，最终选择一个对应该 SQL 的最佳执行计划。SQL 的执行计划是一棵由多个操作符构成的执行树。</p>
+</li>
+<li>
+<p>Code Generator（代码生成器）</p>
+<p>优化器负责生成最佳的执行计划，但其输出的结果并不能立即执行，还需要通过代码生成器将其转换为可执行的代码，这个过程由 Code Generator 负责。</p>
+</li>
+<li>
+<p>Executor（执行器）</p>
+<p>当 SQL 的执行计划生成后，Executor 会启动该 SQL 的执行过程。对于不同类型的执行计划，Executor 的逻辑有很大的不同：对于本地执行计划，Executor 会简单的从执行计划的顶端的算子开始调用，由算子自身的逻辑完成整个执行的过程，并返回执行结果；对于远程或分布式计划，Executor 需要根据预选的划分，将执行树分成多个可以调度的线程，并通过 RPC 将其发送给相关的节点执行。</p>
+</li>
+<li>
+<p>Plan Cache（执行计划缓存模块）</p>
+<p>执行计划的生成是一个比较复杂的过程，耗时比较长，尤其是在 OLTP 场景中，这个耗时往往不可忽略。为了加速 SQL 请求的处理过程，SQL 执行引擎会将该 SQL 第一次生成的执行计划缓存在内存中，后续的执行可以反复执行这个计划，避免了重复查询优化的过程。</p>
+</li>
+</ul>
 
     </div>
 
@@ -407,7 +495,7 @@ https://github.com/oceanbase/oceanbase
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-06-03 00:00
+        2021-06-22 00:00
         
     </span>
   </p>
@@ -418,17 +506,11 @@ https://github.com/oceanbase/oceanbase
   </p>
 </div>
 <footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/GTD/">GTD</a>
-          </div>
+      
       <nav class="post-nav">
-        <a class="prev" href="/post/2020/01_srs/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">SRS官方文档和学习路径</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/ARTS/100_life/">
-            <span class="next-text nav-default">日常生活记录第100周</span>
+        
+        <a class="next" href="/post/plan/02_kernel/">
+            <span class="next-text nav-default">Linux内核之旅社区</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
