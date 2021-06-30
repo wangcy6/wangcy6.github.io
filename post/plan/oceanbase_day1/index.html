@@ -48,7 +48,7 @@
 <meta itemprop="name" content="oceanbase源码阅读（1）程序启动">
 <meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-22T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3139">
+<meta itemprop="wordCount" content="3138">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="oceanbase源码阅读（1）程序启动"/>
 <meta name="twitter:description" content="OceanBase代码阅读第一天：程序启动"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 3139 字 </span>
+          <span class="more-meta"> 约 3138 字 </span>
           <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -210,15 +210,17 @@ md5: 33af3cb189d73116e8d629147bc4d530、
 make DESTDIR=./ install &amp;&amp; obd mirror create -n oceanbase-ce -V 3.1.0 -p ./usr/local</p>
 <h3 id="步骤3centos-环境设置和部署">步骤3：centos 环境设置和部署</h3>
 <ul>
-<li>sysctl.conf添加内容
-echo &ldquo;fs.aio-max-nr=1048576&rdquo; &raquo; /etc/sysctl.conf</li>
+<li>
+<p>sysctl.conf添加内容</p>
+<p>echo &ldquo;fs.aio-max-nr=1048576&rdquo; &raquo; /etc/sysctl.conf</p>
+</li>
 </ul>
 <p>配置生效
 sysctl -p</p>
 <ul>
 <li>
-<p>open files参数修改
-vim /etc/security/limits.conf  #添加内容</p>
+<p>open files参数修改</p>
+<p>vim /etc/security/limits.conf  #添加内容</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -239,11 +241,13 @@ vim /etc/security/limits.conf  #添加内容</p>
 <p>[root@oceanbase ~]#ulimit -a</p>
 <ul>
 <li>
-<p>Q: 如何指定使用特定版本的组件？
-A: 在部署配置文件中使用 package_hash 或 tag 声明。
-如果您给自己编译的 OceanBase-CE 设置了t ag，您可以使用 tag 来指定。如：
-oceanbase-ce:
-tag: my-oceanbase</p>
+<p>Q: 如何指定使用特定版本的组件</p>
+</li>
+<li>
+<p>A: 在部署配置文件中使用 package_hash 或 tag 声明。</p>
+<p>如果您给自己编译的 OceanBase-CE 设置了t ag，您可以使用 tag 来指定。如：</p>
+<p>oceanbase-ce:</p>
+<p>tag: my-oceanbase</p>
 </li>
 <li>
 <p>启动</p>
