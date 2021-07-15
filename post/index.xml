@@ -6,14 +6,32 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>打破砂锅问到底</title>
+      <link>https://wangcy6.github.io/post/2020/ask_2021/</link>
+      <pubDate>Sun, 11 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/ask_2021/</guid>
+      <description># 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技</description>
+    </item>
+    
+    <item>
+      <title>2021-读书清单</title>
+      <link>https://wangcy6.github.io/post/book/2021_book/</link>
+      <pubDate>Sat, 10 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/2021_book/</guid>
+      <description>2021年第28周 第一本：单核工作法图解：事多到事少,拖延变高效 高 帮助你解决问题：提供行动指南，非理论一本书 百度网盘：https://pan</description>
+    </item>
+    
     <item>
       <title>oceanbase源码阅读（1）程序启动</title>
       <link>https://wangcy6.github.io/post/plan/oceanbase_day1/</link>
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/plan/oceanbase_day1/</guid>
-      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步骤2</description>
+      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具÷÷ 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步</description>
     </item>
     
     <item>

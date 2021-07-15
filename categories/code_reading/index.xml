@@ -13,7 +13,7 @@
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/plan/oceanbase_day1/</guid>
-      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步骤2</description>
+      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具÷÷ 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步</description>
     </item>
     
     <item>

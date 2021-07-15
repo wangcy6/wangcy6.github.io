@@ -48,7 +48,7 @@
 <meta itemprop="name" content="SRS官方文档和学习路径">
 <meta itemprop="description" content="高性能可扩展服务"><meta itemprop="datePublished" content="2021-06-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3081">
+<meta itemprop="wordCount" content="3875">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SRS官方文档和学习路径"/>
 <meta name="twitter:description" content="高性能可扩展服务"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 3081 字 </span>
-          <span class="more-meta"> 预计阅读 7 分钟 </span>
+          <span class="more-meta"> 约 3875 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -163,6 +163,10 @@
       </ul>
     </li>
     <li><a href="#第三天">第三天</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#todo-跟踪issue去学习">todo 跟踪issue去学习</a></li>
   </ul>
 </nav>
   </div>
@@ -519,7 +523,52 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 <p><a href="https://github.com/ossrs/srs/issues/1607#issuecomment-586543387">https://github.com/ossrs/srs/issues/1607#issuecomment-586543387</a></p>
 <h2 id="第三天">第三天</h2>
 <h1 id="srs之启用webrtc播放">SRS之启用webrtc播放</h1>
+<h2 id="todo-跟踪issue去学习">todo 跟踪issue去学习</h2>
+<ul>
+<li><input disabled="" type="checkbox"> <a href="https://github.com/ossrs/srs/issues/2449">https://github.com/ossrs/srs/issues/2449</a> SRS webrtc 播放出现灰屏现象 #2449</li>
+</ul>
+<p>webrtc不支持B帧，看看是不是这个原因。<a href="https://github.com/ossrs/srs/issues/2439#issuecomment-868208452">#2439 (comment)</a></p>
+<p>您好，通过 ffmpeg 推 RTMP 时已经去除了 B 帧</p>
+<p><a href="https://github.com/ossrs/srs/issues/2439">https://github.com/ossrs/srs/issues/2439</a></p>
+<ul>
+<li>&ldquo;设置&rdquo;-&gt; &ldquo;输出&rdquo; -&gt; 高级 -&gt; profile 选&quot;baseline&quot;, webrtc不支持B帧</li>
+</ul>
+<p>H.264有四种画质级别,分别是baseline, extended, main, high：</p>
+<p>1、Baseline Profile：基本画质。支持I/P 帧，只支持无交错（Progressive）和CAVLC；</p>
+<p>从压缩比例来说，baseline&lt; main &lt; high ，对于带宽比较局限的在线视频，可能会选择high，</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ffmpeg -i input.mp4 -c:v libx264 -preset fast -profile:v baseline out.mov
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">H.264有四种画质级别,分别是baseline, extended, main, high：
 
+1、Baseline Profile：基本画质。支持I/P 帧，只支持无交错（Progressive）和CAVLC；
+2、Extended profile：进阶画质。支持I/P/B/SP/SI 帧，只支持无交错（Progressive）和CAVLC；(用的少)
+3、Main profile：主流画质。提供I/P/B 帧，支持无交错（Progressive）和交错（Interlaced）， 也支持CAVLC 和CABAC 的支持；
+4、High profile：高级画质。在main Profile 的基础上增加了8x8内部预测、自定义量化、 无损视频编码和更多的YUV 格式；
+　　H.264 Baseline profile、Extended profile和Main profile都是针对8位样本数据、4:2:0格式(YUV)的视频序列。在相同配置情况下，High profile（HP）可以比Main profile（MP）降低10%的码率。 根据应用领域的不同，Baseline profile多应用于实时通信领域，Main profile多应用于流媒体领域，High profile则多应用于广电和存储领域。
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
