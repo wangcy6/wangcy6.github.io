@@ -2,28 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://wangcy6.github.io/tags/FQA/</loc>
-    <lastmod>2021-07-11T00:00:00+00:00</lastmod>
+    <loc>https://wangcy6.github.io/post/ARTS/life_2021_arts/</loc>
+    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/ARTS/</loc>
+    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/</loc>
+    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/post/</loc>
-    <lastmod>2021-07-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/tags/</loc>
-    <lastmod>2021-07-11T00:00:00+00:00</lastmod>
+    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/</loc>
+    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/mysql/</loc>
+    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/</loc>
+    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/tidb/parse/</loc>
+    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/FQA/</loc>
     <lastmod>2021-07-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -45,13 +80,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/categories/book/</loc>
-    <lastmod>2021-07-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/</loc>
     <lastmod>2021-07-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -142,13 +170,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/ARTS/</loc>
-    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/2020/01_srs/</loc>
     <lastmod>2021-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -207,6 +228,13 @@
   <url>
     <loc>https://wangcy6.github.io/post/class/6.824/</loc>
     <lastmod>2021-05-29T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/leetcode/leetcode_medium_400-500/</loc>
+    <lastmod>2021-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -331,13 +359,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/leetcode/leetcode_medium_400-500/</loc>
-    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/leetcode/template/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -347,13 +368,6 @@
   <url>
     <loc>https://wangcy6.github.io/tags/work/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/tags/mysql/</loc>
-    <lastmod>2020-05-13T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

@@ -48,7 +48,7 @@
 <meta itemprop="name" content="oceanbase源码阅读（1）程序启动">
 <meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-22T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3623">
+<meta itemprop="wordCount" content="4061">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="oceanbase源码阅读（1）程序启动"/>
 <meta name="twitter:description" content="OceanBase代码阅读第一天：程序启动"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 3623 字 </span>
-          <span class="more-meta"> 预计阅读 8 分钟 </span>
+          <span class="more-meta"> 约 4061 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -155,6 +155,7 @@
       </ul>
     </li>
     <li><a href="#看2号线程">看2号线程</a></li>
+    <li><a href="#thread-495-日志模块">Thread 495 日志模块</a></li>
     <li><a href="#暂停-没看懂">暂停 没看懂</a></li>
     <li><a href="#存储引擎">存储引擎</a></li>
     <li><a href="#sql-引擎">SQL 引擎</a></li>
@@ -171,6 +172,19 @@
     <li><a href="#代码">代码：</a></li>
     <li><a href="#参考别人阅读记录">参考别人阅读记录</a></li>
     <li><a href="#参考">参考：</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#sql-执行过程">sql 执行过程</a></li>
+        <li><a href="#开源数据库oceanbase代码导读11">开源数据库OceanBase代码导读（11）</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#第一题在线ddl操作-开始--">第一题：在线ddl操作 【开始&ndash;】</a></li>
   </ul>
 </nav>
   </div>
@@ -266,16 +280,44 @@ sysctl -p</p>
 <p>启动</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">hostname oceanbase
+<pre class="chroma"><code class="language-shell" data-lang="shell">参考：https://gitee.com/oceanbase/obdeploy
+
+hostname oceanbase
+obd cluster deploy obtest -c mini-local-example.yaml
+
 obd cluster edit-config obtest
 obd cluster redeploy obtest
 obd cluster start obtest
+obd cluster stop obtest
+
+
+<span class="c1"># 参看obd管理的集群列表</span>
+obd cluster list
+<span class="c1"># 查看 lo 集群状态</span>
+obd cluster display obtest
+
+obd cluster destroy obtest
+
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -454,6 +496,65 @@ void wait() override;//
 };
 
 
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div><h2 id="thread-495-日志模块">Thread 495 日志模块</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">Thread</span> <span class="mi">495</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7fdc587dc700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">31402</span><span class="p">))</span><span class="o">:</span>
+
+<span class="err">\#</span><span class="mi">0</span> <span class="mh">0x00007fdc669c2a82</span> <span class="n">in</span> <span class="n">pthread_cond_timedwait</span><span class="err">@@</span><span class="n">GLIBC_2</span><span class="mf">.3.2</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+
+<span class="err">\#</span><span class="mi">1</span> <span class="mh">0x0000000008ffbe65</span> <span class="n">in</span> <span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObBaseLogWriter</span><span class="o">::</span><span class="n">flush_log</span><span class="p">()</span> <span class="p">()</span>
+
+<span class="err">\#</span><span class="mi">2</span> <span class="mh">0x0000000008ffb855</span> <span class="n">in</span> <span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObBaseLogWriter</span><span class="o">::</span><span class="n">flush_log_thread</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="p">()</span>
+
+<span class="err">\#</span><span class="mi">3</span> <span class="mh">0x00007fdc669bedc5</span> <span class="n">in</span> <span class="n">start_thread</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+
+<span class="err">\#</span><span class="mi">4</span> <span class="mh">0x00007fdc663eb76d</span> <span class="n">in</span> <span class="n">clone</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
+
+<span class="n">Thread</span> <span class="mi">494</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7fdc0b9f3700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">31524</span><span class="p">))</span><span class="o">:</span>
+
+<span class="err">\#</span><span class="mi">0</span> <span class="mh">0x00007fdc669c2a82</span> <span class="n">in</span> <span class="n">pthread_cond_timedwait</span><span class="err">@@</span><span class="n">GLIBC_2</span><span class="mf">.3.2</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+
+<span class="err">\#</span><span class="mi">1</span> <span class="mh">0x0000000008ffbe65</span> <span class="n">in</span> <span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObBaseLogWriter</span><span class="o">::</span><span class="n">flush_log</span><span class="p">()</span> <span class="p">()</span>
+
+<span class="err">\#</span><span class="mi">2</span> <span class="mh">0x0000000008ffb855</span> <span class="n">in</span> <span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObBaseLogWriter</span><span class="o">::</span><span class="n">flush_log_thread</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="p">()</span>
+
+<span class="err">\#</span><span class="mi">3</span> <span class="mh">0x00007fdc669bedc5</span> <span class="n">in</span> <span class="n">start_thread</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
+
+<span class="err">\#</span><span class="mi">4</span> <span class="mh">0x00007fdc663eb76d</span> <span class="n">in</span> <span class="n">clone</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span>
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -684,6 +785,41 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 <a href="https://pingcap.com/blog-cn/tidb-source-code-reading-23/">https://pingcap.com/blog-cn/tidb-source-code-reading-23/</a></p>
 <p>TiDB 源码阅读系列文章（四）Insert 语句概览
 <a href="https://pingcap.com/blog-cn/tidb-source-code-reading-4/">https://pingcap.com/blog-cn/tidb-source-code-reading-4/</a></p>
+<h1 id="开源数据库oceanbase代码导读">开源数据库OceanBase代码导读</h1>
+<h3 id="sql-执行过程">sql 执行过程</h3>
+<p>split_multiple_stmt</p>
+<p>首先通过ObParser的一个快速解析入口split_multiple_stmt把每条语句拆分出来，对每条语句process_single_stmt</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">ObMPQuery</span><span class="o">::</span><span class="n">process_single_stmt</span><span class="p">(</span><span class="k">const</span> <span class="n">ObMultiStmtItem</span><span class="o">&amp;</span> <span class="n">multi_stmt_item</span><span class="p">,</span> <span class="n">ObSQLSessionInfo</span><span class="o">&amp;</span> <span class="n">session</span><span class="p">,</span>
+
+  <span class="kt">bool</span> <span class="n">has_more_result</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">force_sync_resp</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">async_resp_used</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">need_disconnect</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>开源数据库OceanBase代码导读（1）</p>
+<p><a href="https://zhuanlan.zhihu.com/p/379437192">https://zhuanlan.zhihu.com/p/379437192</a></p>
+<h3 id="开源数据库oceanbase代码导读11">开源数据库OceanBase代码导读（11）</h3>
+<p>（8）分布式事务</p>
+<p><a href="https://zhuanlan.zhihu.com/p/385944563">https://zhuanlan.zhihu.com/p/385944563</a></p>
+<ul>
+<li>
+<p>开源数据库OceanBase代码导读（13）（10）事务日志的提交和回放</p>
+<p><a href="https://zhuanlan.zhihu.com/p/389202627">https://zhuanlan.zhihu.com/p/389202627</a></p>
+</li>
+</ul>
+<h1 id="社区问题">社区问题</h1>
+<h2 id="第一题在线ddl操作-开始--">第一题：在线ddl操作 【开始&ndash;】</h2>
+<p><a href="https://open.oceanbase.com/answer/detail?id=340">https://open.oceanbase.com/answer/detail?id=340</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/48370599">https://zhuanlan.zhihu.com/p/48370599</a></p>
+<ul>
+<li>OceanBase v2.2.50 官方教程</li>
+</ul>
+<p><a href="https://www.bookstack.cn/read/oceanbase-2.2.50-zh/%e4%ba%86%e8%a7%a3OceanBase%e6%95%b0%e6%8d%ae%e5%ba%93.md">https://www.bookstack.cn/read/oceanbase-2.2.50-zh/%e4%ba%86%e8%a7%a3OceanBase%e6%95%b0%e6%8d%ae%e5%ba%93.md</a></p>
 
     </div>
 
