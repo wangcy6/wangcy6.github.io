@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangcy6.github.io/categories/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/Interview-Question/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/Leetcode/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/leetcode/leetcode_string/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/</loc>
+    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/post/ARTS/life_2021_arts/</loc>
     <lastmod>2021-07-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -16,35 +65,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/</loc>
-    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/post/</loc>
-    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/</loc>
-    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/tags/mysql/</loc>
-    <lastmod>2021-07-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/tags/</loc>
     <lastmod>2021-07-18T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -198,20 +219,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/tags/Interview-Question/</loc>
-    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/Leetcode/</loc>
-    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/leetcode/hard_50/</loc>
     <lastmod>2021-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -291,13 +298,6 @@
   <url>
     <loc>https://wangcy6.github.io/post/ARTS/ARTS_2020_19_weekly/</loc>
     <lastmod>2020-06-03T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/post/leetcode/leetcode_string/</loc>
-    <lastmod>2020-06-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

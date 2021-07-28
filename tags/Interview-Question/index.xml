@@ -6,7 +6,16 @@
     <description>Recent content in Interview Question on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 01 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Interview-Question/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Interview-Question/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>leetcode 题目分类</title>
+      <link>https://wangcy6.github.io/post/leetcode/leetcode_string/</link>
+      <pubDate>Wed, 28 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/leetcode_string/</guid>
+      <description>如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做</description>
+    </item>
+    
     <item>
       <title>leetcode_hard_0-60</title>
       <link>https://wangcy6.github.io/post/leetcode/hard_50/</link>
@@ -32,15 +41,6 @@
       
       <guid>https://wangcy6.github.io/post/leetcode/leetcode_medium_300-400/</guid>
       <description>开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 查找和最小的K对数字 合并K个排序链表 寻找两个有序数组的中位数 K个有序数组的中位数 m</description>
-    </item>
-    
-    <item>
-      <title>字符串总结</title>
-      <link>https://wangcy6.github.io/post/leetcode/leetcode_string/</link>
-      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/leetcode/leetcode_string/</guid>
-      <description>第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都</description>
     </item>
     
     <item>

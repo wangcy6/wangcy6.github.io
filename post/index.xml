@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>leetcode 题目分类</title>
+      <link>https://wangcy6.github.io/post/leetcode/leetcode_string/</link>
+      <pubDate>Wed, 28 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/leetcode_string/</guid>
+      <description>如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做</description>
+    </item>
+    
     <item>
       <title>2021-思考与行动：</title>
       <link>https://wangcy6.github.io/post/ARTS/life_2021_arts/</link>
@@ -203,15 +212,6 @@
       
       <guid>https://wangcy6.github.io/post/ARTS/ARTS_2020_19_weekly/</guid>
       <description>GTD践行第19周（2020第19周） 本周视图 一. ARTS的初衷 周一 周二 周三 周四 周五 周六 周日 Algorithm Review Review/Tip Share 1. Algorithm **主要是为了编程训练和学习。**每</description>
-    </item>
-    
-    <item>
-      <title>字符串总结</title>
-      <link>https://wangcy6.github.io/post/leetcode/leetcode_string/</link>
-      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/leetcode/leetcode_string/</guid>
-      <description>第一题 387. 字符串中的第一个唯一字符 一、题目信息 今天来做这个题目，自己注意力完全被 第一次 这个约束困扰了，回顾常见的数据结构,map,hash,都</description>
     </item>
     
     <item>
