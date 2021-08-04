@@ -48,7 +48,7 @@
 <meta itemprop="name" content="leetcode 题目分类">
 <meta itemprop="description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做"><meta itemprop="datePublished" content="2021-07-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-07-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="555">
+<meta itemprop="wordCount" content="894">
 <meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="leetcode 题目分类"/>
 <meta name="twitter:description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/Leetcode/"> Leetcode </a>
             </div>
-          <span class="more-meta"> 约 555 字 </span>
+          <span class="more-meta"> 约 894 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -148,11 +148,10 @@
     <li><a href="#二叉树">二叉树</a></li>
     <li><a href="#图">图</a>
       <ul>
-        <li><a href="#一题目信息">一、<strong>题目信息</strong></a></li>
-        <li><a href="#二题目描述">二、<strong>题目描述</strong></a></li>
-        <li><a href="#三算法描述">三、<strong>算法描述</strong></a></li>
-        <li><a href="#四参考代码">四、<strong>参考代码</strong></a></li>
-        <li><a href="#五举一反三">五、举一反三</a></li>
+        <li><a href="#一思路">一、思路</a></li>
+        <li><a href="#二关键点">二、关键点</a></li>
+        <li><a href="#三-代码">三、 代码</a></li>
+        <li><a href="#四举一反三">四、举一反三</a></li>
       </ul>
     </li>
   </ul>
@@ -170,6 +169,9 @@
 </ol>
 <p>前500题：抄。就是直接看答案抄！完美解决没基础看不懂，</p>
 <p>不会做，做题枯燥等种种问题。</p>
+<ul>
+<li>按照习惯，你必须完成这个题目，才能做其他题目，不管其他题目多么重要，你必须先完成这个题目才可以。</li>
+</ul>
 <ol start="2">
 <li>个人感觉： 熟练度 &raquo;&raquo;&gt; （远重要于）抖小聪明。</li>
 </ol>
@@ -202,6 +204,13 @@
 </ol>
 <p>- <a href="https://www.nowcoder.com/questionTerminal/c850773943af4f45a7a5fddc9eef4852?orderByHotValue=0&amp;mutiTagIds=5050&amp;page=1&amp;onlyReference=false">https://www.nowcoder.com/questionTerminal/c850773943af4f45a7a5fddc9eef4852?orderByHotValue=0&amp;mutiTagIds=5050&amp;page=1&amp;onlyReference=false</a></p>
 <p>- <a href="https://leetcode-cn.com/problems/add-strings/">https://leetcode-cn.com/problems/add-strings/</a></p>
+<ol start="2">
+<li>
+<p>最长不重复子串。</p>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<p><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/</a></p>
+</li>
+</ol>
 <h2 id="单链表">单链表</h2>
 <ol>
 <li><strong>NC23</strong> <strong>划分链表</strong></li>
@@ -210,24 +219,30 @@
 <p><a href="https://leetcode-cn.com/problems/partition-list/">https://leetcode-cn.com/problems/partition-list/</a></p>
 <h2 id="二叉树">二叉树</h2>
 <h2 id="图">图</h2>
-<hr>
-<h3 id="一题目信息">一、<strong>题目信息</strong></h3>
-<h3 id="二题目描述">二、<strong>题目描述</strong></h3>
+<h3 id="一思路">一、思路</h3>
 <blockquote>
-<p>算法是问题求解过程的一种描述，看看这个题目是怎么描述的吧。</p>
+<p>能说出基本实现步骤,实在不行动手画个流程图</p>
 </blockquote>
-<h3 id="三算法描述">三、<strong>算法描述</strong></h3>
-<blockquote>
-<p>能说出基本思想即可,实在不行动手画个流程图把。</p>
-</blockquote>
-<h3 id="四参考代码">四、<strong>参考代码</strong></h3>
+<p>用一个 hashmap 来建立字符和其出现位置之间的映射。</p>
+<p>维护一个滑动窗口，窗口内的都是没有重复的字符，去尽可能的扩大窗口的大小，窗口不停的向右滑动。</p>
+<p>（1）如果当前遍历到的字符从未出现过，那么直接扩大右边界；</p>
+<p>（2）如果当前遍历到的字符出现过，则缩小窗口（左边索引向右移动??），然后继续观察当前遍历到的字符；</p>
+<p>（3）重复（1）（2），直到左边索引无法再移动；</p>
+<p>（4）维护一个结果 res，每次用出现过的窗口大小来更新结果 res，最后返回 res 获取结果。</p>
+<h3 id="二关键点">二、关键点</h3>
+<p>用一个 mapper 记录出现过并且没有被删除的字符</p>
+<p>用一个滑动窗口记录当前 index 开始的最大的不重复的字符序列</p>
+<p>用 res 去记录目前位置最大的长度，每次滑动窗口更新就去决定是否需要更新 res</p>
+<h3 id="三-代码">三、 代码</h3>
 <blockquote>
 <p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
 </blockquote>
-<h3 id="五举一反三">五、举一反三</h3>
+<h3 id="四举一反三">四、举一反三</h3>
 <blockquote>
 <p>别人最佳答案并不重要，关键是自己理解。</p>
 </blockquote>
+<p>​</p>
+<hr>
 
     </div>
 

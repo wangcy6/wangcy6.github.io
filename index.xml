@@ -22,7 +22,7 @@
       <pubDate>Fri, 23 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ARTS/life_2021_arts/</guid>
-      <description>目的： 把它变成每天习惯，重复千千万次。 成功才是成功之母， 失败是当时最好解决办法。如果不改进，环境不变你不变， 你必然重复千次万次，你必然失败千</description>
+      <description>目的：打造好环境，罪恶环境就罪恶结果 最后一公 把它变成每天习惯，重复千千万次。 成功才是成功之母， 失败是当时最好解决办法。如果不改进，环境不变你</description>
     </item>
     
     <item>
@@ -50,6 +50,15 @@
       
       <guid>https://wangcy6.github.io/post/book/2021_book/</guid>
       <description>2021年第28周 第一本：单核工作法图解：事多到事少,拖延变高效 高 帮助你解决问题：提供行动指南，非理论一本书 百度网盘：https://pan</description>
+    </item>
+    
+    <item>
+      <title>oceanbase源码阅读（1）程序启动</title>
+      <link>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</link>
+      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</guid>
+      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具÷÷ 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步</description>
     </item>
     
     <item>
