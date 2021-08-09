@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. https://leetcode-cn.com/problemset/all) solution 思路 细节 时间复杂度： plan 任务：leetcode 哪些0-50 题目 看 5遍。预计1个月 开始日期：2021-8-7" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,19 +39,19 @@
 
 
 <meta property="og:title" content="leetcode 题目分类" />
-<meta property="og:description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做" />
+<meta property="og:description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. https://leetcode-cn.com/problemset/all) solution 思路 细节 时间复杂度： plan 任务：leetcode 哪些0-50 题目 看 5遍。预计1个月 开始日期：2021-8-7" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/leetcode/leetcode_string/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-07-28T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2021-07-28T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="leetcode 题目分类">
-<meta itemprop="description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做"><meta itemprop="datePublished" content="2021-07-28T00:00:00&#43;00:00" />
+<meta itemprop="description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. https://leetcode-cn.com/problemset/all) solution 思路 细节 时间复杂度： plan 任务：leetcode 哪些0-50 题目 看 5遍。预计1个月 开始日期：2021-8-7"><meta itemprop="datePublished" content="2021-07-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-07-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="894">
+<meta itemprop="wordCount" content="716">
 <meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="leetcode 题目分类"/>
-<meta name="twitter:description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. 关于具体刷题，我只说第一遍，我是怎么刷的。 前500题：抄。就是直接看答案抄！完美解决没基础看不懂， 不会做，做"/>
+<meta name="twitter:description" content="如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. https://leetcode-cn.com/problemset/all) solution 思路 细节 时间复杂度： plan 任务：leetcode 哪些0-50 题目 看 5遍。预计1个月 开始日期：2021-8-7"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/Leetcode/"> Leetcode </a>
             </div>
-          <span class="more-meta"> 约 894 字 </span>
+          <span class="more-meta"> 约 716 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -142,28 +142,58 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#如何刷题">如何刷题</a></li>
+  </ul>
+
+  <ul>
     <li><a href="#数组">数组</a></li>
     <li><a href="#字符串">字符串</a></li>
-    <li><a href="#单链表">单链表</a></li>
+    <li><a href="#单链表-ok">单链表 [ok]</a></li>
     <li><a href="#二叉树">二叉树</a></li>
-    <li><a href="#图">图</a>
+    <li><a href="#图">图</a></li>
+    <li><a href="#这个总结超级棒">这个总结超级棒</a>
       <ul>
-        <li><a href="#一思路">一、思路</a></li>
-        <li><a href="#二关键点">二、关键点</a></li>
-        <li><a href="#三-代码">三、 代码</a></li>
-        <li><a href="#四举一反三">四、举一反三</a></li>
+        <li><a href="#第一章节complexity-analysis-背后考察是数学知识">第一章节：Complexity Analysis [背后考察是数学知识]</a></li>
       </ul>
     </li>
+    <li><a href="#dynamic-programming">Dynamic Programming</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="heading"></h1>
-<h2 id="如何刷题">如何刷题</h2>
+      <h2 id="如何刷题">如何刷题</h2>
 <p>Happy coding! Enjoy Algorithms.</p>
 <p>Happy coding! Enjoy Algorithms.</p>
 <p>Happy coding! Enjoy Algorithms.</p>
+<p><a href="https://leetcode-cn.com/problemset/all">https://leetcode-cn.com/problemset/all</a>)</p>
+<p>solution</p>
+<ol>
+<li>思路</li>
+<li>细节</li>
+<li>时间复杂度：</li>
+</ol>
+<h1 id="plan">plan</h1>
+<p>任务：leetcode 哪些0-50 题目 看 5遍。预计1个月  开始日期：2021-8-7号。-2021-9-7</p>
+<p>任务：leetcode 哪些50-100 题目 看 5遍。预计1个月  开始日期：9-7号。</p>
+<p>任务：leetcode 哪些100-150 题目 看 5遍。预计1个月  开始日期：10-7号。</p>
+<h2 id="数组">数组</h2>
+<h2 id="字符串">字符串</h2>
+<ul>
+<li>求一个字符串的最长回文子串。</li>
+<li>无重复字符的最长子串 3</li>
+</ul>
+<p><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/ru-he-mo-hu-wen-ti-ju-ti-hua-fu-za-wen-t-m3zd/">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/ru-he-mo-hu-wen-ti-ju-ti-hua-fu-za-wen-t-m3zd/</a></p>
+<h2 id="单链表-ok">单链表 [ok]</h2>
+<ol>
+<li><strong>NC23</strong> <strong>划分链表</strong></li>
+</ol>
+<p><a href="https://www.nowcoder.com/practice/1dc1036be38f45f19000e48abe00b12f?tpId=188&amp;&amp;tqId=38668&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/job-code-high-week/question-ranking">https://www.nowcoder.com/practice/1dc1036be38f45f19000e48abe00b12f?tpId=188&amp;&amp;tqId=38668&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/job-code-high-week/question-ranking</a></p>
+<p><a href="https://leetcode-cn.com/problems/partition-list/">https://leetcode-cn.com/problems/partition-list/</a></p>
+<ol start="2">
+<li><a href="https://afteracademy.com/tech-interview/ds-algo-concepts/array-and-linked-list">https://afteracademy.com/tech-interview/ds-algo-concepts/array-and-linked-list</a> [12个题目都很经典]</li>
+</ol>
+<h2 id="二叉树">二叉树</h2>
+<h2 id="图">图</h2>
 <ol>
 <li>关于具体刷题，我只说第一遍，我是怎么刷的。</li>
 </ol>
@@ -193,56 +223,26 @@
 <p>不在刷题的时候开口，到面试的时候才意识到沟通不畅就太晚了。</p>
 <p>其实，我觉得，在刚开始的时候完全没必要思考，做题。因为初学者啥也不会。</p>
 <p>自己拼命想，写两题就被劝退不想再做了。</p>
-<ol>
-<li><a href="https://afteracademy.com/tech-interview/ds-algo-concepts">https://afteracademy.com/tech-interview/ds-algo-concepts</a> 题目总结和这个对比起来。</li>
-</ol>
-<p><a href="https://leetcode-cn.com/problemset/all">https://leetcode-cn.com/problemset/all/</a></p>
-<h2 id="数组">数组</h2>
-<h2 id="字符串">字符串</h2>
-<ol>
-<li>字符串相加</li>
-</ol>
-<p>- <a href="https://www.nowcoder.com/questionTerminal/c850773943af4f45a7a5fddc9eef4852?orderByHotValue=0&amp;mutiTagIds=5050&amp;page=1&amp;onlyReference=false">https://www.nowcoder.com/questionTerminal/c850773943af4f45a7a5fddc9eef4852?orderByHotValue=0&amp;mutiTagIds=5050&amp;page=1&amp;onlyReference=false</a></p>
-<p>- <a href="https://leetcode-cn.com/problems/add-strings/">https://leetcode-cn.com/problems/add-strings/</a></p>
-<ol start="2">
-<li>
-<p>最长不重复子串。</p>
-<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
-<p><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/</a></p>
-</li>
-</ol>
-<h2 id="单链表">单链表</h2>
-<ol>
-<li><strong>NC23</strong> <strong>划分链表</strong></li>
-</ol>
-<p><a href="https://www.nowcoder.com/practice/1dc1036be38f45f19000e48abe00b12f?tpId=188&amp;&amp;tqId=38668&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/job-code-high-week/question-ranking">https://www.nowcoder.com/practice/1dc1036be38f45f19000e48abe00b12f?tpId=188&amp;&amp;tqId=38668&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/job-code-high-week/question-ranking</a></p>
-<p><a href="https://leetcode-cn.com/problems/partition-list/">https://leetcode-cn.com/problems/partition-list/</a></p>
-<h2 id="二叉树">二叉树</h2>
-<h2 id="图">图</h2>
-<h3 id="一思路">一、思路</h3>
-<blockquote>
-<p>能说出基本实现步骤,实在不行动手画个流程图</p>
-</blockquote>
-<p>用一个 hashmap 来建立字符和其出现位置之间的映射。</p>
-<p>维护一个滑动窗口，窗口内的都是没有重复的字符，去尽可能的扩大窗口的大小，窗口不停的向右滑动。</p>
-<p>（1）如果当前遍历到的字符从未出现过，那么直接扩大右边界；</p>
-<p>（2）如果当前遍历到的字符出现过，则缩小窗口（左边索引向右移动??），然后继续观察当前遍历到的字符；</p>
-<p>（3）重复（1）（2），直到左边索引无法再移动；</p>
-<p>（4）维护一个结果 res，每次用出现过的窗口大小来更新结果 res，最后返回 res 获取结果。</p>
-<h3 id="二关键点">二、关键点</h3>
-<p>用一个 mapper 记录出现过并且没有被删除的字符</p>
-<p>用一个滑动窗口记录当前 index 开始的最大的不重复的字符序列</p>
-<p>用 res 去记录目前位置最大的长度，每次滑动窗口更新就去决定是否需要更新 res</p>
-<h3 id="三-代码">三、 代码</h3>
-<blockquote>
-<p>放轻松，虽然是c++实现，我们一贯宗旨是拒绝奇技淫巧，不懂代码一看就明白</p>
-</blockquote>
-<h3 id="四举一反三">四、举一反三</h3>
-<blockquote>
-<p>别人最佳答案并不重要，关键是自己理解。</p>
-</blockquote>
-<p>​</p>
+<p><a href="https://afteracademy.com/tech-interview/ds-algo-concepts">https://afteracademy.com/tech-interview/ds-algo-concepts</a></p>
+<p>题目总结和这个对比起来。</p>
+<p>[https://leetcode-cn.com/problemset/all/](</p>
+<h2 id="这个总结超级棒">这个总结超级棒</h2>
+<p><a href="https://afteracademy.com/tech-interview/ds-algo-concepts">https://afteracademy.com/tech-interview/ds-algo-concepts</a></p>
+<h3 id="第一章节complexity-analysis-背后考察是数学知识">第一章节：Complexity Analysis [背后考察是数学知识]</h3>
+<ul>
+<li>必须掌握时间复杂度计算 Big O notation example of Algorithms</li>
+</ul>
+<p>​	solution  *<strong>O(1)*</strong></p>
+<p><a href="https://mp.weixin.qq.com/s/A-GbSWvbB5TvXJUAXfxFyA">https://mp.weixin.qq.com/s/A-GbSWvbB5TvXJUAXfxFyA</a></p>
+<p><a href="https://afteracademy.com/blog/time-and-space-complexity-analysis-of-algorithm">https://afteracademy.com/blog/time-and-space-complexity-analysis-of-algorithm</a></p>
+<p><a href="https://stackoverflow.com/questions/8185079/how-to-calculate-binary-search-complexity">https://stackoverflow.com/questions/8185079/how-to-calculate-binary-search-complexity</a></p>
+<ul>
+<li>大话数据结构。p54 p60 p61  p63</li>
+</ul>
+<p><img src="image/image-20210807163137506.png" alt="image-20210807163137506"></p>
+<p><img src="image/image-20210807163150210.png" alt="image-20210807163150210"></p>
 <hr>
+<h2 id="dynamic-programming">Dynamic Programming</h2>
 
     </div>
 
@@ -269,7 +269,11 @@
           <a href="/tags/Interview-Question/">Interview Question</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/class/liyongle/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">李永乐老师</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/ARTS/life_2021_arts/">
             <span class="next-text nav-default">2021-思考与行动：</span>
             <span class="next-text nav-mobile">下一篇</span>
