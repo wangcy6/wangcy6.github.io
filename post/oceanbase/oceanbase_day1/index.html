@@ -48,7 +48,7 @@
 <meta itemprop="name" content="oceanbase源码阅读（1）程序启动">
 <meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-22T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4061">
+<meta itemprop="wordCount" content="5313">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="oceanbase源码阅读（1）程序启动"/>
 <meta name="twitter:description" content="OceanBase代码阅读第一天：程序启动"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 4061 字 </span>
-          <span class="more-meta"> 预计阅读 9 分钟 </span>
+          <span class="more-meta"> 约 5313 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -141,6 +141,11 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
+    <li>
+      <ul>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
     <li><a href="#预备知识">预备知识：</a></li>
     <li><a href="#源码编译">源码编译</a>
       <ul>
@@ -169,7 +174,10 @@
       </ul>
     </li>
     <li><a href="#日志">日志</a></li>
-    <li><a href="#代码">代码：</a></li>
+    <li><a href="#heading"></a></li>
+  </ul>
+
+  <ul>
     <li><a href="#参考别人阅读记录">参考别人阅读记录</a></li>
     <li><a href="#参考">参考：</a></li>
   </ul>
@@ -184,13 +192,41 @@
   </ul>
 
   <ul>
-    <li><a href="#第一题在线ddl操作-开始--">第一题：在线ddl操作 【开始&ndash;】</a></li>
+    <li><a href="#第一题the-lsm-tree-storage-engine-into-oceanbase-66">第一题：The LSM-tree storage engine into OceanBase #66</a>
+      <ul>
+        <li><a href="#小白提问1">小白提问1：</a></li>
+        <li><a href="#青铜理解">青铜理解</a></li>
+      </ul>
+    </li>
+    <li><a href="#tak">tak</a>
+      <ul>
+        <li><a href="#第二题一次性说清楚-paxosraft-等算法的区别">第二题：一次性说清楚 Paxos、Raft 等算法的区别</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h2 id="预备知识">预备知识：</h2>
+      <h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以完全上线的项目，非demo和一个知识点。自己认为真的 不是闹着玩的。。】</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>经过领导，专家 进行鸡蛋里挑骨头。【自己做好了别人路了胡扯，不会对别人产生任何影响，做事和做人一样，无论熟悉人，还是老师，领导，不相关人 反对 他们反馈信号，接受质疑，经过九九八十一难考验，并且你还在坚持认为对的。】</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目。【不听老人言，吃亏在眼前，不敢接受别人批评，说明自己完全没有把握，才去否定 愤怒方式】</p>
+</li>
+</ol>
+<h2 id="预备知识">预备知识：</h2>
 <ul>
 <li><a href="https://mp.weixin.qq.com/s/G8Rj0C5KuCpeCsWDxcY5Rg">掌握gdb原理</a></li>
 </ul>
@@ -757,7 +793,8 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="代码">代码：</h2>
+</div><h2 id="heading"></h2>
+<h1 id="第一部分源码阅读">第一部分：源码阅读</h1>
 <h2 id="参考别人阅读记录">参考别人阅读记录</h2>
 <ul>
 <li>
@@ -806,20 +843,102 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 <h3 id="开源数据库oceanbase代码导读11">开源数据库OceanBase代码导读（11）</h3>
 <p>（8）分布式事务</p>
 <p><a href="https://zhuanlan.zhihu.com/p/385944563">https://zhuanlan.zhihu.com/p/385944563</a></p>
+<p>（10）事务日志的提交和回放</p>
+<p><a href="https://www.zhihu.com/people/yang-zhi-feng-79/posts">https://www.zhihu.com/people/yang-zhi-feng-79/posts</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/389202627">https://zhuanlan.zhihu.com/p/389202627</a></p>
+<p>（14）索引构建</p>
+<p><a href="https://www.zhihu.com/people/yang-zhi-feng-79/posts">https://www.zhihu.com/people/yang-zhi-feng-79/posts</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/400934816">https://zhuanlan.zhihu.com/p/400934816</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/400934816">https://zhuanlan.zhihu.com/p/400934816</a></p>
+<p>create index i1 on t1(c2) &ndash;&gt;parser和resolver&ndash;&gt;ObRootService::create_index</p>
+<p>void TestDDL::do_load_sql &ndash;&gt;</p>
+<p>nt ObIndexBuilder::create_index</p>
+<p>int ObRootService::create_index</p>
+<h1 id="第一部分代码阅读">第一部分：代码阅读</h1>
+<ol>
+<li>OceanBase原理与实现分析</li>
+</ol>
+<p><a href="https://yang.observer/2020/04/19/oceanbase/">https://yang.observer/2020/04/19/oceanbase/</a></p>
+<p><a href="https://docs.huihoo.com/big-data/hic2011/taobao-oceanbase.pdf">https://docs.huihoo.com/big-data/hic2011/taobao-oceanbase.pdf</a></p>
+<ul>
+<li>OceanBase架构</li>
+</ul>
+<h1 id="第二部分pr">第二部分：pr</h1>
+<ol>
+<li><a href="https://github.com/oceanbase/oceanbase/issues/316">https://github.com/oceanbase/oceanbase/issues/316</a></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="n">pop_back</span><span class="p">()</span> <span class="k">in</span> <span class="n">ObSEArrayImpl</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">call</span> <span class="n">destructor</span> <span class="n">of</span> <span class="n">T</span> <span class="err">#</span><span class="m">316</span>
+
+
+<span class="n">The</span> <span class="n">first</span> <span class="n">pop_back</span><span class="p">()</span> <span class="n">function</span> <span class="k">in</span> <span class="err">`</span><span class="n">ObSEArrayImpl</span><span class="err">`</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">call</span> <span class="n">destructor</span> <span class="n">of</span> <span class="n">T</span> <span class="n">like</span> <span class="n">the</span> <span class="n">second</span> <span class="n">function</span><span class="p">,</span> <span class="n">or</span> <span class="n">there</span> <span class="n">may</span> <span class="n">be</span> <span class="n">risk</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">leaks</span><span class="p">.</span>
+
+
+<span class="n">Thanks</span> <span class="k">for</span> <span class="n">your</span> <span class="n">contribution</span><span class="p">.</span>
+<span class="n">Right</span><span class="p">,</span> <span class="n">it</span> <span class="k">is</span> <span class="n">a</span> <span class="n">bug</span> <span class="n">and</span> <span class="n">we</span> <span class="n">create</span> <span class="n">a</span> <span class="n">bug</span> <span class="n">task</span><span class="p">.</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="第三部分讨论">第三部分：讨论</h1>
+<h2 id="第一题the-lsm-tree-storage-engine-into-oceanbase-66">第一题：The LSM-tree storage engine into OceanBase #66</h2>
+<h3 id="小白提问1">小白提问1：</h3>
+<p><a href="https://github.com/oceanbase/oceanbase/discussions/66">https://github.com/oceanbase/oceanbase/discussions/66</a></p>
+<p><a href="https://hub.fastgit.org/oceanbase/oceanbase/discussions/66">https://hub.fastgit.org/oceanbase/oceanbase/discussions/66</a></p>
+<p>LSM-tree：</p>
+<p>平时写代码都是写缓存，写磁盘。着就是常规的os的文件系统。</p>
+<p>这个和 LSM-tree有区别？</p>
+<h3 id="青铜理解">青铜理解</h3>
+<p>一个文件（inode） 数据内部分为很多block，这些block 分散不同地方，然后通用block快 也合并多个请求，最后batch 操作！</p>
+<ul>
+<li>mysql inno的delete比insert慢得多[ 删除操作啥东东？？？]</li>
+</ul>
+<p>为了理解这个问题 我阅读了 资料：</p>
+<ul>
+<li>the Log structured Merge-Tree（LSM-Tree</li>
+</ul>
+<p>​    <a href="https://kernelmaker.github.io/lsm-tree">https://kernelmaker.github.io/lsm-tree</a></p>
 <ul>
 <li>
-<p>开源数据库OceanBase代码导读（13）（10）事务日志的提交和回放</p>
-<p><a href="https://zhuanlan.zhihu.com/p/389202627">https://zhuanlan.zhihu.com/p/389202627</a></p>
+<p><strong>LSM Tree 架构</strong></p>
+<p><a href="https://www.oceanbase.com/docs/oceanbase-database/oceanbase-database/V3.1.2/lsm-tree-architecture">https://www.oceanbase.com/docs/oceanbase-database/oceanbase-database/V3.1.2/lsm-tree-architecture</a></p>
+<p><a href="https://www.zhihu.com/question/20545708">https://www.zhihu.com/question/20545708</a></p>
+</li>
+<li>
+<p>为了理解这个问题 我阅读了<strong>redo 日志管理控制</strong> <a href="https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/redo-log-management-and-control">https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/redo-log-management-and-control</a></p>
+</li>
+<li>
+<p>为了理解这个问题 我阅读了 内存表 MemTable <a href="https://www.bookstack.cn/read/oceanbase-2.2.30-zh/30085c9e2371ac1c.md">https://www.bookstack.cn/read/oceanbase-2.2.30-zh/30085c9e2371ac1c.md</a></p>
+<p><a href="https://www.oceanbase.com/community/articles/200130">https://www.oceanbase.com/community/articles/200130</a></p>
+<p><a href="https://www.oceanbase.com/docs/oceanbase-database/oceanbase-database/V3.1.2/memory-table">https://www.oceanbase.com/docs/oceanbase-database/oceanbase-database/V3.1.2/memory-table</a></p>
 </li>
 </ul>
-<h1 id="社区问题">社区问题</h1>
-<h2 id="第一题在线ddl操作-开始--">第一题：在线ddl操作 【开始&ndash;】</h2>
-<p><a href="https://open.oceanbase.com/answer/detail?id=340">https://open.oceanbase.com/answer/detail?id=340</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/48370599">https://zhuanlan.zhihu.com/p/48370599</a></p>
+<h2 id="tak">tak</h2>
 <ul>
-<li>OceanBase v2.2.50 官方教程</li>
+<li>OS 有自己的内存管理策略。 page cache 利用率到了一定程度也会刷脏。另外也有定时（秒级）刷脏策略。  OS 的策略是通用的策略，它并不熟悉 具体是什么样的程序在写文件。是代码还是办公应用，或者数据库。</li>
 </ul>
-<p><a href="https://www.bookstack.cn/read/oceanbase-2.2.50-zh/%e4%ba%86%e8%a7%a3OceanBase%e6%95%b0%e6%8d%ae%e5%ba%93.md">https://www.bookstack.cn/read/oceanbase-2.2.50-zh/%e4%ba%86%e8%a7%a3OceanBase%e6%95%b0%e6%8d%ae%e5%ba%93.md</a></p>
+<p>数据库是特殊的应用，特殊在数据的价值、重要性，普通的文件不满足数据库的需求。所以数据库软件会有自己的内存管理策略和读写模型。  LSM-Tree 就是一种读写模型，传统的关系数据库读写模型是 BTree 那种。 oB的 LSM-Tree 创新之处还在于 level 不会很高，并且增量会尽可能的在内存，延迟刷脏。OB的刷脏有 转储（类比oracle的checkpoint，ob叫 minor freeze）以及默认每天一次的 合并（merge，major freeze）</p>
+<ul>
+<li>
+<p>操作系统的文件缓存 只能说有一定的相似度, 但算法是有很大区别</p>
+</li>
+<li>
+<p><a href="https://www.zhihu.com/question/20545708">https://www.zhihu.com/question/20545708</a>
+02-17</p>
+<p>请问我这样理解对吗？红黑树相比AVL主要优点是旋转次数少了，在并发情形下，AVL和红黑树的旋转操作都需要加锁，而红黑树的重染色过程不需加锁，所以在并发情形下红黑树的旋转操作少导致其并发性能比AVL高？</p>
+<p><a href="https://github.com/torvalds/linux/blob/master/Documentation/core-api/rbtree.rst">https://github.com/torvalds/linux/blob/master/Documentation/core-api/rbtree.rst</a></p>
+</li>
+</ul>
+<h3 id="第二题一次性说清楚-paxosraft-等算法的区别">第二题：一次性说清楚 Paxos、Raft 等算法的区别</h3>
 
     </div>
 

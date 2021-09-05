@@ -6,7 +6,25 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 07 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TDengine</title>
+      <link>https://wangcy6.github.io/post/2021/02_tdb/</link>
+      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/02_tdb/</guid>
+      <description>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有</description>
+    </item>
+    
+    <item>
+      <title>docker入门教程</title>
+      <link>https://wangcy6.github.io/post/2021/docker01/</link>
+      <pubDate>Wed, 25 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/docker01/</guid>
+      <description>docker 第一天 基本操作 https://hub.fastgit.org/docker https://github.com/docker 安装 1 2 3 4 5 6 7 8 9 10 11 [root@fhb ~]# cat /etc/redhat-release CentOS release 6.8 (Final) [root@fhb ~]# sudo rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm [root@fhb ~]# sudo yum update -y curl -sSL https://get.docker.com/ | sh docker version service docker start yum install -y nginx service nginx start docker 基本操作 启动 1 systemctl restart</description>
+    </item>
+    
     <item>
       <title>李永乐老师</title>
       <link>https://wangcy6.github.io/post/class/liyongle/</link>
@@ -17,12 +35,21 @@
     </item>
     
     <item>
+      <title>跟leveldb学C&#43;&#43;，跟rocksdb学做引擎</title>
+      <link>https://wangcy6.github.io/post/2021/01_Rocksdb/</link>
+      <pubDate>Mon, 02 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/01_Rocksdb/</guid>
+      <description>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有</description>
+    </item>
+    
+    <item>
       <title>leetcode 题目分类</title>
       <link>https://wangcy6.github.io/post/leetcode/leetcode_string/</link>
       <pubDate>Wed, 28 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/leetcode_string/</guid>
-      <description>如何刷题 Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. Happy coding! Enjoy Algorithms. https://leetcode-cn.com/problemset/all) solution 思路 细节 时间复杂度： plan 任务：leetcode 哪些0-50 题目 看 5遍。预计1个月 开始日期：2021-8-7</description>
+      <description>方法：架构评审 &amp;amp;&amp;amp;日常沟通 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是</description>
     </item>
     
     <item>
@@ -67,7 +94,7 @@
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</guid>
-      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具÷÷ 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步</description>
+      <description>沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以</description>
     </item>
     
     <item>
@@ -94,6 +121,15 @@
       <pubDate>Sun, 20 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/kubernetes_base/</guid>
+      <description>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有</description>
+    </item>
+    
+    <item>
+      <title>从零开始k8s</title>
+      <link>https://wangcy6.github.io/post/2021/kubernetes_01/</link>
+      <pubDate>Sun, 20 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/kubernetes_01/</guid>
       <description>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有</description>
     </item>
     
@@ -125,12 +161,21 @@
     </item>
     
     <item>
+      <title>python入门教程</title>
+      <link>https://wangcy6.github.io/post/2021/python01/</link>
+      <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/python01/</guid>
+      <description>第一天 window python 环境安装 官网地址： https://www.python.org/downloads/release/python-396/ python环境变量：path D:\local\python3 pip环境变量 path D:\local\python3\Scripts window可以默认按照自动设置。其他手工设置 用于检测当前W</description>
+    </item>
+    
+    <item>
       <title>SRS官方文档和学习路径</title>
       <link>https://wangcy6.github.io/post/2020/01_srs/</link>
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/01_srs/</guid>
-      <description>卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不上) 1 2 3 4 5 6 git clone -b</description>
+      <description>卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ Introduction Problem solucction https://gitee.com/ossrs/srs/wikis/v4_CN_Home https://github.com/ossrs/srs https://hub.fastgit.org/ossrs/srs 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不上) 1 2 3</description>
     </item>
     
     <item>

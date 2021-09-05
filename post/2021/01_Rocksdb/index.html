@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>庖丁解牛之LevelDB - Troy的网络博客</title>
+  <title>跟leveldb学C&#43;&#43;，跟rocksdb学做引擎 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="庖丁解牛之LevelDB" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/post/2020/leveldb/" />
+<link rel="canonical" href="https://wangcy6.github.io/post/2021/01_Rocksdb/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,20 +38,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="庖丁解牛之LevelDB" />
-<meta property="og:description" content="庖丁解牛之LevelDB" />
+<meta property="og:title" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎" />
+<meta property="og:description" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangcy6.github.io/post/2020/leveldb/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-06-20T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://wangcy6.github.io/post/2021/01_Rocksdb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-08-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-08-02T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="庖丁解牛之LevelDB">
-<meta itemprop="description" content="庖丁解牛之LevelDB"><meta itemprop="datePublished" content="2021-06-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="937">
-<meta itemprop="keywords" content="庖丁解牛," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="庖丁解牛之LevelDB"/>
-<meta name="twitter:description" content="庖丁解牛之LevelDB"/>
+<meta itemprop="name" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎">
+<meta itemprop="description" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎"><meta itemprop="datePublished" content="2021-08-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-08-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="874">
+<meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎"/>
+<meta name="twitter:description" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -123,12 +123,12 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">庖丁解牛之LevelDB</h1>
+      <h1 class="post-title">跟leveldb学C&#43;&#43;，跟rocksdb学做引擎</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2021-06-20 00:00 </span>
+        <span class="post-time"> 2021-08-02 00:00 </span>
         
-          <span class="more-meta"> 约 937 字 </span>
+          <span class="more-meta"> 约 874 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -139,7 +139,7 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#leveldb">LevelDB</a>
+    <li><a href="#heading"></a>
       <ul>
         <li><a href="#一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</a></li>
         <li><a href="#二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</a></li>
@@ -152,87 +152,177 @@
   </ul>
 
   <ul>
-    <li><a href="#设计思路"><strong>设计思路</strong></a>
+    <li>
       <ul>
-        <li><a href="#从看文档开始httpsgithubcomgoogleleveldbblobmasterdocindexmd">从看文档开始：https://github.com/google/leveldb/blob/master/doc/index.md</a></li>
+        <li><a href="#第一天">第一天</a></li>
       </ul>
     </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-查看别人的文档">1. 查看别人的文档</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#3-leveldb之lsm-tree">3 LevelDB之LSM-Tree</a></li>
+      </ul>
+    </li>
+    <li><a href="#ref">ref</a></li>
+    <li><a href="#第一天输出">第一天输出：</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h2 id="leveldb">LevelDB</h2>
-<p>LevelDB是Google传奇工程师Jeff Dean和Sanjay Ghemawat开源的KV存储引擎</p>
-<p>无论从设计还是代码上都可以用精致优雅来形容，非常值得细细品味。</p>
+      <h2 id="heading"></h2>
 <h3 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h3>
 <h3 id="二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</h3>
 <h3 id="三这个技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</h3>
 <h3 id="四技术的组成部分和关键点">四、技术的组成部分和关键点。</h3>
 <h3 id="五技术的底层原理和关键实现">五、技术的底层原理和关键实现</h3>
 <h3 id="六已有的实现和它之间的对比">六、已有的实现和它之间的对比</h3>
-<table>
-<thead>
-<tr>
-<th>产品</th>
-<th>一致性</th>
-<th>角色</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ZooKeeper</td>
-<td>过半</td>
-<td>leader,followers,Observer（只读节点）</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>conf</td>
-<td>Master,Slave</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="庖丁解leveldb之概览-todo任务执行中">庖丁解LevelDB之概览 【todo任务执行中】</h1>
-<p>来呀：http://catkang.github.io/2017/01/07/leveldb-summary.html</p>
-<p>接下来就将用几篇博客来由表及里的介绍LevelDB的设计和代码细节。</p>
-<p>本文将从设计思路、整体结构、读写流程、压缩流程几个方面来进行介绍，从而能够对LevelDB有一个整体的感知。</p>
-<h2 id="设计思路"><strong>设计思路</strong></h2>
-<p>LevelDB的数据是存储在磁盘上的，采用LSM-Tree的结构实现。</p>
-<p>LSM-Tree将磁盘的随机写转化为顺序写，从而大大提高了写速度。</p>
-<p>为了做到这一点LSM-Tree的思路是将索引树结构拆成一大一小两颗树，较小的一个常驻内存，较大的一个持久化到磁盘，他们共同维护一个有序的key空间。</p>
-<p>写入操作会首先操作内存中的树，随着内存中树的不断变大，会触发与磁盘中树的归并操作，而归并操作本身仅有顺序写。如下图所示：</p>
-<p><img src="http://catkang.github.io/assets/img/leveldb_summary/summary.png" alt="LSM示意"></p>
-<p>随着数据的不断写入，磁盘中的树会不断膨胀，为了避免每次参与归并操作的数据量过大，以及优化读操作的考虑，LevelDB将磁盘中的数据又拆分成多层，每一层的数据达到一定容量后会触发向下一层的归并操作，每一层的数据量比其上一层成倍增长。这也就是LevelDB的名称来源。</p>
-<p>LSM-Tree示意图来源于论文：<a href="http://www.cs.umb.edu/~poneil/lsmtree.pdf">The Log-Structured Merge-Tree</a></p>
-<p>Source Code：https://github.com/google/leveldb</p>
-<blockquote>
-<p>看完了上面文字，我还是不懂 怎么办？不要说自己理解差 笨，拿出更多时间吧</p>
-</blockquote>
+<h1 id="rocksdb">rocksdb</h1>
+<h3 id="第一天">第一天</h3>
+<p>ubuntu</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">git clone --recurse-submodules https://github.com/google/leveldb.git
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mkdir build &amp;&amp; cd build
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rocksdb ..
+make &amp;&amp; make install
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="从看文档开始httpsgithubcomgoogleleveldbblobmasterdocindexmd">从看文档开始：https://github.com/google/leveldb/blob/master/doc/index.md</h3>
+</div><p>阅读的资料：</p>
+<ol>
+<li>基于leveldb谈谈MVCC多版本控制 <a href="https://yuerblog.cc/2017/09/26/leveldb-mvcc/">https://yuerblog.cc/2017/09/26/leveldb-mvcc/</a> ，[10分]
 <ul>
-<li>如何读写操作的！！！</li>
+<li><a href="https://yuerblog.cc/wp-content/uploads/leveldb%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90.pdf">https://yuerblog.cc/wp-content/uploads/leveldb%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90.pdf</a> 【10分】</li>
 </ul>
+</li>
+<li><a href="http://mysql.taobao.org/monthly/2018/11/05/">http://mysql.taobao.org/monthly/2018/11/05/</a> 【10分&ndash;开始】</li>
+<li><a href="http://zrainy.top/2019/12/11/leveldb%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A05-dbformat%E5%92%8Ccomparator/">leveldb源码学习5-dbformat和comparator</a></li>
+</ol>
+<h1 id="-leveldb-学习方法"># leveldb 学习方法</h1>
+<p><a href="https://github.com/google/leveldb">https://github.com/google/leveldb</a></p>
+<p><a href="mailto:git@github.com">git@github.com</a>:watchpoints/leveldb.git</p>
+<h3 id="1-查看别人的文档">1. 查看别人的文档</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git clone git@github.com:watchpoints/leveldb.git
+mkdir -p build &amp;&amp; cd build
+cmake -DCMAKE_BUILD_TYPE=Release .. &amp;&amp; cmake --build .
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>代码位置：/Users/wangchuanyi/doc/daily_read_coding/leveldb</p>
+</li>
+<li>
+<p><a href="https://kernelmaker.github.io/Leveldb_Put">Leveldb之Put实现</a></p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/xueqiuqiu/p/8296324.html">https://www.cnblogs.com/xueqiuqiu/p/8296324.html</a></p>
+</li>
+<li>
+<h1 id="leveldb的源码阅读一httpswwwcnblogscomxueqiuqiup8287008html"><a href="https://www.cnblogs.com/xueqiuqiu/p/8287008.html">LevelDB的源码阅读（一）</a></h1>
+</li>
+<li>
+<h1 id="leveldb的源码阅读二-open操作httpswwwcnblogscomxueqiuqiup8289046html"><a href="https://www.cnblogs.com/xueqiuqiu/p/8289046.html">LevelDB的源码阅读（二） Open操作</a></h1>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/xueqiuqiu/p/8268814.html">https://www.cnblogs.com/xueqiuqiu/p/8268814.html</a></p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+项目结构
+db/, 数据库逻辑
+doc/, MD文档
+helpers/, LevelDB内存版, 通过namespace覆盖
+port/, 平台相关代码
+table/, LSM有关的
+LevelDB选择用跳跃表（skiplist）实现memtable和immemtable, 用有序行组来实现SSTable。
+</code></pre></td></tr></table>
+</div>
+</div><p>leveldb的写入速度很快，主要因为它将随机写转化为顺序写，</p>
+<p>一个写入操作会首先在log文件中顺序写oplog，然后在内存的memtable中插入该数据就可返回</p>
+<p>疑问：</p>
+<ol>
+<li>随机写转化为顺序写 怎么转化，用户write可任意位置【10，30，1，80】，追加位置，【1，2，3，4，5】</li>
+<li>内存的memtable是cache吗？</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+DBImpl::Put -&gt; DB::Put -&gt; DBImpl::Write
+
+/Users/wangchuanyi/doc/daily_read_coding/leveldb/db/db_impl.cc
+
+Status DBImpl::Write(
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-leveldb之lsm-tree">3 LevelDB之LSM-Tree</h3>
+<p><a href="https://zouzls.github.io/2016/11/23/LevelDB%E4%B9%8BLSM-Tree/">https://zouzls.github.io/2016/11/23/LevelDB%E4%B9%8BLSM-Tree/</a></p>
+<ul>
+<li>LSM被设计来提供比传统的B+树或者ISAM更好的写操作吞吐量，通过消去随机的本地更新操作来达到这个目标。</li>
+</ul>
+<p>那么为什么这是一个好的方法呢？这个问题的本质还是磁盘随机操作慢，顺序读写快的老问题。这二种操作存在巨大的差距，无论是磁盘还是SSD。</p>
+<ol>
+<li>问：结构是什么？</li>
+</ol>
+<ul>
+<li>
+<p>memtable 的核心结构就是用了跳表</p>
+<p>elasticsearch 的高速搜索就是基于跳表,</p>
+</li>
+<li>
+<p>sstable 全名 sort-string table, bigtable 使用的存储技术. 顾名思义, sstable 中的数据都是有序的</p>
+</li>
+</ul>
+<h2 id="ref">ref</h2>
+<ul>
+<li><a href="https://kernelmaker.github.io/">https://kernelmaker.github.io/</a></li>
+<li></li>
+</ul>
+<h2 id="第一天输出">第一天输出：</h2>
 
     </div>
 
@@ -244,7 +334,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-06-20 00:00
+        2021-08-02 00:00
         
     </span>
   </p>
@@ -256,16 +346,16 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/%E5%BA%96%E4%B8%81%E8%A7%A3%E7%89%9B/">庖丁解牛</a>
+          <a href="/tags/book/">book</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/2021/kubernetes_01/">
+        <a class="prev" href="/post/class/liyongle/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">从零开始k8s</span>
+            <span class="prev-text nav-default">李永乐老师</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/English/01_word/">
-            <span class="next-text nav-default">english</span>
+        <a class="next" href="/post/leetcode/leetcode_string/">
+            <span class="next-text nav-default">leetcode 题目分类</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

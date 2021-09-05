@@ -48,7 +48,7 @@
 <meta itemprop="name" content="SRS官方文档和学习路径">
 <meta itemprop="description" content="高性能可扩展服务"><meta itemprop="datePublished" content="2021-06-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3875">
+<meta itemprop="wordCount" content="4645">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SRS官方文档和学习路径"/>
 <meta name="twitter:description" content="高性能可扩展服务"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 3875 字 </span>
-          <span class="more-meta"> 预计阅读 8 分钟 </span>
+          <span class="more-meta"> 约 4645 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -143,7 +143,7 @@
   <ul>
     <li><a href="#第一天快速预览">第一天：快速预览</a>
       <ul>
-        <li></li>
+        <li><a href="#40">4.0</a></li>
         <li><a href="#第一天-fqa">第一天 FQA</a></li>
       </ul>
     </li>
@@ -167,6 +167,11 @@
 
   <ul>
     <li><a href="#todo-跟踪issue去学习">todo 跟踪issue去学习</a></li>
+    <li><a href="#推送">推送</a>
+      <ul>
+        <li><a href="#查看文档">查看文档</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
@@ -176,6 +181,12 @@
 <p>SRS4.0官方文档和学习路径</p>
 <p><a href="https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg">https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg</a></p>
 <p><a href="https://ossrs.net/releases/">https://ossrs.net/releases/</a></p>
+<p>Introduction</p>
+<p>Problem</p>
+<p>solucction</p>
+<p><a href="https://gitee.com/ossrs/srs/wikis/v4_CN_Home">https://gitee.com/ossrs/srs/wikis/v4_CN_Home</a></p>
+<p><a href="https://github.com/ossrs/srs">https://github.com/ossrs/srs</a></p>
+<p><a href="https://hub.fastgit.org/ossrs/srs">https://hub.fastgit.org/ossrs/srs</a></p>
 <h2 id="第一天快速预览">第一天：快速预览</h2>
 <p>环境：2g+Ubuntu</p>
 <ul>
@@ -183,20 +194,32 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">git clone -b 4.0release https://gitee.com/ossrs/srs.git &amp;&amp;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+git clone -b 4.0release https://gitee.com/ossrs/srs.git &amp;&amp;
 cd srs/trunk &amp;&amp; ./configure &amp;&amp; make &amp;&amp; ./objs/srs -c conf/srs.conf
 
 /root/code/c++/srs/trunk
 
 nohup ./objs/srs -c conf/srs.conf &amp;
+10.112.179.21
+/usr/local/srs 
+rtmp://10.112.179.21:1935/live/wangchuanyi
+
+
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -204,15 +227,18 @@ nohup ./objs/srs -c conf/srs.conf &amp;
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">nohup</span> <span class="p">.</span><span class="o">/</span><span class="n">ffmpeg</span>  <span class="o">-</span><span class="n">re</span> <span class="o">-</span><span class="n">i</span> <span class="p">.</span><span class="o">/</span><span class="n">hengping</span><span class="p">.</span><span class="n">mp4</span>  <span class="o">-</span><span class="n">vcodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">acodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">f</span> <span class="n">flv</span> <span class="nl">rtmp</span><span class="p">:</span><span class="c1">//74.120.174.137:1935/live/wangchuanyi &gt;&gt;./push3.log 2&gt;&amp;1 &amp;
@@ -224,7 +250,10 @@ nohup ./objs/srs -c conf/srs.conf &amp;
 <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">srs</span><span class="p">.</span><span class="n">log</span>  <span class="c1">//目前看不懂 
 </span><span class="c1"></span>
 <span class="nl">https</span><span class="p">:</span><span class="c1">//gitee.com/ossrs/srs/wikis/v4_CN_SampleRTMP?sort_id=3957465
-</span></code></pre></td></tr></table>
+</span><span class="c1"></span>
+
+
+</code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>VLC观看</li>
@@ -255,6 +284,47 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 4. H5<span class="o">(</span>WebRTC<span class="o">)</span>: webrtc://74.120.174.137/live/wangchuanyi --测试不通过【相关配置和原理不清楚】
 
 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="40">4.0</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /app/work
+git clone -b 4.0release https://gitee.com/ossrs/srs.git
+srs-4.0release.zip
+rm -rf  srs-4.0release\ \(1\).zip
+./configure 
+make
+cat conf/srs.conf
+nohup ./objs/srs -c conf/srs.conf &amp;
+
+:10.112.179.21
+https://gitee.com/ossrs/srs/wikis/v4_CN_HTTPApi?sort_id=3957392
+
+./objs/srs -c http-api.conf
+cat ./conf/http-api.conf
+http://10.112.179.21:1985/api/v1
+
+http://10.112.179.21:1985/api/v1/streams
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="C:%5CUsers%5Cwangchuanyi%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210531211418617.png" alt="image-20210531211418617"></p>
@@ -550,13 +620,77 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">H.264有四种画质级别,分别是baseline, extended, main, high：
@@ -566,9 +700,283 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 3、Main profile：主流画质。提供I/P/B 帧，支持无交错（Progressive）和交错（Interlaced）， 也支持CAVLC 和CABAC 的支持；
 4、High profile：高级画质。在main Profile 的基础上增加了8x8内部预测、自定义量化、 无损视频编码和更多的YUV 格式；
 　　H.264 Baseline profile、Extended profile和Main profile都是针对8位样本数据、4:2:0格式(YUV)的视频序列。在相同配置情况下，High profile（HP）可以比Main profile（MP）降低10%的码率。 根据应用领域的不同，Baseline profile多应用于实时通信领域，Main profile多应用于流媒体领域，High profile则多应用于广电和存储领域。
+　　
+　　
+　　nt SrsRtmpConn::acquire_publish(SrsSource* source, bool is_edge)
+{
+int ret = ERROR_SUCCESS;
+
+if (!source-&gt;can_publish(is_edge)) {
+ret = ERROR_SYSTEM_STREAM_BUSY;
+srs_warn(&#34;stream %s is already publishing. ret=%d&#34;,
+req-&gt;get_stream_url().c_str(), ret);
+return ret;
+}
+
+// when edge, ignore the publish event, directly proxy it.
+if (is_edge) {
+if ((ret = source-&gt;on_edge_start_publish()) != ERROR_SUCCESS) {
+srs_error(&#34;notice edge start publish stream failed. ret=%d&#34;, ret);
+return ret;
+}
+} else {
+if ((ret = source-&gt;on_publish()) != ERROR_SUCCESS) {
+srs_error(&#34;notify publish failed. ret=%d&#34;, ret);
+return ret;
+}
+}
+
+return ret;
+}
+
+清者自清:
+int SrsRtmpConn::process_publish_message(SrsSource* source, SrsCommonMessage* msg, bool vhost_is_edge)
+
+清者自清:
+int SrsSource::on_audio(SrsCommonMessage* shared_audio)
+
+清者自清:
+int SrsPublishRecvThread::handle(SrsCommonMessage* msg)
+
+清者自清:
+SrsSource
+
+清者自清:
+SrsRtmpConn
+
+清者自清:
+SrsPublishRecvThread
+
+清者自清:
+SrsPlayEdge
+
+清者自清:
+SrsPublishEdge
+
+清者自清:
+http_hooks_on_policy_publish
+
+清者自清:
+http_hooks_on_policy_unpublish
+
+清者自清:
+[图片]
+
+清者自清:
+SrsGoApiRaw::SrsGoApiRaw(SrsServer *svr)
 </code></pre></td></tr></table>
 </div>
+</div><p><img src="http://wiki.intra.gomeplus.com/download/attachments/75367792/image2021-8-26%2017%3A16%3A59.png?version=1&amp;modificationDate=1629969420000&amp;api=v2" alt="img"></p>
+<p><img src="http://wiki.intra.gomeplus.com/download/attachments/75367792/image2021-8-26%2017%3A17%3A49.png?version=1&amp;modificationDate=1629969470000&amp;api=v2" alt="img"></p>
+<h2 id="推送">推送</h2>
+<p>1、首先分析RTMP连接</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">SrsServer</span><span class="o">::</span><span class="n">listen_rtmp</span><span class="p">()</span>
+<span class="kt">int</span> <span class="n">SrsConnection</span><span class="o">::</span><span class="n">cycle</span><span class="p">()</span>
+
+<span class="kt">int</span> <span class="n">SrsRecvThread</span><span class="o">::</span><span class="n">cycle</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">rtmp</span><span class="o">-&gt;</span><span class="n">recv_message</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">handler</span><span class="o">-&gt;</span><span class="n">handle</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+            <span class="p">}</span>
+<span class="mf">10.112.179.21</span> 
+<span class="mf">10.115.37.56</span>
+<span class="nl">rtmp</span><span class="p">:</span><span class="c1">//zhibo.xx.com.cn/live/lyl
+</span><span class="c1"></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">srs</span><span class="o">/</span><span class="n">objs</span><span class="o">/</span><span class="n">srs</span><span class="p">.</span><span class="n">log</span>
+<span class="n">gome</span>
+ <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">srs</span><span class="o">/</span><span class="n">objs</span><span class="o">/</span><span class="n">srs</span><span class="p">.</span><span class="n">log</span> <span class="o">|</span><span class="n">grep</span> <span class="n">trace</span>
+
+ 
+<span class="kt">int</span> <span class="n">SrsPublishRecvThread</span><span class="o">::</span><span class="n">handle</span><span class="p">(</span><span class="n">SrsCommonMessage</span><span class="o">*</span> <span class="n">msg</span><span class="p">)</span>
+
+    
+<span class="n">SrsRtmpConn</span><span class="o">::</span><span class="n">handle_publish_message</span>
+    
+    
+<span class="kt">int</span> <span class="n">SrsRtmpConn</span><span class="o">::</span><span class="n">handle_publish_message</span><span class="p">(</span><span class="n">SrsSource</span> <span class="o">*</span><span class="n">source</span><span class="p">,</span> <span class="n">SrsCommonMessage</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">is_fmle</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">vhost_is_edge</span><span class="p">)</span>
+        <span class="c1">// for edge, directly proxy message to origin.
+</span><span class="c1"></span>         <span class="c1">// process audio packet
+</span><span class="c1"></span>         <span class="c1">// process video packet
+</span><span class="c1"></span>         <span class="c1">// process onMetaData
+</span><span class="c1"></span>
+    
+    <span class="kt">int</span> <span class="n">SrsSource</span><span class="o">::</span><span class="n">on_video</span><span class="p">(</span><span class="n">SrsCommonMessage</span><span class="o">*</span> <span class="n">shared_video</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
+</div><p><img src="https://images2018.cnblogs.com/blog/1382048/201805/1382048-20180525172300209-859246016.png" alt="https://www.cnblogs.com/jimodetiantang/p/9087775.html"></p>
+<p><a href="https://www.cnblogs.com/jimodetiantang/p/9087775.html">https://www.cnblogs.com/jimodetiantang/p/9087775.html</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">SrsRtmpConn</span><span class="o">::</span><span class="n">stream_service_cycle</span><span class="p">()</span>
+    
+    <span class="k">virtual</span> <span class="kt">int</span> <span class="n">http_hooks_on_connect</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_close</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_publish</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_unpublish</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_play</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_stop</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_publish_receiveaudio</span><span class="p">(</span><span class="kt">bool</span> <span class="n">flag</span><span class="p">);</span>	
+    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_publish_receivevideo</span><span class="p">(</span><span class="kt">bool</span> <span class="n">flag</span><span class="p">);</span>
+	<span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_policy_publish</span><span class="p">();</span>
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_policy_unpublish</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">SrsRtmpConn</span><span class="o">::</span><span class="n">publishing</span><span class="p">(</span><span class="n">SrsSource</span><span class="o">*</span> <span class="n">source</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="err">关于</span><span class="n">SRS3配置文件参数说明</span>
+    <span class="nl">https</span><span class="p">:</span><span class="c1">//www.itbkz.com/12548.html
+</span><span class="c1"></span>    <span class="nl">https</span><span class="p">:</span><span class="c1">//gitee.com/winlinvip/srs.oschina/wikis/v3_CN_HTTPCallback
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>播放回调：https://gitee.com/ossrs/srs/wikis/v4_CN_HTTPCallback?sort_id=3957393</li>
+</ol>
+<p>virtual int http_hooks_on_play();</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#define URL_SRS_POST &#34;/api/v1/streams&#34;
+
+else if (0 == strncasecmp(url, URL_SRS_POST, strlen(url)))
+
+void dns_down_httpserver::deal_srs_msg(char* data)
+  virtual void publish_msg(char *msg) = 0;
+
+  //{&#34;action&#34;:&#34;on_play&#34;,&#34;client_id&#34;:6120,&#34;ip&#34;:&#34;121.69.49.32&#34;,&#34;vhost&#34;:&#34;gomeplus&#34;,&#34;server_ip&#34;:&#34;127.0.0.1&#34;,
+//&#34;server_port&#34;:&#34;19360&#34;,&#34;app&#34;:&#34;live/162020008_188800160&#34;,&#34;stream&#34;:1887608896,&#34;play_stream&#34;:&#34;liveAV-162020008&#34;,
+//&#34;tcUrl&#34;:&#34;rtmp://124.250.75.41:19360/live/162020008_188800160?vhost=gomeplus&#34;,&#34;pageUrl&#34;:&#34;&#34;
+
+:srs_redis get new data {
+        &#34;streamid&#34;:     &#34;73523459629&#34;,
+        &#34;video&#34;:        &#34;1&#34;,
+        &#34;audio&#34;:        &#34;0&#34;,
+        &#34;confer&#34;:       &#34;73523459629_73546364519&#34;
+}
+
+http_hooks {
+        on_publish_receivevideo http://10.112.179.22/api/v1/streams;
+        on_publish_receiveaudio http://10.112.179.22/api/v1/streams;
+        on_publish http://10.112.179.22/api/v1/streams;
+        on_stop http://10.112.179.22/api/v1/sessions;
+        on_unpublish http://10.112.179.22/api/v1/streams;
+        on_play http://10.112.179.22/api/v1/sessions;
+        enabled on;
+    }
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>扩展架构阅读：rpc无法跟踪</li>
+</ol>
+<ul>
+<li>gRPC + Zipkin 分布式链路追踪
+<a href="https://blog.csdn.net/EDDYCJY/article/details/102426281">https://blog.csdn.net/EDDYCJY/article/details/102426281</a></li>
+<li>基于 Thrift RPC 的调用链跟踪</li>
+</ul>
+<h3 id="查看文档">查看文档</h3>
+<ul>
+<li><a href="https://gitee.com/ossrs/srs/wikis/v4_CN_SrsLog">https://gitee.com/ossrs/srs/wikis/v4_CN_SrsLog</a></li>
+</ul>
+<p><a href="https://hub.fastgit.org/ossrs/srs">https://hub.fastgit.org/ossrs/srs</a></p>
+<p><a href="https://gitee.com/ossrs/srs/wikis/v4_CN_DeliveryMethod">https://gitee.com/ossrs/srs/wikis/v4_CN_DeliveryMethod</a></p>
+<ol>
+<li>获取在线人数
+<a href="https://gitee.com/ossrs/srs/wikis/v2_CN_HTTPApi?sort_id=3957020">https://gitee.com/ossrs/srs/wikis/v2_CN_HTTPApi?sort_id=3957020</a></li>
+</ol>
+<p>srs的http API控制相关接口
+<a href="https://blog.csdn.net/weixin_36270623/article/details/104411595">https://blog.csdn.net/weixin_36270623/article/details/104411595</a></p>
+<p>curl -v -X GET http://10.1.0.222:1985/api/v1/streams/</p>
+<p>curl -v -X GET http://10.1.0.222:1985/api/v1/streams/24420</p>
+<h1 id="第二部分参与开发">第二部分：参与开发</h1>
+<ul>
+<li>
+<p>rtmp转码后有没有办法再推到srs服务器上 有大佬知道吗？</p>
+</li>
+<li>
+<p>断过网重新推流都会重新调用on_publish</p>
+</li>
+</ul>
+<p><a href="http://ossrs.net/srs.release/releases/">http://ossrs.net/srs.release/releases/</a></p>
+
     </div>
 
     <div class="post-copyright">
@@ -592,9 +1000,9 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/ARTS/2_ARTS_2021_18_weekly/">
+        <a class="prev" href="/post/2021/python01/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">02_ARTS_2021_weekly</span>
+            <span class="prev-text nav-default">python入门教程</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         <a class="next" href="/post/plan/oceanbase_read_01/">

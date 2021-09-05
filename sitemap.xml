@@ -3,28 +3,49 @@
   
   <url>
     <loc>https://wangcy6.github.io/tags/book/</loc>
-    <lastmod>2021-08-07T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/post/</loc>
-    <lastmod>2021-08-07T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/tags/</loc>
-    <lastmod>2021-08-07T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2021/02_tdb/</loc>
+    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/</loc>
-    <lastmod>2021-08-07T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/code_reading/</loc>
+    <lastmod>2021-08-25T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2021/docker01/</loc>
+    <lastmod>2021-08-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -32,6 +53,13 @@
   <url>
     <loc>https://wangcy6.github.io/post/class/liyongle/</loc>
     <lastmod>2021-08-07T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2021/01_Rocksdb/</loc>
+    <lastmod>2021-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -177,6 +205,13 @@
   </url>
   
   <url>
+    <loc>https://wangcy6.github.io/post/2021/kubernetes_01/</loc>
+    <lastmod>2021-06-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/tags/%E5%BA%96%E4%B8%81%E8%A7%A3%E7%89%9B/</loc>
     <lastmod>2021-06-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -207,6 +242,13 @@
   <url>
     <loc>https://wangcy6.github.io/post/ARTS/2_ARTS_2021_18_weekly/</loc>
     <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/2021/python01/</loc>
+    <lastmod>2021-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

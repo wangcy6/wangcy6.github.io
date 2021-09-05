@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>庖丁解牛之LevelDB - Troy的网络博客</title>
+  <title>TDengine - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="庖丁解牛之LevelDB" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="TDengine" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/post/2020/leveldb/" />
+<link rel="canonical" href="https://wangcy6.github.io/post/2021/02_tdb/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,20 +38,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="庖丁解牛之LevelDB" />
-<meta property="og:description" content="庖丁解牛之LevelDB" />
+<meta property="og:title" content="TDengine" />
+<meta property="og:description" content="TDengine" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangcy6.github.io/post/2020/leveldb/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-06-20T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://wangcy6.github.io/post/2021/02_tdb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-08-30T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-08-30T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="庖丁解牛之LevelDB">
-<meta itemprop="description" content="庖丁解牛之LevelDB"><meta itemprop="datePublished" content="2021-06-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-06-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="937">
-<meta itemprop="keywords" content="庖丁解牛," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="庖丁解牛之LevelDB"/>
-<meta name="twitter:description" content="庖丁解牛之LevelDB"/>
+<meta itemprop="name" content="TDengine">
+<meta itemprop="description" content="TDengine"><meta itemprop="datePublished" content="2021-08-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-08-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="598">
+<meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TDengine"/>
+<meta name="twitter:description" content="TDengine"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -123,12 +123,12 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">庖丁解牛之LevelDB</h1>
+      <h1 class="post-title">TDengine</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2021-06-20 00:00 </span>
+        <span class="post-time"> 2021-08-30 00:00 </span>
         
-          <span class="more-meta"> 约 937 字 </span>
+          <span class="more-meta"> 约 598 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -139,7 +139,7 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#leveldb">LevelDB</a>
+    <li><a href="#heading"></a>
       <ul>
         <li><a href="#一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</a></li>
         <li><a href="#二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</a></li>
@@ -152,9 +152,9 @@
   </ul>
 
   <ul>
-    <li><a href="#设计思路"><strong>设计思路</strong></a>
+    <li>
       <ul>
-        <li><a href="#从看文档开始httpsgithubcomgoogleleveldbblobmasterdocindexmd">从看文档开始：https://github.com/google/leveldb/blob/master/doc/index.md</a></li>
+        <li><a href="#第一天">第一天</a></li>
       </ul>
     </li>
   </ul>
@@ -162,78 +162,105 @@
   </div>
 </div>
     <div class="post-content">
-      <h2 id="leveldb">LevelDB</h2>
-<p>LevelDB是Google传奇工程师Jeff Dean和Sanjay Ghemawat开源的KV存储引擎</p>
-<p>无论从设计还是代码上都可以用精致优雅来形容，非常值得细细品味。</p>
+      <h2 id="heading"></h2>
 <h3 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h3>
 <h3 id="二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</h3>
 <h3 id="三这个技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</h3>
 <h3 id="四技术的组成部分和关键点">四、技术的组成部分和关键点。</h3>
 <h3 id="五技术的底层原理和关键实现">五、技术的底层原理和关键实现</h3>
 <h3 id="六已有的实现和它之间的对比">六、已有的实现和它之间的对比</h3>
-<table>
-<thead>
-<tr>
-<th>产品</th>
-<th>一致性</th>
-<th>角色</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ZooKeeper</td>
-<td>过半</td>
-<td>leader,followers,Observer（只读节点）</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>conf</td>
-<td>Master,Slave</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="庖丁解leveldb之概览-todo任务执行中">庖丁解LevelDB之概览 【todo任务执行中】</h1>
-<p>来呀：http://catkang.github.io/2017/01/07/leveldb-summary.html</p>
-<p>接下来就将用几篇博客来由表及里的介绍LevelDB的设计和代码细节。</p>
-<p>本文将从设计思路、整体结构、读写流程、压缩流程几个方面来进行介绍，从而能够对LevelDB有一个整体的感知。</p>
-<h2 id="设计思路"><strong>设计思路</strong></h2>
-<p>LevelDB的数据是存储在磁盘上的，采用LSM-Tree的结构实现。</p>
-<p>LSM-Tree将磁盘的随机写转化为顺序写，从而大大提高了写速度。</p>
-<p>为了做到这一点LSM-Tree的思路是将索引树结构拆成一大一小两颗树，较小的一个常驻内存，较大的一个持久化到磁盘，他们共同维护一个有序的key空间。</p>
-<p>写入操作会首先操作内存中的树，随着内存中树的不断变大，会触发与磁盘中树的归并操作，而归并操作本身仅有顺序写。如下图所示：</p>
-<p><img src="http://catkang.github.io/assets/img/leveldb_summary/summary.png" alt="LSM示意"></p>
-<p>随着数据的不断写入，磁盘中的树会不断膨胀，为了避免每次参与归并操作的数据量过大，以及优化读操作的考虑，LevelDB将磁盘中的数据又拆分成多层，每一层的数据达到一定容量后会触发向下一层的归并操作，每一层的数据量比其上一层成倍增长。这也就是LevelDB的名称来源。</p>
-<p>LSM-Tree示意图来源于论文：<a href="http://www.cs.umb.edu/~poneil/lsmtree.pdf">The Log-Structured Merge-Tree</a></p>
-<p>Source Code：https://github.com/google/leveldb</p>
-<blockquote>
-<p>看完了上面文字，我还是不懂 怎么办？不要说自己理解差 笨，拿出更多时间吧</p>
-</blockquote>
+<p><a href="https://www.taosdata.com/cn/documentation/">https://www.taosdata.com/cn/documentation/</a></p>
+<p><a href="https://hub.fastgit.org/taosdata/TDengine">https://hub.fastgit.org/taosdata/TDengine</a></p>
+<p><a href="https://www.taosdata.com/cn/documentation/">https://www.taosdata.com/cn/documentation/</a></p>
+<h1 id="issue">issue</h1>
+<ul>
+<li><a href="https://github.com/taosdata/TDengine/issues/7408">https://github.com/taosdata/TDengine/issues/7408</a></li>
+<li><a href="https://hub.fastgit.org/taosdata/TDengine/issues/7503">https://hub.fastgit.org/taosdata/TDengine/issues/7503</a></li>
+</ul>
+<h3 id="第一天">第一天</h3>
+<p>群公告
+#新手任务 #灭虫计划 🎉📢最轻松的新手Contributor任务，来啦！</p>
+<p>我们正在推出持续的社群活动——灭虫计划，让大家可以零门槛成为TDengine的Contributor。具体规则：</p>
+<ol>
+<li>TDengine团队以issue的形式（标签为good first issue）发布任务</li>
+<li>感兴趣的同学在issue下回复pick up challenge</li>
+<li>在收到assigned it to you的回复后，视为认领成功，就可以开始干活啦～</li>
+<li>做完任务后记得将Pull Request提交至develop分支哦～</li>
+</ol>
+<p>提交的Pull Request被合并后，即可成为TDengine的Contributor，届时我们会发放带有专属编号的证书以及小礼品～</p>
+<p>本期准备了5个关于文档的“虫”，如下：</p>
+<p><a href="https://github.com/taosdata/TDengine/issues/7650">https://github.com/taosdata/TDengine/issues/7650</a>
+<a href="https://github.com/taosdata/TDengine/issues/7629">https://github.com/taosdata/TDengine/issues/7629</a>
+<a href="https://github.com/taosdata/TDengine/issues/7628">https://github.com/taosdata/TDengine/issues/7628</a>
+<a href="https://github.com/taosdata/TDengine/issues/7495">https://github.com/taosdata/TDengine/issues/7495</a>
+<a href="https://github.com/taosdata/TDengine/issues/765">https://github.com/taosdata/TDengine/issues/765</a></p>
+<p><a href="https://hub.fastgit.org/">https://hub.fastgit.org/</a></p>
+<ol>
+<li>环境 vpn（开发环境）</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">git clone --recurse-submodules https://github.com/google/leveldb.git
+<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/watchpoints/TDengine
+<span class="nb">cd</span> TDengine
+git submodule update --init --recursive
+mkdir debug <span class="o">&amp;&amp;</span> <span class="nb">cd</span> debug 
+//. jemalloc 传说中最强最前沿的内存分配模型. jemalloc<span class="o">(</span>facebook<span class="o">)</span>
+cmake .. -DJEMALLOC_ENABLED<span class="o">=</span><span class="nb">true</span>
+cmake --build .
+sudo make install
+
+TDengine is installed successfully!
+
+To configure TDengine : edit /etc/taos/taos.cfg
+To start TDengine     : sudo systemctl start taosd
+To access TDengine    : use taos in shell
+
+TDengine is installed successfully!
+
+./build/bin/taosd -c test/cfg
+taos
+
+create database db<span class="p">;</span>
+use db<span class="p">;</span>
+create table t <span class="o">(</span>ts timestamp, a int<span class="o">)</span><span class="p">;</span>
+insert into t values <span class="o">(</span><span class="s1">&#39;2019-07-15 00:00:00&#39;</span>, 1<span class="o">)</span><span class="p">;</span>
+insert into t values <span class="o">(</span><span class="s1">&#39;2019-07-15 01:00:00&#39;</span>, 2<span class="o">)</span><span class="p">;</span>
+<span class="k">select</span> * from t<span class="p">;</span>
+drop database db<span class="p">;</span>
+
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="从看文档开始httpsgithubcomgoogleleveldbblobmasterdocindexmd">从看文档开始：https://github.com/google/leveldb/blob/master/doc/index.md</h3>
-<ul>
-<li>如何读写操作的！！！</li>
-</ul>
-
+</div>
     </div>
 
     <div class="post-copyright">
@@ -244,7 +271,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-06-20 00:00
+        2021-08-30 00:00
         
     </span>
   </p>
@@ -256,16 +283,12 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/%E5%BA%96%E4%B8%81%E8%A7%A3%E7%89%9B/">庖丁解牛</a>
+          <a href="/tags/book/">book</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/2021/kubernetes_01/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">从零开始k8s</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/English/01_word/">
-            <span class="next-text nav-default">english</span>
+        
+        <a class="next" href="/post/2021/docker01/">
+            <span class="next-text nav-default">docker入门教程</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

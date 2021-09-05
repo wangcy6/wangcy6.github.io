@@ -13,7 +13,7 @@
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</guid>
-      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具÷÷ 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步</description>
+      <description>沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以</description>
     </item>
     
     <item>
@@ -26,12 +26,21 @@
     </item>
     
     <item>
+      <title>python入门教程</title>
+      <link>https://wangcy6.github.io/post/2021/python01/</link>
+      <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/python01/</guid>
+      <description>第一天 window python 环境安装 官网地址： https://www.python.org/downloads/release/python-396/ python环境变量：path D:\local\python3 pip环境变量 path D:\local\python3\Scripts window可以默认按照自动设置。其他手工设置 用于检测当前W</description>
+    </item>
+    
+    <item>
       <title>SRS官方文档和学习路径</title>
       <link>https://wangcy6.github.io/post/2020/01_srs/</link>
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/01_srs/</guid>
-      <description>卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不上) 1 2 3 4 5 6 git clone -b</description>
+      <description>卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ Introduction Problem solucction https://gitee.com/ossrs/srs/wikis/v4_CN_Home https://github.com/ossrs/srs https://hub.fastgit.org/ossrs/srs 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不上) 1 2 3</description>
     </item>
     
     <item>
