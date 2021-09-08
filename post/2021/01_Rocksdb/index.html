@@ -48,7 +48,7 @@
 <meta itemprop="name" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎">
 <meta itemprop="description" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎"><meta itemprop="datePublished" content="2021-08-02T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-08-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="874">
+<meta itemprop="wordCount" content="1676">
 <meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎"/>
 <meta name="twitter:description" content="跟leveldb学C&#43;&#43;，跟rocksdb学做引擎"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2021-08-02 00:00 </span>
         
-          <span class="more-meta"> 约 874 字 </span>
-          <span class="more-meta"> 预计阅读 2 分钟 </span>
+          <span class="more-meta"> 约 1676 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -155,6 +155,7 @@
     <li>
       <ul>
         <li><a href="#第一天">第一天</a></li>
+        <li><a href="#肩膀为了补充基础-我阅读过的文档">肩膀：为了补充基础 我阅读过的文档</a></li>
       </ul>
     </li>
   </ul>
@@ -202,14 +203,38 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rocksdb ..
 make &amp;&amp; make install
 </code></pre></td></tr></table>
 </div>
-</div><p>阅读的资料：</p>
-<ol>
-<li>基于leveldb谈谈MVCC多版本控制 <a href="https://yuerblog.cc/2017/09/26/leveldb-mvcc/">https://yuerblog.cc/2017/09/26/leveldb-mvcc/</a> ，[10分]
+</div><p>查看：</p>
+<p>virtual void Get(const LookupKey&amp; k, void* callback_args,</p>
+<p>Status DBImpl::GetImpl</p>
+<p>RocksDB如何在sstable中查找到对应的数据</p>
+<p>我们来看一下如何针对磁盘上的SST进行搜索：</p>
 <ul>
-<li><a href="https://yuerblog.cc/wp-content/uploads/leveldb%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90.pdf">https://yuerblog.cc/wp-content/uploads/leveldb%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90.pdf</a> 【10分】</li>
+<li>首先我们需要遍历搜索Level 0(L0)层所有的文件，假设没有找到则继续</li>
+<li>我们来到了L1层，该层数据文件是有序的，每一个文件都会有一个FileMetaData保存着该文件的最小key和最大key，同时还有IndexUnit。我们通过对L1层文件进行二分查找来找到第一个largest key大于要查找key的文件。我们继续对此SST文件内的key进行查找，假如没有找到，则继续。理论上到L1层我们可以再次进行二分查找来找到对应的key，但是借助IndexUnit我们可以快速过滤不需要查找的文件，提升查找速度。这里还有一点，假设要查找的key小于第一个文件的smallest key，则基准文件为第一个文件；假设要查找的key大于最后一个文件的largest key，则基准文件为最后一个文件。针对于key与基准文件key范围的比较结果，我们又有以下的几种场景：
+<ul>
+<li>当前要查找的key小于基准文件的smallest key。这种场景下，假设基准文件为该层第一个文件则我们需要查找的文件范围为 <code>[First file on L(N+1), smallest_rb of current sst]</code>;若不是第一个文件，则要查找的范围为<code>[largest_lb of previous sst, smallest_rb of current sst]</code>。</li>
+<li>当前要查找的key在基准文件的smallest key和largest key范围内。这种场景下，我们要查找的文件范围为 <code>[smallest_lb of current sst, largest_rb of current sst]</code>。</li>
+<li>当前要查找的key大于基准文件的largest key。这种场景下，唯一的可能性为基准文件为该层的最后一个文件，则我们需要查找的文件范围为<code>[largest_lb of current sst, Last file on L(N+1)]</code></li>
 </ul>
 </li>
-<li><a href="http://mysql.taobao.org/monthly/2018/11/05/">http://mysql.taobao.org/monthly/2018/11/05/</a> 【10分&ndash;开始】</li>
+<li>针对上层的范围，对下层的SST进行搜索</li>
+</ul>
+<h3 id="肩膀为了补充基础-我阅读过的文档">肩膀：为了补充基础 我阅读过的文档</h3>
+<ol>
+<li>
+<p>基于leveldb谈谈MVCC多版本控制 <a href="https://yuerblog.cc/2017/09/26/leveldb-mvcc/">https://yuerblog.cc/2017/09/26/leveldb-mvcc/</a> ，[10分]</p>
+<ul>
+<li><a href="https://yuerblog.cc/wp-content/uploads/leveldb%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90.pdf">https://yuerblog.cc/wp-content/uploads/leveldb%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90.pdf</a> 【10分、</li>
+</ul>
+</li>
+<li>
+<p>MySQL · RocksDB · 数据的读取(一)http://mysql.taobao.org/monthly/2018/11/05/ 【10分&ndash;开始】</p>
+<p>MySQL · RocksDB · 数据的读取(二)</p>
+</li>
+</ol>
+<p><a href="http://mysql.taobao.org/monthly/2018/12/08/">http://mysql.taobao.org/monthly/2018/12/08/</a></p>
+<p><a href="https://gocode.cc/project/13/article/187">https://gocode.cc/project/13/article/187</a></p>
+<ol start="3">
 <li><a href="http://zrainy.top/2019/12/11/leveldb%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A05-dbformat%E5%92%8Ccomparator/">leveldb源码学习5-dbformat和comparator</a></li>
 </ol>
 <h1 id="-leveldb-学习方法"># leveldb 学习方法</h1>
