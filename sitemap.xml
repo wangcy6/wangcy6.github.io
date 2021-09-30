@@ -2,14 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://wangcy6.github.io/tags/book/</loc>
-    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
+    <loc>https://wangcy6.github.io/categories/ARTS/</loc>
+    <lastmod>2021-09-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/</loc>
+    <lastmod>2021-09-30T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangcy6.github.io/post/</loc>
+    <lastmod>2021-09-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/</loc>
+    <lastmod>2021-09-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/ARTS/day_02_run/</loc>
+    <lastmod>2021-09-30T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/tags/book/</loc>
     <lastmod>2021-08-30T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -24,13 +52,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/post/2021/02_tdb/</loc>
-    <lastmod>2021-08-30T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/</loc>
     <lastmod>2021-08-30T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -65,13 +86,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/</loc>
-    <lastmod>2021-07-28T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/tags/Interview-Question/</loc>
     <lastmod>2021-07-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -93,6 +107,13 @@
   </url>
   
   <url>
+    <loc>https://wangcy6.github.io/post/ARTS/day_04_sleep/</loc>
+    <lastmod>2021-07-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/post/ARTS/life_2021_arts/</loc>
     <lastmod>2021-07-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -100,7 +121,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/categories/ARTS/</loc>
+    <loc>https://wangcy6.github.io/post/ARTS/day_03_run/</loc>
     <lastmod>2021-07-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -233,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/English/01_word/</loc>
+    <loc>https://wangcy6.github.io/post/English/01-2021-9-12-motto/</loc>
     <lastmod>2021-06-16T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
