@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>leetcode 题目分类 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="方法：架构评审 &amp;amp;&amp;amp;日常沟通 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/01_all/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="leetcode 题目分类" />
+<meta property="og:description" content="方法：架构评审 &amp;&amp;日常沟通 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/01_all/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-07-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-07-28T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="leetcode 题目分类">
+<meta itemprop="description" content="方法：架构评审 &amp;&amp;日常沟通 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是"><meta itemprop="datePublished" content="2021-07-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-07-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1567">
+<meta itemprop="keywords" content="Interview Question," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="leetcode 题目分类"/>
+<meta name="twitter:description" content="方法：架构评审 &amp;&amp;日常沟通 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">leetcode 题目分类</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-07-28 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Leetcode/"> Leetcode </a>
+            </div>
+          <span class="more-meta"> 约 1567 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#方法架构评审-日常沟通">方法：架构评审 &amp;&amp;日常沟通</a></li>
+    <li><a href="#如何刷题">如何刷题</a></li>
+    <li><a href="#这个总结超级棒">这个总结超级棒</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#数组">数组</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#字符串">字符串</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#单链表-ok">单链表 [ok]</a></li>
+    <li><a href="#二叉树">二叉树</a></li>
+    <li><a href="#图">图</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#动态规划-and-greedy-algorithms">动态规划 and Greedy Algorithms</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="方法架构评审-日常沟通">方法：架构评审 &amp;&amp;日常沟通</h2>
+<ol>
+<li>
+<p>准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以完全上线的项目，非demo和一个知识点。自己认为真的 不是闹着玩的。。】</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>经过领导，专家 进行鸡蛋里挑骨头。【自己做好了别人路了胡扯，不会对别人产生任何影响，做事和做人一样，无论熟悉人，还是老师，领导，不相关人 反对 他们反馈信号，接受质疑，经过九九八十一难考验，并且你还在坚持认为对的。】</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目。【不听老人言，吃亏在眼前，不敢接受别人批评，说明自己完全没有把握，才去否定 愤怒方式】</p>
+</li>
+</ol>
+<h2 id="如何刷题">如何刷题</h2>
+<p>Happy coding! Enjoy Algorithms.</p>
+<p>Happy coding! Enjoy Algorithms.</p>
+<p>Happy coding! Enjoy Algorithms.</p>
+<p><a href="https://github.com/leetcode-pp/91alg-5-daily-check">https://github.com/leetcode-pp/91alg-5-daily-check</a></p>
+<p><a href="https://github.com/liweiwei1419/LeetCode-Solution-PPT">https://github.com/liweiwei1419/LeetCode-Solution-PPT</a></p>
+<p>leetcode-solution.cn/91</p>
+<p>刷容易题目时候专注刷题</p>
+<p>不看看中等和难度题目</p>
+<p>根不要写总结。</p>
+<p>最快速度做出来 从60分钟做 1题到到4题 到20题目。</p>
+<p>【一天时间，全部做完120题】</p>
+<ol>
+<li>关于具体刷题，我只说第一遍，我是怎么刷的。</li>
+</ol>
+<p>前500题：抄。就是直接看答案抄！完美解决没基础看不懂，</p>
+<p>不会做，做题枯燥等种种问题。</p>
+<ul>
+<li>按照习惯，你必须完成这个题目，才能做其他题目，不管其他题目多么重要，你必须先完成这个题目才可以。</li>
+</ul>
+<ol start="2">
+<li>个人感觉： 熟练度 &raquo;&raquo;&gt; （远重要于）抖小聪明。</li>
+</ol>
+<blockquote>
+<p>流畅的表达，简介明了的思路远好于在白板上磨磨蹭蹭的推导。</p>
+<p>这也回到第一点，反复刷同样的题非常重要。</p>
+</blockquote>
+<blockquote>
+<p>其实，8-10遍高频效果是最好的，这基本就是到另一个境界了。</p>
+</blockquote>
+<p>当然，大家没有那么多时间，3-5遍也可以去面试了。</p>
+<ol start="3">
+<li>Talk out loud，这个不仅仅是说在面试的时候你要说出你的思路。</li>
+</ol>
+<blockquote>
+<p>刷题的时候也是！你第一遍可以不开口，但后面几遍，一定要开口说话！！</p>
+</blockquote>
+<p>刷题是为了面试，面试第一看的是communication skill!</p>
+<p>不在刷题的时候开口，到面试的时候才意识到沟通不畅就太晚了。</p>
+<p>其实，我觉得，在刚开始的时候完全没必要思考，做题。因为初学者啥也不会。</p>
+<p>自己拼命想，写两题就被劝退不想再做了。</p>
+<p><a href="https://afteracademy.com/tech-interview/ds-algo-concepts">https://afteracademy.com/tech-interview/ds-algo-concepts</a></p>
+<p>题目总结和这个对比起来。</p>
+<p>[https://leetcode-cn.com/problemset/all/](</p>
+<h2 id="这个总结超级棒">这个总结超级棒</h2>
+<p><a href="https://afteracademy.com/tech-interview/ds-algo-concepts">https://afteracademy.com/tech-interview/ds-algo-concepts</a></p>
+<h1 id="plan">plan</h1>
+<p>任务：简单的题目全部刷一遍</p>
+<p>任务：leetcode 哪些0-50 题目 看 5遍。预计1个月  开始日期：2021-8-7号。-2021-9-7</p>
+<h2 id="数组">数组</h2>
+<ul>
+<li>
+<h4 id="121-买卖股票的最佳时机httpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a></h4>
+</li>
+</ul>
+<h2 id="字符串">字符串</h2>
+<ul>
+<li>
+<h4 id="剑指-offer-58---i-翻转单词顺序httpsleetcode-cncomproblemsfan-zhuan-dan-ci-shun-xu-lcof"><a href="https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/">剑指 Offer 58 - I. 翻转单词顺序</a></h4>
+</li>
+<li>
+<p>第五题 剑指 Offer 58 - I. 翻转单词顺序</p>
+<p>核心思想： (A⁻¹B⁻¹) ⁻¹ = BA</p>
+</li>
+<li>
+<p>求一个字符串的最长回文子串。</p>
+</li>
+<li>
+<p>无重复字符的最长子串 3</p>
+</li>
+</ul>
+<p><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/ru-he-mo-hu-wen-ti-ju-ti-hua-fu-za-wen-t-m3zd/">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/ru-he-mo-hu-wen-ti-ju-ti-hua-fu-za-wen-t-m3zd/</a></p>
+<p>ret =max(ret,end-start+1);//思考60秒：执行条件是什么？</p>
+<h2 id="单链表-ok">单链表 [ok]</h2>
+<ol>
+<li><strong>NC23</strong> <strong>划分链表</strong></li>
+</ol>
+<p><a href="https://www.nowcoder.com/practice/1dc1036be38f45f19000e48abe00b12f?tpId=188&amp;&amp;tqId=38668&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/job-code-high-week/question-ranking">https://www.nowcoder.com/practice/1dc1036be38f45f19000e48abe00b12f?tpId=188&amp;&amp;tqId=38668&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/job-code-high-week/question-ranking</a></p>
+<p><a href="https://leetcode-cn.com/problems/partition-list/">https://leetcode-cn.com/problems/partition-list/</a></p>
+<ol start="2">
+<li><a href="https://afteracademy.com/tech-interview/ds-algo-concepts/array-and-linked-list">https://afteracademy.com/tech-interview/ds-algo-concepts/array-and-linked-list</a> [12个题目都很经典]</li>
+</ol>
+<h2 id="二叉树">二叉树</h2>
+<h2 id="图">图</h2>
+<h4 id="329-矩阵中的最长递增路径httpsleetcode-cncomproblemslongest-increasing-path-in-a-matrix"><a href="https://leetcode-cn.com/problems/longest-increasing-path-in-a-matrix/">329. 矩阵中的最长递增路径</a></h4>
+<h4 id="54-螺旋矩阵httpsleetcode-cncomproblemsspiral-matrix-ok"><a href="https://leetcode-cn.com/problems/spiral-matrix/">54. 螺旋矩阵</a> 【ok】</h4>
+<ol>
+<li>LeetCode：访问所有节点的最短路径【847】</li>
+</ol>
+<p>​    <a href="https://leetcode-cn.com/problems/shortest-path-visiting-all-nodes/">https://leetcode-cn.com/problems/shortest-path-visiting-all-nodes/</a></p>
+<p><a href="https://www.programminghunter.com/article/3610285945/">https://www.programminghunter.com/article/3610285945/</a></p>
+<h4 id="graph-questions">Graph questions</h4>
+<ul>
+<li><a href="https://afteracademy.com/problems/is-graph-bipartite">Is Graph Bipartite?</a></li>
+<li><a href="https://afteracademy.com/problems/number-of-islands">Number of Islands</a></li>
+<li><a href="https://afteracademy.com/problems/word-ladder-problem">Word Ladder Problem</a></li>
+<li><a href="https://afteracademy.com/problems/smallest-multiple-with-0-and-1">Smallest Multiple with 0 and 1</a></li>
+<li><a href="https://afteracademy.com/problems/course-schedule">Course Schedule</a></li>
+</ul>
+<p><a href="https://leetcode-cn.com/problems/course-schedule/">https://leetcode-cn.com/problems/course-schedule/</a></p>
+<p><a href="https://leetcode-cn.com/problems/course-schedule/solution/course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa/">https://leetcode-cn.com/problems/course-schedule/solution/course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa/</a></p>
+<p><a href="https://leetcode-cn.com/problems/course-schedule-ii/">https://leetcode-cn.com/problems/course-schedule-ii/</a></p>
+<ul>
+<li><a href="https://afteracademy.com/problems/knight-on-chessboard">Knight on Chessboard</a></li>
+</ul>
+<ol start="2">
+<li>
+<ol start="79">
+<li>Word Search</li>
+</ol>
+<p><a href="https://leetcode.com/problems/word-search/">https://leetcode.com/problems/word-search/</a></p>
+<p>longest-increasing-path-in-a-matrix</p>
+<p><a href="https://leetcode-cn.com/problems/longest-increasing-path-in-a-matrix/">https://leetcode-cn.com/problems/longest-increasing-path-in-a-matrix/</a></p>
+<p>[拓扑排序，和dfs 记忆优化]</p>
+</li>
+</ol>
+<h2 id="动态规划-and-greedy-algorithms">动态规划 and Greedy Algorithms</h2>
+<p><a href="https://afteracademy.com/blog/what-are-greedy-algorithms">https://afteracademy.com/blog/what-are-greedy-algorithms</a></p>
+<h4 id="45-跳跃游戏-iihttpsleetcode-cncomproblemsjump-game-ii"><a href="https://leetcode-cn.com/problems/jump-game-ii/">45. 跳跃游戏 II</a></h4>
+<h1 id="简单">简单</h1>
+<h4 id="20-有效的括号httpsleetcode-cncomproblemsvalid-parentheses"><a href="https://leetcode-cn.com/problems/valid-parentheses/">20. 有效的括号</a></h4>
+<h4 id="58-最后一个单词的长度httpsleetcode-cncomproblemslength-of-last-word"><a href="https://leetcode-cn.com/problems/length-of-last-word/">58. 最后一个单词的长度</a></h4>
+<h4 id="剑指-offer-58---i-翻转单词顺序httpsleetcode-cncomproblemsfan-zhuan-dan-ci-shun-xu-lcof-1"><a href="https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/">剑指 Offer 58 - I. 翻转单词顺序</a></h4>
+<h4 id="151-翻转字符串里的单词httpsleetcode-cncomproblemsreverse-words-in-a-string"><a href="https://leetcode-cn.com/problems/reverse-words-in-a-string/">151. 翻转字符串里的单词</a></h4>
+<h1 id="左旋转字符串httpswwwcnblogscomedisonchoup4823706html"><a href="https://www.cnblogs.com/edisonchou/p/4823706.html">左旋转字符串</a></h1>
+<h1 id="最长回文子串">最长回文子串</h1>
+<p>[20] 有效的括号 ok</p>
+<ul>
+<li>
+<h4 id="125-验证回文串httpsleetcode-cncomproblemsvalid-palindrome-ok"><a href="https://leetcode-cn.com/problems/valid-palindrome/">125. 验证回文串</a> ok</h4>
+</li>
+</ul>
+<h4 id="234-回文链表httpsleetcode-cncomproblemspalindrome-linked-list"><a href="https://leetcode-cn.com/problems/palindrome-linked-list/">234. 回文链表</a></h4>
+<h4 id="1217-玩筹码httpsleetcode-cncomproblemsminimum-cost-to-move-chips-to-the-same-position-"><a href="https://leetcode-cn.com/problems/minimum-cost-to-move-chips-to-the-same-position/">1217. 玩筹码</a> []</h4>
+<h4 id="1221-分割平衡字符串httpsleetcode-cncomproblemssplit-a-string-in-balanced-stringsok这里没有对称"><a href="https://leetcode-cn.com/problems/split-a-string-in-balanced-strings/">1221. 分割平衡字符串</a>【ok,这里没有对称】</h4>
+<p><a href="https://leetcode-cn.com/problems/split-a-string-in-balanced-strings/solution/gong-shui-san-xie-noxiang-xin-ke-xue-xi-wumnk/">https://leetcode-cn.com/problems/split-a-string-in-balanced-strings/solution/gong-shui-san-xie-noxiang-xin-ke-xue-xi-wumnk/</a></p>
+<h4 id="1232-缀点成线httpsleetcode-cncomproblemscheck-if-it-is-a-straight-line-矩阵-ok"><a href="https://leetcode-cn.com/problems/check-if-it-is-a-straight-line/">1232. 缀点成线</a> 【矩阵-ok】</h4>
+<h4 id="1252-奇数值单元格的数目httpsleetcode-cncomproblemscells-with-odd-values-in-a-matrix矩阵--停止"><a href="https://leetcode-cn.com/problems/cells-with-odd-values-in-a-matrix/">1252. 奇数值单元格的数目</a>（矩阵 -停止）</h4>
+<ul>
+<li>[1260] 二维网格迁移</li>
+</ul>
+<p><a href="https://leetcode-cn.com/problems/shift-2d-grid/solution/shuang-zhi-zhen-huo-qu-lastjie-dian-by-a-rae5/">https://leetcode-cn.com/problems/shift-2d-grid/solution/shuang-zhi-zhen-huo-qu-lastjie-dian-by-a-rae5/</a></p>
+<h1 id="中等">中等</h1>
+<h4 id="54-螺旋矩阵httpsgithubcomwatchpointsdaily-interviewblobmainleetcodecode54e89ebae6978be79fa9e998b5cpp-完成"><a href="https://github.com/watchpoints/daily-interview/blob/main/leetcode/code/54.%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5.cpp">54. 螺旋矩阵</a> [完成]</h4>
+<h4 id="55-跳跃游戏httpsleetcode-cncomproblemsjump-gamesolutionru-he-biao-shi-duo-ge-ren-zou-dao-wo-zhe-xpen-ok"><a href="https://leetcode-cn.com/problems/jump-game/solution/ru-he-biao-shi-duo-ge-ren-zou-dao-wo-zhe-xpen/">55. 跳跃游戏</a> [ok]</h4>
+<h4 id="56-合并区间httpsleetcode-cncomproblemsmerge-intervals"><a href="https://leetcode-cn.com/problems/merge-intervals/">56. 合并区间</a></h4>
+<h1 id="难">难</h1>
+<h4 id="84-柱状图中最大的矩形httpsleetcode-cncomproblemslargest-rectangle-in-histogram-不会写不出来"><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/">84. 柱状图中最大的矩形</a> [不会写不出来]</h4>
+<h4 id="1312-让字符串成为回文串的最少插入次数httpsleetcode-cncomproblemsminimum-insertion-steps-to-make-a-string-palindrome"><a href="https://leetcode-cn.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/">1312. 让字符串成为回文串的最少插入次数</a></h4>
+<h4 id="剑指-offer-ii-094-最少回文分割httpsleetcode-cncomproblemsomkaoa"><a href="https://leetcode-cn.com/problems/omKAoA/">剑指 Offer II 094. 最少回文分割</a></h4>
+<h1 id="题号">题号：</h1>
+<h4 id="20-有效的括号httpsleetcode-cncomproblemsvalid-parentheses-ok"><a href="https://leetcode-cn.com/problems/valid-parentheses/">20. 有效的括号</a> ok</h4>
+<h4 id="21-合并两个有序链表httpsleetcode-cncomproblemsmerge-two-sorted-lists0k"><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/">21. 合并两个有序链表</a>【0k】</h4>
+<h4 id="22-括号生成httpsleetcode-cncomproblemsgenerate-parentheses-ok"><a href="https://leetcode-cn.com/problems/generate-parentheses/">22. 括号生成</a> [ok]</h4>
+<p><a href="https://leetcode-cn.com/problems/generate-parentheses/solution/hui-su-suan-fa-by-liweiwei1419/">https://leetcode-cn.com/problems/generate-parentheses/solution/hui-su-suan-fa-by-liweiwei1419/</a></p>
+<p><a href="https://github.com/liweiwei1419/LeetCode-Solution-PPT/blob/master/backtracking/LeetCode%20%E7%AC%AC%2022%20%E9%A2%98%EF%BC%9A%E2%80%9C%E6%8B%AC%E5%8F%B7%E7%94%9F%E5%87%BA%E2%80%9D%E9%A2%98%E8%A7%A3%E9%85%8D%E5%9B%BE.pptx">https://github.com/liweiwei1419/LeetCode-Solution-PPT/blob/master/backtracking/LeetCode%20%E7%AC%AC%2022%20%E9%A2%98%EF%BC%9A%E2%80%9C%E6%8B%AC%E5%8F%B7%E7%94%9F%E5%87%BA%E2%80%9D%E9%A2%98%E8%A7%A3%E9%85%8D%E5%9B%BE.pptx</a></p>
+<h4 id="23-合并k个升序链表httpsleetcode-cncomproblemsmerge-k-sorted-listsok"><a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/">23. 合并K个升序链表</a>【ok】</h4>
+<h4 id="24-两两交换链表中的节点httpsleetcode-cncomproblemsswap-nodes-in-pairs"><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/">24. 两两交换链表中的节点</a></h4>
+<p><a href="https://www.yuque.com/docs/share/7c61b6bc-48a0-4fd2-8678-6db713d511d8?#">https://www.yuque.com/docs/share/7c61b6bc-48a0-4fd2-8678-6db713d511d8?#</a> 《24. 两两交换链表中的节点》</p>
+<h4 id="84-柱状图中最大的矩形httpsleetcode-cncomproblemslargest-rectangle-in-histogram"><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/">84. 柱状图中最大的矩形</a></h4>
+<h4 id="121-买卖股票的最佳时机httpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock-ok"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a> ok</h4>
+<h4 id="122-买卖股票的最佳时机-iihttpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock-ii"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/">122. 买卖股票的最佳时机 II</a></h4>
+<p><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/solution/tan-xin-suan-fa-by-liweiwei1419-2/">https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/solution/tan-xin-suan-fa-by-liweiwei1419-2/</a></p>
+<h4 id="1380-矩阵中的幸运数httpsleetcode-cncomproblemslucky-numbers-in-a-matrix"><a href="https://leetcode-cn.com/problems/lucky-numbers-in-a-matrix/">1380. 矩阵中的幸运数</a></h4>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-07-28 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Interview-Question/">Interview Question</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2021/01_Rocksdb/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">跟leveldb学C&#43;&#43;，跟rocksdb学做引擎</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/day_04_sleep/">
+            <span class="next-text nav-default">2021-思考与行动：</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

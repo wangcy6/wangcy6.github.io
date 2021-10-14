@@ -6,7 +6,25 @@
     <description>Recent content in ARTS on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 30 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/ARTS/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/ARTS/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一周精彩内容分享（第四期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/34/</link>
+      <pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/34/</guid>
+      <description>第一部分：work输出 一、我提交的pr https://github.com/watchpoints/daily-interview/ 二、 我阅读代码 开源数据库OceanBase代码导读 **（二）：SQL的一生 **https://www.yuque.com/wangcy6/lkwas2/fcctwn 三 、社区提问 Q1: [30#] 小王提问</description>
+    </item>
+    
+    <item>
+      <title>2021年历史文章</title>
+      <link>https://wangcy6.github.io/post/2021/04_2021-10-10.2021.years/</link>
+      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/04_2021-10-10.2021.years/</guid>
+      <description>2021 我的历史文章 基础：共3篇 60秒问答：请问下面的程序一共输出多少个&amp;quot;hello,world” 自己看了3遍 整天背诵五种I/O模型/e</description>
+    </item>
+    
     <item>
       <title>学习区：专心学习：</title>
       <link>https://wangcy6.github.io/post/ARTS/day_02_run/</link>
