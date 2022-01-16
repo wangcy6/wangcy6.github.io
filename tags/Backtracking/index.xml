@@ -6,16 +6,7 @@
     <description>Recent content in Backtracking on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 10 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Backtracking/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>27-二叉搜索树与双向链表</title>
-      <link>https://wangcy6.github.io/post/leetcode/027-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</link>
-      <pubDate>Fri, 10 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/leetcode/027-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</guid>
-      <description>题目信息 链接：二叉搜索树转换成一个排序的双向链表 来源：LeetCode 难度：Hard 一、描述 convert-binary-tree-to-doubly-linked-list 输入一棵二叉搜索树，将该二叉搜索树转换成一个排</description>
-    </item>
-    
+    <lastBuildDate>Thu, 10 Oct 2019 17:02:43 +0800</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Backtracking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>智力题</title>
       <link>https://wangcy6.github.io/post/leetcode/%E6%B1%BD%E6%B0%B4%E7%93%B6/</link>

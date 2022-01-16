@@ -48,7 +48,7 @@
 <meta itemprop="name" content="oceanbase源码阅读（1）程序启动">
 <meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-22T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="5475">
+<meta itemprop="wordCount" content="5806">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="oceanbase源码阅读（1）程序启动"/>
 <meta name="twitter:description" content="OceanBase代码阅读第一天：程序启动"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 5475 字 </span>
-          <span class="more-meta"> 预计阅读 11 分钟 </span>
+          <span class="more-meta"> 约 5806 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -154,7 +154,10 @@
         <li><a href="#步骤3centos-环境设置和部署">步骤3：centos 环境设置和部署</a></li>
       </ul>
     </li>
-    <li><a href="#查看1号线程">查看1号线程</a>
+  </ul>
+
+  <ul>
+    <li>
       <ul>
         <li><a href="#程序入口">程序入口</a></li>
       </ul>
@@ -200,9 +203,11 @@
     </li>
     <li><a href="#tak">tak</a>
       <ul>
-        <li><a href="#第二题一次性说清楚-paxosraft-等算法的区别">第二题：一次性说清楚 Paxos、Raft 等算法的区别</a></li>
+        <li><a href="#obdeploy-文档">obdeploy 文档</a></li>
       </ul>
     </li>
+    <li><a href="#第二题一次性说清楚-paxosraft-等算法的区别">第二题：一次性说清楚 Paxos、Raft 等算法的区别</a></li>
+    <li><a href="#使用-obd-扩容">使用 OBD 扩容</a></li>
   </ul>
 </nav>
   </div>
@@ -351,25 +356,6 @@ sysctl -p</p>
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">参考：https://gitee.com/oceanbase/obdeploy
@@ -384,47 +370,217 @@ obd cluster stop obtest
 
 
 <span class="c1"># 参看obd管理的集群列表</span>
-obd cluster list
-<span class="c1"># 查看 lo 集群状态</span>
-obd cluster display obtest
 
-obd cluster destroy obtest
-
-<span class="nb">cd</span> /app/data
-10.115.37.60
-
-<span class="nb">alias</span> <span class="nv">cdob</span><span class="o">=</span><span class="s2">&#34;obclient -u root -h 127.0.0.1 -P2881&#34;</span>
-
-
-10.115.37.60
-<span class="nb">alias</span> <span class="nv">cdob</span><span class="o">=</span><span class="s2">&#34;obclient -u root -h 127.0.0.1 -P2881&#34;</span>
-use OceanBase
-<span class="k">select</span> * from __all_server <span class="se">\G</span><span class="p">;</span> //服务器的状态
-<span class="k">select</span> * from __all_virtual_server_stat <span class="se">\G</span><span class="p">;</span> //资源分配情况
-<span class="k">select</span> * from __all_unit_config <span class="se">\G</span><span class="p">;</span> //资源定义情况
-
-<span class="k">select</span> * from __all_unit <span class="se">\G</span><span class="p">;</span> //资源分配情况
-<span class="k">select</span> * from __all_resource_pool <span class="se">\G</span><span class="p">;</span> //资源分配情况
+- obd cluster list
 </code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
-<h2 id="查看1号线程">查看1号线程</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /app/data
+
+obd cluster list
++--------------------------------------------------+
+|                   Cluster List                   |
++------+-------------------------+-----------------+
+| Name | Configuration Path      | Status (Cached) |
++------+-------------------------+-----------------+
+| test | /root/.obd/cluster/test | stopped         |
++------+-------------------------+-----------------+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>obd cluster start  test</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Wait for observer init ok
++---------------------------------------------+
+|                   observer                  |
++-----------+---------+------+-------+--------+
+| ip        | version | port | zone  | status |
++-----------+---------+------+-------+--------+
+| 127.0.0.1 | 3.1.1   | 2881 | zone1 | active |
++-----------+---------+------+-------+--------+
+
+obd cluster start  test
+Get local repositories and plugins ok
+Open ssh connection ok
+Cluster param config check ok
+Deploy &#34;test&#34; is running
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>obd cluster display test</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> obd cluster display test
+Get local repositories and plugins ok
+Open ssh connection ok
+Cluster status check ok
+Connect to observer ok
+Wait for observer init ok
++---------------------------------------------+
+|                   observer                  |
++-----------+---------+------+-------+--------+
+| ip        | version | port | zone  | status |
++-----------+---------+------+-------+--------+
+| 127.0.0.1 | 3.1.1   | 2881 | zone1 | active |
++-----------+---------+------+-------+--------+
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="查看-lo-集群状态">查看 lo 集群状态</h1>
+<p>obd cluster display obtest</p>
+<p>obd cluster destroy obtest</p>
+<p>cd /app/data
+10.115.37.60</p>
+<p>alias cdob=&ldquo;obclient -u root -h 127.0.0.1 -P2881&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> - MySQL 租户的管理员用户名默认是root
+-  默认租户 sys
+- 数据库名 oceanbase
+
+obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase
+
+  10.115.37.60
+  alias cdob=&#34;obclient -u root -h 127.0.0.1 -P2881&#34;
+  use OceanBase
+  select * from __all_server \G; //服务器的状态
+  select * from __all_virtual_server_stat \G; //资源分配情况
+  select * from __all_unit_config \G; //资源定义情况
+  
+  select * from __all_unit \G; //资源分配情况
+  select * from __all_resource_pool \G; //资源分配情况
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>select * from __all_server \G;</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">Thread <span class="m">1</span> <span class="o">(</span>Thread 0x7f292e84a340 <span class="o">(</span>LWP 59<span class="o">))</span>:
-<span class="c1">#0  0x00007f292d519d98 in nanosleep () from /lib64/libc.so.6</span>
-<span class="c1">#1  0x00007f292d519c9e in sleep () from /lib64/libc.so.6</span>
-<span class="c1">#2  0x000000000870f998 in oceanbase::observer::ObServer::wait() ()</span>
-<span class="c1">#3  0x00000000024c1443 in main ()</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">select zone,svr_ip,svr_port,inner_port,usec_to_time(start_service_time),usec_to_time(stop_time) from oceanbase.__all_server;
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>资源占用情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>select a.zone,concat(a.svr_ip,':',a.svr_port) observer, cpu_total, cpu_assigned, (cpu_total-cpu_assigned) cpu_free, mem_total/1024/1024/1024 mem_total_gb, mem_assigned/1024/1024/1024 mem_assign_gb, (mem_total-mem_assigned)/1024/1024/1024 mem_free_gb  from __all_virtual_server_stat a join __all_server b on (a.svr_ip=b.svr_ip and a.svr_port=b.svr_port) order by a.zone, a.svr_ip;</p>
+<p>select t1.name resource_pool_name, t2.<code>name</code> unit_config_name, t2.max_cpu, t2.min_cpu, t2.max_memory/1024/1024/1024 max_mem_gb, t2.min_memory/1024/1024/1024 min_mem_gb, t3.unit_id, t3.zone, concat(t3.svr_ip,':',t3.<code>svr_port</code>) observer,t4.tenant_id, t4.tenant_name
+from __all_resource_pool t1 join __all_unit_config t2 on (t1.unit_config_id=t2.unit_config_id)
+join __all_unit t3 on (t1.<code>resource_pool_id</code> = t3.<code>resource_pool_id</code>)
+left join __all_tenant t4 on (t1.tenant_id=t4.tenant_id)
+order by t1.<code>resource_pool_id</code>, t2.<code>unit_config_id</code>, t3.unit_id ;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+
+
+## 查看1号线程
+
+~~~shell
+Thread 1 (Thread 0x7f292e84a340 (LWP 59)):
+#0  0x00007f292d519d98 in nanosleep () from /lib64/libc.so.6
+#1  0x00007f292d519c9e in sleep () from /lib64/libc.so.6
+#2  0x000000000870f998 in oceanbase::observer::ObServer::wait() ()
+#3  0x00000000024c1443 in main ()
 
 </code></pre></td></tr></table>
 </div>
@@ -992,7 +1148,14 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 <p><a href="https://github.com/torvalds/linux/blob/master/Documentation/core-api/rbtree.rst">https://github.com/torvalds/linux/blob/master/Documentation/core-api/rbtree.rst</a></p>
 </li>
 </ul>
-<h3 id="第二题一次性说清楚-paxosraft-等算法的区别">第二题：一次性说清楚 Paxos、Raft 等算法的区别</h3>
+<p>obd cluster display obtest</p>
+<h3 id="obdeploy-文档">obdeploy 文档</h3>
+<ul>
+<li><a href="https://github.com/oceanbase/obdeploy/blob/master/docs/docs-cn/Q%26A.md">https://github.com/oceanbase/obdeploy/blob/master/docs/docs-cn/Q%26A.md</a></li>
+</ul>
+<h2 id="第二题一次性说清楚-paxosraft-等算法的区别">第二题：一次性说清楚 Paxos、Raft 等算法的区别</h2>
+<h2 id="使用-obd-扩容">使用 OBD 扩容</h2>
+<p><a href="https://open.oceanbase.com/docs/videoCenter/5900009">https://open.oceanbase.com/docs/videoCenter/5900009</a></p>
 
     </div>
 
@@ -1074,7 +1237,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2021
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
