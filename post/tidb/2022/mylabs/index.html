@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Troy的网络博客</title>
+  <title>vldb-2021-labs - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="Troy&#39;s Blog" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="Tidb" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,9 +26,7 @@
 <meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/" />
-  <link href="https://wangcy6.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
-  <link href="https://wangcy6.github.io/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="canonical" href="https://wangcy6.github.io/post/tidb/2022/mylabs/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,15 +38,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Troy的网络博客" />
-<meta property="og:description" content="Troy&#39;s Blog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wangcy6.github.io/" />
+<meta property="og:title" content="vldb-2021-labs" />
+<meta property="og:description" content="Tidb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/tidb/2022/mylabs/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-01-12T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="Troy的网络博客">
-<meta itemprop="description" content="Troy&#39;s Blog"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Troy的网络博客"/>
-<meta name="twitter:description" content="Troy&#39;s Blog"/>
+<meta itemprop="name" content="vldb-2021-labs">
+<meta itemprop="description" content="Tidb"><meta itemprop="datePublished" content="2022-01-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-01-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="11">
+<meta itemprop="keywords" content="Tidb," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="vldb-2021-labs"/>
+<meta name="twitter:description" content="Tidb"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -117,132 +120,95 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/nginx%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86100%E8%AE%B2/">nginx核心知识100讲</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-04-29 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">vldb-2021-labs</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-12 00:00 </span>
+        
+          <span class="more-meta"> 约 11 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#实验1">实验1</a>
+      <ul>
+        <li><a href="#make-lab1p0">make lab1P0</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>文章地址</p>
+<ul>
+<li>http://localhost:1313/post/tidb/2022/tidb_01/</li>
+<li><a href="https://github.com/watchpoints/mylabs">https://github.com/watchpoints/mylabs</a></li>
+</ul>
+<h2 id="实验1">实验1</h2>
+<h3 id="make-lab1p0">make lab1P0</h3>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-01-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Tidb/">Tidb</a>
           </div>
-        <span class="more-meta"> 约 213 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      下面重要概念记录 nginx核心知识100讲课件@陶辉 FQA-1 如何不影响服务情况下升级 FQA-2 为什么需要共享内存 FQA-3 如何优化 TCP消息的发送 10个步骤 了解下
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/nginx%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86100%E8%AE%B2/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/plan04/">2020-5-学习计划</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-04-21 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/todo/"> todo </a>
-          </div>
-        <span class="more-meta"> 约 825 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      力个flag 学习中关键一步是什么 就一个办法 像公司的大牛学习，你能从他们身上学到高度，就是未来的高度 不要抱怨你环境，请从电信外包，各种小公司，
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/plan04/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/k8s/">zooKeeper</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-04-20 00:00 </span>
-      
-        <span class="more-meta"> 约 953 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/k8s/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/zooKeeper/">zooKeeper</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-04-20 00:00 </span>
-      
-        <span class="more-meta"> 约 953 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/zooKeeper/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/st/">协程库</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-14 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/code_reading/"> code_reading </a>
-          </div>
-        <span class="more-meta"> 约 1532 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      卡片 协程库 语言 开发者 state threads library 3000行C代码 历史渊源 摘要 今日理解。 一、一个普通的应用程序，假如采用st库，那么这个应用具备2个特点 highly scalable appl
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/st/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    <a class="prev" href="/page/10/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/page/12/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">逆向入门教程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tidb/2022/2022-1-19-Project2/">
+            <span class="next-text nav-default">Tidb入门1</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
 
       </div>
     </main>

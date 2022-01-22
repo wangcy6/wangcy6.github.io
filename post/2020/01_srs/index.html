@@ -48,7 +48,7 @@
 <meta itemprop="name" content="SRS官方文档和学习路径">
 <meta itemprop="description" content="高性能可扩展服务"><meta itemprop="datePublished" content="2021-06-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4645">
+<meta itemprop="wordCount" content="4270">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SRS官方文档和学习路径"/>
 <meta name="twitter:description" content="高性能可扩展服务"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 4645 字 </span>
-          <span class="more-meta"> 预计阅读 10 分钟 </span>
+          <span class="more-meta"> 约 4270 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -150,8 +150,6 @@
     <li><a href="#第二天61-深入场景-主要了解功能">第二天（6.1） 深入场景 主要了解功能</a>
       <ul>
         <li><a href="#通过下面图片看到-相关知识框架">通过下面图片看到 相关知识框架</a></li>
-        <li><a href="#第三天6-8-集群部署配置">第三天(6-8) 集群部署配置</a></li>
-        <li><a href="#qa">qa</a></li>
         <li><a href="#note-问题推流srs单点故障怎么办阅读">note： 问题：推流srs单点故障怎么办？阅读</a></li>
       </ul>
     </li>
@@ -167,9 +165,14 @@
 
   <ul>
     <li><a href="#todo-跟踪issue去学习">todo 跟踪issue去学习</a></li>
-    <li><a href="#推送">推送</a>
+    <li><a href="#推送">推送</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#资料搜集">资料搜集</a></li>
+    <li><a href="#动手">动手</a>
       <ul>
-        <li><a href="#查看文档">查看文档</a></li>
+        <li><a href="#task1">task1</a></li>
       </ul>
     </li>
   </ul>
@@ -177,7 +180,11 @@
   </div>
 </div>
     <div class="post-content">
-      <h1 id="卡片">卡片</h1>
+      <ul>
+<li>文章路径</li>
+</ul>
+<p>http://localhost:1313/post/2020/01_srs/</p>
+<h1 id="卡片">卡片</h1>
 <p>SRS4.0官方文档和学习路径</p>
 <p><a href="https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg">https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg</a></p>
 <p><a href="https://ossrs.net/releases/">https://ossrs.net/releases/</a></p>
@@ -206,6 +213,11 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">
@@ -213,11 +225,16 @@ git clone -b 4.0release https://gitee.com/ossrs/srs.git &amp;&amp;
 cd srs/trunk &amp;&amp; ./configure &amp;&amp; make &amp;&amp; ./objs/srs -c conf/srs.conf
 
 /root/code/c++/srs/trunk
+/app/work/srs/trunk
+
 
 nohup ./objs/srs -c conf/srs.conf &amp;
 10.112.179.21
+10.112.178.189
+
 /usr/local/srs 
 rtmp://10.112.179.21:1935/live/wangchuanyi
+rtmp://10.112.178.189:1935/live/wangchuanyi
 
 
 </code></pre></td></tr></table>
@@ -365,12 +382,6 @@ http://10.112.179.21:1985/api/v1/streams
 <p><strong>解协议</strong>的作用 &mdash;-&gt;<strong>解封装</strong>的作用 &mdash;<strong>解码</strong>的作用</p>
 <ul>
 <li>FLV 格式的数据，经过解封装操作后，输出 H.264 编码的视频码流和 AAC 编码的音频码流</li>
-</ul>
-<h3 id="第三天6-8-集群部署配置">第三天(6-8) 集群部署配置</h3>
-<h3 id="qa">qa</h3>
-<ul>
-<li>问题：srs已经支持Origin Cluster，假如 3个节点做为源节点，客户端在推送时候可以随便选择任意一个节点推送？在Origin Cluster前面添加一个lvs可以了</li>
-<li>问题：推流srs单点故障怎么办？</li>
 </ul>
 <h3 id="note-问题推流srs单点故障怎么办阅读">note： 问题：推流srs单点故障怎么办？阅读</h3>
 <p>Cluster: Origin Cluster for Fault Tolarence and Load Balance, 源站热备和负载均衡集群 #464</p>
@@ -836,146 +847,30 @@ SrsGoApiRaw::SrsGoApiRaw(SrsServer *svr)
     <span class="kt">int</span> <span class="n">SrsSource</span><span class="o">::</span><span class="n">on_video</span><span class="p">(</span><span class="n">SrsCommonMessage</span><span class="o">*</span> <span class="n">shared_video</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><p><img src="https://images2018.cnblogs.com/blog/1382048/201805/1382048-20180525172300209-859246016.png" alt="https://www.cnblogs.com/jimodetiantang/p/9087775.html"></p>
-<p><a href="https://www.cnblogs.com/jimodetiantang/p/9087775.html">https://www.cnblogs.com/jimodetiantang/p/9087775.html</a></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">SrsRtmpConn</span><span class="o">::</span><span class="n">stream_service_cycle</span><span class="p">()</span>
-    
-    <span class="k">virtual</span> <span class="kt">int</span> <span class="n">http_hooks_on_connect</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_close</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_publish</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_unpublish</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_play</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_stop</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_publish_receiveaudio</span><span class="p">(</span><span class="kt">bool</span> <span class="n">flag</span><span class="p">);</span>	
-    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_publish_receivevideo</span><span class="p">(</span><span class="kt">bool</span> <span class="n">flag</span><span class="p">);</span>
-	<span class="k">virtual</span> <span class="kt">int</span> <span class="nf">http_hooks_on_policy_publish</span><span class="p">();</span>
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">http_hooks_on_policy_unpublish</span><span class="p">();</span>
-<span class="kt">int</span> <span class="n">SrsRtmpConn</span><span class="o">::</span><span class="n">publishing</span><span class="p">(</span><span class="n">SrsSource</span><span class="o">*</span> <span class="n">source</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="err">关于</span><span class="n">SRS3配置文件参数说明</span>
-    <span class="nl">https</span><span class="p">:</span><span class="c1">//www.itbkz.com/12548.html
-</span><span class="c1"></span>    <span class="nl">https</span><span class="p">:</span><span class="c1">//gitee.com/winlinvip/srs.oschina/wikis/v3_CN_HTTPCallback
-</span></code></pre></td></tr></table>
-</div>
-</div><ol start="2">
-<li>播放回调：https://gitee.com/ossrs/srs/wikis/v4_CN_HTTPCallback?sort_id=3957393</li>
-</ol>
-<p>virtual int http_hooks_on_play();</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#define URL_SRS_POST &#34;/api/v1/streams&#34;
-
-else if (0 == strncasecmp(url, URL_SRS_POST, strlen(url)))
-
-void dns_down_httpserver::deal_srs_msg(char* data)
-  virtual void publish_msg(char *msg) = 0;
-
-  //{&#34;action&#34;:&#34;on_play&#34;,&#34;client_id&#34;:6120,&#34;ip&#34;:&#34;121.69.49.32&#34;,&#34;vhost&#34;:&#34;gomeplus&#34;,&#34;server_ip&#34;:&#34;127.0.0.1&#34;,
-//&#34;server_port&#34;:&#34;19360&#34;,&#34;app&#34;:&#34;live/162020008_188800160&#34;,&#34;stream&#34;:1887608896,&#34;play_stream&#34;:&#34;liveAV-162020008&#34;,
-//&#34;tcUrl&#34;:&#34;rtmp://124.250.75.41:19360/live/162020008_188800160?vhost=gomeplus&#34;,&#34;pageUrl&#34;:&#34;&#34;
-
-:srs_redis get new data {
-        &#34;streamid&#34;:     &#34;73523459629&#34;,
-        &#34;video&#34;:        &#34;1&#34;,
-        &#34;audio&#34;:        &#34;0&#34;,
-        &#34;confer&#34;:       &#34;73523459629_73546364519&#34;
-}
-
-http_hooks {
-        on_publish_receivevideo http://10.112.179.22/api/v1/streams;
-        on_publish_receiveaudio http://10.112.179.22/api/v1/streams;
-        on_publish http://10.112.179.22/api/v1/streams;
-        on_stop http://10.112.179.22/api/v1/sessions;
-        on_unpublish http://10.112.179.22/api/v1/streams;
-        on_play http://10.112.179.22/api/v1/sessions;
-        enabled on;
-    }
-
-</code></pre></td></tr></table>
-</div>
-</div><ol start="3">
-<li>扩展架构阅读：rpc无法跟踪</li>
-</ol>
-<ul>
-<li>gRPC + Zipkin 分布式链路追踪
-<a href="https://blog.csdn.net/EDDYCJY/article/details/102426281">https://blog.csdn.net/EDDYCJY/article/details/102426281</a></li>
-<li>基于 Thrift RPC 的调用链跟踪</li>
-</ul>
-<h3 id="查看文档">查看文档</h3>
-<ul>
-<li><a href="https://gitee.com/ossrs/srs/wikis/v4_CN_SrsLog">https://gitee.com/ossrs/srs/wikis/v4_CN_SrsLog</a></li>
-</ul>
-<p><a href="https://hub.fastgit.org/ossrs/srs">https://hub.fastgit.org/ossrs/srs</a></p>
-<p><a href="https://gitee.com/ossrs/srs/wikis/v4_CN_DeliveryMethod">https://gitee.com/ossrs/srs/wikis/v4_CN_DeliveryMethod</a></p>
-<ol>
-<li>获取在线人数
-<a href="https://gitee.com/ossrs/srs/wikis/v2_CN_HTTPApi?sort_id=3957020">https://gitee.com/ossrs/srs/wikis/v2_CN_HTTPApi?sort_id=3957020</a></li>
-</ol>
-<p>srs的http API控制相关接口
-<a href="https://blog.csdn.net/weixin_36270623/article/details/104411595">https://blog.csdn.net/weixin_36270623/article/details/104411595</a></p>
-<p>curl -v -X GET http://10.1.0.222:1985/api/v1/streams/</p>
-<p>curl -v -X GET http://10.1.0.222:1985/api/v1/streams/24420</p>
-<h1 id="第二部分参与开发">第二部分：参与开发</h1>
+</div><h1 id="第二部分参与开发">第二部分：参与开发</h1>
+<h2 id="资料搜集">资料搜集</h2>
 <ul>
 <li>
-<p>rtmp转码后有没有办法再推到srs服务器上 有大佬知道吗？</p>
+<p><a href="https://gitee.com/ossrs/srs/wikis/v4_CN_SrsLog">https://gitee.com/ossrs/srs/wikis/v4_CN_SrsLog</a></p>
 </li>
 <li>
-<p>断过网重新推流都会重新调用on_publish</p>
+<p><a href="https://www.bilibili.com/video/BV1Lh411v7kD/">https://www.bilibili.com/video/BV1Lh411v7kD/</a></p>
+</li>
+<li>
+<p><a href="https://www.bilibili.com/video/BV1Lh411v7kD/">https://www.bilibili.com/video/BV1Lh411v7kD/</a></p>
+</li>
+<li>
+<p>AvStackDocs-master</p>
 </li>
 </ul>
-<p><a href="http://ossrs.net/srs.release/releases/">http://ossrs.net/srs.release/releases/</a></p>
+<h2 id="动手">动手</h2>
+<h3 id="task1">task1</h3>
+<p><a href="https://blog.csdn.net/m0_56595685/article/details/122594797">https://blog.csdn.net/m0_56595685/article/details/122594797</a></p>
+<p>FFmpeg播放WebRTC的流，全开源的方案来了，没有二进制库和私有协议，全都是开源代码和公开的协议，欢迎一起来搞metaRTC。
+10.112.178.189<br>
+/app/work/srs/trunk
+nohup ./objs/srs -c conf/srs.conf &amp;
+rtmp://10.112.178.189:1935/live/watchpoints</p>
 
     </div>
 

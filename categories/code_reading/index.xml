@@ -6,7 +6,16 @@
     <description>Recent content in code_reading on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/code_reading/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/code_reading/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>逆向入门教程</title>
+      <link>https://wangcy6.github.io/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
+      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</guid>
+      <description>背景：答应别人导入微信记录，结果半年毫无动静，一点进展都没有。 记录入门遇到的问题，然后看了那些文章 和写了那些代码解决的。 文章地址 http://localhost:1313/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/ 手机端-A</description>
+    </item>
+    
     <item>
       <title>oceanbase源码阅读（1）程序启动</title>
       <link>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</link>
@@ -40,7 +49,7 @@
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/01_srs/</guid>
-      <description>卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ Introduction Problem solucction https://gitee.com/ossrs/srs/wikis/v4_CN_Home https://github.com/ossrs/srs https://hub.fastgit.org/ossrs/srs 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不上) 1 2 3</description>
+      <description>文章路径 http://localhost:1313/post/2020/01_srs/ 卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ Introduction Problem solucction https://gitee.com/ossrs/srs/wikis/v4_CN_Home https://github.com/ossrs/srs https://hub.fastgit.org/ossrs/srs 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不</description>
     </item>
     
     <item>
