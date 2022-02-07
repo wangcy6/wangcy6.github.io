@@ -6,7 +6,43 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 20 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>实践练习六（必选）：查看 OceanBase 执行计划</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</link>
+      <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</guid>
+      <description>多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version</description>
+    </item>
+    
+    <item>
+      <title>一周精彩内容分享（第六期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/6/</link>
+      <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2022/6/</guid>
+      <description>文章地址： http://localhost:1313/post/ARTS/2022/6 https://wangcy6.github.io/post/ARTS/2022/6 第一部分：work输出 一、我提交的pr 什么都没有 二、 我阅读代码 三 、社区 todo1 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 OceanBase</description>
+    </item>
+    
+    <item>
+      <title>操作系统入门知识</title>
+      <link>https://wangcy6.github.io/post/2022/2-2022-1-25-os/</link>
+      <pubDate>Tue, 25 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/2-2022-1-25-os/</guid>
+      <description>## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技</description>
+    </item>
+    
+    <item>
+      <title>k8s入门</title>
+      <link>https://wangcy6.github.io/post/2020/k8s/</link>
+      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2020/k8s/</guid>
+      <description>协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术</description>
+    </item>
+    
     <item>
       <title>逆向入门教程</title>
       <link>https://wangcy6.github.io/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
@@ -473,15 +509,6 @@
       
       <guid>https://wangcy6.github.io/post/2020/plan04/</guid>
       <description>力个flag 学习中关键一步是什么 就一个办法 像公司的大牛学习，你能从他们身上学到高度，就是未来的高度 不要抱怨你环境，请从电信外包，各种小公司，</description>
-    </item>
-    
-    <item>
-      <title>zooKeeper</title>
-      <link>https://wangcy6.github.io/post/2020/k8s/</link>
-      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2020/k8s/</guid>
-      <description>协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master</description>
     </item>
     
     <item>

@@ -6,7 +6,16 @@
     <description>Recent content in book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>操作系统入门知识</title>
+      <link>https://wangcy6.github.io/post/2022/2-2022-1-25-os/</link>
+      <pubDate>Tue, 25 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/2-2022-1-25-os/</guid>
+      <description>## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技</description>
+    </item>
+    
     <item>
       <title>TDengine</title>
       <link>https://wangcy6.github.io/post/2021/02_tdb/</link>

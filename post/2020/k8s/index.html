@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>zooKeeper - Troy的网络博客</title>
+  <title>k8s入门 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -38,20 +38,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="zooKeeper" />
-<meta property="og:description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master" />
+<meta property="og:title" content="k8s入门" />
+<meta property="og:description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/k8s/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-04-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-04-20T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2022-01-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-01-20T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="zooKeeper">
-<meta itemprop="description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master"><meta itemprop="datePublished" content="2020-04-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-04-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="953">
-<meta itemprop="keywords" content="中间件," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="zooKeeper"/>
-<meta name="twitter:description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master"/>
+<meta itemprop="name" content="k8s入门">
+<meta itemprop="description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术"><meta itemprop="datePublished" content="2022-01-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-01-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="163">
+<meta itemprop="keywords" content="云原生," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k8s入门"/>
+<meta name="twitter:description" content="协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -123,13 +123,13 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">zooKeeper</h1>
+      <h1 class="post-title">k8s入门</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-04-20 00:00 </span>
+        <span class="post-time"> 2022-01-20 00:00 </span>
         
-          <span class="more-meta"> 约 953 字 </span>
-          <span class="more-meta"> 预计阅读 2 分钟 </span>
+          <span class="more-meta"> 约 163 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -143,140 +143,39 @@
       <ul>
         <li><a href="#一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</a></li>
         <li><a href="#二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</a></li>
-        <li><a href="#服务缺乏可扩展性">服务缺乏可扩展性</a></li>
         <li><a href="#三这个技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</a></li>
         <li><a href="#四技术的组成部分和关键点">四、技术的组成部分和关键点。</a></li>
         <li><a href="#五技术的底层原理和关键实现">五、技术的底层原理和关键实现</a></li>
         <li><a href="#六已有的实现和它之间的对比">六、已有的实现和它之间的对比</a></li>
       </ul>
     </li>
+    <li><a href="#青铜技能-熟悉docker">青铜技能-熟悉docker</a></li>
   </ul>
 </nav>
   </div>
 </div>
-  <div class="post-outdated">
-    <div class="hint">
-      <p>【注意】最后更新于 <span class="timeago" datetime="2020-04-20T00:00:00" title="April 20, 2020">April 20, 2020</span>，文中内容可能已过时，请谨慎使用。</p>
-    </div>
-  </div>
     <div class="post-content">
       <h2 id="协调者zookeeper">协调者ZooKeeper</h2>
 <h3 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h3>
-<p>从集中式部署业务架构到 分布式部署，Master-Worker架构 改造过程中，必然涉及数据一致性问题</p>
-<p>2pc，3pc都没很好解决这个问题，ZooKeeper 站出来解决这个问题。</p>
-<ul>
-<li>
-<p>协调应用之间保持一致性。</p>
-</li>
-<li>
-<p>协调分布式应用之间保持一致性。</p>
-</li>
-<li>
-<p>协调分布式应用之间保持一致性的服务(中间件)</p>
-</li>
-</ul>
-<blockquote>
-<p>使用<strong>Zoo keeper</strong> ，一个普通服务做很少改造机就能升级为分布式服务.</p>
-<p>ZooKeeper is  coordination service for distributed applications.</p>
-</blockquote>
-<p>ZooKeeper 是伴随Hadoop产生的， 而Hadoop生态系统中，很多项目都是以动物来命名，如Pig，Hive等， 似乎像一个动物园，这样就得到动物园管家的名称”ZooKeeper”</p>
 <h3 id="二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</h3>
-<h4 id="劣势">劣势</h4>
-<ul>
-<li>
-<h3 id="服务缺乏可扩展性">服务缺乏可扩展性</h3>
-</li>
-</ul>
-<p>微服务相关的项目都纷纷抛弃ZK转投etcd，可见其确实有可取之处，也可以看出一个项目的易用的重要性有时候甚至高于稳定性和功能</p>
-<p>可扩展性不足，ZK集群不支持在线动态添加机器或替换机器</p>
-<ul>
-<li>
-<p>不适合用于大容量存储。</p>
-<blockquote>
-<p>对于大容量存储 ，我们完全可以考虑使用数据库或者分布式文件系统等</p>
-</blockquote>
-</li>
-</ul>
 <h3 id="三这个技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</h3>
-<p>　<strong>Zookeeper</strong> 是一个基于 <a href="https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/chubby-osdi06.pdf">Google Chubby</a> 论文实现的一款解决分布式数据一致性问题的开源实现，方便了依赖 Zookeeper 的应用实现</p>
-<ul>
-<li>
-<p>数据发布 / 订阅</p>
-</li>
-<li>
-<p>负载均衡</p>
-</li>
-<li>
-<p>服务注册与发现</p>
-</li>
-<li>
-<p>分布式协调</p>
-</li>
-<li>
-<p>事件通知</p>
-</li>
-<li>
-<p>集群管理</p>
-</li>
-<li>
-<p>Leader 选举</p>
-</li>
-<li>
-<p>分布式锁和队列</p>
-</li>
-</ul>
 <h3 id="四技术的组成部分和关键点">四、技术的组成部分和关键点。</h3>
-<ul>
-<li>
-<p>ZAB 协议是为分布式协调服务 Zookeeper 专门设计的一种支持崩溃恢复的原子广播协议.专为ZK设计的</p>
-<blockquote>
-<p>2pc和3pc的分析中可以看出，出现不一致的情况都是因为执行rollback操作导致的，同步阻塞本来就性能差，而且还要等待所有的参与者回复才能做出决策，这导致性能更差。</p>
-<p>Zab在汲取了这些经验后，其在设计上不允许执行rollback操作，协调者(zab中是leader)发出的请求，参与者(zab中是Follower)要么同意，要么丢弃，且协调者在收到一半的回复后，就能做出决策，发出提交申请，同样在得到一半的回复后，能够完成事务</p>
-<p>zk很好的解决了2pc和3pc的各种问题，且也不会有单点问题</p>
-</blockquote>
-</li>
-</ul>
 <h3 id="五技术的底层原理和关键实现">五、技术的底层原理和关键实现</h3>
 <h3 id="六已有的实现和它之间的对比">六、已有的实现和它之间的对比</h3>
-<table>
-<thead>
-<tr>
-<th>产品</th>
-<th>一致性</th>
-<th>角色</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>ZooKeeper</td>
-<td>过半</td>
-<td>leader,followers,Observer（只读节点）</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>conf</td>
-<td>Master,Slave</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><a href="http://www.jasongj.com/zookeeper/fastleaderelection/">http://www.jasongj.com/zookeeper/fastleaderelection/</a></p>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MzI4MTY5NTk4Ng==&amp;mid=2247489041&amp;idx=1&amp;sn=b58745994c0c98662e2330c966b5036f&amp;source=41#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzI4MTY5NTk4Ng==&amp;mid=2247489041&amp;idx=1&amp;sn=b58745994c0c98662e2330c966b5036f&amp;source=41#wechat_redirect</a></p>
-<p><a href="https://juejin.im/post/5b924b0de51d450e9a2de615">https://juejin.im/post/5b924b0de51d450e9a2de615</a></p>
-<p><a href="https://zyt505050.gitee.io/2019/02/20/zookeeper-gai-lan/">https://zyt505050.gitee.io/2019/02/20/zookeeper-gai-lan/</a></p>
+<h2 id="青铜技能-熟悉docker">青铜技能-熟悉docker</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## 登陆</span>
+docker <span class="nb">exec</span> -i -t 56bd78306b21  /bin/sh 
 
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
@@ -287,7 +186,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-04-20 00:00
+        2022-01-20 00:00
         
     </span>
   </p>
@@ -299,16 +198,16 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+          <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/2020/plan04/">
+        <a class="prev" href="/post/2022/2-2022-1-25-os/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">2020-5-学习计划</span>
+            <span class="prev-text nav-default">操作系统入门知识</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/2020/zooKeeper/">
-            <span class="next-text nav-default">zooKeeper</span>
+        <a class="next" href="/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+            <span class="next-text nav-default">逆向入门教程</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

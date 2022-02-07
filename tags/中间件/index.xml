@@ -27,15 +27,6 @@
     
     <item>
       <title>zooKeeper</title>
-      <link>https://wangcy6.github.io/post/2020/k8s/</link>
-      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2020/k8s/</guid>
-      <description>协调者ZooKeeper 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 从集中式部署业务架构到 分布式部署，Master</description>
-    </item>
-    
-    <item>
-      <title>zooKeeper</title>
       <link>https://wangcy6.github.io/post/2020/zooKeeper/</link>
       <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
       

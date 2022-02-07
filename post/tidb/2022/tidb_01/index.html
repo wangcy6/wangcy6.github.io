@@ -48,7 +48,7 @@
 <meta itemprop="name" content="Tidb入门1">
 <meta itemprop="description" content="Tidb"><meta itemprop="datePublished" content="2022-01-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-01-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="554">
+<meta itemprop="wordCount" content="838">
 <meta itemprop="keywords" content="Tidb," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Tidb入门1"/>
 <meta name="twitter:description" content="Tidb"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2022-01-11 00:00 </span>
         
-          <span class="more-meta"> 约 554 字 </span>
+          <span class="more-meta"> 约 838 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -149,6 +149,7 @@
       <ul>
         <li><a href="#逻辑优化">逻辑优化</a></li>
         <li><a href="#物理优化">物理优化</a></li>
+        <li><a href="#q2同城两中心-采用raft-复制存在的问题是">Q2同城两中心 采用raft 复制存在的问题是？</a></li>
       </ul>
     </li>
   </ul>
@@ -362,6 +363,72 @@ EXPLAIN ANALYZE SELECT * FROM t USE INDEX(a);
 CREATE TABLE t16 (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, c1 INT NOT NULL);
 INSERT INTO t16 (c1) VALUES (1), (2), (3);
 EXPLAIN ANALYZE SELECT * FROM t16 WHERE id = 1 \G;
+
+</code></pre></td></tr></table>
+</div>
+</div><p>同城两中心</p>
+<p>Data Replication Auto Synchronous，简称 DR Auto-Sync。</p>
+<p><img src="https://lh3.googleusercontent.com/xJ3HeTecqs8ZdC76aYMZJRdN9C2_Vy6Wzx_iP3Pr3K-qjWezzOkUFVHsTHNREPuPMqqX0w6fj4EFfpzHml_9vYP4fdYcOv3JkBe5YLmpS4mgYKJNb8IcSiQZcgD0FrQSclSERSnB=s1600" alt=""></p>
+<h3 id="q2同城两中心-采用raft-复制存在的问题是">Q2同城两中心 采用raft 复制存在的问题是？</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-gas" data-lang="gas"><span class="err">5副本：</span>
+<span class="err">[</span><span class="na">rep</span><span class="nf">lication-mode</span><span class="p">]</span>
+<span class="na">rep</span><span class="nf">lication-mode</span> <span class="err">=</span> <span class="err">&#34;</span><span class="no">dr-auto-sync</span><span class="err">&#34;</span>
+<span class="err">[</span><span class="na">rep</span><span class="nf">lication-mode.dr-auto-sync</span><span class="p">]</span>
+<span class="nf">label-key</span> <span class="err">=</span> <span class="err">&#34;</span><span class="no">zone</span><span class="err">&#34;</span>
+<span class="nf">primary</span> <span class="err">=</span> <span class="err">&#34;</span><span class="no">east</span><span class="err">&#34;</span>
+<span class="nf">dr</span> <span class="err">=</span> <span class="err">&#34;</span><span class="no">west</span><span class="err">&#34;</span>
+<span class="nf">primary-replicas</span> <span class="err">=</span> <span class="mi">2</span>
+
+<span class="nf">dr-replicas</span> <span class="err">=</span> <span class="mi">1</span>
+<span class="nf">wait-store-timeout</span> <span class="err">=</span> <span class="err">&#34;</span><span class="mi">1</span><span class="no">m</span><span class="err">&#34;</span>
+<span class="nf">wait-sync-timeout</span> <span class="err">=</span> <span class="err">&#34;</span><span class="mi">1</span><span class="no">m</span><span class="err">&#34;</span>
+
+<span class="nl">https:</span><span class="err">//</span><span class="nf">asktug.com</span><span class="err">/</span><span class="no">t</span><span class="err">/</span><span class="no">topic</span><span class="err">/</span><span class="mi">212812</span>
+<span class="err">同步切异步</span>
+<span class="nl">https:</span><span class="err">//</span><span class="nf">docs.pingcap.com</span><span class="err">/</span><span class="no">zh</span><span class="err">/</span><span class="no">tidb</span><span class="err">/</span><span class="no">dev</span><span class="err">/</span><span class="no">two-data-centers-in-one-city-deployment</span><span class="err">/</span>
+
+<span class="nf">DR</span><span class="err">（</span><span class="no">Disaster</span> <span class="no">Recovery</span><span class="err">），代指同城容灾数据中心</span>
+
+<span class="nf">sync</span><span class="err">：同步复制，此时</span> <span class="no">DR</span> <span class="err">与</span> <span class="no">Primary</span> <span class="err">至少有一个节点与</span> <span class="no">Primary</span> <span class="err">同步，</span><span class="no">Raft</span> <span class="err">保证每条</span> <span class="no">log</span> <span class="err">按</span> <span class="no">label</span> <span class="err">同步复制到</span> <span class="no">DR</span>
+
+<span class="nf">async</span><span class="err">：</span>
+<span class="err">异步复制，此时不保证</span> <span class="nf">DR</span> <span class="err">与</span> <span class="no">Primary</span> <span class="err">完全同步，</span>
+<span class="nf">Raft</span> <span class="err">使用经典的</span> <span class="no">majority</span> <span class="err">方式复制</span> <span class="no">log</span>
+
+<span class="nf">sync-recover</span><span class="err">：恢复同步，此时不保证</span> <span class="no">DR</span> <span class="err">与</span> <span class="no">Primary</span> <span class="err">完全同步，</span><span class="no">Raft</span> <span class="err">逐步切换成</span> <span class="no">label</span> <span class="err">复制，切换成功后汇报给</span> <span class="no">PD</span>
+
 
 </code></pre></td></tr></table>
 </div>

@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GTD</title>
+      <link>https://wangcy6.github.io/tags/GTD/</link>
+      <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/GTD/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>work</title>
+      <link>https://wangcy6.github.io/tags/work/</link>
+      <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/work/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>book</title>
+      <link>https://wangcy6.github.io/tags/book/</link>
+      <pubDate>Tue, 25 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/book/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>云原生</title>
+      <link>https://wangcy6.github.io/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/</link>
+      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Tidb</title>
       <link>https://wangcy6.github.io/tags/Tidb/</link>
@@ -17,38 +53,11 @@
     </item>
     
     <item>
-      <title>GTD</title>
-      <link>https://wangcy6.github.io/tags/GTD/</link>
-      <pubDate>Thu, 06 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/GTD/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>work</title>
-      <link>https://wangcy6.github.io/tags/work/</link>
-      <pubDate>Thu, 06 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/work/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Interview Question</title>
       <link>https://wangcy6.github.io/tags/Interview-Question/</link>
       <pubDate>Tue, 04 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/tags/Interview-Question/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>book</title>
-      <link>https://wangcy6.github.io/tags/book/</link>
-      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/tags/book/</guid>
       <description></description>
     </item>
     
