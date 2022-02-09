@@ -6,7 +6,25 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 28 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021年历史文章</title>
+      <link>https://wangcy6.github.io/post/04_2021-10-10.2021.years/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/04_2021-10-10.2021.years/</guid>
+      <description>2021 我的历史文章 基础：共3篇 60秒问答：请问下面的程序一共输出多少个&amp;quot;hello,world” 自己看了3遍 整天背诵五种I/O模型/e</description>
+    </item>
+    
+    <item>
+      <title>视频管理平台</title>
+      <link>https://wangcy6.github.io/post/2022/2022-2-7-go-vue-mp4/</link>
+      <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/2022-2-7-go-vue-mp4/</guid>
+      <description>代码地址： https://gitee.com/wang_cyi/go_mp4 /Users/wangchuanyi/code/src/gitee.com/wang_cyi/go_mp4 练习01 ：用网页播放视频 http://bilibili.github.io/flv.js/demo/ 引用 https://github.com/bytedance/xgplayer/blob/master/README.zh-CN.md GET 和 POST https://www.cnblogs.com/liuhe688/p/11063945.html axios在Vue-cli+webpac 一个axios的简单教程</description>
+    </item>
+    
     <item>
       <title>实践练习六（必选）：查看 OceanBase 执行计划</title>
       <link>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</link>

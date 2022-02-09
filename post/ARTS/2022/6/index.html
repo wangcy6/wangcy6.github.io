@@ -48,7 +48,7 @@
 <meta itemprop="name" content="一周精彩内容分享（第六期）">
 <meta itemprop="description" content="GTD践行第6周"><meta itemprop="datePublished" content="2022-01-26T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-01-26T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="8287">
+<meta itemprop="wordCount" content="8616">
 <meta itemprop="keywords" content="GTD,work," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="一周精彩内容分享（第六期）"/>
 <meta name="twitter:description" content="GTD践行第6周"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/ARTS/"> ARTS </a>
             </div>
-          <span class="more-meta"> 约 8287 字 </span>
-          <span class="more-meta"> 预计阅读 17 分钟 </span>
+          <span class="more-meta"> 约 8616 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -447,7 +447,53 @@ void aof_background_fsync(int fd) {
 <p>主要是为了总结和归纳你在是常工作中所遇到的知识点。</p>
 <p>学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</p>
 </blockquote>
-<h3 id="4--share">4.  Share</h3>
+<p>如何优雅地实现网页播放视频</p>
+<p><a href="https://www.jianshu.com/p/65af0f01cb97">https://www.jianshu.com/p/65af0f01cb97</a></p>
+<p>React + Videojs + Sanic 打造简易流播放器</p>
+<p><a href="https://ermao.live/React+Videojs+Sanic%E6%89%93%E9%80%A0%E7%AE%80%E6%98%93%E6%B5%81%E6%92%AD%E6%94%BE%E5%99%A8.html">https://ermao.live/React+Videojs+Sanic%E6%89%93%E9%80%A0%E7%AE%80%E6%98%93%E6%B5%81%E6%92%AD%E6%94%BE%E5%99%A8.html</a></p>
+<p>理解 MP4 moov atom</p>
+<p><a href="https://ermao.live/%E7%90%86%E8%A7%A3MP4-moov-atom.html">https://ermao.live/%E7%90%86%E8%A7%A3MP4-moov-atom.html</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ffmpeg -v trace -i 1.mp4 2&gt;&amp;1 | grep -e &#39;moov&#39;
+.\ffmpeg.exe -i input.mp4 -c copy -map 0 -movflags faststart output.mp4
+
+第一次：
+Request：Range: bytes=0-
+
+Response：Content-Range: bytes 0-230379138/230379139
+第二次：
+Request：Range: bytes=229736448-
+Response：Content-Range: bytes 229736448-230379138/230379139
+
+第三次：
+
+Request：Range: bytes=32768-
+
+Response：Content-Range: bytes 32768-230379138/230379139
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4--share">4.  Share</h3>
 <blockquote>
 <p>分享一篇有观点和思考的技术文章。</p>
 <p>主要是为了建立影响力，能够输出价值观。</p>
@@ -462,7 +508,6 @@ void aof_background_fsync(int fd) {
 <p><a href="https://www.bilibili.com/video/BV14S4y1T7Li">https://www.bilibili.com/video/BV14S4y1T7Li</a></p>
 </li>
 </ul>
-<p><a href="https://hardcore.feishu.cn/docs/doccnGK3vOxAiEv6mPe06toFtkc">https://hardcore.feishu.cn/docs/doccnGK3vOxAiEv6mPe06toFtkc</a></p>
 <h4 id="问题">问题：</h4>
 <ul>
 <li>Redis和Memcached性能比较。</li>
@@ -481,6 +526,9 @@ void aof_background_fsync(int fd) {
 <p><a href="https://www.bilibili.com/video/BV1YF411b7mf">https://www.bilibili.com/video/BV1YF411b7mf</a></p>
 </li>
 </ul>
+<ol start="4">
+<li>sstable格式是什么？</li>
+</ol>
 <p>参考</p>
 <ul>
 <li>
@@ -829,6 +877,14 @@ void aof_background_fsync(int fd) {
 </blockquote>
 <ul>
 <li>
+<p>2022-2-6</p>
+<p>睡觉时候手机放到床上导致熬夜3小时。你必须从思想上去解决。你可以选择不看。</p>
+</li>
+</ul>
+<p>要求：</p>
+<p>假如手机在床上，在卧室，你选择可以不看。不打开 这个你徐来呢地方</p>
+<ul>
+<li>
 <p>2022-2-4:</p>
 <p>21点到23点 别人看电视，你看电视，你记住你目标 在客厅就运动，远离一切电视剧，综艺节目，一个眼不行。【可以做到不去做】</p>
 </li>
@@ -924,7 +980,11 @@ void aof_background_fsync(int fd) {
 <p>3.1 没有记录就没有进步</p>
 </blockquote>
 <p>第一阶段：只管去做，系鞋带&ndash;走操场&ndash;转呀转</p>
-<p>2022年02月02日：</p>
+<ul>
+<li>2022年02月07日：</li>
+</ul>
+<p>9:000起床太晚，没有时间去运动。状态和情绪不佳</p>
+<p>自己一定起床，闹钟响起时候要起床。</p>
 <blockquote>
 <p>3.2 执行结果 就是最好的反馈。</p>
 </blockquote>
