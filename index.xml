@@ -6,14 +6,23 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mimob代码阅读</title>
+      <link>https://wangcy6.github.io/post/oceanbase/03_mimi_ob/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/03_mimi_ob/</guid>
+      <description>慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果</description>
+    </item>
+    
     <item>
       <title>2021年历史文章</title>
       <link>https://wangcy6.github.io/post/04_2021-10-10.2021.years/</link>
       <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/04_2021-10-10.2021.years/</guid>
-      <description>2021 我的历史文章 基础：共3篇 60秒问答：请问下面的程序一共输出多少个&amp;quot;hello,world” 自己看了3遍 整天背诵五种I/O模型/e</description>
+      <description>https://wangcy6.github.io/post/04_2021-10-10.2021.years/ 2021 我的历史文章 基础：共3篇 60秒问答：请问下面的程序一共输出多少个&amp;quot;hello,world” 自己看了3遍 整天背诵五种I/O模型/</description>
     </item>
     
     <item>
@@ -185,6 +194,15 @@
       
       <guid>https://wangcy6.github.io/post/2021/01_Rocksdb/</guid>
       <description>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有</description>
+    </item>
+    
+    <item>
+      <title>跟leveldb学C&#43;&#43;，跟rocksdb学做引擎</title>
+      <link>https://wangcy6.github.io/post/2021/06_ask_1/</link>
+      <pubDate>Mon, 02 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2021/06_ask_1/</guid>
+      <description>描述 tcp四次挥手的过程？ time_wait 状态变化有三个情况 2个图来说明 客户端状态变化： ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;FIN_WAIT_2&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED simultaneous close ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;CLOSING&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED 服务器端状态变化： ESTABLISHED &amp;mdash;-&amp;gt;CLOSE_WAIT&amp;mdash;&amp;gt;LAST_ACK&amp;mdash;-&amp;gt;CLOSED ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;CLOSING&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED 关闭tcp连接一定要四次</description>
     </item>
     
     <item>

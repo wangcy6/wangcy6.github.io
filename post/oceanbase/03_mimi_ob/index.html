@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Troy的网络博客</title>
+  <title>mimob代码阅读 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="Troy&#39;s Blog" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -26,9 +26,7 @@
 <meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/" />
-  <link href="https://wangcy6.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
-  <link href="https://wangcy6.github.io/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/03_mimi_ob/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,15 +38,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Troy的网络博客" />
-<meta property="og:description" content="Troy&#39;s Blog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wangcy6.github.io/" />
+<meta property="og:title" content="mimob代码阅读" />
+<meta property="og:description" content="慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/03_mimi_ob/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-02-10T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="Troy的网络博客">
-<meta itemprop="description" content="Troy&#39;s Blog"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Troy的网络博客"/>
-<meta name="twitter:description" content="Troy&#39;s Blog"/>
+<meta itemprop="name" content="mimob代码阅读">
+<meta itemprop="description" content="慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果"><meta itemprop="datePublished" content="2022-02-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-02-10T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="488">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="mimob代码阅读"/>
+<meta name="twitter:description" content="慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -117,132 +120,115 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/ARTS/100_life/">日常生活记录第100周</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-06-02 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/ARTS/"> ARTS </a>
-          </div>
-        <span class="more-meta"> 约 1986 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      记录的目的 如果感觉距离目标 难于上青天，请回头看看你已经走了多少步 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 蜀道难 唐代：李白 噫吁嚱
-    </div>
-    <div class="read-more">
-      <a href="/post/ARTS/100_life/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">mimob代码阅读</h1>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/class/6.824/">MIT 6.824 Distributed Systems 2020 Spring</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-05-29 00:00 </span>
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-10 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/code_reading/"> code_reading </a>
+            </div>
+          <span class="more-meta"> 约 488 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#预备知识">预备知识：</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>慢慢来，多看、多问、多总结</p>
+</blockquote>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以完全上线的项目，非demo和一个知识点。自己认为真的 不是闹着玩的。。】</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>经过领导，专家 进行鸡蛋里挑骨头。【自己做好了别人路了胡扯，不会对别人产生任何影响，做事和做人一样，无论熟悉人，还是老师，领导，不相关人 反对 他们反馈信号，接受质疑，经过九九八十一难考验，并且你还在坚持认为对的。】</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目。【不听老人言，吃亏在眼前，不敢接受别人批评，说明自己完全没有把握，才去否定 愤怒方式】</p>
+</li>
+</ol>
+<h2 id="预备知识">预备知识：</h2>
+<ul>
+<li>源码：https://github.com/watchpoints/miniob</li>
+<li>2019CMU数据库导论(intro to database systems fall 2019) <a href="https://www.bilibili.com/video/av91919329?amp%3Bseid=15982257803189242166">https://www.bilibili.com/video/av91919329?amp%3Bseid=15982257803189242166</a></li>
+<li>2020 MIT 6.824 分布式系统 <a href="https://www.bilibili.com/video/BV1R7411t71W/">https://www.bilibili.com/video/BV1R7411t71W/</a></li>
+<li><a href="https://github.com/CDDSCLab/training-plan">https://github.com/CDDSCLab/training-plan</a></li>
+<li><a href="https://github.com/tidb-incubator/tinykv">https://github.com/tidb-incubator/tinykv</a></li>
+</ul>
+<h1 id="heading"></h1>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-10 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
       
-        <span class="more-meta"> 约 278 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技术都有
-    </div>
-    <div class="read-more">
-      <a href="/post/class/6.824/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/talkgo_todo/">talkgo</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-08-20 00:00 </span>
-      
-        <span class="more-meta"> 约 168 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      https://github.com/talkgo/night 2020-08-20 TiDB Operator 架构与实现 &ndash;正在看 TiDB Operator 是 Kubernetes 上的 TiDB 集群自动运维系统，提供包括部署、升级、扩缩容、备份恢复、配置变更的 TiDB 全生命周期管理。 借助
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/talkgo_todo/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/leetcode_hard/">leetcode_medium_300-400</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-06-10 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/Leetcode/"> Leetcode </a>
-          </div>
-        <span class="more-meta"> 约 3555 字 </span>
-        <span class="more-meta"> 预计阅读 8 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      开始日期 更新日期 备注 2020-6-10 2020-6-10 300-400中等难度总结 题目汇总 查找和最小的K对数字 合并K个排序链表 寻找两个有序数组的中位数 K个有序数组的中位数 m
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/leetcode_hard/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020/%E6%8A%80%E8%83%BD01-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">systems_performance</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-06-10 00:00 </span>
-      <div class="post-category">
-          <a href="/categories/FQA/"> FQA </a>
-          </div>
-        <span class="more-meta"> 约 172 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      开始日期 更新日期 更新内容 2020-06-10 2020-06-10 一共分为四个部分 看看图片，自己掌握多少。 性能优化书籍：《性能之巅：洞悉系统、企业与云计算&raquo; Systems Performance: Enterprise and the
-    </div>
-    <div class="read-more">
-      <a href="/post/2020/%E6%8A%80%E8%83%BD01-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    <a class="prev" href="/page/8/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/page/10/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/04_2021-10-10.2021.years/">
+            <span class="next-text nav-default">2021年历史文章</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
 
       </div>
     </main>
