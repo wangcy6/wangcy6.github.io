@@ -48,7 +48,7 @@
 <meta itemprop="name" content="阅读与写作第一期">
 <meta itemprop="description" content="地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪"><meta itemprop="datePublished" content="2022-02-10T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-10T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1586">
+<meta itemprop="wordCount" content="2383">
 <meta itemprop="keywords" content="60秒问答," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="阅读与写作第一期"/>
 <meta name="twitter:description" content="地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-10 00:00 </span>
         
-          <span class="more-meta"> 约 1586 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 2383 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -168,7 +168,10 @@
     <li><a href="#four-way-handshake-四次挥手">four-way Handshake 四次挥手</a>
       <ul>
         <li><a href="#3-为什么-time_wait-状态还需要等-2msl-后才能返回到-closed-状态">3. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能返回到 CLOSED 状态？</a></li>
+        <li><a href="#5-udp的问题">5 udp的问题</a></li>
+        <li><a href="#51-有什么问题自己都不知道然后空白回答-就是pass">5.1 有什么问题，自己都不知道，然后空白回答 就是pass</a></li>
         <li><a href="#7什么tcp-延迟启动-快速重传流量控制">7.什么tcp 延迟启动 快速重传。流量控制</a></li>
+        <li><a href="#8--问redis--cluster节点间采取gossip协议进行通讯-传递数据数是什么主从复制的数据吗1主-1从-感觉不需要这么复杂协议吧httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoindu4ytbizdkxn2rmndqxy2i5mwmxmwqzy2rjyzq2nzuilcjpzci6mjk5ndq4mdmsinuiojq2njuxfqccjcci0lj1ezelkaevtebwvg1m2caq4tdi0-adcuwmafromlist">8  <a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNDU4YTBiZDkxN2RmNDQxY2I5MWMxMWQzY2RjYzQ2NzUiLCJpZCI6Mjk5NDQ4MDMsInUiOjQ2NjUxfQ.ccJCcI0lj1eZeLkAeVtEBwvG1m2caq4Tdi0-adcUwmA&amp;from=list">问：redis  <em>cluster</em>节点间采取<em>gossip</em>协议进行通讯 。传递数据数是什么主从复制的数据吗？1主 1从 感觉不需要这么复杂协议吧</a></a></li>
       </ul>
     </li>
   </ul>
@@ -307,13 +310,45 @@
 <p>tcp 会将应用程序发送的数据分割合适的数据块来字节流传输。</p>
 </li>
 </ul>
+<h3 id="5-udp的问题">5 udp的问题</h3>
 </li>
 <li>
 <p><a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNWI0ZWM3NmFhYjFkNDk4MjhmMTE1ODQ2MmU3MDVhNjEiLCJpZCI6Mjk5MjcyODgsInUiOjQ2NjUxfQ.dpI12xFWledfdMr_93jCL5Q0um2DHbmt0khSrYdkMr4&amp;from=list">为什么流量型 都是用udp，不使用tcp ，tcp不能把带宽打满吗</a></p>
 </li>
+</ol>
+<h3 id="51-有什么问题自己都不知道然后空白回答-就是pass">5.1 有什么问题，自己都不知道，然后空白回答 就是pass</h3>
+<p><a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNWI0ZWM3NmFhYjFkNDk4MjhmMTE1ODQ2MmU3MDVhNjEiLCJpZCI6Mjk5MjcyODgsInUiOjQ2NjUxfQ.dpI12xFWledfdMr_93jCL5Q0um2DHbmt0khSrYdkMr4&amp;from=list">为什么流量型 都是用udp，不使用tcp ，tcp不能把带宽打满吗</a></p>
+<p><a href="https://maimai.cn/web/gossip_detail?gid=29758420&amp;egid=f087f0801a254f91b764c1c490d43cc6">一面凉 迅雷为什么用udp 答了半天 都不对</a></p>
+<p>区别：</p>
+<ul>
+<li>
+<p>格式大小：（从协议看）tup小。建立连接，</p>
+</li>
+<li>
+<p>传输数据大小</p>
+</li>
+</ul>
+<p>。而 UDP 继承了 IP 的特性，基于数据报的，一个一个地发，一个</p>
+<ul>
+<li>1:对传输</li>
+</ul>
+<p>场景：</p>
+<ul>
+<li>
+<p>upd 打洞</p>
+</li>
+<li>
+<p>udp flood攻击</p>
+</li>
+<li>
+<p>不需要一对一沟通，建立连接，而是可以广播的应用，比如 DHCP 协议就是基于 UDP 协议的。</p>
+</li>
+</ul>
+<ol start="4">
 <li>
 <p>tcp 数据传输过程，如何实现的？</p>
 <h3 id="7什么tcp-延迟启动-快速重传流量控制">7.什么tcp 延迟启动 快速重传。流量控制</h3>
+<h3 id="8--问redis--cluster节点间采取gossip协议进行通讯-传递数据数是什么主从复制的数据吗1主-1从-感觉不需要这么复杂协议吧httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoindu4ytbizdkxn2rmndqxy2i5mwmxmwqzy2rjyzq2nzuilcjpzci6mjk5ndq4mdmsinuiojq2njuxfqccjcci0lj1ezelkaevtebwvg1m2caq4tdi0-adcuwmafromlist">8  <a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNDU4YTBiZDkxN2RmNDQxY2I5MWMxMWQzY2RjYzQ2NzUiLCJpZCI6Mjk5NDQ4MDMsInUiOjQ2NjUxfQ.ccJCcI0lj1eZeLkAeVtEBwvG1m2caq4Tdi0-adcUwmA&amp;from=list">问：redis  <em>cluster</em>节点间采取<em>gossip</em>协议进行通讯 。传递数据数是什么主从复制的数据吗？1主 1从 感觉不需要这么复杂协议吧</a></h3>
 </li>
 </ol>
 <h1 id="-第一步阅读输入三天万句---输出-笔记摘要记录了但是不懂-"># 第一步：阅读(输入：三天,万句   输出 笔记摘要，记录了但是不懂 )</h1>
@@ -326,6 +361,31 @@
 <p><img src="http://www.iigrowing.cn/wp-content/uploads/TCPtcp_C97D/wps_clip_image899741.jpg" alt=""></p>
 <p><img src="https://pic1.zhimg.com/80/v2-d80eca1373a96f0f27df2400413f0902_1440w.jpg?source=1940ef5c" alt=""></p>
 <p><img src="https://pic1.zhimg.com/80/v2-c1cc4773efb484a5bb20e8ded575e7a9_1440w.jpg?source=1940ef5c" alt=""></p>
+<p>Redis Cluster采用P2P的Gossip协议进行通信，采用tcp还是udp这个没区别吗？</p>
+<p>Gossip协议一般基于UDP实现，其自身即在应用层保证了协议的robustness。</p>
+<p><a href="https://maimai.cn/web/gossip_detail?gid=29170876&amp;egid=61b42cdfe2f511eba165246e96b48088">https://maimai.cn/web/gossip_detail?gid=29170876&amp;egid=61b42cdfe2f511eba165246e96b48088</a></p>
+<p>UDP 全称 User Datagram Protocol，即用户数据报协议。</p>
+<p>不需要一对一沟通，建立连接，而是可以广播的应用，比如 DHCP 协议就是基于 UDP 协议的。</p>
+<p>。而 UDP 继承了 IP 的特性，基于数据报的，一个一个地发，一个</p>
+<p><a href="https://blog.csdn.net/weixin_39766014/article/details/111118107">https://blog.csdn.net/weixin_39766014/article/details/111118107</a></p>
+<p>Redis 集群是去中心化的，彼此之间状态同步靠 gossip 协议通信，集群的消息有以下几种类</p>
+<h1 id="redis-cluster-gossip-协议">Redis Cluster Gossip 协议</h1>
+<p>cluster bus 用的是一种叫gossip 协议的二进制协议，用于节点间高效的数据交换，占用更少的网络带宽和处理时间</p>
+<p><img src="https://img2020.cnblogs.com/blog/2136379/202009/2136379-20200907102559173-1607791644.png" alt="元数据1："></p>
+<p>将集群元数据集中存储在一个节点上。</p>
+<p>典型代表是大数据领域的 storm。</p>
+<p>它是分布式的大数据实时计算引擎，是集中式的元数据存储的结构，底层基于 zookeeper对所有元数据进行存储维护。</p>
+<p><img src="https://img2020.cnblogs.com/blog/2136379/202009/2136379-20200907102610613-1983444640.png" alt=""></p>
+<p>redis 维护集群元数据采用的是gossip 协议，所有节点都持有一份元数据，不同的节点如果出现了元数据的变更，就不断将元数据发送给其它的节点，让其它节点也进行元数据的变更。</p>
+<ul>
+<li><strong>优点</strong></li>
+</ul>
+<p>元数据的更新比较分散，不是集中在一个地方，降低了压力；</p>
+<ul>
+<li><strong>缺点</strong></li>
+</ul>
+<p>元数据的更新有延时，可能导致集群中的一些操作会有一些滞后。</p>
+<p>gossip 协议包含多种消息，包含 ping、pong、meet、fail等等。</p>
 
     </div>
 
