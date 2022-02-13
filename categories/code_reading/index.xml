@@ -22,7 +22,7 @@
       <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</guid>
-      <description>多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version</description>
+      <description>多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ |</description>
     </item>
     
     <item>

@@ -13,7 +13,7 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2021/06_ask_1/</guid>
-      <description>描述 tcp四次挥手的过程？ time_wait 状态变化有三个情况 2个图来说明 客户端状态变化： ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;FIN_WAIT_2&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED simultaneous close ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;CLOSING&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED 服务器端状态变化： ESTABLISHED &amp;mdash;-&amp;gt;CLOSE_WAIT&amp;mdash;&amp;gt;LAST_ACK&amp;mdash;-&amp;gt;CLOSED ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;CLOSING&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED 关闭tcp连接一定要四次</description>
+      <description>https://wangcy6.github.io/post/2021/06_ask_1/ 1. 描述 tcp四次挥手的过程？ time_wait 状态变化有三个情况 2个图来说明 客户端状态变化： ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;FIN_WAIT_2&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED simultaneous close ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;CLOSING&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED 服务器端状态变化： ESTABLISHED &amp;mdash;-&amp;gt;CLOSE_WAIT&amp;mdash;&amp;gt;LAST_ACK&amp;mdash;-&amp;gt;CLOSED ESTABLISHED &amp;mdash;-FIN_WAIT_1&amp;mdash;&amp;gt;CLOSING&amp;mdash;&amp;gt;TIME_WAIT&amp;mdash;&amp;gt;CLOSED 关闭tcp连接一定要</description>
     </item>
     
     <item>
