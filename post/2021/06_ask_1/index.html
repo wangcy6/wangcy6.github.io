@@ -48,7 +48,7 @@
 <meta itemprop="name" content="阅读与写作第一期">
 <meta itemprop="description" content="地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪"><meta itemprop="datePublished" content="2022-02-10T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-10T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2383">
+<meta itemprop="wordCount" content="4420">
 <meta itemprop="keywords" content="60秒问答," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="阅读与写作第一期"/>
 <meta name="twitter:description" content="地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-10 00:00 </span>
         
-          <span class="more-meta"> 约 2383 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 4420 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -147,6 +147,13 @@
         <li><a href="#四技术的组成部分和关键点">四、技术的组成部分和关键点。</a></li>
         <li><a href="#五技术的底层原理和关键实现">五、技术的底层原理和关键实现</a></li>
         <li><a href="#六已有的实现和它之间的对比">六、已有的实现和它之间的对比</a></li>
+        <li><a href="#一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题-1">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</a></li>
+        <li><a href="#二这个技术的优势和劣势分别是什么-1">二、这个技术的优势和劣势分别是什么</a></li>
+        <li><a href="#三这个技术适用的场景任何技术都有其适用的场景离开了这个场景-1">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</a></li>
+        <li><a href="#四技术的组成部分和关键点-1">四、技术的组成部分和关键点。</a></li>
+        <li><a href="#五技术的底层原理和关键实现-1">五、技术的底层原理和关键实现</a></li>
+        <li><a href="#六已有的实现和它之间的对比-1">六、已有的实现和它之间的对比</a></li>
+        <li><a href="#2gdb-问号httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoinmewzwjhzme3ywnjndk5ndkxywuymmnjmzziytg5ntcilcjpzci6mjk5nzgzmdasinuiojq2njuxfqiveedd-50iwvxzi0jw3fkrj3cszzih6y_rw4g0qe3jefromlist">2、<a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNmEwZWJhZmE3YWNjNDk5NDkxYWUyMmNjMzZiYTg5NTciLCJpZCI6Mjk5NzgzMDAsInUiOjQ2NjUxfQ.IVeEdD-50IwvxZi0jw3Fkrj3CSzzih6y_rW4g0qe3jE&amp;from=list">gdb 问号？</a></a></li>
       </ul>
     </li>
     <li><a href="#第四步回答问题输入60秒2句-技术语言--输出一个视频">第四步：回答问题（输入：60秒,2句 技术语言  输出：一个视频）</a></li>
@@ -165,6 +172,9 @@
         <li><a href="#12-答">#1.2 答：</a></li>
       </ul>
     </li>
+  </ul>
+
+  <ul>
     <li><a href="#four-way-handshake-四次挥手">four-way Handshake 四次挥手</a>
       <ul>
         <li><a href="#3-为什么-time_wait-状态还需要等-2msl-后才能返回到-closed-状态">3. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能返回到 CLOSED 状态？</a></li>
@@ -172,12 +182,27 @@
         <li><a href="#51-有什么问题自己都不知道然后空白回答-就是pass">5.1 有什么问题，自己都不知道，然后空白回答 就是pass</a></li>
         <li><a href="#7什么tcp-延迟启动-快速重传流量控制">7.什么tcp 延迟启动 快速重传。流量控制</a></li>
         <li><a href="#8--问redis--cluster节点间采取gossip协议进行通讯-传递数据数是什么主从复制的数据吗1主-1从-感觉不需要这么复杂协议吧httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoindu4ytbizdkxn2rmndqxy2i5mwmxmwqzy2rjyzq2nzuilcjpzci6mjk5ndq4mdmsinuiojq2njuxfqccjcci0lj1ezelkaevtebwvg1m2caq4tdi0-adcuwmafromlist">8  <a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNDU4YTBiZDkxN2RmNDQxY2I5MWMxMWQzY2RjYzQ2NzUiLCJpZCI6Mjk5NDQ4MDMsInUiOjQ2NjUxfQ.ccJCcI0lj1eZeLkAeVtEBwvG1m2caq4Tdi0-adcUwmA&amp;from=list">问：redis  <em>cluster</em>节点间采取<em>gossip</em>协议进行通讯 。传递数据数是什么主从复制的数据吗？1主 1从 感觉不需要这么复杂协议吧</a></a></li>
+        <li><a href="#9-c11-新特性">9. c++11 新特性</a></li>
+        <li><a href="#10-模版编译过程编译器-连接器做了什么事情">10 模版编译过程：编译器 连接器做了什么事情</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#问--什么是深度拷贝-什么是浅拷贝">问：  什么是深度拷贝 什么是浅拷贝？</a></li>
+        <li><a href="#问函数能返回局部变量吗">问：函数能返回局部变量吗？</a></li>
       </ul>
     </li>
   </ul>
 
   <ul>
     <li><a href="#tcp-ip详解卷1协议">TCP-IP详解卷1：协议</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#程序员自我修养-第2章节">&lt;程序员自我修养&gt; 第2章节。</a></li>
   </ul>
 </nav>
   </div>
@@ -213,6 +238,117 @@
 <h3 id="四技术的组成部分和关键点">四、技术的组成部分和关键点。</h3>
 <h3 id="五技术的底层原理和关键实现">五、技术的底层原理和关键实现</h3>
 <h3 id="六已有的实现和它之间的对比">六、已有的实现和它之间的对比</h3>
+<p>http://127.0.0.1:1313/post/2021/06_ask_1/</p>
+<h3 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题-1">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h3>
+<h3 id="二这个技术的优势和劣势分别是什么-1">二、这个技术的优势和劣势分别是什么</h3>
+<h3 id="三这个技术适用的场景任何技术都有其适用的场景离开了这个场景-1">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</h3>
+<h3 id="四技术的组成部分和关键点-1">四、技术的组成部分和关键点。</h3>
+<h3 id="五技术的底层原理和关键实现-1">五、技术的底层原理和关键实现</h3>
+<h3 id="六已有的实现和它之间的对比-1">六、已有的实现和它之间的对比</h3>
+<h3 id="2gdb-问号httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoinmewzwjhzme3ywnjndk5ndkxywuymmnjmzziytg5ntcilcjpzci6mjk5nzgzmdasinuiojq2njuxfqiveedd-50iwvxzi0jw3fkrj3cszzih6y_rw4g0qe3jefromlist">2、<a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNmEwZWJhZmE3YWNjNDk5NDkxYWUyMmNjMzZiYTg5NTciLCJpZCI6Mjk5NzgzMDAsInUiOjQ2NjUxfQ.IVeEdD-50IwvxZi0jw3Fkrj3CSzzih6y_rW4g0qe3jE&amp;from=list">gdb 问号？</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+<span class="o">(</span>gdb<span class="o">)</span> bt
+<span class="c1">#0  0x0000003ec40e91a3 in __epoll_wait_nocancel () from /lib64/libc.so.6</span>
+<span class="c1">#1  0x00000000006410da in _st_epoll_dispatch ()</span>
+<span class="c1">#2  0x000000000063bc78 in _st_idle_thread_start ()</span>
+<span class="c1">#3  0x000000000063c082 in _st_thread_main ()</span>
+<span class="c1">#4  0x000000000063c8ff in st_thread_create ()</span>
+<span class="c1">#5  0x00007ffcd2733958 in ?? ()</span>
+<span class="c1">#6  0x0000000000915258 in vtable for _SrsContextId ()</span>
+<span class="c1">#7  0x00007ffcd2733968 in ?? ()</span>
+<span class="c1">#8  0x0000000000000008 in ?? () at /usr/local/gcc/include/c++/6.3.0/bits/stl_tree.h:2318</span>
+<span class="c1">#9  0x3138343863373838 in ?? ()</span>
+<span class="c1">#10 0x00007ffcd2733900 in ?? ()</span>
+<span class="c1">#11 0x0000000000000002 in ?? () at /usr/local/gcc/include/c++/6.3.0/bits/stl_tree.h:2318</span>
+<span class="c1">#12 0x0000000030006e6f in ?? ()</span>
+<span class="c1">#13 0x0000000000ec90b0 in ?? ()</span>
+<span class="c1">#14 0x0000000000f0e280 in ?? ()</span>
+<span class="c1">#15 0x0000000000000064 in ?? () at /usr/local/gcc/include/c++/6.3.0/bits/stl_tree.h:2322</span>
+<span class="c1">#16 0x0000000000000064 in ?? () at /usr/local/gcc/include/c++/6.3.0/bits/stl_tree.h:2322</span>
+<span class="c1">#17 0x0000003e00000001 in ?? ()</span>
+<span class="c1">#18 0x0000000000915258 in vtable for _SrsContextId ()</span>
+<span class="c1">#19 0x00007ffcd27339c8 in ?? ()</span>
+<span class="c1">#20 0x0000000000000008 in ?? () at /usr/local/gcc/include/c++/6.3.0/bits/stl_tree.h:2318</span>
+<span class="c1">#21 0x3138343863373838 in ?? ()</span>
+<span class="c1">#22 0x0000000000000000 in ?? ()</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>过程：（忘记问题，专注过程）</p>
+</blockquote>
+<ul>
+<li><a href="https://sourceware.org/gdb/current/onlinedocs/gdb/index.html#SEC_Contents">看gdb 文档</a>，了解gdb调试原理</li>
+<li>了解编译器做了什么（函数调用）</li>
+<li><a href="https://blog.csdn.net/weixin_30840573/article/details/98768479">了解连接器做了什么</a></li>
+</ul>
+<blockquote>
+<p>青铜-&gt;新手村：</p>
+</blockquote>
+<ol>
+<li>
+<p>这个问题自己无法根本解决，掌握知识不够（心态问题，你全部回顾你掌握的知识 ）</p>
+</li>
+<li>
+<p>我看文档 也找不大答案，（看方式不正确，全面看资料，问题是引子。意外收获呢，你看文档资料对吗？）</p>
+<ul>
+<li>
+<p><a href="https://blog.csdn.net/linyt/article/details/51635768?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.pc_relevant_default&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=2">disassemble</a>  main(<strong>objdump -d test.o</strong>)</p>
+</li>
+<li>
+<p>callq  0x400468 <a href="mailto:puts@plt">puts@plt</a>（不允许修改代码段，只能修改数据段）</p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/weixin_30840573/article/details/98768479">链接器无法知知道进程运行起来之</a>后printf函数的加载地址.只有进程运运行后，<a href="https://blog.csdn.net/linyt/article/details/51635768?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.pc_relevant_default&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=2">printf函数的地址才能确定</a></p>
+</li>
+<li>
+<p>got表中存放的是外部符号的地址。plt表中存放的是函数地址</p>
+</li>
+<li>
+<p>小贴士：线索：<a href="https://blog.csdn.net/weixin_30840573/article/details/98768479">No function contains specified address.</a></p>
+</li>
+<li>
+<p>资料：<a href="https://blog.csdn.net/zhy025907/article/details/86088368?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_default&amp;utm_relevant_index=1">GOT表与PLT表</a></p>
+<p><img src="06_ask_1.assets/20160611124517413.jpeg" alt="没看懂系列">、<a href="https://stackoverflow.com/questions/39016138/how-to-force-gdb-to-disassemble-code-when-it-says-no-function-contains-program">How to force GDB to disassemble code when it says &ldquo;No function contains program counter for selected frame&rdquo;?</a></p>
+<p>【动手操作】 <a href="https://www.cs.dartmouth.edu/~sergey/cs108/dyn-linking-with-gdb.txt">https://www.cs.dartmouth.edu/~sergey/cs108/dyn-linking-with-gdb.txt</a></p>
+</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>黄金-&gt;熟练工：</p>
+</blockquote>
+<hr>
 <h2 id="第四步回答问题输入60秒2句-技术语言--输出一个视频">第四步：回答问题（输入：60秒,2句 技术语言  输出：一个视频）</h2>
 <h2 id="第三步整理问题输入5分钟-10句-技术文档--输出说重点快问快答-">第三步：整理问题（输入：5分钟 10句 技术文档  输出：说重点快问快答 ）</h2>
 <h3 id="-问什么是四次挥手描述具体过程"># 问：什么是四次挥手，描述具体过程？</h3>
@@ -231,7 +367,7 @@
 <ol>
 <li>
 <p>客户端接受是： 第二次握手延三次握手合并传输 其中包括 第二次 第三次握手之间传递数据。（（场景：tcp延迟确认））</p>
-<p>tcp状态是 ESTABLISHED &mdash;-FIN_WAIT_1&mdash;&gt;直接进入TIME_WAIT状态.</p>
+<p>tcp状态是 ESTABLISHED &mdash;-FIN_WAIT_1&mdash;&gt;直接进入TIME_WAIT状态.  Tcp 默认开启</p>
 </li>
 <li>
 <p>客户端接受是： 第二次握手，然后接受是 第三次握手先后传输 tcp状态是（场景：tcp没有延迟确认）</p>
@@ -281,6 +417,24 @@
 <p>服务器端状态变化：</p>
 <p>ESTABLISHED &mdash;-&gt;CLOSE_WAIT&mdash;&gt;LAST_ACK&mdash;-&gt;CLOSED</p>
 <p>ESTABLISHED &mdash;-FIN_WAIT_1&mdash;&gt;<strong>CLOSING</strong>&mdash;&gt;TIME_WAIT&mdash;&gt;CLOSED</p>
+<p>对于关闭TCP_NODELAY，则是应用了Nagle算法。数据只有在写缓存中累积到一定量之后，才会被发送出去，这样明显提高了网络利用率</p>
+<ul>
+<li>
+<h1 id="tcp-tcp_nodelay选项与神秘的40ms延迟">TCP TCP_NODELAY选项与神秘的40ms延迟</h1>
+</li>
+<li>
+<p>TCP Delayed ACK 也是基于同样的目的而设计出来的，他的作用就是延迟ACK包的发送，使得协议栈可以合并多个ACK，提高网络利用率</p>
+</li>
+<li>
+<p><code>TCP_CORK</code>选项与<code>TCP_NODELAY</code>一样，是控制Nagle化的。</p>
+<ol>
+<li>打开<code>TCP_NODELAY</code>选项，则意味着无论数据包是多么的小，都立即发送(不考虑拥塞窗口)。</li>
+<li>就是A块数据的ACK为什么40ms之后才收到？这是因为TCP/IP中不仅仅有nagle算法，还有一个<strong>ACK延迟机制</strong> 。当Server端收到数据之后，它并不会马上向client端发送ACK，而是会将ACK的发送延迟一段时间（假设为t），它希望在t时间内server端会向client端发送应答数据，</li>
+<li>那么可以通过<strong>设置TCP_NODELAY将其禁用</strong></li>
+<li>CLOSING</li>
+</ol>
+</li>
+</ul>
 <p>1.3 更新</p>
 <ol start="2">
 <li>关闭tcp连接一定要四次挥手吗？为什么不是三个？</li>
@@ -351,6 +505,80 @@
 <h3 id="8--问redis--cluster节点间采取gossip协议进行通讯-传递数据数是什么主从复制的数据吗1主-1从-感觉不需要这么复杂协议吧httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoindu4ytbizdkxn2rmndqxy2i5mwmxmwqzy2rjyzq2nzuilcjpzci6mjk5ndq4mdmsinuiojq2njuxfqccjcci0lj1ezelkaevtebwvg1m2caq4tdi0-adcuwmafromlist">8  <a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNDU4YTBiZDkxN2RmNDQxY2I5MWMxMWQzY2RjYzQ2NzUiLCJpZCI6Mjk5NDQ4MDMsInUiOjQ2NjUxfQ.ccJCcI0lj1eZeLkAeVtEBwvG1m2caq4Tdi0-adcUwmA&amp;from=list">问：redis  <em>cluster</em>节点间采取<em>gossip</em>协议进行通讯 。传递数据数是什么主从复制的数据吗？1主 1从 感觉不需要这么复杂协议吧</a></h3>
 </li>
 </ol>
+<h3 id="9-c11-新特性">9. c++11 新特性</h3>
+<h3 id="10-模版编译过程编译器-连接器做了什么事情">10 模版编译过程：编译器 连接器做了什么事情</h3>
+<blockquote>
+<p>小白思考：做了什么我围绕做什么思考，怎么说也说明白，。那些功能，很多东西付过 定义 生命 为市民办</p>
+<h1 id="编译器链接生成的符号详解">编译器链接生成的符号详解</h1>
+</blockquote>
+<p>GCC编译分为四个阶段：</p>
+<p>　　1、预处理：将代码中的代码中的头文件，宏定义宏选择等进行展开及替换。 gcc -E</p>
+<p>g++ -E -std=c++17 3_unique_ptr.cpp  -o test.i</p>
+<p>　　2、编译   ：产生汇编文件 。gcc -S</p>
+<p>g++ -std=c++17 -S test.i  -o test.s</p>
+<p>　　3、汇编   ：将汇编文件编译为目标文件。 gcc -c</p>
+<p>g++ -std=c++17  -c test.s -o test.o</p>
+<p>　　4、链接   ：产生可执行文件</p>
+<p>g++ -std=c++17  test.o -o test</p>
+<blockquote>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://www.jianshu.com/p/02a5a1bf1096
+st=&gt;start: Start
+op=&gt;operation: Your Operation
+cond=&gt;condition: Yes or No?
+e=&gt;end
+st-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;op
+</code></pre></td></tr></table>
+</div>
+</div><p>&laquo;&laquo;&laquo;&lt; HEAD</p>
+<h3 id="问--什么是深度拷贝-什么是浅拷贝">问：  什么是深度拷贝 什么是浅拷贝？</h3>
+<ul>
+<li>拷贝只是对象拷贝。指针赋值不属于拷贝。</li>
+<li>深度拷贝对应值拷贝（stl 容器值拷贝）。浅拷C++编译器默认提供的拷贝方式（memcpy）</li>
+</ul>
+<p>为防止HomeForSale对象被拷贝，可以继承Uncopyable类</p>
+<p><a href="https://tangxing.blog.csdn.net/article/details/116401405?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1.queryctrv4&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1.queryctrv4&amp;utm_relevant_index=1">C++ Boost库：禁止拷贝 nocopyable</a></p>
+<p><a href="https://stackoverflow.com/questions/7823990/what-are-the-advantages-of-boostnoncopyable">What are the advantages of boost::noncopyable</a></p>
+<ul>
+<li>浅拷贝(构造函数)</li>
+</ul>
+<p>std:moved()</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">成本：Clone(浅克隆.) &gt; new &gt; Kryo序列化 &gt; Jdk序列化 &gt; Json(各种Json类似)序列化
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="问函数能返回局部变量吗">问：函数能返回局部变量吗？</h3>
+<ul>
+<li>
+<p>静态局部变量</p>
+</li>
+<li>
+<p><a href="https://www.cprogramming.com/c++11/rvalue-references-and-move-semantics-in-c++11.html">rvalue reference（Move semantics ）</a></p>
+</li>
+</ul>
+<p>=======</p>
 <h1 id="-第一步阅读输入三天万句---输出-笔记摘要记录了但是不懂-"># 第一步：阅读(输入：三天,万句   输出 笔记摘要，记录了但是不懂 )</h1>
 <h2 id="tcp-ip详解卷1协议">TCP-IP详解卷1：协议</h2>
 <ol>
@@ -364,6 +592,21 @@
 <p>Redis Cluster采用P2P的Gossip协议进行通信，采用tcp还是udp这个没区别吗？</p>
 <p>Gossip协议一般基于UDP实现，其自身即在应用层保证了协议的robustness。</p>
 <p><a href="https://maimai.cn/web/gossip_detail?gid=29170876&amp;egid=61b42cdfe2f511eba165246e96b48088">https://maimai.cn/web/gossip_detail?gid=29170876&amp;egid=61b42cdfe2f511eba165246e96b48088</a></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>68d31a29b19096497f92a97bbbb8b1cea499cd2e</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <p>UDP 全称 User Datagram Protocol，即用户数据报协议。</p>
 <p>不需要一对一沟通，建立连接，而是可以广播的应用，比如 DHCP 协议就是基于 UDP 协议的。</p>
 <p>。而 UDP 继承了 IP 的特性，基于数据报的，一个一个地发，一个</p>
@@ -386,6 +629,51 @@
 </ul>
 <p>元数据的更新有延时，可能导致集群中的一些操作会有一些滞后。</p>
 <p>gossip 协议包含多种消息，包含 ping、pong、meet、fail等等。</p>
+<h2 id="程序员自我修养-第2章节">&lt;程序员自我修养&gt; 第2章节。</h2>
+<h1 id="编译器链接生成的符号详解-1">编译器链接生成的符号详解</h1>
+<ul>
+<li>
+<p>编译过程就是把预处理完的文件进行一系列的词法分析、语法分析、语义分析以及优化后产生相应的.  汇编代码文件</p>
+</li>
+<li>
+<p>GCC把预处理和编译两个步骤合并成一个步骤，使用一个叫ccl的程序来完成两个步骤。我们可以直接使用如下命令：</p>
+</li>
+</ul>
+<p>gcc -S test.c -o test.s</p>
+<p>test.s: assembler source text, ASCII text</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">wangchuanyi@bogon 2022 % which ld
+/usr/bin/ld
+wangchuanyi@bogon 2022 % which as
+/usr/bin/as
+wangchuanyi@bogon 2022 % which cc 
+/usr/bin/cc
+
+movl $0x2a, var
+ 这条指令就是给这个var变量赋值0x2a，相当于C语言中的语句var = 42
+  由于在编译目标文件B的时候，编译器并不知道变量var的目标地址，所以编译器在没法确定地址的情况下，将这条mov指令的目标地址设为0，等待链接器在将目标文件A和B链接起来的时候再将其修正
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>gcc这个命令只是这些后台程序的包装，它会根据不同的参数要求取调用预处理编译程序ccl、汇编器as、链接器ld。</p>
+<p><a href="http://blog.chinaunix.net/uid-26430381-id-3842510.html">http://blog.chinaunix.net/uid-26430381-id-3842510.html</a></p>
+</blockquote>
+<ul>
+<li>由于在编译目标文件B的时候，编译器并不知道变量var的目标地址，所以编译器在没法确定地址的情况下，将这条mov指令的目标地址设为0，等待链接器在将目标文件A和B链接起来的时候再将其修正。假设A和B链接后，变量var的地址确定下来为0x1000，那么链接器将会把这个指令的目标地址部分修改成0x10000。这个地址修正的过程也叫做重定位，每个要被修正的地方叫一个重定位入口。</li>
+</ul>
 
     </div>
 
@@ -412,9 +700,9 @@
           <a href="/tags/60%E7%A7%92%E9%97%AE%E7%AD%94/">60秒问答</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/ARTS/2022/2022-7/">
+        <a class="prev" href="/post/oceanbase/04_FQA/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">一周精彩内容分享（第7期）</span>
+            <span class="prev-text nav-default">社区问题整理第一期</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         <a class="next" href="/post/04_2021-10-10.2021.years/">

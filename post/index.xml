@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 13 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OBCP考试</title>
+      <link>https://wangcy6.github.io/post/oceanbase/p7_obcp/</link>
+      <pubDate>Sun, 20 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/p7_obcp/</guid>
+      <description>多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version | port | zone | status | +-----------+---------+------+-------+--------+ | 127.0.0.1 | 3.1.1 | 2881 |</description>
+    </item>
+    
     <item>
       <title>币圈连环诈骗犯刘庆, 拖欠数亿成老赖</title>
       <link>https://wangcy6.github.io/post/2022/liuqing/</link>
@@ -35,6 +44,15 @@
     </item>
     
     <item>
+      <title>社区问题整理第一期</title>
+      <link>https://wangcy6.github.io/post/oceanbase/04_FQA/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/04_FQA/</guid>
+      <description>慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果</description>
+    </item>
+    
+    <item>
       <title>阅读与写作第一期</title>
       <link>https://wangcy6.github.io/post/2021/06_ask_1/</link>
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
@@ -53,12 +71,21 @@
     </item>
     
     <item>
+      <title>gperftools</title>
+      <link>https://wangcy6.github.io/post/2022/6-tool-gperftools/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/6-tool-gperftools/</guid>
+      <description>基本用法 Perftools-Specific Install Notes 1 2 3 4 5 6 7 8 9 10 11 12 13 14 https://github.com/gperftools/gperftools/blob/master/INSTALL yum install libunwind(否者heap profiler产生的数据文件都会是空的) if you use a 64-bit system, we strongly recommend</description>
+    </item>
+    
+    <item>
       <title>python学习记录</title>
       <link>https://wangcy6.github.io/post/2022/4_study_python/</link>
       <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2022/4_study_python/</guid>
-      <description>day1 Windows下如何构建Python开发环境 直接从window商店下载 Python 3.9 where python C:\Users\wangchuanyi\AppData\Local\Microsoft\WindowsApps\python.exe python -V Python 3.10.2</description>
+      <description>day1 环境搭建： window： 删除 Microsoft Store 安装python(无法删除 30分钟) 直接删除环境变量：%USERPROFILE%\AppData\Loca</description>
     </item>
     
     <item>
@@ -76,7 +103,7 @@
       <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2022/2022-2-7-go-vue-mp4/</guid>
-      <description>环境配置 练习06 ：短视频管理平台 练习05 ：直播管理平台 练习04 ：ai 主播 4.1 基础理论 Examples PaddleBoBo: Use PaddleSpeech TTS to generate virtual human voice. 4.2 依赖 4.3 动手操作 4.4 引用 https://www.zhihu.com/question/362044834 语音聊天机器人</description>
+      <description>http://127.0.0.1:1313/post/2022/2022-2-7-go-vue-mp4/ 练习06 ：短视频管理平台 练习05 ：直播管理平台 练习04 ：ai 主播 4.1 基础理论 Examples PaddleBoBo: Use PaddleSpeech TTS to generate virtual human voice. 4.2 产品 PaddleBoBo 4.3 使用教程 4.3.1 PaddleBoBo 运行环境 飞桨AIStu</description>
     </item>
     
     <item>
@@ -85,7 +112,7 @@
       <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</guid>
-      <description>多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ |</description>
+      <description>多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28_p6/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ |</description>
     </item>
     
     <item>
@@ -913,7 +940,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/leetcod_easy/</guid>
-      <description>开始日期 更新日期 备注 2020-6-17 2020-6-17 leetcode_easy_200-300 绘图工具 https://app.diagrams.net/#Hwatchpoints%2Fdaily-interview%2Fmain%2Fleetcode%2Fppt%2F%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.drawio 题目汇总 最后一个单词的长度 796. 旋转字符串 151. 翻转字符串里的单词 感觉理解 1 。之翻转 blue eulb &amp;mdash;&amp;gt;在</description>
+      <description>开始日期 更新日期 备注 2020-6-17 2020-6-17 leetcode_easy_200-300 绘图工具 https://app.diagrams.net/#Hwatchpoints%2Fdaily-interview%2Fmain%2Fleetcode%2Fppt%2F%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.drawio http://127.0.0.1:1313/post/leetcode/leetcod_easy/ 题目汇总 最后一个单词的长度 796. 旋转字符串 151. 翻转字符串里的单词 感觉理解 1 。之翻转 blue eulb &amp;mdash;&amp;gt;</description>
     </item>
     
     <item>
