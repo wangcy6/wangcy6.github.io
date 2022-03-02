@@ -48,7 +48,7 @@
 <meta itemprop="name" content="阅读与写作第一期">
 <meta itemprop="description" content="地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪"><meta itemprop="datePublished" content="2022-02-10T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-10T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4420">
+<meta itemprop="wordCount" content="4908">
 <meta itemprop="keywords" content="60秒问答," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="阅读与写作第一期"/>
 <meta name="twitter:description" content="地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-10 00:00 </span>
         
-          <span class="more-meta"> 约 4420 字 </span>
-          <span class="more-meta"> 预计阅读 9 分钟 </span>
+          <span class="more-meta"> 约 4908 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -153,6 +153,10 @@
         <li><a href="#四技术的组成部分和关键点-1">四、技术的组成部分和关键点。</a></li>
         <li><a href="#五技术的底层原理和关键实现-1">五、技术的底层原理和关键实现</a></li>
         <li><a href="#六已有的实现和它之间的对比-1">六、已有的实现和它之间的对比</a></li>
+        <li><a href="#5-虚拟内存是怎么实现的怎么映射的-为分段分野">5. 虚拟内存是怎么实现的？怎么映射的 为分段分野</a></li>
+        <li><a href="#52022-3-1-在c语言中浮点型数据只有有符号类型这是为什么">5.2022-3-1 在c语言中，浮点型数据只有有符号类型。这是为什么</a></li>
+        <li><a href="#4-2022-2-24--raft-日志怎么commitedapply-idfollow如何接受数据的">4. 2022-2-24  raft 日志怎么commited,apply id，follow如何接受数据的？</a></li>
+        <li><a href="#3-2022-2-24-为分页和分段优缺点">3. 2022-2-24 为分页和分段，优缺点？</a></li>
         <li><a href="#2gdb-问号httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoinmewzwjhzme3ywnjndk5ndkxywuymmnjmzziytg5ntcilcjpzci6mjk5nzgzmdasinuiojq2njuxfqiveedd-50iwvxzi0jw3fkrj3cszzih6y_rw4g0qe3jefromlist">2、<a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNmEwZWJhZmE3YWNjNDk5NDkxYWUyMmNjMzZiYTg5NTciLCJpZCI6Mjk5NzgzMDAsInUiOjQ2NjUxfQ.IVeEdD-50IwvxZi0jw3Fkrj3CSzzih6y_rW4g0qe3jE&amp;from=list">gdb 问号？</a></a></li>
       </ul>
     </li>
@@ -245,6 +249,38 @@
 <h3 id="四技术的组成部分和关键点-1">四、技术的组成部分和关键点。</h3>
 <h3 id="五技术的底层原理和关键实现-1">五、技术的底层原理和关键实现</h3>
 <h3 id="六已有的实现和它之间的对比-1">六、已有的实现和它之间的对比</h3>
+<h3 id="5-虚拟内存是怎么实现的怎么映射的-为分段分野">5. 虚拟内存是怎么实现的？怎么映射的 为分段分野</h3>
+<p>4.1 青铜-：小白回答</p>
+<ul>
+<li>之间用 malloc 返回的地址</li>
+<li>虚假的很大  （类 对象 地址 。）</li>
+</ul>
+<p>阅读：</p>
+<p><a href="https://hansimov.gitbook.io/csapp/part2/ch09-virtual-memory/9.2-address-spaces"><strong>9.2 地址空间</strong></a></p>
+<p><a href="https://willendless.github.io/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/2021/07/14/csapp-ch9-1/">第 3 章：程序的机器级表示</a></p>
+<ul>
+<li><a href="https://www.bbsmax.com/A/x9J211Qjz6/">所有可能地址的集合称为<strong>虚拟地址空间</strong></a></li>
+</ul>
+<p>虚拟内存被组织成一个<strong>存储在磁盘上的N个连续字节大小的数组</strong>。【字长】</p>
+<p><a href="http://kaito-kidd.com/2018/09/06/computer-system-virtual-memory/">阅读：计算机系统基础（八）虚拟存储器</a></p>
+<ul>
+<li>一个程序是如何加载到内存中去的。</li>
+</ul>
+<p>阅读：怎样通俗的理解操作系统中内存管理分页和分段？</p>
+<p>分段其实是特定时期的产物，主要是由于寄存器位数不够，而地址线的位数超过了寄存器的位数，所以采用分段的方式好访问所有内存。随着时间的流逝，分页逐渐站上了历史舞台，它更灵活，支持的内存大，安全性控制好，所以成为主流</p>
+<p>分段机制早于分页机制，使用分段考虑的是多进程并行，在分段的基础上产生了分页，分页可以减少外部碎片</p>
+<p>4.2 白银：熟练工回答</p>
+<p>4.3 王者：别人怎么回答</p>
+<h3 id="52022-3-1-在c语言中浮点型数据只有有符号类型这是为什么">5.2022-3-1 在c语言中，浮点型数据只有有符号类型。这是为什么</h3>
+<p>​      <a href="https://zhuanlan.zhihu.com/p/138845520">https://zhuanlan.zhihu.com/p/138845520</a></p>
+<h3 id="4-2022-2-24--raft-日志怎么commitedapply-idfollow如何接受数据的">4. 2022-2-24  raft 日志怎么commited,apply id，follow如何接受数据的？</h3>
+<p>4.1 青铜-：小白回答</p>
+<p>4.2 白银：熟练工回答</p>
+<p>4.3 王者：别人怎么回答</p>
+<h3 id="3-2022-2-24-为分页和分段优缺点">3. 2022-2-24 为分页和分段，优缺点？</h3>
+<p>3.1 青铜-：小白回答</p>
+<p>3.2 白银：熟练工回答</p>
+<p>3.3 王者：别人怎么回答</p>
 <h3 id="2gdb-问号httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoinmewzwjhzme3ywnjndk5ndkxywuymmnjmzziytg5ntcilcjpzci6mjk5nzgzmdasinuiojq2njuxfqiveedd-50iwvxzi0jw3fkrj3cszzih6y_rw4g0qe3jefromlist">2、<a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiNmEwZWJhZmE3YWNjNDk5NDkxYWUyMmNjMzZiYTg5NTciLCJpZCI6Mjk5NzgzMDAsInUiOjQ2NjUxfQ.IVeEdD-50IwvxZi0jw3Fkrj3CSzzih6y_rW4g0qe3jE&amp;from=list">gdb 问号？</a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

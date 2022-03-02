@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
-<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/p7_obcp/" />
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/obcp_home/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -41,14 +41,14 @@
 <meta property="og:title" content="OBCP考试" />
 <meta property="og:description" content="多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 | 3.1.1 | 2881 |" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/p7_obcp/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/obcp_home/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-02-20T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2022-02-20T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="OBCP考试">
 <meta itemprop="description" content="多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 | 3.1.1 | 2881 |"><meta itemprop="datePublished" content="2022-02-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1616">
+<meta itemprop="wordCount" content="1620">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OBCP考试"/>
 <meta name="twitter:description" content="多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 | 3.1.1 | 2881 |"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 1616 字 </span>
+          <span class="more-meta"> 约 1620 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -142,7 +142,11 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#环境说明">环境说明</a></li>
-    <li><a href="#实验5-sql调优">实验5 sql调优</a></li>
+    <li><a href="#实验5-sql调优">实验5 sql调优</a>
+      <ul>
+        <li><a href="#第六章-obproxy">第六章 OBProxy</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
@@ -432,7 +436,8 @@ https://open.oceanbase.com/docs/videoCenter/5900015
 select * from oceanbase.gv$plan_cache_plan_stat；
 </code></pre></td></tr></table>
 </div>
-</div>
+</div><h3 id="第六章-obproxy">第六章 OBProxy</h3>
+
     </div>
 
     <div class="post-copyright">
@@ -456,13 +461,13 @@ select * from oceanbase.gv$plan_cache_plan_stat；
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/oceanbase/obcp_home/">
+        <a class="prev" href="/post/oceanbase/day1_issue_oceanbase/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">OBCP考试</span>
+            <span class="prev-text nav-default">OceanBase开发者手册</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/2022/liuqing/">
-            <span class="next-text nav-default">币圈连环诈骗犯刘庆, 拖欠数亿成老赖</span>
+        <a class="next" href="/post/oceanbase/p7_obcp/">
+            <span class="next-text nav-default">OBCP考试</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

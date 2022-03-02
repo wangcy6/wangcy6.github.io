@@ -9,6 +9,15 @@
     <lastBuildDate>Sun, 20 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/code_reading/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OBCP考试</title>
+      <link>https://wangcy6.github.io/post/oceanbase/obcp_home/</link>
+      <pubDate>Sun, 20 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/obcp_home/</guid>
+      <description>多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version | port | zone | status | +-----------+---------+------+-------+--------+ | 127.0.0.1 | 3.1.1 | 2881 |</description>
+    </item>
+    
+    <item>
+      <title>OBCP考试</title>
       <link>https://wangcy6.github.io/post/oceanbase/p7_obcp/</link>
       <pubDate>Sun, 20 Feb 2022 00:00:00 +0000</pubDate>
       

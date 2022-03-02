@@ -48,7 +48,7 @@
 <meta itemprop="name" content="OceanBase开发者手册">
 <meta itemprop="description" content="OceanBase开发者手册"><meta itemprop="datePublished" content="2022-02-23T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-23T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1713">
+<meta itemprop="wordCount" content="3755">
 <meta itemprop="keywords" content="OceanBase," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OceanBase开发者手册"/>
 <meta name="twitter:description" content="OceanBase开发者手册"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-23 00:00 </span>
         
-          <span class="more-meta"> 约 1713 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 3755 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -149,14 +149,19 @@
     <li><a href="#14-vscode设置">1.4 vscode设置</a>
       <ul>
         <li><a href="#15-oceanbase开发者手册之三-如何成为oceanbase-contributorhttpsgithubcomoceanbaseoceanbasewikihow_to_contribute">1.5 <a href="https://github.com/oceanbase/oceanbase/wiki/how_to_contribute">《OceanBase开发者手册》之三 如何成为OceanBase Contributor</a></a></li>
+        <li><a href="#16-oceanbase开发者手册之五-如何debug-oceanbasehttpsgithubcomoceanbaseoceanbasewikihow_to_debug">1.6 <a href="https://github.com/oceanbase/oceanbase/wiki/how_to_debug">《OceanBase开发者手册》之五 如何debug OceanBase</a></a></li>
       </ul>
     </li>
+    <li><a href="#day2-阅读-roadmap">day2: 阅读 Roadmap</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <table>
+      <blockquote>
+<p>多看、多问、多总结</p>
+</blockquote>
+<table>
 <thead>
 <tr>
 <th>日期</th>
@@ -182,6 +187,7 @@
 </tr>
 </tbody>
 </table>
+<p>blog地址：https://wangcy6.github.io/post/oceanbase/day1_issue_oceanbase/</p>
 <h2 id="day1-阅读oceanbase开发者手册httpsgithubcomoceanbaseoceanbasedeveloper-manual">day1: 阅读：<a href="https://github.com/oceanbase/oceanbase#developer-manual">OceanBase开发者手册</a></h2>
 <p>使用VSCode 远程链接功能阅读OceanBase代码</p>
 <p><img src="https://s2.loli.net/2022/02/23/qgrFLh3ZSbD7zXv.png" alt="image.png"></p>
@@ -494,7 +500,481 @@ https://github.com/oceanbase/oceanbase/issues/646 为例子 提交pr
 
 </code></pre></td></tr></table>
 </div>
+</div><h3 id="16-oceanbase开发者手册之五-如何debug-oceanbasehttpsgithubcomoceanbaseoceanbasewikihow_to_debug">1.6 <a href="https://github.com/oceanbase/oceanbase/wiki/how_to_debug">《OceanBase开发者手册》之五 如何debug OceanBase</a></h3>
+<ul>
+<li>1.6.1 准备工作 【开始 50】</li>
+</ul>
+<p>一、小思考</p>
+<p>Q: <a href="https://github.com/oceanbase/obdeploy">How can I use a component of a specific version?</a></p>
+<p>最低配置是多少？</p>
+<p>vscode 运行一个程序为什么需要launch文件？</p>
+<p>二、过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+<span class="c1">#1. 官方提供2C8G参考配置 https://github.com/oceanbase/oceanbase/pull/787(2C8G)</span>
+
+https://github.com/oceanbase/obdeploy
+Your server has at least <span class="m">8</span> GB of memory.
+Your server has at least <span class="m">2</span> CPU cores.
+
+RUN sh build.sh debug --init <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> sh build.sh --make -j4 <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build_debug <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> make <span class="nv">DESTDIR</span><span class="o">=</span>. install <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> obd mirror create -n oceanbase-ce -V 100.0.0 -p ./usr/local -t <span class="nb">test</span> -f
+    
+    
+docker <span class="nb">exec</span> -it oceanbase-ce bash
+service sshd restart
+ssh root@10.2.131.60 -p <span class="m">22</span> （宿主机器IP）
+
+
+observer -r xxx.xxx.xxx.xxx:2882:2881 -o <span class="nv">__min_full_resource_pool_memory</span><span class="o">=</span>268435456,enable_syslog_recycle<span class="o">=</span>True,enable_syslog_wf<span class="o">=</span>True,max_syslog_file_count<span class="o">=</span>4,memory_limit<span class="o">=</span>69G,system_memory<span class="o">=</span>27G,cpu_count<span class="o">=</span>19,datafile_size<span class="o">=</span>1029G,clog_disk_utilization_threshold<span class="o">=</span>95,clog_disk_usage_limit_percentage<span class="o">=</span><span class="m">98</span> -z zone1 -p <span class="m">2881</span> -P <span class="m">2882</span> -n obcluster -c <span class="m">1</span> -d /home/xxxxxxx/observer/store -i em1 -l INFO
+
+https://gitee.com/oceanbase/obdeploy/blob/master/example/mini-local-example.yaml
+
+
+obd cluster deploy obtest -c mini-local-example.yaml
+obd cluster edit-config obtest
+obd cluster redeploy obtest
+
+obd cluster list
+obd cluster display obtest
+obd cluster start  obtest
+
+obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase
+
+//
+observer program health check x
+<span class="o">[</span>2022-02-25 02:30:19.076440<span class="o">]</span> WARN  <span class="o">[</span>SHARE<span class="o">]</span> add_extra_config <span class="o">(</span>ob_common_config.cpp:100<span class="o">)</span> <span class="o">[</span>1476<span class="o">][</span>0<span class="o">][</span>Y0-0000000000000000<span class="o">]</span> <span class="o">[</span><span class="nv">lt</span><span class="o">=</span>20<span class="o">]</span> Invalid config, value out of range<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&#34;memory_limit&#34;</span>, <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;6G&#34;</span>, <span class="nv">ret</span><span class="o">=</span>-4147<span class="o">)</span>
+
+const int64_t ObRunningModeConfig::MINI_MEM_LOWER <span class="o">=</span> 8L <span class="s">&lt;&lt; 30;
+</span><span class="s">const int64_t ObRunningModeConfig::MINI_MEM_UPPER = 16L &lt;&lt; 30</span><span class="p">;</span>
+
+Invalid config, value out of range<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&#34;memory_limit&#34;</span>, <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;6G&#34;</span>, <span class="nv">ret</span><span class="o">=</span>-4147<span class="o">)</span>
+
+int64_t ObRunningModeConfig::MINI_MEM_LOWER <span class="o">=</span> 8L <span class="s">&lt;&lt; 30;
+</span><span class="s">
+</span><span class="s">obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase
+</span><span class="s">
+</span><span class="s">[root@3346da816048 ~]# obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase
+</span><span class="s">Reading table information for completion of table and column names
+</span><span class="s">You can turn off this feature to get a quicker startup with -A
+</span><span class="s">
+</span><span class="s">Welcome to the OceanBase.  Commands end with ; or \g.
+</span><span class="s">Your MySQL connection id is 3221487661
+</span><span class="s">Server version: 5.7.25 OceanBase 3.1.2 (r100003920211230</span>10-d4ace121deae5b81d8f0b40afbc4c02705b7fc1d<span class="o">)</span> <span class="o">(</span>Built Dec <span class="m">30</span> <span class="m">2021</span> 02:47:29<span class="o">)</span>
+
+Copyright <span class="o">(</span>c<span class="o">)</span> 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type <span class="s1">&#39;help;&#39;</span> or <span class="s1">&#39;\h&#39;</span> <span class="k">for</span> help. Type <span class="s1">&#39;\c&#39;</span> to clear the current input statemen
+
+捕获oceanbase 的启动参数 <span class="o">(</span>通过‘ps -ef<span class="p">|</span>grep observer’<span class="o">)</span>.
+
+/root/observer/bin/observer -r 127.0.0.1:2882:2881 -o <span class="nv">__min_full_resource_pool_memory</span><span class="o">=</span>268435456,memory_limit<span class="o">=</span>8G,system_memory<span class="o">=</span>4G,stack_size<span class="o">=</span>512K,cpu_count<span class="o">=</span>16,cache_wash_threshold<span class="o">=</span>1G,workers_per_cpu_quota<span class="o">=</span>10,schema_history_expire_time<span class="o">=</span>1d,net_thread_count<span class="o">=</span>4,sys_bkgd_migration_retry_num<span class="o">=</span>3,minor_freeze_times<span class="o">=</span>10,enable_separate_sys_clog<span class="o">=</span>0,enable_merge_by_turn<span class="o">=</span>False,datafile_disk_percentage<span class="o">=</span>20,enable_syslog_wf<span class="o">=</span>False,enable_syslog_recycle<span class="o">=</span>True,max_syslog_file_count<span class="o">=</span><span class="m">4</span> -z zone1 -p <span class="m">2881</span> -P <span class="m">2882</span> -c <span class="m">1</span> -d /root/observer/store -i lo -l INFO
+
+
+资料：https://github.com/oceanbase/oceanbase/wiki/how_to_debug
+
+摘要：
+remote ssh 连接远程机器
+插件：
+C/C++ GNU Global
+C/C++
+
+OB_SRC_DIR：
+<span class="c1">###########################</span>
+<span class="c1"># 动态库  /etc/ld.so.conf</span>
+<span class="c1">#####################</span>
+<span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/usr/local/lib
+
+<span class="c1">###########################</span>
+<span class="c1">#  环境变量</span>
+<span class="c1">#####################</span>
+<span class="nb">export</span> <span class="nv">OB_SRC_DIR</span><span class="o">=</span>/root/oceanbase
+<span class="nb">export</span> <span class="nv">IP</span><span class="o">=</span>127.0.0.1
+
+<span class="c1">###########################</span>
+<span class="c1">#  别名</span>
+<span class="c1">#####################</span>
+<span class="nb">alias</span> <span class="nv">c</span><span class="o">=</span><span class="s2">&#34;source ~/.bashrc&#34;</span>
+<span class="nb">alias</span> <span class="nv">cdcode</span><span class="o">=</span><span class="s2">&#34;cd /home/work/dns_zhibo&#34;</span>
+
+
+OBServer 启动失败
+https://open.oceanbase.com/docs/tutorials-cn/V1.0.0/10000000000012304
+</code></pre></td></tr></table>
 </div>
+</div><ul>
+<li>
+<p>配置:</p>
+<blockquote>
+<p>小贴士：</p>
+<p>文档默认64G配置，不能直接拿来用，要改成自己的</p>
+</blockquote>
+</li>
+</ul>
+<p>/root/observer/bin/observer -r 127.0.0.1:2882:2881 -o __min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4 -z zone1 -p 2881 -P 2882 -c 1 -d /root/observer/store -i lo -l INFO</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    &#34;version&#34;: &#34;0.2.0&#34;,
+    &#34;configurations&#34;: [
+    
+        {
+            &#34;name&#34;: &#34;observer&#34;,
+            &#34;type&#34;: &#34;cppdbg&#34;,
+            &#34;request&#34;: &#34;launch&#34;,
+            &#34;program&#34;: &#34; /root/observer/build_debug/src/observer/observer&#34;,
+            &#34;args&#34;: [&#34;-r&#34;, &#34;127.0.0.1:2882:2881&#34;, &#34;-o&#34;, &#34;__min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4&#34;, &#34;-z&#34;, &#34;zone1&#34;, &#34;-p&#34;, &#34;2881&#34;, &#34;-P&#34;, &#34;2882&#34;, &#34;-n&#34;, &#34;obcluster&#34;, &#34;-c&#34;, 1, &#34;-d&#34;, &#34;/root/observer/store&#34;, &#34;-i&#34;, &#34;lo&#34;, &#34;-l&#34;, &#34;INFO&#34;],
+            &#34;stopAtEntry&#34;: true,
+            &#34;cwd&#34;: &#34; /root/observer&#34;,
+            &#34;environment&#34;: [],
+            &#34;externalConsole&#34;: false,
+            &#34;MIMode&#34;: &#34;gdb&#34;,
+            &#34;setupCommands&#34;: [
+                {
+                    &#34;description&#34;: &#34;Enable pretty-printing for gdb&#34;,
+                    &#34;text&#34;: &#34;-enable-pretty-printing&#34;,
+                    &#34;ignoreFailures&#34;: true
+                },
+                {
+                    &#34;description&#34;: &#34;将反汇编风格设置为 Intel&#34;,
+                    &#34;text&#34;: &#34;-gdb-set disassembly-flavor intel&#34;,
+                    &#34;ignoreFailures&#34;: true
+                }
+            ]
+        }
+    ]
+}
+
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    &#34;version&#34;: &#34;0.2.0&#34;,
+    &#34;configurations&#34;: [
+        {
+            &#34;name&#34;: &#34;(gdb) 启动&#34;,
+            &#34;type&#34;: &#34;cppdbg&#34;,
+            &#34;request&#34;: &#34;launch&#34;,
+            &#34;program&#34;: &#34;输入程序名称，例如 ${workspaceFolder}/a.out&#34;,
+            &#34;args&#34;: [],
+            &#34;stopAtEntry&#34;: false,
+            &#34;cwd&#34;: &#34;${fileDirname}&#34;,
+            &#34;environment&#34;: [],
+            &#34;externalConsole&#34;: false,
+            &#34;MIMode&#34;: &#34;gdb&#34;,
+            &#34;setupCommands&#34;: [
+                {
+                    &#34;description&#34;: &#34;为 gdb 启用整齐打印&#34;,
+                    &#34;text&#34;: &#34;-enable-pretty-printing&#34;,
+                    &#34;ignoreFailures&#34;: true
+                },
+                {
+                    &#34;description&#34;: &#34;将反汇编风格设置为 Intel&#34;,
+                    &#34;text&#34;: &#34;-gdb-set disassembly-flavor intel&#34;,
+                    &#34;ignoreFailures&#34;: true
+                }
+            ]
+        }
+    ]
+}
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>clion 本地调试【遗留问题】</p>
+<p>据说它的源码索引效率优于sourceInsight几倍。这里没有使用</p>
+</li>
+</ul>
+<p><a href="https://www.jetbrains.com/zh-cn/clion/">https://www.jetbrains.com/zh-cn/clion/</a></p>
+<ul>
+<li>直接用gdb 本地调试 [ 在linx 环境下运行 done]</li>
+</ul>
+<ol>
+<li>登录remote 机器, 并进入${OB_SRC_DIR} 源码目录</li>
+<li>参考之前文章 介绍 《如何编译OceanBase源码》</li>
+<li>修改 用户目录下的.gdbinit, 添加下面一行, 其中${OB_SRC_DIR}需要换成OB 源码根目录</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">add-auto-load-safe-path ${OB_SRC_DIR}/.gdbinit
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>vi ${OB_SRC_DIR}/.gdbinit</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">file build_debug/src/observer/observer
+set args &#34;-r&#34;, &#34;127.0.0.1:2882:2881&#34;, &#34;-o&#34;, &#34;___min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4&#34;, &#34;-z&#34;, &#34;zone1&#34;, &#34;-p&#34;, &#34;2881&#34;, &#34;-P&#34;, &#34;2882&#34;, &#34;-n&#34;, &#34;obcluster&#34;, &#34;-c&#34;, 1, &#34;-d&#34;, &#34;/root/observer/store&#34;, &#34;-i&#34;, &#34;em1&#34;, &#34;-l&#34;, &#34;INFO&#34;
+b main
+r
+</code></pre></td></tr></table>
+</div>
+</div><p>备注: 这个里面有args的参数来自于第一步的准备工作中获取的启动参数, 每台机器有每台机器的配置, 笔者的参数如下, 其中:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1. ${OB_SRC_DIR} 为源码目录, ${IP} 为observer 的绑定ip
+2. 需要设置“cwd”, 为${OB_SRC_DIR}
+3. 当前的工作目录必须是${OB_SRC_DIR}
+4. 在args 参数中, 其中 -d 设置的目录 &#34;/home/xxxxx/observer/store&#34;, 需要设置为真实的参数
+5. 在args 参数中, 其中-i 设置的设备名称 &#34;em1&#34;, 为ip 对应的设备名称
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>推荐使用tui tui是gdb自带的图形界面，比较直观，这里简单说一下切换方法和常用命令</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1、gdb -tui + (可执行程序)  直接进入tui图形界面
+
+2、gdb进入后，使用命令focus进入tui图形界面，或者使用快捷键：Ctl+x+a (注意按键顺序，记忆：x：focus，a：another)
+
+3、在tui中使用相同的快捷键Ctl+x+a返回到gdb原生界面
+
+4、在gdb中↑和↓切换上一个命令和下一个命令，但是在tui中只是控制代码视图。想达到切换命令的目的，使用Ctl+n （记忆：next）和Ctl+p（记忆：previous），这其实就是gdb的原生快捷键
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>在源码目录下, 敲入gdb 即可启动gdb debug</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">gdb 
+</code></pre></td></tr></table>
+</div>
+</div><p>阅读：<a href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/config-gdbinit.html">配置gdb init文件</a> 10分钟 ✅</p>
+<ul>
+<li>当gdb启动时，会读取HOME目录和当前目录下的的配置文件，执行里面的命令。这个文件通常为“.gdbinit”。</li>
+</ul>
+<p>阅读：<a href="https://blog.csdn.net/nancygreen/article/details/17789677">gdb中查看stl容器内容 1</a>0分钟 ✅</p>
+<p><a href="https://github.com/oceanbase/oceanbase/wiki/how_to_test">单元测试</a>  完成。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">cd</span> <span class="n">build_debug</span><span class="o">/</span><span class="n">unittest</span><span class="o">/</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
+<span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span>
+  
+<span class="err">整个过程</span><span class="p">,</span> <span class="err">需要</span><span class="mi">1</span><span class="err">个小时</span> <span class="err">太慢了。又优化吗？（</span><span class="n">mac不舍得</span> <span class="err">编译太慢，用其他</span><span class="n">liunx机器代替</span><span class="err">）</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>三 、 结论</p>
+<ul>
+<li>
+<p>docker弹性伸缩 ： 开发环境 2C2G ，配置至少12G（4G其他用，8G observer用）</p>
+<p>int64_t ObRunningModeConfig::MINI_MEM_LOWER = 8L &laquo; 30;</p>
+</li>
+<li>
+<p>更好的调试工具 clion 和gdb（界面） 这个做课下作业 没有尝试。后于遇到问题在尝试。</p>
+</li>
+</ul>
+<h2 id="day2-阅读-roadmap">day2: 阅读 Roadmap</h2>
+<p><img src="https://github.com/oceanbase/oceanbase/wiki/images/roadmap.jpg" alt=""></p>
+
     </div>
 
     <div class="post-copyright">
@@ -520,8 +1000,12 @@ https://github.com/oceanbase/oceanbase/issues/646 为例子 提交pr
           <a href="/tags/OceanBase/">OceanBase</a>
           </div>
       <nav class="post-nav">
-        
-        <a class="next" href="/post/oceanbase/p7_obcp/">
+        <a class="prev" href="/post/mysql/day1_mysql_demo/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">mysql内核学习过程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/obcp_home/">
             <span class="next-text nav-default">OBCP考试</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
