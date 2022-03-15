@@ -48,7 +48,7 @@
 <meta itemprop="name" content="SRS官方文档和学习路径">
 <meta itemprop="description" content="高性能可扩展服务"><meta itemprop="datePublished" content="2021-06-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-06-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4299">
+<meta itemprop="wordCount" content="4711">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SRS官方文档和学习路径"/>
 <meta name="twitter:description" content="高性能可扩展服务"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 4299 字 </span>
-          <span class="more-meta"> 预计阅读 9 分钟 </span>
+          <span class="more-meta"> 约 4711 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -176,6 +176,7 @@
         <li><a href="#todo02avstackdocs-master">todo02：AvStackDocs-master</a></li>
       </ul>
     </li>
+    <li><a href="#depends">Depends</a></li>
   </ul>
 </nav>
   </div>
@@ -881,6 +882,114 @@ SrsGoApiRaw::SrsGoApiRaw(SrsServer *svr)
 /app/work/srs/trunk
 nohup ./objs/srs -c conf/srs.conf &amp;
 rtmp://10.112.178.189:1935/live/watchpoint
+</code></pre></td></tr></table>
+</div>
+</div><p><a href="https://github.com/ossrs/srs/issues/2856">https://github.com/ossrs/srs/issues/2856</a></p>
+<p><a href="https://github.com/ossrs/srs/issues/2891">https://github.com/ossrs/srs/issues/2891</a></p>
+<p>SRS云服务器是nodejs实现的开源方案，代码在<a href="https://github.com/ossrs/srs-cloud">srs-cloud</a>，欢迎一起来搞。</p>
+<p>SRS云服务器面向鼠标编程，让每个人都能做音视频业务，不懂音视频的可以，懂音视频的也可以，种地的可以，撸网线的可以，剪电影的可以，背摄像机的也可以，跳舞的可以，唱歌的可以，会用电脑有微信就可以，守法公民都可以。</p>
+<p>LightHouse是腾讯云的轻量服务器（云服务器），一键就可以购买内置了SRS服务器的云服务器，而且带外网IP可以直接访问。
+使用说明，请参考视频<a href="https://www.bilibili.com/video/BV1844y1L7dL/">内置SRS的云服务器</a>。</p>
+<p><a href="https://github.com/ossrs/srs-cloud">https://github.com/ossrs/srs-cloud</a></p>
+<p><a href="https://github.com/ossrs/srs-cloud">https://github.com/ossrs/srs-cloud</a></p>
+<p><a href="https://github.com/ossrs/srs-cloud">https://github.com/ossrs/srs-cloud</a></p>
+<p>A lightweight open-source video cloud based on Nodejs, SRS, FFmpeg, WebRTC, etc.</p>
+<h2 id="depends">Depends</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-SAS" data-lang="SAS">The software we depend <span class="k">on</span>:
+
+Docker ok
+
+yum install -y docker ok
+
+Redis ok
+yum install -y redis 
+
+Nginx, ok
+
+yum install -y nginx
+
+SSL: /etc/nginx/ssl
+Certbot, docker --name certbot
+Verify webroot: mgmt/containers/www/.well-known/acme-challenge/
+Cert files: mgmt/containers/etc/letsencrypt/live/
+SRS, docker --name srs-server
+Config: mgmt/containers/conf/srs<span class="m">.</span>conf mount <span class="k">as</span> /usr/local/srs/conf/lighthouse<span class="m">.</span>conf
+Volume: mgmt/containers/objs/nginx/html mount <span class="k">as</span> /usr/local/srs/objs/nginx/html
+srs-hooks, docker --name srs-hooks
+Volume: mgmt/containers/objs/nginx/html mount <span class="k">as</span> /usr/local/mgmt/containers/objs/nginx/html
+tencent-cloud, docker --name tencent-cloud
+CAM Authentication <span class="k">by</span> secretId <span class="k">and</span> secretKey.
+ffmpeg, docker --name ffmpeg
+FFmpeg <span class="k">and</span> ffprobe tools <span class="k">in</span> ossrs/srs:node-av
+Prometheus, docker --name prometheus
+Config: mgmt/containers/conf/prometheus<span class="m">.</span>yml
+<span class="kr">Data </span>directory: mgmt/containers/data/prometheus
+NodeExporter, docker --name node-exporter
+</code></pre></td></tr></table>
+</div>
+</div><p>Develop</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+Install dependencies:
+<span class="nb">cd</span> mgmt <span class="o">&amp;&amp;</span> npm install
+Run the mgmt backend:
+
+<span class="nb">cd</span> mgmt
+npm start
+Run the mgmt react ui:
+
+<span class="nb">cd</span> mgmt/ui
+npm start
+Access the browser: http://localhost:3000
 </code></pre></td></tr></table>
 </div>
 </div>

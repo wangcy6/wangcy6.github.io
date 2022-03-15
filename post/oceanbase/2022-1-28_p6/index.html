@@ -48,7 +48,7 @@
 <meta itemprop="name" content="实践练习六（必选）：查看 OceanBase 执行计划">
 <meta itemprop="description" content="多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28_p6/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test &#43;---------------------------------------------&#43; |"><meta itemprop="datePublished" content="2022-01-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-01-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4148">
+<meta itemprop="wordCount" content="4182">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="实践练习六（必选）：查看 OceanBase 执行计划"/>
 <meta name="twitter:description" content="多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28_p6/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test &#43;---------------------------------------------&#43; |"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/code_reading/"> code_reading </a>
             </div>
-          <span class="more-meta"> 约 4148 字 </span>
+          <span class="more-meta"> 约 4182 字 </span>
           <span class="more-meta"> 预计阅读 9 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -582,14 +582,12 @@ Term-00, Running Average tpmTOTAL: 14.43  Current tpmTOTAL: <span class="m">96</
 </span><span class="lnt">72
 </span><span class="lnt">73
 </span><span class="lnt">74
-</span><span class="lnt">75
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">obclient</span><span class="w"> </span><span class="o">-</span><span class="n">uroot</span><span class="o">@</span><span class="n">tpcc</span><span class="w"> </span><span class="o">-</span><span class="n">h127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="n">P2881</span><span class="w"> </span><span class="o">-</span><span class="n">p123456</span><span class="w"> </span><span class="o">-</span><span class="n">Doceanbase</span><span class="w">
 </span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">select</span><span class="cm">/*+ parallel(15)*/</span><span class="w"> </span><span class="n">SQL_ID</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">QPS</span><span class="p">,</span><span class="w"> </span><span class="k">avg</span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">elapsed_time</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="w"> </span><span class="n">RT_MS</span><span class="p">,</span><span class="k">sum</span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">elapsed_time</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="w"> </span><span class="n">Total_MS</span><span class="w">
-</span><span class="w">
 </span><span class="w"></span><span class="k">from</span><span class="w"> </span><span class="n">oceanbase</span><span class="p">.</span><span class="n">gv$sql_audit</span><span class="w"> </span><span class="n">t1</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">IS_EXECUTOR_RPC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">
@@ -600,7 +598,7 @@ Term-00, Running Average tpmTOTAL: 14.43  Current tpmTOTAL: <span class="m">96</
 </span><span class="w"></span><span class="k">limit</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w">
 </span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">sql_id</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="w">  </span><span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">))</span><span class="w"> </span><span class="n">avg_elapsed_time</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">sql_id</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="w">  </span><span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">))</span><span class="w"> </span><span class="n">avg_elapsed_time</span><span class="p">,</span><span class="w">   </span><span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">QUEUE_TIME</span><span class="p">))</span><span class="w"> </span><span class="n">QUEUE_TIME</span><span class="w">
 </span><span class="w">                      </span><span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">execute_time</span><span class="p">))</span><span class="w"> </span><span class="n">avg_exec_time</span><span class="p">,</span><span class="w">
 </span><span class="w">                      </span><span class="n">s</span><span class="p">.</span><span class="n">svr_ip</span><span class="p">,</span><span class="w">
 </span><span class="w">                      </span><span class="n">s</span><span class="p">.</span><span class="n">svr_port</span><span class="p">,</span><span class="w">
@@ -738,6 +736,9 @@ Term-00, Running Average tpmTOTAL: 14.43  Current tpmTOTAL: <span class="m">96</
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-sql" data-lang="sql"><span class="w"> </span><span class="k">explain</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">sum</span><span class="p">(</span><span class="n">ol_amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">sum_ol_amount</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">bmsql_order_line</span><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ol_w_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">ol_d_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">ol_o_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2101</span><span class="w"> </span><span class="err">\</span><span class="k">G</span><span class="p">;</span><span class="w">
@@ -756,6 +757,9 @@ Term-00, Running Average tpmTOTAL: 14.43  Current tpmTOTAL: <span class="m">96</
 </span><span class="w">      </span><span class="k">group</span><span class="p">(</span><span class="n">nil</span><span class="p">),</span><span class="w"> </span><span class="n">agg_func</span><span class="p">([</span><span class="n">T_FUN_SUM</span><span class="p">(</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_amount</span><span class="p">)])</span><span class="w">
 </span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">output</span><span class="p">([</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_amount</span><span class="p">]),</span><span class="w"> </span><span class="n">filter</span><span class="p">([</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_o_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2101</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_d_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_w_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">]),</span><span class="w"> 
 </span><span class="w">      </span><span class="k">access</span><span class="p">([</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_w_id</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_d_id</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_o_id</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">bmsql_order_line</span><span class="p">.</span><span class="n">ol_amount</span><span class="p">]),</span><span class="w"> </span><span class="n">partitions</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">oceanbase</span><span class="p">.</span><span class="n">__all_virtual_lock_wait_stat</span><span class="w"> </span><span class="err">\</span><span class="k">G</span><span class="w">
 </span><span class="w">
 </span></code></pre></td></tr></table>
 </div>

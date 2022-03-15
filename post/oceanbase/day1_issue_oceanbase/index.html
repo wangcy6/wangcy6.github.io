@@ -48,7 +48,7 @@
 <meta itemprop="name" content="OceanBase开发者手册">
 <meta itemprop="description" content="OceanBase开发者手册"><meta itemprop="datePublished" content="2022-02-23T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-23T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3755">
+<meta itemprop="wordCount" content="4567">
 <meta itemprop="keywords" content="OceanBase," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OceanBase开发者手册"/>
 <meta name="twitter:description" content="OceanBase开发者手册"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-23 00:00 </span>
         
-          <span class="more-meta"> 约 3755 字 </span>
-          <span class="more-meta"> 预计阅读 8 分钟 </span>
+          <span class="more-meta"> 约 4567 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -318,6 +318,8 @@ https://hub.docker.com/r/obpilot/oceanbase-ce
 </span><span class="lnt">70
 </span><span class="lnt">71
 </span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## centos镜像</span>
@@ -376,7 +378,9 @@ debug mode
 bash build.sh debug --init --make
 
 <span class="c1"># 执行build.sh脚本并传入init参数</span>
-sh build.sh init
+sh build.sh init //更新依赖的第三方库。
+
+
 <span class="c1"># 在源码目录下执行debug版的预制构建命令</span>
 yum install m4
 sh build.sh debug
@@ -687,7 +691,7 @@ OB_SRC_DIR：
 <span class="c1">###########################</span>
 <span class="c1">#  环境变量</span>
 <span class="c1">#####################</span>
-<span class="nb">export</span> <span class="nv">OB_SRC_DIR</span><span class="o">=</span>/root/oceanbase
+<span class="nb">export</span> <span class="nv">OB_SRC_DIR</span><span class="o">=</span>//app//oceanbase
 <span class="nb">export</span> <span class="nv">IP</span><span class="o">=</span>127.0.0.1
 
 <span class="c1">###########################</span>
@@ -884,7 +888,7 @@ https://open.oceanbase.com/docs/tutorials-cn/V1.0.0/10000000000012304
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">file build_debug/src/observer/observer
-set args &#34;-r&#34;, &#34;127.0.0.1:2882:2881&#34;, &#34;-o&#34;, &#34;___min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4&#34;, &#34;-z&#34;, &#34;zone1&#34;, &#34;-p&#34;, &#34;2881&#34;, &#34;-P&#34;, &#34;2882&#34;, &#34;-n&#34;, &#34;obcluster&#34;, &#34;-c&#34;, 1, &#34;-d&#34;, &#34;/root/observer/store&#34;, &#34;-i&#34;, &#34;em1&#34;, &#34;-l&#34;, &#34;INFO&#34;
+set args &#34;-r&#34;, &#34;127.0.0.1:2882:2881&#34;, &#34;-o&#34;, &#34;___min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4&#34;,&#34;-z&#34;, &#34;zone1&#34;, &#34;-p&#34;, &#34;2881&#34;, &#34;-P&#34;, &#34;2882&#34;, &#34;-n&#34;, &#34;obcluster&#34;, &#34;-c&#34;, 1, &#34;-d&#34;, &#34;/root/observer/store&#34;, &#34;-i&#34;, &#34;lo&#34;, &#34;-l&#34;, &#34;INFO&#34;
 b main
 r
 </code></pre></td></tr></table>
@@ -934,10 +938,164 @@ r
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">gdb 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/root/.obd/repository/oceanbase-ce/3.1.1/f19f8bfb67723712175fb0dfd60579196b3168f1/bin/observer
+
+
+gdb 
+
+gdb进入后，使用命令focus进入tui图形界面，或者使用快捷键：Ctl+x+a (注意按键顺序，记忆：x：focus，a：another)
+在tui中使用相同的快捷键Ctl+x+a返回到gdb原生界面
+
+
+替换：
+obd cluster stop test
+cd /app/oceanbase/build_debug/src/observer
+cp observer /root/.obd/repository/oceanbase-ce/3.1.1/f19f8bfb67723712175fb0dfd60579196b3168f1/bin/observer
+
+
+问：[如何设置断点跟踪](https://open.oceanbase.com/answer/detail?id=20400433)
+
+答：
+
+- gdb Function  not defined. 是因为自己设置符号不存在。
+- 改为thread apply all break obmp_query.cpp:84 解决
+
+
+
+dbgui：基于浏览器的gdb前端（gnu调试器）。 使用C，C ++，Go，Rust和F
+
+obclient -uroot@tpcc -h127.0.0.1 -P2881 -p123456 -Dtpcc
+obclient -uroot@tpcc -h127.0.0.1 -P2881 -p123456 -Dtpcc
+
+
+
+obclient -uroot@tpcc -h127.0.0.1 -P2881 -p123456 -Dtpcc
+gdb设置代码目录
+dir /app/oceanbase/ //No such file or directory.
+
+(gdb) delete
+Delete all breakpoints? (y or n) y
+
+thread apply all break ob_sql.cpp:1139
+
+直接用gdb 本地调试
+
+/app/data/observer/bin/observer -r 127.0.0.1:2882:2881 -o __min_full_resource_pool_memory=268435456,memory_limit=10G,system_memory=4G,stack_size=512K,cpu_count=12,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_recycle=True,max_syslog_file_count=4,clog_disk_utilization_threshold=10 -z zone1 -p 2881 -P 2882 -c 1 -d /app/data/observer/store -i lo -l WARN
+
+
+vi ${OB_SRC_DIR}/.gdbinit
+
+file build_debug/src/observer/observer
+set args &#34;-r&#34;, &#34;127.0.0.1:2882:2881&#34;, &#34;-o&#34;, &#34;__min_full_resource_pool_memory=268435456,memory_limit=10G,system_memory=4G,stack_size=512K,cpu_count=12,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_recycle=True,max_syslog_file_count=4,clog_disk_utilization_threshold=10&#34;, &#34;-z&#34;,&#34;zone1&#34;,&#34;-p&#34;, &#34;2881&#34;, &#34;-P&#34;, &#34;2882&#34;, &#34;-n&#34;, &#34;obcluster&#34;, &#34;-c&#34;, 1, &#34;-d&#34;, &#34;/app/data/observer/store&#34;, &#34;-i&#34;, &#34;lo&#34;, &#34;-l&#34;, &#34;INFO&#34;
+b main
+r
+add-auto-load-safe-path /app/oceanbase/.gdbinit
+
+export OB_SRC_DIR=//app//oceanbase
+export IP=127.0.0.1
+////测试不通过
+
+build_debug/src/observer/observer -r 127.0.0.1:2882:2881 -o __min_full_resource_pool_memory=268435456,memory_limit=10G,system_memory=4G,stack_size=512K,cpu_count=12,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_recycle=True,max_syslog_file_count=4,clog_disk_utilization_threshold=10 -z zone1 -p 2881 -P 2882 -c 1 -d /app/data/observer/store -i lo -l WARN
+
+
+
+
+## 设置断点
+## PROCESS
+dir /app/oceanbase/ 
+set pagination off
+thread apply all break obmp_query.cpp:100
+
+## handle_physical_plan （(这个断点不能设置)）
+thread apply all break ob_sql.cpp:1200
+//thread apply all break ob_sql.cpp:3160 （(这个断点不能设置)）
+int ObSql::handle_physical_plan
+
+thread apply all break ob_sql.cpp:3217(这个断点不能设置)
+else if (OB_FAIL(generate_physical_plan(parse_result, &amp;pc_ctx, context, result))) {
+
+create table sex (sex bit(60) primary key,name bit(60)) partition by hash(sex) partitions 4;
+
 </code></pre></td></tr></table>
 </div>
 </div><p>阅读：<a href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/config-gdbinit.html">配置gdb init文件</a> 10分钟 ✅</p>
@@ -974,6 +1132,58 @@ r
 </ul>
 <h2 id="day2-阅读-roadmap">day2: 阅读 Roadmap</h2>
 <p><img src="https://github.com/oceanbase/oceanbase/wiki/images/roadmap.jpg" alt=""></p>
+<p>gdb 调试 observer</p>
+<p><img src="day1_issue_oceanbase.assets/ojGQeLh83bymEr9.png" alt="image.png"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+<span class="c1">## 设置代码目录</span>
+gdb -p xx
+dir /app/oceanbase/ 
+<span class="c1">## 设置断点</span>
+<span class="c1">## PROCESS</span>
+thread apply all <span class="nb">break</span> obmp_query.cpp:100
+
+<span class="c1">## handle_physical_plan</span>
+thread apply all <span class="nb">break</span> ob_sql.cpp:1200
+thread apply all <span class="nb">break</span> ob_sql.cpp:3160
+thread apply all <span class="nb">break</span> ob_sql.cpp:3217
+
+
+<span class="c1">## tui图形界面</span>
+gdb进入后，使用命令focus进入tui图形界面，
+或者使用快捷键：Ctl+x+a <span class="o">(</span>注意按键顺序，记忆：x：focus，a：another<span class="o">)</span>
+在tui中使用相同的快捷键Ctl+x+a返回到gdb原生界面
+
+<span class="c1">## dbgui：基于浏览器的gdb前端（gnu调试器）。 使用C，C ++，Go，Rust和F</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="day1_issue_oceanbase.assets/urDkBXaGmWygw9O.png" alt="image.png"></p>
+<p>sql 入口为例子</p>
+<p><img src="day1_issue_oceanbase.assets/KWVP35k29GMyEn1-16462966190124.png" alt="image.png"></p>
+<p><img src="day1_issue_oceanbase.assets/meJgcyHBCQp4SPA.png" alt="image.png"></p>
 
     </div>
 
@@ -1005,7 +1215,7 @@ r
             <span class="prev-text nav-default">mysql内核学习过程</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/oceanbase/obcp_home/">
+        <a class="next" href="/post/oceanbase/obcp/">
             <span class="next-text nav-default">OBCP考试</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
