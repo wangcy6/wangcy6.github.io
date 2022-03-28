@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.90.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/server_redis/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="redis必须掌握几个知识点" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/server_redis/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-05-13T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-05-13T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-05-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-13T00:00:00+00:00" />
 
 <meta itemprop="name" content="redis知识卡">
-<meta itemprop="description" content="redis必须掌握几个知识点"><meta itemprop="datePublished" content="2020-05-13T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-13T00:00:00&#43;00:00" />
+<meta itemprop="description" content="redis必须掌握几个知识点"><meta itemprop="datePublished" content="2020-05-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-05-13T00:00:00+00:00" />
 <meta itemprop="wordCount" content="5765">
 <meta itemprop="keywords" content="redis," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="redis知识卡"/>
@@ -303,7 +303,7 @@
 <h3 id="1-fail状态">1 FAIL状态</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -314,7 +314,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">A</span> <span class="n">PFAIL</span> <span class="n">condition</span> <span class="n">is</span> <span class="n">escalated</span> <span class="n">to</span> <span class="n">a</span> <span class="n">FAIL</span> <span class="n">condition</span> <span class="n">when</span> <span class="n">the</span> <span class="n">following</span> <span class="n">set</span> <span class="n">of</span> <span class="n">conditions</span> <span class="n">are</span> <span class="nl">met</span><span class="p">:</span>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">A</span> <span class="n">PFAIL</span> <span class="n">condition</span> <span class="n">is</span> <span class="n">escalated</span> <span class="n">to</span> <span class="n">a</span> <span class="n">FAIL</span> <span class="n">condition</span> <span class="n">when</span> <span class="n">the</span> <span class="n">following</span> <span class="n">set</span> <span class="n">of</span> <span class="n">conditions</span> <span class="n">are</span> <span class="nl">met</span><span class="p">:</span>
 
 <span class="n">Some</span> <span class="n">node</span><span class="p">,</span> <span class="n">that</span> <span class="n">we</span><span class="err">&#39;</span><span class="n">ll</span> <span class="n">call</span> <span class="n">A</span><span class="p">,</span> <span class="n">has</span> <span class="n">another</span> <span class="n">node</span> <span class="n">B</span> <span class="n">flagged</span> <span class="n">as</span> <span class="n">PFAIL</span><span class="p">.</span>
 <span class="n">Node</span> <span class="n">A</span> <span class="n">collected</span><span class="p">,</span> <span class="n">via</span> <span class="n">gossip</span> <span class="n">sections</span><span class="p">,</span> <span class="n">information</span> <span class="n">about</span> <span class="n">the</span> <span class="n">state</span> <span class="n">of</span> <span class="n">B</span> <span class="n">from</span> <span class="n">the</span> <span class="n">point</span> <span class="n">of</span> <span class="n">view</span> <span class="n">of</span> <span class="n">the</span> <span class="n">majority</span> <span class="n">of</span> <span class="n">masters</span> <span class="n">in</span> <span class="n">the</span> <span class="n">cluster</span><span class="p">.</span>
@@ -328,7 +328,7 @@
 </div><h3 id="2-slave-发起投票条件">2 slave 发起投票条件</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -348,7 +348,7 @@
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">于挂掉的master可能会有多个slave，从而存在多个slave竞争成为master节点的过程， 其过程如下：
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">于挂掉的master可能会有多个slave，从而存在多个slave竞争成为master节点的过程， 其过程如下：
 
 1.slave发现自己的master变为FAIL
 2.将自己记录的集群currentEpoch加1，并广播FAILOVER_AUTH_REQUEST信息
@@ -371,7 +371,7 @@ This <span class="nb">time</span> is user configurable.
 </div><h3 id="3-主节点投票条件">3 主节点投票条件</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -471,7 +471,7 @@ This <span class="nb">time</span> is user configurable.
 </span><span class="lnt">98
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">主节点接收到来自于从节点</span><span class="err">、</span><span class="nt">要求以</span> <span class="nt">FAILOVER_AUTH_REQUEST</span> <span class="nt">请求的形式投票的请求</span><span class="err">。</span> 
+<pre tabindex="0" class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">主节点接收到来自于从节点</span><span class="err">、</span><span class="nt">要求以</span> <span class="nt">FAILOVER_AUTH_REQUEST</span> <span class="nt">请求的形式投票的请求</span><span class="err">。</span> 
 <span class="nt">要授予一个投票</span><span class="err">，</span><span class="nt">必须要满足以下条件</span><span class="err">：</span>
 
 <span class="nt">1</span><span class="o">)</span> <span class="nt">在一个给定的时段</span><span class="err">（</span><span class="nt">epoch</span><span class="err">）</span><span class="nt">里</span><span class="err">，</span><span class="nt">一个主节点只能投一次票</span><span class="err">，</span><span class="nt">并且拒绝给以前时段投票</span><span class="err">：</span><span class="nt">每个主节点都有一个</span> <span class="nt">lastVoteEpoch</span> <span class="nt">域</span><span class="err">，</span><span class="nt">一旦认证请求数据包</span><span class="err">（</span><span class="nt">auth</span> <span class="nt">request</span> <span class="nt">packet</span><span class="err">）</span><span class="nt">里的</span> <span class="nt">currentEpoch</span> <span class="nt">小于</span> <span class="nt">lastVoteEpoch</span><span class="err">，</span><span class="nt">那么主节点就会拒绝再次投票</span><span class="err">。</span>
@@ -537,7 +537,7 @@ This <span class="nb">time</span> is user configurable.
 </span><span class="cm">     * times the node timeout. This is not strictly needed for correctness
 </span><span class="cm">     * of the algorithm but makes the base case more linear. */</span>
     <span class="c1">// 如果之前一段时间已经对请求节点进行过投票，那么不进行投票
-</span><span class="c1"></span>    <span class="nt">if</span> <span class="o">(</span><span class="nt">mstime</span><span class="o">()</span> <span class="nt">-</span> <span class="nt">node-</span><span class="o">&gt;</span><span class="nt">slaveof-</span><span class="o">&gt;</span><span class="nt">voted_time</span> <span class="o">&lt;</span> <span class="nt">server</span><span class="nc">.cluster_node_timeout</span> <span class="o">*</span> <span class="nt">2</span><span class="o">)</span>
+</span><span class="c1"></span>    <span class="nt">if</span> <span class="o">(</span><span class="nt">mstime</span><span class="o">()</span> <span class="o">-</span> <span class="nt">node-</span><span class="o">&gt;</span><span class="nt">slaveof-</span><span class="o">&gt;</span><span class="nt">voted_time</span> <span class="o">&lt;</span> <span class="nt">server</span><span class="nc">.cluster_node_timeout</span> <span class="o">*</span> <span class="nt">2</span><span class="o">)</span>
         <span class="nt">return</span><span class="p">;</span>
 
     <span class="cm">/* The slave requesting the vote must have a configEpoch for the claimed
@@ -550,7 +550,7 @@ This <span class="nb">time</span> is user configurable.
 
         <span class="c1">// 查找是否有某个槽的配置纪元大于节点请求的纪元
 </span><span class="c1"></span>        <span class="nt">if</span> <span class="o">(</span><span class="nt">server</span><span class="nc">.cluster-</span><span class="o">&gt;</span><span class="nt">slots</span><span class="o">[</span><span class="nt">j</span><span class="o">]</span> <span class="o">==</span> <span class="nt">NULL</span> <span class="o">||</span>
-            <span class="nt">server</span><span class="nc">.cluster-</span><span class="o">&gt;</span><span class="nt">slots</span><span class="o">[</span><span class="nt">j</span><span class="o">]</span><span class="nt">-</span><span class="o">&gt;</span><span class="nt">configEpoch</span> <span class="o">&lt;=</span> <span class="nt">requestConfigEpoch</span><span class="o">)</span>
+            <span class="nt">server</span><span class="nc">.cluster-</span><span class="o">&gt;</span><span class="nt">slots</span><span class="o">[</span><span class="nt">j</span><span class="o">]-&gt;</span><span class="nt">configEpoch</span> <span class="o">&lt;=</span> <span class="nt">requestConfigEpoch</span><span class="o">)</span>
         <span class="p">{</span>
             <span class="nt">continue</span><span class="p">;</span>
         <span class="p">}</span>
@@ -614,7 +614,7 @@ This <span class="nb">time</span> is user configurable.
 <p>3.5 更新集群的节点状态信息 ！！！！ &mdash;REDIS_NODE_PFAIL  REDIS_CLUSTER_FAIL</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -656,7 +656,7 @@ This <span class="nb">time</span> is user configurable.
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c">    <span class="cm">/* Compute the cluster size, that is the number of master nodes
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c">    <span class="cm">/* Compute the cluster size, that is the number of master nodes
 </span><span class="cm">     * serving at least a single slot.
 </span><span class="cm">     *
 </span><span class="cm">     * At the same time count the number of unreachable masters with
@@ -751,7 +751,7 @@ This <span class="nb">time</span> is user configurable.
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -871,7 +871,7 @@ This <span class="nb">time</span> is user configurable.
 </span><span class="lnt">118
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/*
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cm">/*
 </span><span class="cm"> * 创建一个成员为 obj ，分值为 score 的新节点，
 </span><span class="cm"> * 并将这个新节点插入到跳跃表 zsl 中。
 </span><span class="cm"> * 
@@ -1003,12 +1003,12 @@ This <span class="nb">time</span> is user configurable.
 <p><img src="https://static001.geekbang.org/infoq/8c/8c50590249fb0d3138689348ea791b3b.png" alt=""></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; debug object page_rank
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; debug object page_rank
 
 Value at:0x7f01844863e0 refcount:1 encoding:skiplist serializedlength:53 lru:16526412 lru_seconds_idle:789
 </code></pre></td></tr></table>
@@ -1040,7 +1040,7 @@ Value at:0x7f01844863e0 refcount:1 encoding:skiplist serializedlength:53 lru:165
 <h5 id="陈咬金第二斧--状态状态是什么-1">#陈咬金第二斧  状态状态是什么</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1058,7 +1058,7 @@ Value at:0x7f01844863e0 refcount:1 encoding:skiplist serializedlength:53 lru:165
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">aeEventLoop</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">aeEventLoop</span> <span class="p">{</span>
 
     <span class="c1">// 已注册的文件事件
 </span><span class="c1"></span>    <span class="n">aeFileEvent</span> <span class="o">*</span><span class="n">events</span><span class="p">;</span> <span class="cm">/* Registered events */</span>
@@ -1087,7 +1087,7 @@ Value at:0x7f01844863e0 refcount:1 encoding:skiplist serializedlength:53 lru:165
 <h3 id="陈咬金第二斧-执行步骤是什么--info">#陈咬金第二斧 执行步骤是什么  info</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1189,7 +1189,7 @@ Value at:0x7f01844863e0 refcount:1 encoding:skiplist serializedlength:53 lru:165
 </span><span class="lnt">100
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://www.cnblogs.com/nulige/p/10708900.html
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">https://www.cnblogs.com/nulige/p/10708900.html
 
 Redis-5.0.5
 wget http://download.redis.io/releases/redis-5.0.5.tar.gz
@@ -1296,10 +1296,10 @@ cluster_enabled:0
 <h2 id="延迟时间">延迟时间</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Redis-cli --latency -h 127.0.0.1 -p 6379
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Redis-cli --latency -h 127.0.0.1 -p 6379
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -1307,7 +1307,7 @@ cluster_enabled:0
 <p>used_memory_rss含义</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1321,7 +1321,7 @@ cluster_enabled:0
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://redis.io/commands/info
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">https://redis.io/commands/info
 
 When rss &gt;&gt; used, a large difference means there is memory fragmentation (internal or external), 说明碎片率严重
 

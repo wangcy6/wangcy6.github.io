@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.90.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/FQA_Service_Mesh/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="Service Mesh" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/FQA_Service_Mesh/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-11-13T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2019-11-13T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2019-11-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-11-13T00:00:00+00:00" />
 
 <meta itemprop="name" content="FQA_Service_Mesh">
-<meta itemprop="description" content="Service Mesh"><meta itemprop="datePublished" content="2019-11-13T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-11-13T00:00:00&#43;00:00" />
+<meta itemprop="description" content="Service Mesh"><meta itemprop="datePublished" content="2019-11-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-13T00:00:00+00:00" />
 <meta itemprop="wordCount" content="2879">
 <meta itemprop="keywords" content="book,reading," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="FQA_Service_Mesh"/>
@@ -320,7 +320,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -350,7 +350,7 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Coordinator                                         Participant
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Coordinator                                         Participant
                               QUERY TO COMMIT
                 --------------------------------&gt;
                               VOTE YES/NO           prepare*/abort*
@@ -386,7 +386,7 @@ https://cseweb.ucsd.edu/classes/sp16/cse291-e/applications/ln/lecture8.html
 <h4 id="阻塞的httpsilolinet201911135rvzhuk9qlcikebpng-3pchttpsappyinxiangcomshards39nl822682959f28292-cd0c-4c99-b43a-4405c133154c"><img src="https://i.loli.net/2019/11/13/5rVZHuK9QLcikEb.png" alt="阻塞的"> <a href="https://app.yinxiang.com/shard/s39/nl/8226829/59f28292-cd0c-4c99-b43a-4405c133154c">3PC</a></h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -418,7 +418,7 @@ https://cseweb.ucsd.edu/classes/sp16/cse291-e/applications/ln/lecture8.html
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="o">&gt;</span> <span class="err">一个节点故障，写入操作全部失败，整个系统崩溃？</span>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="o">&gt;</span> <span class="err">一个节点故障，写入操作全部失败，整个系统崩溃？</span>
 <span class="nl">https</span><span class="p">:</span><span class="c1">//en.wikipedia.org/wiki/Three-phase_commit_protocol
 </span><span class="c1"></span><span class="n">A</span> <span class="n">two</span><span class="o">-</span><span class="n">phase</span> <span class="n">commit</span> <span class="n">protocol</span> <span class="n">cannot</span> <span class="n">dependably</span> <span class="n">recover</span> <span class="n">from</span> <span class="n">a</span> <span class="n">failure</span> <span class="n">of</span> <span class="n">both</span> <span class="n">the</span> <span class="n">coordinator</span> <span class="n">and</span> <span class="n">a</span> <span class="n">cohort</span> <span class="n">member</span> <span class="n">during</span> <span class="n">the</span> <span class="n">Commit</span> <span class="n">phase</span> <span class="err">【这里说是第二阶段】</span>
 

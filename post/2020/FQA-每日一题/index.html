@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.90.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/FQA-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="每日一题" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/FQA-%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-05-29T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2020-05-29T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2020-05-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-29T00:00:00+00:00" />
 
 <meta itemprop="name" content="每日一题">
-<meta itemprop="description" content="每日一题"><meta itemprop="datePublished" content="2020-05-29T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-29T00:00:00&#43;00:00" />
+<meta itemprop="description" content="每日一题"><meta itemprop="datePublished" content="2020-05-29T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-05-29T00:00:00+00:00" />
 <meta itemprop="wordCount" content="3834">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="每日一题"/>
@@ -285,12 +285,12 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">//Pimpl是对自己类进一步拆分，只要保证自己模块没有问题，就解决MyClassImp依赖问题
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">//Pimpl是对自己类进一步拆分，只要保证自己模块没有问题，就解决MyClassImp依赖问题
 
 //其他的类不需要关系，有没有发生变动
 </code></pre></td></tr></table>
@@ -340,7 +340,7 @@ redis的单线程的。keys指令会导致线程阻塞一段时间，线上服�
 <p>这个看似容易 不好回答。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -369,7 +369,7 @@ redis的单线程的。keys指令会导致线程阻塞一段时间，线上服�
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">全部一致（2pc）
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">全部一致（2pc）
 
 不确信，主节点是否还能恢复,故障模型，采用失败，踢出集群。
 主要解决问题是主从切换期间，新来数据该怎么办？不然引起全量同步。
@@ -414,7 +414,7 @@ redis高可用依然采用主从模式，但是在主备切换等方面舍去中
 <p>参考答案</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -512,7 +512,7 @@ redis高可用依然采用主从模式，但是在主备切换等方面舍去中
 </span><span class="lnt">96
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">参考答案如下：
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">参考答案如下：
 Redis 高可用架构如下：
 1.Redis Sentinel 集群 + 内网 DNS + 自定义脚本。
 2.Redis Sentinel 集群 + VIP + 自定义脚本。

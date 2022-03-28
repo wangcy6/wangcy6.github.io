@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>OBCP考试 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="多看、多问、多总结，肯定是可以攻克的。 http://127.0.0.1:1313/post/oceanbase/obcp/ 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 |" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.90.0 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/obcp/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="OBCP考试" />
+<meta property="og:description" content="多看、多问、多总结，肯定是可以攻克的。 http://127.0.0.1:1313/post/oceanbase/obcp/ 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 |" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/obcp/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-20T00:00:00+00:00" />
+
+<meta itemprop="name" content="OBCP考试">
+<meta itemprop="description" content="多看、多问、多总结，肯定是可以攻克的。 http://127.0.0.1:1313/post/oceanbase/obcp/ 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 |"><meta itemprop="datePublished" content="2022-02-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-02-20T00:00:00+00:00" />
+<meta itemprop="wordCount" content="5627">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OBCP考试"/>
+<meta name="twitter:description" content="多看、多问、多总结，肯定是可以攻克的。 http://127.0.0.1:1313/post/oceanbase/obcp/ 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 obd cluster display test &#43;---------------------------------------------&#43; | observer | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | ip | version | port | zone | status | &#43;-----------&#43;---------&#43;------&#43;-------&#43;--------&#43; | 127.0.0.1 |"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">OBCP考试</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-20 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/code_reading/"> code_reading </a>
+            </div>
+          <span class="more-meta"> 约 5627 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境说明">环境说明</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#提问">提问</a></li>
+    <li><a href="#准备">准备</a>
+      <ul>
+        <li><a href="#3-阅读目录-完成-">3 阅读目录： 完成 √</a></li>
+      </ul>
+    </li>
+    <li><a href="#字段说明">字段说明</a>
+      <ul>
+        <li><a href="#4-转存">4 转存</a></li>
+      </ul>
+    </li>
+    <li><a href="#实验">实验</a></li>
+    <li><a href="#实验5-sql调优">实验5 sql调优</a></li>
+    <li><a href="#第五章-事务">第五章 事务</a></li>
+    <li><a href="#一提问">一、提问：</a>
+      <ul>
+        <li><a href="#二-准备">二 、准备：</a></li>
+        <li><a href="#三结果">三、结果</a></li>
+        <li><a href="#四实验">四、实验</a></li>
+      </ul>
+    </li>
+    <li><a href="#obproxy-路由策略与使用运维">OBProxy 路由策略与使用运维</a>
+      <ul>
+        <li><a href="#1-阅读资料">1. 阅读资料</a></li>
+        <li><a href="#2-常见问题">2. 常见问题</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#实践合并慢如何解决">实践：合并慢如何解决</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#实验2-创建租户">实验2 创建租户</a></li>
+    <li><a href="#实验3-存储引擎">实验3 存储引擎</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>多看、多问、多总结，肯定是可以攻克的。</p>
+</blockquote>
+<p>http://127.0.0.1:1313/post/oceanbase/obcp/</p>
+<h2 id="环境说明">环境说明</h2>
+<ul>
+<li>单机单节点部署</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">obd cluster display <span class="nb">test</span>
++---------------------------------------------+
+<span class="p">|</span>                   observer                  <span class="p">|</span>
++-----------+---------+------+-------+--------+
+<span class="p">|</span> ip        <span class="p">|</span> version <span class="p">|</span> port <span class="p">|</span> zone  <span class="p">|</span> status <span class="p">|</span>
++-----------+---------+------+-------+--------+
+<span class="p">|</span> 127.0.0.1 <span class="p">|</span> 3.1.1   <span class="p">|</span> <span class="m">2881</span> <span class="p">|</span> zone1 <span class="p">|</span> active <span class="p">|</span>
++-----------+---------+------+-------+--------+
+
+ /etc/sysctl.conf 
+ fs.aio-max-nr <span class="o">=</span> <span class="m">1048576</span> <span class="c1">##文件系统最大异步io</span>
+ fs.file-max <span class="o">=</span> <span class="m">6815744</span> <span class="c1">##文件系统中文件的最大个数</span>
+ 
+obd cluster upgrade obdemo -c oceanbase-ce --version 3.1.2
+ 
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="第1-2章">第1-2章：</h1>
+<h2 id="提问">提问</h2>
+<h2 id="准备">准备</h2>
+<ul>
+<li>
+<p><a href="https://open.oceanbase.com/docs/tutorials/quickstart/V1.0.0/2-3-how-to-plan-the-oceanbase-cluster-deployment">https://open.oceanbase.com/docs/tutorials/quickstart/V1.0.0/2-3-how-to-plan-the-oceanbase-cluster-deployment</a></p>
+</li>
+<li>
+<p>OceanBase 社区版入门到实战教程 |视频合辑</p>
+<p><a href="https://open.oceanbase.com/blog/10900164?currentPage=1">https://open.oceanbase.com/blog/10900164?currentPage=1</a></p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="mi">112</span><span class="p">.</span><span class="mi">177</span><span class="p">.</span><span class="mi">65</span><span class="w"> 
+</span><span class="w"></span><span class="n">alias</span><span class="w"> </span><span class="n">cdsys</span><span class="o">=</span><span class="s2">&#34;obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">zone</span><span class="p">,</span><span class="nf">concat</span><span class="p">(</span><span class="n">svr_ip</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">svr_port</span><span class="p">)</span><span class="w"> </span><span class="n">observer</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">cpu_capacity</span><span class="p">,</span><span class="n">cpu_total</span><span class="p">,</span><span class="n">cpu_assigned</span><span class="p">,</span><span class="n">cpu_assigned_percent</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">mem_capacity</span><span class="p">,</span><span class="n">mem_total</span><span class="p">,</span><span class="n">mem_assigned</span><span class="p">,</span><span class="n">mem_assigned_percent</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">unit_Num</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="o">`</span><span class="k">load</span><span class="o">`</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">`</span><span class="k">load</span><span class="o">`</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">cpu_weight</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">cpu_weight</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">memory_weight</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">mem_weight</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">leader_count</span><span class="w">
+</span><span class="w"></span><span class="k">from</span><span class="w"> </span><span class="n">__all_virtual_server_stat</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">zone</span><span class="p">,</span><span class="n">svr_ip</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="err">查看业务租户内部所有</span><span class="n">leader副本的位置</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">t5</span><span class="p">.</span><span class="n">tenant_name</span><span class="p">,</span><span class="w"> </span><span class="n">t4</span><span class="p">.</span><span class="n">database_name</span><span class="p">,</span><span class="n">t3</span><span class="p">.</span><span class="n">tablegroup_name</span><span class="p">,</span><span class="n">t1</span><span class="p">.</span><span class="n">table_id</span><span class="p">,</span><span class="n">t1</span><span class="p">.</span><span class="n">table_name</span><span class="p">,</span><span class="n">t2</span><span class="p">.</span><span class="n">partition_id</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">role</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">t2</span><span class="p">.</span><span class="n">zone</span><span class="p">,</span><span class="w"> </span><span class="nf">concat</span><span class="p">(</span><span class="n">t2</span><span class="p">.</span><span class="n">svr_ip</span><span class="p">,</span><span class="err">‘</span><span class="p">:</span><span class="err">’</span><span class="p">,</span><span class="n">t2</span><span class="p">.</span><span class="n">svr_port</span><span class="p">)</span><span class="w"> </span><span class="n">observer</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">t2</span><span class="p">.</span><span class="o">`</span><span class="n">data_size</span><span class="o">`/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">)</span><span class="w"> </span><span class="n">data_size_mb</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="o">`</span><span class="n">row_count</span><span class="o">`</span><span class="w">
+</span><span class="w"></span><span class="k">from</span><span class="w"> </span><span class="n">__all_virtual_table</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">gv</span><span class="err">$</span><span class="n">partition</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="n">t2</span><span class="p">.</span><span class="n">tenant_id</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">table_id</span><span class="o">=</span><span class="n">t2</span><span class="p">.</span><span class="n">table_id</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="k">left</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">__all_tablegroup</span><span class="w"> </span><span class="n">t3</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="n">t3</span><span class="p">.</span><span class="n">tenant_id</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">tablegroup_id</span><span class="o">=</span><span class="n">t3</span><span class="p">.</span><span class="n">tablegroup_id</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="k">join</span><span class="w"> </span><span class="n">__all_database</span><span class="w"> </span><span class="n">t4</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">tenant_Id</span><span class="o">=</span><span class="n">t4</span><span class="p">.</span><span class="n">tenant_id</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">database_id</span><span class="o">=</span><span class="n">t4</span><span class="p">.</span><span class="n">database_id</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="k">join</span><span class="w"> </span><span class="n">__all_tenant</span><span class="w"> </span><span class="n">t5</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="p">(</span><span class="n">t1</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="n">t5</span><span class="p">.</span><span class="n">tenant_id</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">t5</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="mi">1020</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">role</span><span class="o">=</span><span class="mi">1</span><span class="w">
+</span><span class="w"></span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">t5</span><span class="p">.</span><span class="n">tenant_name</span><span class="p">,</span><span class="w"> </span><span class="n">t4</span><span class="p">.</span><span class="n">database_name</span><span class="p">,</span><span class="n">t3</span><span class="p">.</span><span class="n">tablegroup_name</span><span class="p">,</span><span class="n">t2</span><span class="p">.</span><span class="n">partition_id</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">svr_ip</span><span class="p">,</span><span class="n">id</span><span class="p">,</span><span class="n">zone</span><span class="p">,</span><span class="n">status</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">__all_server</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">oceanbase</span><span class="p">.</span><span class="n">gv</span><span class="err">$</span><span class="n">tenant</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="n">SYSTEM</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">SERVER</span><span class="w"> </span><span class="s1">&#39;server_ip:port_num&#39;</span><span class="w"> </span><span class="n">ZONE</span><span class="w"> </span><span class="s1">&#39;zone3&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>阅读：借助 OBD 为 OceanBase 集群扩容 完成
+<a href="https://open.oceanbase.com/docs/observer-cn/V3.1.1/10000000000013251">https://open.oceanbase.com/docs/observer-cn/V3.1.1/10000000000013251</a></p>
+</li>
+<li>
+<p>为业务租户 amber_babe 扩容</p>
+</li>
+</ul>
+<p>alter resource pool amber_babe_pool unit_num=2;</p>
+<ul>
+<li>阅读 <a href="https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.1/create-resource-pool">https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.1/create-resource-pool</a> 完成、</li>
+</ul>
+<p>​       当primary zone列表包含多个zone时，用;分隔的具有从高到底的优先级；用,分隔的具有相同优先级。</p>
+<ul>
+<li>variables</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">MySQL [oceanbase]&gt; show variables like &#39;ob_query_timeout&#39;; 10秒
++------------------+----------+
+| Variable_name    | Value    |
++------------------+----------+
+| ob_query_timeout | 10000000 |
++------------------+----------+
+1 row in set (0.014 sec)
+
+show variables like &#39;ob_trx_timeout&#39;;  100秒
+
+
+MySQL [oceanbase]&gt; show variables like &#39;ob_trx_timeout&#39;;
++----------------+-----------+
+| Variable_name  | Value     |
++----------------+-----------+
+| ob_trx_timeout | 100000000 |
++----------------+-----------+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>参数</li>
+</ul>
+<p>10.112.177.65</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="w">
+</span><span class="w"></span><span class="k">show</span><span class="w"> </span><span class="k">parameters</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;memory_limit&#39;</span><span class="p">,</span><span class="s1">&#39;memory_limit_percentage&#39;</span><span class="p">)</span><span class="w"> </span><span class="err">\</span><span class="k">G</span><span class="w">
+</span><span class="w"></span><span class="k">show</span><span class="w"> </span><span class="k">parameters</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;memory_limit%&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">alter</span><span class="w"> </span><span class="k">system</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">memory_limit_percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">85</span><span class="p">;</span><span class="w">
+</span><span class="w"> 
+</span><span class="w"> 
+</span><span class="w">  </span><span class="o">#</span><span class="w"> </span><span class="n">please</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">suitable</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">matching</span><span class="w"> </span><span class="n">resource</span><span class="p">.</span><span class="w">
+</span><span class="w">    </span><span class="n">memory_limit</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="k">G</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">observer</span><span class="w">
+</span><span class="w">    </span><span class="n">system_memory</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="k">G</span><span class="w"> </span><span class="o">#</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">reserved</span><span class="w"> </span><span class="k">system</span><span class="w"> </span><span class="n">memory</span><span class="p">.</span><span class="w"> </span><span class="n">system_memory</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">reserved</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">general</span><span class="w"> </span><span class="n">tenants</span><span class="p">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mi">30</span><span class="k">G</span><span class="p">.</span><span class="w">
+</span><span class="w">    
+</span><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">memstore_limit_percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;80&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w">				
+</span><span class="w"></span><span class="p">;</span><span class="n">__all_virtual_memory_info</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>手动在指定observer上发起转储示例：</p>
+<p>alter system minor freeze server=(&lsquo;172.30.199.109:2882&rsquo;);</p>
+<p>手动在指定租户上发起转储示例：</p>
+<p>ALTER SYSTEM MINOR FREEZE TENANT=(&lsquo;test_tenant_1&rsquo;)</p>
+<ol>
+<li>系统预留内存不能分配给普通租户使用。</li>
+<li>假设 OceanBase 数据库内存上限为 80 GB，<code>system_memory</code> 的值为 20 GB，那么可用于租户分配的内存就是剩下的 60 GB。</li>
+<li></li>
+</ol>
+<h3 id="3-阅读目录-完成-">3 阅读目录： 完成 √</h3>
+<p>D:\money\note_oceanbase\docs\docs\docs-cn\6.administrator-guide\3.basic-database-management\6.memory-management</p>
+<p>查看TOTAL_GB是否已经达到MEM_LIMIT_GB，即已经将MemStore全部写满</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">SELECT /*+ READ_CONSISTENCY(WEAK),query_timeout(100000000) */ TENANT_ID,IP,
+           round(ACTIVE/1024/1024/1024,2)ACTIVE_GB,
+           round(TOTAL/1024/1024/1024,2) TOTAL_GB,
+           round(FREEZE_TRIGGER/1024/1024/1024,2) FREEZE_TRIGGER_GB,
+           round(TOTAL/FREEZE_TRIGGER*100,2) percent_trigger,
+           round(MEM_LIMIT/1024/1024/1024,2) MEM_LIMIT_GB 
+FROM gv$memstore
+WHERE tenant_id &gt;1000 OR TENANT_ID=1
+ORDER BY tenant_id,TOTAL_GB DESC;
+
++-----------+-----------+-----------+----------+-------------------+-----------------+--------------+
+| TENANT_ID | IP        | ACTIVE_GB | TOTAL_GB | FREEZE_TRIGGER_GB | percent_trigger | MEM_LIMIT_GB |
++-----------+-----------+-----------+----------+-------------------+-----------------+--------------+
+|         1 | 127.0.0.1 |      0.17 |     0.17 |              0.30 |           55.99 |         0.60 |
+|      1002 | 127.0.0.1 |      0.07 |     0.07 |              0.50 |           14.84 |         1.00 |
++-----------+-----------+-----------+----------+-------------------+-----------------+--------------+
+
+查看TOTAL_GB是否已经达到MEM_LIMIT_GB，即已经将MemStore全部写满
+
+
+    SELECT tenant_id,svr_ip,sum(hold) module_sum
+    FROM __all_virtual_memory_info
+    WHERE tenant_id&gt;1000 AND hold&lt;&gt;0 AND
+                 mod_name  IN ( &#39;OB_KVSTORE_CACHE&#39;,&#39;OB_MEMSTORE&#39;)
+    GROUP BY tenant_id,svr_ip;
+
+
++-----------+-----------+------------+
+| tenant_id | svr_ip    | module_sum |
++-----------+-----------+------------+
+|      1002 | 127.0.0.1 |   55864128 |
++-----------+-----------+------------+
+1 row in set (0.034 sec)
+
+
+select svr_ip,mod_name,sum(hold) system_memory_sum
+from __all_virtual_memory_info
+where tenant_id=500 and hold&lt;&gt;0
+group by svr_ip,mod_name
+order by system_memory_sum desc;
+
+select * from __all_zone where name in (&#39;merge_status&#39;,&#39;all_merged_version&#39;,&#39;broadcast_version&#39;);
+
+
+除去MemStore和KVCache，查看使用超过一定大小（比如10GB）的内存模块
+select *
+from gv$memory
+where used &gt; 1024*1024*1024*10
+and CONTEXT not in (&#39;OB_MEMSTORE&#39;,&#39;OB_KVSTORE_CACHE&#39;)
+order by used desc;
+查看排名靠前的内存模块
+
+
+500租户内存超限
+• tenant_id=500的租户是OB内部租户，简称500租户。
+• 500租户的内存使用量没有被v$memory和gv$memory统计，需要单独查询__all_virtual_memory_info表
+select svr_ip,mod_name,sum(hold) system_memory_sum
+from __all_virtual_memory_info
+where tenant_id=500 and hold&lt;&gt;0
+group by svr_ip,mod_name
+order by system_memory_sum desc;
+查看排名靠前的内存模块。
+
+
+select hit_count,executions,(hit_count/executions) as hit_ratio
+from v$plan_cache_plan_stat
+where (hit_count/executions) &lt; 0.9;
+select hit_count,executions,(hit_count/executions) as hit_ratio
+from v$plan_cache_plan_stat
+where (hit_count/executions) &lt; 0.9 and executions &gt; 1000
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>oceanbase.__all_virtual_tenant_memstore_info</p>
+<h2 id="字段说明">字段说明</h2>
+<table>
+<thead>
+<tr>
+<th><strong>字段名称</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>是否可以为 NULL</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TENANT_ID</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>租户 ID</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>varchar(32)</td>
+<td>NO</td>
+<td>服务器的 IP</td>
+</tr>
+<tr>
+<td>PORT</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>服务器端口</td>
+</tr>
+<tr>
+<td>ACTIVE</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>当前活跃的 Memtable 的内存占用大小，单位为字节</td>
+</tr>
+<tr>
+<td>TOTAL</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>当前所有 Memtable 的内存占用大小，单位为字节</td>
+</tr>
+<tr>
+<td>FREEZE_TRIGGER</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>触发 Memtable 冻结的内存大小，单位为字节</td>
+</tr>
+<tr>
+<td>MEM_LIMIT</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Memtable 的内存大小限制，单位：字节</td>
+</tr>
+<tr>
+<td>FREEZE_CNT</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Memtable 的冻结次数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>除去MemStore和KVCache，查看使用超过一定大小（比如10GB）的内存模块</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">gv$memory</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">10</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">CONTEXT</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;OB_MEMSTORE&#39;</span><span class="p">,</span><span class="s1">&#39;OB_KVSTORE_CACHE&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">desc</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>__all_virtual_memory_info </code>来获取所有内存组件的使用情况。</p>
+<p>可动态伸缩的内存主要部分是 KVCache。OceanBase 数据库将绝大多数的 KV 格式的缓存统一在了 KVCache 中进行管理，KVCache 支持动态伸缩、不同 KV 的优先级控制以及智能的淘汰机制。</p>
+<h3 id="4-转存">4 转存</h3>
+<ol>
+<li>阅读文章：https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.2/dump-and-merge</li>
+</ol>
+<ul>
+<li>D:\money\note_oceanbase\docs\docs\docs-cn\13.reference-guide\1.system-view\3.performance-view</li>
+</ul>
+<p><img src="obcp.assets/oqRaWhUMkBjwiX5.png" alt="image.png"></p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/DYTOri_Cq6XWKOmZc5EeBg">https://mp.weixin.qq.com/s/DYTOri_Cq6XWKOmZc5EeBg</a></li>
+</ul>
+<p>​     <a href="https://open.oceanbase.com/ask/detail?id=13700301">https://open.oceanbase.com/ask/detail?id=13700301</a></p>
+<ul>
+<li>阅读：大合并显示timeout</li>
+</ul>
+<p>​    <a href="https://open.oceanbase.com/ask/detail?id=20400214">https://open.oceanbase.com/ask/detail?id=20400214</a></p>
+<p><a href="https://open.oceanbase.com/docs/knowledgeBase/how-to-troubleshoot-oceanbase-database-merge-timeout">https://open.oceanbase.com/docs/knowledgeBase/how-to-troubleshoot-oceanbase-database-merge-timeout</a></p>
+<p>​</p>
+<ul>
+<li>阅读：**手动触发合并 **</li>
+</ul>
+<p><a href="https://open.oceanbase.com/docs/observer-cn/V3.1.2/10000000000016256">https://open.oceanbase.com/docs/observer-cn/V3.1.2/10000000000016256</a></p>
+<p>笔记：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">enable_manual_merge</span><span class="o">=</span><span class="s1">&#39;True&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"> </span><span class="err">配置项</span><span class="w"> </span><span class="n">enable_manual_merge</span><span class="w"> </span><span class="err">用于控制是否开启手动合并，默认值为</span><span class="w"> </span><span class="n">Flase</span><span class="w"> </span><span class="err">，表示关闭手动合并。</span><span class="w">
+</span><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="n">MAJOR</span><span class="w"> </span><span class="k">FREEZE</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>阅读：增量合并中如何确认宏块或者微块没有修改</li>
+</ul>
+<p>​                         <a href="https://open.oceanbase.com/ask/detail?id=13700686">https://open.oceanbase.com/ask/detail?id=13700686</a></p>
+<p>可以从分区sstable宏块信息__all_virtual_partition_sstable_macro_info查询分区对应的宏块信息</p>
+<h2 id="实验">实验</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">## 定时合并
+alter system set major_freeze_duty_time=&#39;02:00&#39;;
+show parameters like &#39;major_freeze_duty_time&#39;\G;
+
+select * from gv$memstore \G;
+     TENANT_ID: 1002
+            IP: 127.0.0.1
+          PORT: 2882
+        ACTIVE: 81751800
+         TOTAL: 83886080
+FREEZE_TRIGGER: 536870900
+     MEM_LIMIT: 1073741800
+    FREEZE_CNT: 0
+3 rows in set (0.007 sec)
+
+ERROR: No query specified
+
+
+</code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th><strong>字段名称</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>是否可以为 NULL</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TENANT_ID</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>租户 ID</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>varchar(32)</td>
+<td>NO</td>
+<td>服务器的 IP</td>
+</tr>
+<tr>
+<td>PORT</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>服务器端口</td>
+</tr>
+<tr>
+<td>ACTIVE</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>当前活跃的 Memtable 的内存占用大小，单位为字节</td>
+</tr>
+<tr>
+<td>TOTAL</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>当前所有 Memtable 的内存占用大小，单位为字节</td>
+</tr>
+<tr>
+<td>FREEZE_TRIGGER</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>触发 Memtable 冻结的内存大小，单位为字节</td>
+</tr>
+<tr>
+<td>MEM_LIMIT</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Memtable 的内存大小限制，单位：字节</td>
+</tr>
+<tr>
+<td>FREEZE_CNT</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Memtable 的冻结次数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实验5-sql调优">实验5 sql调优</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t_p_hash</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">c3</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1659</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">Field</span><span class="w"> </span><span class="s1">&#39;c1&#39;</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">allowed</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">partitioning</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t_p_hash</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="n">c3</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="n">c2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t1</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">key</span><span class="p">()</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t2</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="n">p0</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="n">partition</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="err">，</span><span class="w">
+</span><span class="w"></span><span class="n">partition</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="k">default</span><span class="p">));</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="n">delimiter</span><span class="w"> </span><span class="o">//</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">procedure</span><span class="w"> </span><span class="nf">bulk_insert_hash</span><span class="p">()</span><span class="w">
+</span><span class="w"></span><span class="n">begin</span><span class="w">
+</span><span class="w"></span><span class="k">declare</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="kt">set</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">while</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10001</span><span class="w"> </span><span class="n">do</span><span class="w">
+</span><span class="w"></span><span class="k">insert</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="nf">t_p_hash</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="w"> </span><span class="p">,</span><span class="n">c3</span><span class="p">)</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="kt">set</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="n">end</span><span class="w"> </span><span class="k">while</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="n">end</span><span class="w">
+</span><span class="w"></span><span class="o">//</span><span class="w">
+</span><span class="w"></span><span class="n">delimiter</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">drop</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">t_p_key</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t_p_key</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="n">c3</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="n">c2</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t3</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="n">p0</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">partition</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="err">，</span><span class="w">
+</span><span class="w"></span><span class="n">partition</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="k">default</span><span class="p">));</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">info_t</span><span class="o">`</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="kt">INT</span><span class="p">,</span><span class="w"> </span><span class="n">gmt_create</span><span class="w"> </span><span class="kt">TIMESTAMP</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">gmt_create</span><span class="p">))</span><span class="w">
+</span><span class="w"></span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="nf">RANGE</span><span class="p">(</span><span class="nf">UNIX_TIMESTAMP</span><span class="p">(</span><span class="n">gmt_create</span><span class="p">))</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p0</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="n">LESS</span><span class="w"> </span><span class="nf">THAN</span><span class="w"> </span><span class="p">(</span><span class="nf">UNIX_TIMESTAMP</span><span class="p">(</span><span class="s1">&#39;2015-01-01 00:00:00&#39;</span><span class="p">)),</span><span class="w">
+</span><span class="w"></span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="n">LESS</span><span class="w"> </span><span class="nf">THAN</span><span class="w"> </span><span class="p">(</span><span class="nf">UNIX_TIMESTAMP</span><span class="p">(</span><span class="s1">&#39;2016-01-01 00:00:00&#39;</span><span class="p">)),</span><span class="w">
+</span><span class="w"></span><span class="n">PARTITION</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="n">LESS</span><span class="w"> </span><span class="nf">THAN</span><span class="w"> </span><span class="p">(</span><span class="nf">UNIX_TIMESTAMP</span><span class="p">(</span><span class="s1">&#39;2017-01-01 00:00:00&#39;</span><span class="p">)));</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">info_t</span><span class="p">;</span><span class="w">	
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t2</span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">c3</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="n">p4</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t_p_hash</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">c2</span><span class="o">&lt;</span><span class="mi">15</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">c2</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">update</span><span class="w"> </span><span class="n">t_p_hash</span><span class="w"> </span><span class="kt">set</span><span class="w"> </span><span class="n">c1</span><span class="o">=</span><span class="s1">&#39;special&#39;</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">c2</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">explain</span><span class="w"> </span><span class="n">extended</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t_p_hash</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">c1</span><span class="o">=</span><span class="s1">&#39;special&#39;</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">idx_t_p_hash_c1</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nf">t_p_hash</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="w"> </span><span class="n">local</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">idx_t_p_hash_c3</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nf">t_p_hash</span><span class="w"> </span><span class="p">(</span><span class="n">c3</span><span class="p">)</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="k">desc</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t_p_key</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="n">c3</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="n">c2</span><span class="p">)</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">unique</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">idx_t_p_key_c3_g</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nf">t_p_key</span><span class="w"> </span><span class="p">(</span><span class="n">c3</span><span class="p">)</span><span class="w"> </span><span class="n">global</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="n">c3</span><span class="p">)</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">explain</span><span class="w"> </span><span class="n">extended</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t_p_key</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">c3</span><span class="o">=</span><span class="s1">&#39;66&#39;</span><span class="p">;</span><span class="w"> </span><span class="o">//</span><span class="n">is_index_back</span><span class="o">=</span><span class="no">false</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="nf">t_p_key1</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">c2</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="n">c3</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="n">c2</span><span class="p">)</span><span class="w"> </span><span class="n">partitions</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">idx_t_p_hash_c11</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nf">t_p_key1</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="w"> </span><span class="n">local</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">idx_t_p_hash_c31</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nf">t_p_key1</span><span class="w"> </span><span class="p">(</span><span class="n">c3</span><span class="p">)</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">explain</span><span class="w"> </span><span class="n">extended</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t_p_key1</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">c3</span><span class="o">=</span><span class="s1">&#39;66&#39;</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">unique</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">idx_t_p_hash_c3</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nf">t_p_key1</span><span class="w"> </span><span class="p">(</span><span class="n">c3</span><span class="p">)</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="n">ERROR</span><span class="w"> </span><span class="mi">1503</span><span class="w"> </span><span class="p">(</span><span class="n">HY000</span><span class="p">):</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">include</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">table</span><span class="s1">&#39;s partitioning function
+</span><span class="s1">create unique index idx_t_p_hash_c3 on t_p_key1 (c3,c2) local ;
+</span><span class="s1">
+</span><span class="s1">explain extended select c1,c2 from t_p_key where c3=&#39;</span><span class="mi">66</span><span class="s1">&#39;;
+</span><span class="s1">
+</span><span class="s1">
+</span><span class="s1">create table h1(c1 int, c2 int, key idx_h1_c1(c1));
+</span><span class="s1">create table h2(c1 int, c2 int, key idx_h1_c1(c1));
+</span><span class="s1">explain select h1.c1,h2.c2 from h1 ,h2 where h1.c1=h2.c1 ;
+</span><span class="s1">
+</span><span class="s1">| =================================================
+</span><span class="s1">|ID|OPERATOR   |NAME         |EST. ROWS|COST    |
+</span><span class="s1">-------------------------------------------------
+</span><span class="s1">|0 |HASH JOIN  |             |98010000 |58381710|
+</span><span class="s1">|1 | TABLE SCAN|h1(idx_h1_c1)|100000   |47311   |
+</span><span class="s1">|2 | TABLE SCAN|h2           |100000   |64066   |
+</span><span class="s1">=================================================
+</span><span class="s1">
+</span><span class="s1">explain select /*+index(h2 idx_h2_c1)*/  h1.c1, h2.c2 from h1 ,h2 where h1.c1=h2.c1;
+</span><span class="s1">
+</span><span class="s1">
+</span><span class="s1"> create table t5(a int primary key, b int, c int);
+</span><span class="s1">create outline ol_1 on select/*+max_concurrent(0)*/ * from t5 where b =1 and c = 1;
+</span><span class="s1">select * from t5 where b =1 and c = 1;
+</span><span class="s1">
+</span><span class="s1">
+</span><span class="s1"> set ob_enable_trace_log = 1;
+</span><span class="s1"> select count(*) from __all_table;
+</span></code></pre></td></tr></table>
+</div>
+</div><p><img src="p7_obcp.assets/sfkROuH9bCxjFvp.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2022/02/20/QqAs3vyo1jEXCYi.png" alt="范围"></p>
+<p><img src="https://s2.loli.net/2022/02/20/1UqOnRKwvL4fB3D.png" alt="image.png"></p>
+<p><img src="p7_obcp.assets/luO5ipHF1zU3ahZ.png" alt="image.png"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">select/*+ parallel(15)*/ SQL_ID, count(*) as QPS, avg(t1.elapsed_time)/1000 RT_MS,sum(t1.elapsed_time)/1000 Total_MS
+from oceanbase.gv$sql_audit t1
+where IS_EXECUTOR_RPC = 0
+and request_time &gt; (time_to_usec(now()) - 600000000)
+and request_time &lt; time_to_usec(now())
+group by t1.sql_id
+order by Total_MS desc
+limit 10;
+
+mysql&gt; Select * from oceanbase.gv$sql_audit where sql_id=’XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX’ \G;
+
+select * from oceanbase.gv$plan_cache_plan_stat where sql_id=’xxxxxxxxxxxxxxxxx’;
+
+show parameters like &#39;trace_log_slow%&#39;;
+fgrep &#39;[slow query]&#39; observer.log |sed -e &#39;s/|/\n/g&#39; | more &lt;--åçóòôöN7 slow query
+grep “&lt;trace_id&gt;” observer.log |sed -e &#39;s/|/\n/g&#39; | more &lt;---() trace_id åõú3 slow query .
+
+产品模块原理系列 | OceanBase SQL 引擎的模块介绍和调优实践分享
+https://open.oceanbase.com/blog/1100200?currentPage=undefined
+https://open.oceanbase.com/docs/videoCenter/5900015
+select * from oceanbase.gv$plan_cache_plan_stat；
+
+fgrep &#39;[slow query]&#39; observer.log |sed -e &#39;s/|/\n/g&#39; | more &lt;
+grep “&lt;trace_id&gt;” observer.log |sed -e &#39;s/|/\n/g&#39; | more &lt;---() 
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="第五章-事务">第五章 事务</h2>
+<h2 id="一提问">一、提问：</h2>
+<ul>
+<li>多个节点一致性读取如何的？</li>
+<li>事务和快照 ？</li>
+</ul>
+<h3 id="二-准备">二 、准备：</h3>
+<ul>
+<li>
+<p>阅读：<a href="https://open.oceanbase.com/answer/detail?id=20400080&amp;search=obcp&amp;pageNum=1">OceanBase 开源教程 OBCP 知识测试参考答案解析</a>  √</p>
+</li>
+<li>
+<p>阅读：<a href="https://open.oceanbase.com/answer/detail?id=20400296&amp;search=obcp&amp;pageNum=1">OceanBase 开源教程 OBCP 知识测试2参考答案解析</a> √</p>
+</li>
+</ul>
+<h3 id="三结果">三、结果</h3>
+<p>关于事务的特性，总结如下：</p>
+<p>1）两阶段提交（下文简称 2PC ）协议，极致优化；</p>
+<p>2）全局快照；</p>
+<p>3）外部一致性；</p>
+<p>4）巧妙解决：分布式事务领域的读半提交、事务提交与查询并发产生的读原子性问题</p>
+<h3 id="四实验">四、实验</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="n">obclient</span><span class="w"> </span><span class="o">-</span><span class="n">uroot</span><span class="o">@</span><span class="n">tpcc</span><span class="w"> </span><span class="o">-</span><span class="n">h127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="n">P2881</span><span class="w"> </span><span class="o">-</span><span class="n">p123456</span><span class="w"> </span><span class="o">-</span><span class="n">Dtpcc</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">test_account_range</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="n">money</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">range</span><span class="w"> </span><span class="p">(</span><span class="n">money</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="n">p0</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">less</span><span class="w"> </span><span class="k">than</span><span class="w"> </span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="n">partition</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">less</span><span class="w"> </span><span class="k">than</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="n">partition</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="k">less</span><span class="w"> </span><span class="k">than</span><span class="w"> </span><span class="p">(</span><span class="mi">300</span><span class="p">));</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">test_account_range</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;zhangsan&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">66</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;lisi&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">166</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;wangwu&#39;</span><span class="w"> </span><span class="p">,</span><span class="mi">266</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">test_account_range</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">test_account_range</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">P2</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="n">obclient</span><span class="w"> </span><span class="o">-</span><span class="n">uroot</span><span class="o">@</span><span class="n">sys</span><span class="w"> </span><span class="o">-</span><span class="n">h127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="n">P2881</span><span class="w"> </span><span class="n">oceanbase</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="n">tenant</span><span class="p">.</span><span class="n">tenant_name</span><span class="p">,</span><span class="n">meta</span><span class="p">.</span><span class="n">table_id</span><span class="p">,</span><span class="w"> </span><span class="n">tab</span><span class="p">.</span><span class="k">table_name</span><span class="p">,</span><span class="w"> </span><span class="n">partition_id</span><span class="p">,</span><span class="k">zone</span><span class="p">,</span><span class="n">svr_ip</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="k">case</span><span class="w">
+</span><span class="w"></span><span class="k">when</span><span class="w"> </span><span class="k">role</span><span class="o">=</span><span class="mi">1</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="s1">&#39;leader&#39;</span><span class="w">
+</span><span class="w"></span><span class="k">when</span><span class="w"> </span><span class="k">role</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="s1">&#39;follower&#39;</span><span class="w">
+</span><span class="w"></span><span class="k">else</span><span class="w"> </span><span class="k">NULL</span><span class="w">
+</span><span class="w"></span><span class="k">end</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">role</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="n">tab</span><span class="p">.</span><span class="n">primary_zone</span><span class="w">
+</span><span class="w"></span><span class="k">from</span><span class="w">
+</span><span class="w"></span><span class="n">__all_virtual_meta_table</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="k">inner</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">__all_tenant</span><span class="w"> </span><span class="n">tenant</span><span class="w"> </span><span class="k">on</span><span class="w">
+</span><span class="w"></span><span class="n">meta</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant</span><span class="p">.</span><span class="n">tenant_id</span><span class="w">
+</span><span class="w"></span><span class="k">inner</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">__all_virtual_table</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">meta</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="n">tab</span><span class="p">.</span><span class="n">tenant_id</span><span class="w"> </span><span class="k">and</span><span class="w">
+</span><span class="w"></span><span class="n">meta</span><span class="p">.</span><span class="n">table_id</span><span class="o">=</span><span class="n">tab</span><span class="p">.</span><span class="n">table_id</span><span class="w">
+</span><span class="w"></span><span class="k">where</span><span class="w">
+</span><span class="w"></span><span class="n">tenant</span><span class="p">.</span><span class="n">tenant_id</span><span class="o">=</span><span class="mi">1002</span><span class="w">
+</span><span class="w"></span><span class="k">and</span><span class="w">  </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="s1">&#39;test_account_range&#39;</span><span class="w">
+</span><span class="w"></span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">tenant</span><span class="p">.</span><span class="n">tenant_name</span><span class="p">,</span><span class="k">table_name</span><span class="p">,</span><span class="n">partition_id</span><span class="p">,</span><span class="k">zone</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">set</span><span class="w"> </span><span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">ob_query_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">900000000</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">set</span><span class="w"> </span><span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">ob_trx_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">900000000</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">set</span><span class="w"> </span><span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">ob_trx_idle_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">300000000</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">set</span><span class="w"> </span><span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">autocommit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">off</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">begin</span><span class="w">
+</span><span class="w"></span><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">test_account_range</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;smith&#39;</span><span class="p">,</span><span class="mi">77</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;john&#39;</span><span class="p">,</span><span class="mi">177</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">rollback</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">begin</span><span class="w">
+</span><span class="w"></span><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">test_account_range</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;tom&#39;</span><span class="p">,</span><span class="mi">188</span><span class="p">),(</span><span class="s1">&#39;jerry&#39;</span><span class="p">,</span><span class="mi">288</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">update</span><span class="w"> </span><span class="n">test_account_range</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">money</span><span class="o">=</span><span class="mi">99</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;zhangsan&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">commit</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="obproxy-路由策略与使用运维">OBProxy 路由策略与使用运维</h2>
+<h3 id="1-阅读资料">1. 阅读资料</h3>
+<ul>
+<li><a href="https://gw.alipayobjects.com/os/bmw-prod/8808a424-3032-47f6-bb46-fc6f914a78d0.pdf">https://gw.alipayobjects.com/os/bmw-prod/8808a424-3032-47f6-bb46-fc6f914a78d0.pdf</a></li>
+</ul>
+<h3 id="2-常见问题">2. 常见问题</h3>
+<h1 id="实践总结">实践总结</h1>
+<h2 id="实践合并慢如何解决">实践：合并慢如何解决</h2>
+<p>合并（MajorCompaction）方式</p>
+<ol>
+<li>手工触发
+alter system major freeze;</li>
+<li>定时触发
+alter system set major_freeze_duty_time=&lsquo;02:00&rsquo;;</li>
+<li>自动合并
+alter system set freeze_trigger_percentage=20;
+alter system set minor_freeze_times=13;</li>
+</ol>
+<p>select * from __all_zone;
+select * from __all_zone where name like &lsquo;%merge%';</p>
+<p>查看转储（Minor Compaction） 
+select tenant_id,ip,port, active/1024/1024/1024, total/1024/1024/1024,
+freeze_trigger/1024/1024/1024,total/freeze_trigger, mem_limit/1024/1024/1024,freeze_cnt from
+gv$memstore where tenant_id =1 ;</p>
+<h1 id="动手实验">动手实验</h1>
+<h2 id="实验2-创建租户">实验2 创建租户</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">CREATE TENANT local_warehouse replica_num = 1, primary_zone=&#39;zone1&#39;, resource_pool_list=(&#39;pool_large1&#39;);
+https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.2/data-copy-and-service
+用;分隔的具有从高到底的优先级；用,分隔的具有相同优先级。
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>磁盘上的静态数据 整个表记录（SSTable）、存储在内存的增量数据（MEMTable）、</li>
+</ul>
+<h2 id="实验3-存储引擎">实验3 存储引擎</h2>
+<h4 id="内存查看">内存查看</h4>
+<ul>
+<li>
+<ol start="3">
+<li>查看 observer 总内存 大小</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">
+select zone,cpu_total,cpu_assigned,mem_total/1024/1024/1024,mem_assigned/1024/1024/1024
+from __all_virtual_server_stat;
+
+
++-------+-----------+--------------+--------------------------+-----------------------------+
+| zone  | cpu_total | cpu_assigned | mem_total/1024/1024/1024 | mem_assigned/1024/1024/1024 |
++-------+-----------+--------------+--------------------------+-----------------------------+
+| zone1 |        10 |          4.5 |           6.000000000000 |              3.000000000000 |
+
+
+show parameters like &#39;memory_limit%&#39; ;
+
+alter system set memory_limit=&#39;13G&#39;;
+MySQL [oceanbase]&gt;
+select zone,cpu_total,cpu_assigned,mem_total/1024/1024/1024,mem_assigned/1024/1024/1024
+from __all_virtual_server_stat;
++-------+-----------+--------------+--------------------------+-----------------------------+
+| zone  | cpu_total | cpu_assigned | mem_total/1024/1024/1024 | mem_assigned/1024/1024/1024 |
++-------+-----------+--------------+--------------------------+-----------------------------+
+| zone1 |        10 |          4.5 |           9.000000000000 |              3.000000000000 |
++-------+-----------+--------------+--------------------------+-----------------------------+
+
+select tenant_id,ip,port, active/1024/1024/1024, total/1024/1024/1024,
+freeze_trigger/1024/1024/1024,total/freeze_trigger, mem_limit/1024/1024/1024,freeze_cnt from
+gv$memstore where tenant_id&gt;1000;
+
+ alter system set memory_limit_percentage=80;
+ alter system set memory_limit=&#39;8G&#39;;
+ 
+show parameters like &#39;memory_limit%&#39; ;
+
+
+show parameters like &#39;freeze_trigger_percentage&#39; ;
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>转储</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## 马上执行</span>
+alter system major freeze<span class="p">;</span>
+<span class="c1">## 定时合并</span>
+show parameters like <span class="s1">&#39;major_freeze_duty_%&#39;</span> <span class="p">;</span>
+
+<span class="c1">## 什么时候触发合并</span>
+show parameters like <span class="s1">&#39;minor_freeze%&#39;</span> <span class="p">;</span>
+
+<span class="k">select</span> * from __all_zone<span class="p">;</span>
+<span class="k">select</span> * from __all_zone where name like <span class="s1">&#39;%merge%&#39;</span><span class="p">;</span>
+
+<span class="k">select</span> * from __all_virtual_partition_sstable_image_info <span class="se">\G</span><span class="p">;</span>
+<span class="c1">## 查看执行结果</span>
+
+<span class="k">select</span> * from __all_server_event_history <span class="se">\G</span><span class="p">;</span>
+
+
+<span class="k">select</span> * from __all_rootservice_event_history <span class="se">\G</span><span class="p">;</span>  //手工 
+show parameters like <span class="s1">&#39;minor_freeze%&#39;</span> <span class="p">;</span>
+
+specifies how many minor freezes should be triggered between two major freezes.
+
+alter system <span class="nb">set</span> <span class="nv">minor_freeze_times</span><span class="o">=</span>3<span class="p">;</span>
+alter system <span class="nb">set</span> <span class="nv">freeze_trigger_percentage</span><span class="o">=</span>20<span class="p">;</span>
+
+sysbench ./oltp_insert.lua --mysql-host<span class="o">=</span>127.0.0.1 --mysql-db<span class="o">=</span><span class="nb">test</span> --mysql-port<span class="o">=</span><span class="m">2883</span> --mysqluser<span class="o">=</span>root@obcp_t1#obcp_test --tables<span class="o">=</span><span class="m">10</span> --table_size<span class="o">=</span><span class="m">30000</span> --report-interval<span class="o">=</span><span class="m">10</span> 
+<span class="m">26</span>
+<span class="nv">driver</span><span class="o">=</span>mysql --skip-trx<span class="o">=</span>on --db-ps-mode<span class="o">=</span>disable --create-secondary<span class="o">=</span>off --mysql-ignoreerrors<span class="o">=</span>6002,6004,4012,2013,4016 --threads<span class="o">=</span><span class="m">10</span> --time<span class="o">=</span><span class="m">240</span> run
+
+
+<span class="c1">## 租户持久化结果</span>
+<span class="k">select</span> tenant_id,ip,port, active/1024/1024/1024, total/1024/1024/1024,
+freeze_trigger/1024/1024/1024,total/freeze_trigger, mem_limit/1024/1024/1024,freeze_cnt from
+gv<span class="nv">$memstore</span> where <span class="nv">tenant_id</span> <span class="o">=</span><span class="m">1</span> <span class="p">;</span>
+
+alter system <span class="nb">set</span> <span class="nv">freeze_trigger_percentage</span><span class="o">=</span>70<span class="p">;</span>
+show parameters like <span class="s1">&#39;minor_freeze%&#39;</span> 
+
+alter system <span class="nb">set</span> <span class="nv">minor_freeze_times</span><span class="o">=</span>3<span class="p">;</span>
+
+
+ALTER SYSTEM MINOR FREEZE<span class="p">;</span>
+ALTER SYSTEM MINOR FREEZE <span class="nv">SERVER</span><span class="o">=</span><span class="s1">&#39;10.10.10.1:2882&#39;</span><span class="p">;</span>
+ALTER SYSTEM MINOR FREEZE <span class="nv">TENANT</span><span class="o">=</span><span class="s1">&#39;prod_tenant&#39;</span><span class="p">;</span>
+
+合并操作（Major Compaction）是将动静态数据做归并
+转储（Minor Compaction）
+
+合并（Major Compaction）
+https://open.oceanbase.com/docs/observer-cn/V3.1.2/10000000000015528
+
+
+如何查看当前的合并进度？
+
+
+ SELECT zone,svr_ip,major_version,macro_block_count,use_old_macro_block_count,merge_start_time,merge_finish_time,merge_process,<span class="o">(</span> merge_finish_time - merge_start_time <span class="o">)</span> AS cost_time, <span class="o">(</span> macro_block_count - use_old_macro_block_count <span class="o">)</span> AS merge_macro_block_count,<span class="o">(</span> macro_block_count - use_old_macro_block_count <span class="o">)</span> / <span class="o">(</span> merge_finish_time - merge_start_time <span class="o">)</span> AS avg_per_sec
+          FROM   __all_virtual_partition_sstable_image_info
+          ORDER  BY zone,svr_ip,major_version<span class="p">;</span>	
+ https://open.oceanbase.com/ask/detail?id<span class="o">=</span><span class="m">13700001</span>
+</code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th><strong>转储（<strong>Minor Compaction</strong>）</strong></th>
+<th><strong>合并（Major</strong> Compaction**）**</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>减少合并（Major Compaction）的方法</p>
+<p>show parameters like minor_freeze_times&rsquo;</p>
+<p>show parameters like &lsquo;freeze_trigger_percentage&rsquo; ;</p>
+<p>alter system major freeze;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">alter system set freeze_trigger_percentage=20;（调小）
+
+alter system set minor_freeze_times=13;（调大）
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>​</p>
+<p><img src="obcp.assets/WXDlGH6PSTfreta.png" alt="image.png"></p>
+<p>alter system set  	zone_merge_order=&lsquo;z1,z2,z3</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-20 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/day1_issue_oceanbase/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">OceanBase开发者手册</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2022/liuqing/">
+            <span class="next-text nav-default">币圈连环诈骗犯刘庆, 拖欠数亿成老赖</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.90.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2021/docker01/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="docker入门教程" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2021/docker01/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-08-25T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-08-25T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-08-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-25T00:00:00+00:00" />
 
 <meta itemprop="name" content="docker入门教程">
-<meta itemprop="description" content="docker入门教程"><meta itemprop="datePublished" content="2021-08-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-08-25T00:00:00&#43;00:00" />
+<meta itemprop="description" content="docker入门教程"><meta itemprop="datePublished" content="2021-08-25T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-08-25T00:00:00+00:00" />
 <meta itemprop="wordCount" content="582">
 <meta itemprop="keywords" content="code_reading," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="docker入门教程"/>
@@ -166,7 +166,7 @@
 <h3 id="安装">安装</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -179,7 +179,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@fhb ~]# cat /etc/redhat-release
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[root@fhb ~]# cat /etc/redhat-release
 CentOS release 6.8 (Final)
 [root@fhb ~]# sudo rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 [root@fhb ~]# sudo yum update -y
@@ -198,10 +198,10 @@ service nginx start
 <p>启动</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">systemctl restart docker
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">systemctl restart docker
 </code></pre></td></tr></table>
 </div>
 </div></li>
@@ -223,12 +223,12 @@ service nginx start
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">$ docker logs -f -t --since<span class="o">=</span><span class="s2">&#34;2018-02-08&#34;</span> --tail<span class="o">=</span><span class="m">100</span> CONTAINER_ID
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ docker logs -f -t --since<span class="o">=</span><span class="s2">&#34;2018-02-08&#34;</span> --tail<span class="o">=</span><span class="m">100</span> CONTAINER_ID
 $ docker logs --since 30m CONTAINER_ID
 docker logs -f --tail<span class="o">=</span><span class="m">100</span> f215dfab44fd
 </code></pre></td></tr></table>
@@ -251,7 +251,7 @@ docker logs -f --tail<span class="o">=</span><span class="m">100</span> f215dfab
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -266,7 +266,7 @@ docker logs -f --tail<span class="o">=</span><span class="m">100</span> f215dfab
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run -d --name if-test centos:8.1.1911 sleep 36000
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">docker run -d --name if-test centos:8.1.1911 sleep 36000
 docker exec -it if-test bash
 exit
 
