@@ -48,7 +48,7 @@
 <meta itemprop="name" content="python学习记录">
 <meta itemprop="description" content="day1 环境搭建： window： 删除 Microsoft Store 安装python(无法删除 30分钟) 直接删除环境变量：%USERPROFILE%\AppData\Loca"><meta itemprop="datePublished" content="2022-02-08T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-02-08T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="460">
+<meta itemprop="wordCount" content="169">
 <meta itemprop="keywords" content="系统设计," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="python学习记录"/>
 <meta name="twitter:description" content="day1 环境搭建： window： 删除 Microsoft Store 安装python(无法删除 30分钟) 直接删除环境变量：%USERPROFILE%\AppData\Loca"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-08 00:00 </span>
         
-          <span class="more-meta"> 约 460 字 </span>
+          <span class="more-meta"> 约 169 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -171,52 +171,6 @@ D:\local\Python\Python310\Lib\site-packages</p>
 index-url = <a href="http://mirrors.aliyun.com/pypi/simple/">http://mirrors.aliyun.com/pypi/simple/</a>
 [install]
 trusted-host=mirrors.aliyun.com</p>
-<p>Python IDE界的倚天和屠龙：Pycharm 和 Jupyter notebook</p>
-<p>习惯在学习，数据探索的阶段使用<em>Anaconda/Jupyter notebook</em> (交互式，可视性强，方便阅读），实际做项目时用<em>PyCharm</em></p>
-<p>CentOS 7 升级Python2.7.5到Python3.10</p>
-<p>编译安装Python3.10</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 下载 Python-3.10.2.tgz
-
-# 解压
-tar -zxf Python-3.10.2.tgz
-# 安装依赖包
-yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc  libffi-devel
-# 进入python目录
-cd Python-3.10.2 
-# 编译
-./configure --prefix=/usr/local/python3.10(目录)
-make &amp;&amp; make install
-</code></pre></td></tr></table>
-</div>
-</div><p>将系统默认的python2备份
-mv /usr/bin/python /usr/bin/python.bak</p>
-<p>创建新的软连接
-ln -s /usr/local/python3.10/bin/python3.10 /usr/bin/python
-ln -s /usr/local/python3.10/bin/pip3 /usr/bin/pip</p>
-<p>更改yum配置修改yum不能用的问题
-python -V
-Python 2.7.5
-vi /usr/bin/yum
-#!/usr/bin/python &ndash;&gt; #!/usr/bin/python2.7
-vi /usr/libexec/urlgrabber-ext-down
-#!/usr/bin/python &ndash;&gt; #!/usr/bin/python2.7</p>
-<p>pip位置
-ln -s /usr/local/python3.10/bin/pip3 /usr/bin/pip</p>
 
     </div>
 

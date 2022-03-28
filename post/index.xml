@@ -27,15 +27,6 @@
     
     <item>
       <title>OBCP考试</title>
-      <link>https://wangcy6.github.io/post/oceanbase/obcp/</link>
-      <pubDate>Sun, 20 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/oceanbase/obcp/</guid>
-      <description>多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version | port | zone | status | +-----------+---------+------+-------+--------+ | 127.0.0.1 | 3.1.1 | 2881 |</description>
-    </item>
-    
-    <item>
-      <title>OBCP考试</title>
       <link>https://wangcy6.github.io/post/oceanbase/obcp_home/</link>
       <pubDate>Sun, 20 Feb 2022 00:00:00 +0000</pubDate>
       
@@ -76,15 +67,6 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ARTS/2022/2022-7/</guid>
-      <description>文章地址：进展 20% http://127.0.0.1:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/2022-7/ 今天是： 2022-2-10 号 今天是： 2022年的第 7 周 今天是： 2月份的第 2 周 今天是： 1季度的第 7 周 第一部分：work输出 一、我提交的pr</description>
-    </item>
-    
-    <item>
-      <title>一周精彩内容分享（第7期）</title>
-      <link>https://wangcy6.github.io/post/ARTS/2022/2022-8/</link>
-      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-8/</guid>
       <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 今天是： 2022-2-10 号 今天是： 2022年的第 7 周 今天是： 2月份的第 2 周 今天是： 1季度的第 7 周 第一部分：work输出 一、我提交的pr</description>
     </item>
     
@@ -103,7 +85,7 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2021/06_ask_1/</guid>
-      <description>地址：https://wangcy6.github.io/post/2021/06_ask_1/ http://127.0.0.1:1313//post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就</description>
+      <description>地址：https://wangcy6.github.io/post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就哪</description>
     </item>
     
     <item>

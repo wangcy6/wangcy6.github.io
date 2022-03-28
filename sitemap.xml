@@ -65,13 +65,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/post/oceanbase/obcp/</loc>
-    <lastmod>2022-02-20T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/oceanbase/obcp_home/</loc>
     <lastmod>2022-02-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -136,13 +129,6 @@
   
   <url>
     <loc>https://wangcy6.github.io/post/ARTS/2022/2022-7/</loc>
-    <lastmod>2022-02-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/post/ARTS/2022/2022-8/</loc>
     <lastmod>2022-02-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
