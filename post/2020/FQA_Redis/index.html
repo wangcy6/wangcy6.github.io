@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/FQA_Redis/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="知识卡(redis.5.0) 源码阅读 参考redis-3.0-annotated-huangz1990 内容 对象的类型和编码 1 2 3 4 5 6 7 8 9 10" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/FQA_Redis/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-11-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-11-20T00:00:00+00:00" />
+<meta property="article:published_time" content="2019-11-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-11-20T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="Redis.5.0">
-<meta itemprop="description" content="知识卡(redis.5.0) 源码阅读 参考redis-3.0-annotated-huangz1990 内容 对象的类型和编码 1 2 3 4 5 6 7 8 9 10"><meta itemprop="datePublished" content="2019-11-20T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-11-20T00:00:00+00:00" />
+<meta itemprop="description" content="知识卡(redis.5.0) 源码阅读 参考redis-3.0-annotated-huangz1990 内容 对象的类型和编码 1 2 3 4 5 6 7 8 9 10"><meta itemprop="datePublished" content="2019-11-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-20T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="3855">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis.5.0"/>
@@ -185,7 +185,7 @@
 <h2 id="对象的类型和编码">对象的类型和编码</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -241,7 +241,7 @@
 </span><span class="lnt">54
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c">
+<pre class="chroma"><code class="language-c" data-lang="c">
 <span class="k">typedef</span> <span class="k">struct</span> <span class="n">redisObject</span> <span class="p">{</span>
   <span class="kt">unsigned</span> <span class="nl">type</span> <span class="p">:</span> <span class="mi">4</span><span class="p">;</span>
   <span class="kt">unsigned</span> <span class="nl">encoding</span> <span class="p">:</span> <span class="mi">4</span><span class="p">;</span>
@@ -372,7 +372,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -435,7 +435,7 @@
 </span><span class="lnt">61
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">6379</span><span class="o">&gt;</span>  <span class="n">ZADD</span> <span class="n">page_rank</span> <span class="mi">9</span> <span class="n">baidu</span><span class="p">.</span><span class="n">com</span> <span class="mi">8</span> <span class="n">bing</span><span class="p">.</span><span class="n">com</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">6379</span><span class="o">&gt;</span>  <span class="n">ZADD</span> <span class="n">page_rank</span> <span class="mi">9</span> <span class="n">baidu</span><span class="p">.</span><span class="n">com</span> <span class="mi">8</span> <span class="n">bing</span><span class="p">.</span><span class="n">com</span>
 <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">2</span>
 <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">ZADD</span> <span class="n">page_rank</span> <span class="mi">10</span> <span class="n">google</span><span class="p">.</span><span class="n">com</span>
 <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">0</span>
@@ -502,7 +502,7 @@
 <p>ziplist.c</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -519,7 +519,7 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">The</span> <span class="n">ziplist</span> <span class="n">is</span> <span class="n">a</span> <span class="n">specially</span> <span class="n">encoded</span> <span class="n">dually</span> <span class="n">linked</span> <span class="n">list</span> <span class="n">that</span> <span class="n">is</span> <span class="n">designed</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">The</span> <span class="n">ziplist</span> <span class="n">is</span> <span class="n">a</span> <span class="n">specially</span> <span class="n">encoded</span> <span class="n">dually</span> <span class="n">linked</span> <span class="n">list</span> <span class="n">that</span> <span class="n">is</span> <span class="n">designed</span>
  <span class="o">*</span> <span class="n">to</span> <span class="n">be</span> <span class="n">very</span> <span class="n">memory</span> <span class="n">efficient</span><span class="p">.</span> <span class="n">It</span> <span class="n">stores</span> <span class="n">both</span> <span class="n">strings</span> <span class="n">and</span> <span class="n">integer</span> <span class="n">values</span><span class="p">,</span>
  <span class="o">*</span> <span class="n">where</span> <span class="n">integers</span> <span class="n">are</span> <span class="n">encoded</span> <span class="n">as</span> <span class="n">actual</span> <span class="n">integers</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">a</span> <span class="n">series</span> <span class="n">of</span>
  <span class="o">*</span> <span class="n">characters</span><span class="p">.</span> <span class="n">It</span> <span class="n">allows</span> <span class="n">push</span> <span class="n">and</span> <span class="n">pop</span> <span class="n">operations</span> <span class="n">on</span> <span class="n">either</span> <span class="n">side</span> <span class="n">of</span> <span class="n">the</span> <span class="n">list</span>
@@ -579,7 +579,7 @@
 <h5 id="zset---跳表类似-tree">zset &ndash;跳表类似 tree</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -604,7 +604,7 @@
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c">
+<pre class="chroma"><code class="language-c" data-lang="c">
 <span class="nl">file</span> <span class="p">:</span><span class="n">t_zset</span><span class="p">.</span><span class="n">c</span>
     
     
@@ -632,7 +632,7 @@
 </div><h3 id="set">set</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -643,7 +643,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; sadd numbers 1 2 3 4
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; sadd numbers 1 2 3 4
 (integer) 4
 127.0.0.1:6379&gt; object encoding numbers
 &#34;intset&#34;
@@ -661,7 +661,7 @@
 <p>一、哨兵(sentinel)模式下的脑裂</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -692,7 +692,7 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">         +----+
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">         +----+
          | M1 |
          | S1 | &lt;- C1 (writes will be lost)
          +----+
@@ -778,7 +778,7 @@
 <p>～～～～～～～～～～～～～～～～～～～～～～华丽分隔符～～～～～～～～～～～～～～～～～～</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -916,7 +916,7 @@
 </span><span class="lnt">136
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* Context for an async connection to Redis */</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* Context for an async connection to Redis */</span>
 <span class="k">typedef</span> <span class="k">struct</span> <span class="n">redisAsyncContext</span> <span class="p">{</span>
     <span class="cm">/* Hold the regular context, so it can be realloc&#39;ed. */</span>
     <span class="n">redisContext</span> <span class="n">c</span><span class="p">;</span>

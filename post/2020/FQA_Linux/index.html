@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/FQA_Linux/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="FQA" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/FQA_Linux/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-11-16T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-11-16T00:00:00+00:00" />
+<meta property="article:published_time" content="2019-11-16T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-11-16T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="FQA_Linux">
-<meta itemprop="description" content="FQA"><meta itemprop="datePublished" content="2019-11-16T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-11-16T00:00:00+00:00" />
+<meta itemprop="description" content="FQA"><meta itemprop="datePublished" content="2019-11-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-11-16T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="21485">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="FQA_Linux"/>
@@ -263,7 +263,7 @@
 <p>主进程在申请资源时候 采用 close-on-exec机制。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -322,7 +322,7 @@
 </span><span class="lnt">57
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef WIN32
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef WIN32
 </span><span class="cp"></span>	<span class="n">SOCKET</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 <span class="cp">#else
 </span><span class="cp"></span>	<span class="n">SOCKET</span> <span class="n">ss</span> <span class="o">=</span> <span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span> <span class="o">|</span> <span class="n">SOCK_CLOEXEC</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
@@ -400,7 +400,7 @@
 <p>信号的异步性意味着，应用程序不用等待事件的发生，当信号发生时应用程序自动陷入到对应的信号处理函数中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -408,7 +408,7 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> 信号与中断的区别：
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 信号与中断的区别：
 （1）中断有优先级，而信号没有优先级，所有的信号都是平等的；
 
 （2）信号处理程序是在用户态下运行的，而中断处理程序是在核心态下运行；
@@ -483,14 +483,14 @@ ignored: SIGKILL and SIGSTOP.</p>
 <h6 id="不可重入函数">不可重入函数</h6>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="nl">http</span><span class="p">:</span><span class="c1">//man7.org/linux/man-pages/man7/signal-safety.7.html       
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">http</span><span class="p">:</span><span class="c1">//man7.org/linux/man-pages/man7/signal-safety.7.html       
 </span><span class="c1"></span><span class="n">signal</span><span class="o">-</span><span class="n">safety</span> <span class="o">-</span> <span class="n">async</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">safe</span> <span class="n">functions</span>
            
            <span class="n">An</span> <span class="n">async</span><span class="o">-</span><span class="n">signal</span><span class="o">-</span><span class="n">safe</span> <span class="n">function</span> <span class="n">is</span> <span class="n">one</span> <span class="n">that</span> <span class="n">can</span> <span class="n">be</span> <span class="n">safely</span> <span class="n">called</span> <span class="n">from</span>
@@ -869,7 +869,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p>很多文献中都认为轻量级进程就是线程，实际上这种说法并不完全正确，从前面的分析中可以看到，<a href="https://www.cnblogs.com/zhaoyl/p/3620204.html">只有在用户线程完全由轻量级进程构成时</a>，才可以说轻量级进程就是线程。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -889,7 +889,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">                     USER VIEW
+<pre class="chroma"><code class="language-shell" data-lang="shell">                     USER VIEW
  &lt;-- PID <span class="m">43</span> --&gt; &lt;----------------- PID <span class="m">42</span> -----------------&gt;
                      +---------+
                      <span class="p">|</span> process <span class="p">|</span>
@@ -944,7 +944,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -982,7 +982,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="lnt">36
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="n">dns_down_connect</span><span class="o">::</span><span class="n">start</span><span class="o">()</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="n">dns_down_connect</span><span class="o">::</span><span class="n">start</span><span class="o">()</span>
 <span class="o">{</span>
 	<span class="n">m_thread</span> <span class="o">=</span> <span class="n">st_thread_create</span><span class="o">(</span><span class="n">connect_thread_fun</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
 	<span class="n">m_thread_heart</span> <span class="o">=</span> <span class="n">st_thread_create</span><span class="o">(</span><span class="n">heart_thread_fun</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
@@ -1023,12 +1023,12 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </div><p>小王：不能</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"> <span class="n">F</span><span class="mf">.2</span><span class="o">:</span> <span class="n">I</span><span class="err">&#39;</span><span class="n">m</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">use</span> <span class="n">LinuxThreads</span> <span class="n">from</span> <span class="n">a</span> <span class="n">C</span><span class="o">++</span> <span class="n">program</span><span class="p">,</span> <span class="n">and</span> <span class="n">the</span> <span class="n">compiler</span> <span class="n">complains</span> <span class="n">about</span> <span class="n">the</span> <span class="n">third</span> <span class="n">argument</span> <span class="n">to</span> <span class="err">`</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">`</span> <span class="o">!</span>
+<pre class="chroma"><code class="language-c" data-lang="c"> <span class="n">F</span><span class="mf">.2</span><span class="o">:</span> <span class="n">I</span><span class="err">&#39;</span><span class="n">m</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">use</span> <span class="n">LinuxThreads</span> <span class="n">from</span> <span class="n">a</span> <span class="n">C</span><span class="o">++</span> <span class="n">program</span><span class="p">,</span> <span class="n">and</span> <span class="n">the</span> <span class="n">compiler</span> <span class="n">complains</span> <span class="n">about</span> <span class="n">the</span> <span class="n">third</span> <span class="n">argument</span> <span class="n">to</span> <span class="err">`</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">`</span> <span class="o">!</span>
 
 <span class="n">You</span><span class="err">&#39;</span><span class="n">re</span> <span class="n">probably</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">pass</span> <span class="n">a</span> <span class="n">class</span> <span class="n">member</span> <span class="n">function</span> <span class="n">or</span> <span class="n">some</span> <span class="n">other</span> <span class="n">C</span><span class="o">++</span> <span class="n">thing</span> <span class="n">as</span> <span class="n">third</span> <span class="n">argument</span> <span class="n">to</span> <span class="err">`</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">``</span><span class="n">pthread_create</span><span class="p">()</span><span class="err">`</span>
 </code></pre></td></tr></table>
@@ -1098,7 +1098,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p><strong>而mmap操控文件，只需要从磁盘到用户主存的一次数据拷贝过程。</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1111,7 +1111,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-CQL" data-lang="CQL"><span class="err">由上文讨论可知，</span><span class="n">mmap优点共有一下几点</span><span class="err">：</span><span class="w">
+<pre class="chroma"><code class="language-CQL" data-lang="CQL"><span class="err">由上文讨论可知，</span><span class="n">mmap优点共有一下几点</span><span class="err">：</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="mf">1</span><span class="err">、对文件的读取操作跨过了页缓存，减少了数据的拷贝次数，用内存读写取代</span><span class="n">I</span><span class="o">/</span><span class="n">O读写</span><span class="err">，提高了文件读取效率。</span><span class="w">
 </span><span class="w">
@@ -1131,7 +1131,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p><img src="https://i.loli.net/2019/11/16/eHqQT2F4M8lxor1.png" alt="image.png"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1172,7 +1172,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="err">读文件</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">读文件</span>
 
 <span class="mi">1</span><span class="err">、进程调用库函数向内核发起读文件请求；</span>
 
@@ -1299,7 +1299,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 <p>fcntl 函数   <a href="http://man7.org/linux/man-pages/man2/fcntl.2.html">http://man7.org/linux/man-pages/man2/fcntl.2.html</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1308,7 +1308,7 @@ Linux的内核是一个有机整体，每个用户进程运行时都好像有一
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-SAS" data-lang="SAS"><span class="k">If</span> the
+<pre class="chroma"><code class="language-SAS" data-lang="SAS"><span class="k">If</span> the
        O_NONBLOCK flag is <span class="k">not</span> enabled, <span class="k">then</span> the system <span class="k">call</span> is blocked <span class="k">until</span>
        the lock is removed <span class="k">or</span> converted to a mode that is compatible with
        the access.  <span class="k">If</span> the O_NONBLOCK flag is enabled, <span class="k">then</span> the system <span class="k">call</span>
@@ -1371,7 +1371,7 @@ I/O operation completes.</p>
 <p>这两种类型的线程一次都只能处理一个活动。 如果任意一个回调或任务需要很长时间，则运行它的线程将被 <em>阻塞</em>。 如果你的应用程序发起阻塞的回调或任务，在好的情况下这可能只会导致吞吐量下降（客户端/秒），而在最坏情况下可能会导致完全拒绝服务。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1393,7 +1393,7 @@ I/O operation completes.</p>
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">IO操作其实可以分成两个步骤</span><span class="err">，请求</span><span class="n">IO操作和执行IO操作</span><span class="err">。</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">IO操作其实可以分成两个步骤</span><span class="err">，请求</span><span class="n">IO操作和执行IO操作</span><span class="err">。</span>
 <span class="err">一般的</span><span class="n">IO调用过程是这样的</span><span class="err">：发起</span><span class="n">IO操作的请求</span><span class="err">，执行</span><span class="n">IO操作</span><span class="err">，得到</span><span class="n">IO操作的结果</span><span class="err">，将结果返回给</span><span class="n">IO操作请求</span><span class="err">。</span>
 
 <span class="err">同步和异步同步和异步是一种通信机制，涉及到调用方和被调用方，关注的是</span><span class="n">IO操作的执行过程及结果的返回方式</span><span class="err">，不同点在于双方在这两个方面的行为方式。</span>
@@ -1483,7 +1483,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <p><a href="https://www.zhihu.com/question/34957059/answer/115823715">epoll非阻塞服务器，在20k并发测试结束产生大量establish状态假连接，可能原因</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1548,7 +1548,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">events</span><span class="p">,</span> <span class="n">blocking</span> <span class="n">the</span> <span class="n">calling</span> <span class="kr">thread</span> <span class="k">if</span> <span class="n">no</span> <span class="n">events</span> <span class="n">are</span> <span class="n">currently</span> <span class="n">available</span><span class="p">.</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">epoll_wait</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">events</span><span class="p">,</span> <span class="n">blocking</span> <span class="n">the</span> <span class="n">calling</span> <span class="kr">thread</span> <span class="k">if</span> <span class="n">no</span> <span class="n">events</span> <span class="n">are</span> <span class="n">currently</span> <span class="n">available</span><span class="p">.</span>
     
 <span class="cp">#include</span> <span class="cpf">&lt;sys/epoll.h&gt;</span><span class="cp">
 </span><span class="cp"></span><span class="kt">int</span> <span class="n">epoll_wait</span><span class="p">(</span><span class="kt">int</span> <span class="n">epfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">epoll_event</span> <span class="o">*</span><span class="n">events</span><span class="p">,</span><span class="kt">int</span> <span class="n">maxevents</span><span class="p">,</span> <span class="kt">int</span> <span class="n">timeout</span><span class="p">);</span>
@@ -1657,7 +1657,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 <p>2、 同样网络情况不好并且无TIME_WAIT等待，关闭连接后无新连接，当接收到被动方重传或延迟的FIN包后，会给被动方回一个RST包，可能会影响被动方其它的服务连接。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1738,7 +1738,7 @@ for rapid development of maintainable high performance protocol servers &amp; cl
 </span><span class="lnt">79
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">ulimit</span> -a
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">ulimit</span> -a
 
 vim /etc/sysctl.conf 
 net.ipv4.tcp_tw_reuse <span class="o">=</span> **1 表示开启重用**。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；

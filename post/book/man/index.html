@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/book/man/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="帮助文档 内存管理 1 man malloc http://man7.org/linux/man-pages/man3/malloc.3.html Thread safety （多个线程可以同时执行） arena 1 2 3 4 5 To scalably handle memory allocation in multithreaded applications, glibc creates additional memory allocation arenas if mutex contention is detected. Each arena is a large region of memory that is internally allocated by the system (using brk(2) or mmap(2))," />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/book/man/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-12-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-12-02T00:00:00+00:00" />
+<meta property="article:published_time" content="2019-12-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-12-02T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="man">
-<meta itemprop="description" content="帮助文档 内存管理 1 man malloc http://man7.org/linux/man-pages/man3/malloc.3.html Thread safety （多个线程可以同时执行） arena 1 2 3 4 5 To scalably handle memory allocation in multithreaded applications, glibc creates additional memory allocation arenas if mutex contention is detected. Each arena is a large region of memory that is internally allocated by the system (using brk(2) or mmap(2)),"><meta itemprop="datePublished" content="2019-12-02T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2019-12-02T00:00:00+00:00" />
+<meta itemprop="description" content="帮助文档 内存管理 1 man malloc http://man7.org/linux/man-pages/man3/malloc.3.html Thread safety （多个线程可以同时执行） arena 1 2 3 4 5 To scalably handle memory allocation in multithreaded applications, glibc creates additional memory allocation arenas if mutex contention is detected. Each arena is a large region of memory that is internally allocated by the system (using brk(2) or mmap(2)),"><meta itemprop="datePublished" content="2019-12-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-02T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="2281">
 <meta itemprop="keywords" content="man," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="man"/>
@@ -187,14 +187,14 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">To</span> <span class="nt">scalably</span> <span class="nt">handle</span> <span class="nt">memory</span> <span class="nt">allocation</span> <span class="nt">in</span>
+<pre class="chroma"><code class="language-scss" data-lang="scss"><span class="nt">To</span> <span class="nt">scalably</span> <span class="nt">handle</span> <span class="nt">memory</span> <span class="nt">allocation</span> <span class="nt">in</span>
        <span class="nt">multithreaded</span> <span class="nt">applications</span><span class="o">,</span> <span class="nt">glibc</span> <span class="nt">creates</span> <span class="nt">additional</span> <span class="nt">memory</span>
        <span class="nt">allocation</span> <span class="nt">arenas</span> <span class="nt">if</span> <span class="nt">mutex</span> <span class="nt">contention</span> <span class="nt">is</span> <span class="nt">detected</span><span class="nc">.</span>  <span class="nt">Each</span> <span class="nt">arena</span> <span class="nt">is</span> <span class="nt">a</span>
        <span class="nt">large</span> <span class="nt">region</span> <span class="nt">of</span> <span class="nt">memory</span> <span class="nt">that</span> <span class="nt">is</span> <span class="nt">internally</span> <span class="nt">allocated</span> <span class="nt">by</span> <span class="nt">the</span> <span class="nt">system</span>
@@ -225,14 +225,14 @@
 <p>glibc采用的是dlmalloc。为了避免频繁调用系统调用，它内部维护了一个内存池，方便reuse，又称为free-list或bins</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">DEFAULT_MXFAST</span>             <span class="mi">64</span> <span class="p">(</span><span class="k">for</span> <span class="mi">32</span><span class="nx">bit</span><span class="p">),</span> <span class="mi">128</span> <span class="p">(</span><span class="k">for</span> <span class="mi">64</span><span class="nx">bit</span><span class="p">)</span> <span class="c1">// free-list(fastbin)最大内存块
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">DEFAULT_MXFAST</span>             <span class="mi">64</span> <span class="p">(</span><span class="k">for</span> <span class="mi">32</span><span class="nx">bit</span><span class="p">),</span> <span class="mi">128</span> <span class="p">(</span><span class="k">for</span> <span class="mi">64</span><span class="nx">bit</span><span class="p">)</span> <span class="c1">// free-list(fastbin)最大内存块
 </span><span class="c1"></span><span class="nx">DEFAULT_TRIM_THRESHOLD</span>     <span class="mi">128</span> <span class="o">*</span> <span class="mi">1024</span> <span class="c1">// malloc_trim的门槛值 128k
 </span><span class="c1"></span><span class="nx">DEFAULT_TOP_PAD</span>            <span class="mi">0</span>
 <span class="nx">DEFAULT_MMAP_THRESHOLD</span>     <span class="mi">128</span> <span class="o">*</span> <span class="mi">1024</span> <span class="c1">// 使用mmap分配内存的门槛值 128k
@@ -284,7 +284,7 @@ by rwlock.</p>
 <p>key::whether  a  read  or  write lock deadlock</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -294,7 +294,7 @@ by rwlock.</p>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">()</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
+<pre class="chroma"><code class="language-shell" data-lang="shell"> The  pthread_rwlock_wrlock<span class="o">()</span>  <span class="k">function</span>  shall  apply  a  write lock to the read-write lock referenced by rwlock.<span class="o">(</span>写锁<span class="o">)</span> 
    
 The calling thread acquires the write lock <span class="k">if</span> no other thread <span class="o">(</span>reader or writer<span class="o">)</span> holds the read-write  lock  rwlock. <span class="o">(</span>获取成功，没有任何其他锁<span class="o">)</span>
    
@@ -318,7 +318,7 @@ The pthread_rwlock_trywrlock() function shall fail if:</p>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -349,7 +349,7 @@ The pthread_rwlock_trywrlock() function shall fail if:</p>
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 
    EAGAIN or EWOULDBLOCK
           The socket is marked nonblocking and the requested operation would block.   POSIX.1-2001  allows  either
@@ -383,7 +383,7 @@ On success, these calls <span class="k">return</span> the number of bytes sent. 
 </div><h3 id="httpslinuxdienetman2recv"><a href="https://linux.die.net/man/2/recv">https://linux.die.net/man/2/recv</a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -422,7 +422,7 @@ On success, these calls <span class="k">return</span> the number of bytes sent. 
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 Return Value
 
 These calls <span class="k">return</span> the number of bytes received, 
@@ -464,7 +464,7 @@ The argument sockfd does not refer to a socket.
 </div><h3 id="man-2-read">man 2 read</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -491,7 +491,7 @@ The argument sockfd does not refer to a socket.
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* myread() 函数的一部分，在 while (1) 大循环里 */</span>
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* myread() 函数的一部分，在 while (1) 大循环里 */</span>
 <span class="k">if</span> <span class="p">((</span><span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 	<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
 		<span class="n">perror</span><span class="p">(</span><span class="s">&#34;EINTR&#34;</span><span class="p">);</span>

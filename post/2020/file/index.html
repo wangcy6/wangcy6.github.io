@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/file/" />
@@ -243,7 +243,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -261,7 +261,7 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> df -h
+<pre class="chroma"><code class="language-shell" data-lang="shell"> df -h
 Filesystem                Size  Used Avail Use% Mounted on
 /dev/mapper/vg_root-root   19G  6.5G   12G  37% /
 devtmpfs                  7.8G     <span class="m">0</span>  7.8G   0% /dev
@@ -361,7 +361,7 @@ https://blog.csdn.net/qq_27840681/article/details/77567094
 <h5 id="vfs-中的-inode-与-inode_operations-结构体">VFS 中的 inode 与 inode_operations 结构体</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -384,7 +384,7 @@ https://blog.csdn.net/qq_27840681/article/details/77567094
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">inode</span> <span class="p">{</span> 
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">inode</span> <span class="p">{</span> 
    <span class="p">...</span> 
    <span class="k">const</span> <span class="k">struct</span> <span class="n">inode_operations</span>   <span class="o">*</span><span class="n">i_op</span><span class="p">;</span> <span class="c1">// 索引节点操作
 </span><span class="c1"></span>   <span class="kt">unsigned</span> <span class="kt">long</span>           <span class="n">i_ino</span><span class="p">;</span>      <span class="c1">// 索引节点号
@@ -409,7 +409,7 @@ https://blog.csdn.net/qq_27840681/article/details/77567094
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -421,7 +421,7 @@ https://blog.csdn.net/qq_27840681/article/details/77567094
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">ext4_inode</span> <span class="p">{</span> 
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">ext4_inode</span> <span class="p">{</span> 
    <span class="err">``</span><span class="p">...</span> 
    <span class="err">``</span><span class="n">__le32</span>  <span class="n">i_atime</span><span class="p">;</span>        <span class="c1">// 文件内容最后一次访问时间
 </span><span class="c1"></span>   <span class="err">``</span><span class="n">__le32</span>  <span class="n">i_ctime</span><span class="p">;</span>        <span class="c1">// inode 修改时间
@@ -439,7 +439,7 @@ https://blog.csdn.net/qq_27840681/article/details/77567094
 <h4 id="superblock-超级区块">Superblock （超级区块）</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -456,7 +456,7 @@ https://blog.csdn.net/qq_27840681/article/details/77567094
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">block 与 inode 的总量；
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">block 与 inode 的总量；
 
 未使用与已使用的 inode / block 数量；
 
@@ -583,7 +583,7 @@ kernel</p>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -607,7 +607,7 @@ kernel</p>
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp"># 按下 c 按照缓存大小排序，按下 a 按照活跃对象数排序 
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp"># 按下 c 按照缓存大小排序，按下 a 按照活跃对象数排序 
 </span><span class="cp"></span>
 <span class="err">$</span> <span class="n">slabtop</span> 
 <span class="n">Active</span> <span class="o">/</span> <span class="n">Total</span> <span class="n">Objects</span> <span class="p">(</span><span class="o">%</span> <span class="n">used</span><span class="p">)</span>    <span class="o">:</span> <span class="mi">277970</span> <span class="o">/</span> <span class="mi">358914</span> <span class="p">(</span><span class="mf">77.4</span><span class="o">%</span><span class="p">)</span> 
@@ -636,7 +636,7 @@ kernel</p>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -648,7 +648,7 @@ kernel</p>
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 $ cat /proc/meminfo <span class="p">|</span> grep -E <span class="s2">&#34;SReclaimable|Cached&#34;</span> 
 Cached:           <span class="m">748316</span> kB 
 SwapCached:            <span class="m">0</span> kB 
@@ -662,7 +662,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -711,7 +711,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 </span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell">
+<pre class="chroma"><code class="language-powershell" data-lang="powershell">
 
 <span class="nb">cat </span><span class="p">/</span><span class="n">proc</span><span class="p">/</span><span class="n">meminfo</span>
 <span class="n">MemTotal</span><span class="err">:</span>       <span class="n">16267884</span> <span class="n">kB</span>
@@ -765,7 +765,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -793,7 +793,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"> stat cmd.txt 
+<pre class="chroma"><code class="language-shell" data-lang="shell"> stat cmd.txt 
   File: ‘cmd.txt’
   Size: <span class="m">131</span>             Blocks: <span class="m">8</span>          IO Block: <span class="m">4096</span>   regular file
 Device: fd00h/64768d    Inode: <span class="m">482</span>         Links: <span class="m">1</span>
@@ -826,7 +826,7 @@ tmpfs                     <span class="m">2033485</span>      <span class="m">1<
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -868,7 +868,7 @@ tmpfs                     <span class="m">2033485</span>      <span class="m">1<
 </span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">To free pagecache:
+<pre class="chroma"><code class="language-shell" data-lang="shell">To free pagecache:
 <span class="c1"># echo 1 &gt; /proc/sys/vm/drop_caches</span>
 To free dentries and inodes:
 <span class="c1"># echo 2 &gt; /proc/sys/vm/drop_caches</span>
@@ -915,7 +915,7 @@ dentry <span class="m">309050</span> KB
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -923,7 +923,7 @@ dentry <span class="m">309050</span> KB
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget http://sourceforge.net/projects/nmon/files/nmon16e_mpginc.tar.gz
+<pre class="chroma"><code class="language-shell" data-lang="shell">wget http://sourceforge.net/projects/nmon/files/nmon16e_mpginc.tar.gz
 tar -zxvf nmon16e_mpginc.tar.gz
 cp nmon_x86_64_centos7 /usr/local/bin/nmon
 <span class="nb">cd</span> /usr/local/bin

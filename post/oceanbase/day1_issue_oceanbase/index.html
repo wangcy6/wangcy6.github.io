@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/day1_issue_oceanbase/" />
@@ -42,13 +42,13 @@
 <meta property="og:description" content="OceanBase开发者手册" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/day1_issue_oceanbase/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-02-23T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-02-23T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-02-23T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-02-23T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="OceanBase开发者手册">
-<meta itemprop="description" content="OceanBase开发者手册"><meta itemprop="datePublished" content="2022-02-23T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2022-02-23T00:00:00+00:00" />
-<meta itemprop="wordCount" content="4616">
+<meta itemprop="description" content="OceanBase开发者手册"><meta itemprop="datePublished" content="2022-02-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-02-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4567">
 <meta itemprop="keywords" content="OceanBase," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OceanBase开发者手册"/>
 <meta name="twitter:description" content="OceanBase开发者手册"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-23 00:00 </span>
         
-          <span class="more-meta"> 约 4616 字 </span>
+          <span class="more-meta"> 约 4567 字 </span>
           <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -176,9 +176,9 @@
 <td>v1  勉强可以用。</td>
 </tr>
 <tr>
-<td>2022-3-22</td>
 <td></td>
-<td>阅读不下去了</td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td></td>
@@ -214,7 +214,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -225,7 +225,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">Make sure the available resources meet the requirements:
+<pre class="chroma"><code class="language-shell" data-lang="shell">Make sure the available resources meet the requirements:
 The logical CPU count is no less than 4.
 The available memory is no less than 10G, and the docker container memory limit is no less than 10G.
 The available disk space is no less than 10G.
@@ -246,7 +246,7 @@ https://hub.docker.com/r/obpilot/oceanbase-ce
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -322,7 +322,7 @@ https://hub.docker.com/r/obpilot/oceanbase-ce
 </span><span class="lnt">74
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## centos镜像</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## centos镜像</span>
 https://github.com/watchpoints/mydocker
 docker pull oceanbase/centos7:latest
 
@@ -424,7 +424,7 @@ docker run -d -p 10022:22 herong/centos7-ssh:latest /usr/sbin/sshd -D
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -464,7 +464,7 @@ docker run -d -p 10022:22 herong/centos7-ssh:latest /usr/sbin/sshd -D
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">docker <span class="nb">exec</span> -it oceanbase-ce bash
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker <span class="nb">exec</span> -it oceanbase-ce bash
 service sshd restart
 ssh root@10.2.131.60 -p <span class="m">22</span> （宿主机器IP）
 
@@ -515,7 +515,7 @@ https://github.com/oceanbase/oceanbase/issues/646 为例子 提交pr
 <p>二、过程</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -610,7 +610,7 @@ https://github.com/oceanbase/oceanbase/issues/646 为例子 提交pr
 </span><span class="lnt">93
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 <span class="c1">#1. 官方提供2C8G参考配置 https://github.com/oceanbase/oceanbase/pull/787(2C8G)</span>
 
 https://github.com/oceanbase/obdeploy
@@ -717,7 +717,7 @@ https://open.oceanbase.com/docs/tutorials-cn/V1.0.0/10000000000012304
 <p>/root/observer/bin/observer -r 127.0.0.1:2882:2881 -o __min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4 -z zone1 -p 2881 -P 2882 -c 1 -d /root/observer/store -i lo -l INFO</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -785,7 +785,7 @@ https://open.oceanbase.com/docs/tutorials-cn/V1.0.0/10000000000012304
 </span><span class="lnt">66
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">{
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">{
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
@@ -870,10 +870,10 @@ https://open.oceanbase.com/docs/tutorials-cn/V1.0.0/10000000000012304
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">add-auto-load-safe-path ${OB_SRC_DIR}/.gdbinit
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">add-auto-load-safe-path ${OB_SRC_DIR}/.gdbinit
 </code></pre></td></tr></table>
 </div>
 </div><ol>
@@ -881,13 +881,13 @@ https://open.oceanbase.com/docs/tutorials-cn/V1.0.0/10000000000012304
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">file build_debug/src/observer/observer
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">file build_debug/src/observer/observer
 set args &#34;-r&#34;, &#34;127.0.0.1:2882:2881&#34;, &#34;-o&#34;, &#34;___min_full_resource_pool_memory=268435456,memory_limit=8G,system_memory=4G,stack_size=512K,cpu_count=16,cache_wash_threshold=1G,workers_per_cpu_quota=10,schema_history_expire_time=1d,net_thread_count=4,sys_bkgd_migration_retry_num=3,minor_freeze_times=10,enable_separate_sys_clog=0,enable_merge_by_turn=False,datafile_disk_percentage=20,enable_syslog_wf=False,enable_syslog_recycle=True,max_syslog_file_count=4&#34;,&#34;-z&#34;, &#34;zone1&#34;, &#34;-p&#34;, &#34;2881&#34;, &#34;-P&#34;, &#34;2882&#34;, &#34;-n&#34;, &#34;obcluster&#34;, &#34;-c&#34;, 1, &#34;-d&#34;, &#34;/root/observer/store&#34;, &#34;-i&#34;, &#34;lo&#34;, &#34;-l&#34;, &#34;INFO&#34;
 b main
 r
@@ -896,14 +896,14 @@ r
 </div><p>备注: 这个里面有args的参数来自于第一步的准备工作中获取的启动参数, 每台机器有每台机器的配置, 笔者的参数如下, 其中:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1. ${OB_SRC_DIR} 为源码目录, ${IP} 为observer 的绑定ip
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1. ${OB_SRC_DIR} 为源码目录, ${IP} 为observer 的绑定ip
 2. 需要设置“cwd”, 为${OB_SRC_DIR}
 3. 当前的工作目录必须是${OB_SRC_DIR}
 4. 在args 参数中, 其中 -d 设置的目录 &#34;/home/xxxxx/observer/store&#34;, 需要设置为真实的参数
@@ -915,7 +915,7 @@ r
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -924,7 +924,7 @@ r
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1、gdb -tui + (可执行程序)  直接进入tui图形界面
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">1、gdb -tui + (可执行程序)  直接进入tui图形界面
 
 2、gdb进入后，使用命令focus进入tui图形界面，或者使用快捷键：Ctl+x+a (注意按键顺序，记忆：x：focus，a：another)
 
@@ -938,7 +938,7 @@ r
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1018,7 +1018,7 @@ r
 </span><span class="lnt">78
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">/root/.obd/repository/oceanbase-ce/3.1.1/f19f8bfb67723712175fb0dfd60579196b3168f1/bin/observer
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/root/.obd/repository/oceanbase-ce/3.1.1/f19f8bfb67723712175fb0dfd60579196b3168f1/bin/observer
 
 
 gdb 
@@ -1106,14 +1106,14 @@ create table sex (sex bit(60) primary key,name bit(60)) partition by hash(sex) p
 <p><a href="https://github.com/oceanbase/oceanbase/wiki/how_to_test">单元测试</a>  完成。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">cd</span> <span class="n">build_debug</span><span class="o">/</span><span class="n">unittest</span><span class="o">/</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">cd</span> <span class="n">build_debug</span><span class="o">/</span><span class="n">unittest</span><span class="o">/</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
 <span class="p">.</span><span class="o">/</span><span class="n">run_tests</span><span class="p">.</span><span class="n">sh</span>
   
@@ -1136,7 +1136,7 @@ create table sex (sex bit(60) primary key,name bit(60)) partition by hash(sex) p
 <p><img src="day1_issue_oceanbase.assets/ojGQeLh83bymEr9.png" alt="image.png"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1156,19 +1156,9 @@ create table sex (sex bit(60) primary key,name bit(60)) partition by hash(sex) p
 </span><span class="lnt">18
 </span><span class="lnt">19
 </span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">112.177.65
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 <span class="c1">## 设置代码目录</span>
 gdb -p xx
 dir /app/oceanbase/ 
@@ -1181,15 +1171,6 @@ thread apply all <span class="nb">break</span> ob_sql.cpp:1200
 thread apply all <span class="nb">break</span> ob_sql.cpp:3160
 thread apply all <span class="nb">break</span> ob_sql.cpp:3217
 
-<span class="c1">## 设置ob虚表断点：</span>
-thread apply all <span class="nb">break</span> ob_all_virtual_memory_info.cpp:40
-
-<span class="k">select</span> svr_ip,mod_name,sum<span class="o">(</span>hold<span class="o">)</span> system_memory_sum
-from __all_virtual_memory_info
-where <span class="nv">tenant_id</span><span class="o">=</span><span class="m">500</span> and hold&lt;&gt;0
-group by svr_ip,mod_name
-order by system_memory_sum desc<span class="p">;</span>
-
 
 <span class="c1">## tui图形界面</span>
 gdb进入后，使用命令focus进入tui图形界面，
@@ -1197,7 +1178,6 @@ gdb进入后，使用命令focus进入tui图形界面，
 在tui中使用相同的快捷键Ctl+x+a返回到gdb原生界面
 
 <span class="c1">## dbgui：基于浏览器的gdb前端（gnu调试器）。 使用C，C ++，Go，Rust和F</span>
-
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="day1_issue_oceanbase.assets/urDkBXaGmWygw9O.png" alt="image.png"></p>

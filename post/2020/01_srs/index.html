@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2020/01_srs/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="高性能可扩展服务" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2020/01_srs/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-06T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-06T00:00:00+00:00" />
+<meta property="article:published_time" content="2021-06-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-06T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="SRS官方文档和学习路径">
-<meta itemprop="description" content="高性能可扩展服务"><meta itemprop="datePublished" content="2021-06-06T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2021-06-06T00:00:00+00:00" />
+<meta itemprop="description" content="高性能可扩展服务"><meta itemprop="datePublished" content="2021-06-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-06T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="4711">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SRS官方文档和学习路径"/>
@@ -203,7 +203,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -222,7 +222,7 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
 git clone -b 4.0release https://gitee.com/ossrs/srs.git &amp;&amp;
 cd srs/trunk &amp;&amp; ./configure &amp;&amp; make &amp;&amp; ./objs/srs -c conf/srs.conf
 
@@ -246,7 +246,7 @@ rtmp://10.112.178.189:1935/live/wangchuanyi
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -260,7 +260,7 @@ rtmp://10.112.178.189:1935/live/wangchuanyi
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">nohup</span> <span class="p">.</span><span class="o">/</span><span class="n">ffmpeg</span>  <span class="o">-</span><span class="n">re</span> <span class="o">-</span><span class="n">i</span> <span class="p">.</span><span class="o">/</span><span class="n">hengping</span><span class="p">.</span><span class="n">mp4</span>  <span class="o">-</span><span class="n">vcodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">acodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">f</span> <span class="n">flv</span> <span class="nl">rtmp</span><span class="p">:</span><span class="c1">//74.120.174.137:1935/live/wangchuanyi &gt;&gt;./push3.log 2&gt;&amp;1 &amp;
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">nohup</span> <span class="p">.</span><span class="o">/</span><span class="n">ffmpeg</span>  <span class="o">-</span><span class="n">re</span> <span class="o">-</span><span class="n">i</span> <span class="p">.</span><span class="o">/</span><span class="n">hengping</span><span class="p">.</span><span class="n">mp4</span>  <span class="o">-</span><span class="n">vcodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">acodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">f</span> <span class="n">flv</span> <span class="nl">rtmp</span><span class="p">:</span><span class="c1">//74.120.174.137:1935/live/wangchuanyi &gt;&gt;./push3.log 2&gt;&amp;1 &amp;
 </span><span class="c1"></span><span class="n">ffmpeg</span> <span class="o">-</span><span class="n">re</span> <span class="o">-</span><span class="n">i</span> <span class="mf">1.</span><span class="n">mp4</span> <span class="o">-</span><span class="n">vcodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">acodec</span> <span class="n">copy</span> <span class="o">-</span><span class="n">f</span> <span class="n">flv</span> <span class="nl">rtmp</span><span class="p">:</span><span class="c1">//74.120.174.137/live/wangchuanyi
 </span><span class="c1"></span>
 
@@ -279,7 +279,7 @@ rtmp://10.112.178.189:1935/live/wangchuanyi
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -292,7 +292,7 @@ rtmp://10.112.178.189:1935/live/wangchuanyi
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">http://74.120.174.137:8080/
+<pre class="chroma"><code class="language-shell" data-lang="shell">http://74.120.174.137:8080/
 
 1. RTMP <span class="o">(</span>by VLC<span class="o">)</span>: rtmp://74.120.174.137:1935/live/wangchuanyi --播放正常
 
@@ -308,7 +308,7 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 </div><h3 id="40">4.0</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -327,7 +327,7 @@ http://74.120.174.137:8080/console/ng_index.html#/streams?port<span class="o">=<
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /app/work
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /app/work
 git clone -b 4.0release https://gitee.com/ossrs/srs.git
 srs-4.0release.zip
 rm -rf  srs-4.0release\ \(1\).zip
@@ -499,7 +499,7 @@ http://10.112.179.21:1985/api/v1/streams
 <p>关于源站集群的存储问题，参考：<a href="https://github.com/ossrs/srs/issues/1595#issuecomment-586550583">#1595 (comment)</a></p>
 <p>关于源站集群的API问题，参考：<a href="https://github.com/ossrs/srs/issues/1607#issuecomment-586549464">#1607 (comment)</a></p>
 <p><a href="https://github.com/ossrs/srs/wiki/v4_CN_K8s#srs-origin-cluster-for-a-large-number-of-streams">https://github.com/ossrs/srs/wiki/v4_CN_K8s#srs-origin-cluster-for-a-large-number-of-streams</a></p>
-<p><a href="https://github.com/ossrs/srs/issues/1607">https://github.com/ossrs/srs/issues/1607</a>:</p>
+<p><a href="https://github.com/ossrs/srs/issues/1607:">https://github.com/ossrs/srs/issues/1607:</a></p>
 <p><a href="https://github.com/ossrs/srs/wiki/v3_EN_SampleOriginCluster">https://github.com/ossrs/srs/wiki/v3_EN_SampleOriginCluster</a></p>
 <p>源站集群主要解决大量推流的情况</p>
 <p><a href="https://github.com/ossrs/srs/wiki/v3_CN_OriginCluster">https://github.com/ossrs/srs/wiki/v3_CN_OriginCluster</a></p>
@@ -512,7 +512,7 @@ http://10.112.179.21:1985/api/v1/streams
 <p><a href="https://github.com/ossrs/srs/wiki/v3_EN_OriginCluster">https://github.com/ossrs/srs/wiki/v3_EN_OriginCluster</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -536,7 +536,7 @@ http://10.112.179.21:1985/api/v1/streams
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">vhost __defaultVhost__ {
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">vhost __defaultVhost__ {
     # The config for cluster.
     cluster {
         # The cluster mode, local or remote.
@@ -623,17 +623,17 @@ http://10.112.179.21:1985/api/v1/streams
 <li>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">ffmpeg -i input.mp4 -c:v libx264 -preset fast -profile:v baseline out.mov
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ffmpeg -i input.mp4 -c:v libx264 -preset fast -profile:v baseline out.mov
 </code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -706,7 +706,7 @@ http://10.112.179.21:1985/api/v1/streams
 </span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">H.264有四种画质级别,分别是baseline, extended, main, high：
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">H.264有四种画质级别,分别是baseline, extended, main, high：
 
 1、Baseline Profile：基本画质。支持I/P 帧，只支持无交错（Progressive）和CAVLC；
 2、Extended profile：进阶画质。支持I/P/B/SP/SI 帧，只支持无交错（Progressive）和CAVLC；(用的少)
@@ -785,7 +785,7 @@ SrsGoApiRaw::SrsGoApiRaw(SrsServer *svr)
 <p>1、首先分析RTMP连接</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -817,7 +817,7 @@ SrsGoApiRaw::SrsGoApiRaw(SrsServer *svr)
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">SrsServer</span><span class="o">::</span><span class="n">listen_rtmp</span><span class="p">()</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">SrsServer</span><span class="o">::</span><span class="n">listen_rtmp</span><span class="p">()</span>
 <span class="kt">int</span> <span class="n">SrsConnection</span><span class="o">::</span><span class="n">cycle</span><span class="p">()</span>
 
 <span class="kt">int</span> <span class="n">SrsRecvThread</span><span class="o">::</span><span class="n">cycle</span><span class="p">()</span>
@@ -872,13 +872,13 @@ SrsGoApiRaw::SrsGoApiRaw(SrsServer *svr)
 <h3 id="todo02avstackdocs-master">todo02：AvStackDocs-master</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">10.112.178.189  
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">10.112.178.189  
 /app/work/srs/trunk
 nohup ./objs/srs -c conf/srs.conf &amp;
 rtmp://10.112.178.189:1935/live/watchpoint
@@ -897,7 +897,7 @@ rtmp://10.112.178.189:1935/live/watchpoint
 <h2 id="depends">Depends</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -929,7 +929,7 @@ rtmp://10.112.178.189:1935/live/watchpoint
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-SAS" data-lang="SAS">The software we depend <span class="k">on</span>:
+<pre class="chroma"><code class="language-SAS" data-lang="SAS">The software we depend <span class="k">on</span>:
 
 Docker ok
 
@@ -964,7 +964,7 @@ NodeExporter, docker --name node-exporter
 </div><p>Develop</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -978,7 +978,7 @@ NodeExporter, docker --name node-exporter
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 Install dependencies:
 <span class="nb">cd</span> mgmt <span class="o">&amp;&amp;</span> npm install
 Run the mgmt backend:

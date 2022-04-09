@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.90.0 with theme even" />
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/oceanbase_day1/" />
@@ -42,12 +42,12 @@
 <meta property="og:description" content="OceanBase代码阅读第一天：程序启动" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/oceanbase_day1/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-22T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-06-22T00:00:00+00:00" />
+<meta property="article:published_time" content="2021-06-22T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-22T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="oceanbase源码阅读（1）程序启动">
-<meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2021-06-22T00:00:00+00:00" />
+<meta itemprop="description" content="OceanBase代码阅读第一天：程序启动"><meta itemprop="datePublished" content="2021-06-22T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-22T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="5977">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="oceanbase源码阅读（1）程序启动"/>
@@ -243,7 +243,7 @@
 <h3 id="步骤1-源码编译oceanbase">步骤1 源码编译OceanBase：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -254,7 +254,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">//编译
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">//编译
 bash build.sh debug --init --make 
 cd /app/data/oceanbase/build_debug
 make install 
@@ -268,7 +268,7 @@ sh run_tests.sh
 </div><h3 id="步骤2-将编译产物加入obd本地仓库">步骤2 将编译产物加入OBD本地仓库</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -281,7 +281,7 @@ sh run_tests.sh
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">obd mirror create -n oceanbase-ce  -V 3.1.0 -t my-oceanbase -f  -p /usr/local
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">obd mirror create -n oceanbase-ce  -V 3.1.0 -t my-oceanbase -f  -p /usr/local
 
 Package ok
 name: oceanbase-ce
@@ -312,13 +312,13 @@ sysctl -p</p>
 <p>vim /etc/security/limits.conf  #添加内容</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">*       soft    core    unlimited
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">*       soft    core    unlimited
 *       hard    core    unlimited
 *       soft  nofile 655350
 *       hard  nofile 655350
@@ -342,7 +342,7 @@ sysctl -p</p>
 <p>启动</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -358,7 +358,7 @@ sysctl -p</p>
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">参考：https://gitee.com/oceanbase/obdeploy
+<pre class="chroma"><code class="language-shell" data-lang="shell">参考：https://gitee.com/oceanbase/obdeploy
 
 hostname oceanbase
 obd cluster deploy obtest -c mini-local-example.yaml
@@ -378,7 +378,7 @@ obd cluster stop obtest
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -390,7 +390,7 @@ obd cluster stop obtest
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cd /app/data
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /app/data
 
 obd cluster list
 +--------------------------------------------------+
@@ -407,7 +407,7 @@ obd cluster list
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -425,7 +425,7 @@ obd cluster list
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Wait for observer init ok
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Wait for observer init ok
 +---------------------------------------------+
 |                   observer                  |
 +-----------+---------+------+-------+--------+
@@ -448,7 +448,7 @@ Deploy &#34;test&#34; is running
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -464,7 +464,7 @@ Deploy &#34;test&#34; is running
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> obd cluster display test
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> obd cluster display test
 Get local repositories and plugins ok
 Open ssh connection ok
 Cluster status check ok
@@ -488,7 +488,7 @@ Wait for observer init ok
 <p>alias cdob=&ldquo;obclient -u root -h 127.0.0.1 -P2881&rdquo;</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -507,7 +507,7 @@ Wait for observer init ok
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> - MySQL 租户的管理员用户名默认是root
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> - MySQL 租户的管理员用户名默认是root
 -  默认租户 sys
 - 数据库名 oceanbase
 
@@ -531,10 +531,10 @@ obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">select zone,svr_ip,svr_port,inner_port,usec_to_time(start_service_time),usec_to_time(stop_time) from oceanbase.__all_server;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">select zone,svr_ip,svr_port,inner_port,usec_to_time(start_service_time),usec_to_time(stop_time) from oceanbase.__all_server;
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -542,9 +542,9 @@ obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase
 <p>资源占用情况</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -556,7 +556,7 @@ left join __all_tenant t4 on (t1.tenant_id=t4.tenant_id)
 order by t1.<code>resource_pool_id</code>, t2.<code>unit_config_id</code>, t3.unit_id ;</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -570,7 +570,7 @@ order by t1.<code>resource_pool_id</code>, t2.<code>unit_config_id</code>, t3.un
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
 
 
 ## 查看1号线程
@@ -598,7 +598,7 @@ Thread 1 (Thread 0x7f292e84a340 (LWP 59)):
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -621,7 +621,7 @@ Thread 1 (Thread 0x7f292e84a340 (LWP 59)):
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">ObWorker</span> <span class="n">worker</span><span class="p">;</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">ObWorker</span> <span class="n">worker</span><span class="p">;</span>
 
 <span class="n">ObServer</span><span class="o">&amp;</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">ObServer</span><span class="o">::</span><span class="n">get_instance</span><span class="p">();</span> <span class="c1">//单例模式 返回observer static对象 --认识：了解
 </span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">log_cfg</span><span class="p">)))</span> <span class="p">{</span> <span class="c1">//初始化配置过程复杂：---认识： 知道有这个函数，运行出错可查看
@@ -647,7 +647,7 @@ Thread 1 (Thread 0x7f292e84a340 (LWP 59)):
 </div><h2 id="看2号线程">看2号线程</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -694,7 +694,7 @@ Thread 1 (Thread 0x7f292e84a340 (LWP 59)):
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Thread 2 (Thread 0x7f29277a1700 (LWP 60)):
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Thread 2 (Thread 0x7f29277a1700 (LWP 60)):
 
 \#0 0x00007f292dba664a in pthread_cond_timedwait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
 
@@ -743,14 +743,14 @@ void wait() override;//
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
 </div>
 </div><h2 id="thread-495-日志模块">Thread 495 日志模块</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -775,7 +775,7 @@ void wait() override;//
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">Thread</span> <span class="mi">495</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7fdc587dc700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">31402</span><span class="p">))</span><span class="o">:</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">Thread</span> <span class="mi">495</span> <span class="p">(</span><span class="n">Thread</span> <span class="mh">0x7fdc587dc700</span> <span class="p">(</span><span class="n">LWP</span> <span class="mi">31402</span><span class="p">))</span><span class="o">:</span>
 
 <span class="err">\#</span><span class="mi">0</span> <span class="mh">0x00007fdc669c2a82</span> <span class="n">in</span> <span class="n">pthread_cond_timedwait</span><span class="err">@@</span><span class="n">GLIBC_2</span><span class="mf">.3.2</span> <span class="p">()</span> <span class="n">from</span> <span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
 
@@ -802,16 +802,16 @@ void wait() override;//
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
 </div>
 </div><h2 id="暂停-没看懂">暂停 没看懂</h2>
 <p>问题：通过观察线程 无法找到sql执行过程 ？</p>
 <p>解决办法：通过看日志方式解决，最后聚焦到stmt</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -841,7 +841,7 @@ void wait() override;//
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
 
 tail -f observer.log
 
@@ -873,9 +873,9 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
 </div>
 </div><p>任务1：Lex-and-Yacc【sql解析基础知识必须掌握】！！！</p>
 <p>动手练习：yum -y install flex bison</p>
@@ -982,7 +982,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 <h2 id="日志">日志</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -991,7 +991,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[2021-07-03 16:35:25.259332] WARN  [SQL.RESV] select_stmt_resolver_func (ob_resolver.cpp:142) [14686][424][YB427F000001-0005C6331F72012E] [lt=4] [dc=0] execute stmt_resolver failed(ret=-5019, parse_tree.type_=3035)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[2021-07-03 16:35:25.259332] WARN  [SQL.RESV] select_stmt_resolver_func (ob_resolver.cpp:142) [14686][424][YB427F000001-0005C6331F72012E] [lt=4] [dc=0] execute stmt_resolver failed(ret=-5019, parse_tree.type_=3035)
 [2021-07-03 16:35:25.259347] WARN  [SQL] generate_stmt (ob_sql.cpp:1406) [14686][424][YB427F000001-0005C6331F72012E] [lt=4] [dc=0] failed to resolve(ret=-5019)
 [2021-07-03 16:35:25.259359] WARN  [SQL] generate_physical_plan (ob_sql.cpp:1494) [14686][424][YB427F000001-0005C6331F72012E] [lt=9] [dc=0] Failed to generate stmt(ret=-5019, result.get_exec_context().need_disconnect()=false)
 [2021-07-03 16:35:25.259367] WARN  [SQL] handle_physical_plan (ob_sql.cpp:3159) [14686][424][YB427F000001-0005C6331F72012E] [lt=5] [dc=0] Failed to generate plan(ret=-5019, result.get_exec_context().need_disconnect()=false)
@@ -1035,12 +1035,12 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 <p>首先通过ObParser的一个快速解析入口split_multiple_stmt把每条语句拆分出来，对每条语句process_single_stmt</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">ObMPQuery</span><span class="o">::</span><span class="n">process_single_stmt</span><span class="p">(</span><span class="k">const</span> <span class="n">ObMultiStmtItem</span><span class="o">&amp;</span> <span class="n">multi_stmt_item</span><span class="p">,</span> <span class="n">ObSQLSessionInfo</span><span class="o">&amp;</span> <span class="n">session</span><span class="p">,</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">int</span> <span class="n">ObMPQuery</span><span class="o">::</span><span class="n">process_single_stmt</span><span class="p">(</span><span class="k">const</span> <span class="n">ObMultiStmtItem</span><span class="o">&amp;</span> <span class="n">multi_stmt_item</span><span class="p">,</span> <span class="n">ObSQLSessionInfo</span><span class="o">&amp;</span> <span class="n">session</span><span class="p">,</span>
 
   <span class="kt">bool</span> <span class="n">has_more_result</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">force_sync_resp</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">async_resp_used</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">need_disconnect</span><span class="p">)</span>
 </code></pre></td></tr></table>
@@ -1079,7 +1079,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1089,7 +1089,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="n">pop_back</span><span class="p">()</span> <span class="k">in</span> <span class="n">ObSEArrayImpl</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">call</span> <span class="n">destructor</span> <span class="n">of</span> <span class="n">T</span> <span class="err">#</span><span class="m">316</span>
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="n">pop_back</span><span class="p">()</span> <span class="k">in</span> <span class="n">ObSEArrayImpl</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">call</span> <span class="n">destructor</span> <span class="n">of</span> <span class="n">T</span> <span class="err">#</span><span class="m">316</span>
 
 
 <span class="n">The</span> <span class="n">first</span> <span class="n">pop_back</span><span class="p">()</span> <span class="n">function</span> <span class="k">in</span> <span class="err">`</span><span class="n">ObSEArrayImpl</span><span class="err">`</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">call</span> <span class="n">destructor</span> <span class="n">of</span> <span class="n">T</span> <span class="n">like</span> <span class="n">the</span> <span class="n">second</span> <span class="n">function</span><span class="p">,</span> <span class="n">or</span> <span class="n">there</span> <span class="n">may</span> <span class="n">be</span> <span class="n">risk</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">leaks</span><span class="p">.</span>
@@ -1160,7 +1160,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 <p>obd cluster list</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1181,7 +1181,7 @@ parse_sql <span class="o">(</span>ob_parser.cpp:194<span class="o">)</span>
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">obd cluster list
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">obd cluster list
 obd cluster start test
 obd cluster display test
 obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase

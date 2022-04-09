@@ -6,23 +6,14 @@
     <description>Recent content in work on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 16 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/work/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/work/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>一周精彩内容分享（第8期）</title>
-      <link>https://wangcy6.github.io/post/ARTS/2022/2022-8/</link>
-      <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
+      <title>一周精彩内容分享（第7期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-10/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-8/</guid>
-      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-8/ https://wangcy6.github.io/post/ARTS/2022/2022-8/ 本周故事 挑战01第一个要解决事情-学习区-与餐厅区息-混淆 挑战02 期望结果-识别互联网本质 挑战03 第二个事情:如果在学习</description>
-    </item>
-    
-    <item>
-      <title>一周精彩内容分享（第8期）</title>
-      <link>https://wangcy6.github.io/post/ARTS/2022/2022-9/</link>
-      <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-9/</guid>
-      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-9/ https://wangcy6.github.io/post/ARTS/2022/2022-9/ 本周故事 挑战01第一个要解决事情-学习区-与餐厅区息-混淆 挑战02 期望结果-识别互联网本质 挑战03 第二个事情:如果在学习</description>
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-10/</guid>
+      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 第一部分：work输出 一、公开课 阅读：200行代码实现基于paxos的kv存储 用paxos实现多副本日志系统&amp;ndash</description>
     </item>
     
     <item>
@@ -31,7 +22,16 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ARTS/2022/2022-7/</guid>
-      <description>文章地址：进展 20% http://localhost/:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/2022-7/ 今天是： 2022-2-10 号 今天是： 2022年的第 7 周 今天是： 2月份的第 2 周 今天是： 1季度的第 7 周 第一部分：work输出 一、我提交的pr</description>
+      <description>文章地址：进展 20% http://127.0.0.1:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/2022-7/ 今天是： 2022-2-10 号 今天是： 2022年的第 7 周 今天是： 2月份的第 2 周 今天是： 1季度的第 7 周 第一部分：work输出 一、我提交的pr</description>
+    </item>
+    
+    <item>
+      <title>一周精彩内容分享（第7期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-8/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-8/</guid>
+      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 第一部分：work输出 一、我提交的pr 二、 我阅读代码 2022-3-18 阅读文章：TiDB集群恢复之TiKV集群不可用 10% 三 、社区 四、内核 来</description>
     </item>
     
     <item>
