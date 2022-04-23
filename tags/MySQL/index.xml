@@ -6,7 +6,16 @@
     <description>Recent content in mysql on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 27 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tiflash学习记录</title>
+      <link>https://wangcy6.github.io/post/tidb/01_2022_4_14_tiflsh_study/</link>
+      <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/tidb/01_2022_4_14_tiflsh_study/</guid>
+      <description>day1 阅读资料 TiFlash 相关的学习资料 ## Build TiFlash 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 # 环境依赖 cmake version 3.21.2 curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain nightly source $HOME/.cargo/env alias python=&amp;#34;/usr/local/bin/python3&amp;#34; python -V Python 3.9.9 g++ --version Apple clang version 13.1.6 (clang-1316.0.21.2) #</description>
+    </item>
+    
     <item>
       <title>mysql内核学习过程</title>
       <link>https://wangcy6.github.io/post/mysql/day1_mysql_demo/</link>

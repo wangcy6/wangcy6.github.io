@@ -6,14 +6,50 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>操作系统入门知识--网络</title>
+      <link>https://wangcy6.github.io/post/2022/08_2022_4_17_epoll/</link>
+      <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/08_2022_4_17_epoll/</guid>
+      <description>day1 :请一定要有自信。你就是一道风景，没必要在别人风景里面仰视。 资料：第一手资料 同样看资料，你为什么不去看成功人怎么走的 因为看他们文章你离开舒</description>
+    </item>
+    
+    <item>
+      <title>早起120小时写代码第一期：kvcore</title>
+      <link>https://wangcy6.github.io/post/2022/07_2022_4_17_kvcore/</link>
+      <pubDate>Sun, 17 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/07_2022_4_17_kvcore/</guid>
+      <description>day1： 2022-4-17 看斗鱼 看手机 晚上6点22点 时间规划和紧急措施陷入时间黑洞 #象与骑象人，根本控制不大象，强制无效 手写KV引擎(第一部分)-实现单机</description>
+    </item>
+    
+    <item>
+      <title>tiflash学习记录</title>
+      <link>https://wangcy6.github.io/post/tidb/01_2022_4_14_tiflsh_study/</link>
+      <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/tidb/01_2022_4_14_tiflsh_study/</guid>
+      <description>day1 阅读资料 TiFlash 相关的学习资料 ## Build TiFlash 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 # 环境依赖 cmake version 3.21.2 curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain nightly source $HOME/.cargo/env alias python=&amp;#34;/usr/local/bin/python3&amp;#34; python -V Python 3.9.9 g++ --version Apple clang version 13.1.6 (clang-1316.0.21.2) #</description>
+    </item>
+    
     <item>
       <title>OBCP准备</title>
       <link>https://wangcy6.github.io/post/oceanbase/obcp_2/</link>
       <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/oceanbase/obcp_2/</guid>
-      <description>多看、多问、多总结，肯定是可以攻克的。 麻烦点评，第8章，甘洛 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version | port | zone</description>
+      <description>多看、多问、多总结，肯定是可以攻克的。 文章地址：https://wangcy6.github.io/post/oceanbase/obcp_</description>
+    </item>
+    
+    <item>
+      <title>带着问题去学习第三期</title>
+      <link>https://wangcy6.github.io/post/2022/03_ask_and_read/</link>
+      <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/03_ask_and_read/</guid>
+      <description>学习方法： 阅读(输入：三天,万句 输出 笔记摘要就哪里，但是自己看不懂，别人看不懂 ) 发现问题（输入：技术文档 30分钟 百句，输出 ：一大堆东西不无法</description>
     </item>
     
     <item>
@@ -112,6 +148,15 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2021/06_ask_1/</guid>
+      <description>地址：https://wangcy6.github.io/post/2021/06_ask_1/ http://127.0.0.1:1313//post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就</description>
+    </item>
+    
+    <item>
+      <title>阅读与写作第一期</title>
+      <link>https://wangcy6.github.io/post/2022/06_ask_1/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/06_ask_1/</guid>
       <description>地址：https://wangcy6.github.io/post/2021/06_ask_1/ http://127.0.0.1:1313//post/2021/06_ask_1/ 方法： 阅读(输入：三天,万句 输出 笔记摘要就</description>
     </item>
     

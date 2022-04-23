@@ -6,7 +6,16 @@
     <description>Recent content in book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 26 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>操作系统入门知识--网络</title>
+      <link>https://wangcy6.github.io/post/2022/08_2022_4_17_epoll/</link>
+      <pubDate>Sat, 23 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/08_2022_4_17_epoll/</guid>
+      <description>day1 :请一定要有自信。你就是一道风景，没必要在别人风景里面仰视。 资料：第一手资料 同样看资料，你为什么不去看成功人怎么走的 因为看他们文章你离开舒</description>
+    </item>
+    
     <item>
       <title>git入门</title>
       <link>https://wangcy6.github.io/post/2022/tool_git_3_26/</link>
