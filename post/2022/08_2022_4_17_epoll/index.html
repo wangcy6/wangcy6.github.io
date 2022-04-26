@@ -48,7 +48,7 @@
 <meta itemprop="name" content="操作系统入门知识--网络">
 <meta itemprop="description" content="day1 :请一定要有自信。你就是一道风景，没必要在别人风景里面仰视。 问题：直觉 为了快速掌握本文所要表达的思想，我们可以带着以下问题阅读。 Busy loop when poll/epoll is"><meta itemprop="datePublished" content="2022-04-23T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-04-23T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4382">
+<meta itemprop="wordCount" content="4529">
 <meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="操作系统入门知识--网络"/>
 <meta name="twitter:description" content="day1 :请一定要有自信。你就是一道风景，没必要在别人风景里面仰视。 问题：直觉 为了快速掌握本文所要表达的思想，我们可以带着以下问题阅读。 Busy loop when poll/epoll is"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-04-23 00:00 </span>
         
-          <span class="more-meta"> 约 4382 字 </span>
-          <span class="more-meta"> 预计阅读 9 分钟 </span>
+          <span class="more-meta"> 约 4529 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -181,6 +181,9 @@
 <li>
 <p>问：
 <a href="https://maimai.cn/web/gossip_detail?gid=30313046&amp;egid=0489f149cb074c3987d30583e924f208">一个网络包了，会触发一次中断处理程序，10000个网络包来了，触发100000次中断吗？是不是太频繁了呢</a></p>
+<ol start="3">
+<li>应用程序开始收取TCP消息，与程序所在的机器网卡上接收到网络里发来的TCP消息，这是两个独立的流程。它们之间是如何互相影响的？例如，应用程序正在收取消息时，内核通过网卡又在这条TCP连接上收到消息时，究竟是如何处理的？若应用程序没有调用read或者recv时，内核收到TCP连接上的消息后又是怎样处理的？</li>
+</ol>
 </li>
 </ul>
 <h2 id="资料第一手资料">资料：第一手资料</h2>
@@ -280,7 +283,6 @@
 </span><span class="lnt">38
 </span><span class="lnt">39
 </span><span class="lnt">40
-</span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">BUSY POLLING, What is that ?
@@ -309,15 +311,14 @@ permitted to handle TX completions smoothly.
 堆排序时间复杂度误解
 老王：堆排序时间复杂度多少？
 小王：O(nlog n)脱口而生 记住了
-老王：不对 堆排序的时间复杂度是O(nlog n + n) =O(nlog n)。 执行次数
-
-建堆的时间复杂度是O(n)
-
-堆调整的时间复杂度是O(log n) 
-
-小王：和我记住有什么区别？一样呀 结果
+老王：不对 堆排序的时间复杂度是O(nlog n + n) =O(nlog n)。()
+小王：和我记住有什么区别？一样呀
 
 老忘：top k 问题 用堆实现 时间复杂度多少？
+
+建堆的时间复杂度是O(n)
+堆调整的时间复杂度是O(log n) 
+
 执行次数：k +(n-k)logk
 
 
