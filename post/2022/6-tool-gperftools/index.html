@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/2022/6-tool-gperftools/" />
@@ -42,13 +42,13 @@
 <meta property="og:description" content="gperftools" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2022/6-tool-gperftools/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-02-09T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2022-02-09T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2022-02-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-09T00:00:00+00:00" />
 
 <meta itemprop="name" content="gperftools">
-<meta itemprop="description" content="gperftools"><meta itemprop="datePublished" content="2022-02-09T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2022-02-09T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="91">
+<meta itemprop="description" content="gperftools"><meta itemprop="datePublished" content="2022-02-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-02-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="89">
 <meta itemprop="keywords" content="系统设计," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="gperftools"/>
 <meta name="twitter:description" content="gperftools"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2022-02-09 00:00 </span>
         
-          <span class="more-meta"> 约 91 字 </span>
+          <span class="more-meta"> 约 89 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -151,7 +151,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -163,25 +163,21 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">https://github.com/gperftools/gperftools/blob/master/INSTALL
-
-yum install libunwind<span class="o">(</span>否者heap profiler产生的数据文件都会是空的<span class="o">)</span>
-
-<span class="k">if</span> you use a 64-bit system, we strongly recommend you
-install libunwind before trying to configure or install gperftools.
-
-yum install autoconf automake libtool
-
-git clone https://github.com/gperftools/gperftools
-sh autogen.sh
-./configure 
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">https://github.com/gperftools/gperftools/blob/master/INSTALL
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">yum install libunwind<span class="o">(</span>否者heap profiler产生的数据文件都会是空的<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> you use a 64-bit system, we strongly recommend you
+</span></span><span class="line"><span class="cl">install libunwind before trying to configure or install gperftools.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">yum install autoconf automake libtool
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git clone https://github.com/gperftools/gperftools
+</span></span><span class="line"><span class="cl">sh autogen.sh
+</span></span><span class="line"><span class="cl">./configure 
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>

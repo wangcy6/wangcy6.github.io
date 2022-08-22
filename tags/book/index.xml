@@ -31,7 +31,7 @@
       <pubDate>Tue, 25 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2022/2-2022-1-25-os/</guid>
-      <description>## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技</description>
+      <description>cpu 疑问1 What is NUMA? dmesg|grep -i numa [ 0.000000] No NUMA configuration found 疑问2:网卡软中断都集中在了一个cpu上，导致cpu负载升高，多余网络包被丢弃？ X86系统采用中断机制协同处</description>
     </item>
     
     <item>

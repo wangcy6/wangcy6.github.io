@@ -6,7 +6,16 @@
     <description>Recent content in ARTS on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 10 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/ARTS/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/ARTS/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一周精彩内容分享（第12期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-12/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-12/</guid>
+      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 本周故事 第一部分：work输出 一、公开课 课程4:MIT 经典课程 《分布式系统》 https://learnku.com/go/wikis/41239 课程3 数据库 sql执行引擎 课程2 分布式协议</description>
+    </item>
+    
     <item>
       <title>一周精彩内容分享（第7期）</title>
       <link>https://wangcy6.github.io/post/ARTS/2022/2022-10/</link>
@@ -22,7 +31,7 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ARTS/2022/2022-11/</guid>
-      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 第一部分：work输出 一、公开课 阅读：200行代码实现基于paxos的kv存储 用paxos实现多副本日志系统&amp;ndash</description>
+      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 本周故事 数据库内核资深研发工程师 基本条件： 熟悉数据库系统常用算法与基本原理，具有3年以上数据库内核或大数据处理系统开发经</description>
     </item>
     
     <item>

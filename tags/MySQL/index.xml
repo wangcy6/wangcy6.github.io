@@ -31,7 +31,7 @@
       <pubDate>Sun, 18 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/tidb/parse/</guid>
-      <description>说明： parser 模块 https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2&amp;amp;confirmed=1 https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 https://github.com/pingcap/blog https://github.com/pingcap/tidb/issues/20804 https://github.com/pingcap/tidb/issues/20804#sig/DDL 基本操作parser 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 https://github.com/watchpoints/parser https://github.com/pingcap/parser git reset --hard origin/master // git 放弃本地修改 强制更新 git remote add upstream //https://github.com/pingcap/parser.git #切换到主分支 git checkout master</description>
+      <description>说明： parser 模块 https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2&amp;amp;confirmed=1 https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 https://github.com/pingcap/blog https://github.com/pingcap/tidb/issues/20804 https://github.com/pingcap/tidb/issues/20804#sig/DDL 基本操作parser 1 2 3 4 5 6 7 8 9 10 11 12 13 14 https://github.com/watchpoints/parser https://github.com/pingcap/parser git reset --hard origin/master // git 放弃本地修改 强制更新 git remote add upstream //https://github.com/pingcap/parser.git #切换到主分支 git checkout master git fetch</description>
     </item>
     
     <item>
