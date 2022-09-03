@@ -48,7 +48,7 @@
 <meta itemprop="name" content="成为oceanbase贡献者第二天：源码解析 DDL语句执行过程">
 <meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2022-08-14T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-08-14T00:00:00+00:00" />
-<meta itemprop="wordCount" content="5140">
+<meta itemprop="wordCount" content="5099">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="成为oceanbase贡献者第二天：源码解析 DDL语句执行过程"/>
 <meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/oceanbase/"> oceanbase </a>
             </div>
-          <span class="more-meta"> 约 5140 字 </span>
+          <span class="more-meta"> 约 5099 字 </span>
           <span class="more-meta"> 预计阅读 11 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -178,7 +178,8 @@
 </blockquote>
 <p>大家好，</p>
 <p>这篇文章描述的是在解决issues/1035 对sql一生的 ddl部分理解，问题出现在哪里.重在2.1章节 步骤4 5 6</p>
-<p>不能提供最终是如何解决。愿对你有帮助。</p>
+<p>不能提供最终是如何解决。愿对你有帮助，仅供参考</p>
+<p>主要使用gdb 一步步跟踪，根据cmd 类型 if else switch 判断</p>
 <ul>
 <li>题目如下： ALTER TABLE v0 DROP COLUMN v2 ;</li>
 </ul>
@@ -657,7 +658,7 @@ thread apply all break ob_ddl_operator.cpp:3006</p>
 </blockquote>
 <h2 id="三-gdb调试技巧">三 、gdb调试技巧</h2>
 <h3 id="31-gdb过程">3.1 gdb过程</h3>
-<h4 id="第六次测试">第六次测试</h4>
+<h4 id="第六次">第六次</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -686,17 +687,6 @@ thread apply all break ob_ddl_operator.cpp:3006</p>
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">dir</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">oceanbase</span>
@@ -725,17 +715,6 @@ thread apply all break ob_ddl_operator.cpp:3006</p>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">rowkey_position_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   <span class="n">ERROR_NAME</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;OB_ERR_ALTER_INDEX_COLUMN&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ERROR_CAUSE</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;Internal Error&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ERROR_SOLUTION</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;Contact OceanBase Support&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">MYSQL_ERRNO</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">SQLSTATE</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;42000&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">STR_ERROR</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;Cannot alter index column&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">STR_USER_ERROR</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;Cannot alter index column&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ORACLE_ERRNO</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ORACLE_STR_ERROR</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;ORA-00600: internal error code, arguments: -5071, Cannot alter index column&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ORACLE_STR_USER_ERROR</span><span class="p">[</span><span class="o">-</span><span class="n">OB_ERR_ALTER_INDEX_COLUMN</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;ORA-00600: internal error code, arguments: -5071, Cannot alter index column&#34;</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>case OB_DDL_DROP_COLUMN:</p>
