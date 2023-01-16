@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>从青铜到王者 on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/</link>
+    <description>Recent content in 从青铜到王者 on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 29 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从青铜到王者系列1：emacs入门教程</title>
+      <link>https://wangcy6.github.io/post/2022/10_2022_10_13_how_to-use_emacs/</link>
+      <pubDate>Sat, 29 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/10_2022_10_13_how_to-use_emacs/</guid>
+      <description>目录 如何安装 5分钟完成 无插件情况下，直接看官方入门指导 30分钟完成。 提问 快捷键 C-h 怎么输入 过程 推荐阅读文章： https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org centos8.6 Installation Method #01: Installing the Emacs editor using the EPEL repository 1 2 3 sudo</description>
+    </item>
+    
+  </channel>
+</rss>
