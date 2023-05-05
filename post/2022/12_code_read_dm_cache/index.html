@@ -48,7 +48,7 @@
 <meta itemprop="name" content="从青铜到王者系列：Dm-cache">
 <meta itemprop="description" content="Dm-cache [23],a general block-level disk cache, for any storage systems, 带着问题和目标去学习 学习方法： 阅读(输入：三天,万句 输出 笔记摘要就哪里，但是自己看不懂，别人看不懂 ) 发现问题（输入：技术"><meta itemprop="datePublished" content="2023-01-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-01-11T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2280">
+<meta itemprop="wordCount" content="2568">
 <meta itemprop="keywords" content="阅读与写作," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从青铜到王者系列：Dm-cache"/>
 <meta name="twitter:description" content="Dm-cache [23],a general block-level disk cache, for any storage systems, 带着问题和目标去学习 学习方法： 阅读(输入：三天,万句 输出 笔记摘要就哪里，但是自己看不懂，别人看不懂 ) 发现问题（输入：技术"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2023-01-11 00:00 </span>
         
-          <span class="more-meta"> 约 2280 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 2568 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -425,6 +425,31 @@ Linux version 4.18.0-305.3.1.el8_4.x86_64 (<a href="mailto:mockbuild@ord1-prod-x
 <h4 id="13-lustre核心组件">1.3 lustre核心组件</h4>
 <p>3., 安装 Lustre 客户端</p>
 <p><a href="https://docs.aws.amazon.com/zh_cn/fsx/latest/LustreGuide/install-lustre-client.html">https://docs.aws.amazon.com/zh_cn/fsx/latest/LustreGuide/install-lustre-client.html</a></p>
+<ol start="4">
+<li>mdt含义？</li>
+</ol>
+<p><a href="https://wiki.lustre.org/Lustre_Metadata_Service_(MDS)">Lustre Metadata Service (MDS)</a></p>
+<p><a href="https://wiki.lustre.org/Data_on_MDT">https://wiki.lustre.org/Data_on_MDT</a></p>
+<ol start="5">
+<li><a href="">命名空间什么含义？</a></li>
+</ol>
+<p><img src="https://pic1.zhimg.com/v2-c5a5674f6e67b4cb409e1ea57c14bf14_b.jpg" alt="Distributed Namespace(DNE)能够提供将命名空间切分到多个不同的元数据服务节点上"></p>
+<p>Distributed Namespace(DNE)能够提供将命名空间切分到多个不同的元数据服务节点上</p>
+<p>6、 Lustre客户端持久高速缓存设计与：</p>
+<ul>
+<li>只读模式RO-PCC的设计原理和实现；</li>
+<li>基于规则的可定制的自动缓存机制；</li>
+<li>缓存机制必须解决的一个问题即缓存的预取和淘汰策略；</li>
+<li><a href="https://blog.csdn.net/weixin_34455676/article/details/112648924">RW-PCC的设计，它通过文件和客户端RW-PCC副本之间的一对一映射的关系来加速I/O密集型应用程序</a></li>
+</ul>
+<p>​    <a href="https://blog.csdn.net/weixin_34455676/article/details/112648924">https://blog.csdn.net/weixin_34455676/article/details/112648924</a> ！！！</p>
+<p>7 . <a href="https://www.cnblogs.com/xuyaowen/p/fs-cache.html">FS-Cache 调研</a></p>
+<ul>
+<li><a href="https://www.kernel.org/doc/Documentation/filesystems/caching/fscache.txt">https://www.kernel.org/doc/Documentation/filesystems/caching/fscache.txt</a></li>
+<li><a href="https://www.kernel.org/doc/Documentation/filesystems/caching/">https://www.kernel.org/doc/Documentation/filesystems/caching/</a></li>
+<li><a href="https://damonyi.cc/2021/02/19/cachefilesd%E7%BC%93%E5%AD%98%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">https://damonyi.cc/2021/02/19/cachefilesd%E7%BC%93%E5%AD%98%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/</a></li>
+</ul>
+<p>FS-Cache是一种内核功能，网络文件系统或其他文件系统可以通过它来缓存数据到本地磁盘空间，减少网络传输的数据，从而提升性能。这在网络速度比较慢时会得到比较好的效果</p>
 
     </div>
 
