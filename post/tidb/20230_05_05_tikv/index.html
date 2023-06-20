@@ -48,7 +48,7 @@
 <meta itemprop="name" content="tikv入门">
 <meta itemprop="description" content="Tidb"><meta itemprop="datePublished" content="2023-05-05T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-05-05T00:00:00+00:00" />
-<meta itemprop="wordCount" content="135">
+<meta itemprop="wordCount" content="243">
 <meta itemprop="keywords" content="Tidb," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="tikv入门"/>
 <meta name="twitter:description" content="Tidb"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2023-05-05 00:00 </span>
         
-          <span class="more-meta"> 约 135 字 </span>
+          <span class="more-meta"> 约 243 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -141,7 +141,8 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#什么是-storeregion">什么是 store，region，</a></li>
+        <li><a href="#tikv-源码阅读三部曲一重要模块">TiKV 源码阅读三部曲（一）重要模块</a></li>
+        <li><a href="#tikv-源码阅读三部曲二读流程">TiKV 源码阅读三部曲（二）读流程</a></li>
       </ul>
     </li>
   </ul>
@@ -158,12 +159,28 @@
 <p>【源码合集】TiKV 源码阅读三部曲</p>
 <p><a href="https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg">https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg</a></p>
 </li>
+<li>
+<p>阅读  Rust 参考手册 中文版
+<a href="https://rustwiki.org/zh-CN/reference/expressions/if-expr.html">https://rustwiki.org/zh-CN/reference/expressions/if-expr.html</a></p>
+</li>
 </ul>
 <p>开始时间：2023-05-05</p>
 <p>结束时间：2023-06-05</p>
 <p>期望一个月内</p>
 <h1 id="二如何分析的">二、如何分析的</h1>
-<h3 id="什么是-storeregion">什么是 store，region，</h3>
+<h3 id="tikv-源码阅读三部曲一重要模块">TiKV 源码阅读三部曲（一）重要模块</h3>
+<p>本小节将简单介绍 KVService 及其启动流程，并顺带介绍 TiKV 若干重要结构的初始化流程</p>
+<h3 id="tikv-源码阅读三部曲二读流程">TiKV 源码阅读三部曲（二）读流程</h3>
+<p>本小节将在 TiKV 6.1 版本的源码基础上，以一条读请求为例，介绍当前版本读请求的全链路执行流程。</p>
+<ul>
+<li>
+<p><a href="https://github.com/pingcap/kvproto/blob/master/proto/tikvpb.proto#L20">https://github.com/pingcap/kvproto/blob/master/proto/tikvpb.proto#L20</a>
+rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}</p>
+</li>
+<li>
+<p>KVService</p>
+</li>
+</ul>
 <h1 id="三如何解决的">三、如何解决的</h1>
 <p>文章地址</p>
 <ul>
@@ -200,7 +217,11 @@
           <a href="/tags/Tidb/">Tidb</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/2023/13_ai_tool/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">学会使用工具：ai</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/book/01_thing/">
             <span class="next-text nav-default">践行时间管理方法</span>
             <span class="next-text nav-mobile">下一篇</span>

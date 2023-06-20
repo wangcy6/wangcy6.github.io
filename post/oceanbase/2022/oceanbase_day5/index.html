@@ -48,7 +48,7 @@
 <meta itemprop="name" content="OceanBase Contributor day5：">
 <meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2023-01-30T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-01-30T00:00:00+00:00" />
-<meta itemprop="wordCount" content="3009">
+<meta itemprop="wordCount" content="3131">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OceanBase Contributor day5："/>
 <meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/oceanbase%E6%8E%A2%E7%B4%A2%E4%B9%8B%E6%97%85/"> oceanbase探索之旅 </a>
             </div>
-          <span class="more-meta"> 约 3009 字 </span>
+          <span class="more-meta"> 约 3131 字 </span>
           <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -189,6 +189,11 @@
 <p>前言</p>
 </blockquote>
 <p>大家好,今天是成为oceanbase贡献者第5天。</p>
+<p><a href="https://github.com/watchpoints/oceanbase/commit/eb331d4f0d8d7887201b835b07ea1f3528b934c2">https://github.com/watchpoints/oceanbase/commit/eb331d4f0d8d7887201b835b07ea1f3528b934c2</a></p>
+<p><a href="https://github.com/oceanbase/oceanbase/issues/1383">https://github.com/oceanbase/oceanbase/issues/1383</a></p>
+<p>[status: confirmed](<a href="https://github.com/oceanbase/oceanbase/labels/status%3A">https://github.com/oceanbase/oceanbase/labels/status%3A</a> confirmed)</p>
+<p><a href="https://github.com/oceanbase/oceanbase/issues/1355">https://github.com/oceanbase/oceanbase/issues/1355</a></p>
+<p><a href="https://github.com/oceanbase/oceanbase/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22">https://github.com/oceanbase/oceanbase/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22</a></p>
 <p>今天主要任务是：</p>
 <ul>
 <li>
@@ -476,6 +481,7 @@ GATEWAY=10.141.163.254</p>
 </span><span class="lnt">95
 </span><span class="lnt">96
 </span><span class="lnt">97
+</span><span class="lnt">98
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="n">hard</span> <span class="n">origin</span><span class="o">/</span><span class="n">master</span> 　　<span class="c1">//把HEAD指向最新下载的版本
@@ -509,11 +515,11 @@ GATEWAY=10.141.163.254</p>
 </span></span><span class="line"><span class="cl"><span class="err">禁用远程镜像仓库</span>
 </span></span><span class="line"><span class="cl"><span class="n">obd</span> <span class="n">mirror</span> <span class="n">disable</span> <span class="n">remote</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="n">obd</span> <span class="n">demo</span> <span class="o">-</span><span class="n">c</span> <span class="n">oceanbase</span><span class="p">,</span><span class="n">obproxy</span><span class="p">,</span><span class="n">obagent</span><span class="p">,</span><span class="n">prometheus</span><span class="p">,</span><span class="n">grafana</span>
+</span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="err">镜像版本</span>
 </span></span><span class="line"><span class="cl"><span class="n">make</span> <span class="n">DESTDIR</span><span class="o">=</span><span class="p">.</span><span class="o">/</span> <span class="n">install</span> <span class="o">&amp;&amp;</span> 
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl"><span class="n">obd</span> <span class="n">mirror</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">oceanbase</span><span class="o">-</span><span class="n">ce</span> <span class="o">-</span><span class="n">V</span> <span class="mf">4.1.0.0</span> <span class="o">-</span><span class="n">p</span> <span class="p">.</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span> <span class="o">-</span><span class="n">t</span> <span class="n">my</span><span class="o">-</span><span class="n">oceanbase</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">Package</span> <span class="n">ok</span>
@@ -558,6 +564,7 @@ GATEWAY=10.141.163.254</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">export</span> <span class="n">LD_LIBRARY_PATH</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nl">lib</span><span class="p">:</span><span class="err">$</span><span class="n">LD_LIBRARY_PATH</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">obclient</span> <span class="o">-</span><span class="n">h127</span><span class="mf">.0.0.1</span> <span class="o">-</span><span class="n">P2881</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">Doceanbase</span> <span class="o">-</span><span class="n">A</span>
@@ -1117,9 +1124,61 @@ GATEWAY=10.141.163.254</p>
 <h3 id="heading"></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code></code></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+</span></span><span class="line"><span class="cl">=======
+</span></span><span class="line"><span class="cl">vi mini-local-example.yaml
+</span></span><span class="line"><span class="cl">obd cluster edit-config  watchpoints
+</span></span><span class="line"><span class="cl">obd cluster redeploy watchpoints
+</span></span><span class="line"><span class="cl">obd cluster stop watchpoints
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">obd cluster deploy wathchpoints -c ./mini-local-example.yaml
+</span></span><span class="line"><span class="cl">obd cluster start watchpoints
+</span></span><span class="line"><span class="cl"># Connect to the OceanBase Database by using a MySQL client.
+</span></span><span class="line"><span class="cl">mysql -h127.1 -uroot -P2883
+</span></span><span class="line"><span class="cl">alias cdob=&#34;obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">启动失败：
+</span></span><span class="line"><span class="cl">ERROR] (127.0.0.1): when production_mode is True, memory_limit can not be less then 16.0G
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">解决：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">production_mode false
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">编译：
+</span></span><span class="line"><span class="cl">bash build.sh debug --init --make -j8
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 5f6cb77ef99db04dd94448ed20f6c0a0f5424ad6
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>慢慢来，多看、多问、多总结，肯定是可以攻克的。</p>
