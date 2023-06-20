@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cephfse on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/Cephfse/</link>
+    <description>Recent content in Cephfse on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 20 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/Cephfse/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cephfs入门手册</title>
+      <link>https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/</link>
+      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/</guid>
+      <description>Cephfs探索之旅第一天 文章地址：http://localhost:1313/post/storage/1_2023_02_13_day1</description>
+    </item>
+    
+  </channel>
+</rss>
