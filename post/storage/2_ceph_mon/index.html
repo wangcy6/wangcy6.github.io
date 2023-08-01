@@ -48,7 +48,7 @@
 <meta itemprop="name" content="日拱一卒：ceph-mon模块">
 <meta itemprop="description" content="you can"><meta itemprop="datePublished" content="2023-06-02T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-06-02T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2360">
+<meta itemprop="wordCount" content="3713">
 <meta itemprop="keywords" content="Cephfs," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="日拱一卒：ceph-mon模块"/>
 <meta name="twitter:description" content="you can"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/Cephfse/"> Cephfse </a>
             </div>
-          <span class="more-meta"> 约 2360 字 </span>
-          <span class="more-meta"> 预计阅读 5 分钟 </span>
+          <span class="more-meta"> 约 3713 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -155,6 +155,7 @@
   <ul>
     <li><a href="#代码分析">代码分析</a></li>
     <li><a href="#文件mdsmonitorcc">文件：MDSMonitor.cc</a></li>
+    <li><a href="#他山之石">他山之石</a></li>
   </ul>
 </nav>
   </div>
@@ -200,9 +201,10 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
 </div>
-</div><h1 id="paxos算法">Paxos算法</h1>
+</div><h1 id="paxos">Paxos</h1>
 <p>论文：https://sedna.cs.umd.edu/818/papers/paxosMadeSimple.pdf</p>
 <p>阅读文档：https://zhuanlan.zhihu.com/p/408735316</p>
+<p><a href="https://ceph.io/geen-categorie/monitors-and-paxos-a-chat-with-joao/">https://ceph.io/geen-categorie/monitors-and-paxos-a-chat-with-joao/</a></p>
 <p>Prepare-&gt;promise-&gt;propose-&gt;accept-&gt;learn</p>
 <ol>
 <li>
@@ -216,7 +218,25 @@
 </li>
 </ol>
 <ul>
-<li><a href="https://ceph.io/geen-categorie/monitors-and-paxos-a-chat-with-joao/">https://ceph.io/geen-categorie/monitors-and-paxos-a-chat-with-joao/</a></li>
+<li>
+<p>请为入门小白描述一下 什么是paxos，他解决了什么问题，然后如何解决的？</p>
+</li>
+<li></li>
+</ul>
+<p>Paxos是一种用于分布式系统中达成共识的算法，它的目的是让多个节点在没有中心化控制的情况下，就某个值达成一致。</p>
+<p>在分布式系统中，由于网络延迟、节点故障等原因，节点之间的通信可能会出现问题，从而导致共识无法达成。</p>
+<p>Paxos算法就是为了解决这个问题而设计的。</p>
+<p>Paxos算法的核心思想是通过多轮投票来达成共识。在每一轮投票中，节点会向其他节点发送请求，并根据其他节点的响应来决定下一步该做什么。</p>
+<p>如果大多数节点都同意了某个值，那么这个值就被认为是达成共识的值。 Paxos算法解决了分布式系统中的共识问题，即如何让多个节点就某个值达成一致。它通过多轮投票来实现共识，并且可以容忍节点故障和网络延迟等问题。</p>
+<p>Paxos算法的实现比较复杂，但是它已经被广泛应用于分布式系统中，例如Google的Chubby锁服务和Apache的ZooKeeper分布式协调服务等。 总之，Paxos算法是一种用于分布式系统中达成共识的算法，它解决了共识问题，并且可以容忍节点故障和网络延迟等问题</p>
+<ul>
+<li>
+<p>Paxos如何工程实现？</p>
+</li>
+<li>
+<p>Paxos算法的工程实现可以分为以下几个步骤： 1. 设计系统架构：首先，需要设计分布式系统的整体架构，确定系统中的角色和节点数量。通常，Paxos算法中会有提议者（Proposer）、接受者（Acceptor）和学习者（Learner）等角色。 2. 实现网络通信：为了让节点之间能够进行通信，需要实现网络通信模块。这个模块负责节点之间的消息传递，包括发送和接收消息。 3. 实现提议者角色：提议者负责发起提议并推动共识的达成。在实现提议者角色时，需要实现以下功能：   - 生成唯一的提议编号；   - 发送prepare请求给接受者，并处理接受者的promise响应；   - 根据接受者的promise响应，决定是否发送accept请求；   - 处理接受者的accept响应，判断是否达成共识。 4. 实现接受者角色：接受者负责接收提议者的请求，并根据算法规则进行响应。在实现接受者角色时，需要实现以下功能：   - 接收并处理来自提议者的prepare请求；   - 根据当前状态和提议者的请求，返回promise响应；   - 接收并处理来自提议者的accept请求；   - 根据当前状态和提议者的请求，返回accept响应。 5. 实现学习者角色：学习者负责接收已达成共识的值，并将其应用到系统中。在实现学习者角色时，需要实现以下功能：   - 接收并处理来自接受者的已达成共识的值；   - 将共识的值应用到系统中，以完成相应的操作</p>
+</li>
+<li></li>
 </ul>
 <h1 id="流程分析">流程分析</h1>
 <h3 id="涉及文件">涉及文件</h3>
@@ -266,6 +286,11 @@
 <li>Introduction</li>
 </ul>
 <p>monitor在ceph集群中起着非常关键的作用，它维护着几张map(monmap, osdmap, pgmap等)， 通过paxos算法保证数据的一致性。</p>
+<p>monitor节点信息会存放在monmap这张表中,其中存放的就是rank值，在选举leader的时候，rank值最小的获胜，所以monitor地位并不是平等的，这样做的目的可能是为了快速的选举出leader。</p>
+<p>monitor维护的map，都是以PaxosService的服务提供，不同服务继承基类PaxosService实现自己的特性，这些服务通过paxos算法对数据进行更新，</p>
+<blockquote>
+<p>只有leader才可以调用propose相关函数进行更新，如果peon节点收到更新的消息，则需要将消息转发给leader节点， 所以同一时刻paxos算法只会存在一个proposer，几乎没有竞争，决议会很快完成，更新也是非常迅速的。</p>
+</blockquote>
 <p><img src="https://blog.wjin.org/assets/img/post/ceph_mon_startup.png" alt=""></p>
 <ul>
 <li><a href="https://blog.wjin.org/posts/ceph-monitor-startup.html">https://blog.wjin.org/posts/ceph-monitor-startup.html</a></li>
@@ -343,6 +368,10 @@
 <p><img src="https://img-blog.csdn.net/20160825160932814?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
 <h2 id="代码分析">代码分析</h2>
 <h2 id="文件mdsmonitorcc">文件：MDSMonitor.cc</h2>
+<h2 id="他山之石">他山之石</h2>
+<ul>
+<li><a href="https://monica.im/s/959082ae">https://monica.im/s/959082ae</a></li>
+</ul>
 
     </div>
 
