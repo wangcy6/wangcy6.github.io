@@ -31,7 +31,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/storage/4_icfs_help/</guid>
-      <description>系统罐装 1. Linux 如何查看网络带宽是千兆还是万兆 1 2 ethtool ens160 Speed: 10000Mb/s 2 .CentOS 8 网络管理：使用 nmcli 和 nmtui 进行高效配置 3, ssh 设置远程登录 /etc/ssh/sshd_config</description>
+      <description>系统罐装 1. Linux 如何查看网络带宽是千兆还是万兆 1 2 ethtool ens160 Speed: 10000Mb/s 2 .CentOS 8 网络管理：使用 nmcli 和 nmtui 进行高效配置 3, ssh 设置远程登录 /etc/ssh/sshd_config cifs [mds减少mds 进程个数]</description>
     </item>
     
   </channel>

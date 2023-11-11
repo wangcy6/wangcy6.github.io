@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>do_book on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/do_book/</link>
+    <description>Recent content in do_book on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/do_book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>强哥答疑</title>
+      <link>https://wangcy6.github.io/post/do_book/ASK_README/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/do_book/ASK_README/</guid>
+      <description>📝 提问规则： http://localhost:1313/post/do_book/ASK_README/ 1.周五到周六中午12点可提问 2.每位伙伴每周限提交1个问题； 3.提问请描述清楚问题背景、尝试、想要得到的帮助 ——【提问必读】</description>
+    </item>
+    
+  </channel>
+</rss>

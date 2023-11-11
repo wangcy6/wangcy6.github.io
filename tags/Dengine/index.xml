@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dengine on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/Dengine/</link>
+    <description>Recent content in Dengine on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 26 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Dengine/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>成为TDengine贡献者第一天</title>
+      <link>https://wangcy6.github.io/post/TDengine/20230905_day1/</link>
+      <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/TDengine/20230905_day1/</guid>
+      <description>开始时间：2023-09-22： 结束时间： 源码编译： 准备工作：https://github.com/watchpoints/TDengine</description>
+    </item>
+    
+  </channel>
+</rss>
