@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Rust For Linux - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_1_/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Rust For Linux" />
+<meta property="og:description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_1_/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-11-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-11-06T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Rust For Linux">
+<meta itemprop="description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"><meta itemprop="datePublished" content="2023-11-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-11-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2310">
+<meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Rust For Linux"/>
+<meta name="twitter:description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Rust For Linux</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-11-06 00:00 </span>
+        
+          <span class="more-meta"> 约 2310 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#如何学习">如何学习</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#任务一embassy文档翻译">任务一：Embassy文档翻译</a>
+      <ul>
+        <li><a href="#看教学视频并发与处理器操作系统和编程语言httpswwwxuetangxcomlearnthu0809100czxtthu0809100czxt14294493video25500376">看教学视频：<a href="https://www.xuetangx.com/learn/THU0809100czxt/THU0809100czxt/14294493/video/25500376">并发与处理器、操作系统和编程语言</a></a></li>
+        <li><a href="#200行代码讲透rust-futures">200行代码讲透RUST FUTURES</a></li>
+      </ul>
+    </li>
+    <li><a href="#三-rust中的futures">三 Rust中的Futures</a>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="如何学习">如何学习</h2>
+<blockquote>
+<p>在本文中，我将试着去回答liunx 内核参数：
+Q1 (Why): 为什么需要协程？
+我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什么场景，需要使用协程来进行处理？为什么进程或者线程不能够很好地满足当下的使用场景？
+Q2 (What): 到底什么是协程？
+我们一直在谈论协程。由于协程中包含有「程」这个字眼，因此经常被拿来与进程线程进行对比，称协程为「用户态线程」；但又有人从协程实现的角度，说「协程是一种泛化的函数」。这就把我们给绕晕了。我们不禁要问，到底什么是协程？在本次分享中，我会试着进行回答。
+Q3 (How): 怎么实现协程 (库)？
+在回答了协程是什么之后，第三个问题就紧随而来，我们可以自己去实现一个简单的协程或者协程库吗？如果可以实现，那我们应该怎么实现呢？
+Q4 (Usage): 使用协程时需要注意什么？
+通过实际编码实现一个简单的协程库后，我们再来看 libco 的实现，就会清晰明了。我们会在第四部分介绍使用协程时需要注意的一些问题。
+这就是我本次分享想要达成的目标 —— 回答这四个问题。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
+
+ 二、这个技术的优势和劣势分别是什么 
+
+三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+四、技术的组成部分和关键点。
+
+五、技术的底层原理和关键实现
+
+六、已有的实现和它之间的对比
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="2023-01-06">2023-01-06</h1>
+<p>录制: 第三阶段项目方向选题会
+日期: 2023-11-05 19:58:18
+录制文件：https://meeting.tencent.com/v2/cloud-record/share?id=54cbe9a8-fa09-4ac4-82ce-5888129808e7&amp;from=3</p>
+<p><a href="https://shimo.im/docs/m8AZM4Z6X9tzG7kb">https://shimo.im/docs/m8AZM4Z6X9tzG7kb</a></p>
+<p>相关资料
+训练营第三阶段项目实习选题会ppt介绍（这里的幻灯片中的链接无法访问。）
+训练营第三阶段项目方向选题会“项目六：基于协程异步机制的操作系统/驱动”介绍（这里的幻灯片中的链接是可以访问的。）</p>
+<p>选题协商
+请各位同学在这里填写自己的选题意向，以便大家相互了解进展并进行可能的合作。
+任务一要求所有同学参与，后面的六个任务可以选择自己有兴趣的部分参与，可以多人合作。</p>
+<p>任务一：Embassy文档翻译
+Embassy Documentation：Embassy is a project to make async/await a first-class option for embedded development.
+具体任务描述：
+看教学视频：并发与处理器、操作系统和编程语言
+学习“协程的实现(200行代码讲透RUST FUTURES)”，写学习笔记；
+填写自己想翻译的“Embassy Documentation”章节。
+把翻译结果上传到公开仓库，并提交访问链接；</p>
+<p>任务二：开发和移植跨OS的异步驱动
+具体任务描述：
+学习“Async Rust vs RTOS showdown（中文版本）”，写学习笔记；
+在qemu模拟的RISC-V平台，尝试移植
+任务三：异步机制的硬件支持 - 用户态中断的QEMU和FPGA实现和改进
+任务四：共享调度器
+任务五：reL4微内枋操作系统的异步改进
+任务六：异步内核模块
+任务七：异步函数调用栈跟踪分析</p>
+<h2 id="任务一embassy文档翻译">任务一：Embassy文档翻译</h2>
+<h3 id="看教学视频并发与处理器操作系统和编程语言httpswwwxuetangxcomlearnthu0809100czxtthu0809100czxt14294493video25500376">看教学视频：<a href="https://www.xuetangx.com/learn/THU0809100czxt/THU0809100czxt/14294493/video/25500376">并发与处理器、操作系统和编程语言</a></h3>
+<h3 id="200行代码讲透rust-futures">200行代码讲透RUST FUTURES</h3>
+<p>目的：这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>探索释Rust中的Futures， 为什么他们被设计成这样，以及他们如何工作。</p>
+<p>阅读资料：</p>
+<p>Rust 中写的关于并发编程的第四文章</p>
+<ul>
+<li><a href="https://stevenbai.top/rust/futures_explained_in_200_lines_of_rust/">https://stevenbai.top/rust/futures_explained_in_200_lines_of_rust/</a></li>
+<li><a href="https://cfsamson.github.io/book-exploring-async-basics/">https://cfsamson.github.io/book-exploring-async-basics/</a></li>
+<li><a href="https://cfsamson.gitbook.io/green-threads-explained-in-200-lines-of-rust/">https://cfsamson.gitbook.io/green-threads-explained-in-200-lines-of-rust/</a></li>
+<li><a href="https://cfsamsonbooks.gitbook.io/epoll-kqueue-iocp-explained/">https://cfsamsonbooks.gitbook.io/epoll-kqueue-iocp-explained/</a></li>
+</ul>
+<p>线程为不写并发使用的</p>
+<p>语法：thread::spawn 与spawn闭包</p>
+<p>参数传递方式：同C++11 Lambda的变量捕获</p>
+<h2 id="三-rust中的futures">三 Rust中的Futures</h2>
+<h3 id="概述">概述</h3>
+<ol>
+<li>Rust中并发性的高级介绍</li>
+<li>了解 Rust 在使用异步代码时能提供什么，不能提供什么</li>
+<li>了解为什么我们需要 Rust 的运行时库</li>
+<li>理解“leaf-future”和“non-leaf-future”的区别</li>
+<li>了解如何处理 CPU 密集型任务</li>
+</ol>
+<blockquote>
+<p>注解：</p>
+<p>什么是<code>Future</code>? <code>Future</code>是一些将在未来完成的操作。 Rust中的异步实现基于轮询,每个异步任务分成三个阶</p>
+<ol>
+<li>轮询阶段 执行器(executor</li>
+<li>等待阶段. 事件源(通常称为reactor)注册等待一个事件发生</li>
+<li>. 唤醒阶段</li>
+</ol>
+</blockquote>
+<p>回顾：IO模型</p>
+<ul>
+<li>
+<p>面试经典题目：IO多路复用——深入浅出理解select、poll、epoll</p>
+</li>
+<li>
+<p>面试经典题目：高级IO模型之kqueue和epoll</p>
+</li>
+</ul>
+<p>五种IO模型</p>
+<p>《<em>UNIX网络编程</em>》(第1卷)(套接口API第3版)第1版和第2络专家W. Richard Stevens博士独自编写。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">[1]blockingIO - 阻塞IO
+[2]nonblockingIO - 非阻塞IO
+[3]signaldrivenIO - 信号驱动IO
+[4]asynchronousIO - 异步IO
+[5]IOmultiplexing - IO多路复用
+</code></pre></td></tr></table>
+</div>
+</div><p>多路服用 事件完成通知 事件就绪通知</p>
+<p>面试经典题目：高级IO模型之kqueue和epol</p>
+<p>kqueue 不仅能够处理文件描述符事件，还可以用于各种其他通知，例如文件修改监视、信号、异步 I/O 事件 (AIO)、子进程状态更改监视和支持纳秒级分辨率的计时器，此外 kqueue 提供了一种方式除了内核提供的事件之外，还可以使用用户定义的事</p>
+<p>l</p>
+<p>产品：redis libevent</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/26943938">根据事件类型分配（Dispatch）给某个进程 / 线程*</a></li>
+</ul>
+<blockquote>
+<p>疑问“</p>
+</blockquote>
+<ul>
+<li>
+<p>与<code>leaf-future</code>相比，这些Future本身并不代表I/O资源。 当我们对这些Future进行轮询时, 有可能会运行一段时间或者因为等待相关资源而让度给调度器,然后等待相关资源ready的时候唤醒自己.</p>
+</li>
+<li>
+<p>Rust 和其他语言的区别在于，在选择运行时时，您必须进行主动选择。大多数情况下，在其他语言中，你只会使用提供给你的那一种。</p>
+</li>
+</ul>
+<p>异步运行时可以分为两部分: 1. 执行器(The Executor) 2. reactor (The Reactor)</p>
+<p>当 Rusts Futures 被设计出来的时候，有一个愿望，那就是将通知<code>Future</code>它可以做更多工作的工作与<code>Future</code>实际做工作分开。</p>
+<p>异步运行时可以分为两部分: 1. 执行器(The Executor) 2. reactor (The Reactor)</p>
+<p>当</p>
+<ol>
+<li><a href="https://github.com/async-rs/async-std">async-std</a></li>
+<li><a href="https://github.com/tokio-rs/tokio">Tokio</a></li>
+</ol>
+<p>这就是Rust标准库所做的。 正如你所看到的，不包括异步I/O的定义,这些异步任务是如何被创建的,如何运行的。</p>
+<p><a href="https://github.com/async-rs/async-std">https://github.com/async-rs/async-std</a></p>
+<p><a href="https://github.com/tokio-rs/tokio">https://github.com/tokio-rs/tokio</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-11-06 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/book/">book</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/2023/do_book_weekly7/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">只管去做践N0.7</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2023/5_how_to_use_crash/">
+            <span class="next-text nav-default">使用 Clash 为 Linux 提供网络代理服务</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

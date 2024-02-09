@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为oceanbase贡献者第四天：内置函数 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习，专业上只能靠自己" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为oceanbase贡献者第四天：内置函数" />
+<meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-26T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-05-26T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为oceanbase贡献者第四天：内置函数">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2023-05-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-05-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6840">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为oceanbase贡献者第四天：内置函数"/>
+<meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为oceanbase贡献者第四天：内置函数</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-26 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 6840 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#sql-客户端">sql 客户端</a></li>
+        <li><a href="#parser模块">parser模块</a></li>
+        <li><a href="#resolver模块">resolver模块</a></li>
+        <li><a href="#resolver模块-1">resolver模块</a></li>
+        <li><a href="#表达式注册">表达式注册</a></li>
+        <li><a href="#geometry">geometry</a></li>
+        <li><a href="#to_do">to_do</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#如何测试">如何测试</a></li>
+        <li><a href="#单元测试">单元测试</a></li>
+        <li><a href="#task3-st_exteriorringpoly">task3 ST_ExteriorRing(poly)</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#遇到的坑">遇到的坑</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="一overview">#一、Overview</h1>
+<p>大家好， 本文主要描述是如何OceanBase 社区版实现一个 MySQL 5.7 新增的系统内建函数。</p>
+<p>通过https://github.com/oceanbase/oceanbase/issues/1400 实践</p>
+<p>开始时间：2023-6-8号&ndash;</p>
+<p>思考 60秒，可能会产生下面几个疑问。</p>
+<blockquote>
+<p>微行动：拆分到自己可用完成的步骤</p>
+</blockquote>
+<ul>
+<li>
+<p>新增一个表达式 ，需要修改parser模块吗？ done</p>
+</li>
+<li>
+<p>参考 <a href="https://github.com/boostorg/geometry/tree/develop">https://github.com/boostorg/geometry/tree/develop</a> 写一个 Boost.Geometry ExteriorRing 例子  done</p>
+</li>
+<li>
+<p>todo-3:如何为Boost.Geometry ExteriorRing写一个单元测试。</p>
+</li>
+<li>
+<p>了解boost库ExteriorRing 例子https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp，但是 ObGeoFuncAreaImpl 中这么多OB_GEO_GEOG_BINARY_FUNC_DEFAULT 宏是做用的。</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/813fe3b29417a79cdaf369b19161f479.png" alt=""></p>
+<h1 id="二-solutions">二、 Solutions</h1>
+<blockquote>
+<p>通过例子学习</p>
+<p>可以参考当前已有的实现，比如ST_area。</p>
+<p>主要参考代码文件</p>
+<p>ob_expr_st_area.cpp.h</p>
+<p>ob_expr_st_area.h</p>
+<p>ob_geo_func_area.cpp/.h</p>
+<p>ob_geo_func_register.h</p>
+</blockquote>
+<p>涉及文件：</p>
+<ul>
+<li>ob_sql.cpp:2425</li>
+<li>ob_dml_resolver.cpp:1589</li>
+<li>ob_select_resolver.cpp:1859</li>
+<li>ob_select_resolver.cpp:1274</li>
+</ul>
+<h3 id="sql-客户端">sql 客户端</h3>
+<table>
+<thead>
+<tr>
+<th>ST_Area({poly</th>
+<th>mpoly})</th>
+<th>计算多边形的面积，参数可以是Polygon或者MultiPolygon，MultiPolygon的面积是其中所有多边形面积的和</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="p">.</span><span class="n">mysql</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">refman</span><span class="o">/</span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">gis</span><span class="o">-</span><span class="n">polygon</span><span class="o">-</span><span class="n">property</span><span class="o">-</span><span class="n">functions</span><span class="p">.</span><span class="n">html</span><span class="o">#</span><span class="n">function_area</span><span class="w">
+</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">poly</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="w">       </span><span class="s1">&#39;Polygon((0 0,0 3,3 0,0 0),(1 1,1 2,2 1,1 1))&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">poly</span><span class="p">));</span><span class="w">
+</span><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
+</span><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">poly</span><span class="p">))</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
+</span><span class="c1"></span><span class="o">|</span><span class="w">                               </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
+</span><span class="c1"></span><span class="w">
+</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">mpoly</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="w">       </span><span class="s1">&#39;MultiPolygon(((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1)))&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">mpoly</span><span class="p">));</span><span class="w">
+</span><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
+</span><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">mpoly</span><span class="p">))</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
+</span><span class="c1"></span><span class="o">|</span><span class="w">                                </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="parser模块">parser模块</h3>
+<blockquote>
+<p>表达式是如何被解析的</p>
+</blockquote>
+<p>Parser 是整个 SQL 执行引擎的词法或语法解析器。通过flex（ 词法分析器生成工具） 和bison(语法分析器生成器) 通过把 SQL 字符串解析为一个 ParseNode 组成的抽象语法树。</p>
+<p>用法参考：miniob-sql-parser.md</p>
+<p>相关代码：</p>
+<ul>
+<li>
+<p>ob_parser.cpp</p>
+</li>
+<li>
+<p>sql_parser_mysql_mode.l</p>
+</li>
+<li>
+<p>sql_parser_mysql_mode.y</p>
+</li>
+</ul>
+<h3 id="resolver模块">resolver模块</h3>
+<p>ObDMLResolver::resolve_sql_expr</p>
+<p><code>ObDMLResolver::resolve_sql_expr</code>函数：</p>
+<ul>
+<li>
+<p>功能：该函数用于解析SQL表达式并生成对应的<code>ObRawExpr</code>对象，同时进行一系列的解析和分析操作，</p>
+<p>​     包括解析函数、解析列、解析系统变量等。</p>
+</li>
+<li>
+<p>输入参数：</p>
+<ul>
+<li><code>const ParseNode &amp;node</code>：要解析的 SQL 表达式的语法节点。</li>
+<li><code>ObRawExpr *&amp;expr</code>：解析后的表达式树的指针，通过该参数返回。</li>
+<li><code>ObArray&lt;ObQualifiedName&gt; *output_columns</code>：可选参数，用于存储解析过程中发现的列名信息。</li>
+</ul>
+</li>
+</ul>
+<h3 id="resolver模块-1">resolver模块</h3>
+<blockquote>
+<p>判断st_area函数是否存在</p>
+</blockquote>
+<p>表达式解析类是位于sql/resolver/expr 的ObRawExprResolver，它输入ObParseNode 树，输出表达式树 ObRawExpr 。</p>
+<p>这个 ObRawExpr 仅用于优化器阶段的语义分析优化，在生成物理执行计划后会被转换为为执行效率优化的 ObExpr 。</p>
+<p>文件：D:\db\oceanbase\src\sql\resolver\expr\ob_raw_expr_resolver_impl.cpp</p>
+<ol>
+<li>根据节点的类型：case T_FUN_SYS:，执行process_fun_sys_node和process_dll_udf_node(udf其他特殊类型的函数这里跳过)</li>
+</ol>
+<ul>
+<li>ObRawExprResolverImpl::process_fun_sys_node(const ParseNode *node, ObRawExpr *&amp;expr)</li>
+</ul>
+<p>​    在递归解析参数列表之前, 先检查下当前函数是否存在, 这是因为如果该函数报错          OB_ERR_FUNCTION_UNKNOWN, 外部会继续尝试是否是UDF、</p>
+<ol start="2">
+<li>根据函数名字查找类型type = ObExprOperatorFactory::get_type_by_name(func_name);</li>
+</ol>
+<ul>
+<li>ObExprOperatorType ObExprOperatorFactory::get_type_by_name(const ObString &amp;name)</li>
+</ul>
+<h3 id="表达式注册">表达式注册</h3>
+<blockquote>
+<p>ob_expr_operator_factory.cpp  ObExprSTArea函数是如何被注册的？</p>
+</blockquote>
+<p>执行过程分析</p>
+<ol>
+<li>
+<p>ObExprSTArea op(alloc) //构造函数，虽然只有一个参数，但是继承关系，默认 函数名字和类型写死了。</p>
+</li>
+<li>
+<p>表达式名字： st_area，表达式类型 T_FUN_SYS_ST_AREA 1676</p>
+</li>
+</ol>
+<p>#define N_ST_AREA                           &ldquo;st_area&rdquo;</p>
+<p>T_FUN_SYS_ST_AREA = 1676,</p>
+<p>sql 命令 关联函数执行</p>
+<ol>
+<li>REG_OP 实现是一个 lambda表达式，通过引用的方式捕获 获取外部变量：</li>
+</ol>
+<p>​     其中 i ,alloc,NAME_TYPES 含义 表达式个数，分配器类型和全局静态数组</p>
+<p>​      ObExprOperatorFactory::register_expr_operators()</p>
+<ul>
+<li>对照代码 ObExprOperatorFactory::register_expr_operators()</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">register_expr_operators</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">NAME_TYPES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">NAME_TYPES</span><span class="p">));</span>
+  <span class="n">ObArenaAllocator</span> <span class="n">alloc</span><span class="p">;</span>
+  <span class="kt">int64_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//
+</span><span class="c1"></span>  <span class="n">REG_OP</span><span class="p">(</span><span class="n">ObExprSTArea</span><span class="p">);</span><span class="c1">//注册表达式，这里面是lambda表达式
+</span><span class="c1"></span><span class="p">}</span>
+    
+<span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">NameType</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">EXPR_OP_NUM</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+
+<span class="cp">#define REG_OP(OpClass)                             \
+</span><span class="cp">  do { </span><span class="c1">//lambda 语法，[&amp;] 按引用的方式捕获所有外部变量。                                             \
+</span><span class="c1"></span>    <span class="p">[</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span>                                         \
+      <span class="n">OpClass</span> <span class="nf">op</span><span class="p">(</span><span class="n">alloc</span><span class="p">);</span>  <span class="c1">// ObExprSTArea(common::ObIAllocator &amp;alloc);                        \
+</span><span class="c1">      if (OB_UNLIKELY(i &gt;= EXPR_OP_NUM)) {          \
+</span><span class="c1">        LOG_ERROR(&#34;out of the max expr&#34;);           \
+</span><span class="c1">      } else {                                      \
+</span><span class="c1">        NAME_TYPES[i].name_ = op.get_name();        \   //外部变量   位置register_expr_operators 
+</span><span class="c1"></span>        <span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">type_</span> <span class="o">=</span> <span class="n">op</span><span class="p">.</span><span class="n">get_type</span><span class="p">();</span>        \
+        <span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">is_internal_</span> <span class="o">=</span> <span class="n">op</span><span class="p">.</span><span class="n">is_internal_for_mysql</span><span class="p">();</span> \
+        <span class="n">OP_ALLOC</span><span class="p">[</span><span class="n">op</span><span class="p">.</span><span class="n">get_type</span><span class="p">()]</span> <span class="o">=</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">alloc</span><span class="o">&lt;</span><span class="n">OpClass</span><span class="o">&gt;</span><span class="p">;</span> \
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>  <span class="c1">//外部变量   位置register_expr_operators                                     \
+</span><span class="c1">      }                                             \
+</span><span class="c1">    }();                                            \
+</span><span class="c1">  } while(0) //只执行一次就结束 理解成if
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>旁白：</p>
+</blockquote>
+<ul>
+<li>lambda本质就是 函数对象，在stl源码解析book有解释 函数对象：opeartor ()的一个类.</li>
+<li>lambda 语法，<strong>[&amp;]</strong> 按引用的方式捕获所有外部变量。</li>
+<li><strong>define是在预处理中进行替换，const语句是实实在在的编译器处理的</strong></li>
+<li></li>
+</ul>
+<h4 id="engineexpr">engine/expr</h4>
+<h4 id="obexprstareaeval_st_area是如何实现的">ObExprSTArea::eval_st_area是如何实现的</h4>
+<ol>
+<li>在ObExpr::EvalFunc g_expr_eval_functions 添加新的计算函数</li>
+</ol>
+<p>​       ObExprSTArea::eval_st_area,                                         /* 557 */</p>
+<ol start="2">
+<li>ObExprSTArea::eval_st_area 函数</li>
+<li>调用 Making Use of Boost Geometry in MySQL GIS</li>
+</ol>
+<ul>
+<li><a href="https://www.boost.org/doc/libs/1_78_0/libs/geometry/doc/html/index.html">https://www.boost.org/doc/libs/1_78_0/libs/geometry/doc/html/index.html</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#define REG_SER_FUNC_ARRAY(id, array, size) \
+  static_assert(id &gt;= 0 &amp;&amp; id &lt; OB_SFA_MAX, &#34;too big id&#34; #id); \
+  bool g_reg_ser_func_##id = ObFuncSerialization::reg_func_array( \
+      id, reinterpret_cast&lt;void **&gt;(array), size);
+
+} // end namespace sql
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="geometry">geometry</h3>
+<ol>
+<li>Why Boost.Geometry in MySQL?</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">computational geometry is not our field of expertise。
+We evaluated multiple geometry libraries, and Boost.Geometry proved to fit our needs best.
+http://mysql.taobao.org/monthly/2021/07/06/
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>
+<p>GIS数据类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">    GEOMETRY：不可实例化的数据类型，但是可以作为一个列的类型，存储任何一种其他类型的数据
+    POINT：点
+    LINESTRING：线
+    POLYGON：多边形，由多条闭合的线构成的图形
+    MULTIPOINT：点集合
+    MULTILINESTRING：线集合
+    MULTIPOLYGON：多边形集合
+    GEOMCOLLECTION：空间对象集合
+
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>GIS对象属性
+MySQL中每个GIS对象都具有一些属性，MySQL中有一系列函数来获取GIS对象的属性，
+类型(type)：每个GIS对象都会有一个类型，表示了该对象是上述八种类型中的哪一种。</p>
+</li>
+<li>
+<p>GIS数据格式</p>
+<p>MySQL中支持WKT以及WKB两种格式来操作GIS数据，同时在内部以另外一种格式存储GIS数据。</p>
+</li>
+</ol>
+<p>WKT</p>
+<p>即文本格式，在用户操作GIS类型的数据时可以使用直观的文本进行插入或查询，</p>
+<p>MySQL支持OpenGIS定义的语法来写WKT数据，</p>
+<ul>
+<li>
+<p>在用户进行插入时可以使用ST_GeomFromText等函数来将WKT格式的GIS数据转换成内部格式进行插入，</p>
+</li>
+<li>
+<p>在进行查询时可以使用ST_AsText函数来将内部数据转换为更直观的WKT结果格式。</p>
+</li>
+</ul>
+<p>示例如下：</p>
+<p>WKT用文本的方式来表达Geometry，便于人的阅读。</p>
+<p>WKT的格式为：Geometry类型(坐标数据)</p>
+<p>Point：POINT(15 20)</p>
+<p>LineString：LINESTRING(0 0, 10 10, 20 25, 50 60)</p>
+<p>Polygon ：POLYGON((0 0,10 0,10 10,0 10,0 0),(5 5,7 5,7 7,5 7, 5 5))</p>
+<p>MultiPoint：MULTIPOINT(0 0, 20 20, 60 60)</p>
+<p>MultiLineString：MULTILINESTRING((10 10, 20 20), (15 15, 30 15))</p>
+<p>MultiPolygon：MULTIPOLYGON(((0 0,10 0,10 10,0 10,0 0)),((5 5,7 5,7 7,5 7, 5 5))) //？？和Polygon  区别是？</p>
+<p>参考：<a href="https://www.cnblogs.com/marsprj/archive/2013/02/08/2909452.html">矢量空间数据格式</a></p>
+<p>Polygon和MultiPolygon的结构较为复杂，概念相也容易混淆。Polygon和MultiPolygon都由多个环(Ring)构成的封闭的面状实体。</p>
+<p><img src="assets/09235635-00812c4355b3495eacb08f58d0331067.png" alt="img"></p>
+<ul>
+<li>
+<p>Polygon具有1个外环和0个或n个内环构成。</p>
+<p>MultiPoylgon由多个Plygon构成，Plygon之间的空间关系是相离，因此MultiPolygon并没有外环。</p>
+</li>
+</ul>
+<p>多面(MultiPolygon)</p>
+<p>由多个相离的Polygon构成，并没有一个外环。</p>
+<p><img src="assets/09235652-bca770a47efa4c1a9c5e3b7eefb75b64.png" alt="img"></p>
+<p>​</p>
+<p>GeometryCollection：GEOMETRYCOLLECTION(POINT(1 -1), POINT(10 10), POINT(30 30), LINESTRING(15 15, 20 20))</p>
+<p>WKB</p>
+<p>该格式时OpenGIS定义的一个格式，使用二进制数据来保存信息，</p>
+<p>例如平面坐标系下的点(1,-1)的WKB格式为：
+0101000000000000000000F03F000000000000F0BF`</p>
+<p>5.GIS函数</p>
+<p><a href="https://www.boost.org/doc/libs/1_63_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_2_with_strategy.html">https://www.boost.org/doc/libs/1_63_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_2_with_strategy.html</a></p>
+<p>GIS函数</p>
+<p>MySQL提供了一系列的空间数据分析计算函数，大部分空间数据计算函数是基于Boost.Geometry库实现的，选择Boost的原因可以参考Manyi Lu的博客。</p>
+<p>空间数据计算函数主要分为空间对象构造、空间数据格式转换、空间对象属性、空间对象关系计算，空间对象生成等等几大类</p>
+<p>MySQL中GIS函数的实现定义在sql/item_geofunc*等文件中，其中大部分定义在sql/item_geofunc.h和sql/item_geofunc.cc文件中。</p>
+<h3 id="to_do">to_do</h3>
+<blockquote>
+<p>参考 <a href="https://github.com/boostorg/geometry/tree/develop">https://github.com/boostorg/geometry/tree/develop</a> 写一个 Boost.Geometry ExteriorRing 例子   下面是记录过程</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ST_ExteriorRing(poly)</th>
+<th>返回一个多边形对象的外圈，返回值是linestring（一条线），参数只能是polygon，否则报错或返回NULL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/exterior_ring.hpp
+
+https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
+https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ring_type.hpp //type_traits
+https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/tags.hpp //GIS数据类型 是类标识，不是枚举值作用是什么？参考stl中的设计。
+/workspaces/oceanbase/unittest/share/test_geo_func_difference.cpp
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">brief：该函数返回多边形的外环。
+ingroup：该函数属于 exterior_ring 组。
+note：该函数符合 OGC 标准，即符合开放地理空间联盟的标准。与 &#34;ExteriorRing&#34; 不同，该函数使用 &#34;exterior ring&#34;。
+tparam：这是一个模板参数。Polygon 是将要从中获取外环的多边形的类型。
+param：这是函数的参数。polygon 是将要从中获取外环的多边形的引用。
+return：该函数返回一个指向外环的常量引用。
+
+/*!
+\brief Function to get the exterior ring of a polygon (const version)
+\ingroup exterior_ring
+\note OGC compliance: instead of ExteriorRing
+\tparam Polygon polygon type
+\param polygon the polygon to get the exterior ring from
+\return a const reference to the exterior ring
+
+\qbk{distinguish,const version}
+*/
+template &lt;typename Polygon&gt;
+inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
+        Polygon const&amp; polygon)
+{
+    return core_dispatch::exterior_ring
+        &lt;
+            typename tag&lt;Polygon&gt;::type,
+            Polygon const
+        &gt;::apply(polygon);
+}
+
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>小贴士：还是没看明白可用参考 看msyql 如何实现</p>
+</blockquote>
+<hr>
+<h1 id="第三部分st_exteriorring实现过程">第三部分：ST_ExteriorRing实现过程</h1>
+<h4 id="新增一个函数相关文件">新增一个函数相关文件</h4>
+<ol>
+<li>
+<p><strong>表达式和geo函数之间关系</strong></p>
+<ul>
+<li>D:\db\oceanbase\deps\oblib\src\lib\geo\ob_geo_func_register.h</li>
+<li>deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp</li>
+</ul>
+</li>
+<li>
+<p><strong>geo函数实现</strong></p>
+</li>
+</ol>
+<ul>
+<li>
+<p>D:\db\oceanbase\deps\oblib\src\lib\CMakeLists.txt</p>
+</li>
+<li>
+<p>D:\db\oceanbase\deps\oblib\src\lib\geo\ob_geo_func_exterior_ring.cpp</p>
+</li>
+<li>
+<p>D:\db\oceanbase\deps\oblib\src\lib\geo\ob_geo_func_exterior_ring.h</p>
+<ol start="3">
+<li><strong>新增一个函数实现</strong></li>
+</ol>
+</li>
+<li>
+<p>D:\db\oceanbase\src\sql\CMakeLists.txt</p>
+</li>
+<li>
+<p>D:\db\oceanbase\src\sql\engine\expr\ob_expr_operator_factory.cpp</p>
+</li>
+<li>
+<p>D:\db\oceanbase\src\sql\engine\expr\ob_expr_st_exterior_ring.cpp</p>
+</li>
+<li>
+<p>D:\db\oceanbase\src\objit\include\objit\common\ob_item_type.h</p>
+</li>
+<li>
+<p>D:\db\oceanbase\deps\oblib\src\lib\ob_name_def.h</p>
+</li>
+<li>
+<p>D:\db\oceanbase\src\sql\resolver\expr\ob_raw_expr.h</p>
+</li>
+<li>
+<p>D:\db\oceanbase\src\sql\engine\expr\ob_expr_eval_functions.cpp</p>
+<p><strong>单元测试</strong></p>
+</li>
+<li>
+<p>D:\db\oceanbase\unittest\share\CMakeLists.txt</p>
+</li>
+</ul>
+<h4 id="如何提交pr">如何提交pr</h4>
+<ul>
+<li>方法1 ： 自己提交，利用github提交</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 1. 关联远程仓库，保证代码可以和远程更新和提交</span>
+git remote add oceanbase https://github.com/oceanbase/oceanbase.git
+git remote -v
+
+<span class="c1"># 2. oceanbase代码更新后更新自己仓库 </span>
+
+自己在github 界面上 同步 然后pull
+
+<span class="c1"># 3. 提交分支到远程自己仓库</span>
+ git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
+<span class="c1"># 从将本地的分支版本上传到远程参考(这里不是pr提交)</span>
+git push origin issue_1400:issue_1400
+
+<span class="c1"># 4. 界面上 提交pr</span>
+<span class="c1"># 5. 可选</span>
+git push --set-upstream origin issue_1400
+origin 是默认的远程版本库名称
+等价于git push origin issue_1400:issue_1400 
+
+如果你用Windows就设置全局变量 
+git config --global core.autocrlf <span class="nb">true</span> 
+如果是mac/linux则设置 
+git config --global core.autocrlf input 
+ 如果使用 <span class="nb">set</span> list 显示隐藏字符 : <span class="nb">set</span> nolist ：不显示
+
+
+
+合并到master
+git checkout master
+<span class="c1">#把本地分支合并到master</span>
+git merge issue_1400
+
+手工修改
+当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成
+git add xxx
+git commit -m <span class="s2">&#34;merged from main&#34;</span>
+继续
+git merge issue_1400
+已经是最新的。
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="如何测试">如何测试</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+<span class="c1"># DEBUG 构建</span>
+bash build.sh debug --init
+
+<span class="c1"># 这里没有制作镜像，之间覆盖4.0版本的</span>
+<span class="nb">echo</span> <span class="m">3</span> &gt; /proc/sys/vm/drop_caches
+tiup cluster stop watchpoints //关闭其他的
+tiup cluster disable watchpoints  //关闭其他的
+<span class="c1"># 制作本地镜像</span>
+make <span class="nv">DESTDIR</span><span class="o">=</span>./ install <span class="o">&amp;&amp;</span> 
+obd mirror create -n oceanbase-ce -V 4.2.0.1 -p ./usr/local -t my-oceanbase
+Package ok
+name: oceanbase-ce
+version: 4.2.0.1
+release:20230615110800
+arch: x86_64
+md5: dd828bcc94f6f4257d212bc73f7cbc42
+Trace ID: d5ee1980-0b29-11ee-a4c9-000c29378c15
+
+<span class="c1"># 离线安装部署，禁用远程仓库</span>
+obd mirror disable remote
+
+配置文件：
+
+
+<span class="o">[</span>root@localhost oceanbase<span class="o">]</span><span class="c1"># cat mini-local-example.yaml</span>
+oceanbase-ce:
+  tag: my-oceanbase
+  servers:
+    <span class="c1"># Please don&#39;t use hostname, only IP can be supported</span>
+    - 127.0.0.1
+  global:
+    <span class="c1">#  The working directory for OceanBase Database. OceanBase Database is started under this directory. This is a required field.</span>
+    home_path: /mnt/ob/observer
+    <span class="c1"># The directory for data storage. The default value is $home_path/store.</span>
+    data_dir: /mnt/ob/data
+    <span class="c1"># The directory for clog, ilog, and slog. The default value is the same as the data_dir value.</span>
+    redo_dir: /mnt/ob/redo
+    <span class="c1"># Please set devname as the network adaptor&#39;s name whose ip is  in the setting of severs.</span>
+    <span class="c1"># if set severs as &#34;127.0.0.1&#34;, please set devname as &#34;lo&#34;</span>
+    <span class="c1"># if current ip is 192.168.1.10, and the ip&#39;s network adaptor&#39;s name is &#34;eth0&#34;, please use &#34;eth0&#34;</span>
+    devname: lo
+    mysql_port: <span class="m">2881</span> <span class="c1"># External port for OceanBase Database. The default value is 2881. DO NOT change this value after the cluster is started.</span>
+    rpc_port: <span class="m">2882</span> <span class="c1"># Internal port for OceanBase Database. The default value is 2882. DO NOT change this value after the cluster is started.</span>
+    zone: zone1
+    cluster_id: <span class="m">1</span>
+    <span class="c1"># please set memory limit to a suitable value which is matching resource.</span>
+    memory_limit: 6G <span class="c1"># The maximum running memory for an observer</span>
+    system_memory: 1G <span class="c1"># The reserved system memory. system_memory is reserved for general tenants. The default value is 30G.</span>
+    datafile_size: 15G <span class="c1"># Size of the data file.</span>
+    log_disk_size: 10G <span class="c1"># The size of disk space used by the clog files.</span>
+    cpu_count: <span class="m">4</span>
+    production_mode: <span class="nb">false</span>
+    enable_syslog_wf: <span class="nb">false</span> <span class="c1"># Print system logs whose levels are higher than WARNING to a separate log file. The default value is true.</span>
+    enable_syslog_recycle: <span class="nb">true</span> <span class="c1"># Enable auto system log recycling or not. The default value is false.</span>
+    max_syslog_file_count: <span class="m">4</span> <span class="c1"># The maximum number of reserved log files before enabling auto recycling. The default value is 0.</span>
+    <span class="c1"># root_password: # root user password, can be empty</span>
+---------------------------------------------------------------
+
+obd cluster destroy watchpoints //删除之前的，不要轻易执行
+
+<span class="c1"># 创建 </span>
+obd cluster deploy watchpoints -c ./mini-local-example.yaml
+
+obd cluster start watchpoints 
+Wait <span class="k">for</span> observer init ok
++---------------------------------------------+
+<span class="p">|</span>                   observer                  <span class="p">|</span>
++-----------+---------+------+-------+--------+
+<span class="p">|</span> ip        <span class="p">|</span> version <span class="p">|</span> port <span class="p">|</span> zone  <span class="p">|</span> status <span class="p">|</span>
++-----------+---------+------+-------+--------+
+<span class="p">|</span> 127.0.0.1 <span class="p">|</span> 4.2.0.0 <span class="p">|</span> <span class="m">2881</span> <span class="p">|</span> zone1 <span class="p">|</span> ACTIVE <span class="p">|</span>
++-----------+---------+------+-------+--------+
+obclient -h127.0.0.1 -P2881 -uroot -p<span class="s1">&#39;GC29IoH3V9NQk8hIM2yr&#39;</span> -Doceanbase -A
+
+
+obd cluster edit-config watchpoints 
+obd cluster start watchpoints // 启动不了怎么办？
+
+
+
+
+https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_area
+mysql&gt; SET @poly <span class="o">=</span>
+       <span class="s1">&#39;Polygon((0 0,0 3,3 0,0 0),(1 1,1 2,2 1,1 1))&#39;</span><span class="p">;</span>
+mysql&gt; SELECT ST_Area<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
++---------------------------------+
+<span class="p">|</span> ST_Area<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span> <span class="p">|</span>
++---------------------------------+
+<span class="p">|</span>                               <span class="m">4</span> <span class="p">|</span>
++---------------------------------+
+
+
+SELECT ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
+
+obclient <span class="o">[</span>oceanbase<span class="o">]</span>&gt; SELECT ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
++-----------------------------------------+
+<span class="p">|</span> ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span> <span class="p">|</span>
++-----------------------------------------+
+<span class="p">|</span>                                       <span class="m">4</span> <span class="p">|</span>
++-----------------------------------------+
+
+&gt; 画外音：走到这里说明 ST_ExteriorRing生效了，执行结果和ST_Area一样，是因为完全copy了ST_Area代码，下一步就是调用boost实现
+
+mysql&gt; SET @poly <span class="o">=</span>
+       <span class="s1">&#39;Polygon((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))&#39;</span><span class="p">;</span>
+mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">)))</span><span class="p">;</span>
++----------------------------------------------------+
+<span class="p">|</span> ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">)))</span> <span class="p">|</span>
++----------------------------------------------------+
+<span class="p">|</span> LINESTRING<span class="o">(</span><span class="m">0</span> 0,0 3,3 3,3 0,0 0<span class="o">)</span>                    <span class="p">|</span>
++----------------------------------------------------+
+
+ 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="单元测试">单元测试</h3>
+<blockquote>
+<p>todo-3:如何为Boost.Geometry ExteriorRing写一个单元测试？ 参考：test_geo_func_difference.cpp</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+1. cp test_geo_func_difference.cpp test_geo_func_exterior_ring.cpp 
+2. unittest\share\CMakeLists.txt 添加 
+3. 替换
+ sed -i &#39;s/TestGeoFuncDifference/TestGeoFuncExte
+ riorRring/g&#39; test_geo_func_exterior_ring.cpp 
+
+4. unittest/share/test_geo_func_exterior_ring.cpp
+
+//
+发现 ob 提供外环函数计算是不是不用boost提供接口了 bWkbGeogLinearRing&amp; ObWkbGeogPolygon::exterior_ring() ，发现boost 返回的不是简单值，是一个对象的化，bWkbGeogLinearRing&amp; ObWkbGeogPolygon::exterior_ring()用的模板，不行2个都试试吧
+
+
+
+这个得做一些测试吧。boost肯定是对的吧，经过那么多测试。如果返回的数据类型跟预期不符，是否可以转换一下？
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="task3-st_exteriorringpoly">task3 ST_ExteriorRing(poly)</h3>
+<blockquote>
+<p>参考 <a href="https://github.com/boostorg/geometry/tree/develop">https://github.com/boostorg/geometry/tree/develop</a> 写一个 Boost.Geometry ExteriorRing 例子   下面是记录过程</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ST_ExteriorRing(poly)</th>
+<th>返回一个多边形对象的外圈，返回值是linestring（一条线），参数只能是polygon，否则报错或返回NULL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="boostgeometry">boost::geometry</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">brief：该函数返回多边形的外环。
+ingroup：该函数属于 exterior_ring 组。
+note：该函数符合 OGC 标准，即符合开放地理空间联盟的标准。与 &#34;ExteriorRing&#34; 不同，该函数使用 &#34;exterior ring&#34;。
+tparam：这是一个模板参数。Polygon 是将要从中获取外环的多边形的类型。
+param：这是函数的参数。polygon 是将要从中获取外环的多边形的引用。
+return：该函数返回一个指向外环的常量引用。
+
+/*!
+\brief Function to get the exterior ring of a polygon (const version)
+\ingroup exterior_ring
+\note OGC compliance: instead of ExteriorRing
+\tparam Polygon polygon type
+\param polygon the polygon to get the exterior ring from
+\return a const reference to the exterior ring
+
+\qbk{distinguish,const version}
+*/
+template &lt;typename Polygon&gt;
+inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
+        Polygon const&amp; polygon)
+{
+    return core_dispatch::exterior_ring
+        &lt;
+            typename tag&lt;Polygon&gt;::type,
+            Polygon const
+        &gt;::apply(polygon);
+}
+
+https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/exterior_ring.hpp
+
+https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
+https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ring_type.hpp //type_traits
+https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/tags.hpp //GIS数据类型 是类标识，不是枚举值作用是什么？参考stl中的设计。
+/workspaces/oceanbase/unittest/share/test_geo_func_difference.cpp
+
+https://github.com/watchpoints/master-cpp/blob/main/example/Boost/demo.cpp
+
+https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
+</code></pre></td></tr></table>
+</div>
+</div><p>我在编译过程中遇到下面问题，看例子：为什么可用编译通过</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// geography
+    OB_GEO_UNARY_FUNC_BEGIN(ObGeoFuncAreaImpl, ObWkbGeogPolygon, double)
+    {
+      INIT_SUCC(ret);
+      const ObSrsItem *srs = context.get_srs();
+      if (OB_ISNULL(srs))
+      {
+        ret = OB_ERR_NULL_VALUE;
+        LOG_WARN(&#34;srs is null&#34;, K(ret), K(g-&gt;get_srid()), K(g));
+      }
+      else
+      {
+        boost::geometry::srs::spheroid&lt;double&gt; geog_sphere(srs-&gt;semi_major_axis(), srs-&gt;semi_minor_axis());
+        boost::geometry::strategy::area::geographic&lt;&gt; area_strategy(geog_sphere);
+        const ObWkbGeogPolygon *geo = reinterpret_cast&lt;const ObWkbGeogPolygon *&gt;(g-&gt;val());
+        result = boost::geometry::area(*geo, area_strategy);
+      }
+      return ret;
+    }
+    https://www.boost.org/doc/libs/1_65_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_1.html
+    
+    template&lt;typename Geometry&gt;
+    default_area_result&lt;Geometry&gt;::type area(Geometry const &amp; geometry)
+    
+    
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>画外音：自己想很多原因，但是 没有想到结果是 boost::geometry::area(geo） 看走眼了，</p>
+<p>但是很奇怪，明明是2个不同类型没有报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ype area(Geometry const &amp; geometry)
+class ObWkbGeomMultiPolygon
+这个通过带代码没有看清楚。
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>编译错误2：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:10                                                                                                                     8:64: error: non-const lvalue reference to type &#39;double&#39; cannot bind to a value                                                                                                                      of unrelated type &#39;oceanbase::common::ObGeometry *&#39;
+  return ObGeoFuncExteriorRingImpl::eval_geo_func(gis_context, result);
+                                                               ^~~~~~
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:34:85: note:                                                                                                                      passing argument to parameter &#39;result&#39; here
+  static inline int eval_geo_func(const common::ObGeoEvalCtx &amp;gis_context, RetTy                                                                                                                     pe &amp;result);
+                                                                                                                                                                                                         ^
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:66:79: error                                                                                                                     : non-const lvalue reference to type &#39;oceanbase::common::ObGeometry *&#39; cannot bi                                                                                                                     nd to a value of unrelated type &#39;double&#39;
+      ret = Functype::template EvalTree&lt;ObCartesianPoint&gt; :: eval(g, context, re                                                                                                                     sult);
+      
+      
+      
+                                               
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>原因分析： SELECT ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly)));   ST_ExteriorRing 返回的一个是  LINESTRING 对象，现有表达式类型 都是 字符串，json int 没有st对象的定义呢？</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">int ObExprSTExteriorRing::calc_result_type1
+
+ST_ExteriorRing() handles its arguments as described in the introduction to this section.
+
+https://dev.mysql.com/doc/refman/8.0/en/gis-polygon-property-functions.html#function_st-exteriorring
+mysql&gt; SET @poly =
+       &#39;Polygon((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))&#39;;
+mysql&gt; SELECT ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly)));
++----------------------------------------------------+
+| ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly))) |
++----------------------------------------------------+
+| LINESTRING(0 0,0 3,3 3,3 0,0 0)                    |
++----------------------------------------------------+
+
+ObExprSTAsText::ObExprSTAsText
+
+enum class ObGeoType
+{
+  GEOMETRY = 0,
+  POINT = 1,
+  LINESTRING = 2,
+  POLYGON = 3,
+  MULTIPOINT = 4,
+  MULTILINESTRING = 5,
+  MULTIPOLYGON = 6,
+  GEOMETRYCOLLECTION = 7,
+  GEOTYPEMAX = 31, // 5 bit for geometry type in column schema,set max 31
+};
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<p>[1] <a href="http://mysql.taobao.org/monthly/2021/07/06/">http://mysql.taobao.org/monthly/2021/07/06/</a></p>
+<p>[2] <a href="https://www.boost.org/doc/libs/1_55_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_1.html">https://www.boost.org/doc/libs/1_55_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_1.html</a></p>
+<p>[3] <a href="https://desktop.arcgis.com/zh-cn/arcmap/latest/manage-data/using-sql-with-gdbs/st-exteriorring.htm">https://desktop.arcgis.com/zh-cn/arcmap/latest/manage-data/using-sql-with-gdbs/st-exteriorring.htm</a></p>
+<ul>
+<li>
+<p><a href="https://www.ibm.com/docs/en/db2/11.5?topic=sf-st-exteriorring">https://www.ibm.com/docs/en/db2/11.5?topic=sf-st-exteriorring</a></p>
+<ul>
+<li><a href="https://www.boost.org/doc/libs/1_76_0/libs/geometry/doc/html/geometry/reference/access/exterior_ring/exterior_ring_1.html">https://www.boost.org/doc/libs/1_76_0/libs/geometry/doc/html/geometry/reference/access/exterior_ring/exterior_ring_1.html</a></li>
+</ul>
+</li>
+</ul>
+<p>【4】 <a href="https://monica.im/s/f3b3dbfc">https://monica.im/s/f3b3dbfc</a></p>
+<ul>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_st-exteriorring">https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_st-exteriorring</a></li>
+<li><a href="https://help.aliyun.com/document_detail/417061.html">https://help.aliyun.com/document_detail/417061.html</a> done</li>
+</ul>
+<p>【5】侯捷系列视频</p>
+<p><a href="https://github.com/ZachL1/Bilibili-plus">https://github.com/ZachL1/Bilibili-plus</a></p>
+<p>[6] <a href="https://blog.csdn.net/iLuoPu/article/details/124034790">https://blog.csdn.net/iLuoPu/article/details/124034790</a>  阅读中&mdash;-阅读完成</p>
+<p>[7] <a href="https://www.boost.org/doc/libs/1_55_0/libs/geometry/doc/html/geometry/reference/algorithms/sym_difference.html">https://www.boost.org/doc/libs/1_55_0/libs/geometry/doc/html/geometry/reference/algorithms/sym_difference.html</a></p>
+<p><a href="https://www.boost.org/doc/libs/1_64_0/libs/geometry/doc/html/geometry/reference/access/exterior_ring/exterior_ring_1.html">https://www.boost.org/doc/libs/1_64_0/libs/geometry/doc/html/geometry/reference/access/exterior_ring/exterior_ring_1.html</a></p>
+<p>阅读中-</p>
+<p>[8] <a href="https://www.jianshu.com/p/67e474b507a0">https://www.jianshu.com/p/67e474b507a0</a> postgis多边形去孔洞</p>
+<p><a href="https://zhuanlan.zhihu.com/p/62444917">https://zhuanlan.zhihu.com/p/62444917</a></p>
+<h1 id="慢慢来多看多问多总结肯定是可以攻克的">慢慢来，多看、多问、多总结，肯定是可以攻克的。</h1>
+<p>文章地址：</p>
+<p>http://localhost:1313/post/oceanbase/1-2023-05-28-add-fun</p>
+<p><a href="https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun">https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun</a></p>
+<p><a href="https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/">https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/</a></p>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以完全上线的项目，非demo和一个知识点。自己认为真的 不是闹着玩的。。】</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>经过领导，专家 进行鸡蛋里挑骨头。【自己做好了别人路了胡扯，不会对别人产生任何影响，做事和做人一样，无论熟悉人，还是老师，领导，不相关人 反对 他们反馈信号，接受质疑，经过九九八十一难考验，并且你还在坚持认为对的。】</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目。【不听老人言，吃亏在眼前，不敢接受别人批评，说明自己完全没有把握，才去否定 愤怒方式】</p>
+</li>
+</ol>
+<h2 id="遇到的坑">遇到的坑</h2>
+<p>编译1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_type.hpp:95:68: error: no type named &#39;type&#39; in &#39;boost::geometry::traits::interior_const_type&lt;const oceanbase::common::ObWkbGeomPolygon *&gt;&#39;
+            typename traits::interior_const_type&lt;nc_polygon_type&gt;::type,
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
+/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_type.hpp:153:37: note: in instantiation of template class &#39;boost::geometry::core_dispatch::interior_return_type&lt;boost::geometry::polygon_tag, const oceanbase::common::ObWkbGeomPolygon *const&gt;&#39; requested here
+    typedef typename core_dispatch::interior_return_type
+                                    ^
+/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_rings.hpp:135:17: note: in instantiation of template class &#39;boost::geometry::interior_return_type&lt;const oceanbase::common::ObWkbGeomPolygon *const&gt;&#39; requested here
+inline typename interior_return_type&lt;Polygon const&gt;::type interior_rings(
+                ^
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:81:10: note: while substituting deduced template arguments into function template &#39;interior_rings&#39; [with Polygon = const oceanbase::common::ObWkbGeomPolygon *]
+ result= bg::interior_rings(geo);
+         ^
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:81:10: error: no matching function for call to &#39;interior_rings&#39;
+ result= bg::interior_rings(geo);
+         ^~~~~~~~~~~~~~~~~~
+/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_rings.hpp:114:53: note: candidate template ignored: substitution failure [with Polygon = const oceanbase::common::ObWkbGeomPolygon *]
+inline typename interior_return_type&lt;Polygon&gt;::type interior_rings(Polygon&amp; polygon)
+                                                    ^
+/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_rings.hpp:135:59: note: candidate template ignored: substitution failure [with Polygon = const oceanbase::common::ObWkbGeomPolygon *]
+inline typename interior_return_type&lt;Polygon const&gt;::type interior_rings(
+                                                          ^
+In file included from /mnt/oceanbase/oceanbase/build_debug/deps/oblib/src/lib/CMakeFiles/oblib_lib.dir/Unity/unity_oblib_lib_geo/1_cxx.cxx:51:
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:99:19: error: assigning to &#39;oceanbase::common::ObGeometry *&#39; from incompatible type &#39;const oceanbase::common::ObWkbGeogLinearRing&#39;
+    result = geo-&gt;exterior_ring();
+             ~~~~~^~~~~~~~~~~~~~~
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:106:28: error: out-of-line definition of &#39;eval&#39; does not match any declaration in &#39;oceanbase::common::ObGeoFuncExteriorRing&#39;
+int ObGeoFuncExteriorRing::eval(const ObGeoEvalCtx &amp;gis_context, ObGeometry *&amp;result)
+                           ^~~~
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:108:64: error: non-const lvalue reference to type &#39;double&#39; cannot bind to a value of unrelated type &#39;oceanbase::common::ObGeometry *&#39;
+  return ObGeoFuncExteriorRingImpl::eval_geo_func(gis_context, result);
+                                                               ^~~~~~
+/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:34:85: note: passing argument to parameter &#39;result&#39; here
+  static inline int eval_geo_func(const common::ObGeoEvalCtx &amp;gis_context, RetType &amp;result);
+
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-26 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/storage/2_ceph_mon/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">日拱一卒：ceph-mon模块</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ai/01_gpt_from_new_to_master/">
+            <span class="next-text nav-default">ChatGPT从入门到精通</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

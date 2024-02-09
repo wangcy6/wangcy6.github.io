@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tools on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/tools/</link>
+    <description>Recent content in tools on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 19 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>do_book</title>
+      <link>https://wangcy6.github.io/post/2023/2_do_book/</link>
+      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/2_do_book/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>do_book</title>
+      <link>https://wangcy6.github.io/post/book/2_2023_do_book/</link>
+      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/2_2023_do_book/</guid>
+      <description>http://localhost:1313/post/2023/2_do_book/ 少有人走的路 https://www.holisticedu.us/wechat/The_Road_Less_Traveled.pdf D2-NO1-803-问题和痛苦 金句: 替代品带来的痛苦，甚至比逃避的痛苦更为强烈 真正的健康者 寥寥无几。有的逃避问题者，宁可躲</description>
+    </item>
+    
+    <item>
+      <title>ChatGPT从入门到精通</title>
+      <link>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</guid>
+      <description>一次只使用一个工具，其他装作看不见。 第一章：概念 ChatGPT是什么 https://mp.weixin.qq.com/s/Dns5GSsiledxCV2SIhNgrw 第二章：提示词 写专利 例如：绘制时序图 1 2 请绘制 mermaid sequence diagram ： mds 启动 recov</description>
+    </item>
+    
+    <item>
+      <title>学会使用工具：ai</title>
+      <link>https://wangcy6.github.io/post/2023/1.git/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/1.git/</guid>
+      <description>cherry-pick git cherry-pick 可以理解为”挑拣”提交，它会获取某一个分支的单笔提交， 并作为一个新的提交引入到你当前分支上 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术</description>
+    </item>
+    
+    <item>
+      <title>学会使用工具：ai</title>
+      <link>https://wangcy6.github.io/post/2023/13_ai_tool/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/13_ai_tool/</guid>
+      <description>一次只使用一个工具，其他装作看不见。 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二</description>
+    </item>
+    
+  </channel>
+</rss>

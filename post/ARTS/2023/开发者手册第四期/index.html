@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title> - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="本文分为三个部分 产品应用，行业应用 和基础知识 从完成到完美，别想太多，只管去做。 这一期没有什么内容，我依然发出来了，只为重启，上一阶段解释。 马" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/ARTS/2023/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C%E7%AC%AC%E5%9B%9B%E6%9C%9F/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="本文分为三个部分 产品应用，行业应用 和基础知识 从完成到完美，别想太多，只管去做。 这一期没有什么内容，我依然发出来了，只为重启，上一阶段解释。 马" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/ARTS/2023/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C%E7%AC%AC%E5%9B%9B%E6%9C%9F/" /><meta property="article:section" content="post" />
+
+
+
+<meta itemprop="name" content="">
+<meta itemprop="description" content="本文分为三个部分 产品应用，行业应用 和基础知识 从完成到完美，别想太多，只管去做。 这一期没有什么内容，我依然发出来了，只为重启，上一阶段解释。 马">
+
+<meta itemprop="wordCount" content="2052">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="本文分为三个部分 产品应用，行业应用 和基础知识 从完成到完美，别想太多，只管去做。 这一期没有什么内容，我依然发出来了，只为重启，上一阶段解释。 马"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title"></h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 0001-01-01 00:00 </span>
+        
+          <span class="more-meta"> 约 2052 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一公开课资料">一、公开课[资料]</a>
+      <ul>
+        <li><a href="#--阅读书籍leveldb-精通">- 阅读书籍：leveldb 精通</a></li>
+      </ul>
+    </li>
+    <li><a href="#二-tidb">二. TIdb</a></li>
+    <li><a href="#如何成为-tiflash-contributor">如何成为 TiFlash Contributor？</a>
+      <ul>
+        <li><a href="#heading-2"></a></li>
+        <li><a href="#挑战tikv-raft-engine日志丢失tikv恢复失败httpsasktugcomttopic1006099">挑战：<a href="https://asktug.com/t/topic/1006099">TiKV raft engine日志丢失Tikv恢复失败</a></a></li>
+        <li><a href="#挑战2">挑战2:</a></li>
+      </ul>
+    </li>
+    <li><a href="#三-ob社区">三 ob社区</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#四--tdengine">四  TDengine</a>
+      <ul>
+        <li><a href="#五-操作系统">五 。操作系统</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#跑吧-linux内核入门篇">跑吧 Linux内核（入门篇）</a>
+      <ul>
+        <li><a href="#要点1linux系统调用truncate">要点1：Linux系统调用：truncate</a></li>
+        <li><a href="#31-c最重要就是三座大山面向对象技术内存管理模板泛型编程">3.1 C++最重要就是三座大山：面向对象技术，内存管理，模板（泛型编程）</a></li>
+      </ul>
+    </li>
+    <li><a href="#32-猴子都能懂的git入门掌握版本管理">3.2 猴子都能懂的GIT入门〜掌握版本管理〜</a>
+      <ul>
+        <li><a href="#合并代码用cherry-pick">合并代码用cherry-pick</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="0001-01-01T00:00:00" title="January 1, 0001">January 1, 0001</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="heading"></h1>
+<blockquote>
+<p>本文分为三个部分 产品应用，行业应用 和基础知识</p>
+</blockquote>
+<p>从完成到完美，别想太多，只管去做。</p>
+<p>这一期没有什么内容，我依然发出来了，只为重启，上一阶段解释。
+马上开启下一阶段。</p>
+<p>开始时间：2023-07-01
+结束时间：
+一. 行业 从石器时代到黄金时代
+一. 基础知识：从青铜到白银经历问题</p>
+<h1 id="heading-1"></h1>
+<h1 id="一-站在巨人肩膀上">一 、站在巨人肩膀上</h1>
+<h1 id="二-从石器时代到黄金时代">二. 从石器时代到黄金时代</h1>
+<h2 id="一公开课资料">一、公开课[资料]</h2>
+<ul>
+<li>
+<p>数据库/存储学习路径推荐</p>
+<p><a href="https://mp.weixin.qq.com/s/fl-R_ZMQwy0aNQbsXZeQ3Q">https://mp.weixin.qq.com/s/fl-R_ZMQwy0aNQbsXZeQ3Q</a>
+<a href="https://www.yuque.com/attachments/yuque/0/2023/pdf/215144/1687312146522-2b93a5b1-c9e4-4d64-b7fe-5f9d63663b15.pdf?_lake_card=%7B%22src%22%3A%22https%3A%2F%2Fwww.yuque.com%2Fattachments%2Fyuque%2F0%2F2023%2Fpdf%2F215144%2F1687312146522-2b93a5b1-c9e4-4d64-b7fe-5f9d63663b15.pdf%22%2C%22name%22%3A%22%E5%BF%85%E8%AF%BB%EF%BC%81%EF%BC%81%EF%BC%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99.pdf%22%2C%22size%22%3A182593%2C%22ext%22%3A%22pdf%22%2C%22source%22%3A%22%22%2C%22status%22%3A%22done%22%2C%22download%22%3Atrue%2C%22taskId%22%3A%22u715749ac-30fc-46a6-a312-bc144281ffd%22%2C%22taskType%22%3A%22upload%22%2C%22type%22%3A%22application%2Fpdf%22%2C%22__spacing%22%3A%22both%22%2C%22mode%22%3A%22title%22%2C%22id%22%3A%22ud3fc422c%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%2C%22card%22%3A%22file%22%7D">必读！！！数据库开发学习资料.pdf</a>
+进展：0</p>
+</li>
+</ul>
+<h3 id="--阅读书籍leveldb-精通">- 阅读书籍：leveldb 精通</h3>
+<p><a href="https://github.com/watchpoints/leveldb">https://github.com/watchpoints/leveldb</a>
+<a href="https://leveldb-handbook.readthedocs.io/zh/latest/basic.html">https://leveldb-handbook.readthedocs.io/zh/latest/basic.html</a>
+进展：1</p>
+<ul>
+<li>Go 开放课程：MIT 经典课程 《分布式系统》</li>
+</ul>
+<p><a href="https://learnku.com/go/wikis/41239">https://learnku.com/go/wikis/41239</a></p>
+<ul>
+<li>MIT 6.84: Distributed Systems</li>
+</ul>
+<p>官方地址：<a href="https://pdos.csail.mit.edu/6.824/">https://pdos.csail.mit.edu/6.824/</a>
+进展：0</p>
+<h2 id="二-tidb">二. TIdb</h2>
+<p>:::warning
+为什么要看tidb，自己一个担心，前面无数人在 做，自己先做晚来了？
+然后等待3年 5年什么都不事情？然后看看手机电影，
+为纠这个态度，从消息态度变成积极态度，
+一个社区无数文档，无数参与 着说明有价值的。
+你认为正确行业，你认为正确社区，你认为正确的，
+为什么行动呢？着就是最大问题？
+有正确，有价值的不去做，反而去做没有用 事情。破冰
+:::</p>
+<h2 id="如何成为-tiflash-contributor">如何成为 TiFlash Contributor？</h2>
+<p><a href="https://asktug.com/t/topic/693824">https://asktug.com/t/topic/693824</a></p>
+<table>
+<thead>
+<tr>
+<th>资料</th>
+<th>作者</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>High Performance TiDB 课程学习计划</strong></td>
+<td>官方</td>
+<td><a href="https://docs.qq.com/sheet/DY3RueHVEd1JQV1Vi?tab=BB08J2">https://docs.qq.com/sheet/DY3RueHVEd1JQV1Vi?tab=BB08J2</a></td>
+</tr>
+<tr>
+<td><strong>TiFlash 往期源码解读</strong></td>
+<td>官方</td>
+<td><a href="https://asktug.com/t/topic/903372">https://asktug.com/t/topic/903372</a></td>
+</tr>
+<tr>
+<td><strong>Talent Plan 2021 KV</strong></td>
+<td><strong>社区</strong></td>
+<td><a href="https://learn.pingcap.com/learner/course/510001">https://learn.pingcap.com/learner/course/510001</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/tikv/tikv">https://github.com/tikv/tikv</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>### TiDB 社区技术月刊</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>七大模板</td>
+<td><a href="https://tidb.net/book/tidb-monthly/">https://tidb.net/book/tidb-monthly/</a></td>
+<td></td>
+</tr>
+<tr>
+<td>T<strong>iKV 源码阅读三部曲</strong></td>
+<td>社区</td>
+<td><a href="https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg">https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg</a></td>
+</tr>
+<tr>
+<td>### issue</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/pingcap/tidb/issues/7623">https://github.com/pingcap/tidb/issues/7623</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/tikv/tikv/issues/8650">https://github.com/tikv/tikv/issues/8650</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://asktug.com/t/topic/693645">【源码类学习资源大放送】TiDB、TiKV、TiFlash、Chaos Mesh 等源码解读补给站</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>|
+| <a href="https://asktug.com/t/topic/693645/1">https://asktug.com/t/topic/693645/1</a> |
+| <a href="https://asktug.com/t/topic/1000469">最近学习数据库源码 遇到的疑惑，希望过来人帮忙解答</a> |  | <a href="https://asktug.com/t/topic/1000469?_gl=1*fkkx3*_ga*MjI2MTMzMTkyLjE2NzM5MjYyNDI.*_ga_5FQSB5GH7F*MTY3NzE1NzkzOS4yMi4wLjE2NzcxNTc5MzkuMC4wLjA.">https://asktug.com/t/topic/1000469?_gl=1<em>fkkx3</em>_ga<em>MjI2MTMzMTkyLjE2NzM5MjYyNDI.</em>_ga_5FQSB5GH7F*MTY3NzE1NzkzOS4yMi4wLjE2NzcxNTc5MzkuMC4wLjA.</a> |</p>
+<h3 id="heading-2"></h3>
+<h3 id="挑战tikv-raft-engine日志丢失tikv恢复失败httpsasktugcomttopic1006099">挑战：<a href="https://asktug.com/t/topic/1006099">TiKV raft engine日志丢失Tikv恢复失败</a></h3>
+<p><a href="https://asktug.com/t/topic/1006099">https://asktug.com/t/topic/1006099</a></p>
+<p>第一步： 盯着问题根本无法解决，凭空想想不出来的问题变为tikv如何加载recover日志的。</p>
+<h3 id="挑战2">挑战2:</h3>
+<p><a href="https://github.com/pingcap/tidb/issues/44219">Incorrect data conversion · Issue #44219 · pingcap/tidb</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-basic" data-lang="basic"><span class="vg">CREATE</span><span class="w"> </span><span class="vg">TABLE</span><span class="w"> </span><span class="vg">t1</span><span class="w"> </span><span class="p">(</span><span class="vg">c1</span><span class="w"> </span><span class="kr">INT</span><span class="w"> </span><span class="vg">UNSIGNED</span><span class="w"> </span><span class="ow">NOT</span><span class="w"> </span><span class="vg">NULL</span><span class="p">);</span>
+<span class="vg">INSERT</span><span class="w"> </span><span class="vg">INTO</span><span class="w"> </span><span class="vg">t1</span><span class="w"> </span><span class="vg">VALUES</span><span class="w"> </span><span class="p">(</span><span class="il">0</span><span class="p">);</span>
+<span class="vg">SELECT</span><span class="w"> </span><span class="vg">c1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="c1">&#39;7&#39; FROM t1;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>开发进展：</p>
+<p>提问3： <a href="https://asktug.com/t/topic/1007498">tidb 如何禁止开启启动</a>
+分类：运维部署
+回答：</p>
+<p>提问4:我的SQL走tiflash
+<a href="https://asktug.com/t/topic/1007129/15">TIFLASH sql优化问题</a></p>
+<p>分类：架构设计
+回答：</p>
+<h2 id="三-ob社区">三 ob社区</h2>
+<p>提问1：
+函数ST_ExteriorRing已经新增了，ST_ExteriorRing函数都是boost geometry 不需要自己实现把？
+<a href="https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_st-exteriorring">https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_st-exteriorring</a>
+分类：sql引引擎
+答： 所有的函数的都是调用boost库的，我看MySQL也是这么做的，当时MySQL还写了一个文章为什么要用</p>
+<h4 id="提问2-_-关于__all_virtual_server_stat表的各字段的含义描述是从什么渠道了解到的呢找了官方文档没找到在哪">提问2： _ 关于__all_virtual_server_stat表的各字段的含义描述,是从什么渠道了解到的呢,找了官方文档没找到在哪</h4>
+<p>分类：多租户
+回答：无</p>
+<h4 id="提问3-我这边三台服务器有一台数据被清除了集群起不来这种有办法处理吗每台服务器上只有一个节点">提问3： 我这边三台服务器，有一台数据被清除了，集群起不来，这种有办法处理吗，每台服务器上只有一个节点</h4>
+<p>分类：高可用 ！！！！
+回答：</p>
+<p>gdb 设置断点很容易造成选举失败，推荐单元测试</p>
+<p>可以用debug sync</p>
+<h2 id="四--tdengine">四  TDengine</h2>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>模块</th>
+<th>提问</th>
+<th>回答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>技能</td>
+<td><a href="https://mp.weixin.qq.com/s/p0mhBpdHDk2kxQMDD75Z3A">通过招聘看要求</a></td>
+<td>必须掌握英语。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>理念</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+<h3 id="五-操作系统">五 。操作系统</h3>
+<h1 id="三-开发者手册httpwwwruanyifengcomblogdeveloper从青铜到白银经">三. <a href="http://www.ruanyifeng.com/blog/developer/">开发者手册</a>：从青铜到白银经</h1>
+<h2 id="跑吧-linux内核入门篇">跑吧 Linux内核（入门篇）</h2>
+<h3 id="要点1linux系统调用truncate">要点1：Linux系统调用：truncate</h3>
+<p>函数：</p>
+<p>int truncate(const char *path,off_t length);</p>
+<p><a href="https://man7.org/linux/man-pages/man2/truncate.2.html">https://man7.org/linux/man-pages/man2/truncate.2.html</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> If the file previously was larger than this size, the extra data
+       is lost.  If the file previously was shorter, it is extended, and
+       the extended part reads as null bytes (&#39;\0&#39;)
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://img-blog.csdnimg.cn/c4df106b62f84df587555257f937e741.png" alt=""></p>
+<p>要点2：cat</p>
+<p>-A, &ndash;show-all
+equivalent to -vET</p>
+<p>第一步：使用下述命令看看该文件的格式，dos格式的文件行尾为^M$，unix格式的文件行尾为$</p>
+<p>第二步：使用下述命令直接替换结尾符为unix格式</p>
+<p>命令行：sed -i &ldquo;s/\r//&rdquo; [xxx.sh]</p>
+<p><strong>bash: /home/xxx.sh: /bin/bash^M: bad interpreter: No such file or directory</strong></p>
+<h3 id="31-c最重要就是三座大山面向对象技术内存管理模板泛型编程">3.1 C++最重要就是三座大山：面向对象技术，内存管理，模板（泛型编程）</h3>
+<ol>
+<li>std::unique_ptr 默认不允许拷贝构造，拷贝赋值，为什么函数可以返回unique_ptr ？<a href="https://blog.csdn.net/xiaoxiaoguailou/article/details/123316470">而不是&amp;unique_ptr</a></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"> <span class="nl">https</span><span class="p">:</span><span class="c1">//en.cppreference.com/w/cpp/memory/unique_ptr/make_unique 
+</span><span class="c1"></span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span><span class="err">... </span><span class="nc">Args</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;!</span><span class="n">std</span><span class="o">::</span><span class="n">is_array</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span>
+<span class="n">make_unique</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">T</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...));</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>2  template&lt;typename&hellip; _Args&gt; std::move 使用场景是什么？ std：forwrd区别？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="p">...</span><span class="n">Args</span><span class="o">&gt;</span>
+  <span class="k">static</span> <span class="n">old_inode_map_ptr</span> <span class="n">allocate_old_inode_map</span><span class="p">(</span><span class="n">Args</span> <span class="o">&amp;&amp;</span> <span class="p">...</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">mempool</span><span class="o">::</span><span class="n">mds_co</span><span class="o">::</span><span class="n">pool_allocator</span><span class="o">&lt;</span><span class="n">mempool_old_inode_map</span><span class="o">&gt;</span> <span class="n">allocator</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">allocate_shared</span><span class="o">&lt;</span><span class="n">mempool_old_inode_map</span><span class="o">&gt;</span><span class="p">(</span><span class="n">allocator</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+  <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">InodeStoreBase</span><span class="o">::</span><span class="n">decode_old_inodes</span><span class="p">(</span><span class="n">bufferlist</span><span class="o">::</span><span class="n">const_iterator</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">ceph</span><span class="o">::</span><span class="n">decode</span><span class="p">;</span>
+  <span class="n">mempool_old_inode_map</span> <span class="n">tmp</span><span class="p">;</span>
+  <span class="n">decode</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">reset_old_inodes</span><span class="p">(</span><span class="n">old_inode_map_ptr</span><span class="p">());</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">reset_old_inodes</span><span class="p">(</span><span class="n">allocate_old_inode_map</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">tmp</span><span class="p">)));</span>
+  <span class="p">}</span>
+    
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="32-猴子都能懂的git入门掌握版本管理">3.2 猴子都能懂的GIT入门〜掌握版本管理〜</h2>
+<h3 id="合并代码用cherry-pick">合并代码用cherry-pick</h3>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/215144/1686045322780-4f2601d4-9f64-4f8f-9f89-50802a6055ce.png#averageHue=%236c7b7e&amp;clientId=u07e5eee0-e1d9-4&amp;from=paste&amp;id=u3ca51b8a&amp;originHeight=418&amp;originWidth=800&amp;originalType=url&amp;ratio=1.340000033378601&amp;rotation=0&amp;showTitle=false&amp;size=108437&amp;status=done&amp;style=none&amp;taskId=u3df83e70-15ad-498a-a3a3-3d9e6a4154a&amp;title=" alt="image.png">
+:::success
+使用BeyondCompare合并代码，
+结果发现提交上去代码 根本编译不通过，耗时 2天。都是语法错误
+这是处理方式不对。合并代码，</p>
+<ul>
+<li><a href="https://ruanyifeng.com/blog/2020/04/git-cherry-pick.html">https://ruanyifeng.com/blog/2020/04/git-cherry-pick.html</a></li>
+</ul>
+<p>这时分两种情况。一种情况是，你需要另一个分支的所有代码变动，那么就采用合并（git merge）。另一种情况是，你只需要部分代码变动（某几个提交），这时可以采用 Cherry pick</p>
+<p>如果操作过程中发生代码冲突，Cherry pick 会停下来，让用户决定如何继续操作。
+git cherry-pick &ndash;continue
+:::
+<img src="https://cdn.nlark.com/yuque/0/2023/png/215144/1686045605745-d775ed77-7e9d-4847-a57e-43714470db28.png#averageHue=%23f3f1e1&amp;clientId=u07e5eee0-e1d9-4&amp;from=paste&amp;height=543&amp;id=u39dc8251&amp;originHeight=727&amp;originWidth=1284&amp;originalType=binary&amp;ratio=1.340000033378601&amp;rotation=0&amp;showTitle=false&amp;size=68310&amp;status=done&amp;style=none&amp;taskId=uada570b4-e1b8-4147-86d2-ed80771fe80&amp;title=&amp;width=958.2089313554674" alt="image.png"></p>
+<p>git rebase &ndash;continue</p>
+<ul>
+<li>cherry-pick ：合并一次提交。</li>
+</ul>
+<p>解决冲突CONFLICT
+在rebase的过程中，也许会出现冲突(conflict)。在这种情况，Git会停止rebase并会让你去解决冲突；在解决完冲突后，用git add命令去更新这些内容的索引(index)，然后，你无需执行 git commit，只要执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">bash
+git rebase --continue
+https://juejin.cn/post/6844903600976576519
+</code></pre></td></tr></table>
+</div>
+</div><p>作者：麦田里的糖醋鱼
+链接：https://juejin.cn/post/6969101234338791432
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<ul>
+<li>
+<p>Linux中执行bash脚本报错/bin/bash^M: bad interpreter: No such file or directory</p>
+<p><a href="https://zhuanlan.zhihu.com/p/597066517">https://zhuanlan.zhihu.com/p/597066517</a></p>
+<p><a href="https://blog.51cto.com/u_15588078/6532252">https://blog.51cto.com/u_15588078/6532252</a></p>
+</li>
+</ul>
+<p>然后修改文件格式
+#sh&gt;vi filename</p>
+<p>利用如下命令查看文件格式
+:set ff 或 :set fileformat</p>
+<p>可以看到如下信息
+fileformat=dos 或 fileformat=unix</p>
+<p>利用如下命令修改文件格式
+:set ff=unix 或 :set fileformat=unix</p>
+<p>:wq (存盘退出)</p>
+<p>最后再执行文件</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        0001-01-01 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020/file/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default"></span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/plan/how_to_study/">
+            <span class="next-text nav-default"></span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

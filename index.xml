@@ -6,7 +6,448 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在一台电脑上同时使用多个github账号(亲测有效)</title>
+      <link>https://wangcy6.github.io/post/2024/2024-02-09-git-two-account/</link>
+      <pubDate>Fri, 09 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-02-09-git-two-account/</guid>
+      <description>what：从现象提出问题 在一台电脑上有两个 github 账号 git 提交代码时候 fatal: 无法读取远程仓库。 尝试 密码登陆 今天是2021年8月13日（情人节），苦涩。 在</description>
+    </item>
+    
+    <item>
+      <title>只管去做践N0.7</title>
+      <link>https://wangcy6.github.io/post/ARTS/2023/do_book_weekly7/</link>
+      <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2023/do_book_weekly7/</guid>
+      <description>只管去做 N0.7 开始日期：2023-12-5 # Part I ![L1-1对自我否定say no](D:\db\daily-interview\blog\con</description>
+    </item>
+    
+    <item>
+      <title>Rust For Linux</title>
+      <link>https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_1_/</link>
+      <pubDate>Mon, 06 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_1_/</guid>
+      <description>如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什</description>
+    </item>
+    
+    <item>
+      <title>使用 Clash 为 Linux 提供网络代理服务</title>
+      <link>https://wangcy6.github.io/post/2023/5_how_to_use_crash/</link>
+      <pubDate>Sat, 04 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/5_how_to_use_crash/</guid>
+      <description>购买 云主机，竟然无法下载github上资源，鸡肋呀，解决方式就是网络代理 提示请勿将其用作翻墙等违法行为！ 关于 Clash Clash for Windows 删库跑路 Clash Core（各大</description>
+    </item>
+    
+    <item>
+      <title>只管去做践N0.6</title>
+      <link>https://wangcy6.github.io/post/ARTS/2023/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC6%E5%91%A8-/</link>
+      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2023/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC6%E5%91%A8-/</guid>
+      <description>只管去做 N0.6 # Part I ![L1-1对自我否定say no](D:\db\daily-interview\blog\content\post\ARTS</description>
+    </item>
+    
+    <item>
+      <title>how to create virtual</title>
+      <link>https://wangcy6.github.io/post/dream/day6_zhibo_shuziren/</link>
+      <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/dream/day6_zhibo_shuziren/</guid>
+      <description>Fay项目 1. fork 分支代码 在fork的项目里同步别人新增分支的方法 原创 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 git clone git@github.com:watchpoints/Fay.git git remote add upstream https://github.com/TheRamU/Fay.git $ git remote -v origin</description>
+    </item>
+    
+    <item>
+      <title>how to create virtual</title>
+      <link>https://wangcy6.github.io/post/dream/day7_zhibo_luna/</link>
+      <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/dream/day7_zhibo_luna/</guid>
+      <description>1. 项目资料 https://luna.docs.ie.cx/ 1 2 3 4 5 6 7 8 9 10 Luna AI 是一个由 ChatterBot / GPT / Claude / langchain 本地 or 云端 / chatglm / text-generation-webui / 讯飞星火 / 智谱AI 做为 大脑 驱动的虚拟主播 Live2D / Vtube Studio / UE5 + Audio2Face ，可以</description>
+    </item>
+    
+    <item>
+      <title>day1:obs</title>
+      <link>https://wangcy6.github.io/post/dream/day4_ffmeg/</link>
+      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/dream/day4_ffmeg/</guid>
+      <description>规则 歌曲类版权限制，不使用 相关组织，比如大家说的影视审核群？ 读书类的 ok 基本用啊 提问1：how-to-concatenate-two-mp4-</description>
+    </item>
+    
+    <item>
+      <title>day3:xmind</title>
+      <link>https://wangcy6.github.io/post/dream/day3_xmind/</link>
+      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/dream/day3_xmind/</guid>
+      <description>基本使用技巧 提问1：Xmind思维导图如何隐藏线条？ 保姆级教程！手把手教你用5分钟做出一张竖版图｜Xmind思维导图 提问2：如何添加外框 需要</description>
+    </item>
+    
+    <item>
+      <title>day1:obs</title>
+      <link>https://wangcy6.github.io/post/dream/day2_obs/</link>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/dream/day2_obs/</guid>
+      <description>Live2D虚拟形象加载插件使用教程 https://vmmbvgdeeg.feishu.cn/docx/BAU3dVdI7oXiyjxXGusccntznV4</description>
+    </item>
+    
+    <item>
+      <title>从青铜到王者系列：Coding Interview</title>
+      <link>https://wangcy6.github.io/post/liunx/Coding-Interview/2022_11_29_liunx_memory_/</link>
+      <pubDate>Sat, 23 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/Coding-Interview/2022_11_29_liunx_memory_/</guid>
+      <description>Coding Interview Tutorial 1: Two Sum [LeetCode]</description>
+    </item>
+    
+    <item>
+      <title>day1:</title>
+      <link>https://wangcy6.github.io/post/dream/day1_zhibo_v.0/</link>
+      <pubDate>Sat, 09 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/dream/day1_zhibo_v.0/</guid>
+      <description>第一个版本：云主机+FFmpeg工具 工具 猫抓 chrome资源嗅探扩展 ffmpeg 使用说明书： 猫抓 Cat Catch 项目描述: 是一款网页资源嗅探扩展，能帮你下载网页视</description>
+    </item>
+    
+    <item>
+      <title>what is Paxos</title>
+      <link>https://wangcy6.github.io/post/book/NO1_what_is.Paxos/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/NO1_what_is.Paxos/</guid>
+      <description>一句话读书摘要很难吗？ 难， 当我打卡浏览器，短视频app时候 第一眼 或者 总有一次无意间 看到 系统推荐各种新闻，电影解说各种炫耀。 这样方式重置我操作</description>
+    </item>
+    
+    <item>
+      <title>2023的目标</title>
+      <link>https://wangcy6.github.io/post/2023/203_my_dream/</link>
+      <pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/203_my_dream/</guid>
+      <description>一次只使用一个工具，其他装作看不见。 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二</description>
+    </item>
+    
+    <item>
+      <title>只管去做践N0.5</title>
+      <link>https://wangcy6.github.io/post/ARTS/2023/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC5%E5%91%A8/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2023/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC5%E5%91%A8/</guid>
+      <description>只管去做 N0.5 大家好，个人记录，可能不完整比较冷乱。 http://localhost:1313/post/ARTS/2023 第一部分 #203年 8月复盘# 一 、目标完成情况 本月完成目标0个，实现 年度目标0个 二 、令我高兴</description>
+    </item>
+    
+    <item>
+      <title>新手村打怪升级：技术周报N06</title>
+      <link>https://wangcy6.github.io/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N06/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N06/</guid>
+      <description>开始时间：2023-9-01 结束日期：‘ 周一 【网络知识补习】❄️| 由浅入深了解HTTP（四） HTTP之cookies RFC 6265定义了 cookie 的工作</description>
+    </item>
+    
+    <item>
+      <title>新手村打怪升级：技术周报N06</title>
+      <link>https://wangcy6.github.io/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N09/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N09/</guid>
+      <description>一. ARTS的初衷 周一 周二 周三 周四 周五 周六 周日 Algorithm Review Review/Tip Share 1.Algorithm **主要是为了编程训练和学习。**每周至少做一个 leetcode 的算法题（先从Easy开始，然后再</description>
+    </item>
+    
+    <item>
+      <title>强哥答疑</title>
+      <link>https://wangcy6.github.io/post/book/ASK_README/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/ASK_README/</guid>
+      <description>📝 提问规则： 1.周五到周六中午12点可提问 2.每位伙伴每周限提交1个问题； 3.提问请描述清楚问题背景、尝试、想要得到的帮助 ——【提问必读】—</description>
+    </item>
+    
+    <item>
+      <title>git通关从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/liunx/git%E9%80%9A%E5%85%B3%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/git%E9%80%9A%E5%85%B3%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/</guid>
+      <description>第一关：项目最新代码出现问题，你想回退，但是保留自己修改最新代码怎么办？ 期望结果 n1（正常状态）&amp;mdash;&amp;ndash;n2-（出现问题</description>
+    </item>
+    
+    <item>
+      <title>mysql从青铜到王者第一天</title>
+      <link>https://wangcy6.github.io/post/mysql/mysql%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85%E7%AC%AC%E4%B8%80%E5%A4%A9/</link>
+      <pubDate>Wed, 09 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/mysql/mysql%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85%E7%AC%AC%E4%B8%80%E5%A4%A9/</guid>
+      <description>day1 一、问题 msyql 忘记root密码怎么办？ 二、过程 mysql8.0安装 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38</description>
+    </item>
+    
+    <item>
+      <title>通过interview构建地基</title>
+      <link>https://wangcy6.github.io/post/interview/01_2023_08_04/</link>
+      <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/01_2023_08_04/</guid>
+      <description>提问1：什么是右移动？ 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优</description>
+    </item>
+    
+    <item>
+      <title>do_book</title>
+      <link>https://wangcy6.github.io/post/2023/2_do_book/</link>
+      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/2_do_book/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>do_book</title>
+      <link>https://wangcy6.github.io/post/book/2_2023_do_book/</link>
+      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/2_2023_do_book/</guid>
+      <description>http://localhost:1313/post/2023/2_do_book/ 少有人走的路 https://www.holisticedu.us/wechat/The_Road_Less_Traveled.pdf D2-NO1-803-问题和痛苦 金句: 替代品带来的痛苦，甚至比逃避的痛苦更为强烈 真正的健康者 寥寥无几。有的逃避问题者，宁可躲</description>
+    </item>
+    
+    <item>
+      <title>通过对话学英语</title>
+      <link>https://wangcy6.github.io/post/English/02_learn_englis_from_chat/</link>
+      <pubDate>Sun, 18 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/English/02_learn_englis_from_chat/</guid>
+      <description>If you missed the Hackathon Idea Pool meetup a few hours ago, you can watch the recording at https://youtube.com/live/eZt7-Cz3Zs4 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 梦想是什么？ 梦想是每一个天还未亮， 你已悄然出门， 梦想，是不管身处何方， 你</description>
+    </item>
+    
+    <item>
+      <title>日拱一卒：ceph-mds 业务操作</title>
+      <link>https://wangcy6.github.io/post/storage/3_ceph_msd/</link>
+      <pubDate>Fri, 02 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/3_ceph_msd/</guid>
+      <description>http://localhost:1313/post/storage/2_ceph_mon/ 目录 CEPH源码解析：读写流程 CephFS 内部实现（四）：MDS是如何启动的？ https://www.jianshu.com/p/742e18f53f3a ceph Heartbeat 分析 https://zhuanlan.zhihu.com/p/128631881 Ceph心跳机制 https://zhuanlan.zhihu.com/p/106730337 参考 Ceph中纠删码的读写过程与缓存分层</description>
+    </item>
+    
+    <item>
+      <title>日拱一卒：ceph-mon模块</title>
+      <link>https://wangcy6.github.io/post/storage/2_ceph_mon/</link>
+      <pubDate>Fri, 02 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2_ceph_mon/</guid>
+      <description>http://localhost:1313/post/storage/2_ceph_mon/ 本文主要描述了 结合ceph mon模块，介绍Paxos基本实现。 大纲如下： 画外音：导入下面文章 https://www.chatpdf.com/ 提问 The Part-Time Parliament Paxos Made Simple Revisiting the Paxos algorithm https://www.read.seas.harvard.edu/~kohler/class/08w-dsi/chandra07paxos.pdf 先解作者背后故事 最</description>
+    </item>
+    
+    <item>
+      <title>成为oceanbase贡献者第四天：内置函数</title>
+      <link>https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/</guid>
+      <description>#一、Overview 大家好， 本文主要描述是如何OceanBase 社区版实现一个 MySQL 5.7 新增的系统内建函数。 通过https://github.c</description>
+    </item>
+    
+    <item>
+      <title>ChatGPT从入门到精通</title>
+      <link>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</guid>
+      <description>一次只使用一个工具，其他装作看不见。 第一章：概念 ChatGPT是什么 https://mp.weixin.qq.com/s/Dns5GSsiledxCV2SIhNgrw 第二章：提示词 写专利 例如：绘制时序图 1 2 请绘制 mermaid sequence diagram ： mds 启动 recov</description>
+    </item>
+    
+    <item>
+      <title>学会使用工具：ai</title>
+      <link>https://wangcy6.github.io/post/2023/1.git/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/1.git/</guid>
+      <description>cherry-pick git cherry-pick 可以理解为”挑拣”提交，它会获取某一个分支的单笔提交， 并作为一个新的提交引入到你当前分支上 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术</description>
+    </item>
+    
+    <item>
+      <title>学会使用工具：ai</title>
+      <link>https://wangcy6.github.io/post/2023/13_ai_tool/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/13_ai_tool/</guid>
+      <description>一次只使用一个工具，其他装作看不见。 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二</description>
+    </item>
+    
+    <item>
+      <title>tikv入门</title>
+      <link>https://wangcy6.github.io/post/tidb/20230_05_05_tikv/</link>
+      <pubDate>Fri, 05 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/tidb/20230_05_05_tikv/</guid>
+      <description>一、问题是什么 阅读文章：https://asktug.com/t/topic/693645 【源码合集】TiKV 源码阅读三部曲 https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg 阅读 Rust 参考手册</description>
+    </item>
+    
+    <item>
+      <title>践行时间管理方法</title>
+      <link>https://wangcy6.github.io/post/book/01_thing/</link>
+      <pubDate>Thu, 04 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/book/01_thing/</guid>
+      <description>个人学习使用 强哥思考笔记 1. 关于改变 很多人所谓的“改变”，其实都是在做“无用功”，比如说希望这次能够升职加薪，怎么办呢？要跟老板好好沟通，所以</description>
+    </item>
+    
+    <item>
+      <title>Cephfs入门手册</title>
+      <link>https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/</link>
+      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/</guid>
+      <description>Cephfs探索之旅第一天 文章地址：http://localhost:1313/post/storage/1_2023_02_13_day1</description>
+    </item>
+    
+    <item>
+      <title>CurveFS精通之旅第一天</title>
+      <link>https://wangcy6.github.io/post/storage/1_2023_02_10_day1_curveFS/</link>
+      <pubDate>Fri, 10 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/1_2023_02_10_day1_curveFS/</guid>
+      <description>day 1 【新手】快速上手 Curve 指南 https://ask.opencurve.io/t/topic/70 https://github.com/opencurve/curve/wiki 【CurveFS设计文档】 https://github.com/opencurve/curve-meetup-slides/tree/main/CurveFS 【coode】 http://github.com/opencurve/curve。</description>
+    </item>
+    
+    <item>
+      <title>OceanBase Contributor day5：</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day5/</link>
+      <pubDate>Mon, 30 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day5/</guid>
+      <description>oceanbase探索之旅开始，成为oceanbase贡献者第5天 历史文章 https://www.yuque.com/yiyezhou/rgak0e/ykp9grn90kvx59c2 # 一、Overview (任务是什么) 前言 大家好,今天是成为oce</description>
+    </item>
+    
+    <item>
+      <title>从青铜到王者系列：Dm-cache</title>
+      <link>https://wangcy6.github.io/post/2022/13_code_read_dm_cache/</link>
+      <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/13_code_read_dm_cache/</guid>
+      <description>Dm-cache [23],a general block-level disk cache, for any storage systems, 带着问题和目标去学习 学习方法： 阅读(输入：三天,万句 输出 笔记摘要就哪里，但是自己看不懂，别人看不懂 ) 发现问题（输入：技术</description>
+    </item>
+    
+    <item>
+      <title>Linux内核参数配置入门</title>
+      <link>https://wangcy6.github.io/post/liunx/2022-11-20-liunx_kernel_param/</link>
+      <pubDate>Sun, 20 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2022-11-20-liunx_kernel_param/</guid>
+      <description>如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什</description>
+    </item>
+    
+    <item>
+      <title>从青铜到王者系列：故障定位</title>
+      <link>https://wangcy6.github.io/post/liunx/2022_11_29_liunx_memory_/</link>
+      <pubDate>Sun, 20 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2022_11_29_liunx_memory_/</guid>
+      <description>如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什</description>
+    </item>
+    
+    <item>
+      <title>从青铜到王者系列1：emacs入门教程</title>
+      <link>https://wangcy6.github.io/post/2022/10_2022_10_13_how_to-use_emacs/</link>
+      <pubDate>Sat, 29 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/10_2022_10_13_how_to-use_emacs/</guid>
+      <description>目录 如何安装 5分钟完成 无插件情况下，直接看官方入门指导 30分钟完成。 提问 快捷键 C-h 怎么输入 过程 推荐阅读文章： https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org centos8.6 Installation Method #01: Installing the Emacs editor using the EPEL repository 1 2 3 sudo</description>
+    </item>
+    
+    <item>
+      <title>阅读与写作第一期：王者回答</title>
+      <link>https://wangcy6.github.io/post/2022/11_FQA1_body/</link>
+      <pubDate>Tue, 18 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/11_FQA1_body/</guid>
+      <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 12 13 ### 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 ### 二、这个技术的优势和劣势分别是什</description>
+    </item>
+    
+    <item>
+      <title>阅读与写作第一期：王者回答</title>
+      <link>https://wangcy6.github.io/post/2022/12-how_to_read_liunx/</link>
+      <pubDate>Tue, 18 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/12-how_to_read_liunx/</guid>
+      <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 根据问题去阅读 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和</description>
+    </item>
+    
+    <item>
+      <title>GTD践行第17周</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-17/</link>
+      <pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-17/</guid>
+      <description>GDT践行记录 本周故事 问题5.怎么才能玩得更有趣？ 昵称:康康—干不正经事儿的正经人—山西 问题：怎么才能玩得更有趣？ 问题详情：这几天的学习，已</description>
+    </item>
+    
+    <item>
+      <title>GTD践行第18周</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-18/</link>
+      <pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-18/</guid>
+      <description>GDT践行记录 本周故事 问题5.怎么才能玩得更有趣？ 昵称:康康—干不正经事儿的正经人—山西 问题：怎么才能玩得更有趣？ 问题详情：这几天的学习，已</description>
+    </item>
+    
+    <item>
+      <title>成为oceanbase贡献者第四天：容器与分配器</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/</link>
+      <pubDate>Sun, 02 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/</guid>
+      <description>#一、Overview 前言 大家好,今天是成为oceanbase贡献者第四天 本文 主要描述的是 通过#1038 the template parameter of ObSortedVector must be pointer type which is not resonable 了解模板特</description>
+    </item>
+    
+    <item>
+      <title>成为ob贡献者第三天</title>
+      <link>https://wangcy6.github.io/post/oceanbase/day3_ob/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/day3_ob/</guid>
+      <description>多看、多问、多总结，肯定是可以攻克的。 一、Overview https://github.com/oceanbase/oceanbase/issues/1038 提出疑问 设计一个类是需要需要考虑什么问题 这个和侯捷的《STL源码剖析》提到知识有</description>
+    </item>
+    
+    <item>
+      <title>成为oceanbase贡献者第二天：源码解析 DDL语句执行过程</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/</link>
+      <pubDate>Sat, 03 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/</guid>
+      <description>慢慢来，多看、多问、多总结，肯定是可以攻克的。 文章地址： http://localhost:1313/post/oceanbase/2022/oceanbase_day2/ https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/ 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不</description>
+    </item>
+    
+    <item>
+      <title>时间管理</title>
+      <link>https://wangcy6.github.io/post/habit/2022-8-22-GTD.life/</link>
+      <pubDate>Mon, 22 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/habit/2022-8-22-GTD.life/</guid>
+      <description>锦囊一：改变从接受开始。 锦囊二：训练你的反馈系统。 锦囊三：找到温柔而坚定的力量。 第一，千万不要光学不练。 第二，千万不要光复制不进化。 第三，千</description>
+    </item>
+    
+    <item>
+      <title>一周精彩内容分享（第12期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-12/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-12/</guid>
+      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 本周故事 第一部分：work输出 一、公开课 课程4:MIT 经典课程 《分布式系统》 https://learnku.com/go/wikis/41239 课程3 数据库 sql执行引擎 课程2 分布式协议</description>
+    </item>
+    
+    <item>
+      <title>今日打卡伴奏第一期</title>
+      <link>https://wangcy6.github.io/post/2022/09_pre_speak/</link>
+      <pubDate>Thu, 05 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/09_pre_speak/</guid>
+      <description>地址： http://127.0.0.1:1313/post/2022/09_pre_speak/ 5-5 ​ 《淮安信息职业技术学院招生配音文案》 传统与现代在这里融汇，激情与活力在这里飞扬！一代伟人，铸就她胸怀天下的大气；毓秀名湖，孕育她</description>
+    </item>
+    
     <item>
       <title>操作系统入门知识--网络</title>
       <link>https://wangcy6.github.io/post/2022/08_2022_4_17_epoll/</link>
@@ -26,20 +467,20 @@
     </item>
     
     <item>
-      <title>tiflash学习记录</title>
-      <link>https://wangcy6.github.io/post/tidb/01_2022_4_14_tiflsh_study/</link>
+      <title>成为tiflash贡献者第一天</title>
+      <link>https://wangcy6.github.io/post/tidb/2022/01_2022_4_14_tiflsh_study/</link>
       <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/tidb/01_2022_4_14_tiflsh_study/</guid>
-      <description>day1 阅读资料 TiFlash 相关的学习资料 ## Build TiFlash 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 # 环境依赖 cmake version 3.21.2 curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain nightly source $HOME/.cargo/env alias python=&amp;#34;/usr/local/bin/python3&amp;#34; python -V Python 3.9.9 g++ --version Apple clang version 13.1.6 (clang-1316.0.21.2) #</description>
+      <guid>https://wangcy6.github.io/post/tidb/2022/01_2022_4_14_tiflsh_study/</guid>
+      <description>成为贡献者day1 xx 阅读资料 TiFlash 相关的学习资料 ## Build TiFlash 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 # 环境依赖 cmake version 3.21.2 curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain nightly source $HOME/.cargo/env alias python=&amp;#34;/usr/local/bin/python3&amp;#34; python -V</description>
     </item>
     
     <item>
       <title>OBCP准备</title>
-      <link>https://wangcy6.github.io/post/oceanbase/obcp_2/</link>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/obcp_2/</link>
       <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/obcp_2/</guid>
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/obcp_2/</guid>
       <description>多看、多问、多总结，肯定是可以攻克的。 文章地址：https://wangcy6.github.io/post/oceanbase/obcp_</description>
     </item>
     
@@ -54,37 +495,37 @@
     
     <item>
       <title>git入门</title>
-      <link>https://wangcy6.github.io/post/2022/tool_git_3_26/</link>
+      <link>https://wangcy6.github.io/post/2022/git%E9%80%9A%E5%85%B3%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/</link>
       <pubDate>Sat, 26 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/2022/tool_git_3_26/</guid>
-      <description>问：git pull merge git rebase 区别？ 答： 参考资料 https://www.liaoxuefeng.com/wiki/896043488029600/1216289527823648 https://www.yiibai.com/git/git_merge.html https://www.yiibai.com/git/git_rebase.html</description>
+      <guid>https://wangcy6.github.io/post/2022/git%E9%80%9A%E5%85%B3%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/</guid>
+      <description>git checkout 文件名字太长错误 1 git config --global core.longpaths true 冲突解决 放弃本地修改（粗暴） 修改了本地文件，但是没有使用git add ​ git checkout . 通过git stash命令，把工作区的</description>
     </item>
     
     <item>
-      <title>mysql内核学习过程</title>
-      <link>https://wangcy6.github.io/post/mysql/day1_mysql_demo/</link>
-      <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
+      <title>myql入门</title>
+      <link>https://wangcy6.github.io/post/2022/03-mysql/</link>
+      <pubDate>Sat, 26 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/mysql/day1_mysql_demo/</guid>
-      <description>day1 一、问题 msyql 忘记root密码怎么办？ 二、过程 mysql8.0安装 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38</description>
+      <guid>https://wangcy6.github.io/post/2022/03-mysql/</guid>
+      <description>第一篇 安装 在CentOS7中已经不在推荐使用mysql，甲骨文公司收购了MySQL后，有将MySQL闭源的潜在风险。 MariaDB数据库是 MySQL</description>
     </item>
     
     <item>
       <title>OceanBase开发者手册</title>
-      <link>https://wangcy6.github.io/post/oceanbase/day1_issue_oceanbase/</link>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/day1_issue_oceanbase/</link>
       <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/day1_issue_oceanbase/</guid>
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/day1_issue_oceanbase/</guid>
       <description>多看、多问、多总结 日期 内容 版本 2022-2-23 day1: v1 勉强可以用。 blog地址：https://wangcy6.github.io/post/oceanbas</description>
     </item>
     
     <item>
       <title>OBCP考试</title>
-      <link>https://wangcy6.github.io/post/oceanbase/obcp/</link>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/obcp/</link>
       <pubDate>Sun, 20 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/obcp/</guid>
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/obcp/</guid>
       <description>多看、多问、多总结，肯定是可以攻克的。 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ | observer | +-----------+---------+------+-------+--------+ | ip | version | port | zone | status | +-----------+---------+------+-------+--------+ | 127.0.0.1 | 3.1.1 | 2881 |</description>
     </item>
     
@@ -98,12 +539,12 @@
     </item>
     
     <item>
-      <title>mimob代码阅读</title>
-      <link>https://wangcy6.github.io/post/oceanbase/03_mimi_ob/</link>
+      <title>一周精彩内容分享（第11期）</title>
+      <link>https://wangcy6.github.io/post/ARTS/2022/2022-11/</link>
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/03_mimi_ob/</guid>
-      <description>慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果</description>
+      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-11/</guid>
+      <description>公网地址：https://wangcy6.github.io/post/ARTS/2022/2022-11/ 内网地址：http://1.11</description>
     </item>
     
     <item>
@@ -112,15 +553,6 @@
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ARTS/2022/2022-10/</guid>
-      <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 第一部分：work输出 一、公开课 阅读：200行代码实现基于paxos的kv存储 用paxos实现多副本日志系统&amp;ndash</description>
-    </item>
-    
-    <item>
-      <title>一周精彩内容分享（第7期）</title>
-      <link>https://wangcy6.github.io/post/ARTS/2022/2022-11/</link>
-      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/ARTS/2022/2022-11/</guid>
       <description>文章地址：进展 20% http://localhost:1313/post/ARTS/2022/2022-7/ https://wangcy6.github.io/post/ARTS/2022/6 第一部分：work输出 一、公开课 阅读：200行代码实现基于paxos的kv存储 用paxos实现多副本日志系统&amp;ndash</description>
     </item>
     
@@ -144,10 +576,10 @@
     
     <item>
       <title>社区问题整理第一期</title>
-      <link>https://wangcy6.github.io/post/oceanbase/04_FQA/</link>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/04_FQA/</link>
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/04_FQA/</guid>
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/04_FQA/</guid>
       <description>慢慢来，多看、多问、多总结 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果</description>
     </item>
     
@@ -184,7 +616,7 @@
       <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2022/6-tool-gperftools/</guid>
-      <description>基本用法 Perftools-Specific Install Notes 1 2 3 4 5 6 7 8 9 10 11 12 13 14 https://github.com/gperftools/gperftools/blob/master/INSTALL yum install libunwind(否者heap profiler产生的数据文件都会是空的) if you use a 64-bit system, we strongly recommend</description>
+      <description>青铜提问1/100：如何用emacs搭建c++开发环境？ 学习别人的思路： https://www.zhihu.com/question/51099641 https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/ https://www.cnblogs.com/flyingdirt/p/3399624.html https://github.com/purcell/emacs.d{web} https://www.cnblogs.com/GarfieldEr007/p/5588979.html https://www.zybuluo.com/qqiseeu/note/17692 小马过河： todo1 我应一开始就照抄 世界级大师 Steve Purcell 的 Emacs 配置. 安心</description>
     </item>
     
     <item>
@@ -211,15 +643,15 @@
       <pubDate>Mon, 07 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2022/2022-2-7-go-vue-mp4/</guid>
-      <description>http://127.0.0.1:1313/post/2022/2022-2-7-go-vue-mp4/ 练习06 ：短视频管理平台 练习05 ：直播管理平台 练习04 ：ai 主播 4.1 基础理论 Examples PaddleBoBo: Use PaddleSpeech TTS to generate virtual human voice. 4.2 产品 PaddleBoBo 4.3 使用教程 4.3.1 PaddleBoBo 运行环境 飞桨AIStu</description>
+      <description>http://127.0.0.1:1313/post/2022/2022-2-7-go-vue-mp4/ todo 7 srs推流转码 云SRS是开源的音视频方案，它组合了SRS、FFmpeg、WebRTC，使用Redis、Nodejs和React来实现必</description>
     </item>
     
     <item>
       <title>实践练习六（必选）：查看 OceanBase 执行计划</title>
-      <link>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</link>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/2022-1-28_p6/</link>
       <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/2022-1-28_p6/</guid>
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/2022-1-28_p6/</guid>
       <description>多看、多问、多总结，肯定是可以攻克的。 文章结构 http://127.0.0.1:1313/post/oceanbase/2022-1-28_p6/ 实践练习六（必选）：查看 OceanBase 执行计划 环境说明 单机单节点部署 1 2 3 4 5 6 7 8 9 10 11 12 obd cluster display test +---------------------------------------------+ |</description>
     </item>
     
@@ -238,7 +670,7 @@
       <pubDate>Tue, 25 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2022/2-2022-1-25-os/</guid>
-      <description>## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技</description>
+      <description>How sched_setaffinity works inside of Linux Kernel 1 2 3 4 5 6 7 8 9 10 11 YSCALL_DEFINE3(sched_setaffinity, pid_t, pid, unsigned int, len, unsigned long __user *, user_mask_ptr) -- sched_setaffinity(pid_t pid, const struct cpumask *in_mask) --- __set_cpus_allowed_ptr(struct task_struct *p, const struct cpumask *new_mask, bool check) ---- stop_one_cpu(unsigned int cpu, cpu_stop_fn_t fn, void *arg) ----- migration_cpu_stop(void *data) ------ __migrate_task(struct rq *rq, struct task_struct *p, int dest_cpu) ------- move_queued_task(struct rq *rq,</description>
     </item>
     
     <item>
@@ -251,30 +683,21 @@
     </item>
     
     <item>
-      <title>逆向入门教程</title>
-      <link>https://wangcy6.github.io/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
-      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</guid>
-      <description>背景：答应别人导入微信记录，结果半年毫无动静，一点进展都没有。 记录入门遇到的问题，然后看了那些文章 和写了那些代码解决的。 文章地址 http://localhost:1313/post/2022/2022-1-20-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/ 手机端-A</description>
-    </item>
-    
-    <item>
-      <title>tikv第一天学习</title>
-      <link>https://wangcy6.github.io/post/tidb/2022/tikv_day1/</link>
-      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/tidb/2022/tikv_day1/</guid>
-      <description>文章地址 http://localhost:1313/post/tidb/2022/tidb_01/ https://github.com/watchpoints/mylabs High Performance TiDB 课程 环境搭建 1 2 3 4 5 6 7 cd /Users/wangchuanyi/code/src/github.com/watchpoints/tikv https://github.com/watchpoints/tikv cd tikv &amp;amp;&amp;amp; make &amp;amp;&amp;amp; mkdir -p ./bin &amp;amp;&amp;amp; cp ./target/release/tikv-server bin brew install rust https://senzhangai.github.io/programming/build-tidb-by-source 参考 Raft/Paxos类协议与分布式事务</description>
-    </item>
-    
-    <item>
       <title>vldb-2021-labs</title>
       <link>https://wangcy6.github.io/post/tidb/2022/mylabs/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/tidb/2022/mylabs/</guid>
       <description>文章地址 http://localhost:1313/post/tidb/2022/tidb_01/ https://github.com/watchpoints/mylabs 实验1 make lab1P0</description>
+    </item>
+    
+    <item>
+      <title>源码解读第一天：raft 与Paxos</title>
+      <link>https://wangcy6.github.io/post/tidb/2022/tikv_day1/</link>
+      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/tidb/2022/tikv_day1/</guid>
+      <description>Raft 学习记录 todo task01：搭建tikv环境 task01：搭建tikv环境（容器版本，和源码版本） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 在Cen</description>
     </item>
     
     <item>
@@ -292,7 +715,7 @@
       <pubDate>Tue, 11 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/tidb/2022/tidb_01/</guid>
-      <description>文章地址 http://localhost:1313/post/tidb/2022/tidb_01/ https://wangcy6.github.io/post/tidb/2022/tidb_01/ 管理配置 tiup 拓扑结构 https://docs.pingcap.com/zh/tidb/stable/minimal-deployment-topology/ http://74.120.174.137:2379/dashboard/#/overview tiup cluster list 1 2 3 4 5 Name User Version Path PrivateKey ---- ---- ------- ---- ---------- tidb-test tidb v5.0.2 /root/.tiup/storage/cluster/clusters/tidb-test /root/.tiup/storage/cluster/clusters/tidb-test/ssh/id_rsa root@money:~# tiup cluster start tidb-test mysql -h 127.0.0.1 -P 4000 -u root -D test 检查部署的 TiDB 集群情况 tiup cluster display tidb-test 1 2</description>
+      <description>文章地址 http://localhost:1313/post/tidb/2022/tidb_01/ https://wangcy6.github.io/post/tidb/2022/tidb_01/ 管理配置 tiup 拓扑结构 https://docs.pingcap.com/zh/tidb/stable/minimal-deployment-topology/ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54</description>
     </item>
     
     <item>
@@ -364,7 +787,7 @@
       <pubDate>Wed, 25 Aug 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2021/docker01/</guid>
-      <description>docker 第一天 基本操作 https://hub.fastgit.org/docker https://github.com/docker 安装 1 2 3 4 5 6 7 8 9 10 11 [root@fhb ~]# cat /etc/redhat-release CentOS release 6.8 (Final) [root@fhb ~]# sudo rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm [root@fhb ~]# sudo yum update -y curl -sSL https://get.docker.com/ | sh docker version service docker start yum install -y nginx service nginx start docker 基本操作 启动 1 systemctl restart</description>
+      <description>目标： 容器实战高手课 在实战中深入理解容器技术的本质 Linux 性能优化实战 Linux 内核技术实战课 深入剖析 Kubernetes 当你不太理解为什么要学习 Kubernetes 项目的时候， 或者，你在学</description>
     </item>
     
     <item>
@@ -432,11 +855,11 @@
     
     <item>
       <title>Tidb学习记录（1）</title>
-      <link>https://wangcy6.github.io/post/tidb/parse/</link>
+      <link>https://wangcy6.github.io/post/tidb/2022/parse/</link>
       <pubDate>Sun, 18 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/tidb/parse/</guid>
-      <description>说明： parser 模块 https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2&amp;amp;confirmed=1 https://docs.qq.com/sheet/DSlBwS3VCb01kTnZw?tab=BB08J2 https://github.com/pingcap/blog https://github.com/pingcap/tidb/issues/20804 https://github.com/pingcap/tidb/issues/20804#sig/DDL 基本操作parser 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 https://github.com/watchpoints/parser https://github.com/pingcap/parser git reset --hard origin/master // git 放弃本地修改 强制更新 git remote add upstream //https://github.com/pingcap/parser.git #切换到主分支 git checkout master</description>
+      <guid>https://wangcy6.github.io/post/tidb/2022/parse/</guid>
+      <description>说明： parser 模块 第一天：环境搭建 GO 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 https://www.digitalocean.com/community/tutorials/how-to-install-go-1-7-on-centos-7 Step 1 – Downloading Go wget https://studygolang.com/dl/golang/go1.19.1.linux-amd64.tar.gz Step 2 – Setting Paths for Go export GOROOT=/root/local/go export PATH=$PATH:$GOROOT/bin export GOPATH=/root/src Step 3 – Downloading lib go env -w GO111MODULE=on go env -w GOPROXY=https://goproxy.cn,direct go get -v golang.org/x/tools/cmd/goimports pingcap/parser 1</description>
     </item>
     
     <item>
@@ -459,29 +882,11 @@
     
     <item>
       <title>oceanbase源码阅读（1）程序启动</title>
-      <link>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</link>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/oceanbase_day1/</link>
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/oceanbase/oceanbase_day1/</guid>
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/oceanbase_day1/</guid>
       <description>慢慢来，多看、多问、多总结，肯定是可以攻克的。 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环</description>
-    </item>
-    
-    <item>
-      <title>oceanbase源码阅读（1）程序启动</title>
-      <link>https://wangcy6.github.io/post/plan/oceanbase_day1/</link>
-      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/plan/oceanbase_day1/</guid>
-      <description>预备知识： 掌握gdb原理 源码编译 OceanBase Deploy （简称 OBD）是 OceanBase 开源软件的安装部署工具÷÷ 步骤1 源码编译OceanBase： 1 2 3 bash build.sh debug --init --make cd /app/data/oceanbase/build_debug make install 步</description>
-    </item>
-    
-    <item>
-      <title>Linux内核之旅社区</title>
-      <link>https://wangcy6.github.io/post/plan/02_kernel/</link>
-      <pubDate>Mon, 21 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/plan/02_kernel/</guid>
-      <description>资料 Linux内核之旅开源社区实验代码管理 https://github.com/linuxkerneltravel/LearningLinuxKernel 网站入口：http://kerneltravel.net/ 十多年前，陈老师和她的学生康华、陈逸飞</description>
     </item>
     
     <item>
@@ -539,21 +944,21 @@
     </item>
     
     <item>
+      <title>python入门教程</title>
+      <link>https://wangcy6.github.io/post/leetcode/pytho3/python01/</link>
+      <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/leetcode/pytho3/python01/</guid>
+      <description>第一天 window python 环境安装 官网地址： https://www.python.org/downloads/release/python-396/ python环境变量：path D:\local\python3 pip环境变量 path D:\local\python3\Scripts window可以默认按照自动设置。其他手工设置 用于检测当前W</description>
+    </item>
+    
+    <item>
       <title>SRS官方文档和学习路径</title>
       <link>https://wangcy6.github.io/post/2020/01_srs/</link>
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2020/01_srs/</guid>
       <description>文章路径 http://localhost:1313/post/2020/01_srs/ 卡片 SRS4.0官方文档和学习路径 https://mp.weixin.qq.com/s/AZhSQbCMBlaZv-0-myc1zg https://ossrs.net/releases/ Introduction Problem solucction https://gitee.com/ossrs/srs/wikis/v4_CN_Home https://github.com/ossrs/srs https://hub.fastgit.org/ossrs/srs 第一天：快速预览 环境：2g+Ubuntu 在vpn环境完成搭建(docker安装不</description>
-    </item>
-    
-    <item>
-      <title> OceanBase 开源社区</title>
-      <link>https://wangcy6.github.io/post/plan/oceanbase_read_01/</link>
-      <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/plan/oceanbase_read_01/</guid>
-      <description>day1 总结：Mac:使用 OBD 部署 OceanBase 数据库 参考文档：https://github.com/oceanbase/obdeploy 预备知识： OceanBase 不支持ma</description>
     </item>
     
     <item>
@@ -1053,38 +1458,20 @@
     
     <item>
       <title></title>
-      <link>https://wangcy6.github.io/post/English/The-Go-scheduler/</link>
+      <link>https://wangcy6.github.io/post/ARTS/2023/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C%E7%AC%AC%E5%9B%9B%E6%9C%9F/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/English/The-Go-scheduler/</guid>
-      <description>The Go scheduler Introduction One of the big features for Go 1.1 is the new scheduler, contributed by Dmitry Vyukov. The new scheduler has given a dramatic increase in performance for parallel Go programs and with nothing better to do, I figured I&amp;rsquo;d write something about it. Most of what&amp;rsquo;s written in this blog post is already described in the original design doc. It&amp;rsquo;s a fairly comprehensive document, but pretty</description>
+      <guid>https://wangcy6.github.io/post/ARTS/2023/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C%E7%AC%AC%E5%9B%9B%E6%9C%9F/</guid>
+      <description>本文分为三个部分 产品应用，行业应用 和基础知识 从完成到完美，别想太多，只管去做。 这一期没有什么内容，我依然发出来了，只为重启，上一阶段解释。 马</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://wangcy6.github.io/product/RocketMQ/</link>
+      <link>https://wangcy6.github.io/post/plan/how_to_study/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/product/RocketMQ/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wangcy6.github.io/product/thrift.apache/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/product/thrift.apache/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ARTS_weekly_5</title>
-      <link>https://wangcy6.github.io/post/plan/2020_04_toddo/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/plan/2020_04_toddo/</guid>
-      <description>项目实战 项目名称 描述 周期 平均每天 思考与行动 身边公司相关人士是谁 如何设计一个高可用，易扩展的视频服务 无法实现 废弃，还没开始接要夭折吗？ 分布式x</description>
+      <guid>https://wangcy6.github.io/post/plan/how_to_study/</guid>
+      <description>title: &amp;ldquo;下班后如何学习&amp;rdquo; date: 2022-09-25 draft: false categories: [&amp;ldquo;oceanbase&amp;rdquo;] why 承诺书 反馈</description>
     </item>
     
     <item>
@@ -1097,12 +1484,39 @@
     </item>
     
     <item>
+      <title>mimob代码阅读</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2011/03_mimi_ob/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2011/03_mimi_ob/</guid>
+      <description>慢慢来，多看、多问、多总结 预备知识： 源码：https://github.com/watchpoints/miniob 2019CMU数据库导论</description>
+    </item>
+    
+    <item>
       <title>system_desing</title>
       <link>https://wangcy6.github.io/post/leetcode/system_desing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/leetcode/system_desing/</guid>
       <description>开始日期 更新日期 备注 2020-6-10 2020-6-10 中等难度总结 题目汇总 用链表设计一个环形队列。满足先进先出，支持任意类型 和 快速a计算，b计算和c计算（干扰信息） 2个大</description>
+    </item>
+    
+    <item>
+      <title>《大话 Ceph》 之Ceph 运维手册&#34;</title>
+      <link>https://wangcy6.github.io/post/storage/3_ceph_help/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/3_ceph_help/</guid>
+      <description>http://localhost:1313/post/storage/2_ceph_mon/ 服务平滑重启 任何一个成熟的项目，必须要提供出接口，就像探针一样，可以让我们探查进程内部的运行情况，进程不能是一个黑盒子。对于ceph而言，</description>
+    </item>
+    
+    <item>
+      <title>日拱一卒：操作手册</title>
+      <link>https://wangcy6.github.io/post/storage/4_icfs_help/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/4_icfs_help/</guid>
+      <description>系统罐装 1. Linux 如何查看网络带宽是千兆还是万兆 1 2 ethtool ens160 Speed: 10000Mb/s 2 .CentOS 8 网络管理：使用 nmcli 和 nmtui 进行高效配置 3, ssh 设置远程登录 /etc/ssh/sshd_config cifs [mds减少mds 进程个数]</description>
     </item>
     
   </channel>

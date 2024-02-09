@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CEPH on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/CEPH/</link>
+    <description>Recent content in CEPH on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/CEPH/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日拱一卒：ceph-mds 业务操作</title>
+      <link>https://wangcy6.github.io/post/storage/3_ceph_msd/</link>
+      <pubDate>Fri, 02 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/3_ceph_msd/</guid>
+      <description>http://localhost:1313/post/storage/2_ceph_mon/ 目录 CEPH源码解析：读写流程 CephFS 内部实现（四）：MDS是如何启动的？ https://www.jianshu.com/p/742e18f53f3a ceph Heartbeat 分析 https://zhuanlan.zhihu.com/p/128631881 Ceph心跳机制 https://zhuanlan.zhihu.com/p/106730337 参考 Ceph中纠删码的读写过程与缓存分层</description>
+    </item>
+    
+    <item>
+      <title>《大话 Ceph》 之Ceph 运维手册&#34;</title>
+      <link>https://wangcy6.github.io/post/storage/3_ceph_help/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/3_ceph_help/</guid>
+      <description>http://localhost:1313/post/storage/2_ceph_mon/ 服务平滑重启 任何一个成熟的项目，必须要提供出接口，就像探针一样，可以让我们探查进程内部的运行情况，进程不能是一个黑盒子。对于ceph而言，</description>
+    </item>
+    
+    <item>
+      <title>日拱一卒：操作手册</title>
+      <link>https://wangcy6.github.io/post/storage/4_icfs_help/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/4_icfs_help/</guid>
+      <description>系统罐装 1. Linux 如何查看网络带宽是千兆还是万兆 1 2 ethtool ens160 Speed: 10000Mb/s 2 .CentOS 8 网络管理：使用 nmcli 和 nmtui 进行高效配置 3, ssh 设置远程登录 /etc/ssh/sshd_config cifs [mds减少mds 进程个数]</description>
+    </item>
+    
+  </channel>
+</rss>

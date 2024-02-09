@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>新手村打怪升级：技术周报N06 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="核心技术" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N06/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="新手村打怪升级：技术周报N06" />
+<meta property="og:description" content="核心技术" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N06/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-08-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-08-25T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="新手村打怪升级：技术周报N06">
+<meta itemprop="description" content="核心技术"><meta itemprop="datePublished" content="2023-08-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-08-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3123">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="新手村打怪升级：技术周报N06"/>
+<meta name="twitter:description" content="核心技术"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">新手村打怪升级：技术周报N06</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-08-25 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/GTD/"> GTD </a>
+            </div>
+          <span class="more-meta"> 约 3123 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#周一">周一</a></li>
+      </ul>
+    </li>
+    <li><a href="#周二">周二</a>
+      <ul>
+        <li><a href="#centos8之网卡配置修改及管理httpsblogcsdnnetcarefree2005articledetails114396600"><a href="https://blog.csdn.net/carefree2005/article/details/114396600">centos8之网卡配置修改及管理</a></a></li>
+        <li><a href="#using-ipv6-for-ssh-connections-issueshttpsaskubuntucomquestions1042091using-ipv6-for-ssh-connections-issues"><a href="https://askubuntu.com/questions/1042091/using-ipv6-for-ssh-connections-issues">Using IPv6 for SSH connections issues</a></a></li>
+        <li><a href="#配置ceph的ipv6集群httpswwwcnblogscomzphj1987p13575376html"><a href="https://www.cnblogs.com/zphj1987/p/13575376.html">配置Ceph的IPV6集群</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#周三">周三</a></li>
+    <li><a href="#周三-1">周三</a></li>
+    <li><a href="#getting-started-with-rust-using-rustlings--parthttpsmediumcomverbruggenjessegetting-started-with-rust-using-rustlings-part-4-vectors-7351c8a66da0-5-move-semantics"><a href="https://medium.com/@verbruggenjesse/getting-started-with-rust-using-rustlings-part-4-vectors-7351c8a66da0">Getting Started with Rust Using Rustlings — Part</a> <strong>5: Move Semantics</strong></a></li>
+    <li><a href="#周四">周四</a>
+      <ul>
+        <li><a href="#提问1">提问1</a></li>
+        <li><a href="#提问2-httpsmediumcomverbruggenjesserust-using-rustlings-part-7-enums-7fb9f9cbbe5c">提问2： <a href="https://medium.com/@verbruggenjesse/rust-using-rustlings-part-7-enums-7fb9f9cbbe5c">https://medium.com/@verbruggenjesse/rust-using-rustlings-part-7-enums-7fb9f9cbbe5c</a></a></li>
+        <li><a href="#题目4shell-get--stat-access-time-转化成秒-shell">题目4：shell get  stat access time 转化成秒 shell</a></li>
+        <li><a href="#提问5">提问5</a></li>
+        <li><a href="#提问6">提问6：</a></li>
+      </ul>
+    </li>
+    <li><a href="#周天">周天：</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#同步异步不能和阻塞非阻塞混为一谈">同步异步不能和阻塞非阻塞混为一谈</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>开始时间：2023-9-01</p>
+<p>结束日期：‘</p>
+<h3 id="周一">周一</h3>
+<p>【网络知识补习】❄️| 由浅入深了解HTTP（四） HTTP之cookies</p>
+<p>RFC 6265定义了 cookie 的工作方式。
+Cookie 的作用域
+Domain 和 Path 标识定义了Cookie的作用域：即允许 Cookie 应该发送给哪些URL。</p>
+<p>持久性 Cookie 在过期时间（Expires）指定的日期或有效期（Max-Age）指定的一段时间后被删除。</p>
+<p>看完这篇 Session、Cookie、Token，和面试官扯皮就没问题了
+<a href="https://www.cnblogs.com/cxuanBlog/p/12635842.html">https://www.cnblogs.com/cxuanBlog/p/12635842.html</a></p>
+<p>Python中，可以使用webdriver模块来模拟浏览器操作。要设置浏览器的cookie永不过期，可以使用webdriver模块中的add_cookie方法。具体来说，可以使用以下代码设置浏览器的cookie永不过期：</p>
+<h2 id="周二">周二</h2>
+<h3 id="centos8之网卡配置修改及管理httpsblogcsdnnetcarefree2005articledetails114396600"><a href="https://blog.csdn.net/carefree2005/article/details/114396600">centos8之网卡配置修改及管理</a></h3>
+<ol>
+<li>编辑网卡配置文件</li>
+</ol>
+<p>cat /etc/sysconfig/network-scripts/ifcfg-ens33</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">将BOOTPROTO参数由dhcp改为static，根据需要配置IP地址、掩码、网关、DNS等信息
+BOOTPROTO=static
+IPADDR=192.168.0.127
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.1
+ONBOOT=yes
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>重载网卡配置 nmcli c reload ens33 【解决修改配置不生效问题，这个容易忘记执行】</li>
+<li>重启网卡 nmcli c up ens33</li>
+</ol>
+<p>画外音：</p>
+<ul>
+<li>不在使用nmtui方式，持续过设置不生效。无法解决问题。</li>
+</ul>
+<h3 id="using-ipv6-for-ssh-connections-issueshttpsaskubuntucomquestions1042091using-ipv6-for-ssh-connections-issues"><a href="https://askubuntu.com/questions/1042091/using-ipv6-for-ssh-connections-issues">Using IPv6 for SSH connections issues</a></h3>
+<ul>
+<li>ssh fe80::20c:29ff:fe37:8c15%ens160</li>
+<li>ping6 fe80::f816:3eff:fe00:76%eth0</li>
+</ul>
+<h3 id="配置ceph的ipv6集群httpswwwcnblogscomzphj1987p13575376html"><a href="https://www.cnblogs.com/zphj1987/p/13575376.html">配置Ceph的IPV6集群</a></h3>
+<ul>
+<li>
+<p>问题1：ceph-deploy 支持 ipv6 subnet</p>
+<p><a href="https://www.cnblogs.com/itsfei/p/17442820.html">https://www.cnblogs.com/itsfei/p/17442820.html</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ceph/ceph-ansible/issues/1569">https://github.com/ceph/ceph-ansible/issues/1569</a></p>
+</li>
+</ul>
+<p>阅读文章：<a href="https://blog.csdn.net/weixin_42319496/article/details/125942831">【Ceph】Ceph快照的原理和实现&ndash;未消化</a></p>
+<p><img src="https://s2.loli.net/2023/09/28/HOf9RntF4JLEgdY.png" alt="image.png"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">unlink, unlinkat - delete a name and possibly the file it refers
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="周三">周三</h2>
+<ol>
+<li>
+<p>read <a href="https://www.taosdata.com/tdengine-engineering/21588.html">一文告诉你为什么时序场景下 TDengine 数据订阅比 Kafka 好</a></p>
+<p>哪里好了 确实没看清楚，文章也说明白</p>
+<p><img src="https://www.taosdata.com/wp-content/uploads/2023/09/1280X1280.jpeg" alt=""></p>
+</li>
+<li>
+<p>在kafka中 topic分区 消息分组概念区别是什么？举例说明</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/76073581">https://zhuanlan.zhihu.com/p/76073581</a></li>
+<li>Kafka Streams抑制的概念。https://cloud.tencent.com/developer/article/2191434</li>
+</ul>
+</li>
+<li>
+<p>python 16进制转化10进制</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">hexadecimal_string = &#34;1A&#34;  # 16进制数的字符串表示
+decimal_number = int(hexadecimal_string, 16)  # 将16进制字符串转换为10进制数
+print(decimal_number)  # 直接打印10进制数
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="周三-1">周三</h2>
+<h2 id="getting-started-with-rust-using-rustlings--parthttpsmediumcomverbruggenjessegetting-started-with-rust-using-rustlings-part-4-vectors-7351c8a66da0-5-move-semantics"><a href="https://medium.com/@verbruggenjesse/getting-started-with-rust-using-rustlings-part-4-vectors-7351c8a66da0">Getting Started with Rust Using Rustlings — Part</a> <strong>5: Move Semantics</strong></h2>
+<p><strong>Move Semantics</strong></p>
+<p>- <a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html">Ownership</a></p>
+<p>- <a href="https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html">Reference and borrowing</a></p>
+<ul>
+<li><a href="https://medium.com/@verbruggenjesse/getting-started-with-rust-using-rustlings-part-5-move-semantics-43dff8766b16">https://medium.com/@verbruggenjesse/getting-started-with-rust-using-rustlings-part-5-move-semantics-43dff8766b16</a></li>
+</ul>
+<p>提问1：rust fn fill_vec(vec: Vec<!-- raw HTML omitted -->) -&gt; Vec<!-- raw HTML omitted -->   值传递 还是引用传递</p>
+<ul>
+<li>
+<p><a href="https://kaisery.github.io/trpl-zh-cn/ch04-01-what-is-ownership.html">https://kaisery.github.io/trpl-zh-cn/ch04-01-what-is-ownership.html</a></p>
+<p>图 4-2：变量 <code>s2</code> 的内存表现，它有一份 <code>s1</code> 指针、长度和容量的拷贝</p>
+</li>
+</ul>
+<p><img src="D:%5Cdb%5Cdaily-interview%5Cblog%5Ccontent%5Cpost%5CARTS%5C2023%5Cassets%5Cccb0610e43f9ea2f1ec3baf9de6347a.png" alt="ccb0610e43f9ea2f1ec3baf9de6347a"></p>
+<p>拷贝的只是vec，就是蓝绿框的部分</p>
+<p>提问2：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">lines = [0, 1, 2, 3, 4, 5]
+result = lines[1::]
+print(result)  # 输出：[1, 2, 3, 4, 5]
+
+在Python中，`lines[1::]` 表达式用于切片（slicing）一个列表或其他可迭代对象，其中包含了三部分信息：
+
+1. `lines`：这是要切片的可迭代对象，通常是一个列表，元组或字符串等。
+
+2. `[1]`：这是切片的起始索引。在这个例子中，索引是1，表示切片将从可迭代对象的第二个元素（Python中的索引从0开始）开始。
+
+3. `::`：这是切片操作符，它分隔起始索引、结束索引和步长（可选）。
+
+4. 空格后的空白部分：在这个例子中为空，表示没有指定结束索引，因此切片将一直持续到可迭代对象的末尾。
+
+因此，`lines[1::]` 表示从可迭代对象 `lines` 的第二个元素开始，一直切片到末尾，返回一个包含所有剩余元素的子列表或子序列。
+
+示例：
+```python
+lines = [0, 1, 2, 3, 4, 5]
+result = lines[1::]
+print(result)  # 输出：[1, 2, 3, 4, 5]
+```
+
+在这个示例中，`lines[1::]` 返回了包含从索引1开始的所有元素的新列表。
+
+</code></pre></td></tr></table>
+</div>
+</div><p>提问：lamdba详解</p>
+<p><a href="https://zhuanlan.zhihu.com/p/354176923">https://zhuanlan.zhihu.com/p/354176923</a></p>
+<h2 id="周四">周四</h2>
+<h3 id="提问1">提问1</h3>
+<p>揭秘Futures</p>
+<p>python中的Futures，位于concurrent.futures和asyncio中，它们都带有延迟操作。Futures会将等待的作业包裹起来放到队列里，同时这些作业的状态可以随时查询，同样作业的结果或者异常也可以在所有作业完成后获取到。</p>
+<ul>
+<li><a href="https://docs.python.org/zh-cn/3/library/asyncio-future.html">https://docs.python.org/zh-cn/3/library/asyncio-future.html</a></li>
+</ul>
+<p>​     <a href="https://docs.python.org/zh-cn/3/library/asyncio-future.html">https://docs.python.org/zh-cn/3/library/asyncio-future.html</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">*class* asyncio.**Future**(***, *loop=None*)
+result()
+返回 Future 的结果
+
+
+import asyncio
+
+async def main():
+    # 创建一个 Future 对象
+    future = asyncio.Future()
+
+    async def worker():
+        await asyncio.sleep(2)
+        future.set_result(&#34;Hello from the worker!&#34;)
+
+    asyncio.create_task(worker())
+
+    # 等待 Future 结果
+    result = await future
+    print(result)
+
+asyncio.run(main())
+
+在这个示例中，我们创建了一个 Future 对象，然后在后台启动了一个协程 (worker)，并在该协程中设置了 Future 的结果。main 协程使用 await 等待 Future 结果，一旦 Future 结果可用，它将恢复执行并打印结果。
+
+asyncio.Future 在异步编程中非常有用，它允许你以非阻塞的方式管理和等待异步操作的结果。
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="https://kafka-python.readthedocs.io/en/master/_modules/kafka/producer/kafka.html#KafkaProducer">https://kafka-python.readthedocs.io/en/master/_modules/kafka/producer/kafka.html#KafkaProducer</a></li>
+<li><a href="https://kafka-python.readthedocs.io/en/master/usage.html#kafkaproducer">https://kafka-python.readthedocs.io/en/master/usage.html#kafkaproducer</a></li>
+</ul>
+<p>Rust allows you to define types called &ldquo;enums&rdquo; which enumerate possible values.</p>
+<p>Enums are a feature in many languages, but their capabilities differ in each language. Rust’s enums are most similar to algebraic data types in functional languages, such as F#, OCaml, and Haskell.</p>
+<p>Useful in combination with enums is Rust&rsquo;s &ldquo;pattern matching&rdquo; facility, which makes it easy to run different code for different values of an enumeration.</p>
+<h3 id="提问2-httpsmediumcomverbruggenjesserust-using-rustlings-part-7-enums-7fb9f9cbbe5c">提问2： <a href="https://medium.com/@verbruggenjesse/rust-using-rustlings-part-7-enums-7fb9f9cbbe5c">https://medium.com/@verbruggenjesse/rust-using-rustlings-part-7-enums-7fb9f9cbbe5c</a></h3>
+<p>提问3： python并发问题</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">import collections
+dic = collections.OrderedDict()
+#dic = {}
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Python 中，如果主线程不等待子线程（即不执行 <code>join()</code>），通常不会导致子线程不执行</li>
+<li>在 Python 中，如果主线程提前退出，通常会导致所有线程（包括子线程）都被终止</li>
+</ul>
+<p>stat&quot; 命令通常会提供三个时间戳，分别是文件的访问时间（access time），修改时间（modification time），和更改时间（change time）。这些时间戳用于跟踪文件的不同类型的操作和更改。以下是它们的解释：</p>
+<ol>
+<li>访问时间（Access Time，atime）：这个时间戳表示文件最后一次被访问的时间。每当文件被读取、执行、或使用&quot;cat&quot;等命令查看文件内容时，访问时间都会更新。在某些系统上，您可以通过 &ldquo;-c&rdquo; 或 &ldquo;&ndash;status&rdquo; 选项来查看它。访问时间用于跟踪文件的读取操作。</li>
+<li>修改时间（Modification Time，mtime）：这个时间戳表示文件最后一次被修改的时间。每当文件内容被更改、编辑、或重新写入时，修改时间都会更新。您可以通过 &ldquo;-m&rdquo; 或 &ldquo;&ndash;modify&rdquo; 选项来查看它。修改时间用于跟踪文件内容的更改。</li>
+<li>更改时间（Change Time，ctime）：这个时间戳表示文件的元数据（例如权限、所有者等）最后一次被更改的时间。不仅包括文件内容的更改，还包括文件属性的更改。您可以通过 &ldquo;-c&rdquo; 或 &ldquo;&ndash;change&rdquo; 选项来查看它。更改时间用于跟踪文件的属性和权限的更改。</li>
+</ol>
+<h3 id="题目4shell-get--stat-access-time-转化成秒-shell">题目4：shell get  stat access time 转化成秒 shell</h3>
+<p>在Shell中，要将文件的&quot;access time&quot;（访问时间）转化为秒数，您可以使用<code>stat</code>命令来获取访问时间，然后使用<code>date</code>命令将其转化为秒数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 获取文件的访问时间
+access_time=$(stat -c %x your_file.txt)
+
+# 将访问时间转化为秒数
+access_time_seconds=$(date -d &#34;$access_time&#34; +%s)
+
+echo &#34;Access Time in Seconds: $access_time_seconds&#34;
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="提问5">提问5</h3>
+<blockquote>
+<p>word 这个变量从哪里来的，不会又语法错误把？</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">您提出的问题是正确的。我犯了一个语法错误。在`if let`表达式中，正确的语法是在`Some`模式中使用模式绑定，如下所示：
+
+```rust
+fn simple_option() {
+    let target = &#34;rustlings&#34;;
+    let optional_target = Some(target);
+
+    // 使用if let来检查optional_target是否为Some，并将其内部的值与target进行比较
+    if let Some(word) = optional_target {
+        assert_eq!(word, target);
+    }
+}
+
+fn main() {
+    simple_option();
+}
+```
+
+在上述代码中，`Some(word)`中的`word`是一个模式绑定，它将`optional_target`中的值（如果是`Some`）绑定到`word`变量上，然后你可以在`if let`块内部使用它。感谢您的指正，我之前的回答中存在错误。
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="提问6">提问6：</h3>
+<p>Rust的所有权并不难理解，它有且只有如下三条规则：</p>
+<ol>
+<li>
+<p>Rust中的每一个值都有一个所有者（owner）的变量；</p>
+</li>
+<li>
+<p>一个值有且只有一个所有者；</p>
+</li>
+<li>
+<p>当所有者离开作用域时这个值将被丢弃。</p>
+<ul>
+<li><a href="https://blog.csdn.net/zhmh326/article/details/103991966">https://blog.csdn.net/zhmh326/article/details/103991966</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">fn main() 
+{
+    let x = String::from(&#34;hello&#34;);
+    let y = x;
+    println!(&#34;x:{} y:{}&#34;, x, y);
+}
+
+fn main() 
+{
+    let x = String::from(&#34;hello&#34;);
+    print(x);
+    println!(&#34;x:{}&#34;, x);
+}
+
+fn print(s:String)
+{
+    println!(&#34;{}&#34;, s)
+}
+//拷贝、移动和克隆，不仅仅发生在赋值时，当调用函数传递参数或从函数接收返回值时，它们也会发生，
+
+
+在c++ 共享智能指针 引用技术概念：函数拷贝 传递 过中，对象构造和习惯 改变引用计数个数，最后一个释放 才真正释放对象
+
+std::move是将对象的状态或者所有权从一个对象转移到另一个对象，只是转移，没有内存的搬迁或者内存拷贝所以可以提高利用效率,改善性能.
+
+类：c++ 右值, 移动语义与完美转发 移动构造函数  vs rust 所有权
+
+
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="周天">周天：</h2>
+<ol>
+<li>
+<p>kafka-console-producer send json data</p>
+<ul>
+<li>
+<p><a href="https://gist.github.com/hpgrahsl/8c145bf12c3b98d8b5146632bddc6d6d">https://gist.github.com/hpgrahsl/8c145bf12c3b98d8b5146632bddc6d6d</a></p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/54672599/json-file-data-into-kafka-topic">https://stackoverflow.com/questions/54672599/json-file-data-into-kafka-topic</a></p>
+</li>
+<li>
+<p><a href="https://juejin.cn/s/kafka-console-producer%20send%20json%20message">https://juejin.cn/s/kafka-console-producer%20send%20json%20message</a></p>
+</li>
+<li>
+<p><a href="https://docs.vmware.com/en/VMware-Greenplum-Streaming-Server/1.10/greenplum-streaming-server/kafka-load-simple-json-example.html">https://docs.vmware.com/en/VMware-Greenplum-Streaming-Server/1.10/greenplum-streaming-server/kafka-load-simple-json-example.html</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p>ceph fs set FS_NAME allow_standby_replay 1</p>
+</li>
+<li>
+<p>git log  &gt;1;cat 1 conets  ;git show comm_id</p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/zh-cn/red_hat_ceph_storage/4/html/file_system_guide/configuring-the-standby-replay-metadata-server_fs">https://access.redhat.com/documentation/zh-cn/red_hat_ceph_storage/4/html/file_system_guide/configuring-the-standby-replay-metadata-server_fs</a></p>
+</li>
+<li>
+<h1 id="chapter-4-kafka-consumers-reading-data-from-kafka">Chapter 4. Kafka Consumers: Reading Data from Kafka</h1>
+</li>
+<li>
+<h3 id="同步异步不能和阻塞非阻塞混为一谈">同步异步不能和阻塞非阻塞混为一谈</h3>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_31866177/article/details/112272968">https://blog.csdn.net/weixin_31866177/article/details/112272968</a></li>
+<li><a href="https://github.com/dpkp/kafka-python/issues/1139">https://github.com/dpkp/kafka-python/issues/1139</a></li>
+<li><a href="https://github.com/dpkp/kafka-python">https://github.com/dpkp/kafka-python</a></li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-08-25 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/2023/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC5%E5%91%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">只管去做践N0.5</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/2023/%E6%96%B0%E6%89%8B%E6%9D%91%E6%89%93%E6%80%AA%E5%8D%87%E7%BA%A7N09/">
+            <span class="next-text nav-default">新手村打怪升级：技术周报N06</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

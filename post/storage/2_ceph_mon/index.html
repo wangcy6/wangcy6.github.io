@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>日拱一卒：ceph-mon模块 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="you can" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/2_ceph_mon/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="日拱一卒：ceph-mon模块" />
+<meta property="og:description" content="you can" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/2_ceph_mon/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-06-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-06-02T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="日拱一卒：ceph-mon模块">
+<meta itemprop="description" content="you can"><meta itemprop="datePublished" content="2023-06-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-06-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3715">
+<meta itemprop="keywords" content="Cephfs," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="日拱一卒：ceph-mon模块"/>
+<meta name="twitter:description" content="you can"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">日拱一卒：ceph-mon模块</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-06-02 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Cephfse/"> Cephfse </a>
+            </div>
+          <span class="more-meta"> 约 3715 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#涉及文件">涉及文件</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#ceph-monitor----初始化和选举httpswwwcnblogscomyi-mu-xip10364797html"><a href="https://www.cnblogs.com/yi-mu-xi/p/10364797.html">ceph monitor&mdash;-初始化和选举</a></a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#代码分析">代码分析</a></li>
+    <li><a href="#文件mdsmonitorcc">文件：MDSMonitor.cc</a></li>
+    <li><a href="#他山之石">他山之石</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>http://localhost:1313/post/storage/2_ceph_mon/</p>
+<p>本文主要描述了 结合ceph mon模块，介绍Paxos基本实现。</p>
+<p>大纲如下：</p>
+<blockquote>
+<p>画外音：导入下面文章  <a href="https://www.chatpdf.com/">https://www.chatpdf.com/</a> 提问</p>
+</blockquote>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/research/uploads/prod/2016/12/The-Part-Time-Parliament.pdf">The Part-Time Parliament</a></li>
+<li><a href="https://www.microsoft.com/en-us/research/publication/paxos-made-simple/">Paxos Made Simple</a></li>
+<li>Revisiting the Paxos algorithm</li>
+<li><a href="https://www.read.seas.harvard.edu/~kohler/class/08w-dsi/chandra07paxos.pdf">https://www.read.seas.harvard.edu/~kohler/class/08w-dsi/chandra07paxos.pdf</a></li>
+</ul>
+<p>先解作者背后故事</p>
+<p>最初的相关论文 <a href="https://link.zhihu.com/?target=https%3A//lamport.azurewebsites.net/pubs/lamport-paxos.pdf">The Part-Time Parliament</a> 发表于 1998 年后，很多人都表示理解不能。</p>
+<p>于是 Lamport 在 2001 年，又使用相对简练的语言和逻辑，将其主干思想重新阐述了一遍，便有了 <a href="https://link.zhihu.com/?target=https%3A//lamport.azurewebsites.net/pubs/paxos-simple.pdf">Paxos made simple</a>。</p>
+<p>此后的1998年，Lynch和Lampson还合写了一篇文章“<a href="https://link.zhihu.com/?target=http%3A//groups.csail.mit.edu/tds/paxos.html">Revisiting the Paxos algorithm</a>”</p>
+<p>从那个时候开始Paxos才逐渐引起理论科学家们的关注，而真正为大众熟知应该是在Google发表<a href="https://link.zhihu.com/?target=http%3A//duanple.blog.163.com/blog/static/70971767201142412058672/%22%20%5Ct%20%22_blank">Chubby</a>之后了。</p>
+<p>Google在它的分布式系统中，大量使用了Paxos，比如Chubby、MegaStore、Spanner、Mesa等系统中。这篇文章详细讲述了Google在最初实现Paxos碰到的一系列问题及解决方案，是一篇全面讲解分布式系统工程实践的文章。其中提到的很多真实发生的场景，相信做过分布式系统的人都会感同身受，每个人或多或少都会遇到过一些类似的问题</p>
+<p>然后看相关资料</p>
+<ul>
+<li>
+<p><a href="https://people.cs.rutgers.edu/~pxk/417/notes/paxos.html">https://people.cs.rutgers.edu/~pxk/417/notes/paxos.html</a></p>
+</li>
+<li>
+<p>[Paxos三部曲之一] 使用Basic-Paxos协议的日志同步与恢复</p>
+</li>
+<li>
+<p><a href="http://oceanbase.org.cn/?p=90">http://oceanbase.org.cn/?p=90</a></p>
+</li>
+<li>
+<p>[<a href="http://oceanbase.org.cn/?p=160">Paxos三部曲之三] Paxos成员组变更</a></p>
+<p><a href="http://oceanbase.org.cn/?cat=16">http://oceanbase.org.cn/?cat=16</a></p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="paxos">Paxos</h1>
+<p>论文：https://sedna.cs.umd.edu/818/papers/paxosMadeSimple.pdf</p>
+<p>阅读文档：https://zhuanlan.zhihu.com/p/408735316</p>
+<p><a href="https://ceph.io/geen-categorie/monitors-and-paxos-a-chat-with-joao/">https://ceph.io/geen-categorie/monitors-and-paxos-a-chat-with-joao/</a></p>
+<p>Prepare-&gt;promise-&gt;propose-&gt;accept-&gt;learn</p>
+<ol>
+<li>
+<p>提议者（Proposer）</p>
+</li>
+<li>
+<p>接受者（Acceptor）</p>
+</li>
+<li>
+<p>学习者（Learner）</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>请为入门小白描述一下 什么是paxos，他解决了什么问题，然后如何解决的？</p>
+</li>
+<li></li>
+</ul>
+<p>Paxos是一种用于分布式系统中达成共识的算法，它的目的是让多个节点在没有中心化控制的情况下，就某个值达成一致。</p>
+<p>在分布式系统中，由于网络延迟、节点故障等原因，节点之间的通信可能会出现问题，从而导致共识无法达成。</p>
+<p>Paxos算法就是为了解决这个问题而设计的。</p>
+<p>Paxos算法的核心思想是通过多轮投票来达成共识。在每一轮投票中，节点会向其他节点发送请求，并根据其他节点的响应来决定下一步该做什么。</p>
+<p>如果大多数节点都同意了某个值，那么这个值就被认为是达成共识的值。 Paxos算法解决了分布式系统中的共识问题，即如何让多个节点就某个值达成一致。它通过多轮投票来实现共识，并且可以容忍节点故障和网络延迟等问题。</p>
+<p>Paxos算法的实现比较复杂，但是它已经被广泛应用于分布式系统中，例如Google的Chubby锁服务和Apache的ZooKeeper分布式协调服务等。 总之，Paxos算法是一种用于分布式系统中达成共识的算法，它解决了共识问题，并且可以容忍节点故障和网络延迟等问题</p>
+<ul>
+<li>
+<p>Paxos如何工程实现？</p>
+</li>
+<li>
+<p>Paxos算法的工程实现可以分为以下几个步骤： 1. 设计系统架构：首先，需要设计分布式系统的整体架构，确定系统中的角色和节点数量。通常，Paxos算法中会有提议者（Proposer）、接受者（Acceptor）和学习者（Learner）等角色。 2. 实现网络通信：为了让节点之间能够进行通信，需要实现网络通信模块。这个模块负责节点之间的消息传递，包括发送和接收消息。 3. 实现提议者角色：提议者负责发起提议并推动共识的达成。在实现提议者角色时，需要实现以下功能：   - 生成唯一的提议编号；   - 发送prepare请求给接受者，并处理接受者的promise响应；   - 根据接受者的promise响应，决定是否发送accept请求；   - 处理接受者的accept响应，判断是否达成共识。 4. 实现接受者角色：接受者负责接收提议者的请求，并根据算法规则进行响应。在实现接受者角色时，需要实现以下功能：   - 接收并处理来自提议者的prepare请求；   - 根据当前状态和提议者的请求，返回promise响应；   - 接收并处理来自提议者的accept请求；   - 根据当前状态和提议者的请求，返回accept响应。 5. 实现学习者角色：学习者负责接收已达成共识的值，并将其应用到系统中。在实现学习者角色时，需要实现以下功能：   - 接收并处理来自接受者的已达成共识的值；   - 将共识的值应用到系统中，以完成相应的操作</p>
+</li>
+<li></li>
+</ul>
+<h1 id="流程分析">流程分析</h1>
+<h3 id="涉及文件">涉及文件</h3>
+<ul>
+<li>
+<p>D:\db\note_ceph\src\mon\PaxosService.h</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#">
+<span class="cm">/**
+</span><span class="cm"> * A Paxos Service is an abstraction that easily allows one to obtain an
+</span><span class="cm"> * association between a Monitor and a Paxos class, in order to implement any
+</span><span class="cm"> * service.
+</span><span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">PaxosService</span> 
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>主要参考</p>
+<ul>
+<li>
+<p><a href="https://blog.wjin.org/posts/ceph-monitor-paxosservice.html">Ceph Monitor PaxosService</a></p>
+</li>
+<li>
+<p><a href="https://blog.wjin.org/posts/ceph-monitor-paxos.html">Ceph Monitor Paxos</a></p>
+</li>
+<li>
+<p><a href="https://blog.wjin.org/posts/ceph-monitor-leader-elect.html">Ceph Monitor Leader Elect</a></p>
+</li>
+<li>
+<p><a href="https://blog.wjin.org/posts/ceph-monitor-overview.html">Ceph Monitor Overview</a></p>
+</li>
+</ul>
+<h1 id="ceph-monitor-overviewhttpsblogwjinorgpostsceph-monitor-overviewhtml"><a href="https://blog.wjin.org/posts/ceph-monitor-overview.html">Ceph Monitor Overview</a></h1>
+<ul>
+<li>Introduction</li>
+</ul>
+<p>monitor在ceph集群中起着非常关键的作用，它维护着几张map(monmap, osdmap, pgmap等)， 通过paxos算法保证数据的一致性。</p>
+<p>monitor节点信息会存放在monmap这张表中,其中存放的就是rank值，在选举leader的时候，rank值最小的获胜，所以monitor地位并不是平等的，这样做的目的可能是为了快速的选举出leader。</p>
+<p>monitor维护的map，都是以PaxosService的服务提供，不同服务继承基类PaxosService实现自己的特性，这些服务通过paxos算法对数据进行更新，</p>
+<blockquote>
+<p>只有leader才可以调用propose相关函数进行更新，如果peon节点收到更新的消息，则需要将消息转发给leader节点， 所以同一时刻paxos算法只会存在一个proposer，几乎没有竞争，决议会很快完成，更新也是非常迅速的。</p>
+</blockquote>
+<p><img src="https://blog.wjin.org/assets/img/post/ceph_mon_startup.png" alt=""></p>
+<ul>
+<li><a href="https://blog.wjin.org/posts/ceph-monitor-startup.html">https://blog.wjin.org/posts/ceph-monitor-startup.html</a></li>
+<li><a href="https://blog.wjin.org/posts/ceph-monitor-overview.html">https://blog.wjin.org/posts/ceph-monitor-overview.html</a></li>
+</ul>
+<h1 id="main-thread">Main Thread</h1>
+<ul>
+<li>主线程的初始化工作，参见代码ceph_mon.cc:</li>
+</ul>
+<p>Data Store</p>
+<p>monitor维护了很多map以及自身Elector和Paxos算法的数据，这些数据肯定是需要地方存储的，最开始的时候monitor采用文件存储，后来采用k/v存储， 主要是利用k/v的原子操作以及对key做有序排列，目前支持levelDB和rocksDB。</p>
+<p>主要实现是在文件MonitorDBStore.h中，将对key的操作封装成一个op， 然后考虑到同时对多个key操作的时候，需要确保事务性，所以使用的时候，都是以transaction的形式提交，一个transaction可能包含多个op。</p>
+<h1 id="ceph-monitor-paxoshttpsblogwjinorgpostsceph-monitor-paxoshtml"><a href="https://blog.wjin.org/posts/ceph-monitor-paxos.html">Ceph Monitor Paxos</a></h1>
+<h1 id="introduction">Introduction</h1>
+<p>paxos算法主要用来解决分布式系统中的数据一致性，ceph monitor中实现了paxos算法，然后抽象出了PaxosService基类，基于此实现了不同的服务， 比如MonmapMonitor, OSDMonitor, PGMonitor等，分别对应monmap, osdmap, pgmap。</p>
+<p>paxos需要根据monitor状态来做转换，大致如下:</p>
+<ul>
+<li>monitor启动的时候，preinit会调用函数init_paxos初始化paxos</li>
+<li>monitor进入bootstrap，准备重新选举的时候，会restart paxos</li>
+<li>monitor选举成功，成为leader的时候，会将paxos初始化leader</li>
+<li>monitor选举失败，成为peon的时候，会将paxos初始化为peon</li>
+<li>monitor运行过程中，leader上的PaxosService会提议一些值，进行paxos决议，即propose</li>
+</ul>
+<p><img src="https://blog.wjin.org/assets/img/post/ceph_mon_paxos_3.png" alt="img"></p>
+<h1 id="ceph-monitor-paxosservicehttpsblogwjinorgpostsceph-monitor-paxosservicehtml"><a href="https://blog.wjin.org/posts/ceph-monitor-paxosservice.html">Ceph Monitor PaxosService</a></h1>
+<ol>
+<li>PaxosService是一个虚基类，内部利用Paxos类的功能，包装了一些接口，即提供一些模板方法，用来构建基于paxos的服务。 目前所有服务如下图所示:</li>
+</ol>
+<p><img src="https://blog.wjin.org/assets/img/post/ceph_mon_paxosservice.png" alt=""></p>
+<p>如果考虑需要实现自己的一个能够利用paxos的服务，应该从何入手？大致应该考虑如下几个方面:</p>
+<ul>
+<li>Init</li>
+<li>Restart</li>
+<li>Process</li>
+<li>Update</li>
+<li>Active</li>
+</ul>
+<p><img src="https://blog.wjin.org/assets/img/post/ceph_mon_sequence.png" alt=""></p>
+<h2 id="ceph-monitor----初始化和选举httpswwwcnblogscomyi-mu-xip10364797html"><a href="https://www.cnblogs.com/yi-mu-xi/p/10364797.html">ceph monitor&mdash;-初始化和选举</a></h2>
+<h1 id="ceph-monitor源码机制分析三-选举">Ceph Monitor源码机制分析（三）—— 选举</h1>
+<p><a href="https://blog.csdn.net/scaleqiao/article/details/52315468">https://blog.csdn.net/scaleqiao/article/details/52315468</a></p>
+<p><img src="https://img-blog.csdn.net/20160825155948415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<p>选举的入口函数是Monitor::start_election</p>
+<p>这么说还是有点笼统，让我们用代码说话吧，当然你得学会看代码。选举的入口函数是Monitor::start_election()，查一下调用这个函数的代码，不难看出会在以下三种情况发生时，调用它：</p>
+<ul>
+<li>
+<p>Monitor::handle_probe_reply()， monitor进行bootstrap时，首先会向monmap中所有的成员发送MMonProbe消息，然后在收到peer返回的probereply时，会根据返回的quorum信息以及paxos版本来判定是否需要发起选举。</p>
+</li>
+<li>
+<p>Elector::handle_propose()，这个是在收到别的monitor发过来的选举请求消息时，会根据情况触发重新选举。</p>
+</li>
+<li>
+<p>Monitor::do_admin_command()和Monitor::handle_command()，</p>
+</li>
+</ul>
+<p>​     这两个属于通过ceph命令或者mon的admin socket执行quorumenter和quorum exit触发的选举操作。</p>
+<blockquote>
+<p>旁白：【ceph】Admin Socket机制|ceph dump 命令原理</p>
+</blockquote>
+<ul>
+<li>
+<p><a href="https://blog.csdn.net/bandaoyu/article/details/123070446">https://blog.csdn.net/bandaoyu/article/details/123070446</a></p>
+</li>
+<li>
+<p>ceph daemon /var/run/ceph/ceph-mon.*.asok help</p>
+</li>
+<li>
+<p>CephContext中会创建一个AdminSocket对象，该对象本质是一个线程。</p>
+</li>
+</ul>
+<p>​      ceph-mon/ceph-osd/ceph-mds这些进程都会有创建一个AdminSocket的线程，负责响应用户的探查命令。</p>
+<p>————————————————
+版权声明：本文为CSDN博主「瞧见风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/scaleqiao/article/details/52315468</p>
+<p><img src="https://img-blog.csdn.net/20160825160932814?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<h2 id="代码分析">代码分析</h2>
+<h2 id="文件mdsmonitorcc">文件：MDSMonitor.cc</h2>
+<h2 id="他山之石">他山之石</h2>
+<ul>
+<li><a href="https://monica.im/s/959082ae">https://monica.im/s/959082ae</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-06-02 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Cephfs/">Cephfs</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/storage/3_ceph_msd/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">日拱一卒：ceph-mds 业务操作</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/1-2023-05-28-add-fun/">
+            <span class="next-text nav-default">成为oceanbase贡献者第四天：内置函数</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

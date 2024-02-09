@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Troy" /><meta name="description" content="## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+<meta name="author" content="Troy" /><meta name="description" content="疑问" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
 
 
 
@@ -39,19 +39,19 @@
 
 
 <meta property="og:title" content="操作系统入门知识" />
-<meta property="og:description" content="## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技" />
+<meta property="og:description" content="疑问" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/2022/2-2022-1-25-os/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-01-25T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2022-01-25T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="操作系统入门知识">
-<meta itemprop="description" content="## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技"><meta itemprop="datePublished" content="2022-01-25T00:00:00&#43;00:00" />
+<meta itemprop="description" content="疑问"><meta itemprop="datePublished" content="2022-01-25T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-01-25T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1077">
+<meta itemprop="wordCount" content="2730">
 <meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="操作系统入门知识"/>
-<meta name="twitter:description" content="## 方法 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这个技术适用的场景。任何技"/>
+<meta name="twitter:description" content="疑问"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2022-01-25 00:00 </span>
         
-          <span class="more-meta"> 约 1077 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 2730 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -139,49 +139,141 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
+    <li>
+      <ul>
+        <li><a href="#疑问1--what-is-numa">疑问1  What is NUMA?</a></li>
+        <li><a href="#疑问2网卡软中断都集中在了一个cpu上导致cpu负载升高多余网络包被丢弃httpszhuanlanzhihucomp80619249">疑问2:<a href="https://zhuanlan.zhihu.com/p/80619249">网卡软中断都集中在了一个cpu上，导致cpu负载升高，多余网络包被丢弃？</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#net">net</a></li>
+    <li><a href="#file">file</a>
+      <ul>
+        <li><a href="#一手资料">一手资料</a></li>
+      </ul>
+    </li>
     <li><a href="#-方法">## 方法</a>
       <ul>
+        <li><a href="#1-沟通步骤">1. 沟通步骤：</a></li>
+        <li><a href="#2-知识点">2. 知识点</a></li>
         <li><a href="#一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</a></li>
         <li><a href="#二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</a></li>
-        <li><a href="#三这个技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</a></li>
+        <li><a href="#三这技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这技术适用的场景。任何技术都有其适用的场景，离开了这个场景</a></li>
         <li><a href="#四技术的组成部分和关键点">四、技术的组成部分和关键点。</a></li>
         <li><a href="#五技术的底层原理和关键实现">五、技术的底层原理和关键实现</a></li>
         <li><a href="#六已有的实现和它之间的对比">六、已有的实现和它之间的对比</a></li>
-        <li><a href="#虚拟内存20问">虚拟内存20问</a></li>
       </ul>
     </li>
-    <li><a href="#文件系统20问">文件系统20问</a>
-      <ul>
-        <li><a href="#1-分区和目录的区别">1. 分区和目录的区别？</a></li>
-      </ul>
-    </li>
-    <li><a href="#2-文件和文件系统的区别关系文件就是文件系统吗">2. 文件和文件系统的区别?关系。文件就是文件系统吗？</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav>
   </div>
 </div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2022-01-25T00:00:00" title="January 25, 2022">January 25, 2022</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
     <div class="post-content">
-      <h2 id="-方法">## 方法</h2>
-<h3 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h3>
-<h3 id="二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</h3>
-<h3 id="三这个技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</h3>
-<h3 id="四技术的组成部分和关键点">四、技术的组成部分和关键点。</h3>
-<h3 id="五技术的底层原理和关键实现">五、技术的底层原理和关键实现</h3>
-<h3 id="六已有的实现和它之间的对比">六、已有的实现和它之间的对比</h3>
-<h3 id="虚拟内存20问">虚拟内存20问</h3>
-<ol>
-<li>Q1 Page Cache是什么？</li>
-</ol>
-<h2 id="文件系统20问">文件系统20问</h2>
-<h3 id="1-分区和目录的区别">1. 分区和目录的区别？</h3>
-<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-旁白&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
-<p>回答：不清楚，不知道。然后结束了 不管不问了</p>
+      <h1 id="how-sched_setaffinity-works-inside-of-linux-kernel">How sched_setaffinity works inside of Linux Kernel</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">YSCALL_DEFINE3(sched_setaffinity, pid_t, pid, unsigned int, len, unsigned long __user *, user_mask_ptr)
+-- sched_setaffinity(pid_t pid, const struct cpumask *in_mask)
+--- __set_cpus_allowed_ptr(struct task_struct *p, const struct cpumask *new_mask, bool check)
+---- stop_one_cpu(unsigned int cpu, cpu_stop_fn_t fn, void *arg)
+----- migration_cpu_stop(void *data)
+------ __migrate_task(struct rq *rq, struct task_struct *p, int dest_cpu)
+------- move_queued_task(struct rq *rq, struct task_struct *p, int new_cpu)
+-------- enqueue_task(struct rq *rq, struct task_struct *p, int flags)
+--------- returns the new run queue of destination CPU
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>[root@h12-storage03 ~]# dmesg|grep -i numa
+[    0.000000] NUMA: Initialized distance table, cnt=2
+[    0.000000] NUMA: Node 0 [mem 0x00000000-0x7fffffff] + [mem 0x100000000-0x807fffffff] -&gt; [mem 0x00000000-0x807fffffff]
+[    0.001000] mempolicy: Enabling automatic NUMA balancing. Configure with numa_balancing= or the kernel.numa_balancing sysctl
+[    1.151966] pci_bus 0000:00: on NUMA node 0
+[    1.154241] pci_bus 0000:16: on NUMA node 0
+[    1.155523] pci_bus 0000:30: on NUMA node 0
+[    1.156810] pci_bus 0000:4a: on NUMA node 0
+[    1.160095] pci_bus 0000:64: on NUMA node 0
+[    1.164343] pci_bus 0000:7e: on NUMA node 0
+[    1.176501] pci_bus 0000:7f: on NUMA node 0
+[    1.178741] pci_bus 0000:80: on NUMA node 1
+[    1.181500] pci_bus 0000:97: on NUMA node 1
+[    1.182764] pci_bus 0000:b0: on NUMA node 1
+[    1.183768] pci_bus 0000:c9: on NUMA node 1
+[    1.184760] pci_bus 0000:e2: on NUMA node 1
+[    1.188830] pci_bus 0000:fe: on NUMA node 1
+[    1.200504] pci_bus 0000:ff: on NUMA node 1
+[root@h12-storage03 ~]#</p>
+<h1 id="cpu">cpu</h1>
+<h3 id="疑问1--what-is-numa">疑问1  What is NUMA?</h3>
+<p>dmesg|grep -i numa</p>
+<p>[  0.000000] No NUMA configuration found</p>
+<h3 id="疑问2网卡软中断都集中在了一个cpu上导致cpu负载升高多余网络包被丢弃httpszhuanlanzhihucomp80619249">疑问2:<a href="https://zhuanlan.zhihu.com/p/80619249">网卡软中断都集中在了一个cpu上，导致cpu负载升高，多余网络包被丢弃？</a></h3>
+<p>X86系统采用中断机制协同处理CPU与其他设备工作。长久以来网卡的中断默认由cpu0处理，在大量小包的网络环境下可能出现cpu0负载高，而其他cpu空闲。后来出现网卡多队列技术解决这个问题。</p>
 <ul>
-<li>青铜：都是路径 都可以存储数据，感觉没什么区别，为什么别人都强调分盘存储？不懂理论 动手操作一下</li>
+<li>
+<p>ls /sys/class/net/eth0/queues/</p>
+<p>多队列网卡的好处是可以将每个队列产生的中断分布到cpu的多个核，实现负载均衡，避免了单个核被占用到100%而其他核还处于空闲的情况</p>
+</li>
+<li>
+<p>ethtool -l eth0  eth0网卡是否支持多队列，最多支持多少、当前开启多少</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">service irqbalance stop
+</code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
-<p>​     umount -l /mnt/met 强制卸载机器上挂载</p>
-<p>mount - mount a filesystem</p>
+<h2 id="net">net</h2>
+<p>Google 对此做的统计显示，三次握手消耗的时间，在 HTTP 请求完成的时间占比在 10% 到 30% 之间</p>
+<p>疑问1.</p>
+<p>net.ipv4.tcp_syncookies = 1</p>
+<p>Linux 下怎样开启 syncookies 功能呢？修改 tcp_syncookies 参数即可，其中值为 0 时表示关闭该功能，2 表示无条件开启功能，而 1 则表示仅当 SYN 半连接队列放不下时，再启用它。由于 syncookie 仅用于应对 SYN 泛洪攻击（攻击者恶意构造大量的 SYN 报文发送给服务器，造成 SYN 半连接队列溢出，导致正常客户端的连接无法建立），这种方式建立的连接，许多 TCP 特性都无法使用。所以，应当把 tcp_syncookies 设置为 1，仅在队列满时再启用。</p>
+<p>tcp_max_tw_buckets 控制并发的 TIME_WAIT 的数量，默认值是 180000</p>
+<h2 id="file">file</h2>
+<p>疑问1: aio 我业务代码没写，需要内核调整吗？</p>
+<p>/etc/sysctl.conf</p>
+<p>## 修改内核异步 I/O 限制</p>
+<p>fs.aio-max-nr=1048576</p>
+<h3 id="一手资料">一手资料</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://open.oceanbase.com/ask/detail?id=20400568&amp;pageNo=1&amp;query=NUMA#all">https://open.oceanbase.com/ask/detail?id=20400568&amp;pageNo=1&amp;query=NUMA#all</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://zhuanlan.zhihu.com/p/336365600">每个程序员都应该知道的 CPU 知识：NUMA</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="">以蚂蚁集团不同使用场景为例，分析如何调整和优化高性能 OceanBase</a></li>
+</ul>
+<p><img src="https://gw.alipayobjects.com/zos/oceanbase/cab256f1-ad0f-4a74-a434-07c2ad995948/image/2022-03-29/8d66c655-e16a-4a7f-859b-fc0a9cbf4047.png" alt=""></p>
+<ul>
+<li>
+<p>Linux 性能优化实战</p>
+<p>下半部用来延迟处理上半部未完成的工作，通常以内核线程的方式运行。</p>
+<p>上半部直接处理硬件请求，也就是我们常说的硬中断，特点是快速执行；（dma）</p>
+<p>而下半部则是由内核触发，也就是我们常说的软中断，特点是延迟执行。</p>
+<p>cat /proc/softirqs</p>
+<p>NET_RX 表示网络接收中断，而 NET_TX 表示网络发送中断。</p>
+<p>ps aux | grep softirq - &mdash;48内核。</p>
+<p>[ksoftirqd/47</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -197,70 +289,211 @@
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">cat /proc/filesystems
-[root@bj1-10-112-179-15 gadmin]# mount
-/dev/mapper/VolGroup-lv_root on / type ext4 (rw)
-proc on /proc type proc (rw)
-sysfs on /sys type sysfs (rw)
-devpts on /dev/pts type devpts (rw,gid=5,mode=620)
-tmpfs on /dev/shm type tmpfs (rw)
-/dev/sda1 on /boot type ext4 (rw)
-/dev/vda1 on /app type ext4 (rw)
-none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
-[root@bj1-10-112-179-15 gadmin]# 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@spa-65-177-112 gadmin]# ps aux | grep softirq
+root         6  0.0  0.0      0     0 ?        S     2021   0:20 [ksoftirqd/0]
+root        14  0.0  0.0      0     0 ?        S     2021   0:21 [ksoftirqd/1]
+root        20  0.0  0.0      0     0 ?        S     2021   0:16 [ksoftirqd/2]
+root        25  0.0  0.0      0     0 ?        S     2021   0:19 [ksoftirqd/3]
+root        30  0.0  0.0      0     0 ?        S     2021   0:19 [ksoftirqd/4]
+root        35  0.0  0.0      0     0 ?        S     2021   0:30 [ksoftirqd/5]
+root        40  0.0  0.0      0     0 ?        S     2021   0:20 [ksoftirqd/6]
+root        45  0.0  0.0      0     0 ?        S     2021   0:33 [ksoftirqd/7]
+root        50  0.0  0.0      0     0 ?        S     2021   0:20 [ksoftirqd/8]
+root        55  0.0  0.0      0     0 ?        S     2021   0:17 [ksoftirqd/9]
+root        60  0.0  0.0      0     0 ?        S     2021   0:31 [ksoftirqd/10]
+root        65  0.0  0.0      0     0 ?        S     2021   0:23 [ksoftirqd/11]
+root        70  0.0  0.0      0     0 ?        S     2021   0:13 [ksoftirqd/12]
+root        76  0.0  0.0      0     0 ?        S     2021   0:22 [ksoftirqd/13]
+root        81  0.0  0.0      0     0 ?        S     2021   0:27 [ksoftirqd/14]
+root        86  0.0  0.0      0     0 ?        S     2021   0:32 [ksoftirqd/15]
+root        91  0.0  0.0      0     0 ?        S     2021   0:34 [ksoftirqd/16]
+root        96  0.0  0.0      0     0 ?        S     2021   0:18 [ksoftirqd/17]
+root       101  0.0  0.0      0     0 ?        S     2021   0:18 [ksoftirqd/18]
+root       106  0.0  0.0      0     0 ?        S     2021   0:16 [ksoftirqd/19]
+root       111  0.0  0.0      0     0 ?        S     2021   0:20 [ksoftirqd/20]
+root       116  0.0  0.0      0     0 ?        S     2021   0:23 [ksoftirqd/21]
+root       121  0.0  0.0      0     0 ?        S     2021   0:18 [ksoftirqd/22]
+root       126  0.0  0.0      0     0 ?        S     2021   0:14 [ksoftirqd/23]
+root       131  0.0  0.0      0     0 ?        S     2021   0:00 [ksoftirqd/24]
+root       136  0.0  0.0      0     0 ?        S     2021   0:06 [ksoftirqd/25]
+root       141  0.0  0.0      0     0 ?        S     2021   0:04 [ksoftirqd/26]
+root       146  0.0  0.0      0     0 ?        S     2021   0:03 [ksoftirqd/27]
+root       151  0.0  0.0      0     0 ?        S     2021   0:03 [ksoftirqd/28]
+root       156  0.0  0.0      0     0 ?        S     2021   0:02 [ksoftirqd/29]
+root       161  0.0  0.0      0     0 ?        S     2021   0:02 [ksoftirqd/30]
+root       166  0.0  0.0      0     0 ?        S     2021   0:02 [ksoftirqd/31]
+root       171  0.0  0.0      0     0 ?        S     2021   0:01 [ksoftirqd/32]
+root       176  0.0  0.0      0     0 ?        S     2021   0:01 [ksoftirqd/33]
+root       181  0.0  0.0      0     0 ?        S     2021   0:01 [ksoftirqd/34]
+root       186  0.0  0.0      0     0 ?        S     2021   0:01 [ksoftirqd/35]
+root       191  0.0  0.0      0     0 ?        S     2021   0:00 [ksoftirqd/36]
+root       196  0.0  0.0      0     0 ?        S     2021   0:06 [ksoftirqd/37]
+root       201  0.0  0.0      0     0 ?        S     2021   0:04 [ksoftirqd/38]
+root       206  0.0  0.0      0     0 ?        S     2021   0:03 [ksoftirqd/39]
+root       211  0.0  0.0      0     0 ?        S     2021   0:03 [ksoftirqd/40]
+root       216  0.0  0.0      0     0 ?        S     2021   0:02 [ksoftirqd/41]
+root       221  0.0  0.0      0     0 ?        S     2021   0:03 [ksoftirqd/42]
+root       226  0.0  0.0      0     0 ?        S     2021   0:02 [ksoftirqd/43]
+root       231  0.0  0.0      0     0 ?        S     2021   0:00 [ksoftirqd/44]
+root       236  0.0  0.0      0     0 ?        S     2021   0:00 [ksoftirqd/45]
+root       241  0.0  0.0      0     0 ?        S     2021   0:00 [ksoftirqd/46]
+root       246  0.0  0.0      0     0 ?        S     2021   0:00 [ksoftirqd/47]
 
+[ ~]# cat /proc/irq/24/smp_affinity
+0001
+[ ~]# cat /proc/irq/24/smp_affinity_list 
+0
+#上面表示0001对应cpu0，可以直接修改绑定关系
+[ ~]# echo 4 &gt; /proc/irq/24/smp_affinity
+[ ~]# cat /proc/irq/24/smp_affinity_list 
+2
+#此时中断号24对应的处理CPU为cpu2
 
+mpstat -P ALL 1 1
+watch -d cat /proc/softirqs
+cat /proc/interrupts  
 </code></pre></td></tr></table>
 </div>
-</div><p>​	&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-旁白&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
-<h2 id="2-文件和文件系统的区别关系文件就是文件系统吗">2. 文件和文件系统的区别?关系。文件就是文件系统吗？</h2>
+</div><p>watch -d cat /proc/softirqs</p>
+<p>ET_RX（网络接收）、SCHED（内核调度）、RCU（RCU 锁）</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 10 | 案例篇：系统的软中断CPU使用率升高，我该怎么办？</li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://linuxhint.com/understanding_numa_architecture/">https://linuxhint.com/understanding_numa_architecture/</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://www.jianshu.com/p/6dfde8331380">https://www.jianshu.com/p/6dfde8331380</a></li>
+</ul>
+</li>
+<li>
+<p><strong>Why</strong> - the application buffer/queue to the write/send data, <a href="https://blog.cloudflare.com/the-story-of-one-latency-spike/">understand its consequences can help a lot</a>.</p>
+</li>
+<li>
+<p><strong>How:</strong></p>
 <ul>
 <li>
-<p>文件系统是一套实现了<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE">数据</a>的存储、分级组织、访问和获取等操作的<a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E6%95%B8%E6%93%9A%E9%A1%9E%E5%9E%8B">抽象数据类型</a>（Abstract data type）。2】</p>
+<p><strong>Check command:</strong> <code>sysctl net.ipv4.tcp_rmem</code></p>
 </li>
 <li>
-<p>文件系统使用<strong>文件</strong>和<strong>树形目录</strong>的抽象逻辑概念代替了硬盘和光盘等物理设备使用数据块的概念，用户使用文件系统来保存数据不必关心数据实际保存在硬盘（或者光盘）的地址为多少的数据块上，只需要记住这个文件的所属目录和文件名[3]</p>
+<p><strong>Change command:</strong> <code>sysctl -w net.ipv4.tcp_rmem=&quot;min default max&quot;</code>; when changing default value, remember to restart your user space app (i.e. your web server, nginx, etc)</p>
 </li>
 <li>
-<p>文件系统并不一定只在特定存储设备上出现。它是数据的组织者和提供者，至于它的底层，可以是磁盘，也可以是其它动态生成数据的设备（比如网络设备）</p>
-<p>网络文件系统（NFS，Network File System）是一种将远程主机上的分区（目录）经网络挂载到本地系统的一种机制。</p>
-<p>网络文件系统（NFS，Network File System）是一种将远程主机上的分区（目录）经网络挂载到本地系统的一种机制。</p>
+<p><strong>How to monitor:</strong> <code>cat /proc/net/sockstat</code></p>
 </li>
 </ul>
-<p><img src="https://static001.geekbang.org/resource/image/72/12/728b7b39252a1e23a7a223cdf4aa1612.png" alt="img"></p>
-<p>为什么文件系统里数据 可以存储在本地磁盘，内存，网络设备上，有什么独特之处吗？</p>
-<p><a href="https://static001.geekbang.org/resource/image/14/b1/14bc3d26efe093d3eada173f869146b1.png"></a></p>
+</li>
+</ul>
+<p>【11】内核参数 /etc/sysctl.conf  ✅</p>
+<p>cat /proc/sys/fs/aio-max-nr</p>
+<p>65536</p>
+<p>fs.aio-max-nr = 1048576</p>
+<p><strong>sysctl -p /etc/sysctl.conf</strong></p>
+<p>The Linux kernel provides the Asynchronous non-blocking I/O (AIO) feature that allows a process to initiate multiple I/O operations simultaneously without having to wait for any of them to complete. This helps boost performance for applications that are able to overlap processing and I/O. ✅</p>
+<p><a href="https://www.jianshu.com/p/6dfde8331380">https://www.jianshu.com/p/6dfde8331380</a></p>
+<p>######################## cat /proc/sys/net/core/somaxconn</p>
+<p># 默认值：128</p>
+<p># 作用：已经成功建立连接的套接字将要进入队列的长度</p>
+<p><strong>net.core.somaxconn = 65536</strong></p>
+<p>作者：济夏
+链接：https://www.jianshu.com/p/6dfde8331380
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>Socket accept 队列满，系统的 somaxconn 内核参数默认太小。</p>
+<p>net.ipv4.tcp_max_syn_backlog = 1024</p>
+<p>net.ipv4.tcp_fin_timeout = 60</p>
+<p>如何提升TCP四次挥手的性能？</p>
 <ul>
 <li>
-<p>文件系统会把连续的扇区或页，组成逻辑块，然后以逻辑块作为最小单元来管理数据。常见的逻辑块的大小是 4KB</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">yum install sysstat
-wget https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
-rpm -Uvh mysql80-community-release-el8-1.noarch.rpm
-
-
-
-</code></pre></td></tr></table>
-</div>
-</div></li>
+<p>为什么建立连接是三次握手，而关闭连接需要四次挥手呢？</p>
+<p>TCP 不允许连接处于 半打开状态 时就单向传输数据，因此合并在一起传输了。</p>
+<p>但是当连接处于半关闭状态时，TCP 是允许单向传输数据的。</p>
+<p>tcp_orphan_retries</p>
+<p>net.ipv4.tcp_max_orphans = 16384</p>
+<p>net.ipv4.tcp_fin_timeout = 60</p>
+<p>net.ipv4.tcp_max_tw_buckets = 5000</p>
+<p>//Linux 提供了 tcp_max_tw_buckets 参数，当 TIME_WAIT 的连接数量超过该参数时，新关闭的连接就不再经历 TIME_WAIT 而直接关闭。</p>
+<p>Linux 并没有限制 CLOSE_WAIT 状态的持续时间。</p>
+<p>tcp_max_orphans 定义了孤儿连接的最大数量。当进程调用 close 函数关闭连接后，无论该连接是在 FIN_WAIT1 状态，还是确实关闭了，这个连接都与该进程无关了，它变成了孤儿连接。Linux 系统为防止孤儿连接过多，导致系统资源长期被占用，就提供了 tcp_max_orphans 参数。</p>
+<ul>
+<li>如果孤儿连接数量大于它，新增的孤儿连接将不再走四次挥手，而是直接发送 RST 复位报文强制关闭。</li>
 </ul>
-<p><img src="https://static001.geekbang.org/resource/image/45/7b/45a6cfdd9d45e30dc2f38f0d2572be7b.jpeg" alt="ln"></p>
-<h2 id="参考">参考</h2>
-<p>[1] <a href="https://www.cnblogs.com/sparkdev/p/9015312.html">https://www.cnblogs.com/sparkdev/p/9015312.html</a></p>
-<p>[2] <a href="https://www.cnblogs.com/cxuanBlog/p/12565601.html">https://www.cnblogs.com/cxuanBlog/p/12565601.html</a></p>
-<p>[3] <a href="https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">文件系统</a></p>
-<p>【4】 <a href="https://time.geekbang.org/column/article/98440">https://time.geekbang.org/column/article/98440</a></p>
+</li>
+</ul>
+<h2 id="-方法">## 方法</h2>
+<h3 id="1-沟通步骤">1. 沟通步骤：</h3>
+<ol>
+<li>准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的</li>
+</ol>
+<p>【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以完全上线的项目，非demo和一个知识点。自己认为真的 不是闹着玩的。。】</p>
+<ol start="2">
+<li>经过领导，专家 进行鸡蛋里挑骨头。【自己做好了别人路了胡扯，不会对别人产生任何影响，做事和做人一样，无论熟悉人，还是老师，领导，不相关人 反对 他们反馈信号，接受质疑，经过九九八十一难考验，并且你还在坚持认为对的。】</li>
+<li>
+<ol start="3">
+<li></li>
+<li>最后融合别人建议，然后完善你项目。【不听老人言，吃亏在眼前，不敢接受别人批评，说明自己完全没有把握，才去否定 愤怒方式】</li>
+</ol>
+</li>
+</ol>
+<p>xx发问；怎么做调度的， 任务多，负载多 ，流量多。</p>
+<p>我的回答</p>
+<p>xx点评：</p>
+<p>完善流程：</p>
+<h3 id="2-知识点">2. 知识点</h3>
+<h3 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h3>
+<h3 id="二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</h3>
+<h3 id="三这技术适用的场景任何技术都有其适用的场景离开了这个场景">三、这技术适用的场景。任何技术都有其适用的场景，离开了这个场景</h3>
+<h3 id="四技术的组成部分和关键点">四、技术的组成部分和关键点。</h3>
+<h3 id="五技术的底层原理和关键实现">五、技术的底层原理和关键实现</h3>
+<h3 id="六已有的实现和它之间的对比">六、已有的实现和它之间的对比</h3>
 
     </div>
 
@@ -344,7 +577,7 @@ rpm -Uvh mysql80-community-release-el8-1.noarch.rpm
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2022
+    2024
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

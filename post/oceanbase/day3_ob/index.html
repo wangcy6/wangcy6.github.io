@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为ob贡献者第三天 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="多看、多问、多总结，肯定是可以攻克的。 一、Overview https://github.com/oceanbase/oceanbase/issues/1038 提出疑问 设计一个类是需要需要考虑什么问题 这个和侯捷的《STL源码剖析》提到知识有" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/day3_ob/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为ob贡献者第三天" />
+<meta property="og:description" content="多看、多问、多总结，肯定是可以攻克的。 一、Overview https://github.com/oceanbase/oceanbase/issues/1038 提出疑问 设计一个类是需要需要考虑什么问题 这个和侯捷的《STL源码剖析》提到知识有" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/day3_ob/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-09-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-09-25T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为ob贡献者第三天">
+<meta itemprop="description" content="多看、多问、多总结，肯定是可以攻克的。 一、Overview https://github.com/oceanbase/oceanbase/issues/1038 提出疑问 设计一个类是需要需要考虑什么问题 这个和侯捷的《STL源码剖析》提到知识有"><meta itemprop="datePublished" content="2022-09-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-09-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2464">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为ob贡献者第三天"/>
+<meta name="twitter:description" content="多看、多问、多总结，肯定是可以攻克的。 一、Overview https://github.com/oceanbase/oceanbase/issues/1038 提出疑问 设计一个类是需要需要考虑什么问题 这个和侯捷的《STL源码剖析》提到知识有"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为ob贡献者第三天</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-09-25 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 2464 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#提出疑问">提出疑问</a></li>
+    <li><a href="#大纲">大纲</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#21-流程图">2.1 流程图</a></li>
+        <li><a href="#--类图">- 类图</a></li>
+        <li><a href="#23-详细描述">2.3 详细描述</a></li>
+        <li><a href="#srcsqlparserob_item_typeh">src\sql\parser\ob_item_type.h</a></li>
+      </ul>
+    </li>
+    <li><a href="#23-测试过程">2.3 测试过程</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2022-09-25T00:00:00" title="September 25, 2022">September 25, 2022</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <blockquote>
+<p>多看、多问、多总结，肯定是可以攻克的。</p>
+</blockquote>
+<h1 id="一overview">一、Overview</h1>
+<ul>
+<li><a href="https://github.com/oceanbase/oceanbase/issues/1038">https://github.com/oceanbase/oceanbase/issues/1038</a></li>
+</ul>
+<h2 id="提出疑问">提出疑问</h2>
+<p>设计一个类是需要需要考虑什么问题</p>
+<ul>
+<li>
+<p>这个和侯捷的《STL源码剖析》提到知识有关系吗？</p>
+<ol>
+<li>
+<p>【stl源码】https://github.com/wangcy6/STL</p>
+<p>​                <a href="https://github.com/wangcy6/reading_code_note/tree/master/SGI-STL">https://github.com/wangcy6/reading_code_note/tree/master/SGI-STL</a></p>
+</li>
+<li>
+<p>【课程：侯捷 - STL和泛型编程】https://www.youtube.com/watch?v=IoXNDKyI1L0&amp;list=PLRTJhCIMo8HPW3OA74uVWIFWDCGRVckUV</p>
+</li>
+</ol>
+<p>​       16 vector深度探索</p>
+<ol start="3">
+<li>常见误区</li>
+</ol>
+</li>
+<li>
+<p>这个和c++11 新特性 std::move std:forward 使用场景？  右值引用（T&amp;&amp;）用使用场景？</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=TJIb9TGfDIw&amp;list=PL-X74YXt4LVYo_bk-jHMV5T3LHRYRbZoH">https://www.youtube.com/watch?v=TJIb9TGfDIw&amp;list=PL-X74YXt4LVYo_bk-jHMV5T3LHRYRbZoH</a></li>
+<li>【资料】02_60秒思考：C++11新特性.xmind</li>
+<li>【资料】<a href="https://app.yinxiang.com/shard/s39/nl/8226829/9ee26731-54a3-4e77-925f-309f897d9a1a/">Effective Modern C++</a></li>
+<li>【资料】移动语义 Move semantics和完美转发问题。</li>
+<li>概念错误理解：<a href="https://app.yinxiang.com/fx/6217a104-f50a-4e2d-87cc-db72b713dd94">std:move 就是左值变成右值</a></li>
+<li>【找答案】https://github.com/watchpoints/microsoft_STL</li>
+</ol>
+<blockquote>
+<p>补丁 根据上面内容 单链表 和 vector怎么设计</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="大纲">大纲</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-forth" data-lang="forth">
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="二mvp">二、MVP</h1>
+<h3 id="21-流程图">2.1 流程图</h3>
+<p><img src="https://cdn.nlark.com/yuque/__puml/a487d04a1c46cdb2d6493645a0b41219.svg#lake_card_v2=eyJ0eXBlIjoicHVtbCIsImNvZGUiOiJAc3RhcnR1bWxcblxuc3RhcnRcbjpvYl9yYXdfZXhwcl9yZXNvbHZlcl9pbXBsLmNwcDtcbjrkuIAu6KGo6L6-5byP55qE6Kej5p6QOuWug-i-k-WFpU9iUGFyc2VOb2RlIOagke-8jOi-k-WHuuihqOi-vuW8j-agkSBPYlJhd0V4cHI7XG46MS4gIE9iUmF3RXhwclJlc29sdmVySW1wbDo6ZG9fcmVjdXJzaXZlX3Jlc29sdmUoY29uc3QgUGFyc2VOb2RlKiBub2RlLCBPYlJhd0V4cHIqJiBleHByKVxuOjEuMSBPYlJhd0V4cHJSZXNvbHZlckltcGw6OnByb2Nlc3NfZnVuX3N5c19ub2RlKGNvbnN0IFBhcnNlTm9kZSogbm9kZSwgT2JSYXdFeHByKiYgZXhwcik7XG46MS4yIE9iUmF3RXhwclJlc29sdmVySW1wbDo6cHJvY2Vzc19kbGxfdWRmX25vZGUoY29uc3QgUGFyc2VOb2RlKiBub2RlLCBPYlJhd0V4cHIqJiBleHByKTtcblxuOjEuMS4xIE9iRXhwck9wZXJhdG9yRmFjdG9yeTo6Z2V0X3R5cGVfYnlfbmFtZShmdW5jX25hbWUpO1xuOjEuMS4yICBPYkV4cHJPcGVyYXRvckZhY3Rvcnk6OnJlZ2lzdGVyX2V4cHJfb3BlcmF0b3JzKClcbiAgICAgICAgICAgUkVHX09QKE9iRXhwckRheU9mTW9udGgpXG4gICAgICAgICAgIFJFR19PUChPYkV4cHJEYXlPZldlZWspXG4gICAgICAgICAgIFJFR19PUChPYkV4cHJEYXlPZlllYXIpO1xuc3RvcFxuXG5AZW5kdW1sIiwidXJsIjoiaHR0cHM6Ly9jZG4ubmxhcmsuY29tL3l1cXVlL19fcHVtbC9hNDg3ZDA0YTFjNDZjZGIyZDY0OTM2NDVhMGI0MTIxOS5zdmciLCJpZCI6IldXeGtGIiwibWFyZ2luIjp7InRvcCI6dHJ1ZSwiYm90dG9tIjp0cnVlfSwiaGVpZ2h0IjozNjMuOTkxMDY1OTc5MDAzOSwiY2FyZCI6ImRpYWdyYW0ifQ==" alt=""></p>
+<h3 id="--类图">- 类图</h3>
+<p><img src="https://cdn.nlark.com/yuque/__puml/0483ed3290f54635666954a237b8d373.svg#lake_card_v2=eyJ0eXBlIjoicHVtbCIsImNvZGUiOiJAc3RhcnR1bWxcblxuY2xhc3MgUGFyc2VOb2Rle1xuXHQgIyDoioLngrnnsbvlnotcblx0T2JJdGVtVHlwZSB0eXBlXztcbiAgIyDlrZDoioLngrnjgJDlkI7pnaLlnKjor6bnu4bnnIvjgJFcbiAgc3RydWN0IF9QYXJzZU5vZGUqKiBjaGlsZHJlbl87XG59XG5jbGFzcyBPYkV4cHJPcGVyYXRvciB7XG4jIOihqOi-vuW8j-WQjeWtlyBcbiMg6KGo6L6-5byP57G75Z6LXG5jb25zdCBPYkV4cHJPcGVyYXRvclR5cGUgdHlwZV87IFxuLyogdHlwZSBkZWZpbmVkIGluIHNxbC9vYl9pdGVtX3R5cGUuaCAqL1xufVxuY2xhc3MgT2JSYXdFeHBye1xuIFxufVxuY2xhc3MgT2JFeHBye1xuZXZhbF9mdW5jX1xu6L-Z5LiqIE9iUmF3RXhwciDku4XnlKjkuo7kvJjljJblmajpmLbmrrXnmoTor63kuYnliIbmnpDkvJjljJbvvIxcbuWcqOeUn-aIkOeJqeeQhuaJp-ihjOiuoeWIkuWQjuS8muiiq-i9rOaNouS4uuS4uuaJp-ihjOaViOeOh-S8mOWMlueahFxuT2JFeHByIOOAglxufVxuY2xhc3MgT2JFeHByVGltZUJhc2Uge1xuIyB2aXJ0dWFsIGludCBjZ19leHByXG59XG5PYkV4cHJPcGVyYXRvciAqLWRvd24tIE9iUmF3RXhwclxuXG5cblxuQGVuZHVtbCIsInVybCI6Imh0dHBzOi8vY2RuLm5sYXJrLmNvbS95dXF1ZS9fX3B1bWwvMDQ4M2VkMzI5MGY1NDYzNTY2Njk1NGEyMzdiOGQzNzMuc3ZnIiwiaWQiOiJFRTlGbSIsIm1hcmdpbiI6eyJ0b3AiOnRydWUsImJvdHRvbSI6dHJ1ZX0sImNhcmQiOiJkaWFncmFtIn0=" alt="">### 2.2 整体流程</p>
+<ul>
+<li>
+<p>parser阶段 ：func(arg1, arg2) 类型的表达式函数 统一parser 成T_FUN_SYS 类型，函数名存在子结点里</p>
+</li>
+<li>
+<p>【resolver 模块】: 根据节点 T_FUN_SYS 类型 执行 process_fun_sys_node函数</p>
+</li>
+<li>
+<p>【resolver 模块】: 根据函数名字查找类型：ObExprOperatorFactory::get_type_by_name(func_name)</p>
+</li>
+<li>
+<p>【ob_expr_operator_factory.cpp】表达式名字 和类型 通过自定义实现类 提前注册REG_OP</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#define REG_OP(OpClass)                                                \
+  do {                                                                 \
+    OpClass op(alloc);                                                 \
+    if (OB_UNLIKELY(i &gt;= EXPR_OP_NUM)) {                               \
+      LOG_ERROR(&#34;out of the max expr&#34;);                                \
+    } else {                                                           \
+      NAME_TYPES[i].name_ = op.get_name();                             \
+      NAME_TYPES[i].type_ = op.get_type();                             \
+      OP_ALLOC[op.get_type()] = ObExprOperatorFactory::alloc&lt;OpClass&gt;; \
+      i++;                                                             \
+    }                                                                  \
+  } while (0)
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>【ob_expr_time.cpp】自定义表达式类：在定义构造时候 初始化了 表达式的名字 和类型【写死了】</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ObExprDayName::ObExprDayName(ObIAllocator&amp; alloc)
+    : ObExprTimeBase(alloc, DT_DAY_NAME, T_FUN_SYS_DAY_NAME, N_DAY_NAME){};
+#define N_DAY_NAME &#34;dayname&#34;
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>[表达式内置函数] virtual  cg_expr 注册自己实现函数到 eval_func_</li>
+<li>【表达式内置函数】提供函数注册是的内存分配，类型定义</li>
+</ul>
+<p>calc_result_type1  返回值的类型
+calc_result_type2 返回值的类型</p>
+<p>看到这里可用了 下面个人测试 和阅读记录</p>
+<hr>
+<h3 id="23-详细描述">2.3 详细描述</h3>
+<h4 id="ob_raw_expr_resolver_implcpp">ob_raw_expr_resolver_impl.cpp</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#781
+</span><span class="cp"></span> <span class="k">case</span> <span class="nl">T_FUN_SYS</span><span class="p">:</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">process_fun_sys_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">expr</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="n">OB_ERR_FUNCTION_UNKNOWN</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;fail to process system function node&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">process_dll_udf_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">expr</span><span class="p">)))</span> <span class="p">{</span>
+              <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="n">OB_ERR_FUNCTION_UNKNOWN</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;fail to process dll user function node&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+              <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">ParseNode</span><span class="o">*</span> <span class="n">udf_node</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+                <span class="n">ObString</span> <span class="n">empty_db_name</span><span class="p">;</span>
+                <span class="n">ObString</span> <span class="n">empty_pkg_name</span><span class="p">;</span>
+                <span class="kt">bool</span> <span class="n">record_udf_info</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">ObResolverUtils</span><span class="o">::</span><span class="n">transform_func_sys_to_udf</span><span class="p">(</span>
+                        <span class="o">&amp;</span><span class="n">ctx_</span><span class="p">.</span><span class="n">expr_factory_</span><span class="p">.</span><span class="n">get_allocator</span><span class="p">(),</span> <span class="n">node</span><span class="p">,</span> <span class="n">empty_db_name</span><span class="p">,</span> <span class="n">empty_pkg_name</span><span class="p">,</span> <span class="n">udf_node</span><span class="p">)))</span> <span class="p">{</span>
+                  <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;transform func sys to udf node failed&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">OB_ISNULL</span><span class="p">(</span><span class="n">expr</span><span class="p">))</span> <span class="p">{</span>
+                  <span class="n">ret</span> <span class="o">=</span> <span class="n">OB_ERR_FUNCTION_UNKNOWN</span><span class="p">;</span>
+                  <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;function does not exist&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="p">));</span>
+                  <span class="n">LOG_USER_ERROR</span><span class="p">(</span>
+                      <span class="n">OB_ERR_FUNCTION_UNKNOWN</span><span class="p">,</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_len_</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="p">);</span>
+                <span class="p">}</span>
+              <span class="p">}</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">OB_ISNULL</span><span class="p">(</span><span class="n">expr</span><span class="p">))</span> <span class="p">{</span>
+                  <span class="n">ret</span> <span class="o">=</span> <span class="n">OB_ERR_FUNCTION_UNKNOWN</span><span class="p">;</span>
+                  <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;function does not exist&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="p">));</span>
+                  <span class="n">LOG_USER_ERROR</span><span class="p">(</span>
+                      <span class="n">OB_ERR_FUNCTION_UNKNOWN</span><span class="p">,</span> <span class="p">(</span><span class="n">int32_t</span><span class="p">)</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_len_</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="p">);</span>
+                <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">  <span class="n">REG_OP</span><span class="p">(</span><span class="n">ObExprDayOfWeek</span><span class="p">);</span>
+
+<span class="n">class</span> <span class="nl">ObExprDayOfWeek</span> <span class="p">:</span> <span class="n">public</span> <span class="n">ObExprTimeBase</span> <span class="p">{</span>
+<span class="nl">public</span><span class="p">:</span>
+  <span class="n">ObExprDayOfWeek</span><span class="p">();</span>
+  <span class="n">explicit</span> <span class="nf">ObExprDayOfWeek</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">ObIAllocator</span><span class="o">&amp;</span> <span class="n">alloc</span><span class="p">);</span>
+  <span class="n">virtual</span> <span class="o">~</span><span class="n">ObExprDayOfWeek</span><span class="p">();</span>
+  <span class="k">static</span> <span class="kt">int</span> <span class="nf">calc_dayofweek</span><span class="p">(</span><span class="k">const</span> <span class="n">ObExpr</span><span class="o">&amp;</span> <span class="n">expr</span><span class="p">,</span> <span class="n">ObEvalCtx</span><span class="o">&amp;</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">ObDatum</span><span class="o">&amp;</span> <span class="n">expr_datum</span><span class="p">);</span>
+
+<span class="nl">private</span><span class="p">:</span>
+  <span class="n">DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">ObExprDayOfWeek</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="n">ObExprDayOfWeek</span><span class="o">::</span><span class="n">calc_dayofweek</span><span class="p">(</span><span class="k">const</span> <span class="n">ObExpr</span><span class="o">&amp;</span> <span class="n">expr</span><span class="p">,</span> <span class="n">ObEvalCtx</span><span class="o">&amp;</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">ObDatum</span><span class="o">&amp;</span> <span class="n">expr_datum</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">OB_SUCCESS</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ObExprTimeBase</span><span class="o">::</span><span class="n">calc</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">expr_datum</span><span class="p">,</span> <span class="n">DT_WDAY</span><span class="p">,</span> <span class="nb">true</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;calc day of week failed&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">expr_datum</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">expr_datum</span><span class="p">.</span><span class="n">set_int32</span><span class="p">(</span><span class="n">expr_datum</span><span class="p">.</span><span class="n">get_int32</span><span class="p">()</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="srcsqlengineexprob_expr_timecpp">src\sql\engine\expr\ob_expr_time.cpp</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">oceanbase</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">oblib</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">timezone</span>
+
+<span class="n">deps</span><span class="err">\</span><span class="n">oblib</span><span class="err">\</span><span class="n">src</span><span class="err">\</span><span class="n">lib</span><span class="err">\</span><span class="n">timezone</span><span class="err">\</span><span class="n">ob_time_convert</span><span class="p">.</span><span class="n">h</span>
+
+<span class="kt">int</span> <span class="n">ObExprTimeBase</span><span class="o">::</span><span class="n">cg_expr</span>
+
+ <span class="k">case</span> <span class="nl">DT_MON_NAME</span><span class="p">:</span>
+        <span class="n">rt_expr</span><span class="p">.</span><span class="n">eval_func_</span> <span class="o">=</span> <span class="n">ObExprMonthName</span><span class="o">::</span><span class="n">calc_month_name</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">oceanbase</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">sql</span><span class="o">/</span><span class="n">engine</span><span class="o">/</span><span class="n">expr</span>
+
+<span class="n">in</span> <span class="n">ObExprTimeBase</span><span class="o">::</span><span class="n">calc_result1</span><span class="p">(</span><span class="n">ObObj</span><span class="o">&amp;</span> <span class="n">result</span><span class="p">,</span> <span class="k">const</span> <span class="n">ObObj</span><span class="o">&amp;</span> <span class="n">obj</span><span class="p">,</span> <span class="n">ObExprCtx</span><span class="o">&amp;</span> <span class="n">expr_ctx</span><span class="p">)</span> <span class="k">const</span>
+
+
+    <span class="k">static</span> <span class="n">ObExpr</span><span class="o">::</span><span class="n">EvalFunc</span> <span class="n">g_expr_eval_functions</span><span class="p">[]</span> 
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">ObExprTimeBase</span><span class="o">::</span><span class="n">calc_result1</span><span class="p">(</span><span class="n">ObObj</span><span class="o">&amp;</span> <span class="n">result</span><span class="p">,</span> <span class="k">const</span> <span class="n">ObObj</span><span class="o">&amp;</span> <span class="n">obj</span><span class="p">,</span> <span class="n">ObExprCtx</span><span class="o">&amp;</span> <span class="n">expr_ctx</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">OB_SUCCESS</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">OB_UNLIKELY</span><span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">is_null</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="n">result</span><span class="p">.</span><span class="n">set_null</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">ObTime</span> <span class="n">ot</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">with_date</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">dt_type_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nl">DT_HOUR</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_MIN</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_SEC</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_USEC</span><span class="p">:</span>
+        <span class="n">with_date</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="nl">DT_YDAY</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_WDAY</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_MDAY</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_YEAR</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_MON</span><span class="p">:</span>
+        <span class="n">with_date</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="nl">DT_MON_NAME</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">DT_DAY_NAME</span><span class="p">:</span>
+        <span class="n">with_date</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+              
+      <span class="k">default</span><span class="o">:</span>
+        <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;ObExprTimeBase calc result1 switch default&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">dt_type_</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">ignoreZero</span> <span class="o">=</span> <span class="p">(</span><span class="n">DT_MDAY</span> <span class="o">==</span> <span class="n">dt_type_</span> <span class="o">||</span> <span class="n">DT_MON</span> <span class="o">==</span> <span class="n">dt_type_</span> <span class="o">||</span> <span class="n">DT_MON_NAME</span> <span class="o">==</span> <span class="n">dt_type_</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">ob_expr_convert_to_dt_or_time</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">expr_ctx</span><span class="p">,</span> <span class="n">ot</span><span class="p">,</span> <span class="n">with_date</span><span class="p">,</span> <span class="n">ignoreZero</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;cast to ob time failed&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">expr_ctx</span><span class="p">.</span><span class="n">cast_mode_</span><span class="p">));</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">CM_IS_WARN_ON_FAIL</span><span class="p">(</span><span class="n">expr_ctx</span><span class="p">.</span><span class="n">cast_mode_</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;cast to ob time failed&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">expr_ctx</span><span class="p">.</span><span class="n">cast_mode_</span><span class="p">));</span>
+        <span class="n">LOG_USER_WARN</span><span class="p">(</span><span class="n">OB_ERR_CAST_VARCHAR_TO_TIME</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">OB_SUCCESS</span><span class="p">;</span>
+        <span class="n">result</span><span class="p">.</span><span class="n">set_null</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">with_date</span> <span class="o">&amp;&amp;</span> <span class="n">DT_MDAY</span> <span class="o">!=</span> <span class="n">dt_type_</span> <span class="o">&amp;&amp;</span> <span class="n">ot</span><span class="p">.</span><span class="n">parts_</span><span class="p">[</span><span class="n">DT_DATE</span><span class="p">]</span> <span class="o">+</span> <span class="n">DAYS_FROM_ZERO_TO_BASE</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">result</span><span class="p">.</span><span class="n">set_null</span><span class="p">();</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">DT_WDAY</span> <span class="o">==</span> <span class="n">dt_type_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">int32_t</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ot</span><span class="p">.</span><span class="n">parts_</span><span class="p">[</span><span class="n">DT_WDAY</span><span class="p">];</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">result</span><span class="p">.</span><span class="n">set_int32</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">DT_MON_NAME</span> <span class="o">==</span> <span class="n">dt_type_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">int32_t</span> <span class="n">mon</span> <span class="o">=</span> <span class="n">ot</span><span class="p">.</span><span class="n">parts_</span><span class="p">[</span><span class="n">DT_MON</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mon</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">mon</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;invalid month value&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">mon</span><span class="p">));</span>
+          <span class="n">result</span><span class="p">.</span><span class="n">set_null</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">month_name</span> <span class="o">=</span> <span class="n">ObExprMonthName</span><span class="o">::</span><span class="n">get_month_name</span><span class="p">(</span><span class="n">ot</span><span class="p">.</span><span class="n">parts_</span><span class="p">[</span><span class="n">DT_MON</span><span class="p">]);</span>
+          <span class="n">result</span><span class="p">.</span><span class="n">set_string</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">ObVarcharType</span><span class="p">,</span> <span class="n">month_name</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">month_name</span><span class="p">));</span>
+          <span class="n">result</span><span class="p">.</span><span class="n">set_collation_type</span><span class="p">(</span><span class="n">result_type_</span><span class="p">.</span><span class="n">get_collation_type</span><span class="p">());</span>
+          <span class="n">result</span><span class="p">.</span><span class="n">set_collation_level</span><span class="p">(</span><span class="n">result_type_</span><span class="p">.</span><span class="n">get_collation_level</span><span class="p">());</span>
+        <span class="p">}</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">result</span><span class="p">.</span><span class="n">set_int32</span><span class="p">(</span><span class="n">ot</span><span class="p">.</span><span class="n">parts_</span><span class="p">[</span><span class="n">dt_type_</span><span class="p">]);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">ObExprMonthName</span><span class="o">::</span><span class="n">ObExprMonthName</span><span class="p">(</span><span class="n">ObIAllocator</span><span class="o">&amp;</span> <span class="n">alloc</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">ObExprTimeBase</span><span class="p">(</span><span class="n">alloc</span><span class="p">,</span> <span class="n">DT_MON_NAME</span><span class="p">,</span> <span class="n">T_FUN_SYS_MONTH_NAME</span><span class="p">,</span> <span class="n">N_MONTH_NAME</span><span class="p">){};</span>
+<span class="cp">#define N_MONTH_NAME &#34;monthname&#34;
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="n">ObExprDayOfWeek</span><span class="o">::</span><span class="n">calc_dayofweek</span><span class="p">(</span><span class="k">const</span> <span class="n">ObExpr</span><span class="o">&amp;</span> <span class="n">expr</span><span class="p">,</span> <span class="n">ObEvalCtx</span><span class="o">&amp;</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">ObDatum</span><span class="o">&amp;</span> <span class="n">expr_datum</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">OB_SUCCESS</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ObExprTimeBase</span><span class="o">::</span><span class="n">calc</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">expr_datum</span><span class="p">,</span> <span class="n">DT_WDAY</span><span class="p">,</span> <span class="nb">true</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;calc day of week failed&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">expr_datum</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">expr_datum</span><span class="p">.</span><span class="n">set_int32</span><span class="p">(</span><span class="n">expr_datum</span><span class="p">.</span><span class="n">get_int32</span><span class="p">()</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="srcsqlparserob_item_typeh">src\sql\parser\ob_item_type.h</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// system function for mysql only
+</span><span class="c1"></span><span class="n">T_FUN_SYS_MONTH_NAME</span> <span class="o">=</span> <span class="mi">708</span><span class="p">,</span> <span class="c1">//sql 命令 怎么知道那个函数执行
+</span><span class="c1"></span><span class="cp">#define N_MONTH_NAME &#34;monthname&#34;
+</span><span class="cp"></span>
+
+<span class="n">ObExprMonthName</span><span class="o">::</span><span class="n">ObExprMonthName</span><span class="p">(</span><span class="n">ObIAllocator</span><span class="o">&amp;</span> <span class="n">alloc</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">ObExprTimeBase</span><span class="p">(</span><span class="n">alloc</span><span class="p">,</span> <span class="n">DT_MON_NAME</span><span class="p">,</span> <span class="n">T_FUN_SYS_MONTH_NAME</span><span class="p">,</span> <span class="n">N_MONTH_NAME</span><span class="p">){};</span>
+
+<span class="n">ObExprIsIpv4</span><span class="o">::</span><span class="n">ObExprIsIpv4</span><span class="p">(</span><span class="n">ObIAllocator</span><span class="o">&amp;</span> <span class="n">alloc</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">ObFuncExprOperator</span><span class="p">(</span><span class="n">alloc</span><span class="p">,</span> <span class="n">T_FUN_SYS_IS_IPV4</span><span class="p">,</span> <span class="n">N_IS_IPV4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">NOT_ROW_DIMENSION</span><span class="p">)</span>
+<span class="p">{}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="23-测试过程">2.3 测试过程</h2>
+<ul>
+<li>根据日志看函数调用关系。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">
+ <span class="n">stmt_query</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">171</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DD</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">query</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2017-06-15&#34;</span><span class="p">),</span> <span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+
+     
+<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">OB_FAIL</span><span class="p">(</span><span class="n">handle_text_query</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">result</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">OB_EAGAIN</span> <span class="o">!=</span> <span class="n">ret</span> <span class="o">&amp;&amp;</span> <span class="n">OB_ERR_PROXY_REROUTE</span> <span class="o">!=</span> <span class="n">ret</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">LOG_WARN</span><span class="p">(</span><span class="s">&#34;fail to handle text query&#34;</span><span class="p">,</span> <span class="n">K</span><span class="p">(</span><span class="n">stmt</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">ObSql</span><span class="o">::</span><span class="n">handle_text_query</span><span class="p">(</span>
+
+    <span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">h12</span><span class="o">-</span><span class="n">storage03</span> <span class="n">log</span><span class="p">]</span><span class="err">#</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">observer</span><span class="p">.</span><span class="n">log</span> <span class="o">|</span><span class="n">grep</span> <span class="s">&#34;not exist&#34;</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141943</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SHARE</span><span class="p">.</span><span class="n">SCHEMA</span><span class="p">]</span> <span class="n">ob_schema_getter_guard</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">6335</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">9</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">udf</span> <span class="n">not</span> <span class="n">exist</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">dayname</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141953</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">798</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">7</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">function</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="o">=</span><span class="s">&#34;DAYNAME&#34;</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141966</span><span class="p">]</span> <span class="n">WARN</span>  <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">800</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">11</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142091</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">obmp_base</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1237</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">send</span> <span class="n">error</span> <span class="n">package</span><span class="p">.(</span><span class="n">user_error_code</span><span class="o">=</span><span class="mi">1305</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">sql_state</span><span class="o">=</span><span class="s">&#34;42000&#34;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span>
+<span class="p">)</span>
+
+
+<span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">+</span>  <span class="n">Stopped</span>                 <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">observer</span><span class="p">.</span><span class="n">log</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">--</span><span class="n">color</span><span class="o">=</span><span class="k">auto</span> <span class="s">&#34;not exist&#34;</span>
+<span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">h12</span><span class="o">-</span><span class="n">storage03</span> <span class="n">log</span><span class="p">]</span><span class="err">#</span> <span class="n">grep</span> <span class="s">&#34;YB427F000001-0005E8344D6D28DF&#34;</span> <span class="n">observer</span><span class="p">.</span><span class="n">log</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141719</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">163</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">8</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">Begin</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">statement</span><span class="p">(</span><span class="n">trunc_stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2017-06-15&#34;</span><span class="p">),</span> <span class="n">sess_id</span><span class="o">=</span><span class="mi">3221487631</span><span class="p">,</span> <span class="n">execution_id</span><span class="o">=</span><span class="mi">194262</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141943</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SHARE</span><span class="p">.</span><span class="n">SCHEMA</span><span class="p">]</span> <span class="n">ob_schema_getter_guard</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">6335</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">9</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">udf</span> <span class="n">not</span> <span class="n">exist</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">dayname</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141953</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">798</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">7</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">function</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="o">=</span><span class="s">&#34;DAYNAME&#34;</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141966</span><span class="p">]</span> <span class="n">WARN</span>  <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="o">:</span><span class="mi">800</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">11</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141975</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">resolve_sql_expr</span> <span class="p">(</span><span class="n">ob_dml_resolver</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">208</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">exec</span> <span class="n">expr_resolver</span><span class="p">.</span><span class="n">resolve</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">node</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="o">*</span><span class="n">output_columns</span><span class="p">,</span> <span class="n">sys_vars</span><span class="p">,</span> <span class="n">sub_query_info</span><span class="p">,</span> <span class="n">aggr_exprs</span><span class="p">,</span> <span class="n">win_exprs</span><span class="p">,</span> <span class="n">op_exprs</span><span class="p">,</span> <span class="n">user_var_exprs</span><span class="p">)(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">node</span><span class="o">=</span><span class="mh">0x7f07f2e6aa18</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">output_columns</span><span class="o">=</span><span class="p">[],</span> <span class="n">sys_vars</span><span class="o">=</span><span class="p">[],</span> <span class="n">sub_query_info</span><span class="o">=</span><span class="p">[],</span> <span class="n">aggr_exprs</span><span class="o">=</span><span class="p">[],</span> <span class="n">win_exprs</span><span class="o">=</span><span class="p">[],</span> <span class="n">op_exprs</span><span class="o">=</span><span class="p">[],</span> <span class="n">user_var_exprs</span><span class="o">=</span><span class="p">[])</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141985</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="nl">resolve_field_list</span> <span class="p">:</span><span class="mi">1399</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">5</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">resolve</span> <span class="n">sql</span> <span class="n">expr</span> <span class="n">failed</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141989</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">resolve_normal_query</span> <span class="p">(</span><span class="n">ob_select_resolver</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">801</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">exec</span> <span class="n">resolve_field_list</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">parse_tree</span><span class="p">.</span><span class="n">children_</span><span class="p">[</span><span class="n">PARSE_SELECT_SELECT</span><span class="p">]))(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141992</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">resolve</span> <span class="p">(</span><span class="n">ob_select_resolver</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">934</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">resolve</span> <span class="n">normal</span> <span class="n">query</span> <span class="n">failed</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.141996</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">select_stmt_resolver_func</span> <span class="p">(</span><span class="n">ob_resolver</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">142</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">execute</span> <span class="n">stmt_resolver</span> <span class="n">failed</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">parse_tree</span><span class="p">.</span><span class="n">type_</span><span class="o">=</span><span class="mi">3035</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142005</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">generate_stmt</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1443</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">failed</span> <span class="n">to</span> <span class="n">resolve</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142010</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">generate_physical_plan</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1531</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">Failed</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">stmt</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">get_exec_context</span><span class="p">().</span><span class="n">need_disconnect</span><span class="p">()</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142014</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">handle_physical_plan</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">3231</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">Failed</span> <span class="n">to</span> <span class="n">generate</span> <span class="n">plan</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">get_exec_context</span><span class="p">().</span><span class="n">need_disconnect</span><span class="p">()</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142018</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">handle_text_query</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1212</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">physical</span> <span class="n">plan</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142023</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">stmt_query</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">171</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">query</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2017-06-15&#34;</span><span class="p">),</span> <span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142035</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">test_and_save_retry_state</span> <span class="p">(</span><span class="n">ob_query_retry_ctrl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">446</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="k">do</span> <span class="n">not</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">client_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">expected_stmt</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span> <span class="n">THIS_WORKER</span><span class="p">.</span><span class="n">get_timeout_ts</span><span class="p">()</span><span class="o">=</span><span class="mi">1662693484141630</span><span class="p">,</span> <span class="n">retry_type_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">get_stmt_type</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">get_exec_context</span><span class="p">().</span><span class="n">need_change_timeout_ret</span><span class="p">()</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span> <span class="n">session</span><span class="o">-&gt;</span><span class="n">get_retry_info</span><span class="p">().</span><span class="n">get_last_query_retry_err</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142042</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">ob_query_retry_ctrl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">460</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">check</span> <span class="k">if</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">client_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_type_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">retry_times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">multi_stmt_item</span><span class="o">=</span><span class="p">{</span><span class="nl">is_part_of_multi_stmt</span><span class="p">:</span><span class="nb">true</span><span class="p">,</span> <span class="nl">seq_num</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="nl">sql</span><span class="p">:</span><span class="s">&#34;SELECT DAYNAME(&#34;</span><span class="mi">2017</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mi">15</span><span class="s">&#34;)&#34;</span><span class="p">})</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142049</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">do_process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">638</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">run</span> <span class="n">stmt_query</span> <span class="n">failed</span><span class="p">,</span> <span class="n">check</span> <span class="k">if</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">cli_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_ctrl_</span><span class="p">.</span><span class="n">need_retry</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sql</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2017-06-15&#34;</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142063</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">do_process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">745</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">query</span> <span class="n">failed</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_ctrl_</span><span class="p">.</span><span class="n">need_retry</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142083</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">obmp_base</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1163</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">sending</span> <span class="n">error</span> <span class="n">packet</span><span class="p">(</span><span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">bt</span><span class="o">=</span><span class="s">&#34;0xb553645 0xa899d40 0xa92d3cd 0xa8c70ce 0xa8c151b 0xb6d881d 0xa740c40 0xa71d3f9 0xa73e9d6 0xa71b2ff 0xa71b7cc 0x1e7613c 0x1e75fcd 0x1e7a00e 0xb4fbd75 0xb4fa515 0xb20b1cf&#34;</span><span class="p">,</span> <span class="n">extra_err_info</span><span class="o">=</span><span class="mh">0x7f07f2e578c8</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142091</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">obmp_base</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1237</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">send</span> <span class="n">error</span> <span class="n">package</span><span class="p">.(</span><span class="n">user_error_code</span><span class="o">=</span><span class="mi">1305</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">sql_state</span><span class="o">=</span><span class="s">&#34;42000&#34;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">09</span> <span class="mi">11</span><span class="o">:</span><span class="mi">17</span><span class="o">:</span><span class="mf">54.142161</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">291</span><span class="p">)</span> <span class="p">[</span><span class="mi">112642</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E8344</span><span class="n">D6D28DF</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">execute</span> <span class="n">sql</span><span class="p">(</span><span class="n">sql_id</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">sql</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2017-06-15&#34;</span><span class="p">),</span> <span class="n">sessid</span><span class="o">=</span><span class="mi">3221487631</span><span class="p">,</span> <span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">ret</span><span class="o">=</span><span class="s">&#34;OB_ERR_FUNCTION_UNKNOWN&#34;</span><span class="p">,</span> <span class="n">need_disconnect</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+<span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">h12</span><span class="o">-</span><span class="n">storage03</span> <span class="n">log</span><span class="p">]</span><span class="err">#</span>
+
+<span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">);</span>
+<span class="n">SELECT</span> <span class="nf">DAYOFWEEK</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="n">SELECT</span> <span class="nf">MONTHNAME</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="err">&#39;</span><span class="p">);</span>
+
+
+
+<span class="n">cp</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">oceanbase</span><span class="o">/</span><span class="n">build_debug</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">observer</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">observer</span>
+<span class="n">obd</span> <span class="n">cluster</span> <span class="n">stop</span> <span class="n">test</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>第二次测试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">h12</span><span class="o">-</span><span class="n">storage03</span> <span class="n">log</span><span class="p">]</span><span class="err">#</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">observer</span><span class="p">.</span><span class="n">log</span> <span class="o">|</span><span class="n">grep</span> <span class="n">DAYNAME</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773166</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">163</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">9</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">Begin</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">statement</span><span class="p">(</span><span class="n">trunc_stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">),</span> <span class="n">sess_id</span><span class="o">=</span><span class="mi">3221487618</span><span class="p">,</span> <span class="n">execution_id</span><span class="o">=</span><span class="mi">62341</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773450</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">798</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">7</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">function</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="o">=</span><span class="s">&#34;DAYNAME&#34;</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773456</span><span class="p">]</span> <span class="n">WARN</span>  <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">800</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773517</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">stmt_query</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">171</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">query</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">),</span> <span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773537</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">ob_query_retry_ctrl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">460</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">5</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">check</span> <span class="k">if</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">client_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_type_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">retry_times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">multi_stmt_item</span><span class="o">=</span><span class="p">{</span><span class="nl">is_part_of_multi_stmt</span><span class="p">:</span><span class="nb">true</span><span class="p">,</span> <span class="nl">seq_num</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="nl">sql</span><span class="p">:</span><span class="s">&#34;SELECT DAYNAME(&#34;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="s">&#34;)&#34;</span><span class="p">})</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773542</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">do_process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">638</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">run</span> <span class="n">stmt_query</span> <span class="n">failed</span><span class="p">,</span> <span class="n">check</span> <span class="k">if</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">cli_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_ctrl_</span><span class="p">.</span><span class="n">need_retry</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sql</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.773995</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">obmp_base</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1237</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">send</span> <span class="n">error</span> <span class="n">package</span><span class="p">.(</span><span class="n">user_error_code</span><span class="o">=</span><span class="mi">1305</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">sql_state</span><span class="o">=</span><span class="s">&#34;42000&#34;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">42.774084</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">291</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A3</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">7</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">execute</span> <span class="n">sql</span><span class="p">(</span><span class="n">sql_id</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">sql</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">),</span> <span class="n">sessid</span><span class="o">=</span><span class="mi">3221487618</span><span class="p">,</span> <span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">ret</span><span class="o">=</span><span class="s">&#34;OB_ERR_FUNCTION_UNKNOWN&#34;</span><span class="p">,</span> <span class="n">need_disconnect</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.975760</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">163</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">8</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">Begin</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">statement</span><span class="p">(</span><span class="n">trunc_stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">),</span> <span class="n">sess_id</span><span class="o">=</span><span class="mi">3221487618</span><span class="p">,</span> <span class="n">execution_id</span><span class="o">=</span><span class="mi">62397</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976064</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">.</span><span class="n">RESV</span><span class="p">]</span> <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">798</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">8</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">function</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">children_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">str_value_</span><span class="o">=</span><span class="s">&#34;DAYNAME&#34;</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976072</span><span class="p">]</span> <span class="n">WARN</span>  <span class="n">do_recursive_resolve</span> <span class="p">(</span><span class="n">ob_raw_expr_resolver_impl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">800</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">5</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976166</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SQL</span><span class="p">]</span> <span class="n">stmt_query</span> <span class="p">(</span><span class="n">ob_sql</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">171</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">text</span> <span class="n">query</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">),</span> <span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976194</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">ob_query_retry_ctrl</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">460</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">6</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">check</span> <span class="k">if</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">client_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_type_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">retry_times</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">multi_stmt_item</span><span class="o">=</span><span class="p">{</span><span class="nl">is_part_of_multi_stmt</span><span class="p">:</span><span class="nb">true</span><span class="p">,</span> <span class="nl">seq_num</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="nl">sql</span><span class="p">:</span><span class="s">&#34;SELECT DAYNAME(&#34;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="s">&#34;)&#34;</span><span class="p">})</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976203</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">do_process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">638</span><span class="p">)</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">6</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">run</span> <span class="n">stmt_query</span> <span class="n">failed</span><span class="p">,</span> <span class="n">check</span> <span class="k">if</span> <span class="n">need</span> <span class="n">retry</span><span class="p">(</span><span class="n">ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">cli_ret</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">retry_ctrl_</span><span class="p">.</span><span class="n">need_retry</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sql</span><span class="o">=</span><span class="n">SELECT</span> <span class="n">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976258</span><span class="p">]</span> <span class="n">INFO</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">obmp_base</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">1237</span> <span class="p">[</span><span class="mi">437909</span><span class="p">][</span><span class="mi">466</span><span class="p">][</span><span class="n">YB427F000001</span><span class="o">-</span><span class="mf">0005E91</span><span class="n">B467985A4</span><span class="p">]</span> <span class="p">[</span><span class="n">lt</span><span class="o">=</span><span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="n">dc</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span> <span class="n">send</span> <span class="n">error</span> <span class="n">package</span><span class="p">.(</span><span class="n">user_error_code</span><span class="o">=</span><span class="mi">1305</span><span class="p">,</span> <span class="n">err</span><span class="o">=-</span><span class="mi">5055</span><span class="p">,</span> <span class="n">sql_state</span><span class="o">=</span><span class="s">&#34;42000&#34;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">FUNCTION</span> <span class="n">DAYNAME</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span> <span class="mi">21</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">45.976355</span><span class="p">]</span> <span class="n">WARN</span>  <span class="p">[</span><span class="n">SERVER</span><span class="p">]</span> <span class="n">process</span> <span class="p">(</span><span class="n">obmp_query</span><span class="p">.</span><span class="nl">cpp</span><span class="p">:</span><span class="mi">291</span><span class="p">)</span> <span class="p">[</span><span class="mi">4</span>
+
+<span class="n">cp</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">oceanbase</span><span class="o">/</span><span class="n">build_debug</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">observer</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">observer</span>
+
+                                                                         
+<span class="n">obclient</span> <span class="p">[</span><span class="n">oceanbase</span><span class="p">]</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="n">DAYOFWEEK</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="o">+-------------------------+</span>
+<span class="o">|</span> <span class="n">DAYOFWEEK</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="err">&#39;</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">+-------------------------+</span>
+<span class="o">|</span>                       <span class="mi">3</span> <span class="o">|</span>
+<span class="o">+-------------------------+</span>
+<span class="n">Returns</span> <span class="n">the</span> <span class="n">weekday</span> <span class="n">index</span> <span class="k">for</span> <span class="n">date</span> <span class="p">(</span><span class="mi">1</span> <span class="o">=</span> <span class="n">Sunday</span><span class="p">,</span> <span class="mi">2</span> <span class="o">=</span> <span class="n">Monday</span><span class="p">,</span> <span class="err">…</span><span class="p">,</span> <span class="mi">7</span> <span class="o">=</span> <span class="n">Saturday</span><span class="p">).</span> <span class="n">These</span> <span class="n">index</span> <span class="n">values</span> <span class="n">correspond</span> <span class="n">to</span> <span class="n">the</span> <span class="n">ODBC</span> <span class="n">standard</span><span class="p">.</span> <span class="n">Returns</span> <span class="nb">NULL</span> <span class="k">if</span> <span class="n">date</span> <span class="n">is</span> <span class="n">NUL</span>
+<span class="n">SELECT</span> <span class="n">MONTHNAME</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="n">SELECT</span> <span class="nf">DAYNAME</span><span class="p">(</span><span class="s">&#34;2022-09-20&#34;</span><span class="p">);</span>
+<span class="n">select</span> <span class="nf">dayname</span><span class="p">(</span><span class="s">&#34;1962-03-01&#34;</span><span class="p">);</span>
+
+<span class="n">cp</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">oceanbase</span><span class="o">/</span><span class="n">build_debug</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">observer</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">observer</span>
+                                                                          
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="三-conclusion">三、 Conclusion</h1>
+<ul>
+<li><a href="https://github.com/pingcap/tidb/pull/10732">https://github.com/pingcap/tidb/pull/10732</a></li>
+<li><a href="https://open.oceanbase.com/blog/10900229?currentPage=1">https://open.oceanbase.com/blog/10900229?currentPage=1</a></li>
+<li><a href="https://open.oceanbase.com/blog/8600156?currentPage=undefined">https://open.oceanbase.com/blog/8600156?currentPage=undefined</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html#function_dayname">https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html#function_dayname</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html">https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-09-25 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/2022/oceanbase_day4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">成为oceanbase贡献者第四天：容器与分配器</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2022/oceanbase_day2/">
+            <span class="next-text nav-default">成为oceanbase贡献者第二天：源码解析 DDL语句执行过程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

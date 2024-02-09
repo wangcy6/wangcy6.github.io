@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Cephfs入门手册 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="you can" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Cephfs入门手册" />
+<meta property="og:description" content="you can" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-02-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-02-20T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Cephfs入门手册">
+<meta itemprop="description" content="you can"><meta itemprop="datePublished" content="2023-02-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-02-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1829">
+<meta itemprop="keywords" content="Cephfs," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cephfs入门手册"/>
+<meta name="twitter:description" content="you can"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Cephfs入门手册</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-02-20 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/Cephfse/"> Cephfse </a>
+            </div>
+          <span class="more-meta"> 约 1829 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#cephfs探索之旅第一天">Cephfs探索之旅第一天</a>
+      <ul>
+        <li><a href="#资料">资料</a></li>
+      </ul>
+    </li>
+    <li><a href="#ceph-撸源码系列一">Ceph 撸源码系列（一）</a></li>
+    <li><a href="#四mds">四、MDS</a></li>
+    <li><a href="#131-mds启动阶段分析">13.1 MDS启动阶段分析</a>
+      <ul>
+        <li><a href="#论文">论文</a></li>
+      </ul>
+    </li>
+    <li><a href="#五存储引擎实">五、存储引擎实</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#一-ceph源码解读">一. ceph源码解读</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="cephfs探索之旅第一天">Cephfs探索之旅第一天</h2>
+<p>文章地址：http://localhost:1313/post/storage/1_2023_02_13_day1_Cephfs/</p>
+<p><a href="https://github.com/watchpoints/ceph">https://github.com/watchpoints/ceph</a></p>
+<p><a href="https://docs.ceph.com/en/quincy/">https://docs.ceph.com/en/quincy/</a></p>
+<p>icfsfs:?</p>
+<p>OSD：？</p>
+<p>MDS：Metadata Server</p>
+<p>子树划？</p>
+<p>当Windows是 Client，CentOS是服务器时，通过Samba就可以实现window访问Linux的资源，实现两个系统间的数据交互。samba服务程序已经成为在Linux系统和Windows系统之间共享文件的最佳选择</p>
+<h3 id="资料">资料</h3>
+<ul>
+<li><a href="https://github.com/lidaohang/ceph_study">https://github.com/lidaohang/ceph_study</a></li>
+</ul>
+<h2 id="ceph-撸源码系列一">Ceph 撸源码系列（一）</h2>
+<ul>
+<li>Ceph 撸源码系列（一）：Ceph开源项目源代码的关键目录介绍</li>
+</ul>
+<p><a href="https://blog.csdn.net/don_chiang709/article/details/99289441">https://blog.csdn.net/don_chiang709/article/details/99289441</a></p>
+<ul>
+<li>Ceph 撸源码系列（二）：Ceph源代码里的那些锁 std::mutex（2 of 3）</li>
+<li>Ceph 撸源码系列（三）：Ceph OSDC源码分析 （1 of 2）</li>
+</ul>
+<p>​    <a href="https://mp.weixin.qq.com/s?__biz=MzIyNTIyNzE0Ng==&amp;mid=2247485657&amp;idx=1&amp;sn=226712acdda9564568b2e60eedbce074&amp;chksm=e803b03cdf74392aacc7dd6e6671ccf7da182ca43097597a80965ce1988883965f33b6ddfacf&amp;scene=21#wechat_redirect">Ceph OSDC源码分析（上篇）</a></p>
+<ol>
+<li><a href="https://www.cnblogs.com/luohaixian/p/8087591.html">Ceph OSD定义</a></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Ceph OSD：OSD的英文全称是Object Storage Device，
+它的主要功能是存储数据、复制数据、平衡数据、恢复数据等，
+与其它OSD间进行心跳检查等，并将一些变化情况上报给Ceph Monitor。一
+般情况下一块硬盘对应一个OSD，由OSD来对硬盘存储进行管理，
+当然一个分区也可以成为一个OSD。
+
+https://github.com/lidaohang/ceph_study/blob/master/CephFS%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.md
+
+osd：Object storage cluster，对象存储集群（将数据和元数据作为对象存储，执行其他关键职能）
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>
+<p>RBD：RBD全称RADOS block device，是Ceph对外提供的块设备服务。</p>
+</li>
+<li>
+<p>RADOS</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+
+RADOS自身是一个完整的分布式对象存储系统，它具有可靠、智能、分布式等特性，Ceph的高可靠、高可拓展、高性能、高自动化都是由这一层来提供的，用户数据的存储最终也都是通过这一层来进行存储的，RADOS可以说就是Ceph的核心。
+
+https://github.com/lidaohang/ceph_study/blob/master/CephFS%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.md
+
+Ceph基础知识和基础架构认识
+https://github.com/lidaohang/ceph_study/blob/master/CephFS%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB.md
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>三、Ceph OSDC源码分析（下篇）</p>
+<ol>
+<li>Ceph 撸源码系列（三）：Ceph OSDC源码分析 （2 of 2）</li>
+<li>【ceph】<a href="https://blog.csdn.net/bandaoyu/article/details/124111075?spm=1001.2101.3001.6650.17&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-17-124111075-blog-90607215.pc_relevant_aa2&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-17-124111075-blog-90607215.pc_relevant_aa2&amp;utm_relevant_index=18">CEPH源码解析：读写流程</a></li>
+<li>Ceph学习——Librados与Osdc实现源码解析</li>
+</ol>
+<h2 id="四mds">四、MDS</h2>
+<p>Ceph是一个去中心化的分布式存储系统， 提供较好的性能、可靠性和可扩展性。</p>
+<p>Ceph项目最早起源于Sage就读博士期间的工作（最早的成果于2004年发表），并随后贡献给开源社区</p>
+<ol>
+<li>
+<h2 id="131-mds启动阶段分析">13.1 MDS启动阶段分析</h2>
+<p><a href="https://juejin.cn/post/6844903760745988109">https://juejin.cn/post/6844903760745988109</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="论文">论文</h3>
+<ul>
+<li>[译] [论文] Ceph: A Scalable, High-Performance Distributed File System (OSDI 2006)</li>
+</ul>
+<ol start="3">
+<li>
+<p>为什么说 Ceph存储集群至少需要一个Ceph Monitor和两个OSD守护进程。而运行Ceph文件系统客户端时，则必须要有元数据服务器（Metadata Server）？</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/514199693">Ceph整体设计</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://www.modb.pro/db/135112">干货分享丨闹心的large omap objects</a></p>
+</li>
+</ol>
+<ul>
+<li><a href="https://blog.csdn.net/skdkjzz/article/details/51579520">https://blog.csdn.net/skdkjzz/article/details/51579520</a></li>
+<li><a href="https://ivanzz1001.github.io/records/post/ceph/2019/01/05/ceph-src-code-part7_5">https://ivanzz1001.github.io/records/post/ceph/2019/01/05/ceph-src-code-part7_5</a></li>
+</ul>
+<h2 id="五存储引擎实">五、存储引擎实</h2>
+<ol>
+<li>解析Ceph: 存储引擎实现之一–FileStore</li>
+</ol>
+<ul>
+<li>ileStore是Ceph目前默认的存储引擎(也是目前使用最多的存储引擎)，其事务实现基于Journal机制</li>
+<li><a href="https://www.jianshu.com/p/262ffed3340f">https://www.jianshu.com/p/262ffed3340f</a></li>
+</ul>
+<ol start="2">
+<li>Ceph学习笔记（二）:RADOS架构</li>
+</ol>
+<ul>
+<li>
+<p>ADOS对象存储集群主要由OSDs，Monitors和Clients组成</p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/zengzhihua/p/9884238.html">Ceph 存储集群 - 存储池 </a></p>
+<ol start="3">
+<li>BlueStore源码分析之架构设计</li>
+</ol>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/91015613">https://zhuanlan.zhihu.com/p/91015613</a></li>
+</ul>
+<p><img src="https://picx.zhimg.com/v2-5e07bf5a049c67cbf6f572133d953511_1440w.jpg?source=172ae18b" alt=""></p>
+<ul>
+<li><a href="https://blog.wjin.org/posts/ceph-bluestore.html">https://blog.wjin.org/posts/ceph-bluestore.html</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="cephfs探索之旅第二天">Cephfs探索之旅第二天</h1>
+<p>一、搭建环境</p>
+<ol>
+<li>centos8部署一个单点ceph</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://docs.ceph.com/en/pacific/cephadm/install/#install-cephadm
+https://blog.csdn.net/Kangyucheng/article/details/125870998
+
+cephadm
+dnf install --assumeyes centos-release-ceph-pacific.noarch
+dnf install --assumeyes cephadm
+cephadm bootstrap --mon-ip 192.168.192.163
+
+Ceph Dashboard is now available at:
+
+             URL: https://10.141.162.38:8443/
+            User: admin
+        Password: 5cu0md9oet
+
+
+Enabling client.admin keyring and conf on hosts with &#34;admin&#34; label
+You can access the Ceph CLI with:
+
+  sudo /usr/sbin/cephadm shell --fsid d150c3bc-b40f-11ed-ba4f-9cc2c42aed5b -c /etc/ceph/ceph.conf -k /etc/ceph/ceph.client.admin.keyring
+
+Please consider enabling telemetry to help improve Ceph:
+
+        ceph telemetry on
+
+https://10.141.162.25:8443/
+
+
+
+ceph orch apply osd --all-available-devices
+ceph orch apply的默认行为导致 cephadm 不断协调。这意味着一旦检测到新驱动器，cephadm 就会创建 OSD
+
+ceph orch apply osd --all-available-devices --unmanaged=true
+禁用在可用设备上自动创建 OSD
+
+
+mon Storage45 is low on available space
+
+the monitor is default installed on the root partition (pve-root).
+cephadm shell ceph -s
+
+cephadm install ceph-common
+
+问题:  Failed to apply 1 service(s): osd.all-available-devices
+
+
+
+六、创建cephfs
+
+</code></pre></td></tr></table>
+</div>
+</div><p>docker 安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cephadm需要容器支持（podman或docker）和Python 3
+
+centos8默认使用podman代替docker
+sudo yum -y install podman
+podman -v
+
+使用cephadm安装ceph octopus
+https://cloud.tencent.com/developer/article/1761334
+
+如果满足以下所有_条件_，则存储设备被视为可用：
+
+cephadm shell  ceph orch device ls
+
+设备必须没有分区。
+设备不得具有任何 LVM 状态。
+不得安装设备。
+设备不能包含文件系统。
+设备不得包含 Ceph BlueStore OSD。
+设备必须大于 5 GB
+
+
+RedHat/CentOS8【Podman】安装和配置
+https://www.jianshu.com/p/d69017fac5dc
+
+[root@host ~]# dnf install podman podman-plugins cockpit cockpit-podman
+[root@host ~]# systemctl enable --now podman
+[root@host ~]# systemctl enable --now cockpit.socket
+
+</code></pre></td></tr></table>
+</div>
+</div><p>问题:  Failed to apply 1 service(s): osd.all-available-devices</p>
+<ul>
+<li><a href="https://kangyucheng.blog.csdn.net/article/details/113664788?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-113664788-blog-125870998.pc_relevant_3mothn_strategy_recovery&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-113664788-blog-125870998.pc_relevant_3mothn_strategy_recovery&amp;utm_relevant_index=1">ceph单节点安装部署</a></li>
+</ul>
+<ol start="3">
+<li>部署osd</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+cephadm shell  ceph orch daemon add osd kyc:/data/kv/1
+cephadm shell  ceph orch daemon add osd kyc:/data/kv/2
+cephadm shell  ceph orch daemon add osd kyc:/data/kv/3
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<h1 id="ceph单节点安装部署">ceph单节点安装部署</h1>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">yum -y install ceph-deploy epel-release python-pip ceph ceph-radosgw chrony 
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="cephfs探索之旅第三天">Cephfs探索之旅第三天</h1>
+<h2 id="一-ceph源码解读">一. ceph源码解读</h2>
+<p><a href="https://www.jianshu.com/u/5c59bd9b10db">https://www.jianshu.com/u/5c59bd9b10db</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-02-20 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Cephfs/">Cephfs</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/book/01_thing/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">践行时间管理方法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/storage/1_2023_02_10_day1_curveFS/">
+            <span class="next-text nav-default">CurveFS精通之旅第一天</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

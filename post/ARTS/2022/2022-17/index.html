@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>GTD践行第17周 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="GTD践行第17周" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/ARTS/2022/2022-17/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="GTD践行第17周" />
+<meta property="og:description" content="GTD践行第17周" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/ARTS/2022/2022-17/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-10-14T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-10-14T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="GTD践行第17周">
+<meta itemprop="description" content="GTD践行第17周"><meta itemprop="datePublished" content="2022-10-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-10-14T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="11651">
+<meta itemprop="keywords" content="GTD,work," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GTD践行第17周"/>
+<meta name="twitter:description" content="GTD践行第17周"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">GTD践行第17周</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-10-14 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/ARTS/"> ARTS </a>
+            </div>
+          <span class="more-meta"> 约 11651 字 </span>
+          <span class="more-meta"> 预计阅读 24 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#第一部分gdt践行">第一部分：GDT践行</a>
+      <ul>
+        <li><a href="#1-热点新闻">1. 热点新闻</a></li>
+        <li><a href="#2-技能">2. 技能</a></li>
+        <li><a href="#提问7--python3--不执行了继续后面函数执行遇到过吗">提问7  python3  ，不执行了，继续后面函数执行，遇到过吗？</a></li>
+        <li><a href="#提问8-内核申请资源失败-可能线程池个数过多引起的">提问8 ：内核申请资源失败 可能线程池个数过多引起的</a></li>
+        <li><a href="#3-algorithm">3. Algorithm</a></li>
+      </ul>
+    </li>
+    <li><a href="#第二部分开源社区">第二部分：开源社区</a>
+      <ul>
+        <li><a href="#一公开课资料">一、公开课[资料]</a></li>
+        <li><a href="#mit-6824-distributed-systems">MIT 6.824: Distributed Systems</a></li>
+        <li><a href="#二-tidb社区">二. TIdb社区</a></li>
+        <li><a href="#三-ob社区">三 ob社区</a></li>
+        <li><a href="#四-tginge">四 tginge</a></li>
+      </ul>
+    </li>
+    <li><a href="#第三部分起床---运动--阅读">第三部分：起床&mdash;运动&ndash;阅读</a>
+      <ul>
+        <li><a href="#我要做什么">我要做什么</a></li>
+        <li><a href="#一环境场-餐厅区--吃饭专心吃饭">一、环境场： 餐厅区&ndash;吃饭专心吃饭。</a></li>
+        <li><a href="#11-餐厅区--吃饭专心吃饭流程中午-和晚上">1.1  餐厅区&ndash;吃饭专心吃饭流程【中午 和晚上】</a></li>
+        <li><a href="#步骤-1-准备-没准备好-就不吃饭这就是态度和决心">步骤 1 准备 ，没准备好 就不吃饭（这就是态度和决心）</a></li>
+        <li><a href="#13-陈咬金第三斧清理餐桌场景在家做饭">1.3 陈咬金第三斧：清理餐桌（场景：在家做饭）</a></li>
+        <li><a href="#步骤2-吃饭时间从300分钟变成30分钟边吃饭边看电视手机-电脑变成300分钟">步骤2: 吃饭时间从300分钟变成30分钟（边吃饭边看电视，手机 电脑变成300分钟）</a></li>
+        <li><a href="#13-没有记录就没有进步">1.3 没有记录就没有进步</a></li>
+        <li><a href="#14-执行结果分析">1.4 执行结果分析</a></li>
+        <li><a href="#二-睡觉区">二、 睡觉区</a></li>
+        <li><a href="#21-提高认知----一个虚假的快乐箱">2.1  提高认知&mdash;-一个虚假的快乐箱</a></li>
+        <li><a href="#22-执行步骤woop">2.2 执行步骤：woop</a></li>
+        <li><a href="#方法1-学习期间-手机远离1米-手机开启专注模式如果在家-手机直接放客厅">方法1 学习期间 ，手机远离1米 手机开启专注模式。如果在家 手机直接放客厅。</a></li>
+        <li><a href="#方法2失控时候断网-眼睛离开屏幕-从座位站起来-活动一圈给你5分钟冷静时间">方法2:失控时候，断网 ，眼睛离开屏幕 从座位站起来 活动一圈，给你5分钟冷静时间。</a></li>
+        <li><a href="#方法4如果在床上必须关掉-躺平手机必须放客厅-锁屏-如果事情去客厅处理">方法4:如果在床上，必须关掉 ，躺平，手机必须放客厅 锁屏 如果事情去客厅处理</a></li>
+        <li><a href="#23-没有记录就没有进步记录--分析--纠正">2.3  没有记录就没有进步:记录&ndash;分析&ndash;纠正</a></li>
+        <li><a href="#三-环境场--运动区掌控跑步你掌控生活">三、 环境场&ndash;运动区（掌控跑步，你掌控生活）</a></li>
+        <li><a href="#31-提高认知">3.1  提高认知：</a></li>
+        <li><a href="#32-执行步骤woop">3.2 执行步骤：woop</a></li>
+        <li><a href="#33-没有记录就没有进步计划--执行--反馈">3.3 没有记录就没有进步:计划&ndash;执行&ndash;反馈</a></li>
+        <li><a href="#四-环境场--学习区">四、 环境场&ndash;学习区：</a></li>
+        <li><a href="#41-意识到带着问题去工作">4.1 意识到：带着问题去工作</a></li>
+        <li><a href="#42-三只青蛙">4.2  三只青蛙</a></li>
+        <li><a href="#43-执行结果计划--执行--反馈">4.3 执行结果：计划&ndash;执行&ndash;反馈</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2022-10-14T00:00:00" title="October 14, 2022">October 14, 2022</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="gdt践行记录">GDT践行记录</h1>
+<h1 id="本周故事">本周故事</h1>
+<p>问题5.怎么才能玩得更有趣？</p>
+<p>昵称:康康—干不正经事儿的正经人—山西</p>
+<blockquote>
+<p>问题：怎么才能玩得更有趣？</p>
+</blockquote>
+<blockquote>
+<p>问题详情：这几天的学习，已经让我开始可以对学习生活有个规划，感觉到学习更加专注，时间正集中到我手中，遇到突发性事件心中也没那么多抱怨了。但我得到的玩耍时间仍然无趣，松散，好像没有那么有趣。</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<blockquote>
+<p>我想为个有趣的人，我如何让自已做的事儿变得有趣起来呢？</p>
+</blockquote>
+<p>好，我们再看第五个问题，怎么才能玩得更有趣。这几天的学习让我开始对学习生活有个规划，感到学习更加专注，突发事情也没那么多的抱怨了这个学的已经非常好了，已经有很多时间可以考虑怎么去玩的问题了。但是我得到的玩耍时间仍然无趣松散，没那么有趣，怎么能够让自己做的事情有趣起来呢？</p>
+<p><strong>这个意思题这个话题挺有意思，怎么能够让自己变得更有趣一点？</strong></p>
+<p>首先推荐一本书，还是去看一下叫《如何成为一个有趣的人》，书名就叫如何成为一个有趣的人，可以去看一下。</p>
+<p>然后另外我也说说我自己的观点就是我们之所以会现在越来越变得无趣，我可以先统一下有多少人是觉得自己现在的生活挺无趣的，就算给你四个小时的时间，你也不知道该玩啥玩的时候你可能也觉得好没意思。有这种感觉吗？有的话打个一先告诉我一下。</p>
+<p>哇这么多同学都不知道玩啥了，都不知道什么是什么有意思意思了啊还有有时候觉得真的挺可怜的啊。而之所以我们现在越来越不知道自己喜欢什么，的时候，怎么样才能够获取获得那种乐趣。是因为什么呢？<strong>我觉得有两个原因。</strong></p>
+<p><strong>第一就是我们一直在做着我们应该做的事情，而不是自己真正想做的事情。</strong></p>
+<p>那就比如说有人说我想去跳伞，有人说我想五期间下这么大的雨，我就想不打伞在雨里跑步。那还有人说啊我我就想在家里床上玩枕头大战，我小时候特别玩的，我现在就想玩枕头大战。可是这些事情呢虽然脑子里喷冒出一个想法，但很快就会被你的理智所打倒，还玩什么枕头大战，多大了媳妇肯定不同意。然后什么外头淋雨，要是感冒了怎么办？对吧，什么不行，赶紧打消这个念头对，你一旦有了一些你真正自己想做的事，就立刻被你的理智打倒在地。</p>
+<p>所以你在做的都是那些理智认可的事，就是我应该去做的事，在做这样的事的时候就没有什么乐趣可言了。比如说我应该看书，我应该听音乐，我应该做烘焙，这些就没有什么意思了。因为那都是不是你发自内心真正想做的那个东西，你能够体会到吧。</p>
+<p><strong>第二个就是我们现在越来越多的是顺着我们的下意识去做事，而不是主动的去给自己安排一些事情去做。</strong></p>
+<p>就是刷抖音，就是不能说刷抖音就是刷视频，然后打游戏都是这样子的。你会发现你虽然打着游戏，你虽然刷着抖刷着视频，可是你停不下来，而且是你下意识就会打开去玩，打开去刷的这样子造成的结果是什么？打完刷完之后内心会非常的空虚，还会自责说刚才那些时间又被浪费了，这说明什么呢？那根本就不是你真正想做的事，是你下意识没事干，下意识就去做那个事情了对吧，往往都会后悔。</p>
+<p>所以我们越来越无趣的原因是因为我们越来越没有勇气去做自己真正想做的事情，这是一件特别悲哀的一件事情。</p>
+<p><strong>我们越来越不像孩子那样好奇，越来越不像孩子那样敢于冒险，越来越不像孩子那样去沉浸在一件事情里面，越来越不像孩子那样想到一件事情就立刻去做。</strong></p>
+<p>在这种情况下，请问怎么样才能够有乐趣呢？所以你要问我答案是什么？我这里没有答案，我只能告诉你说让自己像回归孩子的那种心态状态，你就立刻会变得有趣起来。</p>
+<h2 id="第一部分gdt践行">第一部分：GDT践行</h2>
+<table>
+<thead>
+<tr>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>Read</td>
+<td></td>
+<td>复盘</td>
+<td></td>
+<td>Share</td>
+<td><strong>Algorithm</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-热点新闻">1. 热点新闻</h3>
+<h4 id="目的">目的</h4>
+<blockquote>
+<p>主要是为了学习英文，如果你的英文不行，你基本上无缘技术高手。
+所以，需要你阅读并点评至少一篇英文技术文章，
+我个人最喜欢去的地方是<a href="https://link.zhihu.com/?target=http%3A//Medium.com">http://Medium.com</a></p>
+</blockquote>
+<h3 id="2-技能">2. 技能</h3>
+<blockquote>
+<p>主要是为了总结和归纳你在是常工作中所遇到的知识点。
+学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</p>
+</blockquote>
+<ol>
+<li>shell脚本交互如何输入yes</li>
+</ol>
+<ul>
+<li>echo -e &ldquo;Y&rdquo; |  bdm-update-outtree-index -n 16 /root/data  /root/beegfs</li>
+</ul>
+<ol start="2">
+<li><a href="https://blog.csdn.net/u010417914/article/details/96918562">Remote Development 远程开发</a></li>
+</ol>
+<ul>
+<li>
+<ol>
+<li>vscode 左侧栏在哪里?[一不小心点没了]</li>
+</ol>
+</li>
+</ul>
+<p>​			文件  &ndash; 首选项 &mdash;设置&mdash;搜索workbench，勾选上Workbench › Activity Bar: Visible</p>
+<ul>
+<li>
+<ol start="2">
+<li>window 产生的id_rsa.pub上传到[这个没有问题]</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ssh-keygen
+cd /root/.ssh/
+cat id_rsa.pub &gt;&gt; authorized_keys //公钥上传
+
+并上传到liunx服务器
+
+id_rsa文件的默认权限是600
+chmod 600 id_rsa
+id_rsa authorized_keys 文件的默认权限是700
+chmod 700 .ssh
+chmod 700 authorized_keys
+
+</code></pre></td></tr></table>
+</div>
+</div><p>一句话总结：</p>
+<blockquote>
+<p>习惯性设置 777 是错误的方式。【自己在这个问题浪费一周时间】</p>
+</blockquote>
+</li>
+<li>
+<p>打开远程资源管理进行设置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Host 192.168.192.160
+  HostName 192.168.192.160
+  User root
+  Port 22
+  ForwardAgent yes
+  IdentityFile C:\Users\wangchuanyi\.ssh\id_rsa
+
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>设置ssh服务配置（远程liunx）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+vim /etc/ssh/sshd_config
+RSAAuthentication yes 
+PubkeyAuthentication yes
+service sshd restart
+
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>一句话总结：</p>
+<blockquote>
+<p>频繁提示 输入密码 还是不对 问题在哪里呢？ 权限设置不正确导致的</p>
+</blockquote>
+<ol start="3">
+<li><a href="https://www.baeldung.com/linux/soft-links-to-directories">How to Create Soft Links to Directories</a></li>
+<li>VMware虚拟机 CentOS 7 ping不通 报错：name or service not known 【自测通过】</li>
+</ol>
+<ul>
+<li>如何查询子网IP、子网掩码 （很方便）</li>
+</ul>
+<p>​    编辑”-&gt;“虚拟网络编辑器” -&gt;NAT模式-&gt;NAT设置</p>
+<p><img src="https://img-blog.csdnimg.cn/20190908170726610.png" alt="别人图片"></p>
+<ul>
+<li>如何修改配置文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">vi /etc/sysconfig/network-scripts/ifcfg-ens33
+<span class="nv">BOOTPROTO</span><span class="o">=</span>static
+<span class="nv">NETMASK</span><span class="o">=</span>255.255.255.0
+<span class="nv">IPADDR</span><span class="o">=</span>192.168.192.161
+<span class="nv">GATEWAY</span><span class="o">=</span>192.168.192.2
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>如何dns设置</p>
+<p>概念：</p>
+<p>DNS 是域名系统 (Domain Name System) 的缩写
+/etc/resolv.conf是DNS客户机配置文件，</p>
+<ul>
+<li>
+<p>不知道dns多少 采用公共的（很方便）</p>
+<p>114.114.114.114 是国内移动、电信和联通通用的DNS</p>
+<p>8.8.8.8是GOOGLE公司提供的DNS</p>
+</li>
+</ul>
+<p>步骤：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+vi /etc/resolv.conf
+# Generated by NetworkManager
+nameserver 114.114.114.114 
+nameserver 10.51.1.12 
+nameserver 8.8.8.8      
+nameserver 8.8.4.4    
+</code></pre></td></tr></table>
+</div>
+</div><p>原理：</p>
+<ul>
+<li>
+<p>重启网络</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">service network restart
+ping www.baidu.com
+
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="4-问题如果对python依赖进行打包直接拷贝usrlocallib64python36site-packages-目录可以吗httpsmaimaicnwebgossip_detailencode_ideyjhbgcioijiuzi1niisinr5cci6ikpxvcj9eyjlz2lkijoim2y5ytrhotk0ywy3ndhmmjhimzjly2u0zdk2ndlkyzailcjpzci6mza5otgwnzesinuiojq2njuxfqx5g1sxkpa2mt8wjjvnz_korxu5m_wiaamdrqwj06_nqfromlist">4. 问题：<a href="https://maimai.cn/web/gossip_detail?encode_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZ2lkIjoiM2Y5YTRhOTk0YWY3NDhmMjhiMzJlY2U0ZDk2NDlkYzAiLCJpZCI6MzA5OTgwNzEsInUiOjQ2NjUxfQ.x5G1SxKPa2mT8WJJvnZ_KORxu5M_WiaaMDRQWj06_nQ&amp;from=list">如果对python依赖进行打包，直接拷贝/usr/local/lib64/python3.6/site-packages 目录可以吗？</a></h4>
+<p>问题：如果对python依赖进行打包，直接拷贝/usr/local/lib64/python3.6/site-packages 目录可以吗？</p>
+<ul>
+<li>背景：</li>
+</ul>
+<p>我有个2个机器，在机器A联网开发了 pip3安装APScheduler，</p>
+<p>在部署到生产时候，机器B无法联网。
+通过whl包安装，结果发现APScheduler依赖&ndash;pytz依赖&ndash;	backports 。
+很对依赖。</p>
+<p>请问：如果对python依赖进行打包呢， c++ 动态库 ，golang 编译可执行程序。Python源码部署。
+不知道操作了 ?</p>
+<ul>
+<li>原理</li>
+</ul>
+<p>源码编译 &ndash;&gt;二进制安装包（exe,so）</p>
+<h4 id="5-python多线程-可以实现原子计数吗">5 python多线程 可以实现原子计数吗</h4>
+<p>问：python多线程 可以实现原子计数码？我搜索一下 不像go c+++之间提供一个函数或者类，python3没有搜索到。感谢</p>
+<h4 id="6-正则里的是什么意思">6. 正则里的(.*?)是什么意思</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> .是任意字符 可以匹配任何单个字符，
+
+例子：正则表达式r.t 可以匹配这些字符串：rat、rut、r t，但是不匹配root。 
+
+.*？  表示匹配任意字符到下一个符合条件的字符
+
+例子：正则表达式a.*?xxx   可以匹配 abxxx  axxxxx  abbbbbxxx
+
+区别：用法区别
+
+() 是为了提取匹配的字符串。表达式中有几个()就有几个相应的匹配字符串。[]是定义匹配的字符范围。{}一般用来表示匹配的长度。
+
+具体用例
+
+1、()
+
+(\s*)表示连续空格的字符串。
+
+2、[]
+
+[a-zA-Z0-9] 表示相应位置的字符要匹配英文字符和数字，包括a到z，A到Z，0到9。[\s*]表示空格或者*号。
+
+3、{}
+
+ \s{3} 表示匹配三个空格，\s{1,3}表示匹配一到三个空格
+ https://zhuanlan.zhihu.com/p/88466537
+ 
+ https://zhuanlan.zhihu.com/p/109973506
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>括号能提取字符串，如(com|cn|net)就能够限制，只能是com或cn或net。</p>
+</li>
+<li>
+<p>[]： 方括号是单个匹配，如[abc]他限制的不是abc连续出现，而是只能是其中一个</p>
+<p>1、(abc|bcd|cde)，表示这一段是abc、bcd、cde三者之一均可，顺序也必须一致
+2、(abc)?，表示这一组要么一起出现，要么不出现，出现则按此组内的顺序出现</p>
+</li>
+</ul>
+<h3 id="提问7--python3--不执行了继续后面函数执行遇到过吗">提问7  python3  ，不执行了，继续后面函数执行，遇到过吗？</h3>
+<p>问：之前python程序执行时候，例如 打印log和变量写错了，程序执行报错 抛出exception，现在是python执行直接跳过错误代码，不执行了，继续后面函数执行，遇到过吗？</p>
+<p>print(aa.xxxxxxx) aa 是一个类 xxxxx是不存在的字段</p>
+<p>msg = &ldquo;,&rdquo; + 10</p>
+<p>print(aa.xxxxxxx) aa 是一个类 xxxxx是不存在的字段</p>
+<p>答：</p>
+<ul>
+<li>
+<p>代码里有try ，但是没有catch 做异常捕获。</p>
+</li>
+<li>
+<p>因此出了错误 看不懂任何提示 包括屏幕上的。</p>
+<h3 id="提问8-内核申请资源失败-可能线程池个数过多引起的">提问8 ：内核申请资源失败 可能线程池个数过多引起的</h3>
+</li>
+</ul>
+<p>​</p>
+<p>​      ####  题目9 ：ThreadPoolExecutor</p>
+<p><a href="https://blog.csdn.net/weixin_45642669/article/details/123413293">https://blog.csdn.net/weixin_45642669/article/details/123413293</a></p>
+<h4 id="提问9--有人研究stl-萃取机制吗输入一个模块类型t如果区分是指针还是普通类型issues1038">提问9  有人研究stl 萃取机制吗？输入一个模块类型T，如果区分是指针还是普通类型issues/1038</h4>
+<p>提问9 <a href="https://www.cnblogs.com/pipci/p/12571469.html">nmtui网络配置命令</a></p>
+<p>提问10： python异常时候 如何打印堆栈信息</p>
+<h3 id="3-algorithm">3. Algorithm</h3>
+<h2 id="第二部分开源社区">第二部分：开源社区</h2>
+<h3 id="一公开课资料">一、公开课[资料]</h3>
+<ul>
+<li>
+<p><a href="https://www.bilibili.com/video/av91919329?amp%3Bseid=15982257803189242166&amp;vd_source=432dc5326188b5e1aa7119a815a8b105">2019CMU数据库导论(intro to database systems fall 2019)</a></p>
+<p>进展：正在学习P01</p>
+</li>
+<li>
+<p>硬核课堂</p>
+</li>
+</ul>
+<ol>
+<li><a href="https://hardcore.feishu.cn/docs/doccnKTUS5I0qkqYMg4mhfIVpOd">LSM-论文导读与Leveldb源码解读</a></li>
+<li><a href="https://hardcore.feishu.cn/wiki/wikcnYmGtlgOBgPoxs6vsXcSNNn">手写kv</a></li>
+</ol>
+<p>​    <a href="https://hardcore.feishu.cn/wiki/wikcnYmGtlgOBgPoxs6vsXcSNNn">https://hardcore.feishu.cn/wiki/wikcnYmGtlgOBgPoxs6vsXcSNNn</a></p>
+<p><a href="https://hardcore.feishu.cn/docs/doccnjVdgWAfAEmg3g1HYqKvyhg">https://hardcore.feishu.cn/docs/doccnjVdgWAfAEmg3g1HYqKvyhg</a></p>
+<p><a href="https://hardcore.feishu.cn/docs/doccnKTUS5I0qkqYMg4mhfIVpOd">https://hardcore.feishu.cn/docs/doccnKTUS5I0qkqYMg4mhfIVpOd</a></p>
+<h3 id="mit-6824-distributed-systems">MIT 6.824: Distributed Systems</h3>
+<p>官方地址：https://pdos.csail.mit.edu/6.824/</p>
+<ul>
+<li>2022年10月3日 看到</li>
+</ul>
+<h3 id="二-tidb社区">二. TIdb社区</h3>
+<p>第一步：相关资料搜集
+《TiFlash DeltaTree Index》资料分享请看这里~
+【资料下载】TiFlash DeltaTree Index：<a href="https://asktug.com/t/topic/842801">https://asktug.com/t/topic/842801</a>
+【录屏回放】<a href="https://www.bilibili.com/video/BV1dV4y1L74v">https://www.bilibili.com/video/BV1dV4y1L74v</a></p>
+<p>【TiFlash 往期源码解读 &amp; 资料合集】
+源码解读 | TiFlash DDL 模块设计及实现分析 <a href="https://tidb.net/blog/bf69e04e">https://tidb.net/blog/bf69e04e</a>
+源码解读 | TiFlash DeltaTree 引擎设计及实现解析：<a href="https://asktug.com/t/topic/666285">https://asktug.com/t/topic/666285</a>
+源码解读 | TiFlash 存储引擎的设计思路：<a href="https://asktug.com/t/topic/664458">https://asktug.com/t/topic/664458</a>
+源码解读 | TiFlash 计算层 Overview：<a href="https://asktug.com/t/topic/665254">https://asktug.com/t/topic/665254</a>
+TiFlash 资源合集（性能测评、运维实践、场景案例）：<a href="https://asktug.com/t/topic/632816">https://asktug.com/t/topic/632816</a></p>
+<h3 id="三-ob社区">三 ob社区</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 单元测试编译问题</li>
+</ul>
+<p><a href="https://github.com/oceanbase/oceanbase/issues/903">https://github.com/oceanbase/oceanbase/issues/903</a>
+<a href="https://github.com/intel/hyperscan/issues/19">https://github.com/intel/hyperscan/issues/19</a>
+<a href="https://github.com/oceanbase/oceanbase/issues/351">https://github.com/oceanbase/oceanbase/issues/351</a>
+<a href="https://github.com/oceanbase/oceanbase/pull/139/files">https://github.com/oceanbase/oceanbase/pull/139/files</a>
+<a href="https://github.com/lasote/conan-gtest-example/issues/2">https://github.com/lasote/conan-gtest-example/issues/2</a>
+<a href="https://github.com/NervanaSystems/he-transformer/issues/171">https://github.com/NervanaSystems/he-transformer/issues/171</a> 【不对】</p>
+<p>核心</p>
+<ul>
+<li><a href="https://cmake.org/cmake/help/v3.21/command/target_link_libraries.html">target_link_libraries 和link_libraries区别</a></li>
+</ul>
+<p>原理：
+看懂cmake用法</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_library</td>
+<td>生成动态库或静态库</td>
+<td>add_library (testFunc_shared SHARED ${SRC_LIST})</td>
+</tr>
+<tr>
+<td>set_target_properties</td>
+<td>设置输出的名称</td>
+<td>set_target_properties (testFunc_shared PROPERTIES OUTPUT_NAME &ldquo;testFunc&rdquo;)</td>
+</tr>
+<tr>
+<td>TARGET_LINK_LIBRARIES</td>
+<td><a href="https://cmake.org/cmake/help/v3.21/command/target_link_libraries.html">Library dependencies </a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="四-tginge">四 tginge</h3>
+<h2 id="第三部分起床---运动--阅读">第三部分：起床&mdash;运动&ndash;阅读</h2>
+<blockquote>
+<p>小贴士：
+在学校，出租房，宾馆，工位很多因素导致 学习区，运动区 卧室 都是同一个地方
+环境导致你彻底彻底糊涂了。傻傻分不清楚 物理无法隔离，从逻辑上必须隔离。</p>
+</blockquote>
+<h3 id="我要做什么">我要做什么</h3>
+<ol>
+<li><a href="https://wangcy6.github.io/post/ARTS/life_2021_arts/#%E6%8C%91%E6%88%9801%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BA%8B%E6%83%85-%E5%AD%A6%E4%B9%A0%E5%8C%BA-%E4%B8%8E%E9%A4%90%E5%8E%85%E5%8C%BA%E6%81%AF-%E6%B7%B7%E6%B7%86%E7%A7%9F%E6%88%BF%E5%AE%A2%E8%A7%82%E5%9B%A0%E7%B4%A0%E5%AD%98%E5%9C%A8%E5%92%8C%E5%B7%A5%E4%BD%9C%E4%B8%8D%E5%A5%BD%E8%87%AA%E5%B7%B1%E4%B8%8D%E5%A5%BD%E4%B8%80%E5%88%87%E4%B8%8D%E5%A5%BD%E9%83%BD%E4%BC%9A">挑战01第一个要解决事情-学习区-与餐厅区息-混淆</a></li>
+<li><a href="https://wangcy6.github.io/post/ARTS/life_2021_arts/#%E6%8C%91%E6%88%9801-%E6%9C%9F%E6%9C%9B%E7%BB%93%E6%9E%9C-%E8%AF%86%E5%88%AB%E4%BA%92%E8%81%94%E7%BD%91%E6%9C%AC%E8%B4%A8">挑战02 期望结果-识别互联网本质</a></li>
+<li><a href="https://wangcy6.github.io/post/ARTS/life_2021_arts/#%E6%8C%91%E6%88%9802-%E7%AC%AC%E4%BA%8C%E4%B8%AA%E4%BA%8B%E6%83%85%E5%A6%82%E6%9E%9C%E5%9C%A8%E5%AD%A6%E4%B9%A0%E5%8C%BA%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%83%B3%E7%9C%8B%E8%A7%86%E9%A2%91-%E6%B8%B8%E6%88%8F%E7%9B%B4%E6%92%AD-%E5%B0%8F%E8%AF%B4%E6%80%8E%E4%B9%88">挑战03 第二个事情:如果在学习区过程中，想看视频 游戏直播 小说怎么？</a></li>
+<li><a href="https://wangcy6.github.io/post/ARTS/day_02_run/">挑战04 学习区：专心学习</a></li>
+<li><a href="https://wangcy6.github.io/post/ARTS/day_03_run/">挑战05 第四个解决事情 运动区 打开交流之门</a></li>
+</ol>
+<p>愿景：mm计划</p>
+<p>目标：</p>
+<p>第一阶段： 5：30-7：30   2个小时 运动 吃饭 休息 可以做到嘛</p>
+<p>第二阶段： 7：30 -21:00  90 分钟 学习，每天90分钟时间足够了嘛？</p>
+<p>第三阶段：21：00-22 ：30  洗刷，简单活动，简单read 睡前远离手机 1小时。</p>
+<p>指标：</p>
+<p>刻意练习：三个必须统统做到，</p>
+<p>手机和电脑 电视  不能放到卧室 ，那是睡觉地方 【-10】</p>
+<p>手机和电脑 电视  不能放到客厅，那个读书地方 【-10】</p>
+<p>手机和电脑 电视   不能放到餐厅，那是吃饭地方 【-10】</p>
+<p>吃饭睡觉 运动读书 整体，一个失手， 马上蔓延全部，一次 变成全部一星期一个月一年</p>
+<table>
+<thead>
+<tr>
+<th>作息</th>
+<th>周五</th>
+<th>周六</th>
+<th>周天</th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一周</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没有做到</td>
+<td>done</td>
+<td>done</td>
+<td></td>
+</tr>
+<tr>
+<td>第二周</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没有做到</td>
+<td>没有做到</td>
+<td>失控</td>
+<td></td>
+</tr>
+<tr>
+<td>第三周</td>
+<td>没做到：运动</td>
+<td>没做到：watch</td>
+<td>没做到：watch</td>
+<td>没有做到:手机放客厅，宝宝看到</td>
+<td>没有做到：手机放客厅宝宝看到</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>10.1-10.7</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+<td>没做到</td>
+</tr>
+</tbody>
+</table>
+<h3 id="一环境场-餐厅区--吃饭专心吃饭">一、环境场： 餐厅区&ndash;吃饭专心吃饭。</h3>
+<h3 id="11-餐厅区--吃饭专心吃饭流程中午-和晚上">1.1  餐厅区&ndash;吃饭专心吃饭流程【中午 和晚上】</h3>
+<blockquote>
+<p>补丁：</p>
+<p>学习本质是探索，去思考 ，放松</p>
+<p>躺着，坐着都被动接受信息。在屏幕面前卑躬屈膝，吃苦不行。失败千万次不要侥幸心理</p>
+<p>站起来，去运动。这样才能获得自由。战斗已经开始</p>
+</blockquote>
+<h3 id="步骤-1-准备-没准备好-就不吃饭这就是态度和决心">步骤 1 准备 ，没准备好 就不吃饭（这就是态度和决心）</h3>
+<h4 id="11陈咬金第一斧-在吃饭的路上">1.1陈咬金第一斧： 在吃饭的路上</h4>
+<p>拦路虎：</p>
+<ul>
+<li>周末 看斗鱼 war比赛【1000001】</li>
+<li>吃饭  吃饭后 拿着手机不放，塞满脑子，其实根本装不下东西。【100000000001】</li>
+<li>慢吞吞的，像个80岁人，拖延，被动 态度 自己跟不不知道。【100000000001】</li>
+<li>战斗已经开始，不是走到餐厅 走到手机 电脑开始。【1000001】
+提前30分钟已经开始了</li>
+</ul>
+<h4 id="12-陈咬金第二斧准备下订单流程场景公司-餐厅外面">1.2 陈咬金第二斧：准备下订单流程（场景：公司 餐厅外面）</h4>
+<ol>
+<li>餐厅吃饭的秘密：</li>
+</ol>
+<ul>
+<li>只要餐厅点餐付钱完毕！我就关闭手机25分钟。</li>
+<li>然后拿出自己准备好的纸质资料代替阅读！
+无论什么小说，还是新闻都打印出来看！
+渴望没变，无聊更没变！只是换个方式</li>
+</ul>
+<h3 id="13-陈咬金第三斧清理餐桌场景在家做饭">1.3 陈咬金第三斧：清理餐桌（场景：在家做饭）</h3>
+<h3 id="步骤2-吃饭时间从300分钟变成30分钟边吃饭边看电视手机-电脑变成300分钟">步骤2: 吃饭时间从300分钟变成30分钟（边吃饭边看电视，手机 电脑变成300分钟）</h3>
+<ul>
+<li>一片雪花，一根稻草足够压倒一切。潘多拉 根本不知道后面是什么。【看一次没什么。看一会什么 不耽误事情】</li>
+<li>即使无法搬走，你也可以stop 播放的画面。</li>
+</ul>
+<h4 id="吃掉那那只最丑的青蛙前进的最大的障碍">吃掉那那只最丑的青蛙🐸，前进的最大的障碍</h4>
+<p>我只是看一眼手机没问题，根本不知道理解危害</p>
+<ul>
+<li>根本不知道 一次至少120分钟，看视频，看直播第一层。</li>
+<li>还有第二层：你120分钟切换正常状态，伤心后悔情绪平复</li>
+<li>第三层：你240分钟 弥补过去耽误时间。</li>
+<li>第四层：过去耽误时间，未来耽误时间 480分钟没有了</li>
+<li>第五层：和别人i比，落后了</li>
+<li>一天过去了，一个星期过去了，一个月过去，一年万年 弥补。</li>
+<li>背后 产品 到处都是。无数不在 【24小时 都随时注意。】</li>
+</ul>
+<p>看视频流程</p>
+<ol>
+<li>全屏</li>
+<li>站起来</li>
+<li>远离1米。</li>
+</ol>
+<p>学习本质是探索，去思考。</p>
+<p>为了看视频你拍着，躺着，坐着都被动接受信息。在屏幕面前卑躬屈膝，吃苦不行。</p>
+<p>站起来，去运动。这样才能获得自由。</p>
+<p>刻意练习：三个必须统统做到，</p>
+<p>手机 不能放到卧室 ，那是睡觉地方</p>
+<p>手机不能放到客厅，那个读书地方</p>
+<p>手机不能放到餐厅，那是吃饭地方</p>
+<h3 id="13-没有记录就没有进步">1.3 没有记录就没有进步</h3>
+<table>
+<thead>
+<tr>
+<th>吃饭流                                     程：</th>
+<th>晚上‼️</th>
+<th>中午</th>
+<th>早餐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2022-4-16</td>
+<td>1 自己关机手机 但是电脑不舍得结果导致2小时斗鱼，念头&ndash;后面不解决。放松</td>
+<td>ok</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>2022-04-30</td>
+<td>吃饭看手机</td>
+<td>吃饭看手机</td>
+<td></td>
+</tr>
+<tr>
+<td>2022-7-13</td>
+<td>看了，结果时空</td>
+<td>执行了，但是被动</td>
+<td>ok</td>
+</tr>
+<tr>
+<td>2022-8-4</td>
+<td>吃饭后看8小时综艺 本来运动睡觉</td>
+<td>吃饭时候看手机综艺 本来睡觉</td>
+<td>太晚</td>
+</tr>
+<tr>
+<td>2022-10-4</td>
+<td>吃饭后看8小时综艺 本来运动睡觉</td>
+<td>吃饭时候看手机综艺 本来睡觉</td>
+<td>太晚</td>
+</tr>
+<tr>
+<td>2022-10-7</td>
+<td>从8点看 国际新闻23点：30 国家大事不你关系</td>
+<td>一眼综艺不看，新闻不看，你看全部，然后拖延习惯</td>
+<td>ok 吃饭了</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-执行结果分析">1.4 执行结果分析</h3>
+<blockquote>
+<p>吃饭 &ndash;学习&ndash;休息 其实是一回事  必须认认真对待</p>
+</blockquote>
+<ul>
+<li>补丁</li>
+<li></li>
+</ul>
+<p>【2022-10-5】</p>
+<ul>
+<li>
+<p>：自己目标不明确，结果一开始时候 看一下手机和电视，时间还</p>
+</li>
+<li>
+<p>该出手不出手：意识到不该卡手机，然后什么做了，最</p>
+</li>
+<li>
+<p>下一步行动：第一时间必须去做，不等 更不要天气。不要紧你目标</p>
+</li>
+<li>
+<p>刻意练习：三个必须统统做到，</p>
+<p>手机和电脑 电视  不能放到卧室 ，那是睡觉地方 【-10】</p>
+<p>手机和电脑 电视  不能放到客厅，那个读书地方 【-10】</p>
+<p>手机和电脑 电视   不能放到餐厅，那是吃饭地方 【-10】</p>
+</li>
+</ul>
+<ol>
+<li>别人是诱惑，不是强制。行动你手里。</li>
+</ol>
+<ul>
+<li>行动卡 中午 晚上 睡觉时候。</li>
+</ul>
+<p>    <a href="https://wangcy6.github.io/post/ARTS/day_02_run/">https://wangcy6.github.io/post/ARTS/day_02_run/</a></p>
+<ul>
+<li>【不要独自一人一个人看视频】
+去电影院，去广场 去客厅。不要独自吃饭 睡觉 躲在角落看视频，一个人智商变为0.很容易上当受骗。</li>
+</ul>
+<blockquote>
+<p>1,.4 最终解决方式：从屏幕前面 进入屏幕中。</p>
+<p>在屏幕前习惯 人的性格变成懒惰 暴躁 消极，自欺欺人，内向，欺骗 虚假，本座</p>
+<p>陷入产品 公司 学习一切一切组织陷阱。你说还说不出来为什么。</p>
+<p>进入屏幕中 才会积极，沟通 才提升。这就是目标。</p>
+<p>你极限挑战。</p>
+<p>我说：你心中懒惰  闹钟消息 人事人事清楚 疑问自己失去。</p>
+<p>是外界产品，组织关系，是建筑造成的。</p>
+</blockquote>
+<ul>
+<li>周末 四步走</li>
+</ul>
+<ol>
+<li>耳机 在公司 家里，声音小 看xx游戏【自欺欺人】</li>
+<li>专注模式 电脑&ndash;和浏览器</li>
+<li>crontable 提醒</li>
+<li>你目标是什么</li>
+</ol>
+<ul>
+<li>2022-04-30 忘记cctv，进制微信看cttv在线。因为你会解锁 解锁 解锁 微信解锁 和手机壳解锁 【-一次导致后面100次重复】</li>
+<li>2021-10-10 -周末 晚上：不管什么原因时自己主动打开网页，然后抛弃一个问题不不问。你可以不打开。</li>
+</ul>
+<blockquote>
+<p>晚上吃饭时候 在电脑旁边 看2个小时小动漫。</p>
+<p>自己120分钟从根本不想看到彻底沉迷。自己什么没做完钱别视频控制节奏。罚款 400元</p>
+<p>重复过去10000次，后面一个万时间拯救自己。</p>
+<p>上来1分钟没控制后 后面120分钟放弃了。这个不行。</p>
+<p>吃饭电脑放客厅，禁用网络。</p>
+<p>很多方式自己忘记了。【自己根本没有斗争】</p>
+</blockquote>
+<ul>
+<li>看综艺千万次感觉出现&ndash;导致1000失控 &ndash;你用各种方法和感觉都斗争，多巴胺被吸引感觉导致看一切视频，一切综艺一切错误不起作用
+/////////////////////////更多记录///////////////////////
+防沉迷&mdash;不解锁&ndash;手机和电脑严格执行记录【睡觉问题1
+<a href="https://app.yinxiang.com/shard/s39/nl/8226829/ecf13649-4ba8-4cfd-92bf-99f49d981293/">https://app.yinxiang.com/shard/s39/nl/8226829/ecf13649-4ba8-4cfd-92bf-99f49d981293/</a>
+2021-1-吃饭睡觉休息日志 &mdash;一夜回到解放前 【手机和电脑】记录 自控_抖音和斗鱼 腾讯视频 小说 手机解锁#死亡无人组
+<a href="https://app.yinxiang.com/shard/s39/nl/8226829/8a153868-fc41-4a93-80f2-0a03c5f007a7/">https://app.yinxiang.com/shard/s39/nl/8226829/8a153868-fc41-4a93-80f2-0a03c5f007a7/</a>
+<a href="https://app.yinxiang.com/shard/s39/nl/8226829/2ad31275-df8b-415b-80fb-1d78597c41d9/">https://app.yinxiang.com/shard/s39/nl/8226829/2ad31275-df8b-415b-80fb-1d78597c41d9/</a>
+自控_抖音和斗鱼 腾讯视频 懒人听书 小说 youtue 手机解锁#死亡无人组 【吃饭看手机，床上看手机】
+<a href="https://app.yinxiang.com/shard/s39/nl/8226829/b1161b2e-42ad-444f-9b9b-f70cb9f744c5/">https://app.yinxiang.com/shard/s39/nl/8226829/b1161b2e-42ad-444f-9b9b-f70cb9f744c5/</a>
+/////////////////////////更多记录///////////////////////</li>
+</ul>
+<h3 id="二-睡觉区">二、 睡觉区</h3>
+<h3 id="21-提高认知----一个虚假的快乐箱">2.1  提高认知&mdash;-一个虚假的快乐箱</h3>
+<p>目标：用创造视频代替消费视频，用运动代替躺着 坐着。
+目标：用创造视频代替消费视频，用运动代替躺着 坐着
+目标：用创造视频代替消费视频，用运动代替躺着 坐着</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">看视频的人和奴隶没有区别，随着时间流逝，你最喜欢的小说，最喜欢的电影【没有问题】，最喜欢的动漫，这些喜爱驱动变成奴隶【别人控制】【你视频，听觉 判断完全被驱动 没有自己】
+
+因此下定决定 自己彻底忘记动漫 电影 连续剧 这段东西 本来是不存在的，
+
+是电视，手机 电脑 各种宣传概念 送到你面前 尤其是周末时候
+
+因此下定决定 自己彻底忘记动漫 电影 连续剧 这段东西 本来是不存在的，
+
+是电视，手机 电脑 各种宣传概念 送到你面前 尤其是周末时候
+
+只要21点。22点。23点 你看电脑 你彻底失控，综艺，动漫 电视剧 都是表演者，
+
+你发现你缺点 只要别人在说，在做，你说比不过他们，他们厉害了，彻底隐藏了自己想法，理性 一切 然后什么不做
+
+  
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>自己打开斗鱼网站，自己然后给3小时看，然后身心疲惫，这根本不是休息【看斗鱼就是自己找死，不运动就是-死。不学习=死】</li>
+</ul>
+<p>目标：用创造视频代替消费视频，用运动代替躺着 坐着。</p>
+<blockquote>
+<p>你可以忍住5分钟念头 ，你可以 15分钟 自己ob直播，录制视频代替 斗鱼 ，你可以自己学习 很多事情。</p>
+</blockquote>
+<p>思考：最后一天 我星期天下午想起来，结果晚上晚上 12点 不喜欢</p>
+<ul>
+<li>念头一出现：打开微信 ，微信腾讯视频 ，从23点看到4点 看全部动漫，忘记痛苦。沙发床 舒适区 手浸一个陷阱. &mdash;&gt;一天 一星期 一个月 一年 自己感觉不到 别控制了。</li>
+</ul>
+<p>目标：用创造视频代替消费视频，用运动代替躺着 坐着。</p>
+<p><strong>时间规划：选择你目标开始，</strong></p>
+<p><strong>放弃简单的，你什么都不做：看冠军表演，看别人10w 大v百万点赞 不会进步。通过看 就copy 冠军行为 完全错误的理解。</strong></p>
+<p><strong>代替难的行为：选择一个难的事情的正确，0观众，需要0积累开始。从自己动手练习开始 耐住寂寞，该做事情走。</strong></p>
+<p>你下定决心：你成为运动达人，学习达人和分享达人 需要上千次练习。</p>
+<p>从每天晚上3小时时间开始。</p>
+<p>从看手机 新闻 综艺 直播聊天开始 ，别人明显，千万热点 千万点击 我只要自己一个人看【0观众表演】</p>
+<p>从电脑 看游戏直播，看小说 看xx视频，他们10观众，冠军🏆实力【从菜鸟开始，0观众表演】</p>
+<p>心里：</p>
+<ul>
+<li>我换位置，为这个位置我必须看下去 【sb】</li>
+</ul>
+<h3 id="22-执行步骤woop">2.2 执行步骤：woop</h3>
+<p>愿景：</p>
+<p>目标：</p>
+<p>手机不能放到客厅一次， 那是阅读地方</p>
+<p>手机不能放到卧室一次 ，那是睡觉地方</p>
+<p>手机 不能放到餐厅一次，那是吃饭地方</p>
+<p>请手机放到柜子里，手机隔离盒里。</p>
+<p>隔离期间，手机不断的发出求救 10000次，你拯救10000次 不英雄。、</p>
+<p>执行：</p>
+<p>睡觉流程</p>
+<ol>
+<li>笔记本 和 手机 （同时做到）放 同时到收纳盒。不能客厅沙发上，卧室床上，吃饭餐桌，你伸手够到，眼睛看到地方，</li>
+</ol>
+<blockquote>
+<p>自己意识提供24小时 看手机根本听不下来动力</p>
+</blockquote>
+<ol start="2">
+<li>
+<p>手机开启禅定模式60分钟，断掉你后路，</p>
+<blockquote>
+<p>手机新闻聊天内容提供24小时看手机根本听不下来动力</p>
+</blockquote>
+</li>
+<li>
+<p>一定关闭路由器，断掉后路，</p>
+<blockquote>
+<p>无论路由器提供24小时看手机根本动力</p>
+</blockquote>
+</li>
+<li>
+<p>洗刷，散步都可用</p>
+<blockquote>
+<p>没有手机不解决问题，必须找到代替行为，根本原因你时间用在哪里</p>
+</blockquote>
+</li>
+<li>
+<p>可用带一本书到卧室</p>
+<blockquote>
+<p>代替行为.我着脖子 24小时累死也离开手机</p>
+</blockquote>
+</li>
+<li>
+<p>关灯</p>
+<blockquote>
+<p>光线提供根本不睡觉根本原因</p>
+</blockquote>
+</li>
+<li>
+<p>放松</p>
+<blockquote>
+<p>慢  慢  慢 这个才是重点</p>
+</blockquote>
+</li>
+<li>
+<p>重复1-7步骤。</p>
+</li>
+<li>
+<p>延迟享受 看手机 舒适目的就是早起床</p>
+<blockquote>
+<p>最终目的是什么</p>
+</blockquote>
+</li>
+</ol>
+<p>####1号补丁：【 2022年10月19日 手机放到收纳盒第5天，做到次数1，失控次数4 】</p>
+<p>记录：增加难度 没有退路，才能前进，</p>
+<p>今天 手机睡觉前 ，放到收纳盒子，虽然难受，几次试图
+那手机，但是强制手机锁屏，然后强制关闭路由器。
+最后一秒让决定关闭。</p>
+<p>手机放到收纳盒子&ndash;然后关闭路由器</p>
+<p>意图：你的故事</p>
+<ul>
+<li>自己感觉根本睡不这。</li>
+<li>睡不这你看书计划 自己根本不原因执行【第一个防线失效】</li>
+<li>一个念头告诉你你必须撬开收保险盒子【第二个防线失效】</li>
+<li>然后解锁 自己腾讯视频 看综艺 从0点2点【第三个防线失效】</li>
+<li>看手机没电。中间各种提示自己忽视，</li>
+</ul>
+<p>认知：平台越大越做恶：</p>
+<ul>
+<li>你看一万年腾讯视频和国际新闻
+根本不任何提高，这样平台和内容根本是进步的
+吸引注意力，为他们争取的。背后平台做快。</li>
+<li>家庭路由器产品产品出现，彻底改变生活方式，
+之前从没用过，免费东西不好。</li>
+</ul>
+<p>最终航向：</p>
+<h4 id="2号补丁2100-断网笔记本放到收纳盒第10000天失败10000次做到0次">2号补丁：【21:00 断网，笔记本放到收纳盒，第10000天，失败10000次，做到0次】</h4>
+<p>意图：</p>
+<ul>
+<li>自从电脑笔记本，手机 ，路由器 出现，让人类天然24小时工作提供可能</li>
+<li>然后遇到工作 学习生活各种挑战，让你产生晚上加班学习实现人生理想财富资源计划</li>
+<li>结果是：白天让疲惫不堪，晚上 21点 22点 23点 1点 2点 每秒学习 变成自我毁灭之路，然后最后堕落看手机电视视频。第二天后悔难过，根本没有任何精力做任何事情。越学越倒退。从真个世界每救了</li>
+<li>过去重复10年每天如此 毫无进步，未来给100年也是如此。此路不通过，</li>
+<li>过去重复10年每天如此毫无进步，未来给100年也是如此。此路不通过。</li>
+</ul>
+<p>行动：</p>
+<ul>
+<li>手机不断的发出求救 10000次，你拯救10000次 不英雄，不是证明比别人强。</li>
+</ul>
+<p>​    手机 和电脑 不能放到客厅一次， 那是阅读地方</p>
+<p>手机 和电脑不能放到卧室一次 ，那是睡觉地方</p>
+<p>手机 和电脑不能放到餐厅一次，那是吃饭地方</p>
+<p>请手机放电脑到柜子里，手机隔离盒里。</p>
+<p>本周第5天按时起床计划</p>
+<ul>
+<li>
+<p>下班时候，就要下班，你拖延到22点结果晚上很累，看手机 第二天根本起不来</p>
+</li>
+<li>
+<p>下班时候，电脑放公司，公司电脑就要放公司，不然回家继续看23点和1没区别</p>
+</li>
+<li>
+<p>自己电脑，设置22点强制关机，无法自控采取强制错误，不然解锁多次，设置回来。。</p>
+</li>
+<li>
+<p>周末不48小时电脑手机面前床上一动不动。</p>
+</li>
+</ul>
+<p>最终航向：从猫头鹰 变成百灵鸟</p>
+<ul>
+<li>早休息3个小时：11:30 提前到21：40 ，你知道 你计划11：30 你延迟2：30</li>
+</ul>
+<p><img src="assets/7db5d8b41cbd4eb7a93684ddfcb7e676.png" alt=""></p>
+<h4 id="第二天-早晨-一定安排好-要做事情然后早晨完成你跟不没有权利拖延">第二天 早晨 一定安排好 要做事情。然后早晨完成。你跟不没有权利拖延。</h4>
+<p>A: 内心痛苦千万次没用，你行动起来 ，自己不打开手机 自己不打开一切不会发生。
+不要过去如何，未来如别人如何，现在在看你如何，如何。记录过程</p>
+<p>你为什么拖延</p>
+<p>上学别人上听听课 你听不懂拖延 你没权利</p>
+<p>工作时候 别人好工作 好学习 你没有你拖延</p>
+<p>完时候 客人能力i那你没有English 你饿拖延</p>
+<p>这些合理借口让 世界缺不这么认为。每天3分钟打卡</p>
+<h3 id="方法1-学习期间-手机远离1米-手机开启专注模式如果在家-手机直接放客厅">方法1 学习期间 ，手机远离1米 手机开启专注模式。如果在家 手机直接放客厅。</h3>
+<ul>
+<li>case1 手机放客厅目标执行时候，如果 千方百计的 找各种借口阻扰，太累 不舍得 紧急事情。&mdash;-马上行动  【15秒倒计时】</li>
+</ul>
+<h3 id="方法2失控时候断网-眼睛离开屏幕-从座位站起来-活动一圈给你5分钟冷静时间">方法2:失控时候，断网 ，眼睛离开屏幕 从座位站起来 活动一圈，给你5分钟冷静时间。</h3>
+<ul>
+<li>感觉无法控制 身体 从座位站起来，深陷别人的提供各种消费陷阱&mdash; &mdash;断网</li>
+<li>感觉无法控制 身体 从座位站起来，深陷别人的提供各种消费陷阱&mdash; &ndash; 关闭浏览器</li>
+<li>感觉无法控制 身体 从座位站起来，深陷别人的提供各种消费陷阱&mdash; &ndash; 静音</li>
+</ul>
+<blockquote>
+<p>方法2 你说过 但是忘记做了，怎么办 打开电脑打开 1/ excel 和 和2 note （会看历史）和3 日志三个武器提醒你 ⏰</p>
+</blockquote>
+<h4 id="方法3-24小时手机放客厅放弃看新闻-动漫-放弃看聊天-学习-因为-微信程出现---动漫-综艺-聊天学习全部混淆一起">方法3  24小时手机放客厅，放弃看新闻 动漫 放弃看聊天 学习 因为 微信程出现&mdash;动漫 综艺 聊天学习全部混淆一起</h4>
+<ul>
+<li>微信沟通 是虚假沟通 不是真实沟通</li>
+<li>微信视频 不虚假视频 不俗真实视频</li>
+<li>不看聊天信息。</li>
+</ul>
+<h3 id="方法4如果在床上必须关掉-躺平手机必须放客厅-锁屏-如果事情去客厅处理">方法4:如果在床上，必须关掉 ，躺平，手机必须放客厅 锁屏 如果事情去客厅处理</h3>
+<ul>
+<li>关灯（一开灯跟不无法睡眠）</li>
+<li>躺平（不坐着大作你回可是你）</li>
+<li>手机跟不床上 卧室 （念头司机）</li>
+</ul>
+<ol>
+<li></li>
+</ol>
+<h3 id="23-没有记录就没有进步记录--分析--纠正">2.3  没有记录就没有进步:记录&ndash;分析&ndash;纠正</h3>
+<p>睡觉时间：21：45</p>
+<p>起床时间：6：00</p>
+<table>
+<thead>
+<tr>
+<th>周</th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周天</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.1&ndash;10.7</td>
+<td>23：50</td>
+<td>2：00</td>
+<td>23</td>
+<td>22：00</td>
+<td>23</td>
+<td>23</td>
+<td>23</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>02:00</td>
+<td>23：00</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>周</th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周天</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.1&ndash;10.7</td>
+<td>23：50</td>
+<td>2：00</td>
+<td>23</td>
+<td>22：00</td>
+<td>23</td>
+<td>23</td>
+<td>23</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>02:00</td>
+<td>23：00</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>【 2022年10月19日 21:30 断网，关闭电脑第1天，做到次数0，失控次数1次】</p>
+<p>【 2022年10月21日 21：000断网，关闭电脑第2天，做到次数0，失控次数2次】</p>
+<p>【2022年10月21日 手机放到收纳盒第6天，做到次数2，失控次数4，斗争从1秒，持续到60秒，反复3次 】</p>
+<p>【2022年10月21日 手机放到收纳盒第6天，做到次数2，失控次数4 】</p>
+<blockquote>
+<p>手机放卧室第三天</p>
+</blockquote>
+<p>手机放卧室第三天 彻底失败】
+故事：
+自己感觉根本睡睡不这。
+睡不这你看书计划 自己根本不原因执行【第一个防线失效】
+一个念头告诉你你必须撬开收保险盒子【第二个防线失效】
+然后解锁 自己腾讯视频 看综艺 从0点2点【第三个防线失效】
+看手机没电。中间各种提示自己忽视，</p>
+<p>温水煮青蛙的陷进</p>
+<ul>
+<li>你看一万年腾讯视频和国际新闻
+根本不任何提高，这样平台和内容根本是进步的
+吸引注意力，为他们争取的。背后平台做快。</li>
+<li>家庭路由器产品产品出现，彻底改变生活方式，
+之前从没用过，免费东西不好。</li>
+</ul>
+<p>解决：</p>
+<ol>
+<li>回家手机放到收纳盒子，用户放回去，不能卧室
+任何情况不放卧室，有事情出客厅处理</li>
+<li>22点 路由器必须断电</li>
+</ol>
+<p>[2022-10-5]</p>
+<ul>
+<li>
+<p>拦路虎1：自己有空暇时间，却不敢睡觉。why</p>
+</li>
+<li>
+<p>拦路虎1：6点 不允许 7点看视频 8点看视频   到22点 不甘心睡觉 开启学习模式.</p>
+</li>
+<li>
+<p>猴子：然后不停看手机 电脑 忙碌不停【6点 7点 8点 9点】</p>
+</li>
+<li>
+<p>纠正1：直接睡觉，早睡60分钟 不死人</p>
+</li>
+<li>
+<p>纠正2：晚上 第一时间去完成任务。</p>
+</li>
+</ul>
+<h3 id="三-环境场--运动区掌控跑步你掌控生活">三、 环境场&ndash;运动区（掌控跑步，你掌控生活）</h3>
+<p><a href="https://wangcy6.github.io/post/ARTS/day_03_run/">https://wangcy6.github.io/post/ARTS/day_03_run/</a></p>
+<h3 id="31-提高认知">3.1  提高认知：</h3>
+<ul>
+<li>5分钟也可以。</li>
+<li>为什么总是放弃</li>
+</ul>
+<p>媒体业务的核心，是每天能从消费者的注意力里面，分到多少分钟。
+它满足消费者需求、卖给广告商的就是这个东西，也是媒体之间相互竞争的核心。</p>
+<p>媒体业务的核心，是每天能从消费者的注意力里面，分到多少分钟。
+它满足消费者需求、卖给广告商的就是这个东西，也是媒体之间相互竞争的核心。</p>
+<p>媒体业务的核心，是每天能从消费者的注意力里面，分到多少分钟。
+它满足消费者需求、卖给广告商的就是这个东西，也是媒体之间相互竞争的核心。</p>
+<p>你宁愿选择整个中午，整个晚上，整个睡觉时间
+9小时看 12小时 24小时
+视频，相信那些百万 千万点击广告，综艺节目，伪装骗子
+也不休息一下。不进步 也不做倒推事情</p>
+<p>别人做到了，别人做到了，看看你周围人做到了，</p>
+<p>别人做到了，别人做到了，看看你周围人做到了，</p>
+<p>别人做到了，别人做到了，看看你周围人做到了，</p>
+<ul>
+<li>为什么总是没时间</li>
+</ul>
+<p>&mdash;&mdash;&gt;周末 晚上熬夜看手机，耽误第二天安排 才没有时间 ，</p>
+<p>&mdash; &ndash;&gt;总是因为看手机 小时综艺节目</p>
+<p>&mdash;-&gt;其实内向逃避放弃活动原因。
+&mdash;&ndash;&gt;吃饭时候，睡觉时候，休息时候，只要打开打开一下，恐怖分子就赢了。</p>
+<h3 id="32-执行步骤woop">3.2 执行步骤：woop</h3>
+<p>愿景：最简单方式保持活力</p>
+<p>目标：每天走路2个公里，坚持3个月</p>
+<ol>
+<li>早晨：每天最后地铁一公里  15分钟</li>
+<li>晚上：复盘+散步 30分钟</li>
+<li>下午 跑楼梯一次 15分钟。</li>
+</ol>
+<h3 id="33-没有记录就没有进步计划--执行--反馈">3.3 没有记录就没有进步:计划&ndash;执行&ndash;反馈</h3>
+<table>
+<thead>
+<tr>
+<th>迭代</th>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周天</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一周</td>
+<td>忘记</td>
+<td>忘记</td>
+<td>忘记</td>
+<td>忘记</td>
+<td>忘记</td>
+<td>忘记</td>
+<td>忘记</td>
+</tr>
+<tr>
+<td>10.1-10.7</td>
+<td></td>
+<td></td>
+<td></td>
+<td>done</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>跟踪为什么做不到：</strong></p>
+<p>【2022-1-4】</p>
+<ul>
+<li>
+<p>自己第一时间不做，就无线拖延，无线事情持续，马上去做，一切问题就消失 。例如 各种比赛 各种直播 视频综艺。</p>
+</li>
+<li>
+<p>有一次不做，虎门一个月 一年不做，记住不做状态。这就是最重要的。</p>
+</li>
+</ul>
+<h3 id="四-环境场--学习区">四、 环境场&ndash;学习区：</h3>
+<h3 id="41-意识到带着问题去工作">4.1 意识到：带着问题去工作</h3>
+<ol>
+<li>自己感觉模糊，不清楚，感觉是重点，感觉他存在 &ndash;&gt;明确问题是什么</li>
+<li>看别人如何解决的(从青铜到王者级别 场景 优缺点 本质)</li>
+<li>弯腰驼背一万年i最后吃亏是你，什么得不到</li>
+</ol>
+<h3 id="42-三只青蛙">4.2  三只青蛙</h3>
+<ul>
+<li>
+<p>今天完成任务是 明天完成任务是</p>
+</li>
+<li>
+<p>[专注]关闭微信一次，不然陷入无限聊天 回复回复中【+1】</p>
+</li>
+<li>
+<p>[专注] 工作时候，关闭开浏览器，关闭 记录xmind  关闭其他项目文档，减少 内容【+2】</p>
+</li>
+<li>
+<p>[效率]  马上停止工作练习 【+1 】</p>
+</li>
+</ul>
+<h3 id="43-执行结果计划--执行--反馈">4.3 执行结果：计划&ndash;执行&ndash;反馈</h3>
+<p>【本周第6天】</p>
+<p>按时起床计划</p>
+<p>下班时候，就要下班，你拖延到22点结果晚上很累，看手机 第二天根本起不来</p>
+<p>下班时候，电脑放公司，公司电脑就要放公司，不然回家继续看23点和1没区别</p>
+<p>自己电脑，设置22点强制关机，无法自控采取强制错误，不然解锁多次，设置回来。。</p>
+<p>【day2】</p>
+<ul>
+<li>晚上写代码到23：30 120分钟 后面改为30分钟内。</li>
+</ul>
+<p>【day1】</p>
+<p>你的任务主要分析需求，然后写代码，审查代码。[+1]</p>
+<p>绝不是什么都不清楚不停做黑盒子测试。方法一定要正确[-1]</p>
+<p>http://localhost:1313/post/ARTS/2022/2022-17/</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-10-14 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/GTD/">GTD</a>
+          <a href="/tags/work/">work</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2022/12-how_to_read_liunx/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">阅读与写作第一期：王者回答</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/2022/2022-18/">
+            <span class="next-text nav-default">GTD践行第18周</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

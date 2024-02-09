@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>mimob代码阅读 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="慢慢来，多看、多问、多总结 预备知识： 源码：https://github.com/watchpoints/miniob 2019CMU数据库导论" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2011/03_mimi_ob/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="mimob代码阅读" />
+<meta property="og:description" content="慢慢来，多看、多问、多总结 预备知识： 源码：https://github.com/watchpoints/miniob 2019CMU数据库导论" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2011/03_mimi_ob/" /><meta property="article:section" content="post" />
+
+
+
+<meta itemprop="name" content="mimob代码阅读">
+<meta itemprop="description" content="慢慢来，多看、多问、多总结 预备知识： 源码：https://github.com/watchpoints/miniob 2019CMU数据库导论">
+
+<meta itemprop="wordCount" content="6678">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="mimob代码阅读"/>
+<meta name="twitter:description" content="慢慢来，多看、多问、多总结 预备知识： 源码：https://github.com/watchpoints/miniob 2019CMU数据库导论"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">mimob代码阅读</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 0001-01-01 00:00 </span>
+        
+          <span class="more-meta"> 约 6678 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#预备知识">预备知识：</a></li>
+    <li><a href="#文章">文章</a></li>
+    <li><a href="#select-tables多表查询">select-tables多表查询</a>
+      <ul>
+        <li><a href="#测试用例">测试用例</a></li>
+      </ul>
+    </li>
+    <li><a href="#多列索引-multi-index">多列索引 multi-index</a>
+      <ul>
+        <li><a href="#知识准备">知识准备</a></li>
+        <li><a href="#数据结构">数据结构</a></li>
+        <li><a href="#算法">算法</a></li>
+        <li><a href="#bug">bug</a></li>
+      </ul>
+    </li>
+    <li><a href="#次插入多条数据-insert">⼀次插入多条数据 insert</a>
+      <ul>
+        <li><a href="#1-测试用例">1. 测试用例</a></li>
+        <li><a href="#2-数据结构">2. 数据结构</a></li>
+        <li><a href="#3-算法">3. 算法</a></li>
+        <li><a href="#4-工具">4 工具</a></li>
+        <li><a href="#day1">day1</a></li>
+        <li><a href="#题目2unique">题目2：unique</a></li>
+        <li><a href="#题目1">题目1</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="0001-01-01T00:00:00" title="January 1, 0001">January 1, 0001</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <blockquote>
+<p>慢慢来，多看、多问、多总结</p>
+</blockquote>
+<h2 id="预备知识">预备知识：</h2>
+<ul>
+<li>源码：https://github.com/watchpoints/miniob</li>
+<li>2019CMU数据库导论(intro to database systems fall 2019) <a href="https://www.bilibili.com/video/av91919329?amp%3Bseid=15982257803189242166">https://www.bilibili.com/video/av91919329?amp%3Bseid=15982257803189242166</a></li>
+<li>2020 MIT 6.824 分布式系统 <a href="https://www.bilibili.com/video/BV1R7411t71W/">https://www.bilibili.com/video/BV1R7411t71W/</a></li>
+<li><a href="https://github.com/CDDSCLab/training-plan">https://github.com/CDDSCLab/training-plan</a></li>
+<li><a href="https://github.com/tidb-incubator/tinykv">https://github.com/tidb-incubator/tinykv</a></li>
+<li><a href="https://github.com/WenbinZhu/cmu-15-445">https://github.com/WenbinZhu/cmu-15-445</a> CMU 15-445 Project 1</li>
+</ul>
+<h2 id="文章">文章</h2>
+<ul>
+<li><a href="https://github.com/oceanbase/miniob/wiki/%E4%BD%BF%E7%94%A8-ASAN-%E6%B5%8B%E8%AF%95-MiniOB-%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98">https://github.com/oceanbase/miniob/wiki/%E4%BD%BF%E7%94%A8-ASAN-%E6%B5%8B%E8%AF%95-MiniOB-%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98</a></li>
+<li>使用 ASAN 测试 MiniOB 内存问题</li>
+<li><a href="https://www.cnblogs.com/JayL-zxl/p/14324297.html">https://www.cnblogs.com/JayL-zxl/p/14324297.html</a></li>
+<li>[]CMU数据库(15-445)实验2-b+树索引实现(上)](<a href="https://www.cnblogs.com/JayL-zxl/p/14324297.html">https://www.cnblogs.com/JayL-zxl/p/14324297.html</a>)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>mkdir -p build 
+rm -rf build/miniob/ 
+<span class="nb">cd</span> build 
+
+cmake .. -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DENABLE_ASAN<span class="o">=</span>ON -DWITH_UNIT_TESTS<span class="o">=</span>OFF
+make 
+
+yum install libasan
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="select-tables多表查询">select-tables多表查询</h2>
+<h3 id="测试用例">测试用例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">用release模式编译的时候会做很多代码优化，所以如果哪里代码写得不规范的话，debug模式可能没有问题，但是release模式的编译器可能就会曲解我们的意思，编译出一些奇怪的东西
+
+ulimit -c unlimited
+
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+
+cd /root/github/miniob-2022/build/bin
+./observer -f /root/github/miniob-2022/etc/observer.ini
+/root/github/miniob-2022/build/bin/obclient
+
+dir /root/github/miniob-2022/
+set pagination off 
+thread apply all break cartesian_operator.cpp:16
+
+
+CREATE TABLE Select_tables_1(id int, age int, u_name char);
+
+CREATE TABLE Select_tables_2(id int, age int, u_name char);
+
+CREATE TABLE Select_tables_3(id int, res int, u_name char);
+
+CREATE TABLE Select_tables_4(id int, age int, u_name char);
+
+CREATE TABLE Select_tables_5(id int, res int, u_name char);
+
+
+INSERT INTO Select_tables_1 VALUES (1,18,&#39;a&#39;);
+
+INSERT INTO Select_tables_1 VALUES (2,15,&#39;b&#39;);
+
+INSERT INTO Select_tables_2 VALUES (1,20,&#39;a&#39;);
+
+INSERT INTO Select_tables_2 VALUES (2,21,&#39;c&#39;);
+
+INSERT INTO Select_tables_3 VALUES (1,35,&#39;a&#39;);
+
+INSERT INTO Select_tables_3 VALUES (2,37,&#39;a&#39;);
+
+
+
+INSERT INTO Select_tables_4 VALUES (1, 2, &#39;a&#39;);
+
+INSERT INTO Select_tables_4 VALUES (1, 3, &#39;b&#39;);
+
+INSERT INTO Select_tables_4 VALUES (2, 2, &#39;c&#39;);
+
+INSERT INTO Select_tables_4 VALUES (2, 4, &#39;d&#39;);
+
+INSERT INTO Select_tables_5 VALUES (1, 10, &#39;g&#39;);
+
+INSERT INTO Select_tables_5 VALUES (1, 11, &#39;f&#39;);
+
+INSERT INTO Select_tables_5 VALUES (2, 12, &#39;c&#39;);
+
+
+SELECT * FROM Select_tables_1,Select_tables_2,Select_tables_3;
+
+1 | 18 | A | 1 | 20 | A | 1 | 35 | A
+1 | 18 | A | 1 | 20 | A | 2 | 37 | A
+1 | 18 | A | 2 | 21 | C | 1 | 35 | A
+1 | 18 | A | 2 | 21 | C | 2 | 37 | A
+2 | 15 | B | 1 | 20 | A | 1 | 35 | A
+2 | 15 | B | 1 | 20 | A | 2 | 37 | A
+2 | 15 | B | 2 | 21 | C | 1 | 35 | A
+2 | 15 | B | 2 | 21 | C | 2 | 37 | A
+SELECT_TABLES_1.ID | SELECT_TABLES_1.AGE | SELECT_TABLES_1.U_NAME | SELECT_TABLES_2.ID | SELECT_TABLES_2.AGE | SELECT_TABLES_2.U_NAME | SELECT_TABLES_3.ID | SELECT_TABLES_3.RES | SELECT_TABLES_3.U_NAME
+SELECT Select_tables_1.id,Select_tables_2.u_name,Select_tables_3.res FROM Select_tables_1,Select_tables_2,Select_tables_3;
+1 | A | 35
+1 | A | 37
+1 | C | 35
+1 | C | 37
+2 | A | 35
+2 | A | 37
+2 | C | 35
+2 | C | 37
+SELECT_TABLES_1.ID | SELECT_TABLES_2.U_NAME | SELECT_TABLES_3.RES
+Select Select_tables_1.res FROM Select_tables_1,Select_tables_2,Select_tables_3;
+FAILURE
+
+2. CONDITIONAL QUERY
+SELECT * FROM Select_tables_1,Select_tables_2,Select_tables_3 WHERE Select_tables_1.u_name=Select_tables_2.u_name AND Select_tables_2.u_name=Select_tables_3.u_name;
+1 | 18 | A | 1 | 20 | A | 1 | 35 | A
+1 | 18 | A | 1 | 20 | A | 2 | 37 | A
+SELECT_TABLES_1.ID | SELECT_TABLES_1.AGE | SELECT_TABLES_1.U_NAME | SELECT_TABLES_2.ID | SELECT_TABLES_2.AGE | SELECT_TABLES_2.U_NAME | SELECT_TABLES_3.ID | SELECT_TABLES_3.RES | SELECT_TABLES_3.U_NAME
+SELECT * FROM Select_tables_1,Select_tables_2,Select_tables_3 WHERE Select_tables_1.id=Select_tables_2.id AND Select_tables_3.res=35;
+1 | 18 | A | 1 | 20 | A | 1 | 35 | A
+2 | 15 | B | 2 | 21 | C | 1 | 35 | A
+SELECT_TABLES_1.ID | SELECT_TABLES_1.AGE | SELECT_TABLES_1.U_NAME | SELECT_TABLES_2.ID | SELECT_TABLES_2.AGE | SELECT_TABLES_2.U_NAME | SELECT_TABLES_3.ID | SELECT_TABLES_3.RES | SELECT_TABLES_3.U_NAME
+SELECT * FROM Select_tables_1,Select_tables_2,Select_tables_3 WHERE Select_tables_1.age&lt;18 AND Select_tables_2.u_name=&#39;c&#39; AND Select_tables_3.res=35 AND Select_tables_1.id=Select_tables_2.id AND Select_tables_2.id=Select_tables_3.id;
+SELECT_TABLES_1.ID | SELECT_TABLES_1.AGE | SELECT_TABLES_1.U_NAME | SELECT_TABLES_2.ID | SELECT_TABLES_2.AGE | SELECT_TABLES_2.U_NAME | SELECT_TABLES_3.ID | SELECT_TABLES_3.RES | SELECT_TABLES_3.U_NAME
+SELECT Select_tables_2.age FROM Select_tables_1,Select_tables_2 WHERE Select_tables_1.age&lt;18 AND Select_tables_2.u_name=&#39;c&#39; AND Select_tables_1.id=Select_tables_2.id;
+21
+SELECT_TABLES_2.AGE
+
+3. DUPLICATE KEY QUERY
+SELECT * from Select_tables_4, Select_tables_5 where Select_tables_4.id=Select_tables_5.id;
+1 | 2 | A | 1 | 10 | G
+1 | 2 | A | 1 | 11 | F
+1 | 3 | B | 1 | 10 | G
+1 | 3 | B | 1 | 11 | F
+2 | 2 | C | 2 | 12 | C
+2 | 4 | D | 2 | 12 | C
+SELECT_TABLES_4.ID | SELECT_TABLES_4.AGE | SELECT_TABLES_4.U_NAME | SELECT_TABLES_5.ID | SELECT_TABLES_5.RES | SELECT_TABLES_5.U_NAME
+select * from Select_tables_4, Select_tables_5 where Select_tables_4.id &gt;= Select_tables_5.id;
+1 | 2 | A | 1 | 10 | G
+1 | 2 | A | 1 | 11 | F
+1 | 3 | B | 1 | 10 | G
+1 | 3 | B | 1 | 11 | F
+2 | 2 | C | 1 | 10 | G
+2 | 2 | C | 1 | 11 | F
+2 | 2 | C | 2 | 12 | C
+2 | 4 | D | 1 | 10 | G
+2 | 4 | D | 1 | 11 | F
+2 | 4 | D | 2 | 12 | C
+SELECT_TABLES_4.ID | SELECT_TABLES_4.AGE | SELECT_TABLES_4.U_NAME | SELECT_TABLES_5.ID | SELECT_TABLES_5.RES | SELECT_TABLES_5.U_NAME
+
+4. JOIN EMPTY TABLE
+CREATE TABLE Select_tables_6(id int, res int);
+SUCCESS
+SELECT Select_tables_1.id,Select_tables_6.id from Select_tables_1, Select_tables_6 where Select_tables_1.id=Select_tables_6.id;
+SELECT_TABLES_1.ID | SELECT_TABLES_6.ID
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="多列索引-multi-index">多列索引 multi-index</h2>
+<h3 id="知识准备">知识准备</h3>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/382244184">https://zhuanlan.zhihu.com/p/382244184</a></li>
+<li><a href="https://www.cnblogs.com/sun-lingyu/p/15198683.html">https://www.cnblogs.com/sun-lingyu/p/15198683.html</a></li>
+<li>
+<ul>
+<li>你有空可以搜索一下&quot;mysal,多列索引,实现&quot;这些关键字</li>
+</ul>
+</li>
+</ul>
+<p>CMU15-445的lab与MIT6.824的lab</p>
+<p>CMU15-445的lab与MIT6.824的lab风格很不一样。前者定义好了函数原型，提示更多，但是禁锢了思维，发挥空间变小了。后者只提供了最基础的接口，在代码架构上的可发挥性更高。
+由于函数原型都给好了，我以为这个lab会简单很多。结果没成想，写着写着，发现B+树这个lab给我整不会了。花了足足一个月，才把lab写完，</p>
+<ol>
+<li>测试用例</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+
+cd /root/gitee/miniob-2022/build/bin
+./observer -f /root/gitee/miniob-2022/etc/observer.ini
+/root/gitee/miniob-2022/build/bin/obclient
+
+CREATE TABLE multi_index(id int, col1 int, col2 float, col3 char, col4 date, col5 int, col6 int);
+
+
+CREATE INDEX i_1_12 ON multi_index(col1,col2);
+
+CREATE INDEX i_1_345 ON multi_index(col3, col4, col5);
+
+CREATE INDEX i_1_56 ON multi_index(col5, col6);
+
+CREATE INDEX i_1_456 ON multi_index(col4, col5, col6);
+
+SELECT * FROM multi_index;
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+2. MULTI INDEX OF NON-EMPTY TABLE
+
+CREATE TABLE multi_index2(id int, col1 int, col2 float, col3 char, col4 date, col5 int, col6 int);
+
+INSERT INTO multi_index2 VALUES (1, 1, 11.2, &#39;a&#39;, &#39;2021-01-02&#39;, 1, 1);
+
+INSERT INTO multi_index2 VALUES (2, 1, 16.2, &#39;x&#39;, &#39;2021-01-02&#39;, 1, 61);
+
+INSERT INTO multi_index2 VALUES (3, 1, 11.6, &#39;h&#39;, &#39;2023-01-02&#39;, 10, 17);
+
+
+CREATE INDEX i_2_12 ON multi_index2(col1,col2);
+SUCCESS
+CREATE INDEX i_2_345 ON multi_index2(col3, col4, col5);
+SUCCESS
+CREATE INDEX i_2_56 ON multi_index2(col5, col6);
+SUCCESS
+CREATE INDEX i_2_456 ON multi_index2(col4, col5, col6);
+SUCCESS
+SELECT * FROM multi_index2;
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+2 | 1 | 16.2 | X | 2021-01-02 | 1 | 61
+3 | 1 | 11.6 | H | 2023-01-02 | 10 | 17
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+3. INFLUENCE OF INSERTING
+CREATE TABLE multi_index3(id int, col1 int, col2 float, col3 char, col4 date, col5 int, col6 int);
+
+CREATE INDEX i_3_i1 ON multi_index3(id,col1);
+
+
+INSERT INTO multi_index3 VALUES (1, 1, 11.2, &#39;a&#39;, &#39;2021-01-02&#39;, 1, 1);
+SUCCESS
+INSERT INTO multi_index3 VALUES (1, 1, 11.2, &#39;a&#39;, &#39;2021-01-02&#39;, 1, 1);
+SUCCESS
+SELECT * FROM multi_index3;
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+CREATE INDEX i_3_14 ON multi_index3(col1,col4);
+SUCCESS
+INSERT INTO multi_index3 VALUES (2, 1, 16.2, &#39;x&#39;, &#39;2021-01-02&#39;, 1, 61);
+SUCCESS
+INSERT INTO multi_index3 VALUES (3, 1, 11.6, &#39;h&#39;, &#39;2023-01-02&#39;, 10, 17);
+SUCCESS
+INSERT INTO multi_index3 VALUES (4, 2, 12.2, &#39;e&#39;, &#39;2022-01-04&#39;, 13, 10);
+SUCCESS
+INSERT INTO multi_index3 VALUES (5, 3, 14.2, &#39;d&#39;, &#39;2020-04-02&#39;, 12, 2);
+SUCCESS
+SELECT * FROM multi_index3;
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+2 | 1 | 16.2 | X | 2021-01-02 | 1 | 61
+3 | 1 | 11.6 | H | 2023-01-02 | 10 | 17
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+4. QUERY WITH INDEXS
+SELECT * FROM multi_index3 WHERE id = 1;
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+
+SELECT * FROM multi_index3 WHERE col1 &gt; 1 and col4 = &#39;2021-01-02&#39;;
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+SELECT * FROM multi_index3 WHERE col1 &lt;&gt; 1 and col4 &gt;= &#39;2021-01-02&#39;;
+
+
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+SELECT * FROM multi_index3 WHERE col2 &lt; 15.0 and col4 &lt;&gt; &#39;2021-01-02&#39;;
+3 | 1 | 11.6 | H | 2023-01-02 | 10 | 17
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+
+
+
+5. INFLUENCE OF DELETING
+DELETE FROM multi_index3 WHERE id = 1;
+SUCCESS
+DELETE FROM multi_index3 WHERE id = 61;
+SUCCESS
+SELECT * FROM multi_index3;
+2 | 1 | 16.2 | X | 2021-01-02 | 1 | 61
+3 | 1 | 11.6 | H | 2023-01-02 | 10 | 17
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+DELETE FROM multi_index3 WHERE col3 = &#39;x&#39;;
+SUCCESS
+SELECT * FROM multi_index3;
+3 | 1 | 11.6 | H | 2023-01-02 | 10 | 17
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+DELETE FROM multi_index3 WHERE id = 4 and col1 = 1;
+SUCCESS
+DELETE FROM multi_index3 WHERE id = 90 and col1 = 13;
+SUCCESS
+DELETE FROM multi_index3 WHERE id = 90 and col1 = 1;
+SUCCESS
+DELETE FROM multi_index3 WHERE id = 4 and col1 = 13;
+SUCCESS
+DELETE FROM multi_index3 WHERE id = 3 and col1 = 1;
+SUCCESS
+DELETE FROM multi_index3 WHERE id = 3 and col1 = 1;
+SUCCESS
+SELECT * FROM multi_index3;
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+INSERT INTO multi_index3 VALUES (1, 1, 11.2, &#39;a&#39;, &#39;2021-01-02&#39;, 1, 1);
+SUCCESS
+INSERT INTO multi_index3 VALUES (2, 1, 11.2, &#39;x&#39;, &#39;2021-01-02&#39;, 1, 61);
+SUCCESS
+INSERT INTO multi_index3 VALUES (3, 1, 11.2, &#39;h&#39;, &#39;2023-01-02&#39;, 10, 17);
+SUCCESS
+SELECT * FROM multi_index3;
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+2 | 1 | 11.2 | X | 2021-01-02 | 1 | 61
+3 | 1 | 11.2 | H | 2023-01-02 | 10 | 17
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+6. INFLUENCE OF UPDATING
+UPDATE multi_index3 SET col6=49 where id=2;
+SUCCESS
+UPDATE multi_index3 SET col4=&#39;1999-02-01&#39; where id=2;
+SUCCESS
+UPDATE multi_index3 SET col1=2 where id=2;
+SUCCESS
+UPDATE multi_index3 SET col1=5 where col6=49;
+SUCCESS
+SELECT * FROM multi_index3;
+1 | 1 | 11.2 | A | 2021-01-02 | 1 | 1
+2 | 5 | 11.2 | X | 1999-02-01 | 1 | 49
+3 | 1 | 11.2 | H | 2023-01-02 | 10 | 17
+4 | 2 | 12.2 | E | 2022-01-04 | 13 | 10
+5 | 3 | 14.2 | D | 2020-04-02 | 12 | 2
+ID | COL1 | COL2 | COL3 | COL4 | COL5 | COL6
+
+7. INFLUENCE OF DROPPING TABLE
+DROP table multi_index;
+SUCCESS
+
+8. ERROR
+CREATE TABLE multi_index4(id int, col1 int, col2 float, col3 char, col4 date, col5 int, col6 int);
+SUCCESS
+
+CREATE INDEX i_4_i7 ON multi_index4(id,col7);
+FAILURE
+CREATE INDEX i_4_78 ON multi_index4(col7,col8);
+FAILURE
+CREATE INDEX i_4_i78 ON multi_index4(id,col7,col8);
+FAILURE
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="数据结构">数据结构</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/**
+ * leaf page of bplus tree
+ * storage format:
+ * | common header | prev page id | next page id |
+ * | key0, rid0 | key1, rid1 | ... | keyn, ridn |
+ *
+ * the key is in format: the key value of record and rid.
+ * so the key in leaf page must be unique.
+ * the value is rid.
+ * can you implenment a cluster index ?
+ */
+struct LeafIndexNode : public IndexNode {
+  static constexpr int HEADER_SIZE = IndexNode::HEADER_SIZE + 8;
+  
+  PageNum prev_brother;
+  PageNum next_brother;
+  /**
+   * leaf can store order keys and rids at most
+   */
+  cha
+  
+
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+
+cd /root/gitee/miniob-2022/build/bin
+./observer -f /root/gitee/miniob-2022/etc/observer.ini
+/root/github/miniob-2022/build/bin/obclient
+
+
+table：
+
+//std::vector&lt;FieldMeta&gt; fields_;  // 包含sys_fields
+//std::vector&lt;IndexMeta&gt; indexes_;
+
+
+/**
+ * the meta information of bplus tree
+ * this is the first page of bplus tree.
+ * only one field can be supported, can you extend it to multi-fields?
+ 
+  里面说了是一个列 怎么变成多个列呢
+ */
+ 
+struct IndexFileHeader {
+  IndexFileHeader()
+  {
+    memset(this, 0, sizeof(IndexFileHeader));
+    root_page = BP_INVALID_PAGE_NUM;
+  }
+  PageNum  root_page;
+  int32_t  internal_max_size;
+  int32_t  leaf_max_size;
+  int32_t  attr_length;
+  int32_t  key_length; // attr length + sizeof(RID)
+  AttrType attr_type;
+
+  const std::string to_string()
+  {
+    std::stringstream ss;
+
+    ss &lt;&lt; &#34;attr_length:&#34; &lt;&lt; attr_length &lt;&lt; &#34;,&#34;
+       &lt;&lt; &#34;key_length:&#34; &lt;&lt; key_length &lt;&lt; &#34;,&#34;
+       &lt;&lt; &#34;attr_type:&#34; &lt;&lt; attr_type &lt;&lt; &#34;,&#34;
+       &lt;&lt; &#34;root_page:&#34; &lt;&lt; root_page &lt;&lt; &#34;,&#34;
+       &lt;&lt; &#34;internal_max_size:&#34; &lt;&lt; internal_max_size &lt;&lt; &#34;,&#34;
+       &lt;&lt; &#34;leaf_max_size:&#34; &lt;&lt; leaf_max_size &lt;&lt; &#34;;&#34;;
+
+    return ss.str();
+  }
+};
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="算法">算法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="err">创建索引流程：</span><span class="n">SCF_CREATE_INDEX</span>
+<span class="n">ExecuteStage</span><span class="o">::</span><span class="n">do_create_index</span><span class="o">--&gt;</span><span class="n">Table</span><span class="o">::</span><span class="n">create_index</span> <span class="o">--&gt;</span><span class="n">BplusTreeIndex</span><span class="o">::</span><span class="n">create</span>
+<span class="o">---&gt;</span><span class="n">RC</span> <span class="n">BplusTreeIndex</span><span class="o">::</span><span class="n">create_multi</span>
+    
+<span class="err">插入数据流程：走索引的插入</span>
+<span class="n">ExecuteStage</span><span class="o">::</span><span class="n">do_insert</span><span class="o">---&gt;</span><span class="n">Table</span><span class="o">::</span><span class="n">insert_record_mult_rows</span><span class="o">--&gt;</span><span class="n">Trx</span><span class="o">::</span><span class="n">insert_record</span>
+<span class="o">---&gt;</span><span class="n">Table</span><span class="o">::</span><span class="n">insert_entry_of_indexes</span><span class="o">---&gt;</span><span class="n">BplusTreeHandler</span><span class="o">::</span><span class="n">insert_entry</span>
+
+    <span class="n">BplusTreeHandler</span><span class="o">::</span><span class="n">make_key</span>
+<span class="err">查找</span> 
+<span class="n">ExecuteStage</span><span class="o">::</span><span class="n">do_select</span> <span class="o">---&gt;</span><span class="n">IndexScanOperator</span> <span class="o">*</span><span class="n">try_to_create_index_scan_operator</span>
+  <span class="n">IndexScanOperator</span><span class="o">::</span><span class="n">IndexScanOperator</span><span class="p">(</span>  
+    
+<span class="n">Table</span><span class="o">::</span><span class="n">create_index</span>
+    <span class="mf">1.</span> <span class="err">检测字段是否存在</span> <span class="n">find_mult_index_by_field</span>
+    <span class="mf">2.</span> <span class="err">创建</span><span class="n">b</span><span class="o">+</span> <span class="n">index</span><span class="o">-&gt;</span><span class="n">create_multi</span>
+    <span class="mf">3.</span> <span class="err">遍历当前的所有数据，插入这个索引</span>
+    
+<span class="n">BplusTreeIndex</span><span class="o">::</span><span class="n">create_multi</span>
+    
+    
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+graph TD
+Table::open --&gt; B
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="bug">bug</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">    &#34;indexes&#34; :
+        [
+                {
+                        &#34;fields_name&#34; :
+                        [
+                                {
+                                        &#34;field_name&#34; : &#34;col1&#34;
+                                },
+                                {
+                                        &#34;field_name&#34; : &#34;col2&#34;
+                                }
+                        ],
+                        &#34;name&#34; : &#34;i_1_12&#34;,
+                        &#34;unique&#34; : false
+                },
+                {
+                        &#34;fields_name&#34; :
+                        [
+                                {
+                                        &#34;field_name&#34; : &#34;col3&#34;
+                                },
+                                {
+                                        &#34;field_name&#34; : &#34;col4&#34;
+                                },
+                                {
+                                        &#34;field_name&#34; : &#34;col5&#34;
+                                }
+                        ],
+                        &#34;name&#34; : &#34;i_1_345&#34;,
+                        &#34;unique&#34; : false
+                }
+
+
+
+//  if (table_meta_.index(index_name) != nullptr || table_meta_.find_mult_index_by_field((attribute_count,attributes_name))) {
+  //   LOG_INFO(&#34;Invalid input arguments, table name is %s, index %s exist or attribute %d exist index&#34;,
+  //       name(),
+  //       index_name,
+  //       attribute_count);
+  //   return RC::SCHEMA_INDEX_EXIST;
+  // }
+  
+  
+  //小王同学：唯一索引
+RC DefaultHandler::create_index(
+    Trx *trx, const char *dbname, const char *relation_name, const char *index_name, const char *attribute_name)
+{
+  Table *table = find_table(dbname, relation_name);
+  if (nullptr == table) {
+    return RC::SCHEMA_TABLE_NOT_EXIST;
+  }
+  //to do 先把普通索引实现了，在回来修改唯一索引
+  // return table-&gt;create_index(trx, index_name, attribute_name,false);
+  return 0;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="次插入多条数据-insert">⼀次插入多条数据 insert</h2>
+<h3 id="1-测试用例">1. 测试用例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /root/gitee/miniob-2022/build/bin
+./observer -f /root/gitee/miniob-2022/etc/observer.ini
+/root/gitee/miniob-2022/build/bin/obclient
+
+CREATE TABLE insert_table(id int, t_name char, col1 int, col2 int);
+
+CREATE TABLE multi_index3(id int, col1 int, col2 float, col3 char, col4 date, col5 int, col6 int);
+SUCCESS
+CREATE INDEX i_3_i1 ON multi_index3(id,col1);
+SUCCESS
+
+INSERT INTO multi_index3 VALUES (1, 1, 11.2, &#39;a&#39;, &#39;2021-01-02&#39;, 1, 1);
+
+
+
+1. INSERT
+CREATE TABLE insert_table1(id int, t_name date, col1 int, col2 int);
+INSERT INTO insert_table1 VALUES (1,&#39;2021-01-02&#39;,1,1);
+INSERT INTO insert_table VALUES (1,&#39;N1&#39;,1,1);
+INSERT INTO insert_table VALUES (2,&#39;N2&#39;,1,1),(3,&#39;N3&#39;,2,1);
+
+
+2. ERROR
+INSERT INTO insert_table VALUES (4,&#39;N4&#39;,1,1),(1,1,1);
+FAILURE
+INSERT INTO insert_table VALUES (4,&#39;N4&#39;,1,1),(1,1,1,1);
+FAILURE
+
+3. SELECT
+SELECT * FROM insert_table;
+1 | N1 | 1 | 1
+2 | N2 | 1 | 1
+3 | N3 | 2 | 1
+ID | T_NAME | COL1 | COL2
+
+
+
+
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+
+cd /root/gitee/miniob-2022/build/bin
+./observer -f /root/gitee/miniob-2022/etc/observer.ini
+/root/gitee/miniob-2022/build/bin/obclient
+
+dir /root/gitee/miniob-2022/
+set pagination off 
+thread apply all break execute_stage.cpp:604
+
+RC ExecuteStage::do_insert(SQLStageEvent *sql_event)
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-数据结构">2. 数据结构</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">typedef struct ParserContext {
+  Query * ssql;
+  size_t select_length;
+  size_t condition_length;
+  size_t from_length;
+  size_t value_length;
+  Value values[MAX_NUM];
+  Condition conditions[MAX_NUM];
+  CompOp comp;
+	char id[MAX_NUM];
+} ParserContext;
+
+class InsertStmt : public Stmt
+
+C/C++ GNU Global
+
+//属性值类型
+typedef enum
+{
+  UNDEFINED,
+  CHARS,
+  INTS,
+  FLOATS,
+  DATES
+} AttrType
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-算法">3. 算法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">parse.cpp --&gt;SCF_INSERT
+
+ResolveStage::handle_event
+	--&gt;Stmt::create_stmt
+		case SCF_INSERT:
+		--&gt;InsertStmt::create(Db *db, Inserts &amp;inserts, Stmt *&amp;stmt)
+		  ---&gt;InsertStmt::InsertStmt
+
+
+ExecuteStage::handle_request
+   Stmt *stmt = sql_event-&gt;stmt();
+   case StmtType::INSERT:
+   
+ExecuteStage::do_insert
+RC Table::insert_record(Trx *trx, int value_num, const Value *values) 
+  
+
+事务如何回滚
+insert1
+insert2
+insert3 failed
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-工具">4 工具</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://blog.csdn.net/qq_37041521/article/details/88865202
+How to fix Git Error ‘Your local changes to the following files will be overwritten by merge’
+
+Method 2: Keeping both changes
+
+git stash
+git pull origin master
+git stash pop
+
+Method 1: Forcing a pull to overwrite local changes
+git reset --hard
+git pull origin master
+
+
+Linux Perf 性能分析工具及火焰图浅析
+Perf 是内置于 Linux 内核源码树中的性能剖析（profiling）工具、
+https://zhuanlan.zhihu.com/p/54276509
+https://phoenixnap.com/kb/linux-perf
+
+perf stat对全局性能进行统计；
+perf top可以实时查看当前系统进程函数占用率情况；
+pref record记录信息到perf.data；
+perf report生成报告；
+1，首先使用 perf record 命令记录进程的 CPU 使用情况
+命令：
+
+sudo perf record -e cpu-clock -g -p 1824049
+
+
+2. 使用 perf script 工具对 perf.data 进行解析
+命令：sudo perf script -i perf.data &amp;&gt; perf.unfold
+3. 使用 Flame Graph 工具将 perf.unfold 中的符号折叠 //生成脚本文件
+yum install perl
+./FlameGraph/stackcollapse-perf.pl perf.unfold &amp;&gt; perf.folded
+
+
+4. 使用 Flame Graph 工具将 perf.folded 生成 svg 火焰图
+命令：
+
+./FlameGraph/flamegraph.pl perf.folded &gt; perf.svg 
+
+//执行完成后生成perf.svg图片，可以下载到本地，用浏览器打开 perf.svg
+
+
+命令：perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl &gt; out.svg
+
+火焰图插件下载地址：
+https://github.com/brendangregg/FlameGraph
+快捷命令：
+git clone https://github.com/brendangregg/FlameGraph.git
+火焰图原文翻译：
+https://zhuanlan.zhihu.com/p/73385693
+
+软件的性能分析，往往需要查看 CPU 耗时，了解瓶颈在哪里
+http://www.ruanyifeng.com/blog/2017/09/flame-graph.html
+
+致命报错：想生成火焰图，但是老是抛出错误：ERROR: No stack counts found，could not generate flame graph: exit status 2。
+弄了很久，以为是 perf 没装，但是装了也不行，然后发现必须在访问程序时，火焰图才能生成
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="day1">day1</h3>
+<ul>
+<li>
+<p><input disabled="" type="checkbox"> <a href="https://github.com/watchpoints/miniob_2022/blob/main/docs/how_to_build.md">https://github.com/watchpoints/miniob_2022/blob/main/docs/how_to_build.md</a></p>
+</li>
+<li>
+<p>centos7.8系统【建议用8】</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+<span class="c1">#命令安装版本过低</span>
+yum install  cmake
+cmake --version 
+2.8.12.2 //cmake 版本 &gt;<span class="o">=</span> 3.10
+rpm -e cmake-2.8.12.2-2.el7.x86_64
+<span class="c1"># 下载二进制安装包</span>
+wget https://github.com/Kitware/CMake/releases/download/v3.24.0/cmake-3.24.0-linux-x86_64.sh
+bash cmake-3.24.0-linux-x86_64.sh
+
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$GOROOT</span>/bin:/root/github/cmake-3.24.0-linux-x86_64/bin
+/root/github/cmake-3.24.0-linux-x86_64/bin
+cmake --version
+cmake version 3.24.0
+
+<span class="c1"># gcc过低 需要源码安装</span>
+gcc --version
+gcc <span class="o">(</span>GCC<span class="o">)</span> 4.8.5 <span class="m">20150623</span> <span class="o">(</span>Red Hat 4.8.5-44
+tar xzvf gcc-11.3.0.tar.gz
+<span class="nb">cd</span> gcc-11.3.0
+
+<span class="c1"># gcc不同版本切换 </span>
+
+Centos7 使用 yum 安装的 GCC 版本是 4.8.5，蛮老的版本了，现在稍微新一点的库都要求 GCC5 以上，但是重新编译安装最新的GCC又特别麻烦，而且不能在各个版本的 GCC 之间来回切换，不够灵活，刚好有一个叫做 SCL 的软件库可以提供不同版本 GCC 的灵活切换，可以完美解决我们的需求，安装十分简单：
+————————————————
+版权声明：本文为CSDN博主「thewangcj」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/wcjlyj/article/details/122844189
+
+yum install centos-release-scl scl-utils-build
+yum search devtoolset <span class="c1"># 搜索 GCC</span>
+devtoolset-9-gcc.x86_64 : GCC version <span class="m">9</span>
+
+yum install devtoolset-9-gcc.x86_64 
+scl <span class="nb">enable</span> devtoolset-9 <span class="c1"># 启用 GC9</span>
+
+yum install devtoolset-7-gcc.x86_64 
+scl <span class="nb">enable</span> devtoolset-7 bash
+Operation timed out 
+
+如果要每次登录都自动切换成高版本的gcc，需要运行一下 vi /etc/profile 在最后一行加入
+scl <span class="nb">enable</span> devtoolset-9 bash
+gcc --version
+gcc <span class="o">(</span>GCC<span class="o">)</span> 9.3.1 <span class="m">20200408</span> <span class="o">(</span>Red Hat 9.3.1-2<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>build libevent</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git submodule add https://github.com/libevent/libevent deps/libevent
+cd deps
+cd libevent
+git checkout release-2.1.12-stable
+mkdir build
+cd build
+cmake .. -DEVENT__DISABLE_OPENSSL=ON
+make
+sudo make install
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>build google test</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git submodule add https://github.com/google/googletest deps/googletest
+cd deps
+cd googletest
+mkdir build
+cd build
+cmake ..
+make
+sudo make instal
+
+ error: body of constexpr function ‘static constexpr bool testing::internal::MatcherBase&lt;T&gt;::IsInlined() [with M = testing::internal::EqMatcher&lt;std::basic_string&lt;char&gt; &gt;; T = const std::basic_string&lt;char&gt;&amp;]’ not a return-statement
+   }
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="centos7-不行升级为centos8">centos7 不行升级为centos8</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git clone git@github.com:watchpoints/miniob_2022.git
+
+git submodule add https://github.com/libevent/libevent deps/libevent
+cd deps
+cd libevent
+git checkout release-2.1.12-stable
+mkdir build
+cd build
+cmake .. -DEVENT__DISABLE_OPENSSL=ON
+make
+sudo make install
+
+git submodule add https://github.com/google/googletest deps/googletest
+cd deps
+cd googletest
+mkdir build
+cd build
+cmake ..
+make
+sudo make instal
+
+OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 104
+
+
+git submodule add https://github.com/open-source-parsers/jsoncpp.git deps/jsoncpp
+cd deps
+cd jsoncpp
+mkdir build
+cd build
+cmake -DJSONCPP_WITH_TESTS=OFF -DJSONCPP_WITH_POST_BUILD_UNITTEST=OFF ..
+make
+sudo make install
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>build miniob</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mkdir build
+cd build
+# 建议开启DEBUG模式编译，更方便调试
+cmake .. -DDEBUG=ON
+make
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="https://github.com/watchpoints/miniob_2022/blob/main/docs/miniob-introduction.md">https://github.com/watchpoints/miniob_2022/blob/main/docs/miniob-introduction.md</a></li>
+</ul>
+<h4 id="运行服务端">运行服务端</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">python3 miniob_test.py \
+        --test-case-dir=./test  \
+        --test-case-scores=case-scores.json \
+        --test-result-dir=result \
+        --test-result-tmp-dir=./result_tmp \
+        --use-unix-socket \
+        --git-repo=https://gitee.com/blogg9ggg/miniob-2022.git\
+        --git-branch=main \
+        --code-type=git \
+        --target-dir=./miniob \
+        --log=stdout \
+        --compile-make-args=-j4
+
+/root/gitee/miniob-2022/build/bin/observer -f /root/gitee/miniob-2022/etc/observer.ini
+
+
+/root/github/miniob-2022/build/bin/obclient
+
+
+oot@node1 bin]# ./observer
+./observer: error while loading shared libraries: libjsoncpp.so.25: cannot open shared object file: No such file or directory 环境变量导入了 怎么执行还报错
+
+无效：
+export LD_LIBRARY=$LD_LIBRARY:/usr/local/lib64:/root/github/miniob_2022/deps/jsoncpp/build/lib
+
+正确：
+直接把那3个文件拷贝到/usr/local/lib/下试试。
+
+</code></pre></td></tr></table>
+</div>
+</div><p>后端开发工程师-飞书存储业务-技术专家/架构师/资深研发</p>
+<p>Base 地：深圳 / 广州 / 武汉
+特别说明：飞书 / 创作与生态 / 领域基础架构部。是结合具体场景、将业务卡点问题下沉到定制化存储系统来解决。既有完全自研的分布式数据库产品，也有和公司数据库团队合作共建的定制化分支。期待候选同学有查询优化（Cost Estimation，Cost Model，Plan Enumeration 领域有深度认知和践行），MPP 调度执行引擎、向量化计算引擎 &amp; 算子实践，微软 Socrates / Snowflake / PrestoDB 等相关经验之一。</p>
+<p>职位描述
+1、研发基础存储组件和服务（包含分布式查询引擎和分布式存储引擎等），深度参与到存储架构设计、落地、演进的过程中，提升存储和数据服务的核心技术品质；
+2、深入垂直业务领域，解决超大规模 ToB 系统的性能和稳定性问题；既可以深入到系统底层，又可以和业务架构深入协作，通过优秀的架构设计来满足多元化的扩展和部署需求，是互联网架构师成长的沃土；
+3、解决大规模数据存储模型、分布式数据结构、存储稳定性和平滑扩展等领域难题。</p>
+<p>职位要求
+1、2 年及以上服务端 C++ 开发经验，对分布式系统有持之以恒的兴趣和热情；
+2、 Linux 系统知识扎实，精通任意一种语言的多线程、网络编程、分布式开发；
+3、深入了解数据库原理，熟练掌握分布式存储、计算、查询优化器的关键技术并有实战经验；
+4、熟读过 StarRocks / Apache Doris / Rocksdb / TiDB / CockroachDB 任一代码优先；
+5、开源作品、大厂分布式系统实践、ACM、国内一线技术竞赛获奖经验加分。</p>
+<h3 id="题目2unique">题目2：unique</h3>
+<h4 id="21-测试">2.1 测试</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /root/gitee/miniob-2022/build/bin/
+./observer -f /root/gitee/miniob-2022/etc/observer.ini
+
+/root/gitee/miniob-2022/build/bin/obclient
+
+dir /root/gitee/miniob-2022/
+set pagination off 
+thread apply all break execute_stage.cpp:604
+thread apply all break execute_stage.cpp:619
+
+RC Table::insert_record(Trx *trx, Record *record)
+/root/gitee/miniob-2022/src/observer/storage/index/bplus_tree_index.cpp
+
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+
+
+thread apply all break bplus_tree_index.cpp:619
+INITIALIZATION
+CREATE TABLE unique_table(id int, col1 int, col2 int);
+SUCCESS
+INSERT INTO unique_table VALUES (1,1,1);
+SUCCESS
+
+1. UNIQUE TEST
+CREATE UNIQUE INDEX index_id on unique_table(id);
+SUCCESS
+INSERT INTO unique_table VALUES (2,1,1);
+SUCCESS
+CREATE UNIQUE INDEX index_id on unique_table(id);
+FAILURE
+INSERT INTO unique_table VALUES (3,2,1);
+SUCCESS
+INSERT INTO unique_table VALUES (1,2,1);
+FAILURE
+select * from unique_table where id=1;
+
+CREATE INDEX index_id on unique_table2(id1,id2);
+
+CREATE TABLE unique_table2(id1 int, id2 int, id3 int);
+CREATE UNIQUE INDEX index_id on unique_table2(id1,id2);
+INSERT INTO unique_table2 VALUES (2,2,1,1);
+INSERT INTO unique_table2 VALUES (1,1,1,1);
+2. SELECT
+SELECT * FROM unique_table;
+1 | 1 | 1
+2 | 1 | 1
+3 | 2 | 1
+ID | COL1 | COL2
+
+
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+
+/root/gitee/miniob-2022/build/bin/observer -f /root/gitee/miniob-2022/etc/observer.ini
+/root/github/miniob-2022/build/bin/obclient
+
+dir /root/gitee/miniob-2022/
+set pagination off 
+thread apply all break execute_stage.cpp:604
+
+RC ExecuteStage::do_insert(SQLStageEvent *sql_event)
+
+miniob &gt; select * from unique_table where id=1;
+id | col1 | col2
+miniob &gt; select * from unique_table;
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="22-流程图">2.2 流程图</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="p">[</span><span class="n">OptimizeStage</span><span class="p">]</span>
+<span class="n">ThreadId</span><span class="o">=</span><span class="n">SQLThreads</span>
+<span class="n">NextStages</span><span class="o">=</span><span class="n">ExecuteStage</span>
+
+<span class="p">[</span><span class="n">ExecuteStage</span><span class="p">]</span>
+<span class="n">ThreadId</span><span class="o">=</span><span class="n">SQLThreads</span>
+<span class="n">NextStages</span><span class="o">=</span><span class="n">DefaultStorageStage</span><span class="p">,</span><span class="n">MemStorageStage</span>
+
+<span class="p">[</span><span class="n">DefaultStorageStage</span><span class="p">]</span>
+<span class="n">ThreadId</span><span class="o">=</span><span class="n">IOThreads</span>
+<span class="n">BaseDir</span><span class="o">=</span><span class="p">.</span><span class="o">/</span><span class="n">miniob</span>
+<span class="n">SystemDb</span><span class="o">=</span><span class="n">sys</span>
+
+
+<span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">sql</span><span class="o">/</span><span class="n">parser</span><span class="o">/</span><span class="n">parse</span><span class="p">.</span><span class="n">cpp</span>
+<span class="kt">void</span> <span class="n">query_reset</span><span class="p">(</span><span class="n">Query</span> <span class="o">*</span><span class="n">query</span><span class="p">)</span>
+
+<span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">sql</span><span class="o">/</span><span class="n">executor</span><span class="o">/</span><span class="n">execute_stage</span><span class="p">.</span><span class="n">cpp</span>
+<span class="kt">void</span> <span class="n">ExecuteStage</span><span class="o">::</span><span class="n">handle_request</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">StageEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span>
+
+<span class="n">src</span><span class="o">/</span><span class="n">observer</span><span class="o">/</span><span class="n">sql</span><span class="o">/</span><span class="n">executor</span><span class="o">/</span><span class="n">execute_stage</span><span class="p">.</span><span class="n">cpp</span>
+<span class="n">RC</span> <span class="n">Table</span><span class="o">::</span><span class="n">create_unique_index</span><span class="p">(</span><span class="n">Trx</span> <span class="o">*</span><span class="n">trx</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">index_name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">attribute_name</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="题目1">题目1</h3>
+<h4 id="流程">流程</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[ResolveStage]
+ThreadId=SQLThreads
+NextStages=QueryCacheStage
+
+[QueryCacheStage]
+ThreadId=SQLThreads
+NextStages=OptimizeStage
+
+
+sql解析
+ParseStage::handle_request
+语义解析：
+ResolveStage::handle_event
+ 
+   Stmt::create_stmt
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="代码">代码</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Stmt::create_stmt
+case SCF_SELECT: {
+      return SelectStmt::create(db, query.sstr.selection, stmt);
+    }
+    
+    
+sql解析
+ParseStage::handle_request
+
+Stmt::create_stmt
+
+
+
+src/observer/sql/parser/lex_sql.l
+src/observer/sql/parser/yacc_sql.y
+
+// struct of select
+typedef struct {
+  size_t attr_num;                // Length of attrs in Select clause
+  RelAttr attributes[MAX_NUM];    // attrs in Select clause
+  size_t relation_num;            // Length of relations in Fro clause
+  char *relations[MAX_NUM];       // relations in From clause
+  size_t condition_num;           // Length of conditions in Where clause
+  Condition conditions[MAX_NUM];  // conditions in Where clause
+} Selects;
+
+SelectStmt::create
+
+
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+注意：当前没有把lex_sql.l和yacc_sql.y加入CMakefile.txt中，所以修改这两个文件后，需要手动生成c代码，然后再执行编译。
+
+注意：flex 使用 2.5.35 版本测试通过，bison使用3.7版本测试通过
+
+flex 
+
+CentOS8设置国内阿里云镜像源2022
+https://www.imhu.cn/days/857
+
+/root/gitee/miniob-2022/src/observer/sql/parser
+flex --header-file=lex.yy.h lex_sql.l
+bison -d -b yacc_sql yacc_sql.y
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="测试">测试</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git reset --hard
+我的手机号是17728151873
+/root/gitee/miniob-2022/build/bin/observer -f /root/gitee/miniob-2022/etc/observer.ini
+
+
+/root/github/miniob-2022/build/bin/obclient
+git reset --hard origin/master
+select *,age from Select_meta2;
+select *,age from Select_meta;
+select *,id1 from Select_meta;
+CREATE TABLE Select_meta(id int, age int);
+SUCCESS
+
+1. SELECT FROM A NON-EXISTENT TABLE
+select * from no_table;
+FAILURE
+
+2. SELECT FROM A NON-EXISTENT COLUMN
+select home from Select_meta;
+FAILURE
+select * from Select_meta where home=&#39;001&#39;;
+FAILURE
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>
+<p>SELECT * AND A NON-EXISTENT COLUMN</p>
+<p>select *, age from Select_meta2;</p>
+<p>-FAILURE +FAILED TO PARSE SQL 4. SELECT * AND A EXISTENT COLUMN select *, age from Select_meta; -ID | AGE | AGE +FAILED TO PARSE SQL</p>
+</li>
+</ol>
+<p><img src="assets/image-20221019115032999.png" alt="image-20221019115032999"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        0001-01-01 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode/leetcod_easy/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">leetcode_easy_200-300</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/leetcode/system_desing/">
+            <span class="next-text nav-default">system_desing</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

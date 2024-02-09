@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/tidb/parse/" />
@@ -42,13 +42,13 @@
 <meta property="og:description" content="parser" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/tidb/parse/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-07-18T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-07-18T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-07-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-07-18T00:00:00+00:00" />
 
 <meta itemprop="name" content="Tidb学习记录（1）">
-<meta itemprop="description" content="parser"><meta itemprop="datePublished" content="2021-07-18T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-07-18T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2762">
+<meta itemprop="description" content="parser"><meta itemprop="datePublished" content="2021-07-18T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-07-18T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2627">
 <meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Tidb学习记录（1）"/>
 <meta name="twitter:description" content="parser"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2021-07-18 00:00 </span>
         
-          <span class="more-meta"> 约 2762 字 </span>
+          <span class="more-meta"> 约 2627 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -189,6 +189,11 @@
 </nav>
   </div>
 </div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2021-07-18T00:00:00" title="July 18, 2021">July 18, 2021</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
     <div class="post-content">
       <p>说明：</p>
 <ul>
@@ -202,7 +207,7 @@
 <h1 id="基本操作parser">基本操作parser</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -216,27 +221,23 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">https</span><span class="o">:</span><span class="c1">//github.com/watchpoints/parser
-</span><span class="c1"></span><span class="nx">https</span><span class="o">:</span><span class="c1">//github.com/pingcap/parser
-</span><span class="c1"></span><span class="nx">git</span> <span class="nx">reset</span> <span class="o">--</span><span class="nx">hard</span> <span class="nx">origin</span><span class="o">/</span><span class="nx">master</span> <span class="c1">// git 放弃本地修改 强制更新
-</span><span class="c1"></span><span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span> <span class="nx">upstream</span> <span class="c1">//https://github.com/pingcap/parser.git
-</span><span class="c1"></span><span class="err">#</span><span class="nx">切换到主分支</span>
-<span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">master</span>
-<span class="nx">git</span> <span class="nx">fetch</span> <span class="nx">upstream</span>
-<span class="nx">git</span> <span class="nx">merge</span> <span class="nx">upstream</span><span class="o">/</span><span class="nx">master</span>
-<span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="nx">master</span>
-<span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">dev_study</span>
-
-<span class="nx">git</span><span class="err">@</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">:</span><span class="nx">watchpoints</span><span class="o">/</span><span class="nx">parser</span><span class="p">.</span><span class="nx">git</span>	
-<span class="nx">git</span> <span class="nx">remote</span> <span class="o">-</span><span class="nx">v</span> 
-<span class="nx">git</span> <span class="nx">checkout</span> <span class="o">-</span><span class="nx">b</span> <span class="nx">wangchuanyi</span>
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">https</span><span class="o">:</span><span class="c1">//github.com/watchpoints/parser
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">https</span><span class="o">:</span><span class="c1">//github.com/pingcap/parser
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">git</span> <span class="nx">reset</span> <span class="o">--</span><span class="nx">hard</span> <span class="nx">origin</span><span class="o">/</span><span class="nx">master</span> <span class="c1">// git 放弃本地修改 强制更新
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span> <span class="nx">upstream</span> <span class="c1">//https://github.com/pingcap/parser.git
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">#</span><span class="nx">切换到主分支</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">master</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">fetch</span> <span class="nx">upstream</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">merge</span> <span class="nx">upstream</span><span class="o">/</span><span class="nx">master</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="nx">master</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">dev_study</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">git</span><span class="err">@</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">:</span><span class="nx">watchpoints</span><span class="o">/</span><span class="nx">parser</span><span class="p">.</span><span class="nx">git</span>	
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">remote</span> <span class="o">-</span><span class="nx">v</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">checkout</span> <span class="o">-</span><span class="nx">b</span> <span class="nx">wangchuanyi</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="使用tiup-部署集群">使用tiup 部署集群</h2>
 <h2 id="vpn-环境">vpn 环境</h2>
@@ -246,7 +247,7 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -323,92 +324,86 @@
 </span><span class="lnt">75
 </span><span class="lnt">76
 </span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /data/tidb/tiup
-tiup cluster deploy tidb-test  v5.0.2 ./topology1.yaml --user root -p <span class="c1">##部署</span>
-
-root@money:/data/tidb/tiup# cat topology1.yaml
-<span class="c1"># # Global variables are applied to all deployments and used as the default value of</span>
-<span class="c1"># # the deployments if a specific deployment value is missing.</span>
-global:
- user: <span class="s2">&#34;tidb&#34;</span>
- ssh_port: <span class="m">29761</span>
- deploy_dir: <span class="s2">&#34;/data/tidb/tiup/tidb-deploy&#34;</span>
- data_dir: <span class="s2">&#34;/data/tidb/tiup/tidb-data&#34;</span>
-
-<span class="c1"># # Monitored variables are applied to all the machines.</span>
-monitored:
- node_exporter_port: <span class="m">9100</span>
- blackbox_exporter_port: <span class="m">9115</span>
-
-server_configs:
- tidb:
-   log.slow-threshold: <span class="m">300</span>
- tikv:
-   readpool.storage.use-unified-pool: <span class="nb">false</span>
-   readpool.coprocessor.use-unified-pool: <span class="nb">true</span>
- pd:
-   replication.enable-placement-rules: <span class="nb">true</span>
- tiflash:
-   logger.level: <span class="s2">&#34;info&#34;</span>
-
-pd_servers:
- - host: 127.0.0.1
-
-tidb_servers:
- - host: 127.0.0.1
-
-tikv_servers:
- - host: 127.0.0.1
-   port: <span class="m">20170</span>
-   status_port: <span class="m">20180</span>
-
-
-
-
-monitoring_servers:
- - host: 127.0.0.1
-
-grafana_servers:
- - host: 127.0.0.1
- 
- 
-tiup cluster list <span class="c1">##查询</span>
-
-tiup cluster display tidb-test  <span class="c1">##查询</span>
-tiup cluster start tidb-test <span class="c1">##启动</span>
-tiup cluster stop tidb-test
-
-
-<span class="nb">cd</span> /data/tidb/tiup/tidb-deploy/tidb-4000/bin
-
-
-<span class="c1">## 对之前部署tidb-test集群进行参数 </span>
-tiup cluster edit-config  tidb-test
-tiup cluster reload  tidb-test
-
-<span class="c1"># TiDB 集群可以在不中断线上服务的情况下进行扩容和缩容。</span>
-<span class="c1">## 执行扩容命令  https://docs.pingcap.com/zh/tidb/dev/scale-tidb-using-tiup</span>
-tiup cluster scale-out tidb-test scale-out.yaml
-ssh-keygen //设置 SSH 通过密钥登录
-
-<span class="c1">## 缩容 TiDB/PD/TiKV 节点 </span>
-画外音：配置太低，需要缩容
-
-tiup cluster display  tidb-test
-tiup cluster scale-in tidb-test --node 127.0.0.1:4001
-提示：Scaled cluster <span class="sb">`</span>tidb-test<span class="sb">`</span> in successfully
-查看 /data/tidb/tiup/tidb-deploy 目录 tidb-4001 已经被删除
-
-https://asktug.com/t/topic/36950
-
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> /data/tidb/tiup
+</span></span><span class="line"><span class="cl">tiup cluster deploy tidb-test  v5.0.2 ./topology1.yaml --user root -p <span class="c1">##部署</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">root@money:/data/tidb/tiup# cat topology1.yaml
+</span></span><span class="line"><span class="cl"><span class="c1"># # Global variables are applied to all deployments and used as the default value of</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># # the deployments if a specific deployment value is missing.</span>
+</span></span><span class="line"><span class="cl">global:
+</span></span><span class="line"><span class="cl"> user: <span class="s2">&#34;tidb&#34;</span>
+</span></span><span class="line"><span class="cl"> ssh_port: <span class="m">29761</span>
+</span></span><span class="line"><span class="cl"> deploy_dir: <span class="s2">&#34;/data/tidb/tiup/tidb-deploy&#34;</span>
+</span></span><span class="line"><span class="cl"> data_dir: <span class="s2">&#34;/data/tidb/tiup/tidb-data&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># # Monitored variables are applied to all the machines.</span>
+</span></span><span class="line"><span class="cl">monitored:
+</span></span><span class="line"><span class="cl"> node_exporter_port: <span class="m">9100</span>
+</span></span><span class="line"><span class="cl"> blackbox_exporter_port: <span class="m">9115</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server_configs:
+</span></span><span class="line"><span class="cl"> tidb:
+</span></span><span class="line"><span class="cl">   log.slow-threshold: <span class="m">300</span>
+</span></span><span class="line"><span class="cl"> tikv:
+</span></span><span class="line"><span class="cl">   readpool.storage.use-unified-pool: <span class="nb">false</span>
+</span></span><span class="line"><span class="cl">   readpool.coprocessor.use-unified-pool: <span class="nb">true</span>
+</span></span><span class="line"><span class="cl"> pd:
+</span></span><span class="line"><span class="cl">   replication.enable-placement-rules: <span class="nb">true</span>
+</span></span><span class="line"><span class="cl"> tiflash:
+</span></span><span class="line"><span class="cl">   logger.level: <span class="s2">&#34;info&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pd_servers:
+</span></span><span class="line"><span class="cl"> - host: 127.0.0.1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tidb_servers:
+</span></span><span class="line"><span class="cl"> - host: 127.0.0.1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tikv_servers:
+</span></span><span class="line"><span class="cl"> - host: 127.0.0.1
+</span></span><span class="line"><span class="cl">   port: <span class="m">20170</span>
+</span></span><span class="line"><span class="cl">   status_port: <span class="m">20180</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">monitoring_servers:
+</span></span><span class="line"><span class="cl"> - host: 127.0.0.1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">grafana_servers:
+</span></span><span class="line"><span class="cl"> - host: 127.0.0.1
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">tiup cluster list <span class="c1">##查询</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tiup cluster display tidb-test  <span class="c1">##查询</span>
+</span></span><span class="line"><span class="cl">tiup cluster start tidb-test <span class="c1">##启动</span>
+</span></span><span class="line"><span class="cl">tiup cluster stop tidb-test
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /data/tidb/tiup/tidb-deploy/tidb-4000/bin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 对之前部署tidb-test集群进行参数 </span>
+</span></span><span class="line"><span class="cl">tiup cluster edit-config  tidb-test
+</span></span><span class="line"><span class="cl">tiup cluster reload  tidb-test
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># TiDB 集群可以在不中断线上服务的情况下进行扩容和缩容。</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 执行扩容命令  https://docs.pingcap.com/zh/tidb/dev/scale-tidb-using-tiup</span>
+</span></span><span class="line"><span class="cl">tiup cluster scale-out tidb-test scale-out.yaml
+</span></span><span class="line"><span class="cl">ssh-keygen //设置 SSH 通过密钥登录
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 缩容 TiDB/PD/TiKV 节点 </span>
+</span></span><span class="line"><span class="cl">画外音：配置太低，需要缩容
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tiup cluster display  tidb-test
+</span></span><span class="line"><span class="cl">tiup cluster scale-in tidb-test --node 127.0.0.1:4001
+</span></span><span class="line"><span class="cl">提示：Scaled cluster <span class="sb">`</span>tidb-test<span class="sb">`</span> in successfully
+</span></span><span class="line"><span class="cl">查看 /data/tidb/tiup/tidb-deploy 目录 tidb-4001 已经被删除
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://asktug.com/t/topic/36950
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>编译源码</li>
@@ -416,7 +411,7 @@ https://asktug.com/t/topic/36950
 <h4 id="tidb">tidb</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -461,61 +456,59 @@ https://asktug.com/t/topic/36950
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
-</span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## go </span>
-https://golang.google.cn/dl/
-<span class="nb">cd</span> /Users/wangchuanyi/local
-
-
-<span class="c1">### tidb</span>
-git clone https://github.com/pingcap/tidb.git
-<span class="nb">cd</span> /Users/wangchuanyi/code/src/github.com/watchpoints/tidb
-make
-
-./tidb-server -V 
-Release Version: v4.0.0-beta.2-949-g3f38fa5d0-dirty
-Edition: Community
-Git Commit Hash: 3f38fa5d02b618666efce714be129b1afacd582d
-Git Branch: master
-
-
-
- git remote add  wangchuanyi https://github.com/pingcap/tidb.git
- git remote -v
- 
-
-//切换到本地分支 
-
-git checkout -b wangchuanyi
-
-//下载远程代码
-git fetch wangchuanyi
-//合并master到自己分支
-
-git merge wangchuanyi/master
-//合并upstream的master
-// 提交远程master分支代码
- git push origin master
- 
- http://senzhangai.github.io/programming/build-tidb-by-source
-  git remote -v
-  
- 
- 
- 取代默认tidb：
- 
- data/tidb/tiup/tidb-deploy/tidb-4000/bin
- 
- 
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1">## go </span>
+</span></span><span class="line"><span class="cl">https://golang.google.cn/dl/
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /Users/wangchuanyi/local
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">### tidb</span>
+</span></span><span class="line"><span class="cl">git clone https://github.com/pingcap/tidb.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /Users/wangchuanyi/code/src/github.com/watchpoints/tidb
+</span></span><span class="line"><span class="cl">make
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">./tidb-server -V 
+</span></span><span class="line"><span class="cl">Release Version: v4.0.0-beta.2-949-g3f38fa5d0-dirty
+</span></span><span class="line"><span class="cl">Edition: Community
+</span></span><span class="line"><span class="cl">Git Commit Hash: 3f38fa5d02b618666efce714be129b1afacd582d
+</span></span><span class="line"><span class="cl">Git Branch: master
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> git remote add  wangchuanyi https://github.com/pingcap/tidb.git
+</span></span><span class="line"><span class="cl"> git remote -v
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//切换到本地分支 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git checkout -b wangchuanyi
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//下载远程代码
+</span></span><span class="line"><span class="cl">git fetch wangchuanyi
+</span></span><span class="line"><span class="cl">//合并master到自己分支
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git merge wangchuanyi/master
+</span></span><span class="line"><span class="cl">//合并upstream的master
+</span></span><span class="line"><span class="cl">// 提交远程master分支代码
+</span></span><span class="line"><span class="cl"> git push origin master
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> http://senzhangai.github.io/programming/build-tidb-by-source
+</span></span><span class="line"><span class="cl">  git remote -v
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 取代默认tidb：
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> data/tidb/tiup/tidb-deploy/tidb-4000/bin
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="-vpn环境">## vpn环境</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -534,45 +527,33 @@ git merge wangchuanyi/master
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="err">#</span> <span class="nx">vpn环境</span>
-<span class="err">##</span> <span class="nx">go环境</span>
-<span class="nx">cd</span> <span class="o">/</span><span class="nx">root</span><span class="o">/</span><span class="nx">local</span>
-<span class="nx">https</span><span class="p">:</span><span class="c1">//golang.google.cn/dl/go1.16.5.linux-amd64.tar.gz
-</span><span class="c1"></span><span class="nx">tar</span> <span class="o">-</span><span class="nx">xvf</span> <span class="nx">go1</span><span class="mf">.16.5</span><span class="p">.</span><span class="nx">linux</span><span class="o">-</span><span class="nx">amd64</span><span class="p">.</span><span class="nx">tar</span><span class="p">.</span><span class="nx">gz</span> 
-
-<span class="err">##</span> <span class="nx">tidb</span>
-<span class="nx">cd</span> <span class="o">/</span><span class="nx">data</span><span class="o">/</span><span class="nx">tidb</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">watchpoints</span><span class="o">/</span><span class="nx">tidb</span>
-<span class="nx">git</span> <span class="nx">clone</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/pingcap/tidb.git
-</span><span class="c1"></span>
-<span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span>  <span class="nx">wangchuanyi</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/pingcap/tidb.git
-</span><span class="c1"></span>
-
-<span class="nx">git</span> <span class="nx">fetch</span> <span class="nx">wangchuanyi</span>
-<span class="nx">git</span> <span class="nx">merge</span> <span class="nx">wangchuanyi</span><span class="o">/</span><span class="nx">master</span>
-<span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="nx">master</span>
- 
-
-<span class="nx">make</span> 
-
-
-
-
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="err">#</span> <span class="nx">vpn环境</span>
+</span></span><span class="line"><span class="cl"><span class="err">##</span> <span class="nx">go环境</span>
+</span></span><span class="line"><span class="cl"><span class="nx">cd</span> <span class="o">/</span><span class="nx">root</span><span class="o">/</span><span class="nx">local</span>
+</span></span><span class="line"><span class="cl"><span class="nx">https</span><span class="p">:</span><span class="c1">//golang.google.cn/dl/go1.16.5.linux-amd64.tar.gz
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">tar</span> <span class="o">-</span><span class="nx">xvf</span> <span class="nx">go1</span><span class="mf">.16.5</span><span class="p">.</span><span class="nx">linux</span><span class="o">-</span><span class="nx">amd64</span><span class="p">.</span><span class="nx">tar</span><span class="p">.</span><span class="nx">gz</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">##</span> <span class="nx">tidb</span>
+</span></span><span class="line"><span class="cl"><span class="nx">cd</span> <span class="o">/</span><span class="nx">data</span><span class="o">/</span><span class="nx">tidb</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">watchpoints</span><span class="o">/</span><span class="nx">tidb</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">clone</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/pingcap/tidb.git
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">remote</span> <span class="nx">add</span>  <span class="nx">wangchuanyi</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/pingcap/tidb.git
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">fetch</span> <span class="nx">wangchuanyi</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">merge</span> <span class="nx">wangchuanyi</span><span class="o">/</span><span class="nx">master</span>
+</span></span><span class="line"><span class="cl"><span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="nx">master</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">make</span> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="替换成自己编译">替换成自己编译</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -590,42 +571,40 @@ git merge wangchuanyi/master
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">### tidb </span>
-cp /data/tidb/src/github.com/watchpoints/tidb/bin/tidb-server  /data/tidb/tiup/tidb-deploy/tidb-4000/bin/tidb-server 
-
-tiup cluster destroy tidb-test
-tiup cluster stop tidb-test
-tiup cluster start tidb-test 
-tiup cluster display tidb-test 
-
-
-https://asktug.com/t/topic/34904/22
-
-第 <span class="m">5</span> 步：查看 TiUP 管理的集群情况
-
-tiup cluster deploy tidb-test v5.0.2 ./topology1.yaml --user root -p 
-
-
-tiup cluster list
-tiup cluster display tidb-test
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1">### tidb </span>
+</span></span><span class="line"><span class="cl">cp /data/tidb/src/github.com/watchpoints/tidb/bin/tidb-server  /data/tidb/tiup/tidb-deploy/tidb-4000/bin/tidb-server 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tiup cluster destroy tidb-test
+</span></span><span class="line"><span class="cl">tiup cluster stop tidb-test
+</span></span><span class="line"><span class="cl">tiup cluster start tidb-test 
+</span></span><span class="line"><span class="cl">tiup cluster display tidb-test 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://asktug.com/t/topic/34904/22
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">第 <span class="m">5</span> 步：查看 TiUP 管理的集群情况
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tiup cluster deploy tidb-test v5.0.2 ./topology1.yaml --user root -p 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tiup cluster list
+</span></span><span class="line"><span class="cl">tiup cluster display tidb-test
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="连接">连接：</h4>
 <p>mysql -h 127.0.0.1 -P 4000 -u root -D test</p>
 <p>Cdmysql</p>
 <p>设置密码：
 mysql -h 127.0.0.1 -P 4000 -u root</p>
-<p>SET PASSWORD FOR &lsquo;root&rsquo;@'%' = &lsquo;123456&rsquo;</p>
+<p>SET PASSWORD FOR &lsquo;root&rsquo;@&rsquo;%&rsquo; = &lsquo;123456&rsquo;</p>
 <p>mysql -h 127.0.0.1 -P 4000 -u root  -p</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code></code></pre></td>
+<pre tabindex="0" class="chroma"><code></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
 </div>
 </div><h2 id="如何单元测试">如何单元测试</h2>
 <p><code>go test -check.f $TEST_NAME</code> 来指定测试用例</p>
@@ -641,7 +620,7 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 <h4 id="21-修改-parsery-文件">2.1 修改 <code>parser.y</code> 文件</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -681,50 +660,50 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="cm">/*******************************************************************
-</span><span class="cm"> *
-</span><span class="cm"> *  Create Table Statement
-</span><span class="cm"> *
-</span><span class="cm"> *  Example:
-</span><span class="cm"> *      CREATE TABLE Persons
-</span><span class="cm"> *      (
-</span><span class="cm"> *          P_Id int NOT NULL,
-</span><span class="cm"> *          LastName varchar(255) NOT NULL,
-</span><span class="cm"> *          FirstName varchar(255),
-</span><span class="cm"> *          Address varchar(255),
-</span><span class="cm"> *          City varchar(255),
-</span><span class="cm"> *          PRIMARY KEY (P_Id)
-</span><span class="cm"> *      )
-</span><span class="cm"> // https://dev.mysql.com/doc/refman/5.7/en/create-table.html
-</span><span class="cm"> *******************************************************************/</span>
-<span class="nx">CreateTableStmt</span><span class="p">:</span>
-	<span class="s">&#34;CREATE&#34;</span> <span class="nx">OptTemporary</span> <span class="s">&#34;TABLE&#34;</span> <span class="nx">IfNotExists</span> <span class="nx">TableName</span> <span class="nx">TableElementListOpt</span> <span class="nx">CreateTableOptionListOpt</span> <span class="nx">PartitionOpt</span> <span class="nx">DuplicateOpt</span> <span class="nx">AsOpt</span> <span class="nx">CreateTableSelectOpt</span> <span class="nx">OnCommitOpt</span>
-	<span class="p">{</span>
-		<span class="nx">stmt</span> <span class="o">:=</span> <span class="err">$</span><span class="mf">6.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">CreateTableStmt</span><span class="p">)</span>
-		<span class="nx">stmt</span><span class="p">.</span><span class="nx">Table</span> <span class="p">=</span> <span class="err">$</span><span class="mf">5.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">TableName</span><span class="p">)</span>
-		<span class="nx">stmt</span><span class="p">.</span><span class="nx">IfNotExists</span> <span class="p">=</span> <span class="err">$</span><span class="mf">4.</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span>
-		<span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="p">=</span> <span class="err">$</span><span class="mf">2.</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryKeyword</span><span class="p">)</span>
-		<span class="nx">stmt</span><span class="p">.</span><span class="nx">Options</span> <span class="p">=</span> <span class="err">$</span><span class="mf">7.</span><span class="p">([]</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">TableOption</span><span class="p">)</span>
-		<span class="k">if</span> <span class="err">$</span><span class="mi">8</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="nx">stmt</span><span class="p">.</span><span class="nx">Partition</span> <span class="p">=</span> <span class="err">$</span><span class="mf">8.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">PartitionOptions</span><span class="p">)</span>
-		<span class="p">}</span>
-		<span class="nx">stmt</span><span class="p">.</span><span class="nx">OnDuplicate</span> <span class="p">=</span> <span class="err">$</span><span class="mf">9.</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">OnDuplicateKeyHandlingType</span><span class="p">)</span>
-		<span class="nx">stmt</span><span class="p">.</span><span class="nx">Select</span> <span class="p">=</span> <span class="err">$</span><span class="mf">11.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">CreateTableStmt</span><span class="p">).</span><span class="nx">Select</span>
-		<span class="k">if</span> <span class="p">(</span><span class="err">$</span><span class="mi">12</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">!=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryGlobal</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">==</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryGlobal</span> <span class="o">&amp;&amp;</span> <span class="err">$</span><span class="mi">12</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nx">yylex</span><span class="p">.</span><span class="nf">AppendError</span><span class="p">(</span><span class="nx">yylex</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;GLOBAL TEMPORARY and ON COMMIT DELETE|PRESERVE ROWS must appear together&#34;</span><span class="p">))</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">==</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryGlobal</span> <span class="p">{</span>
-				<span class="nx">stmt</span><span class="p">.</span><span class="nx">OnCommitDelete</span> <span class="p">=</span> <span class="err">$</span><span class="mf">12.</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-		<span class="err">$$</span> <span class="p">=</span> <span class="nx">stmt</span>
-	<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*******************************************************************
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *  Create Table Statement
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *  Example:
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *      CREATE TABLE Persons
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *      (
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *          P_Id int NOT NULL,
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *          LastName varchar(255) NOT NULL,
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *          FirstName varchar(255),
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *          Address varchar(255),
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *          City varchar(255),
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *          PRIMARY KEY (P_Id)
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *      )
+</span></span></span><span class="line"><span class="cl"><span class="cm"> // https://dev.mysql.com/doc/refman/5.7/en/create-table.html
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *******************************************************************/</span>
+</span></span><span class="line"><span class="cl"><span class="nx">CreateTableStmt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;CREATE&#34;</span> <span class="nx">OptTemporary</span> <span class="s">&#34;TABLE&#34;</span> <span class="nx">IfNotExists</span> <span class="nx">TableName</span> <span class="nx">TableElementListOpt</span> <span class="nx">CreateTableOptionListOpt</span> <span class="nx">PartitionOpt</span> <span class="nx">DuplicateOpt</span> <span class="nx">AsOpt</span> <span class="nx">CreateTableSelectOpt</span> <span class="nx">OnCommitOpt</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span> <span class="o">:=</span> <span class="err">$</span><span class="mf">6.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">CreateTableStmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span><span class="p">.</span><span class="nx">Table</span> <span class="p">=</span> <span class="err">$</span><span class="mf">5.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">TableName</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span><span class="p">.</span><span class="nx">IfNotExists</span> <span class="p">=</span> <span class="err">$</span><span class="mf">4.</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="p">=</span> <span class="err">$</span><span class="mf">2.</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryKeyword</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span><span class="p">.</span><span class="nx">Options</span> <span class="p">=</span> <span class="err">$</span><span class="mf">7.</span><span class="p">([]</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">TableOption</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="err">$</span><span class="mi">8</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">stmt</span><span class="p">.</span><span class="nx">Partition</span> <span class="p">=</span> <span class="err">$</span><span class="mf">8.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">PartitionOptions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span><span class="p">.</span><span class="nx">OnDuplicate</span> <span class="p">=</span> <span class="err">$</span><span class="mf">9.</span><span class="p">(</span><span class="nx">ast</span><span class="p">.</span><span class="nx">OnDuplicateKeyHandlingType</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">stmt</span><span class="p">.</span><span class="nx">Select</span> <span class="p">=</span> <span class="err">$</span><span class="mf">11.</span><span class="p">(</span><span class="o">*</span><span class="nx">ast</span><span class="p">.</span><span class="nx">CreateTableStmt</span><span class="p">).</span><span class="nx">Select</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="err">$</span><span class="mi">12</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">!=</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryGlobal</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">==</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryGlobal</span> <span class="o">&amp;&amp;</span> <span class="err">$</span><span class="mi">12</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">yylex</span><span class="p">.</span><span class="nf">AppendError</span><span class="p">(</span><span class="nx">yylex</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;GLOBAL TEMPORARY and ON COMMIT DELETE|PRESERVE ROWS must appear together&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">stmt</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">==</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">TemporaryGlobal</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">stmt</span><span class="p">.</span><span class="nx">OnCommitDelete</span> <span class="p">=</span> <span class="err">$</span><span class="mf">12.</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="err">$$</span> <span class="p">=</span> <span class="nx">stmt</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="22-ddlgo">2.2 ddl.go</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -884,165 +863,165 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </span><span class="lnt">158
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// CreateTableStmt is a statement to create a table.
-</span><span class="c1">// See https://dev.mysql.com/doc/refman/5.7/en/create-table.html
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">CreateTableStmt</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">ddlNode</span>
-
-	<span class="nx">IfNotExists</span> <span class="kt">bool</span>
-	<span class="nx">TemporaryKeyword</span>
-	<span class="c1">// Meanless when TemporaryKeyword is not TemporaryGlobal.
-</span><span class="c1"></span>	<span class="c1">// ON COMMIT DELETE ROWS =&gt; true
-</span><span class="c1"></span>	<span class="c1">// ON COMMIT PRESERVE ROW =&gt; false
-</span><span class="c1"></span>	<span class="nx">OnCommitDelete</span> <span class="kt">bool</span>
-	<span class="nx">Table</span>          <span class="o">*</span><span class="nx">TableName</span>
-	<span class="nx">ReferTable</span>     <span class="o">*</span><span class="nx">TableName</span>
-	<span class="nx">Cols</span>           <span class="p">[]</span><span class="o">*</span><span class="nx">ColumnDef</span>
-	<span class="nx">Constraints</span>    <span class="p">[]</span><span class="o">*</span><span class="nx">Constraint</span>
-	<span class="nx">Options</span>        <span class="p">[]</span><span class="o">*</span><span class="nx">TableOption</span>
-	<span class="nx">Partition</span>      <span class="o">*</span><span class="nx">PartitionOptions</span>
-	<span class="nx">OnDuplicate</span>    <span class="nx">OnDuplicateKeyHandlingType</span>
-	<span class="nx">Select</span>         <span class="nx">ResultSetNode</span>
-<span class="p">}</span>
-
-<span class="c1">// Restore implements Node interface.
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">CreateTableStmt</span><span class="p">)</span> <span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">format</span><span class="p">.</span><span class="nx">RestoreCtx</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-	<span class="k">switch</span> <span class="nx">n</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="p">{</span>
-	<span class="k">case</span> <span class="nx">TemporaryNone</span><span class="p">:</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;CREATE TABLE &#34;</span><span class="p">)</span>
-	<span class="k">case</span> <span class="nx">TemporaryGlobal</span><span class="p">:</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;CREATE GLOBAL TEMPORARY TABLE &#34;</span><span class="p">)</span>
-	<span class="k">case</span> <span class="nx">TemporaryLocal</span><span class="p">:</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;CREATE TEMPORARY TABLE &#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">IfNotExists</span> <span class="p">{</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;IF NOT EXISTS &#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Table</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Table&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; LIKE &#34;</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt ReferTable&#34;</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="nx">lenCols</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span><span class="p">)</span>
-	<span class="nx">lenConstraints</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">lenCols</span><span class="o">+</span><span class="nx">lenConstraints</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34; (&#34;</span><span class="p">)</span>
-		<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">col</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-				<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34;,&#34;</span><span class="p">)</span>
-			<span class="p">}</span>
-			<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">col</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-				<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotatef</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt ColumnDef: [%v]&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-		<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">constraint</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">lenCols</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">{</span>
-				<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34;,&#34;</span><span class="p">)</span>
-			<span class="p">}</span>
-			<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">constraint</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-				<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotatef</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Constraints: [%v]&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34;)&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">option</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Options</span> <span class="p">{</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">option</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotatef</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt TableOption: [%v]&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Partition&#34;</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="k">switch</span> <span class="nx">n</span><span class="p">.</span><span class="nx">OnDuplicate</span> <span class="p">{</span>
-		<span class="k">case</span> <span class="nx">OnDuplicateKeyHandlingError</span><span class="p">:</span>
-			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; AS &#34;</span><span class="p">)</span>
-		<span class="k">case</span> <span class="nx">OnDuplicateKeyHandlingIgnore</span><span class="p">:</span>
-			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; IGNORE AS &#34;</span><span class="p">)</span>
-		<span class="k">case</span> <span class="nx">OnDuplicateKeyHandlingReplace</span><span class="p">:</span>
-			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; REPLACE AS &#34;</span><span class="p">)</span>
-		<span class="p">}</span>
-
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Select&#34;</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">==</span> <span class="nx">TemporaryGlobal</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">OnCommitDelete</span> <span class="p">{</span>
-			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; ON COMMIT DELETE ROWS&#34;</span><span class="p">)</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; ON COMMIT PRESERVE ROWS&#34;</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-
-	<span class="k">return</span> <span class="kc">nil</span>
-<span class="p">}</span>
-
-<span class="c1">// Accept implements Node Accept interface.
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">CreateTableStmt</span><span class="p">)</span> <span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span> <span class="nx">Visitor</span><span class="p">)</span> <span class="p">(</span><span class="nx">Node</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">newNode</span><span class="p">,</span> <span class="nx">skipChildren</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Enter</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">skipChildren</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Leave</span><span class="p">(</span><span class="nx">newNode</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">n</span> <span class="p">=</span> <span class="nx">newNode</span><span class="p">.(</span><span class="o">*</span><span class="nx">CreateTableStmt</span><span class="p">)</span>
-	<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Table</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-	<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
-	<span class="p">}</span>
-	<span class="nx">n</span><span class="p">.</span><span class="nx">Table</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">TableName</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
-		<span class="p">}</span>
-		<span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">TableName</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span> <span class="p">{</span>
-		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">val</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
-		<span class="p">}</span>
-		<span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">ColumnDef</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span> <span class="p">{</span>
-		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">val</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
-		<span class="p">}</span>
-		<span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">Constraint</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
-		<span class="p">}</span>
-		<span class="nx">n</span><span class="p">.</span><span class="nx">Select</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="nx">ResultSetNode</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
-		<span class="p">}</span>
-		<span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">PartitionOptions</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Leave</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// CreateTableStmt is a statement to create a table.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// See https://dev.mysql.com/doc/refman/5.7/en/create-table.html
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">CreateTableStmt</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ddlNode</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">IfNotExists</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">TemporaryKeyword</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Meanless when TemporaryKeyword is not TemporaryGlobal.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// ON COMMIT DELETE ROWS =&gt; true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// ON COMMIT PRESERVE ROW =&gt; false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">OnCommitDelete</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Table</span>          <span class="o">*</span><span class="nx">TableName</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ReferTable</span>     <span class="o">*</span><span class="nx">TableName</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Cols</span>           <span class="p">[]</span><span class="o">*</span><span class="nx">ColumnDef</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Constraints</span>    <span class="p">[]</span><span class="o">*</span><span class="nx">Constraint</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Options</span>        <span class="p">[]</span><span class="o">*</span><span class="nx">TableOption</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Partition</span>      <span class="o">*</span><span class="nx">PartitionOptions</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">OnDuplicate</span>    <span class="nx">OnDuplicateKeyHandlingType</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Select</span>         <span class="nx">ResultSetNode</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Restore implements Node interface.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">CreateTableStmt</span><span class="p">)</span> <span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">format</span><span class="p">.</span><span class="nx">RestoreCtx</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">switch</span> <span class="nx">n</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">TemporaryNone</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;CREATE TABLE &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">TemporaryGlobal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;CREATE GLOBAL TEMPORARY TABLE &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">TemporaryLocal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;CREATE TEMPORARY TABLE &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">IfNotExists</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34;IF NOT EXISTS &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Table</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Table&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; LIKE &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt ReferTable&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">lenCols</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">lenConstraints</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">lenCols</span><span class="o">+</span><span class="nx">lenConstraints</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34; (&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">col</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34;,&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">col</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotatef</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt ColumnDef: [%v]&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">constraint</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">lenCols</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34;,&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">constraint</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotatef</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Constraints: [%v]&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34;)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">option</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Options</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">option</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotatef</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt TableOption: [%v]&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">WritePlain</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Partition&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="nx">n</span><span class="p">.</span><span class="nx">OnDuplicate</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">OnDuplicateKeyHandlingError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; AS &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">OnDuplicateKeyHandlingIgnore</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; IGNORE AS &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">OnDuplicateKeyHandlingReplace</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; REPLACE AS &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span><span class="p">.</span><span class="nf">Restore</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Annotate</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;An error occurred while splicing CreateTableStmt Select&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">TemporaryKeyword</span> <span class="o">==</span> <span class="nx">TemporaryGlobal</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">OnCommitDelete</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; ON COMMIT DELETE ROWS&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">ctx</span><span class="p">.</span><span class="nf">WriteKeyWord</span><span class="p">(</span><span class="s">&#34; ON COMMIT PRESERVE ROWS&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Accept implements Node Accept interface.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">CreateTableStmt</span><span class="p">)</span> <span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span> <span class="nx">Visitor</span><span class="p">)</span> <span class="p">(</span><span class="nx">Node</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">newNode</span><span class="p">,</span> <span class="nx">skipChildren</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Enter</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">skipChildren</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Leave</span><span class="p">(</span><span class="nx">newNode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">n</span> <span class="p">=</span> <span class="nx">newNode</span><span class="p">.(</span><span class="o">*</span><span class="nx">CreateTableStmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Table</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">n</span><span class="p">.</span><span class="nx">Table</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">TableName</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span><span class="p">.</span><span class="nx">ReferTable</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">TableName</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">val</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span><span class="p">.</span><span class="nx">Cols</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">ColumnDef</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">val</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span><span class="p">.</span><span class="nx">Constraints</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">Constraint</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Select</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span><span class="p">.</span><span class="nx">Select</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="nx">ResultSetNode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">node</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span><span class="p">.</span><span class="nf">Accept</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span><span class="p">.</span><span class="nx">Partition</span> <span class="p">=</span> <span class="nx">node</span><span class="p">.(</span><span class="o">*</span><span class="nx">PartitionOptions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Leave</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="23-parser_testgo">2.3 parser_test.go</h4>
 <ul>
@@ -1076,7 +1055,7 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 <h4 id="plannercorepreprocessgo">planner/core/preprocess.go</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1102,37 +1081,35 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
-</span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">
-<span class="c1">// preprocessor is an ast.Visitor that preprocess
-</span><span class="c1">// ast Nodes parsed from parser.
-</span><span class="c1"></span><span class="kd">type</span> <span class="nx">preprocessor</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">ctx</span>    <span class="nx">sessionctx</span><span class="p">.</span><span class="nx">Context</span>
-	<span class="nx">flag</span>   <span class="nx">preprocessorFlag</span>
-	<span class="nx">stmtTp</span> <span class="kt">byte</span>
-
-	<span class="c1">// tableAliasInJoin is a stack that keeps the table alias names for joins.
-</span><span class="c1"></span>	<span class="c1">// len(tableAliasInJoin) may bigger than 1 because the left/right child of join may be subquery that contains `JOIN`
-</span><span class="c1"></span>	<span class="nx">tableAliasInJoin</span> <span class="p">[]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
-	<span class="nx">withName</span>         <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
-
-	<span class="c1">// values that may be returned
-</span><span class="c1"></span>	<span class="o">*</span><span class="nx">PreprocessorReturn</span>
-	<span class="nx">err</span> <span class="kt">error</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">preprocessor</span><span class="p">)</span> <span class="nf">Enter</span><span class="p">(</span><span class="nx">in</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">Node</span><span class="p">)</span> 
-
- <span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">preprocessor</span><span class="p">)</span> <span class="nf">checkCreateTableGrammar</span><span class="p">(</span>
-
-   
-   
-   <span class="nx">planner</span><span class="o">/</span><span class="nx">core</span><span class="o">/</span><span class="nx">preprocess_test</span><span class="p">.</span><span class="k">go</span>
-   
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// preprocessor is an ast.Visitor that preprocess
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ast Nodes parsed from parser.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">preprocessor</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span>    <span class="nx">sessionctx</span><span class="p">.</span><span class="nx">Context</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">flag</span>   <span class="nx">preprocessorFlag</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">stmtTp</span> <span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// tableAliasInJoin is a stack that keeps the table alias names for joins.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// len(tableAliasInJoin) may bigger than 1 because the left/right child of join may be subquery that contains `JOIN`
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">tableAliasInJoin</span> <span class="p">[]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">withName</span>         <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// values that may be returned
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="o">*</span><span class="nx">PreprocessorReturn</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">preprocessor</span><span class="p">)</span> <span class="nf">Enter</span><span class="p">(</span><span class="nx">in</span> <span class="nx">ast</span><span class="p">.</span><span class="nx">Node</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">preprocessor</span><span class="p">)</span> <span class="nf">checkCreateTableGrammar</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   <span class="nx">planner</span><span class="o">/</span><span class="nx">core</span><span class="o">/</span><span class="nx">preprocess_test</span><span class="p">.</span><span class="k">go</span>
+</span></span><span class="line"><span class="cl">   
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="q3如何了解ddl-模块">Q3：如何了解DDL 模块</h2>
 <h4 id="步骤1-阅读文档了解整个处理过程">步骤1 阅读文档。了解整个处理过程</h4>
@@ -1144,7 +1121,7 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 <p><a href="https://github.com/pingcap/tidb/blob/source-code/ddl/ddl_api.go#L739">https://github.com/pingcap/tidb/blob/source-code/ddl/ddl_api.go#L739</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1161,22 +1138,22 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="w">
-</span><span class="w"></span><span class="n">func</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">*</span><span class="n">DDLExec</span><span class="p">)</span><span class="w"> </span><span class="k">Next</span><span class="p">:</span><span class="w">
-</span><span class="w">	</span><span class="k">case</span><span class="w"> </span><span class="o">*</span><span class="n">ast</span><span class="p">.</span><span class="n">CreateTableStmt</span><span class="p">:</span><span class="c1">--&gt;func (e *DDLExec) executeCreateTable --&gt;func (d *ddl) CreateTable(
-</span><span class="c1"></span><span class="w">    
-</span><span class="w">  
-</span><span class="w">    
-</span><span class="w"></span><span class="n">func</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="w"> </span><span class="o">*</span><span class="n">ddl</span><span class="p">)</span><span class="w"> </span><span class="n">CreateTableWithInfo</span><span class="p">(</span><span class="w">
-</span><span class="w">  </span><span class="n">buildTableInfo</span><span class="w"> </span><span class="err">获取</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">ID</span><span class="err">，生成</span><span class="w"> </span><span class="n">tableInfo</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="err">即</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="err">的元信息，然后封装成一个</span><span class="w"> </span><span class="n">DDL</span><span class="w"> </span><span class="n">job</span><span class="err">，</span><span class="w">
-</span><span class="w">  </span><span class="err">这个</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="err">包含了</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="err">和</span><span class="w"> </span><span class="n">tableInfo</span><span class="err">，</span><span class="w">
-</span><span class="w">  </span><span class="err">并将这个</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="err">的</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="err">标记为</span><span class="w">
-</span><span class="w">  </span><span class="n">ActionCreateTable</span><span class="err">。</span><span class="w">
-</span><span class="w">
-</span><span class="w"> </span><span class="n">checkTableInfoValidExtra</span><span class="err">：</span><span class="w">
-</span><span class="w"></span><span class="n">d</span><span class="p">.</span><span class="n">doDDLJob</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">job</span><span class="p">)</span><span class="w"> </span><span class="err">函数中的</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">addDDLJob</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">job</span><span class="p">)</span><span class="w"> </span><span class="err">会先给</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="err">获取一个</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="err">然后放到</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="err">中去。</span><span class="w">
-</span><span class="w">  
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">func</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">*</span><span class="n">DDLExec</span><span class="p">)</span><span class="w"> </span><span class="k">Next</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">case</span><span class="w"> </span><span class="o">*</span><span class="n">ast</span><span class="p">.</span><span class="n">CreateTableStmt</span><span class="p">:</span><span class="c1">--&gt;func (e *DDLExec) executeCreateTable --&gt;func (d *ddl) CreateTable(
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">func</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="w"> </span><span class="o">*</span><span class="n">ddl</span><span class="p">)</span><span class="w"> </span><span class="n">CreateTableWithInfo</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">buildTableInfo</span><span class="w"> </span><span class="err">获取</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">ID</span><span class="err">，生成</span><span class="w"> </span><span class="n">tableInfo</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="err">即</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="err">的元信息，然后封装成一个</span><span class="w"> </span><span class="n">DDL</span><span class="w"> </span><span class="n">job</span><span class="err">，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="err">这个</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="err">包含了</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="err">和</span><span class="w"> </span><span class="n">tableInfo</span><span class="err">，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="err">并将这个</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="err">的</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="err">标记为</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">ActionCreateTable</span><span class="err">。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">checkTableInfoValidExtra</span><span class="err">：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">d</span><span class="p">.</span><span class="n">doDDLJob</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">job</span><span class="p">)</span><span class="w"> </span><span class="err">函数中的</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">addDDLJob</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">job</span><span class="p">)</span><span class="w"> </span><span class="err">会先给</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="err">获取一个</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="err">然后放到</span><span class="w"> </span><span class="n">job</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="err">中去。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="我的issue">我的issue</h1>
 <h2 id="issue-18149-合并">issue 18149 [合并]</h2>
@@ -1193,7 +1170,7 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1214,26 +1191,26 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">constraint</span><span class="p">.</span><span class="nx">IsEmptyIndex</span> <span class="p">{</span>
-				<span class="nx">p</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nx">ddl</span><span class="p">.</span><span class="nx">ErrWrongNameForIndex</span><span class="p">.</span><span class="nf">GenWithStackByArgs</span><span class="p">(</span><span class="nx">constraint</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
-				<span class="k">return</span>
-			<span class="p">}</span>
-<span class="c1">// issue 18149
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">testValidatorSuite</span><span class="p">)</span> <span class="nf">TestValidator</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">C</span><span class="p">)</span> 
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">testValidatorSuite</span><span class="p">)</span> <span class="nf">runSQL</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">C</span><span class="p">,</span> <span class="nx">sql</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">inPrepare</span> <span class="kt">bool</span><span class="p">,</span> <span class="nx">terr</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">stmts</span><span class="p">,</span> <span class="nx">err1</span> <span class="o">:=</span> <span class="nx">session</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">sql</span><span class="p">)</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">err1</span><span class="p">,</span> <span class="nx">IsNil</span><span class="p">,</span> <span class="nf">Commentf</span><span class="p">(</span><span class="s">&#34;sql: %s&#34;</span><span class="p">,</span> <span class="nx">sql</span><span class="p">))</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">stmts</span><span class="p">,</span> <span class="nx">HasLen</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-	<span class="nx">stmt</span> <span class="o">:=</span> <span class="nx">stmts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-	<span class="kd">var</span> <span class="nx">opts</span> <span class="p">[]</span><span class="nx">core</span><span class="p">.</span><span class="nx">PreprocessOpt</span>
-	<span class="k">if</span> <span class="nx">inPrepare</span> <span class="p">{</span>
-		<span class="nx">opts</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span> <span class="nx">core</span><span class="p">.</span><span class="nx">InPrepare</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">core</span><span class="p">.</span><span class="nf">Preprocess</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">stmt</span><span class="p">,</span> <span class="nb">append</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span> <span class="nx">core</span><span class="p">.</span><span class="nf">WithPreprocessorReturn</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">core</span><span class="p">.</span><span class="nx">PreprocessorReturn</span><span class="p">{</span><span class="nx">InfoSchema</span><span class="p">:</span> <span class="nx">s</span><span class="p">.</span><span class="nx">is</span><span class="p">}))</span><span class="o">...</span><span class="p">)</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">terror</span><span class="p">.</span><span class="nf">ErrorEqual</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">terr</span><span class="p">),</span> <span class="nx">IsTrue</span><span class="p">,</span> <span class="nf">Commentf</span><span class="p">(</span><span class="s">&#34;sql: %s, err:%v&#34;</span><span class="p">,</span> <span class="nx">sql</span><span class="p">,</span> <span class="nx">err</span><span class="p">))</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">constraint</span><span class="p">.</span><span class="nx">IsEmptyIndex</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">p</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nx">ddl</span><span class="p">.</span><span class="nx">ErrWrongNameForIndex</span><span class="p">.</span><span class="nf">GenWithStackByArgs</span><span class="p">(</span><span class="nx">constraint</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// issue 18149
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">testValidatorSuite</span><span class="p">)</span> <span class="nf">TestValidator</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">C</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">testValidatorSuite</span><span class="p">)</span> <span class="nf">runSQL</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">C</span><span class="p">,</span> <span class="nx">sql</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">inPrepare</span> <span class="kt">bool</span><span class="p">,</span> <span class="nx">terr</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">stmts</span><span class="p">,</span> <span class="nx">err1</span> <span class="o">:=</span> <span class="nx">session</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">sql</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">err1</span><span class="p">,</span> <span class="nx">IsNil</span><span class="p">,</span> <span class="nf">Commentf</span><span class="p">(</span><span class="s">&#34;sql: %s&#34;</span><span class="p">,</span> <span class="nx">sql</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">stmts</span><span class="p">,</span> <span class="nx">HasLen</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">stmt</span> <span class="o">:=</span> <span class="nx">stmts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">opts</span> <span class="p">[]</span><span class="nx">core</span><span class="p">.</span><span class="nx">PreprocessOpt</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">inPrepare</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">opts</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span> <span class="nx">core</span><span class="p">.</span><span class="nx">InPrepare</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">core</span><span class="p">.</span><span class="nf">Preprocess</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">stmt</span><span class="p">,</span> <span class="nb">append</span><span class="p">(</span><span class="nx">opts</span><span class="p">,</span> <span class="nx">core</span><span class="p">.</span><span class="nf">WithPreprocessorReturn</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">core</span><span class="p">.</span><span class="nx">PreprocessorReturn</span><span class="p">{</span><span class="nx">InfoSchema</span><span class="p">:</span> <span class="nx">s</span><span class="p">.</span><span class="nx">is</span><span class="p">}))</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">c</span><span class="p">.</span><span class="nf">Assert</span><span class="p">(</span><span class="nx">terror</span><span class="p">.</span><span class="nf">ErrorEqual</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">terr</span><span class="p">),</span> <span class="nx">IsTrue</span><span class="p">,</span> <span class="nf">Commentf</span><span class="p">(</span><span class="s">&#34;sql: %s, err:%v&#34;</span><span class="p">,</span> <span class="nx">sql</span><span class="p">,</span> <span class="nx">err</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="ssues9815httpsgithubcompingcaptidbissues9815"><a href="https://github.com/pingcap/tidb/issues/9815">ssues/9815</a></h2>
 <h4 id="进展">进展</h4>
@@ -1254,7 +1231,7 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1304,55 +1281,55 @@ mysql -h 127.0.0.1 -P 4000 -u root</p>
 </span><span class="lnt">48
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">What did you expect to see?
-mysql [localhost:8015] {msandbox} (test) &gt; use test;
-Database changed
-mysql [localhost:8015] {msandbox} (test) &gt; DROP VIEW IF EXISTS v1;
-Query OK, 0 rows affected (0.01 sec)
-
-mysql [localhost:8015] {msandbox} (test) &gt; CREATE VIEW v1 AS SELECT 1;
-Query OK, 0 rows affected (0.01 sec)
-
-mysql [localhost:8015] {msandbox} (test) &gt; SELECT * FROM v1;
-+---+
-| 1 |
-+---+
-| 1 |
-+---+
-1 row in set (0.00 sec)
-
-mysql [localhost:8015] {msandbox} (test) &gt; ALTER VIEW v1 AS SELECT 2;
-Query OK, 0 rows affected (0.01 sec)
-
-mysql [localhost:8015] {msandbox} (test) &gt; SELECT * FROM v1;
-+---+
-| 2 |
-+---+
-| 2 |
-+---+
-1 row in set (0.00 sec)
-
-// DropTableStmt is a statement to drop one or more tables.
-// See https://dev.mysql.com/doc/refman/5.7/en/drop-table.html
-type DropTableStmt struct {
-	ddlNode
-
-	IfExists         bool
-	Tables           []*TableName
-	IsView           bool
-	TemporaryKeyword // make sense ONLY if/when IsView == false
-}
-
-DropViewStmt:
-	&#34;DROP&#34; &#34;VIEW&#34; TableNameList RestrictOrCascadeOpt
-	{
-		$$ = &amp;ast.DropTableStmt{Tables: $3.([]*ast.TableName), IsView: true}
-	}
-|	&#34;DROP&#34; &#34;VIEW&#34; &#34;IF&#34; &#34;EXISTS&#34; TableNameList RestrictOrCascadeOpt
-	{
-		$$ = &amp;ast.DropTableStmt{IfExists: true, Tables: $5.([]*ast.TableName), IsView: true}
-	}
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">What did you expect to see?
+</span></span><span class="line"><span class="cl">mysql [localhost:8015] {msandbox} (test) &gt; use test;
+</span></span><span class="line"><span class="cl">Database changed
+</span></span><span class="line"><span class="cl">mysql [localhost:8015] {msandbox} (test) &gt; DROP VIEW IF EXISTS v1;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.01 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql [localhost:8015] {msandbox} (test) &gt; CREATE VIEW v1 AS SELECT 1;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.01 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql [localhost:8015] {msandbox} (test) &gt; SELECT * FROM v1;
+</span></span><span class="line"><span class="cl">+---+
+</span></span><span class="line"><span class="cl">| 1 |
+</span></span><span class="line"><span class="cl">+---+
+</span></span><span class="line"><span class="cl">| 1 |
+</span></span><span class="line"><span class="cl">+---+
+</span></span><span class="line"><span class="cl">1 row in set (0.00 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql [localhost:8015] {msandbox} (test) &gt; ALTER VIEW v1 AS SELECT 2;
+</span></span><span class="line"><span class="cl">Query OK, 0 rows affected (0.01 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql [localhost:8015] {msandbox} (test) &gt; SELECT * FROM v1;
+</span></span><span class="line"><span class="cl">+---+
+</span></span><span class="line"><span class="cl">| 2 |
+</span></span><span class="line"><span class="cl">+---+
+</span></span><span class="line"><span class="cl">| 2 |
+</span></span><span class="line"><span class="cl">+---+
+</span></span><span class="line"><span class="cl">1 row in set (0.00 sec)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// DropTableStmt is a statement to drop one or more tables.
+</span></span><span class="line"><span class="cl">// See https://dev.mysql.com/doc/refman/5.7/en/drop-table.html
+</span></span><span class="line"><span class="cl">type DropTableStmt struct {
+</span></span><span class="line"><span class="cl">	ddlNode
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	IfExists         bool
+</span></span><span class="line"><span class="cl">	Tables           []*TableName
+</span></span><span class="line"><span class="cl">	IsView           bool
+</span></span><span class="line"><span class="cl">	TemporaryKeyword // make sense ONLY if/when IsView == false
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">DropViewStmt:
+</span></span><span class="line"><span class="cl">	&#34;DROP&#34; &#34;VIEW&#34; TableNameList RestrictOrCascadeOpt
+</span></span><span class="line"><span class="cl">	{
+</span></span><span class="line"><span class="cl">		$$ = &amp;ast.DropTableStmt{Tables: $3.([]*ast.TableName), IsView: true}
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">|	&#34;DROP&#34; &#34;VIEW&#34; &#34;IF&#34; &#34;EXISTS&#34; TableNameList RestrictOrCascadeOpt
+</span></span><span class="line"><span class="cl">	{
+</span></span><span class="line"><span class="cl">		$$ = &amp;ast.DropTableStmt{IfExists: true, Tables: $5.([]*ast.TableName), IsView: true}
+</span></span><span class="line"><span class="cl">	}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="看代码过程">看代码过程</h1>
 <h2 id="第一天">第一天：</h2>

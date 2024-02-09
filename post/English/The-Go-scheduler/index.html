@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/English/The-Go-scheduler/" />
@@ -232,7 +232,7 @@
 <p>这种处理系统调用的原因是即使GoGOPROCS为1的Go程序也可以运行多个线程的原因。运行时使用goroutines调用系统调用，从而使线程落后。</p>
 <hr>
 <h1 id="stealing-work">Stealing work</h1>
-<p>Another way that the steady state of the system can change is when a context runs out of goroutines to schedule to. This can happen if the amount of work on the contexts' runqueues is unbalanced. This can cause a context to end up exhausting it&rsquo;s runqueue while there is still work to be done in the system. To keep running Go code, a context can take goroutines out of the global runqueue but if there are no goroutines in it, it&rsquo;ll have to get them from somewhere else.</p>
+<p>Another way that the steady state of the system can change is when a context runs out of goroutines to schedule to. This can happen if the amount of work on the contexts&rsquo; runqueues is unbalanced. This can cause a context to end up exhausting it&rsquo;s runqueue while there is still work to be done in the system. To keep running Go code, a context can take goroutines out of the global runqueue but if there are no goroutines in it, it&rsquo;ll have to get them from somewhere else.</p>
 <p><img src="../images/steal.jpg" alt="img"></p>
 <p>That somewhere is the other contexts. When a context runs out, it will try to steal about half of the runqueue from another context. This makes sure there is always work to do on each of the contexts, which in turn makes sure that all threads are working at their maximum capacity.</p>
 <h1 id="where-to-go">Where to go?</h1>
@@ -319,7 +319,7 @@
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2022
+    2023
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cephfs on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/Cephfs/</link>
+    <description>Recent content in Cephfs on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Cephfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日拱一卒：ceph-mon模块</title>
+      <link>https://wangcy6.github.io/post/storage/2_ceph_mon/</link>
+      <pubDate>Fri, 02 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2_ceph_mon/</guid>
+      <description>http://localhost:1313/post/storage/2_ceph_mon/ 本文主要描述了 结合ceph mon模块，介绍Paxos基本实现。 大纲如下： 画外音：导入下面文章 https://www.chatpdf.com/ 提问 The Part-Time Parliament Paxos Made Simple Revisiting the Paxos algorithm https://www.read.seas.harvard.edu/~kohler/class/08w-dsi/chandra07paxos.pdf 先解作者背后故事 最</description>
+    </item>
+    
+    <item>
+      <title>Cephfs入门手册</title>
+      <link>https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/</link>
+      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/1_2023_02_13_day1_Cephfs/</guid>
+      <description>Cephfs探索之旅第一天 文章地址：http://localhost:1313/post/storage/1_2023_02_13_day1</description>
+    </item>
+    
+  </channel>
+</rss>

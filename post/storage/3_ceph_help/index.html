@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>《大话 Ceph》 之Ceph 运维手册&#34; - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="you can" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/3_ceph_help/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="《大话 Ceph》 之Ceph 运维手册&#34;" />
+<meta property="og:description" content="you can" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/3_ceph_help/" /><meta property="article:section" content="post" />
+
+
+
+<meta itemprop="name" content="《大话 Ceph》 之Ceph 运维手册&#34;">
+<meta itemprop="description" content="you can">
+
+<meta itemprop="wordCount" content="929">
+<meta itemprop="keywords" content="CEPH," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="《大话 Ceph》 之Ceph 运维手册&#34;"/>
+<meta name="twitter:description" content="you can"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">《大话 Ceph》 之Ceph 运维手册&#34;</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 0001-01-01 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/CEPH/"> CEPH </a>
+            </div>
+          <span class="more-meta"> 约 929 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#服务平滑重启">服务平滑重启</a>
+      <ul>
+        <li><a href="#31-tell子命令"><strong>3.1 tell子命令</strong></a></li>
+        <li><a href="#32-daemon子命令"><strong>3.2 daemon子命令</strong></a></li>
+        <li><a href="#33-socket文件"><strong>3.3 socket文件</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#--维护集群常用命令">#  维护集群常用命令</a>
+      <ul>
+        <li><a href="#mon相关">mon相关</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="0001-01-01T00:00:00" title="January 1, 0001">January 1, 0001</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>http://localhost:1313/post/storage/2_ceph_mon/</p>
+<h2 id="服务平滑重启">服务平滑重启</h2>
+<p>任何一个成熟的项目，必须要提供出接口，就像<a href="https://so.csdn.net/so/search?q=%E6%8E%A2%E9%92%88&amp;spm=1001.2101.3001.7020">探针</a>一样，可以让我们探查进程内部的运行情况，进程不能是一个黑盒子。对于ceph而言，Admin Socket 提供了该功能。</p>
+<p>Admin Socket 不仅可以查看当前的配置，进程运行的状态，而且，还可以修改配置，获取log等。</p>
+<p>有时候需要更改服务的配置，但不想重启服务，或者是临时修改，此时我们就可以通过admin sockets直接与守护进程交互。如查看和修改守护进程的配置参数。</p>
+<p>守护进程的socket文件一般是/var/run/ceph/$cluster-$type.$id.asok</p>
+<p>基于admin sockets的操作：</p>
+<ul>
+<li>
+<p>方式一：tell子命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Usage:
+ceph tell &lt;name (type.id)&gt; help
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>方式二：daemon子命令
+ceph daemon $type.$id command</p>
+</li>
+<li>
+<p>方式三：通过socket文件
+ceph &ndash;admin-daemon /var/run/ceph/$cluster-$type.$id.asok command</p>
+<p>常用command如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="31-tell子命令"><strong>3.1 tell子命令</strong></h3>
+<p>命令使用格式如下，在管理节点执行即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph tell <span class="o">{</span>daemon-type<span class="o">}</span>.<span class="o">{</span>daemon id or *<span class="o">}</span> injectargs --<span class="o">{</span>name<span class="o">}={</span>value<span class="o">}</span> <span class="o">[</span>--<span class="o">{</span>name<span class="o">}={</span>value<span class="o">}]</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>daemon-type：为要操作的对象类型如osd、mon等。</li>
+<li>daemon id：该对象的名称，osd通常为0、1等，mon为ceph -s显示的名称，这里可以输入*表示全部。</li>
+<li>injectargs：表示参数注入，后面必须跟一个参数，也可以跟多个。</li>
+</ul>
+<p>例如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 在管理节点运行</span>
+ceph tell mon.mon01 injectargs --mon_allow_pool_delete<span class="o">=</span><span class="nb">true</span>
+ceph tell mon.* injectargs --mon_allow_pool_delete<span class="o">=</span><span class="nb">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>mon_allow_pool_delete此选项的值默认为false，表示不允许删除pool，只有此选项打开后方可删除，记得改回去！！！ 这里使用mon.ceph-monitor-1表示只对ceph-monitor-1设置，可以使用*</p>
+<h3 id="32-daemon子命令"><strong>3.2 daemon子命令</strong></h3>
+<p>命令格式如下，需要登录到守护进程所在的那台主机上执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph daemon <span class="o">{</span>daemon-type<span class="o">}</span>.<span class="o">{</span>id<span class="o">}</span> config <span class="nb">set</span> <span class="o">{</span>name<span class="o">}={</span>value<span class="o">}</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>例。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh root@mon01
+ceph daemon mon.mon01 config <span class="nb">set</span> mon_allow_pool_delete <span class="nb">false</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="33-socket文件"><strong>3.3 socket文件</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 1、查看帮助</span>
+ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok <span class="nb">help</span>
+
+<span class="c1"># 2、查看配置项</span>
+ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok config get mon_allow_pool_delete
+
+<span class="c1"># 3、设置</span>
+ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok config <span class="nb">set</span> mon_allow_pool_delete <span class="nb">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果超过半数的monitor节点挂掉，此时通过网络访问ceph的所有操作都会被阻塞，但monitor的本地socket还是可以通信的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph --admin-daemon /var/run/ceph/ceph-mon.mon03.asok quorum_status
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="--维护集群常用命令">#  维护集群常用命令</h2>
+<h3 id="mon相关">mon相关</h3>
+<p>1、查看mon状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph mon stat
+</code></pre></td></tr></table>
+</div>
+</div><p>2、查看mon映射信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph mon dump
+</code></pre></td></tr></table>
+</div>
+</div><p>3、检查Ceph monitor仲裁/选举状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph quorum_status --format json-pretty
+</code></pre></td></tr></table>
+</div>
+</div><p>4、查看mon信息包括ip地址</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">获得一个正在运行的 mon map，并保存在 1.txt 文件中 
+ceph mon getmap -o 1.txt
+monmaptool --print 1.txt
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h1 id="wend">wend</h1>
+<ul>
+<li><a href="https://www.mianshigee.com/tutorial/ceph-handbook/troubleshooting-troubleshooting_mon.md">https://www.mianshigee.com/tutorial/ceph-handbook/troubleshooting-troubleshooting_mon.md</a></li>
+</ul>
+<h1 id="httpszhuanlanzhihucomp386561535"><a href="https://zhuanlan.zhihu.com/p/386561535">https://zhuanlan.zhihu.com/p/386561535</a></h1>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        0001-01-01 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/CEPH/">CEPH</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode/system_desing/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">system_desing</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/storage/4_icfs_help/">
+            <span class="next-text nav-default">日拱一卒：操作手册</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

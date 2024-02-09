@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>oceanbase on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/categories/oceanbase/</link>
+    <description>Recent content in oceanbase on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 26 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/oceanbase/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>成为oceanbase贡献者第四天：内置函数</title>
+      <link>https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/</guid>
+      <description>#一、Overview 大家好， 本文主要描述是如何OceanBase 社区版实现一个 MySQL 5.7 新增的系统内建函数。 通过https://github.c</description>
+    </item>
+    
+    <item>
+      <title>成为oceanbase贡献者第四天：容器与分配器</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/</link>
+      <pubDate>Sun, 02 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/</guid>
+      <description>#一、Overview 前言 大家好,今天是成为oceanbase贡献者第四天 本文 主要描述的是 通过#1038 the template parameter of ObSortedVector must be pointer type which is not resonable 了解模板特</description>
+    </item>
+    
+    <item>
+      <title>成为ob贡献者第三天</title>
+      <link>https://wangcy6.github.io/post/oceanbase/day3_ob/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/day3_ob/</guid>
+      <description>多看、多问、多总结，肯定是可以攻克的。 一、Overview https://github.com/oceanbase/oceanbase/issues/1038 提出疑问 设计一个类是需要需要考虑什么问题 这个和侯捷的《STL源码剖析》提到知识有</description>
+    </item>
+    
+    <item>
+      <title>成为oceanbase贡献者第二天：源码解析 DDL语句执行过程</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/</link>
+      <pubDate>Sat, 03 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/</guid>
+      <description>慢慢来，多看、多问、多总结，肯定是可以攻克的。 文章地址： http://localhost:1313/post/oceanbase/2022/oceanbase_day2/ https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day2/ 沟通步骤 准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不</description>
+    </item>
+    
+  </channel>
+</rss>

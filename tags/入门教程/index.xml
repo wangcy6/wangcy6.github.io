@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>入门教程 on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</link>
+    <description>Recent content in 入门教程 on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 04 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 Clash 为 Linux 提供网络代理服务</title>
+      <link>https://wangcy6.github.io/post/2023/5_how_to_use_crash/</link>
+      <pubDate>Sat, 04 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2023/5_how_to_use_crash/</guid>
+      <description>购买 云主机，竟然无法下载github上资源，鸡肋呀，解决方式就是网络代理 提示请勿将其用作翻墙等违法行为！ 关于 Clash Clash for Windows 删库跑路 Clash Core（各大</description>
+    </item>
+    
+  </channel>
+</rss>

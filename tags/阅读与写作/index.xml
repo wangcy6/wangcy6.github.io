@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>阅读与写作 on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/%E9%98%85%E8%AF%BB%E4%B8%8E%E5%86%99%E4%BD%9C/</link>
+    <description>Recent content in 阅读与写作 on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 11 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/%E9%98%85%E8%AF%BB%E4%B8%8E%E5%86%99%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从青铜到王者系列：Dm-cache</title>
+      <link>https://wangcy6.github.io/post/2022/13_code_read_dm_cache/</link>
+      <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2022/13_code_read_dm_cache/</guid>
+      <description>Dm-cache [23],a general block-level disk cache, for any storage systems, 带着问题和目标去学习 学习方法： 阅读(输入：三天,万句 输出 笔记摘要就哪里，但是自己看不懂，别人看不懂 ) 发现问题（输入：技术</description>
+    </item>
+    
+  </channel>
+</rss>

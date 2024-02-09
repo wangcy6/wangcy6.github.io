@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为oceanbase贡献者第四天：容器与分配器 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习，专业上只能靠自己" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为oceanbase贡献者第四天：容器与分配器" />
+<meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-10-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-10-02T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为oceanbase贡献者第四天：容器与分配器">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2022-10-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-10-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1589">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为oceanbase贡献者第四天：容器与分配器"/>
+<meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为oceanbase贡献者第四天：容器与分配器</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-10-02 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 1589 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-sql-一生-回顾">2.1 sql 一生 【回顾】</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#单元测试">单元测试</a>
+      <ul>
+        <li><a href="#1-gdb调试">1. gdb调试</a></li>
+        <li><a href="#2-环境说明">2. 环境说明</a></li>
+        <li><a href="#3-提交代码">3. 提交代码</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2022-10-02T00:00:00" title="October 2, 2022">October 2, 2022</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="一overview">#一、Overview</h1>
+<blockquote>
+<p>前言</p>
+</blockquote>
+<p>大家好,今天是成为oceanbase贡献者第四天</p>
+<p>本文 主要描述的是</p>
+<ol>
+<li>通过#1038  the template parameter of ObSortedVector must be pointer type which is not resonable</li>
+</ol>
+<ul>
+<li>了解模板特性  类型推导使用场景：</li>
+<li>了解模板特性偏特化，萃取 使用场景，</li>
+<li>了解右值引用和通用引用使用场景</li>
+</ul>
+<ol start="2">
+<li>顺便完成</li>
+</ol>
+<p><a href="https://ask.oceanbase.com/t/topic/35601338">【课后练习】从0到1数据库内核实战教程七</a></p>
+<p><strong>【说明】：</strong> 推荐 deps/oblib/src/lib/allocator 内存分配管理相关代码；
+<strong>推荐论文</strong></p>
+<ul>
+<li>
+<p>《AddressSanitizer: <a href="https://github.com/tpn/pdfs/blob/master/AddressSanitizer%20-%20A%20Fast%20Address%20Sanity%20Checker%20(atc12-final39).pdf">A Fast Address Sanity Checker</a>》</p>
+</li>
+<li>
+<p>《<a href="https://www.usenix.org/conference/usenixsecurity17/technical-sessions/presentation/dang">Oscar</a>：A Practical Page-Permissions-Based Scheme for <a href="https://www.youtube.com/watch?v=5HTt4eRWf3E">Thwarting Dangling Pointers</a>》</p>
+</li>
+</ul>
+<ol start="3">
+<li>
+<p><strong>第二期 操作系统重要项目1&ndash;协程</strong></p>
+<p><a href="https://wx.zsxq.com/dweb2/index/group/51122582242854">https://wx.zsxq.com/dweb2/index/group/51122582242854</a></p>
+</li>
+</ol>
+<p>实现一个可以运行的有栈对称协程 核心功能：</p>
+<p>1 协程上下文切换</p>
+<p>2 协程运行栈</p>
+<p>3 非对称调度或者对称协程调度（可选）</p>
+<p>4 hook系统调用（可选）（socket相关的系统调用：connect，read，write等随便选一个</p>
+<p><strong>思考 60 秒 写下你疑问</strong></p>
+<p>大纲</p>
+<h1 id="-二mvp"># 二、MVP</h1>
+<blockquote>
+<p>最少知识</p>
+</blockquote>
+<h2 id="21-sql-一生-回顾">2.1 sql 一生 【回顾】</h2>
+<h4 id="详细流程">详细流程</h4>
+<p><img src="https://img-blog.csdnimg.cn/f1dee96b6097419c8feff51e28c3137d.png" alt="入口"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+graph TB
+    1[ObMPQuery::process]--&gt;2[ObMPQuery::do_process ]  --&gt;5[ObSql::handle_text_query] --&gt;4[handle_physical_plan] --&gt;5[ ObMPQuery::response_result] --&gt;6[ObMPQuery::register_callback_with_async] --&gt;7[ObCmdExecutor::execute] --&gt;8[ObDDLOperator::alter_table_column]
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://img-blog.csdnimg.cn/e423a396e3be4e659a885d0ed81fc9a8.png" alt=""></p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/dcfb6a4bd280418dad2b1c30e494b010.png" alt=""></p>
+<p><img src="https://img-blog.csdnimg.cn/f43a468108504016b441bb6cef633d0f.png" alt=""></p>
+<p>2.2</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">template &lt;typename T, typename Allocator = PageArena&lt;T&gt; &gt;
+class ObVector {}
+D:\oceanbase\deps\oblib\src\lib\allocator\page_arena.h
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="提问obvector-如何申请一个变量内存地址">提问：ObVector 如何申请一个变量内存地址？</h4>
+<blockquote>
+<p>1号补丁：new  operator new 与malloc有什么区别？</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">void* ObAllocator::alloc(const int64_t size, const ObMemAttr&amp; attr)
+{
+  UNUSED(attr);
+  void* ptr = nullptr;
+  int ret = OB_SUCCESS;
+  if (OB_UNLIKELY(!is_inited_)) {
+    ret = init();
+  }
+  if (OB_SUCC(ret)) {
+    BACKTRACE(WARN, !attr.label_.is_valid(), &#34;[OB_MOD_DO_NOT_USE_ME ALLOC]size:%ld&#34;, size);
+    ObMemAttr inner_attr = attr_;
+    if (attr.label_.is_valid()) {
+      inner_attr.label_ = attr.label_;
+    }
+    AObject* obj = os_.alloc_object(size, inner_attr);
+    if (NULL != obj) {
+      ptr = obj-&gt;data_;
+      get_mem_leak_checker().on_alloc(*obj);
+    }
+    if (OB_UNLIKELY(nullptr == obj) &amp;&amp; REACH_TIME_INTERVAL(1 * 1000 * 1000)) {
+      ObTenantCtxAllocator&amp; ta = os_.get_block_mgr()-&gt;get_tenant_ctx_allocator();
+      _OB_LOG(WARN, &#34;[OOPS] alloc failed reason: %s&#34;, alloc_failed_msg());
+      _OB_LOG(WARN,
+          &#34;oops, alloc failed, tenant_id=%ld, ctx_id=%ld, ctx_name=%s, ctx_hold=%ld, &#34;
+          &#34;ctx_limit=%ld, tenant_hold=%ld, tenant_limit=%ld&#34;,
+          inner_attr.tenant_id_,
+          inner_attr.ctx_id_,
+          common::get_global_ctx_info().get_ctx_name(inner_attr.ctx_id_),
+          ta.get_hold(),
+          ta.get_limit(),
+          ta.get_tenant_hold(),
+          ta.get_tenant_limit());
+      // 49 is the user defined signal to dump memory
+      raise(49);
+    }
+  }
+  return ptr;
+}
+
+void ObAllocator::free(void* ptr)
+{
+  int ret = OB_SUCCESS;
+  if (OB_UNLIKELY(!is_inited_)) {
+    ret = init();
+  }
+  if (OB_SUCC(ret)) {
+    if (OB_LIKELY(nullptr != ptr)) {
+      AObject* obj = reinterpret_cast&lt;AObject*&gt;((char*)ptr - lib::AOBJECT_HEADER_SIZE);
+      abort_unless(NULL != obj);
+      abort_unless(obj-&gt;MAGIC_CODE_ == lib::AOBJECT_MAGIC_CODE || obj-&gt;MAGIC_CODE_ == lib::BIG_AOBJECT_MAGIC_CODE);
+      abort_unless(obj-&gt;in_use_);
+
+      get_mem_leak_checker().on_free(*obj);
+      lib::ABlock* block = obj-&gt;block();
+      abort_unless(block);
+      abort_unless(block-&gt;check_magic_code());
+      ObjectSet* os = block-&gt;obj_set_;
+      abort_unless(os == &amp;os_);
+      os-&gt;free_object(obj);
+    }
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="单元测试">单元测试</h2>
+<p>执行单元测试位置：</p>
+<p>/root/src/oceanbase/build_debug/deps/oblib/unittest</p>
+<p>代码位置：</p>
+<p>/root/src/oceanbase/deps/oblib/unittest/lib/container</p>
+<p>/root/src/oceanbase/deps/oblib/unittest/CMakeLists.txt</p>
+<h3 id="1-gdb调试">1. gdb调试</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+
+</code></pre></td></tr></table>
+</div>
+</div><p>D:\oceanbase\src\sql\executor\ob_cmd_executor.cpp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">set ob_enable_trace_log = 1
+show trace;
+obclient [oceanbase]&gt; select * from __all_server_event_history
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-环境说明">2. 环境说明</h3>
+<ul>
+<li>bash build.sh debug &ndash;init &ndash;make -j8</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">源码编译
+https://www.oceanbase.com/docs/community/observer-cn/V3.1.4/10000000000449658
+
+git clone git@github.com:watchpoints/oceanbase.git
+bash build.sh debug --init --make -j8
+
+离线安装部署，必须禁用远程仓库：
+obd mirror disable remote
+
+/oceanbase/oceanbase/build_debug
+make DESTDIR=./ install 
+
+
+
+obd mirror create -n oceanbase-ce -V 3.1.4-1 -p ./usr/local -t my-oceanbase
+
+
+https://gitee.com/oceanbase/obdeploy/blob/master/example/mini-distributed-example.yaml
+
+obd cluster deploy test -c /oceanbase/mini-local-example.yaml
+obd cluster deploy test -c ./mini-local-example.yaml
+obd cluster start test
+# Connect to the OceanBase Database by using a MySQL client.
+mysql -h127.1 -uroot -P2883
+alias cdob=&#34;obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase&#34;
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>copy obd 目录</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="n">cd</span> <span class="p">/</span><span class="n">root</span><span class="p">/</span><span class="n">oceanbase</span><span class="p">/</span><span class="n">build_debug</span><span class="p">/</span><span class="n">src</span><span class="p">/</span><span class="n">observer</span>
+<span class="n">cp</span> <span class="p">/</span><span class="n">observer</span> <span class="p">/</span><span class="n">root</span><span class="p">/.</span><span class="n">obd</span><span class="p">/</span><span class="n">repository</span><span class="p">/</span><span class="n">oceanbase</span><span class="p">-</span><span class="n">ce</span><span class="p">/</span><span class="m">3.1</span><span class="p">.</span><span class="m">4</span><span class="p">-</span><span class="m">1</span><span class="p">/</span><span class="n">my</span><span class="p">-</span><span class="n">oceanbase</span><span class="p">/</span><span class="n">bin</span><span class="p">/</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-提交代码">3. 提交代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git config user.name  watchpoints
+git config user.email wang_cyi@163.com
+
+
+## 关联远程仓库，保证代码可以和远程更新和提交
+git remote add oceanbase https://github.com/oceanbase/oceanbase.git
+git remote -v
+#把远程仓库最新的代码及分支拉取一下 [可以在界面手工合并]
+git fetch oceanbase 
+git merge oceanbase/master
+
+## 本地创建分支，进行开发
+https://github.com/oceanbase/oceanbase/issues/1038
+git checkout -b issue_1038
+git branch -a
+
+## 提交
+git commit -m &#34;fix Rocky is not supported yet #1014&#34;
+git push -u  origin issue_1035 
+
+## 冲突解决
+
+
+cp /root/oceanbase/build_debug/src/observer/observer /root/observer/bin/observer 
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="-三-conclusion"># 三、 Conclusion:</h1>
+<ol>
+<li>
+<p>方法 不停gdb调试</p>
+</li>
+<li>
+<p>ob代码中 主键和rowkey关系？</p>
+</li>
+</ol>
+<p>​    来源：https://github.com/oceanbase/oceanbase/issues/1035</p>
+<ol start="3">
+<li>ddl是通过rootservice（RS）执行的，所以其executor实际是发送RPC</li>
+</ol>
+<p>​         src\rootserver\ob_ddl_operator.cpp</p>
+<h1 id="-四further-reading"># 四、Further reading</h1>
+<blockquote>
+<p>举一反三</p>
+</blockquote>
+<blockquote>
+<p>慢慢来，多看、多问、多总结，肯定是可以攻克的。</p>
+</blockquote>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备好一个ppt，在写代码之前演示最终目标 和架构设计 就是如何去实现的 【不要说公司部门环境不对 着就是最终结果，不要试着看看，一定是可以完全上线的项目，非demo和一个知识点。自己认为真的 不是闹着玩的。。】</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>经过领导，专家 进行鸡蛋里挑骨头。【自己做好了别人路了胡扯，不会对别人产生任何影响，做事和做人一样，无论熟悉人，还是老师，领导，不相关人 反对 他们反馈信号，接受质疑，经过九九八十一难考验，并且你还在坚持认为对的。】</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目。【不听老人言，吃亏在眼前，不敢接受别人批评，说明自己完全没有把握，才去否定 愤怒方式】</p>
+</li>
+</ol>
+<h1 id="-相关文章"># 相关文章</h1>
+<p>[1] <a href="https://medium.com/@vgasparyan1995/what-is-an-allocator-c8df15a93ed">What is an Allocator?</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-10-02 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/2022/2022-18/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">GTD践行第18周</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/day3_ob/">
+            <span class="next-text nav-default">成为ob贡献者第三天</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
