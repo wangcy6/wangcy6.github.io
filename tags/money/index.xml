@@ -22,7 +22,11 @@
       <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/dream/day7_zhibo_luna/</guid>
+<<<<<<< HEAD
       <description>1. 项目资料 https://luna.docs.ie.cx/ 1 2 3 4 5 6 7 8 9 Luna AI 是一个由 ChatterBot / GPT / Claude / langchain 本地 or 云端 / chatglm / text-generation-webui / 讯飞星火 / 智谱AI 做为 大脑 驱动的虚拟主播 Live2D / Vtube Studio / UE5 + Audio2Face ，可以在</description>
+=======
+      <description>1. 项目资料 https://luna.docs.ie.cx/ 1 2 3 4 5 6 7 8 9 10 Luna AI 是一个由 ChatterBot / GPT / Claude / langchain 本地 or 云端 / chatglm / text-generation-webui / 讯飞星火 / 智谱AI 做为 大脑 驱动的虚拟主播 Live2D / Vtube Studio / UE5 + Audio2Face ，可以</description>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
     </item>
     
     <item>

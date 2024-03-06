@@ -23,7 +23,11 @@
 
 
 
+<<<<<<< HEAD
 <meta name="generator" content="Hugo 0.101.0 with theme even" />
+=======
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_1_/" />
@@ -42,12 +46,21 @@
 <meta property="og:description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_1_/" /><meta property="article:section" content="post" />
+<<<<<<< HEAD
 <meta property="article:published_time" content="2023-11-06T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-11-06T00:00:00+00:00" />
 
 <meta itemprop="name" content="Rust For Linux">
 <meta itemprop="description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"><meta itemprop="datePublished" content="2023-11-06T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-11-06T00:00:00+00:00" />
+=======
+<meta property="article:published_time" content="2023-11-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-11-06T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Rust For Linux">
+<meta itemprop="description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"><meta itemprop="datePublished" content="2023-11-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-11-06T00:00:00&#43;00:00" />
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 <meta itemprop="wordCount" content="2310">
 <meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Rust For Linux"/>
@@ -174,7 +187,11 @@ Q4 (Usage): 使用协程时需要注意什么？
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+=======
+<pre class="chroma"><code><span class="lnt"> 1
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -187,6 +204,7 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> 二、这个技术的优势和劣势分别是什么 
@@ -199,6 +217,20 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">六、已有的实现和它之间的对比
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
+
+ 二、这个技术的优势和劣势分别是什么 
+
+三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+四、技术的组成部分和关键点。
+
+五、技术的底层原理和关键实现
+
+六、已有的实现和它之间的对比
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h1 id="2023-01-06">2023-01-06</h1>
 <p>录制: 第三阶段项目方向选题会
@@ -274,19 +306,32 @@ Embassy Documentation：Embassy is a project to make async/await a first-class o
 <p>《<em>UNIX网络编程</em>》(第1卷)(套接口API第3版)第1版和第2络专家W. Richard Stevens博士独自编写。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+=======
+<pre class="chroma"><code><span class="lnt">1
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[1]blockingIO - 阻塞IO
 </span></span><span class="line"><span class="cl">[2]nonblockingIO - 非阻塞IO
 </span></span><span class="line"><span class="cl">[3]signaldrivenIO - 信号驱动IO
 </span></span><span class="line"><span class="cl">[4]asynchronousIO - 异步IO
 </span></span><span class="line"><span class="cl">[5]IOmultiplexing - IO多路复用
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-text" data-lang="text">[1]blockingIO - 阻塞IO
+[2]nonblockingIO - 非阻塞IO
+[3]signaldrivenIO - 信号驱动IO
+[4]asynchronousIO - 异步IO
+[5]IOmultiplexing - IO多路复用
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>多路服用 事件完成通知 事件就绪通知</p>
 <p>面试经典题目：高级IO模型之kqueue和epol</p>

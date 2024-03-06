@@ -23,7 +23,11 @@
 
 
 
+<<<<<<< HEAD
 <meta name="generator" content="Hugo 0.101.0 with theme even" />
+=======
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/" />
@@ -42,6 +46,7 @@
 <meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2022/oceanbase_day4/" /><meta property="article:section" content="post" />
+<<<<<<< HEAD
 <meta property="article:published_time" content="2022-10-02T00:00:00+00:00" />
 <meta property="article:modified_time" content="2022-10-02T00:00:00+00:00" />
 
@@ -49,6 +54,15 @@
 <meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2022-10-02T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-10-02T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1581">
+=======
+<meta property="article:published_time" content="2022-10-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-10-02T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为oceanbase贡献者第四天：容器与分配器">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2022-10-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-10-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1589">
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="成为oceanbase贡献者第四天：容器与分配器"/>
 <meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
@@ -130,7 +144,11 @@
         <div class="post-category">
             <a href="/categories/oceanbase/"> oceanbase </a>
             </div>
+<<<<<<< HEAD
           <span class="more-meta"> 约 1581 字 </span>
+=======
+          <span class="more-meta"> 约 1589 字 </span>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -221,23 +239,44 @@
 <p><img src="https://img-blog.csdnimg.cn/f1dee96b6097419c8feff51e28c3137d.png" alt="入口"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+=======
+<pre class="chroma"><code><span class="lnt">1
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">graph TB
 </span></span><span class="line"><span class="cl">    1[ObMPQuery::process]--&gt;2[ObMPQuery::do_process ]  --&gt;5[ObSql::handle_text_query] --&gt;4[handle_physical_plan] --&gt;5[ ObMPQuery::response_result] --&gt;6[ObMPQuery::register_callback_with_async] --&gt;7[ObCmdExecutor::execute] --&gt;8[ObDDLOperator::alter_table_column]
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+graph TB
+    1[ObMPQuery::process]--&gt;2[ObMPQuery::do_process ]  --&gt;5[ObSql::handle_text_query] --&gt;4[handle_physical_plan] --&gt;5[ ObMPQuery::response_result] --&gt;6[ObMPQuery::register_callback_with_async] --&gt;7[ObCmdExecutor::execute] --&gt;8[ObDDLOperator::alter_table_column]
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><ul>
 <li>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">
+
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p><img src="https://img-blog.csdnimg.cn/e423a396e3be4e659a885d0ed81fc9a8.png" alt=""></p>
 </li>
@@ -247,6 +286,7 @@
 <p>2.2</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
@@ -256,6 +296,19 @@
 </span></span><span class="line"><span class="cl">class ObVector {}
 </span></span><span class="line"><span class="cl">D:\oceanbase\deps\oblib\src\lib\allocator\page_arena.h
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">template &lt;typename T, typename Allocator = PageArena&lt;T&gt; &gt;
+class ObVector {}
+D:\oceanbase\deps\oblib\src\lib\allocator\page_arena.h
+
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h4 id="提问obvector-如何申请一个变量内存地址">提问：ObVector 如何申请一个变量内存地址？</h4>
 <blockquote>
@@ -263,7 +316,11 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+=======
+<pre class="chroma"><code><span class="lnt"> 1
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -327,6 +384,7 @@
 </span><span class="lnt">62
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">void* ObAllocator::alloc(const int64_t size, const ObMemAttr&amp; attr)
 </span></span><span class="line"><span class="cl">{
 </span></span><span class="line"><span class="cl">  UNUSED(attr);
@@ -390,6 +448,71 @@
 </span></span><span class="line"><span class="cl">  }
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">void* ObAllocator::alloc(const int64_t size, const ObMemAttr&amp; attr)
+{
+  UNUSED(attr);
+  void* ptr = nullptr;
+  int ret = OB_SUCCESS;
+  if (OB_UNLIKELY(!is_inited_)) {
+    ret = init();
+  }
+  if (OB_SUCC(ret)) {
+    BACKTRACE(WARN, !attr.label_.is_valid(), &#34;[OB_MOD_DO_NOT_USE_ME ALLOC]size:%ld&#34;, size);
+    ObMemAttr inner_attr = attr_;
+    if (attr.label_.is_valid()) {
+      inner_attr.label_ = attr.label_;
+    }
+    AObject* obj = os_.alloc_object(size, inner_attr);
+    if (NULL != obj) {
+      ptr = obj-&gt;data_;
+      get_mem_leak_checker().on_alloc(*obj);
+    }
+    if (OB_UNLIKELY(nullptr == obj) &amp;&amp; REACH_TIME_INTERVAL(1 * 1000 * 1000)) {
+      ObTenantCtxAllocator&amp; ta = os_.get_block_mgr()-&gt;get_tenant_ctx_allocator();
+      _OB_LOG(WARN, &#34;[OOPS] alloc failed reason: %s&#34;, alloc_failed_msg());
+      _OB_LOG(WARN,
+          &#34;oops, alloc failed, tenant_id=%ld, ctx_id=%ld, ctx_name=%s, ctx_hold=%ld, &#34;
+          &#34;ctx_limit=%ld, tenant_hold=%ld, tenant_limit=%ld&#34;,
+          inner_attr.tenant_id_,
+          inner_attr.ctx_id_,
+          common::get_global_ctx_info().get_ctx_name(inner_attr.ctx_id_),
+          ta.get_hold(),
+          ta.get_limit(),
+          ta.get_tenant_hold(),
+          ta.get_tenant_limit());
+      // 49 is the user defined signal to dump memory
+      raise(49);
+    }
+  }
+  return ptr;
+}
+
+void ObAllocator::free(void* ptr)
+{
+  int ret = OB_SUCCESS;
+  if (OB_UNLIKELY(!is_inited_)) {
+    ret = init();
+  }
+  if (OB_SUCC(ret)) {
+    if (OB_LIKELY(nullptr != ptr)) {
+      AObject* obj = reinterpret_cast&lt;AObject*&gt;((char*)ptr - lib::AOBJECT_HEADER_SIZE);
+      abort_unless(NULL != obj);
+      abort_unless(obj-&gt;MAGIC_CODE_ == lib::AOBJECT_MAGIC_CODE || obj-&gt;MAGIC_CODE_ == lib::BIG_AOBJECT_MAGIC_CODE);
+      abort_unless(obj-&gt;in_use_);
+
+      get_mem_leak_checker().on_free(*obj);
+      lib::ABlock* block = obj-&gt;block();
+      abort_unless(block);
+      abort_unless(block-&gt;check_magic_code());
+      ObjectSet* os = block-&gt;obj_set_;
+      abort_unless(os == &amp;os_);
+      os-&gt;free_object(obj);
+    }
+  }
+}
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h2 id="单元测试">单元测试</h2>
 <p>执行单元测试位置：</p>
@@ -400,13 +523,24 @@
 <h3 id="1-gdb调试">1. gdb调试</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>D:\oceanbase\src\sql\executor\ob_cmd_executor.cpp</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
@@ -416,6 +550,19 @@
 </span></span><span class="line"><span class="cl">show trace;
 </span></span><span class="line"><span class="cl">obclient [oceanbase]&gt; select * from __all_server_event_history
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">set ob_enable_trace_log = 1
+show trace;
+obclient [oceanbase]&gt; select * from __all_server_event_history
+
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h3 id="2-环境说明">2. 环境说明</h3>
 <ul>
@@ -423,7 +570,11 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+=======
+<pre class="chroma"><code><span class="lnt"> 1
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -448,6 +599,7 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
+<<<<<<< HEAD
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">源码编译
@@ -476,12 +628,47 @@
 </span></span><span class="line"><span class="cl">mysql -h127.1 -uroot -P2883
 </span></span><span class="line"><span class="cl">alias cdob=&#34;obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase&#34;
 </span></span></code></pre></td></tr></table>
+=======
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">源码编译
+https://www.oceanbase.com/docs/community/observer-cn/V3.1.4/10000000000449658
+
+git clone git@github.com:watchpoints/oceanbase.git
+bash build.sh debug --init --make -j8
+
+离线安装部署，必须禁用远程仓库：
+obd mirror disable remote
+
+/oceanbase/oceanbase/build_debug
+make DESTDIR=./ install 
+
+
+
+obd mirror create -n oceanbase-ce -V 3.1.4-1 -p ./usr/local -t my-oceanbase
+
+
+https://gitee.com/oceanbase/obdeploy/blob/master/example/mini-distributed-example.yaml
+
+obd cluster deploy test -c /oceanbase/mini-local-example.yaml
+obd cluster deploy test -c ./mini-local-example.yaml
+obd cluster start test
+# Connect to the OceanBase Database by using a MySQL client.
+mysql -h127.1 -uroot -P2883
+alias cdob=&#34;obclient -uroot@sys -h127.0.0.1 -P2881 oceanbase&#34;
+
+
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><ul>
 <li>copy obd 目录</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
@@ -489,11 +676,24 @@
 <pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="n">cd</span> <span class="p">/</span><span class="n">root</span><span class="p">/</span><span class="n">oceanbase</span><span class="p">/</span><span class="n">build_debug</span><span class="p">/</span><span class="n">src</span><span class="p">/</span><span class="n">observer</span>
 </span></span><span class="line"><span class="cl"><span class="n">cp</span> <span class="p">/</span><span class="n">observer</span> <span class="p">/</span><span class="n">root</span><span class="p">/.</span><span class="n">obd</span><span class="p">/</span><span class="n">repository</span><span class="p">/</span><span class="n">oceanbase</span><span class="p">-</span><span class="n">ce</span><span class="p">/</span><span class="m">3.1</span><span class="p">.</span><span class="m">4</span><span class="p">-</span><span class="m">1</span><span class="p">/</span><span class="n">my</span><span class="p">-</span><span class="n">oceanbase</span><span class="p">/</span><span class="n">bin</span><span class="p">/</span>
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="n">cd</span> <span class="p">/</span><span class="n">root</span><span class="p">/</span><span class="n">oceanbase</span><span class="p">/</span><span class="n">build_debug</span><span class="p">/</span><span class="n">src</span><span class="p">/</span><span class="n">observer</span>
+<span class="n">cp</span> <span class="p">/</span><span class="n">observer</span> <span class="p">/</span><span class="n">root</span><span class="p">/.</span><span class="n">obd</span><span class="p">/</span><span class="n">repository</span><span class="p">/</span><span class="n">oceanbase</span><span class="p">-</span><span class="n">ce</span><span class="p">/</span><span class="m">3.1</span><span class="p">.</span><span class="m">4</span><span class="p">-</span><span class="m">1</span><span class="p">/</span><span class="n">my</span><span class="p">-</span><span class="n">oceanbase</span><span class="p">/</span><span class="n">bin</span><span class="p">/</span>
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h3 id="3-提交代码">3. 提交代码</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+=======
+<pre class="chroma"><code><span class="lnt"> 1
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -519,6 +719,7 @@
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git config user.name  watchpoints
 </span></span><span class="line"><span class="cl">git config user.email wang_cyi@163.com
 </span></span><span class="line"><span class="cl">
@@ -544,6 +745,33 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cp /root/oceanbase/build_debug/src/observer/observer /root/observer/bin/observer 
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git config user.name  watchpoints
+git config user.email wang_cyi@163.com
+
+
+## 关联远程仓库，保证代码可以和远程更新和提交
+git remote add oceanbase https://github.com/oceanbase/oceanbase.git
+git remote -v
+#把远程仓库最新的代码及分支拉取一下 [可以在界面手工合并]
+git fetch oceanbase 
+git merge oceanbase/master
+
+## 本地创建分支，进行开发
+https://github.com/oceanbase/oceanbase/issues/1038
+git checkout -b issue_1038
+git branch -a
+
+## 提交
+git commit -m &#34;fix Rocky is not supported yet #1014&#34;
+git push -u  origin issue_1035 
+
+## 冲突解决
+
+
+cp /root/oceanbase/build_debug/src/observer/observer /root/observer/bin/observer 
+</code></pre></td></tr></table>
+>>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h1 id="-三-conclusion"># 三、 Conclusion:</h1>
 <ol>
