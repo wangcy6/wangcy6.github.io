@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>整理：强哥答疑 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/2024/2024-03-03-04_rust_vivo/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="整理：强哥答疑" />
+<meta property="og:description" content="学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/2024/2024-03-03-04_rust_vivo/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-03-03T00:00:00+00:00" />
+
+<meta itemprop="name" content="整理：强哥答疑">
+<meta itemprop="description" content="学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这"><meta itemprop="datePublished" content="2024-03-03T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2024-03-03T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1303">
+<meta itemprop="keywords" content="tools," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="整理：强哥答疑"/>
+<meta name="twitter:description" content="学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">整理：强哥答疑</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-03-03 00:00 </span>
+        
+          <span class="more-meta"> 约 1303 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#学习方法">学习方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#赛题1---蓝河代码转译工具">赛题1 - 蓝河代码转译工具</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="学习方法">学习方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> 二、这个技术的优势和劣势分别是什么 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> 三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> 四、技术的组成部分和关键点。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> 五、技术的底层原理和关键实现
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> 六、已有的实现和它之间的对比
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="背景">背景</h2>
+<p>vivo蓝河操作系统创新赛培训</p>
+<p>vivo蓝河操作系统是面向通用人工智能时代自研的下一代智慧操作系统，创新性地使用Rust语言编写，基于 vivo蓝心大模型 的智慧赋能，实现了自主可控、先进、安全的智慧解决方案。vivo蓝河操作系统创新赛，聚焦基础软件赛道，共设置两个赛题，旨在推动操作系统行业技术革新繁荣操作系统行业生态。</p>
+<p>请参考 <a href="https://learningcamp.cn/vivo">https://learningcamp.cn/vivo</a></p>
+<p>🌟初赛作品提交截止时间为【3月20日】，请大家尽早按照要求进行赛题准备</p>
+<p>开发手册  <a href="https://docs.qq.com/s/DJAUTxVOvQ5DMlbf3KNOQq">https://docs.qq.com/s/DJAUTxVOvQ5DMlbf3KNOQq</a></p>
+<p>赛事FAQ  <a href="https://docs.qq.com/sheet/DV25uTlZtSVF0V3FK?tab=BB08J2">https://docs.qq.com/sheet/DV25uTlZtSVF0V3FK?tab=BB08J2</a></p>
+<p>直播文档  <a href="https://docs.qq.com/pdf/DV09CaXhWUmlzVW9v">https://docs.qq.com/pdf/DV09CaXhWUmlzVW9v</a>?</p>
+<p>赛题介绍及报名    <a href="https://competition.atomgit.com/competitionInfo?id=c50d174fbf4d55a7172b25cb784258f8">https://competition.atomgit.com/competitionInfo?id=c50d174fbf4d55a7172b25cb784258f8</a></p>
+<p><a href="https://bbbbqqqq.feishu.cn/docx/ML6JdEaveoXy51xl05YcMmVZnWc">https://bbbbqqqq.feishu.cn/docx/ML6JdEaveoXy51xl05YcMmVZnWc</a></p>
+<ul>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/apJV_USRuKNozo8jPhqMOw?poc_token=HEod5WWj5EECTvUnV_YvI_HkyQztx3NszjPOutwe">国内 AI 大模型已近80个，哪个最有前途？</a></p>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/qTFuxJsZTxhDHeUBwRFgVA">Stability AI开年首个大模型：专写代码，支持18种编程语言，上下文100K，苹果笔记本离线就能跑</a></p>
+</li>
+<li>
+<p><a href="https://thy1037.github.io/vivo-c2rust/dev-demo.html">https://thy1037.github.io/vivo-c2rust/dev-demo.html</a></p>
+</li>
+<li>
+<p><a href="https://github.com/immunant/c2rust/">https://github.com/immunant/c2rust/</a></p>
+<p><a href="https://github.com/rust-lang/rust/tree/master/compiler">https://github.com/rust-lang/rust/tree/master/compiler</a></p>
+</li>
+</ul>
+<h2 id="赛题1---蓝河代码转译工具">赛题1 - 蓝河代码转译工具</h2>
+<ul>
+<li><a href="https://learningcamp.cn/vivo/camp/202401/stage/1?tab=intro">https://learningcamp.cn/vivo/camp/202401/stage/1?tab=intro</a></li>
+</ul>
+<p><strong>背景阐述</strong></p>
+<p>1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编 译阶段发现内存相关安全漏洞，用Rust语言编写更安全的操作系统，已经成为行业趋势</p>
+<p>2.国内自主研发的操作系统和自主可控的软件生态都还不成熟，通过代码转译技术，提升开发者对新操作系统 的适配效率，促进国产操作系统软件生态发展成熟</p>
+<p><strong>蓝河代码转译工具</strong></p>
+<p>赛题鼓励开发者实现工具程序，完成与蓝河系统/应用相关的代码转译。</p>
+<p><strong>可选方向有两个：</strong></p>
+<p>底层代码转译：底层的 C /C++代码转 Rust 代码工具</p>
+<p>应用代码转化：将其它形态的移动应用（App、小程序、H5 应用等） 代码转成蓝河应用代码，也可以是自然语言/图片等形态生成蓝河应用 代码</p>
+<p><strong>赛题价值</strong></p>
+<ol>
+<li>加快国产操作系统关键技术建设，从源头保障操作系统内存安全， 促进国产操作系统底层技术发展</li>
+<li>加速国产操作系统生态建设，同时繁荣hapjs开源社区生态</li>
+</ol>
+<p>3.希望通过本项赛事，携手开发者为国产操作系统底层技术及生态建 设做出贡献</p>
+<p><strong>难易程度</strong></p>
+<p><strong>•</strong> **技术栈：**熟悉C/C++、Rust语言开发或者应用开发（熟悉前端 技术栈以及APP、小程序等应用开发）</p>
+<p>**• 可实现：**不论是C转Rust，还是应用代码之间的转换，使用大模 型、正则表达式匹配、自建语法树等技术完成常规代码转换已 经是行业常见方案</p>
+<p>**• 上限高：**对于代码数量级大的转译，或者复杂特性的代码转译， 要实现完美代码转译有比较高的实现难度</p>
+<p><strong>实现举例</strong></p>
+<p>• 用蓝心大模型的转译能力，将在 Linux上可编译执行的多线程系统 调用C代码转译成Rust代码</p>
+<p>• 输出的Rust代码功能保持一致，且 采用了Rust的Arc/Mutex机制保证 线程安全，同样在Linux平台上可 编译执行</p>
+<p><img src="https://ssl.cdn.maodouketang.com/Fvo6rKrizGUUJiVXvWNMzqANRJa8" alt="img"></p>
+<p><strong>技术支持</strong></p>
+<p><strong>•</strong> **文档：**开发环境搭建，开发示例，测试用例</p>
+<p>**• 开发环境：**开发工具（IDE、真机调试器apk）、远程云真机等</p>
+<p>**• 培训与答疑：**初赛开始前，提供线上直播、视频教程供参赛者 学习，同时准备参赛者常见问题FAQ文档；初赛开始后，社区 内提供三名技术人员分别对不同 技术方向问题进行答疑和指导</p>
+<p><strong>评价标准</strong></p>
+<p><img src="https://ssl.cdn.maodouketang.com/FnpG0wIU24_01wT12OqjQc3Ew2Ir" alt="img"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-03-03 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/tools/">tools</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2024/2024-03-03-ask/">
+            <span class="next-text nav-default">整理：强哥答疑</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
