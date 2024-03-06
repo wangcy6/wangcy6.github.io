@@ -23,11 +23,7 @@
 
 
 
-<<<<<<< HEAD
 <meta name="generator" content="Hugo 0.101.0 with theme even" />
-=======
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/liunx/2022_11_29_liunx_memory_/" />
@@ -46,7 +42,6 @@
 <meta property="og:description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/liunx/2022_11_29_liunx_memory_/" /><meta property="article:section" content="post" />
-<<<<<<< HEAD
 <meta property="article:published_time" content="2022-11-20T00:00:00+00:00" />
 <meta property="article:modified_time" content="2022-11-20T00:00:00+00:00" />
 
@@ -54,15 +49,6 @@
 <meta itemprop="description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"><meta itemprop="datePublished" content="2022-11-20T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-11-20T00:00:00+00:00" />
 <meta itemprop="wordCount" content="3459">
-=======
-<meta property="article:published_time" content="2022-11-20T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2022-11-20T00:00:00&#43;00:00" />
-
-<meta itemprop="name" content="从青铜到王者系列：故障定位">
-<meta itemprop="description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"><meta itemprop="datePublished" content="2022-11-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2022-11-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3464">
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 <meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从青铜到王者系列：故障定位"/>
 <meta name="twitter:description" content="如何学习 在本文中，我将试着去回答liunx 内核参数： Q1 (Why): 为什么需要协程？ 我们会一起回顾协程出现的历史背景，当时要解决什么问题；同时，现在是什"/>
@@ -142,11 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2022-11-20 00:00 </span>
         
-<<<<<<< HEAD
           <span class="more-meta"> 约 3459 字 </span>
-=======
-          <span class="more-meta"> 约 3464 字 </span>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
           <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -196,11 +178,7 @@ Q4 (Usage): 使用协程时需要注意什么？
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-=======
-<pre class="chroma"><code><span class="lnt"> 1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -213,7 +191,6 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> 二、这个技术的优势和劣势分别是什么 
@@ -226,31 +203,13 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">六、已有的实现和它之间的对比
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
-
- 二、这个技术的优势和劣势分别是什么 
-
-三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
-
-四、技术的组成部分和关键点。
-
-五、技术的底层原理和关键实现
-
-六、已有的实现和它之间的对比
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h1 id="故障1">故障1</h1>
 <h3 id="现象描述发现内存被占用但是查找不到相关进程">现象描述：发现内存被占用，但是查找不到相关进程，</h3>
 <h3 id="1-free-ps-top-这些工具统计差距这么大多出内存去哪里">1. free ps top 这些工具统计差距这么大，多出内存去哪里？</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-=======
-<pre class="chroma"><code><span class="lnt"> 1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -266,7 +225,6 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">[root@localhost ~]# free -g
 </span></span><span class="line"><span class="cl">              total        used        free      shared  buff/cache   available
@@ -282,23 +240,6 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span></span><span class="line"><span class="cl">cat /proc/meminfo
 </span></span><span class="line"><span class="cl">while true; do cat /proc/meminfo | grep MemFree; sleep 10; done
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-[root@localhost ~]# free -g
-              total        used        free      shared  buff/cache   available
-Mem:           1007          16         990           0           0         987
-Swap:            62           0          62
-
-
-ps aux | awk &#39;{mem += $6} END {print mem/1024/1024}&#39;
-2.13824
-
-
-top free 命令完整来源
-cat /proc/meminfo
-while true; do cat /proc/meminfo | grep MemFree; sleep 10; done
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>画外音：</p>
 <ul>
@@ -308,11 +249,7 @@ while true; do cat /proc/meminfo | grep MemFree; sleep 10; done
 <h3 id="2-陈咬金三板斧不用什么原有-执行-drop_caches-之后slab内存还是没有下降无效操作">2 陈咬金三板斧：不用什么原有 执行 drop_caches 之后，slab内存还是没有下降，无效操作？</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-=======
-<pre class="chroma"><code><span class="lnt"> 1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -365,7 +302,6 @@ while true; do cat /proc/meminfo | grep MemFree; sleep 10; done
 </span><span class="lnt">51
 </span><span class="lnt">52
 </span><span class="lnt">53
-<<<<<<< HEAD
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1">## 没有释放</span>
@@ -422,66 +358,6 @@ while true; do cat /proc/meminfo | grep MemFree; sleep 10; done
 </span></span><span class="line"><span class="cl"><span class="c1"># CONFIG_SLUB_DEBUG_ON is not set</span>
 </span></span><span class="line"><span class="cl">开启
 </span></span></code></pre></td></tr></table>
-=======
-</span><span class="lnt">54
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## 没有释放</span>
-<span class="nb">echo</span> <span class="m">3</span> &gt; /proc/sys/vm/drop_caches
-
-<span class="c1">## 其中SUnreclaim:,随着测试时间加长SUnreclaim一直在增加，证明存在内存泄露可能.</span>
-On linux Slab is subdivided into two: SReclaimable and SUnreclaim .
-
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># cat /proc/meminfo | grep &#34;SUnreclaim&#34;</span>
-SUnreclaim:     <span class="m">11777088</span> kB
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># cat /proc/meminfo | grep &#34;SUnreclaim&#34;</span>
-SUnreclaim:     <span class="m">11778504</span> kB
-<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1">#</span>
-
-
-<span class="c1">### slab</span>
-
-cat /proc/slabinfo  <span class="p">|</span> awk <span class="s1">&#39;{if($3*$4/1024/1024 &gt; 100){print $1,$3*$4/1024/1024} }&#39;</span> <span class="p">|</span>sort -nr
-
-task_struct 8784.26
-taskstats 390.255
-signal_cache 1379.58
-kmalloc-192 119.878
-kmalloc-128 146.234
-cred_jar 218.97
-beegfs_inode_cache 226.975
-
-
-
-<span class="c1"># 尝试在/sys/kernel/slab/*/中提供了alloc_calls和free_calls。 这个中断</span>
-
-cat: /sys/kernel/slab/kmalloc-128/alloc_calls: Function not implemented
-
-cat /sys/kernel/slab/task_struct/alloc_calls
-cat: /sys/kernel/slab/task_struct/alloc_calls: Function not implemented
-
-CONFIG_SLUB_DEBUG_ON 不知道如何开启 
-
-slabinfo  -S
-slabtop
-
-在内核中打开slub_debug，相关的工具有slabinfo。
-slabinfo的数据来源是/sys/kernel/slab。
-slabtop -s l
-
- OBJS ACTIVE  USE OBJ SIZE  SLABS OBJ/SLAB CACHE SIZE NAME
-<span class="m">1246208</span> <span class="m">1246174</span>  99%    7.56K <span class="m">311552</span>        <span class="m">4</span>   9969664K task_struct
-<span class="m">1246362</span> <span class="m">1246362</span> 100%    1.19K  <span class="m">47937</span>       <span class="m">26</span>   1533984K signal_cache
-<span class="m">1254336</span> <span class="m">1254336</span> 100%    0.12K  <span class="m">39198</span>       <span class="m">32</span>    156792K kmalloc-128
-<span class="m">1252356</span> <span class="m">1252356</span> 100%    0.19K  <span class="m">29818</span>       <span class="m">42</span>    238544K cred_jar
-
-经过确认  cat /boot/config-4.18.0-305.3.1.el8_4.x86_64
-cat /boot/config-4.18.0-305.3.1.el8_4.x86_64 <span class="p">|</span>grep CONFIG_SLUB_DEBUG_ON
-<span class="c1"># CONFIG_SLUB_DEBUG_ON is not set</span>
-开启
-
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><blockquote>
 <p>画外音：</p>
@@ -493,11 +369,7 @@ cat /boot/config-4.18.0-305.3.1.el8_4.x86_64 <span class="p">|</span>grep CONFIG
 <h3 id="3-对比业务发现tcp链接内存不增长会马上释放然后短链接改为长链接-内存也不增长">3 对比业务发现tcp链接内存不增长，会马上释放，然后短链接改为长链接 内存也不增长。</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-=======
-<pre class="chroma"><code><span class="lnt"> 1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -513,7 +385,6 @@ cat /boot/config-4.18.0-305.3.1.el8_4.x86_64 <span class="p">|</span>grep CONFIG
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">--正常情况
 </span></span><span class="line"><span class="cl">Overhead  Shared Object              Symbol
 </span></span><span class="line"><span class="cl">  34.41%  [kernel]                   [k] clear_page_erms                                                                                                                                                                                                               ◆
@@ -533,27 +404,6 @@ cat /boot/config-4.18.0-305.3.1.el8_4.x86_64 <span class="p">|</span>grep CONFIG
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-=======
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">--正常情况
-Overhead  Shared Object              Symbol
-  34.41%  [kernel]                   [k] clear_page_erms                                                                                                                                                                                                               ◆
-  21.52%  libc-2.28.so               [.] __memset_avx2_erms                                                                                                                                                                                                            ▒
-   1.13%  [kernel]                   [k] _raw_spin_lock                                                                                                                                                                                                                ▒
-   1.11%  [kernel]                   [k] _raw_spin_lock_irqsave                                                                                                                                                                                                        ▒
-   1.03%  [kernel]                   [k] unpin_user_pages_dirty_lock                                                                                                                                                                                                   ▒
-   0.76%  [kernel]                   [k] get_page_from_freelist                                                                                                                                                                                                        ▒
-   0.61%  ld-2.28.so                 [.] do_lookup_x                                                                                                                                                                                                                   ▒
-   0.60%  [kernel]                   [k] native_irq_return_iret                                                                                                                                                                                                        ▒
-   0.53%  [kernel]                   [k] __list_del_entry_valid                                                                                                                                                                                                        ▒
-   0.52%  [kernel]                   [k] update_sd_lb_stats.constprop.118                                                                                                                                                                                              ▒
-   0.47%  [kernel]                   [k] update_rq_clock   
-   
-</code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -572,7 +422,6 @@ Overhead  Shared Object              Symbol
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">内存增长的perf top
 </span></span><span class="line"><span class="cl">Overhead  Shared Object              Symbol
 </span></span><span class="line"><span class="cl">  11.98%  [kernel]                   [k] copy_user_enhanced_fast_string
@@ -591,37 +440,13 @@ Overhead  Shared Object              Symbol
 </span></span><span class="line"><span class="cl">   0.91%  [kernel]                   [k] free_pcppages_bulk
 </span></span><span class="line"><span class="cl">   0.79%  [kernel]                   [k] osq_lock
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">内存增长的perf top
-Overhead  Shared Object              Symbol
-  11.98%  [kernel]                   [k] copy_user_enhanced_fast_string
-  10.42%  [kernel]                   [k] ext4_mpage_readpages
-   7.35%  [kernel]                   [k] native_queued_spin_lock_slowpath
-   5.89%  libc-2.28.so               [.] __memcmp_avx2_movbe
-   5.67%  libc-2.28.so               [.] __memmove_avx_unaligned_erms
-   3.61%  [kernel]                   [k] _raw_spin_lock_irqsave
-   2.15%  [kernel]                   [k] __list_del_entry_valid
-   1.71%  libpthread-2.28.so         [.] pthread_spin_lock
-   1.30%  [kernel]                   [k] ext4_es_lookup_extent
-   1.09%  [kernel]                   [k] mutex_lock
-   0.99%  [kernel]                   [k] mlx5_eq_comp_int
-   0.96%  libmpi.so.12.1.8           [.] 0x00000000001c47d5
-   0.92%  [kernel]                   [k] get_page_from_freelist
-   0.91%  [kernel]                   [k] free_pcppages_bulk
-   0.79%  [kernel]                   [k] osq_lock
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>perf record  -F 99  -g -a  &ndash; sleep 20
 perf report &ndash;stdio
 perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
-=======
-<pre class="chroma"><code><span class="lnt">  1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -861,7 +686,6 @@ perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 </span><span class="lnt">238
 </span><span class="lnt">239
 </span><span class="lnt">240
-<<<<<<< HEAD
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- 正常情况
@@ -1109,261 +933,6 @@ perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-=======
-</span><span class="lnt">241
-</span><span class="lnt">242
-</span><span class="lnt">243
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">- 正常情况
-# Children      Self  Command          Shared Object              Symbol                                                                                                                                                                                               &gt;
-# ........  ........  ...............  .........................  .....................................................................................................................................................................................................&gt;
-#
-    32.52%     0.00%  beegfs-ctl/Main  [unknown]                  [k] 0000000000000000
-            |
-            ---0
-               |
-                --30.94%--ibv_query_device
-
-    31.47%     6.76%  beegfs-ctl/Main  libc-2.28.so               [.] __memset_avx2_erms
-            |
-            |--24.70%--__memset_avx2_erms
-            |          |
-            |           --24.31%--page_fault
-            |                     |
-            |                      --24.18%--do_page_fault
-            |                                |
-            |                                 --24.17%--__do_page_fault
-            |                                           |
-            |                                            --24.14%--handle_mm_fault
-            |                                                      |
-            |                                                       --24.10%--__handle_mm_fault
-            |                                                                 |
-            |                                                                 |--22.95%--do_huge_pmd_anonymous_page
-            |                                                                 |          |
-            |                                                                 |           --22.22%--clear_huge_page
-            |                                                                 |                     |
-            |                                                                 |                      --21.73%--clear_subpage
-            |                                                                 |                                |
-            |                                                                 |                                 --21.37%--clear_page_erms
-            |                                                                 |
-            |                                                                  --1.09%--do_anonymous_page
-            |
-             --6.75%--0
-                       |
-                        --6.62%--ibv_query_device
-
-    31.36%     0.05%  beegfs-ctl/Main  [kernel.kallsyms]          [k] page_fault
-            |
-             --31.31%--page_fault
-                       |
-                        --24.81%--do_page_fault
-                                  __do_page_fault
-                                  |
-                                   --24.75%--handle_mm_fault
-                                             |
-                                              --24.70%--__handle_mm_fault
-                                                        |
-                                                        |--23.24%--do_huge_pmd_anonymous_page
-                                                        |          |
-                                                        |           --22.49%--clear_huge_page
-                                                        |                     |
-                                                        |                      --22.00%--clear_subpage
-                                                        |                                |
-                                                        |                                 --21.64%--clear_page_erms
-                                                        |
-                                                         --1.27%--do_anonymous_page
-                                                                   |
-                                                                    --0.52%--mem_cgroup_charge
-
-    30.94%     0.00%  beegfs-ctl/Main  libibverbs.so.1.14.43.0    [.] ibv_query_device
-            |
-            ---ibv_query_device
-
-    24.82%     0.00%  beegfs-ctl/Main  [kernel.kallsyms]          [k] do_page_fault
-            |
-            ---do_page_fault
-               |
-                --24.81%--__do_page_fault
-                          |
-                           --24.75%--handle_mm_fault
-                                     |
-                                      --24.70%--__handle_mm_fault
-                                                |
-                                                |--23.24%--do_huge_pmd_anonymous_page
-                                                |          |
-                                                |           --22.49%--clear_huge_page
-                                                |                     |
-                                                |                      --22.00%--clear_subpage
-                                                |                                |
-                                                |                                 --21.64%--clear_page_erms
-                                                |
-                                                 --1.27%--do_anonymous_page
-                                                           |
-                                                            --0.52%--mem_cgroup_charge
-
-    24.81%     0.00%  beegfs-ctl/Main  [kernel.kallsyms]          [k] __do_page_fault
-            |
-             --24.81%--__do_page_fault
-                       |
-                        --24.75%--handle_mm_fault
-                                  |
-                                   --24.70%--__handle_mm_fault
-                                             |
-                                             |--23.24%--do_huge_pmd_anonymous_page
-                                             |          |
-                                             |           --22.49%--clear_huge_page
-                                             |                     |
-                                             |                      --22.00%--clear_subpage
-                                             |                                |
-                                             |                                 --21.64%--clear_page_erms
-                                             |
-                                              --1.27%--do_anonymous_page
-                                                        |
-                                                         --0.52%--mem_cgroup_charge
-
-    24.75%     0.03%  beegfs-ctl/Main  [kernel.kallsyms]          [k] handle_mm_fault
-            |
-             --24.72%--handle_mm_fault
-                       |
-                        --24.70%--__handle_mm_fault
-                                  |
-                                  |--23.24%--do_huge_pmd_anonymous_page
-                                  |          |
-                                  |           --22.49%--clear_huge_page
-                                  |                     |
-                                  |                      --22.00%--clear_subpage
-                                  |                                |
-                                  |                                 --21.64%--clear_page_erms
-                                  |
-                                   --1.27%--do_anonymous_page
-                                             |
-                                              --0.52%--mem_cgroup_charge
-
-    24.70%     0.07%  beegfs-ctl/Main  [kernel.kallsyms]          [k] __handle_mm_fault
-            |
-             --24.63%--__handle_mm_fault
-                       |
-                       |--23.24%--do_huge_pmd_anonymous_page
-                       |          |
-                       |           --22.49%--clear_huge_page
-                       |                     |
-                       |                      --22.00%--clear_subpage
-                       |                                |
-                       |                                 --21.64%--clear_page_erms
-                       |
-                        --1.27%--do_anonymous_page
-                                  |
-								  
-								  
-								  
-								  
-								    24.47%     0.00%  ConnAccept       [unknown]                  [.] 0000000000000000
-            |
-            ---0
-               |
-                --24.23%--ibv_query_device
-                          |
-                          |--1.14%--0x7f2f0cfc8830
-                          |          __memset_avx2_erms
-                          |          |
-                          |           --1.11%--page_fault
-                          |                     |
-                          |                      --0.94%--do_page_fault
-                          |                                __do_page_fault
-                          |                                handle_mm_fault
-                          |                                __handle_mm_fault
-                          |                                |
-                          |                                 --0.92%--do_huge_pmd_anonymous_page
-                          |                                           |
-                          |                                            --0.91%--clear_huge_page
-                          |                                                      clear_subpage
-                          |                                                      |
-                          |                                                       --0.87%--clear_page_erms
-                          |
-                          |--1.02%--0x7f2f0cfc8530
-                          |          __memset_avx2_erms
-                          |          |
-                          |           --0.96%--page_fault
-                          |                     |
-                          |                      --0.79%--do_page_fault
-                          |                                __do_page_fault
-                          |                                handle_mm_fault
-                          |                                __handle_mm_fault
-                          |                                |
-                          |                                 --0.73%--do_huge_pmd_anonymous_page
-                          |                                           clear_huge_page
-                          |                                           clear_subpage
-                          |                                           |
-                          |                                            --0.71%--clear_page_erms
-                          |
-                          |--1.00%--0x7f2f0ce7e6f0
-                          |          __memset_avx2_erms
-                          |          |
-                          |           --0.96%--page_fault
-                          |                     |
-                          |                      --0.78%--do_page_fault
-                          |                                __do_page_fault
-                          |                                handle_mm_fault
-                          |                                __handle_mm_fault
-                          |                                |
-                          |                                 --0.76%--do_huge_pmd_anonymous_page
-                          |                                           |
-                          |                                            --0.73%--clear_huge_page
-                          |                                                      |
-                          |                                                       --0.72%--clear_subpage
-                          |                                                                 |
-                          |                                                                  --0.70%--clear_page_erms
-                          |
-                          |--0.98%--0x7f2f0c2a0b80
-                          |          __memset_avx2_erms
-                          |          page_fault
-                          |          |
-                          |           --0.67%--do_page_fault
-                          |                     __do_page_fault
-                          |                     |
-                          |                      --0.63%--handle_mm_fault
-                          |                                __handle_mm_fault
-                          |                                |
-                          |                                 --0.62%--do_huge_pmd_anonymous_page
-                          |                                           |
-                          |                                            --0.60%--clear_huge_page
-
-
-
-
-    24.42%     5.91%  ConnAccept       libc-2.28.so               [.] __memset_avx2_erms
-            |
-            |--18.52%--__memset_avx2_erms
-            |          |
-            |           --18.11%--page_fault
-            |                     |
-            |                      --17.99%--do_page_fault
-            |                                __do_page_fault
-            |                                |
-            |                                 --17.91%--handle_mm_fault
-            |                                           |
-            |                                            --17.87%--__handle_mm_fault
-            |                                                      |
-            |                                                      |--16.61%--do_huge_pmd_anonymous_page
-            |                                                      |          |
-            |                                                      |           --16.23%--clear_huge_page
-            |                                                      |                     |
-            |                                                      |                      --16.05%--clear_subpage
-            |                                                      |                                |
-            |                                                      |                                 --15.67%--clear_page_erms
-            |                                                      |
-            |                                                       --1.21%--do_anonymous_page
-            |
-
-
-
-</code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1391,7 +960,6 @@ perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">+   32.52%     0.00%  beegfs-ctl/Main  [unknown]                  [k] 0000000000000000                                                                                                                                                                                 ◆
 </span></span><span class="line"><span class="cl">+   31.47%     6.76%  beegfs-ctl/Main  libc-2.28.so               [.] __memset_avx2_erms                                                                                                                                                                               ▒
@@ -1419,44 +987,11 @@ perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 </span></span><span class="line"><span class="cl">+   15.89%    15.70%  ConnAccept       [kernel.kallsyms]          [k] clear_page_erms                                                                                                                                                                                  ▒
 </span></span><span class="line"><span class="cl">+   11.13%     0.28%  swapper          [kernel.kallsyms]          [k] do_idle                         
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-+   32.52%     0.00%  beegfs-ctl/Main  [unknown]                  [k] 0000000000000000                                                                                                                                                                                 ◆
-+   31.47%     6.76%  beegfs-ctl/Main  libc-2.28.so               [.] __memset_avx2_erms                                                                                                                                                                               ▒
-+   31.36%     0.05%  beegfs-ctl/Main  [kernel.kallsyms]          [k] page_fault                                                                                                                                                                                       ▒
-+   30.94%     0.00%  beegfs-ctl/Main  libibverbs.so.1.14.43.0    [.] ibv_query_device                                                                                                                                                                                 ▒
-+   24.82%     0.00%  beegfs-ctl/Main  [kernel.kallsyms]          [k] do_page_fault                                                                                                                                                                                    ▒
-+   24.81%     0.00%  beegfs-ctl/Main  [kernel.kallsyms]          [k] __do_page_fault                                                                                                                                                                                  ▒
-+   24.75%     0.03%  beegfs-ctl/Main  [kernel.kallsyms]          [k] handle_mm_fault                                                                                                                                                                                  ▒
-+   24.70%     0.07%  beegfs-ctl/Main  [kernel.kallsyms]          [k] __handle_mm_fault                                                                                                                                                                                ▒
-+   24.47%     0.00%  ConnAccept       [unknown]                  [.] 0000000000000000                                                                                                                                                                                 ▒
-+   24.42%     5.91%  ConnAccept       libc-2.28.so               [.] __memset_avx2_erms                                                                                                                                                                               ▒
-+   24.23%     0.00%  ConnAccept       libibverbs.so.1.14.43.0    [.] ibv_query_device                                                                                                                                                                                 ▒
-+   23.71%     0.01%  ConnAccept       [kernel.kallsyms]          [k] page_fault                                                                                                                                                                                       ▒
-+   23.24%     0.02%  beegfs-ctl/Main  [kernel.kallsyms]          [k] do_huge_pmd_anonymous_page                                                                                                                                                                       ▒
-+   22.49%     0.09%  beegfs-ctl/Main  [kernel.kallsyms]          [k] clear_huge_page                                                                                                                                                                                  ▒
-+   22.00%     0.28%  beegfs-ctl/Main  [kernel.kallsyms]          [k] clear_subpage                                                                                                                                                                                    ▒
-+   21.84%    21.51%  beegfs-ctl/Main  [kernel.kallsyms]          [k] clear_page_erms                                                                                                                                                                                  ▒
-+   18.01%     0.00%  ConnAccept       [kernel.kallsyms]          [k] do_page_fault                                                                                                                                                                                    ▒
-+   18.01%     0.04%  ConnAccept       [kernel.kallsyms]          [k] __do_page_fault                                                                                                                                                                                  ▒
-+   17.94%     0.03%  ConnAccept       [kernel.kallsyms]          [k] handle_mm_fault                                                                                                                                                                                  ▒
-+   17.88%     0.04%  ConnAccept       [kernel.kallsyms]          [k] __handle_mm_fault                                                                                                                                                                                ▒
-+   16.61%     0.01%  ConnAccept       [kernel.kallsyms]          [k] do_huge_pmd_anonymous_page                                                                                                                                                                       ▒
-+   16.23%     0.03%  ConnAccept       [kernel.kallsyms]          [k] clear_huge_page                                                                                                                                                                                  ▒
-+   16.08%     0.30%  ConnAccept       [kernel.kallsyms]          [k] clear_subpage                                                                                                                                                                                    ▒
-+   15.89%    15.70%  ConnAccept       [kernel.kallsyms]          [k] clear_page_erms                                                                                                                                                                                  ▒
-+   11.13%     0.28%  swapper          [kernel.kallsyms]          [k] do_idle                         
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>perf report &ndash;stdio</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
-=======
-<pre class="chroma"><code><span class="lnt">  1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -1703,7 +1238,6 @@ perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 </span><span class="lnt">245
 </span><span class="lnt">246
 </span><span class="lnt">247
-<<<<<<< HEAD
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Children      Self  Command          Shared Object              Symbol                                                                                                                                                                                               &gt;
@@ -1954,260 +1488,6 @@ perf record  -F 99  -g -e &ldquo;kmem:*&rdquo;  &ndash; sleep 20</p>
 </span></span><span class="line"><span class="cl">    16.54%     0.25%  swapper          [kernel.kallsyms]          [k] do_idle
 </span></span><span class="line"><span class="cl">            |
 </span></span></code></pre></td></tr></table>
-=======
-</span><span class="lnt">248
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># Children      Self  Command          Shared Object              Symbol                                                                                                                                                                                               &gt;
-# ........  ........  ...............  .........................  .....................................................................................................................................................................................................&gt;
-#
-    18.48%     0.00%  beegfs-ctl/Main  [kernel.kallsyms]          [k] entry_SYSCALL_64_after_hwframe
-            |
-            ---entry_SYSCALL_64_after_hwframe
-               do_syscall_64
-               |
-               |--14.57%--ksys_read
-               |          vfs_read
-               |          |
-               |           --14.54%--new_sync_read
-               |                     |
-               |                      --14.53%--FhgfsOps_buffered_read_iter
-               |                                read_common
-               |                                |
-               |                                 --14.53%--FhgfsOpsHelper_readCached
-               |                                           |
-               |                                            --14.53%--__FhgfsOpsHelper_readCacheFlushed
-               |                                                      FhgfsOpsRemoting_readfileVec
-               |                                                      |
-               |                                                       --14.51%--FhgfsOpsCommKit_readfileV2bCommunicate
-               |                                                                 |
-               |                                                                  --14.51%--FhgfsOpsCommkit_communicate
-               |                                                                            |
-               |                                                                            |--8.52%--__commkit_readfile_recvdata
-               |                                                                            |          |
-               |                                                                            |           --8.50%--__commkit_readfile_receive
-               |                                                                            |                     |
-               |                                                                            |                      --8.39%--__IBVSocket_recvContinueIncomplete
-               |                                                                            |                                |
-               |                                                                            |                                |--6.63%--_copy_to_iter
-               |                                                                            |                                |          |
-               |                                                                            |                                |           --6.53%--copyout
-               |                                                                            |                                |                     |
-               |                                                                            |                                |                      --6.47%--copy_user_enhanced_fast_string
-               |                                                                            |                                |
-               |                                                                            |                                 --1.15%--__IBVSocket_postRecv
-               |                                                                            |                                           |
-               |                                                                            |                                            --1.03%--mlx5_ib_post_recv
-               |                                                                            |                                                      |
-               |                                                                            |                                                       --0.91%--_raw_spin_lock_irqsave
-               |                                                                            |
-               |                                                                            |--2.83%--NodeConnPool_acquireStreamSocketEx
-               |                                                                            |          |
-               |                                                                            |           --1.89%--__mutex_lock.isra.6
-               |                                                                            |                     |
-               |                                                                            |                      --1.35%--osq_lock
-               |                                                                            |
-               |                                                                            |--1.74%--SocketTk_poll
-               |                                                                            |          |
-               |                                                                            |           --1.17%--IBVSocket_poll
-               |                                                                            |                     |
-               |                                                                            |                      --0.93%--__IBVSocket_receiveCheck
-               |                                                                            |                                |
-               |                                                                            |                                 --0.90%--__IBVSocket_recvWC
-               |                                                                            |                                           |
-               |                                                                            |                                            --0.86%--__IBVSocket_waitForRecvCompletionEvent
-               |                                                                            |                                                      |
-               |                                                                            |                                                       --0.82%--mlx5_ib_poll_cq
-               |                                                                            |
-               |                                                                             --0.83%--__commkit_prepare_io
-               |                                                                                       |
-               |                                                                                        --0.66%--mutex_lock
-               |
-                --3.73%--ksys_write
-                          vfs_write
-                          |
-                           --3.73%--new_sync_write
-                                     FhgfsOps_buffered_write_iter
-                                     write_common
-                                     FhgfsOpsHelper_writeCached
-                                     |
-                                      --3.73%--FhgfsOpsHelper_writefileEx
-                                                FhgfsOpsRemoting_writefileVec
-                                                |
-                                                 --3.72%--FhgfsOpsCommKit_writefileV2bCommunicate
-                                                           |
-                                                            --3.71%--FhgfsOpsCommkit_communicate
-                                                                      |
-                                                                      |--2.70%--__commkit_writefile_sendData
-                                                                      |          IBVSocket_send
-                                                                      |          |
-                                                                      |           --2.28%--IBVBuffer_fill
-                                                                      |                     |
-                                                                      |                      --1.99%--_copy_from_iter
-                                                                      |                                |
-                                                                      |                                 --1.96%--copyin
-                                                                      |                                           |
-                                                                      |                                            --1.95%--copy_user_enhanced_fast_string
-                                                                      |
-                                                                       --0.74%--NodeConnPool_acquireStreamSocketEx
-
-    18.48%     0.00%  beegfs-ctl/Main  [kernel.kallsyms]          [k] do_syscall_64
-            |
-             --18.48%--do_syscall_64
-                       |
-                       |--14.57%--ksys_read
-                       |          vfs_read
-                       |          |
-                       |           --14.54%--new_sync_read
-                       |                     |
-                       |                      --14.53%--FhgfsOps_buffered_read_iter
-                       |                                read_common
-                       |                                |
-                       |                                 --14.53%--FhgfsOpsHelper_readCached
-                       |                                           |
-                       |                                            --14.53%--__FhgfsOpsHelper_readCacheFlushed
-                       |                                                      FhgfsOpsRemoting_readfileVec
-                       |                                                      |
-                       |                                                       --14.51%--FhgfsOpsCommKit_readfileV2bCommunicate
-                       |                                                                 |
-                       |                                                                  --14.51%--FhgfsOpsCommkit_communicate
-                       |                                                                            |
-                       |                                                                            |--8.52%--__commkit_readfile_recvdata
-                       |                                                                            |          |
-                       |                                                                            |           --8.50%--__commkit_readfile_receive
-                       |                                                                            |                     |
-                       |                                                                            |                      --8.39%--__IBVSocket_recvContinueIncomplete
-                       |                                                                            |                                |
-                       |                                                                            |                                |--6.63%--_copy_to_iter
-                       |                                                                            |                                |          |
-                       |                                                                            |                                |           --6.53%--copyout
-                       |                                                                            |                                |                     |
-                       |                                                                            |                                |                      --6.47%--copy_user_enhanced_fast_string
-                       |                                                                            |                                |
-                       |                                                                            |                                 --1.15%--__IBVSocket_postRecv
-                       |                                                                            |                                           |
-                       |                                                                            |                                            --1.03%--mlx5_ib_post_recv
-                       |                                                                            |                                                      |
-                       |                                                                            |                                                       --0.91%--_raw_spin_lock_irqsave
-                       |                                                                            |
-                       |                                                                            |--2.83%--NodeConnPool_acquireStreamSocketEx
-                       |                                                                            |          |
-                       |                                                                            |           --1.89%--__mutex_lock.isra.6
-                       |                                                                            |                     |
-                       |                                                                            |                      --1.35%--osq_lock
-                       |                                                                            |
-                       |                                                                            |--1.74%--SocketTk_poll
-                       |                                                                            |          |
-                       |                                                                            |           --1.17%--IBVSocket_poll
-                       |                                                                            |                     |
-                       |                                                                            |                      --0.93%--__IBVSocket_receiveCheck
-                       |                                                                            |                                |
-                       |                                                                            |                                 --0.90%--__IBVSocket_recvWC
-                       |                                                                            |                                           |
-                       |                                                                            |                                            --0.86%--__IBVSocket_waitForRecvCompletionEvent
-                       |                                                                            |                                                      |
-                       |                                                                            |                                                       --0.82%--mlx5_ib_poll_cq
-                       |                                                                            |
-                       |                                                                             --0.83%--__commkit_prepare_io
-                       |                                                                                       |
-                       |                                                                                        --0.66%--mutex_lock
-                       |
-                        --3.73%--ksys_write
-                                  vfs_write
-                                  |
-                                   --3.73%--new_sync_write
-                                             FhgfsOps_buffered_write_iter
-                                             write_common
-                                             FhgfsOpsHelper_writeCached
-                                             |
-                                              --3.73%--FhgfsOpsHelper_writefileEx
-                                                        FhgfsOpsRemoting_writefileVec
-                                                        |
-                                                         --3.72%--FhgfsOpsCommKit_writefileV2bCommunicate
-                                                                   |
-                                                                    --3.71%--FhgfsOpsCommkit_communicate
-                                                                              |
-                                                                              |--2.70%--__commkit_writefile_sendData
-                                                                              |          IBVSocket_send
-                                                                              |          |
-                                                                              |           --2.28%--IBVBuffer_fill
-                                                                              |                     |
-                                                                              |                      --1.99%--_copy_from_iter
-                                                                              |                                |
-                                                                              |                                 --1.96%--copyin
-                                                                              |                                           |
-                                                                              |                                            --1.95%--copy_user_enhanced_fast_string
-                                                                              |
-                                                                               --0.74%--NodeConnPool_acquireStreamSocketEx
-
-    18.22%     0.08%  beegfs-ctl/Main  [kernel.kallsyms]          [k] FhgfsOpsCommkit_communicate
-            |
-             --18.15%--FhgfsOpsCommkit_communicate
-                       |
-                       |--8.52%--__commkit_readfile_recvdata
-                       |          |
-                       |           --8.50%--__commkit_readfile_receive
-                       |                     |
-                       |                      --8.39%--__IBVSocket_recvContinueIncomplete
-                       |                                |
-                       |                                |--6.63%--_copy_to_iter
-                       |                                |          |
-                       |                                |           --6.53%--copyout
-                       |                                |                     |
-                       |                                |                      --6.47%--copy_user_enhanced_fast_string
-                       |                                |
-                       |                                 --1.15%--__IBVSocket_postRecv
-                       |                                           |
-                       |                                            --1.03%--mlx5_ib_post_recv
-                       |                                                      |
-                       |                                                       --0.91%--_raw_spin_lock_irqsave
-                       |
-                       |--3.56%--NodeConnPool_acquireStreamSocketEx
-                       |          |
-                       |          |--2.38%--__mutex_lock.isra.6
-                       |          |          |
-                       |          |          |--1.70%--osq_lock
-                       |          |          |
-                       |          |           --0.52%--mutex_spin_on_owner
-                       |          |
-                       |           --0.52%--schedule
-                       |
-                       |--2.70%--__commkit_writefile_sendData
-                       |          IBVSocket_send
-                       |          |
-                       |           --2.28%--IBVBuffer_fill
-                       |                     |
-                       |                      --1.99%--_copy_from_iter
-                       |                                |
-                       |                                 --1.96%--copyin
-                       |                                           |
-                       |                                            --1.95%--copy_user_enhanced_fast_string
-                       |
-                       |--1.86%--SocketTk_poll
-                       |          |
-                       |           --1.22%--IBVSocket_poll
-                       |                     |
-                       |                      --0.94%--__IBVSocket_receiveCheck
-                       |                                |
-                       |                                 --0.91%--__IBVSocket_recvWC
-                       |                                           |
-                       |                                            --0.87%--__IBVSocket_waitForRecvCompletionEvent
-                       |                                                      |
-                       |                                                       --0.84%--mlx5_ib_poll_cq
-                       |
-                       |--0.83%--__commkit_prepare_io
-                       |          |
-                       |           --0.67%--mutex_lock
-                       |
-                        --0.52%--__commkit_cleanup_generic
-                                  |
-                                   --0.51%--NodeConnPool_releaseStreamSocket
-
-    16.54%     0.25%  swapper          [kernel.kallsyms]          [k] do_idle
-            |
-
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><blockquote>
 <p>画外音
@@ -2220,11 +1500,7 @@ MLNX_OFED_LINUX-5.6-1.0.3.3:</p>
 <h3 id="启动">启动</h3>
 <p>beegfs客户端无法启动，提示管理节点链接不上
 ip a
-<<<<<<< HEAD
 ibstata 
-=======
-ibstata
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 不显示ip 网卡</p>
 <p>/etc/init.d/opensmd restart 失败</p>
 <p>1164  lsmod |grep rdma
@@ -2263,19 +1539,11 @@ lsmod - Show the status of modules in the Linux Kernel</p>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ git clone https://github.com/torvalds/linux.git
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ git clone https://github.com/torvalds/linux.git
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><ul>
 <li>趣谈Linux操作系统学习笔记：物理内存管理（下）（第24讲）</li>

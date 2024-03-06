@@ -23,11 +23,7 @@
 
 
 
-<<<<<<< HEAD
 <meta name="generator" content="Hugo 0.101.0 with theme even" />
-=======
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/storage/3_ceph_help/" />
@@ -52,11 +48,7 @@
 <meta itemprop="name" content="《大话 Ceph》 之Ceph 运维手册&#34;">
 <meta itemprop="description" content="you can">
 
-<<<<<<< HEAD
 <meta itemprop="wordCount" content="928">
-=======
-<meta itemprop="wordCount" content="929">
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 <meta itemprop="keywords" content="CEPH," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="《大话 Ceph》 之Ceph 运维手册&#34;"/>
 <meta name="twitter:description" content="you can"/>
@@ -138,11 +130,7 @@
         <div class="post-category">
             <a href="/categories/CEPH/"> CEPH </a>
             </div>
-<<<<<<< HEAD
           <span class="more-meta"> 约 928 字 </span>
-=======
-          <span class="more-meta"> 约 929 字 </span>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -187,7 +175,6 @@
 <p>方式一：tell子命令</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
@@ -195,15 +182,6 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Usage:
 </span></span><span class="line"><span class="cl">ceph tell &lt;name (type.id)&gt; help
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Usage:
-ceph tell &lt;name (type.id)&gt; help
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div></li>
 <li>
@@ -216,35 +194,19 @@ ceph &ndash;admin-daemon /var/run/ceph/$cluster-$type.$id.asok command</p>
 <p>常用command如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h3 id="31-tell子命令"><strong>3.1 tell子命令</strong></h3>
 <p>命令使用格式如下，在管理节点执行即可</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ceph tell <span class="o">{</span>daemon-type<span class="o">}</span>.<span class="o">{</span>daemon id or *<span class="o">}</span> injectargs --<span class="o">{</span>name<span class="o">}={</span>value<span class="o">}</span> <span class="o">[</span>--<span class="o">{</span>name<span class="o">}={</span>value<span class="o">}]</span>
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ceph tell <span class="o">{</span>daemon-type<span class="o">}</span>.<span class="o">{</span>daemon id or *<span class="o">}</span> injectargs --<span class="o">{</span>name<span class="o">}={</span>value<span class="o">}</span> <span class="o">[</span>--<span class="o">{</span>name<span class="o">}={</span>value<span class="o">}]</span>
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><ul>
 <li>daemon-type：为要操作的对象类型如osd、mon等。</li>
@@ -254,50 +216,30 @@ ceph &ndash;admin-daemon /var/run/ceph/$cluster-$type.$id.asok command</p>
 <p>例如</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-=======
-<pre class="chroma"><code><span class="lnt">1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 在管理节点运行</span>
 </span></span><span class="line"><span class="cl">ceph tell mon.mon01 injectargs --mon_allow_pool_delete<span class="o">=</span><span class="nb">true</span>
 </span></span><span class="line"><span class="cl">ceph tell mon.* injectargs --mon_allow_pool_delete<span class="o">=</span><span class="nb">true</span>
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 在管理节点运行</span>
-ceph tell mon.mon01 injectargs --mon_allow_pool_delete<span class="o">=</span><span class="nb">true</span>
-ceph tell mon.* injectargs --mon_allow_pool_delete<span class="o">=</span><span class="nb">true</span>
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>mon_allow_pool_delete此选项的值默认为false，表示不允许删除pool，只有此选项打开后方可删除，记得改回去！！！ 这里使用mon.ceph-monitor-1表示只对ceph-monitor-1设置，可以使用*</p>
 <h3 id="32-daemon子命令"><strong>3.2 daemon子命令</strong></h3>
 <p>命令格式如下，需要登录到守护进程所在的那台主机上执行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ceph daemon <span class="o">{</span>daemon-type<span class="o">}</span>.<span class="o">{</span>id<span class="o">}</span> config <span class="nb">set</span> <span class="o">{</span>name<span class="o">}={</span>value<span class="o">}</span> 
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ceph daemon <span class="o">{</span>daemon-type<span class="o">}</span>.<span class="o">{</span>id<span class="o">}</span> config <span class="nb">set</span> <span class="o">{</span>name<span class="o">}={</span>value<span class="o">}</span> 
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>例。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
@@ -305,24 +247,11 @@ ceph tell mon.* injectargs --mon_allow_pool_delete<span class="o">=</span><span 
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh root@mon01
 </span></span><span class="line"><span class="cl">ceph daemon mon.mon01 config <span class="nb">set</span> mon_allow_pool_delete <span class="nb">false</span> 
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ssh root@mon01
-ceph daemon mon.mon01 config <span class="nb">set</span> mon_allow_pool_delete <span class="nb">false</span> 
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h3 id="33-socket文件"><strong>3.3 socket文件</strong></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-=======
-<pre class="chroma"><code><span class="lnt">1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -332,7 +261,6 @@ ceph daemon mon.mon01 config <span class="nb">set</span> mon_allow_pool_delete <
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1、查看帮助</span>
 </span></span><span class="line"><span class="cl">ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok <span class="nb">help</span>
 </span></span><span class="line"><span class="cl">
@@ -342,111 +270,57 @@ ceph daemon mon.mon01 config <span class="nb">set</span> mon_allow_pool_delete <
 </span></span><span class="line"><span class="cl"><span class="c1"># 3、设置</span>
 </span></span><span class="line"><span class="cl">ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok config <span class="nb">set</span> mon_allow_pool_delete <span class="nb">true</span>
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 1、查看帮助</span>
-ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok <span class="nb">help</span>
-
-<span class="c1"># 2、查看配置项</span>
-ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok config get mon_allow_pool_delete
-
-<span class="c1"># 3、设置</span>
-ceph --admin-daemon /var/run/ceph/ceph-mds.mon01.asok config <span class="nb">set</span> mon_allow_pool_delete <span class="nb">true</span>
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>如果超过半数的monitor节点挂掉，此时通过网络访问ceph的所有操作都会被阻塞，但monitor的本地socket还是可以通信的。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ceph --admin-daemon /var/run/ceph/ceph-mon.mon03.asok quorum_status
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ceph --admin-daemon /var/run/ceph/ceph-mon.mon03.asok quorum_status
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><h2 id="--维护集群常用命令">#  维护集群常用命令</h2>
 <h3 id="mon相关">mon相关</h3>
 <p>1、查看mon状态</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ceph mon stat
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ceph mon stat
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>2、查看mon映射信息</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ceph mon dump
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ceph mon dump
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>3、检查Ceph monitor仲裁/选举状态</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ceph quorum_status --format json-pretty
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">ceph quorum_status --format json-pretty
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div><p>4、查看mon信息包括ip地址</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-=======
-<pre class="chroma"><code><span class="lnt">1
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">获得一个正在运行的 mon map，并保存在 1.txt 文件中 
 </span></span><span class="line"><span class="cl">ceph mon getmap -o 1.txt
 </span></span><span class="line"><span class="cl">monmaptool --print 1.txt
 </span></span></code></pre></td></tr></table>
-=======
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">获得一个正在运行的 mon map，并保存在 1.txt 文件中 
-ceph mon getmap -o 1.txt
-monmaptool --print 1.txt
-</code></pre></td></tr></table>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
 </div>
 </div></li>
 </ul>
@@ -481,7 +355,6 @@ monmaptool --print 1.txt
           <a href="/tags/CEPH/">CEPH</a>
           </div>
       <nav class="post-nav">
-<<<<<<< HEAD
         <a class="prev" href="/post/plan/how_to_study/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default"></span>
@@ -489,15 +362,6 @@ monmaptool --print 1.txt
           </a>
         <a class="next" href="/post/leetcode/leetcod_easy/">
             <span class="next-text nav-default">leetcode_easy_200-300</span>
-=======
-        <a class="prev" href="/post/leetcode/system_desing/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">system_desing</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/storage/4_icfs_help/">
-            <span class="next-text nav-default">日拱一卒：操作手册</span>
->>>>>>> 9b7be310c3cd591c19d7bee95dee8ac1c437d9fa
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
