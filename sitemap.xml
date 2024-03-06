@@ -2,8 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangcy6.github.io/categories/</loc>
+    <lastmod>2024-03-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/categories/GTD/</loc>
+    <lastmod>2024-03-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangcy6.github.io/post/</loc>
-    <lastmod>2024-03-03T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/</loc>
+    <lastmod>2024-03-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangcy6.github.io/post/ARTS/2024/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC7%E5%91%A8-/</loc>
+    <lastmod>2024-03-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -23,13 +51,6 @@
   </url>
   
   <url>
-    <loc>https://wangcy6.github.io/</loc>
-    <lastmod>2024-03-03T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wangcy6.github.io/post/2024/2024-03-03-04_rust_vivo/</loc>
     <lastmod>2024-03-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -39,27 +60,6 @@
   <url>
     <loc>https://wangcy6.github.io/post/2024/2024-03-03-ask/</loc>
     <lastmod>2024-03-03T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/</loc>
-    <lastmod>2024-02-28T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/categories/GTD/</loc>
-    <lastmod>2024-02-28T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangcy6.github.io/post/ARTS/2024/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC7%E5%91%A8-/</loc>
-    <lastmod>2024-02-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
