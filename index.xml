@@ -6,7 +6,25 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 06 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>只管去做践N0.9</title>
+      <link>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_8/</link>
+      <pubDate>Mon, 11 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_8/</guid>
+      <description>指定每月目标，拆分每周预先承诺的习惯卡片， 落实每天行动清单 Part I 月初指定目标九宫格：一月一次 一、 我今天为目标做了什么 第一个青蛙 1. 工作·事业： 提</description>
+    </item>
+    
+    <item>
+      <title>只管去做践N0.9</title>
+      <link>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_9/</link>
+      <pubDate>Mon, 11 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_9/</guid>
+      <description>指定每月目标，拆分每周预先承诺的习惯卡片， 落实每天行动清单 Part I 月初指定目标九宫格：一月一次 一、 我今天为目标做了什么 第一个青蛙 1. 工作·事业： 提</description>
+    </item>
+    
     <item>
       <title>只管去做践N0.7</title>
       <link>https://wangcy6.github.io/post/ARTS/2024/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC7%E5%91%A8-/</link>
@@ -17,12 +35,12 @@
     </item>
     
     <item>
-      <title>只管去做践N0.8</title>
-      <link>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_8/</link>
-      <pubDate>Wed, 06 Mar 2024 00:00:00 +0000</pubDate>
+      <title>vivo蓝河操作系统创新赛准备材料</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_8/</guid>
-      <description>指定每月目标，拆分每周预先承诺的习惯卡片， 落实每天行动清单 Part I 月初指定目标九宫格：一月一次 一、 我今天为目标做了什么 第一个青蛙 1. 工作·事业： 提</description>
+      <guid>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</guid>
+      <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>
     </item>
     
     <item>
@@ -310,7 +328,7 @@
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ai/2024-03-07-Ai-promt/</guid>
-      <description>协作 # 每日练习 整理的 AI提示词（Prompt）网站，让AI工具效率翻倍！ 写作 https://xxlab.tech/archives/aigc-ti-shi-ci-prompt-wang-zhan 绘画 Drawing Prompt-AI驱动的绘图提示词生成器 Drawing Prompt是</description>
+      <description>协作 AIPrompter可帮助您快速完成提示词填写和翻译的浏览器插件工具。 适用于Stable Difussion、Midjourney、Com</description>
     </item>
     
     <item>

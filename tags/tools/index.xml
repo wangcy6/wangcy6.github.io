@@ -8,6 +8,15 @@
     <language>zh-cn</language>
     <lastBuildDate>Sun, 03 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>vivo蓝河操作系统创新赛准备材料</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</guid>
+      <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>
+    </item>
+    
+    <item>
       <title>源码阅读：请你设计一个线程池</title>
       <link>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
@@ -76,7 +85,7 @@
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/ai/2024-03-07-Ai-promt/</guid>
-      <description>协作 # 每日练习 整理的 AI提示词（Prompt）网站，让AI工具效率翻倍！ 写作 https://xxlab.tech/archives/aigc-ti-shi-ci-prompt-wang-zhan 绘画 Drawing Prompt-AI驱动的绘图提示词生成器 Drawing Prompt是</description>
+      <description>协作 AIPrompter可帮助您快速完成提示词填写和翻译的浏览器插件工具。 适用于Stable Difussion、Midjourney、Com</description>
     </item>
     
     <item>
