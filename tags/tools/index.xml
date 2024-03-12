@@ -6,11 +6,11 @@
     <description>Recent content in tools on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 03 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>vivo蓝河操作系统创新赛准备材料</title>
       <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
-      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 12 Mar 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</guid>
       <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>

@@ -6,7 +6,16 @@
     <description>Recent content on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 11 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vivo蓝河操作系统创新赛准备材料</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
+      <pubDate>Tue, 12 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</guid>
+      <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>
+    </item>
+    
     <item>
       <title>只管去做践N0.9</title>
       <link>https://wangcy6.github.io/post/ARTS/2024/do_book_weekly_8/</link>
@@ -32,15 +41,6 @@
       
       <guid>https://wangcy6.github.io/post/ARTS/2024/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B0%E5%BD%95%E7%AC%AC7%E5%91%A8-/</guid>
       <description>只管去做 N0.7 # Part I 每月目标九宫格训练营 # Part 2 习惯卡片 一、环境场： 餐厅区&amp;ndash;吃饭专心吃饭 小故事：过去是吧10000次，今天想改造怎么做</description>
-    </item>
-    
-    <item>
-      <title>vivo蓝河操作系统创新赛准备材料</title>
-      <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
-      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</guid>
-      <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>
     </item>
     
     <item>
