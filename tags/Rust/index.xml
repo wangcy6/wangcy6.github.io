@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rust on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/Rust/</link>
+    <description>Recent content in Rust on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/Rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust For Linux02</title>
+      <link>https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_2/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_2/</guid>
+      <description>本文主要描述 第六章：文件系统 参考资料 https://github.com/LearningOS/2023a-rcore-watchpoints https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/0intro.html#id2 https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/index.html rcore-tutorial-book-v3.pdf https://github.com/learningos https://os.phil-opp.com/ 本章代码导读 本章涉及的代码量相对较多，且与进程执行相关的管理还有直接的关系。其实我们是参考经</description>
+    </item>
+    
+  </channel>
+</rss>

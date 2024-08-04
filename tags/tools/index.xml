@@ -6,7 +6,43 @@
     <description>Recent content in tools on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 19 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vivo蓝河操作系统创新赛准备材料</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
+      <pubDate>Tue, 12 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</guid>
+      <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>
+    </item>
+    
+    <item>
+      <title>整理：强哥答疑</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-03-04_rust_vivo/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-03-03-04_rust_vivo/</guid>
+      <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这</description>
+    </item>
+    
+    <item>
+      <title>整理：强哥答疑</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-03-ask/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-03-03-ask/</guid>
+      <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、</description>
+    </item>
+    
+    <item>
+      <title>源码阅读：请你设计一个线程池</title>
+      <link>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</guid>
+      <description>在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜的</description>
+    </item>
+    
     <item>
       <title>do_book</title>
       <link>https://wangcy6.github.io/post/2023/2_do_book/</link>
@@ -23,6 +59,15 @@
       
       <guid>https://wangcy6.github.io/post/book/2_2023_do_book/</guid>
       <description>http://localhost:1313/post/2023/2_do_book/ 少有人走的路 https://www.holisticedu.us/wechat/The_Road_Less_Traveled.pdf D2-NO1-803-问题和痛苦 金句: 替代品带来的痛苦，甚至比逃避的痛苦更为强烈 真正的健康者 寥寥无几。有的逃避问题者，宁可躲</description>
+    </item>
+    
+    <item>
+      <title>AI周刊</title>
+      <link>https://wangcy6.github.io/post/2024/2024_03_10_ai_weekly_01/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024_03_10_ai_weekly_01/</guid>
+      <description>方法 帮助1000个人打造个人ip 每天不停学知识，最后什么都没去学怎办? 你不应先学习，再开始，而应先开始，再学习。 极简主义创业者关注如何“尽一</description>
     </item>
     
     <item>

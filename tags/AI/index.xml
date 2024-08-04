@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/AI/</link>
+    <description>Recent content in AI on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/AI/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI正念｜睡前三小时精力回流提醒助手</title>
+      <link>https://wangcy6.github.io/post/ai/2024/01-2024-08-02-go-to-sleep/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/2024/01-2024-08-02-go-to-sleep/</guid>
+      <description>AI正念｜睡前三小时精力回流提醒助手 大家好，我是watchpoints ，一个只为自己打工程序员， watchpoints是我github用户名</description>
+    </item>
+    
+  </channel>
+</rss>
