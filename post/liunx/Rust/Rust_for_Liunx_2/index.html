@@ -23,7 +23,11 @@
 
 
 
+<<<<<<< HEAD
 <meta name="generator" content="Hugo 0.101.0 with theme even" />
+=======
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_2/" />
@@ -42,12 +46,21 @@
 <meta property="og:description" content="本文主要描述 第六章：文件系统 参考资料 https://github.com/LearningOS/2023a-rcore-watchpoints https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/0intro.html#id2 https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/index.html rcore-tutorial-book-v3.pdf https://github.com/learningos https://os.phil-opp.com/ 本章代码导读 本章涉及的代码量相对较多，且与进程执行相关的管理还有直接的关系。其实我们是参考经" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/liunx/Rust/Rust_for_Liunx_2/" /><meta property="article:section" content="post" />
+<<<<<<< HEAD
 <meta property="article:published_time" content="2023-12-06T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-12-06T00:00:00+00:00" />
 
 <meta itemprop="name" content="Rust For Linux02">
 <meta itemprop="description" content="本文主要描述 第六章：文件系统 参考资料 https://github.com/LearningOS/2023a-rcore-watchpoints https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/0intro.html#id2 https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/index.html rcore-tutorial-book-v3.pdf https://github.com/learningos https://os.phil-opp.com/ 本章代码导读 本章涉及的代码量相对较多，且与进程执行相关的管理还有直接的关系。其实我们是参考经"><meta itemprop="datePublished" content="2023-12-06T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-12-06T00:00:00+00:00" />
+=======
+<meta property="article:published_time" content="2023-12-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-12-06T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Rust For Linux02">
+<meta itemprop="description" content="本文主要描述 第六章：文件系统 参考资料 https://github.com/LearningOS/2023a-rcore-watchpoints https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/0intro.html#id2 https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter6/index.html rcore-tutorial-book-v3.pdf https://github.com/learningos https://os.phil-opp.com/ 本章代码导读 本章涉及的代码量相对较多，且与进程执行相关的管理还有直接的关系。其实我们是参考经"><meta itemprop="datePublished" content="2023-12-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-12-06T00:00:00&#43;00:00" />
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
 <meta itemprop="wordCount" content="752">
 <meta itemprop="keywords" content="Rust," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Rust For Linux02"/>
@@ -189,15 +202,26 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+=======
+<pre class="chroma"><code><span class="lnt">1
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git checkout ch6
 </span></span><span class="line"><span class="cl">cd os
 </span></span><span class="line"><span class="cl">make run
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git checkout ch6
+cd os
+make run
+</code></pre></td></tr></table>
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
 </div>
 </div><h2 id="如何学习">如何学习</h2>
 <blockquote>
@@ -214,7 +238,11 @@ Q4 (Usage): 使用协程时需要注意什么？
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+=======
+<pre class="chroma"><code><span class="lnt"> 1
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -227,6 +255,7 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
+<<<<<<< HEAD
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> 二、这个技术的优势和劣势分别是什么 
@@ -239,6 +268,20 @@ Q4 (Usage): 使用协程时需要注意什么？
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">六、已有的实现和它之间的对比
 </span></span></code></pre></td></tr></table>
+=======
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
+
+ 二、这个技术的优势和劣势分别是什么 
+
+三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+四、技术的组成部分和关键点。
+
+五、技术的底层原理和关键实现
+
+六、已有的实现和它之间的对比
+</code></pre></td></tr></table>
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
 </div>
 </div>
     </div>
@@ -266,9 +309,15 @@ Q4 (Usage): 使用协程时需要注意什么？
           <a href="/tags/Rust/">Rust</a>
           </div>
       <nav class="post-nav">
+<<<<<<< HEAD
         <a class="prev" href="/post/2024/2024-03-03-ask/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">整理：强哥答疑</span>
+=======
+        <a class="prev" href="/post/2024/2024-02-09-100-ways-add-funs/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">小册子：互联网引流的100种手法</span>
+>>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         <a class="next" href="/post/ARTS/2023/do_book_weekly7/">

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ARTS_2024_weekly_13 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="什么是ARTS 我们可以看到，你听别人讲，或是自己看书，或是让别人演示给你，这些都不能让你真正获得学习能力，因为你是在被别人灌输，在听别人说。" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/ARTS/2024/arts_weekly_13/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="ARTS_2024_weekly_13" />
+<meta property="og:description" content="什么是ARTS 我们可以看到，你听别人讲，或是自己看书，或是让别人演示给你，这些都不能让你真正获得学习能力，因为你是在被别人灌输，在听别人说。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/ARTS/2024/arts_weekly_13/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-03-25T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="ARTS_2024_weekly_13">
+<meta itemprop="description" content="什么是ARTS 我们可以看到，你听别人讲，或是自己看书，或是让别人演示给你，这些都不能让你真正获得学习能力，因为你是在被别人灌输，在听别人说。"><meta itemprop="datePublished" content="2024-03-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-03-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2065">
+<meta itemprop="keywords" content="GTD,work," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ARTS_2024_weekly_13"/>
+<meta name="twitter:description" content="什么是ARTS 我们可以看到，你听别人讲，或是自己看书，或是让别人演示给你，这些都不能让你真正获得学习能力，因为你是在被别人灌输，在听别人说。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">ARTS_2024_weekly_13</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-03-25 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/ARTS/"> ARTS </a>
+            </div>
+          <span class="more-meta"> 约 2065 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一algorithm每周至少做一个-leetcode-的算法题">一、Algorithm：每周至少做一个 leetcode 的算法题</a></li>
+    <li><a href="#二review阅读并点评至少一篇英文技术文章">二、Review：阅读并点评至少一篇英文技术文章</a></li>
+    <li><a href="#三tip学习至少一个技术技巧">三、Tip：学习至少一个技术技巧</a></li>
+    <li><a href="#四share分享一篇有观点和思考的技术文章">四、Share：分享一篇有观点和思考的技术文章</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="什么是arts">什么是ARTS</h1>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/webp/215144/1706349075140-8566a7bd-b098-4a51-8b4d-4e857511cafb.webp?x-oss-process=image%2Fresize%2Cw_720%2Climit_0#averageHue=%23c1e4f0&amp;from=url&amp;id=wf7X2&amp;originHeight=385&amp;originWidth=720&amp;originalType=binary&amp;ratio=1.6750000715255737&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt=""></p>
+<p>我们可以看到，你听别人讲，或是自己看书，或是让别人演示给你，这些都不能让你真正获得学习能力，因为你是在被别人灌输，在听别人说。</p>
+<p>只有你开始自己思考，开始自己总结和归纳，开始找人交流讨论，开始践行，并开始对外输出，你才会掌握到真正的学习能力。</p>
+<p><strong>所以，学习不是努力读更多的书，盲目追求阅读的速度和数量，这会让人产生低层次的勤奋和成长的感觉，这只是在使蛮力。要思辨，要践行，要总结和归纳，否则，你只是在机械地重复某件事（记忆知识），而不会有质的成长的。</strong></p>
+<p>作者：陈皓
+链接：https://www.zhihu.com/question/301150832/answer/529809529
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>ARTS是耗子叔叔左耳听风发起的一个活动。</p>
+<ul>
+<li>Algorithm：每周至少做一个 leetcode 的算法题</li>
+<li>Review：阅读并点评至少一篇英文技术文章</li>
+<li>Tip：学习至少一个技术技巧</li>
+<li>Share：分享一篇有观点和思考的技术文章</li>
+<li></li>
+</ul>
+<p>作者：陈皓
+链接：https://www.zhihu.com/question/301150832/answer/529809529</p>
+<p>我们整个世界进入了前所未有的信息爆炸时代，人们担忧的不再是无知识可学，而是有学不完的知识。而且时代的节奏变得越来越快，你可能再也不像 20 年前，可以沉着优雅平和地泡上一杯茶，坐在一个远离喧嚣的环境下，认认真真地看本书。这个时代，你再也不会有大块大块的时间，你的时间都被打成碎片了，不知不觉你也成为了快餐文化的拥趸……</p>
+<p>在这样一个时代下，快速、简单、轻松的方式给人带来的快感更强烈，而高层次的思考、思辨和逻辑则被这些频度高的快餐信息感所弱化。</p>
+<p><strong>商家们看到在这样的时代里怎么治愈这些人在学习上的焦虑的商机，他们在想方设法地用一些手段推出各种代读、领读和听读类产品，让人们可以在短时间内体会到轻松获取知识的快感，并产生勤奋好学和成长的幻觉</strong></p>
+<p>这些所谓的“快餐文化”可以让你有短暂的满足感，但是无法让你有更深层次的思考和把知识转换成自己的技能的有效路径，因为那些都是需要大量时间和精力的付出，不符合现代人的生活节奏。</p>
+<p>人们开始在朋友圈、公众号、得到等这样的地方进行学习，导致他们越学越焦虑，越学越浮燥，越学越不会思考。于是，他们成了“什么都懂，但依然过不好这一生”的状态。</p>
+<p><strong>你有没有发现，在知识的领域也有阶层之分，那些长期在底层知识阶层的人，需要等着高层的人来喂养，他们长期陷于各种谣言和不准确的信息环境中，于是就导致错误或幼稚的认知，并习惯于那些不费劲儿的轻度学习方式，从而一点点地丧失了深度学习的独立思考能力，从而再也没有能力打破知识阶层的限制，被困在认知底层翻不了身</strong></p>
+<p>一句话总结</p>
+<h2 id="一algorithm每周至少做一个-leetcode-的算法题">一、Algorithm：每周至少做一个 leetcode 的算法题</h2>
+<h2 id="二review阅读并点评至少一篇英文技术文章">二、Review：阅读并点评至少一篇英文技术文章</h2>
+<h2 id="三tip学习至少一个技术技巧">三、Tip：学习至少一个技术技巧</h2>
+<h2 id="四share分享一篇有观点和思考的技术文章">四、Share：分享一篇有观点和思考的技术文章</h2>
+<p>开始：03-25-</p>
+<h1 id="一algorithm每周至少做一个-leetcode-的算法题-1">一、Algorithm：每周至少做一个 leetcode 的算法题</h1>
+<h1 id="二review阅读并点评至少一篇英文技术文章-1">二、Review：阅读并点评至少一篇英文技术文章</h1>
+<h1 id="三tip学习至少一个技术技巧-1">三、Tip：学习至少一个技术技巧</h1>
+<h1 id="四share分享一篇有观点和思考的技术文章-1">四、Share：分享一篇有观点和思考的技术文章</h1>
+<p>自己努力 +抓住机会 才是正道</p>
+<p>个人感觉 嵌入式这样岗位 和传统电信一样 依赖 设备，设备最重要 ，互联网重视人， 这个不同道路</p>
+<p>个人经历</p>
+<p>刚毕业天什么无所谓，</p>
+<p>面试过苏宁搜素部门，感觉没准备好，继续原有地方努力，只看bat</p>
+<p>面试过调度的k83类似的，感觉没准备好，继续原有地方努力，只看bat</p>
+<p>面试过jd 广告部门机器学习 ，感觉没准备好，继续原有地方努力，只看bat</p>
+<p>面试过mysql数据库 ，感觉没准备好，继续原有地方努力，只看bat</p>
+<p>结果bat 没面过，</p>
+<p>现在发现错过太多，精力不够，什么技术不感兴趣了。</p>
+<p>什么合适，不合适，结果纠结这样东西</p>
+<p>一直在找目标，结果没有行动。严重错误</p>
+<p>一直行动， 没有目标	严重错误</p>
+<p>你这个总结一直说自己没准备好，但是你有没有分析过自己要去做的方向是什么，面试官拒绝你的真实原因是什么？你自己是不是真的match？面试公司岗位是不是真的需要你这样的应聘者</p>
+<p>就c++而言，只要认证看书，做练习 思考，然后真正写过相关代码，包括算法。</p>
+<p>基本功算过关了。这个感觉其他岗位不一样。就可以参与其他不同岗位，不同方向定位。</p>
+<p>很适合数据库，搜索推荐，分布式岗位，但是之前电信等行业 用c++基本逻辑。</p>
+<p>根本一直抱怨，但是没有去定位。</p>
+<p>例如最简单定位也行，高工作 好行业。</p>
+<p>就是积累行业经验。内存 故障定位 等，</p>
+<p>因为很多企业 根本不用c++，用了也是不怎么重视。包括大厂</p>
+<p>我分析一下 根本原因 每个公司，每个岗位都有自己固有流程，只能去适应，调整，自己都是凭借自己想想。</p>
+<p>没有去调整。</p>
+<p>例如 面试过的的jd 为 AI 网络部门，就是 就是研究百度提供rpc的库，定位很清楚，</p>
+<p>自己想想的 Ai 需要数据，算法 各种模型。</p>
+<p>判断自然任务准备好。</p>
+<p>基本上 能面试通过 基本上 符合这个岗位能力，都是经过好几轮面试。</p>
+<p>他们知道自己招聘什么人，</p>
+<p>他们为自己负责的（垃圾公司除外）</p>
+<p>可能候选人没看清楚，</p>
+<p>一句话 可能候选人没想清楚。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-03-25 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/GTD/">GTD</a>
+          <a href="/tags/work/">work</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/storage/2024-3-08-ceph-read/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">源码解析：ceph数据读写</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2024/2024-03-03-11-rust-ai/">
+            <span class="next-text nav-default">vivo蓝河操作系统创新赛准备材料</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
