@@ -17,7 +17,6 @@
     </item>
     
     <item>
-<<<<<<< HEAD
       <title>源码阅读：请你设计一个线程池</title>
       <link>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
@@ -27,8 +26,6 @@
     </item>
     
     <item>
-=======
->>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
       <title>整理：强哥答疑</title>
       <link>https://wangcy6.github.io/post/2024/2024-03-03-04_rust_vivo/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
@@ -46,18 +43,6 @@
       <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、</description>
     </item>
     
-<<<<<<< HEAD
-=======
-    <item>
-      <title>源码阅读：请你设计一个线程池</title>
-      <link>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</link>
-      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</guid>
-      <description>在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜的</description>
-    </item>
-    
->>>>>>> 5daac766421b18e4e49ca4e73a840eb6773fbf55
     <item>
       <title>do_book</title>
       <link>https://wangcy6.github.io/post/2023/2_do_book/</link>
@@ -92,24 +77,6 @@
       
       <guid>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</guid>
       <description>一次只使用一个工具，其他装作看不见。 第一章：概念 ChatGPT是什么 https://mp.weixin.qq.com/s/Dns5GSsiledxCV2SIhNgrw 第二章：提示词 写专利 例如：绘制时序图 1 2 请绘制 mermaid sequence diagram ： mds 启动 recov</description>
-    </item>
-    
-    <item>
-      <title>跟我学ChatGPT使用技巧：</title>
-      <link>https://wangcy6.github.io/post/ai/2024-03-07-Ai-promt/</link>
-      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/ai/2024-03-07-Ai-promt/</guid>
-      <description>协作 AIPrompter可帮助您快速完成提示词填写和翻译的浏览器插件工具。 适用于Stable Difussion、Midjourney、Com</description>
-    </item>
-    
-    <item>
-      <title>跟我学ChatGPT使用技巧：</title>
-      <link>https://wangcy6.github.io/post/ai/news/ai_new_weekly_01/</link>
-      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/ai/news/ai_new_weekly_01/</guid>
-      <description>协作 # 每日练习 整理的 AI提示词（Prompt）网站，让AI工具效率翻倍！ 写作 https://xxlab.tech/archives/aigc-ti-shi-ci-prompt-wang-zhan 绘画 Drawing Prompt-AI驱动的绘图提示词生成器 Drawing Prompt是</description>
     </item>
     
     <item>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.83.1 with theme even" />
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
 
 
 <link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/01-2024-06-18-ob_study1/" />
@@ -42,13 +42,13 @@
 <meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/01-2024-06-18-ob_study1/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2023-05-26T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2023-05-26T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2023-05-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-05-26T00:00:00+00:00" />
 
 <meta itemprop="name" content="成为oceanbase贡献者第四天：内置函数">
-<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2023-05-26T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2023-05-26T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="6840">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2023-05-26T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-05-26T00:00:00+00:00" />
+<meta itemprop="wordCount" content="6855">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="成为oceanbase贡献者第四天：内置函数"/>
 <meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/oceanbase/"> oceanbase </a>
             </div>
-          <span class="more-meta"> 约 6840 字 </span>
+          <span class="more-meta"> 约 6855 字 </span>
           <span class="more-meta"> 预计阅读 14 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -242,7 +242,7 @@
 </table>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -264,27 +264,27 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="p">.</span><span class="n">mysql</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">refman</span><span class="o">/</span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">gis</span><span class="o">-</span><span class="n">polygon</span><span class="o">-</span><span class="n">property</span><span class="o">-</span><span class="n">functions</span><span class="p">.</span><span class="n">html</span><span class="o">#</span><span class="n">function_area</span><span class="w">
-</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">poly</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="w">       </span><span class="s1">&#39;Polygon((0 0,0 3,3 0,0 0),(1 1,1 2,2 1,1 1))&#39;</span><span class="p">;</span><span class="w">
-</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">poly</span><span class="p">));</span><span class="w">
-</span><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
-</span><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">poly</span><span class="p">))</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
-</span><span class="c1"></span><span class="o">|</span><span class="w">                               </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
-</span><span class="c1"></span><span class="w">
-</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">mpoly</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="w">       </span><span class="s1">&#39;MultiPolygon(((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1)))&#39;</span><span class="p">;</span><span class="w">
-</span><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">mpoly</span><span class="p">));</span><span class="w">
-</span><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
-</span><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">mpoly</span><span class="p">))</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
-</span><span class="c1"></span><span class="o">|</span><span class="w">                                </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w">
-</span><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="p">.</span><span class="n">mysql</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">refman</span><span class="o">/</span><span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">gis</span><span class="o">-</span><span class="n">polygon</span><span class="o">-</span><span class="n">property</span><span class="o">-</span><span class="n">functions</span><span class="p">.</span><span class="n">html</span><span class="o">#</span><span class="n">function_area</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">poly</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="s1">&#39;Polygon((0 0,0 3,3 0,0 0),(1 1,1 2,2 1,1 1))&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">poly</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">poly</span><span class="p">))</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">                               </span><span class="mi">4</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">---------------------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">@</span><span class="n">mpoly</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="s1">&#39;MultiPolygon(((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1)))&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">mpoly</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">ST_Area</span><span class="p">(</span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="o">@</span><span class="n">mpoly</span><span class="p">))</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">                                </span><span class="mi">8</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----------------------------------+
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="parser模块">parser模块</h3>
 <blockquote>
@@ -367,7 +367,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -392,36 +392,34 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">register_expr_operators</span><span class="p">()</span>
-<span class="p">{</span>
-  <span class="n">memset</span><span class="p">(</span><span class="n">NAME_TYPES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">NAME_TYPES</span><span class="p">));</span>
-  <span class="n">ObArenaAllocator</span> <span class="n">alloc</span><span class="p">;</span>
-  <span class="kt">int64_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//
-</span><span class="c1"></span>  <span class="n">REG_OP</span><span class="p">(</span><span class="n">ObExprSTArea</span><span class="p">);</span><span class="c1">//注册表达式，这里面是lambda表达式
-</span><span class="c1"></span><span class="p">}</span>
-    
-<span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">NameType</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">EXPR_OP_NUM</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
-
-<span class="cp">#define REG_OP(OpClass)                             \
-</span><span class="cp">  do { </span><span class="c1">//lambda 语法，[&amp;] 按引用的方式捕获所有外部变量。                                             \
-</span><span class="c1"></span>    <span class="p">[</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span>                                         \
-      <span class="n">OpClass</span> <span class="nf">op</span><span class="p">(</span><span class="n">alloc</span><span class="p">);</span>  <span class="c1">// ObExprSTArea(common::ObIAllocator &amp;alloc);                        \
-</span><span class="c1">      if (OB_UNLIKELY(i &gt;= EXPR_OP_NUM)) {          \
-</span><span class="c1">        LOG_ERROR(&#34;out of the max expr&#34;);           \
-</span><span class="c1">      } else {                                      \
-</span><span class="c1">        NAME_TYPES[i].name_ = op.get_name();        \   //外部变量   位置register_expr_operators 
-</span><span class="c1"></span>        <span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">type_</span> <span class="o">=</span> <span class="n">op</span><span class="p">.</span><span class="n">get_type</span><span class="p">();</span>        \
-        <span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">is_internal_</span> <span class="o">=</span> <span class="n">op</span><span class="p">.</span><span class="n">is_internal_for_mysql</span><span class="p">();</span> \
-        <span class="n">OP_ALLOC</span><span class="p">[</span><span class="n">op</span><span class="p">.</span><span class="n">get_type</span><span class="p">()]</span> <span class="o">=</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">alloc</span><span class="o">&lt;</span><span class="n">OpClass</span><span class="o">&gt;</span><span class="p">;</span> \
-        <span class="n">i</span><span class="o">++</span><span class="p">;</span>  <span class="c1">//外部变量   位置register_expr_operators                                     \
-</span><span class="c1">      }                                             \
-</span><span class="c1">    }();                                            \
-</span><span class="c1">  } while(0) //只执行一次就结束 理解成if
-</span><span class="c1"></span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">register_expr_operators</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">memset</span><span class="p">(</span><span class="n">NAME_TYPES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">NAME_TYPES</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ObArenaAllocator</span> <span class="n">alloc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int64_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">REG_OP</span><span class="p">(</span><span class="n">ObExprSTArea</span><span class="p">);</span><span class="c1">//注册表达式，这里面是lambda表达式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">NameType</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">EXPR_OP_NUM</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#define REG_OP(OpClass)                             \
+</span></span></span><span class="line"><span class="cl"><span class="cp">  do { </span><span class="c1">//lambda 语法，[&amp;] 按引用的方式捕获所有外部变量。                                             \
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">[</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span>                                         \
+</span></span><span class="line"><span class="cl">      <span class="n">OpClass</span> <span class="nf">op</span><span class="p">(</span><span class="n">alloc</span><span class="p">);</span>  <span class="c1">// ObExprSTArea(common::ObIAllocator &amp;alloc);                        \
+</span></span></span><span class="line"><span class="cl"><span class="c1">      if (OB_UNLIKELY(i &gt;= EXPR_OP_NUM)) {          \
+</span></span></span><span class="line"><span class="cl"><span class="c1">        LOG_ERROR(&#34;out of the max expr&#34;);           \
+</span></span></span><span class="line"><span class="cl"><span class="c1">      } else {                                      \
+</span></span></span><span class="line"><span class="cl"><span class="c1">        NAME_TYPES[i].name_ = op.get_name();        \   //外部变量   位置register_expr_operators 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">type_</span> <span class="o">=</span> <span class="n">op</span><span class="p">.</span><span class="n">get_type</span><span class="p">();</span>        \
+</span></span><span class="line"><span class="cl">        <span class="n">NAME_TYPES</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">is_internal_</span> <span class="o">=</span> <span class="n">op</span><span class="p">.</span><span class="n">is_internal_for_mysql</span><span class="p">();</span> \
+</span></span><span class="line"><span class="cl">        <span class="n">OP_ALLOC</span><span class="p">[</span><span class="n">op</span><span class="p">.</span><span class="n">get_type</span><span class="p">()]</span> <span class="o">=</span> <span class="n">ObExprOperatorFactory</span><span class="o">::</span><span class="n">alloc</span><span class="o">&lt;</span><span class="n">OpClass</span><span class="o">&gt;</span><span class="p">;</span> \
+</span></span><span class="line"><span class="cl">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>  <span class="c1">//外部变量   位置register_expr_operators                                     \
+</span></span></span><span class="line"><span class="cl"><span class="c1">      }                                             \
+</span></span></span><span class="line"><span class="cl"><span class="c1">    }();                                            \
+</span></span></span><span class="line"><span class="cl"><span class="c1">  } while(0) //只执行一次就结束 理解成if
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>旁白：</p>
@@ -447,7 +445,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -455,13 +453,13 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">#define REG_SER_FUNC_ARRAY(id, array, size) \
-  static_assert(id &gt;= 0 &amp;&amp; id &lt; OB_SFA_MAX, &#34;too big id&#34; #id); \
-  bool g_reg_ser_func_##id = ObFuncSerialization::reg_func_array( \
-      id, reinterpret_cast&lt;void **&gt;(array), size);
-
-} // end namespace sql
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#define REG_SER_FUNC_ARRAY(id, array, size) \
+</span></span><span class="line"><span class="cl">  static_assert(id &gt;= 0 &amp;&amp; id &lt; OB_SFA_MAX, &#34;too big id&#34; #id); \
+</span></span><span class="line"><span class="cl">  bool g_reg_ser_func_##id = ObFuncSerialization::reg_func_array( \
+</span></span><span class="line"><span class="cl">      id, reinterpret_cast&lt;void **&gt;(array), size);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">} // end namespace sql
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="geometry">geometry</h3>
 <ol>
@@ -469,22 +467,22 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">computational geometry is not our field of expertise。
-We evaluated multiple geometry libraries, and Boost.Geometry proved to fit our needs best.
-http://mysql.taobao.org/monthly/2021/07/06/
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">computational geometry is not our field of expertise。
+</span></span><span class="line"><span class="cl">We evaluated multiple geometry libraries, and Boost.Geometry proved to fit our needs best.
+</span></span><span class="line"><span class="cl">http://mysql.taobao.org/monthly/2021/07/06/
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>
 <p>GIS数据类型</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -492,19 +490,17 @@ http://mysql.taobao.org/monthly/2021/07/06/
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">    GEOMETRY：不可实例化的数据类型，但是可以作为一个列的类型，存储任何一种其他类型的数据
-    POINT：点
-    LINESTRING：线
-    POLYGON：多边形，由多条闭合的线构成的图形
-    MULTIPOINT：点集合
-    MULTILINESTRING：线集合
-    MULTIPOLYGON：多边形集合
-    GEOMCOLLECTION：空间对象集合
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    GEOMETRY：不可实例化的数据类型，但是可以作为一个列的类型，存储任何一种其他类型的数据
+</span></span><span class="line"><span class="cl">    POINT：点
+</span></span><span class="line"><span class="cl">    LINESTRING：线
+</span></span><span class="line"><span class="cl">    POLYGON：多边形，由多条闭合的线构成的图形
+</span></span><span class="line"><span class="cl">    MULTIPOINT：点集合
+</span></span><span class="line"><span class="cl">    MULTILINESTRING：线集合
+</span></span><span class="line"><span class="cl">    MULTIPOLYGON：多边形集合
+</span></span><span class="line"><span class="cl">    GEOMCOLLECTION：空间对象集合
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -581,31 +577,25 @@ MySQL中每个GIS对象都具有一些属性，MySQL中有一系列函数来获�
 </table>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/exterior_ring.hpp
-
-https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
-https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ring_type.hpp //type_traits
-https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/tags.hpp //GIS数据类型 是类标识，不是枚举值作用是什么？参考stl中的设计。
-/workspaces/oceanbase/unittest/share/test_geo_func_difference.cpp
-
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/exterior_ring.hpp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ring_type.hpp //type_traits
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/tags.hpp //GIS数据类型 是类标识，不是枚举值作用是什么？参考stl中的设计。
+</span></span><span class="line"><span class="cl">/workspaces/oceanbase/unittest/share/test_geo_func_difference.cpp
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -632,40 +622,36 @@ https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ta
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">brief：该函数返回多边形的外环。
-ingroup：该函数属于 exterior_ring 组。
-note：该函数符合 OGC 标准，即符合开放地理空间联盟的标准。与 &#34;ExteriorRing&#34; 不同，该函数使用 &#34;exterior ring&#34;。
-tparam：这是一个模板参数。Polygon 是将要从中获取外环的多边形的类型。
-param：这是函数的参数。polygon 是将要从中获取外环的多边形的引用。
-return：该函数返回一个指向外环的常量引用。
-
-/*!
-\brief Function to get the exterior ring of a polygon (const version)
-\ingroup exterior_ring
-\note OGC compliance: instead of ExteriorRing
-\tparam Polygon polygon type
-\param polygon the polygon to get the exterior ring from
-\return a const reference to the exterior ring
-
-\qbk{distinguish,const version}
-*/
-template &lt;typename Polygon&gt;
-inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
-        Polygon const&amp; polygon)
-{
-    return core_dispatch::exterior_ring
-        &lt;
-            typename tag&lt;Polygon&gt;::type,
-            Polygon const
-        &gt;::apply(polygon);
-}
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brief：该函数返回多边形的外环。
+</span></span><span class="line"><span class="cl">ingroup：该函数属于 exterior_ring 组。
+</span></span><span class="line"><span class="cl">note：该函数符合 OGC 标准，即符合开放地理空间联盟的标准。与 &#34;ExteriorRing&#34; 不同，该函数使用 &#34;exterior ring&#34;。
+</span></span><span class="line"><span class="cl">tparam：这是一个模板参数。Polygon 是将要从中获取外环的多边形的类型。
+</span></span><span class="line"><span class="cl">param：这是函数的参数。polygon 是将要从中获取外环的多边形的引用。
+</span></span><span class="line"><span class="cl">return：该函数返回一个指向外环的常量引用。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/*!
+</span></span><span class="line"><span class="cl">\brief Function to get the exterior ring of a polygon (const version)
+</span></span><span class="line"><span class="cl">\ingroup exterior_ring
+</span></span><span class="line"><span class="cl">\note OGC compliance: instead of ExteriorRing
+</span></span><span class="line"><span class="cl">\tparam Polygon polygon type
+</span></span><span class="line"><span class="cl">\param polygon the polygon to get the exterior ring from
+</span></span><span class="line"><span class="cl">\return a const reference to the exterior ring
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">\qbk{distinguish,const version}
+</span></span><span class="line"><span class="cl">*/
+</span></span><span class="line"><span class="cl">template &lt;typename Polygon&gt;
+</span></span><span class="line"><span class="cl">inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
+</span></span><span class="line"><span class="cl">        Polygon const&amp; polygon)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    return core_dispatch::exterior_ring
+</span></span><span class="line"><span class="cl">        &lt;
+</span></span><span class="line"><span class="cl">            typename tag&lt;Polygon&gt;::type,
+</span></span><span class="line"><span class="cl">            Polygon const
+</span></span><span class="line"><span class="cl">        &gt;::apply(polygon);
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>小贴士：还是没看明白可用参考 看msyql 如何实现</p>
@@ -730,7 +716,7 @@ inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -769,59 +755,53 @@ inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
 </span><span class="lnt">37
 </span><span class="lnt">38
 </span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 1. 关联远程仓库，保证代码可以和远程更新和提交</span>
-git remote add oceanbase https://github.com/oceanbase/oceanbase.git
-git remote -v
-
-<span class="c1"># 2. oceanbase代码更新后更新自己仓库 </span>
-
-自己在github 界面上 同步 然后pull
-
-<span class="c1"># 3. 提交分支到远程自己仓库</span>
- git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
-<span class="c1"># 从将本地的分支版本上传到远程参考(这里不是pr提交)</span>
-git push origin issue_1400:issue_1400
-
-<span class="c1"># 4. 界面上 提交pr</span>
-<span class="c1"># 5. 可选</span>
-git push --set-upstream origin issue_1400
-origin 是默认的远程版本库名称
-等价于git push origin issue_1400:issue_1400 
-
-如果你用Windows就设置全局变量 
-git config --global core.autocrlf <span class="nb">true</span> 
-如果是mac/linux则设置 
-git config --global core.autocrlf input 
- 如果使用 <span class="nb">set</span> list 显示隐藏字符 : <span class="nb">set</span> nolist ：不显示
-
-
-
-合并到master
-git checkout master
-<span class="c1">#把本地分支合并到master</span>
-git merge issue_1400
-
-手工修改
-当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成
-git add xxx
-git commit -m <span class="s2">&#34;merged from main&#34;</span>
-继续
-git merge issue_1400
-已经是最新的。
-
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 1. 关联远程仓库，保证代码可以和远程更新和提交</span>
+</span></span><span class="line"><span class="cl">git remote add oceanbase https://github.com/oceanbase/oceanbase.git
+</span></span><span class="line"><span class="cl">git remote -v
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. oceanbase代码更新后更新自己仓库 </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">自己在github 界面上 同步 然后pull
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 提交分支到远程自己仓库</span>
+</span></span><span class="line"><span class="cl"> git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;
+</span></span><span class="line"><span class="cl"><span class="c1"># 从将本地的分支版本上传到远程参考(这里不是pr提交)</span>
+</span></span><span class="line"><span class="cl">git push origin issue_1400:issue_1400
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. 界面上 提交pr</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 5. 可选</span>
+</span></span><span class="line"><span class="cl">git push --set-upstream origin issue_1400
+</span></span><span class="line"><span class="cl">origin 是默认的远程版本库名称
+</span></span><span class="line"><span class="cl">等价于git push origin issue_1400:issue_1400 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">如果你用Windows就设置全局变量 
+</span></span><span class="line"><span class="cl">git config --global core.autocrlf <span class="nb">true</span> 
+</span></span><span class="line"><span class="cl">如果是mac/linux则设置 
+</span></span><span class="line"><span class="cl">git config --global core.autocrlf input 
+</span></span><span class="line"><span class="cl"> 如果使用 <span class="nb">set</span> list 显示隐藏字符 : <span class="nb">set</span> nolist ：不显示
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">合并到master
+</span></span><span class="line"><span class="cl">git checkout master
+</span></span><span class="line"><span class="cl"><span class="c1">#把本地分支合并到master</span>
+</span></span><span class="line"><span class="cl">git merge issue_1400
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">手工修改
+</span></span><span class="line"><span class="cl">当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成
+</span></span><span class="line"><span class="cl">git add xxx
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;merged from main&#34;</span>
+</span></span><span class="line"><span class="cl">继续
+</span></span><span class="line"><span class="cl">git merge issue_1400
+</span></span><span class="line"><span class="cl">已经是最新的。
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="如何测试">如何测试</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -937,121 +917,121 @@ git merge issue_1400
 </span><span class="lnt">114
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">
-<span class="c1"># DEBUG 构建</span>
-bash build.sh debug --init
-
-<span class="c1"># 这里没有制作镜像，之间覆盖4.0版本的</span>
-<span class="nb">echo</span> <span class="m">3</span> &gt; /proc/sys/vm/drop_caches
-tiup cluster stop watchpoints //关闭其他的
-tiup cluster disable watchpoints  //关闭其他的
-<span class="c1"># 制作本地镜像</span>
-make <span class="nv">DESTDIR</span><span class="o">=</span>./ install <span class="o">&amp;&amp;</span> 
-obd mirror create -n oceanbase-ce -V 4.2.0.1 -p ./usr/local -t my-oceanbase
-Package ok
-name: oceanbase-ce
-version: 4.2.0.1
-release:20230615110800
-arch: x86_64
-md5: dd828bcc94f6f4257d212bc73f7cbc42
-Trace ID: d5ee1980-0b29-11ee-a4c9-000c29378c15
-
-<span class="c1"># 离线安装部署，禁用远程仓库</span>
-obd mirror disable remote
-
-配置文件：
-
-
-<span class="o">[</span>root@localhost oceanbase<span class="o">]</span><span class="c1"># cat mini-local-example.yaml</span>
-oceanbase-ce:
-  tag: my-oceanbase
-  servers:
-    <span class="c1"># Please don&#39;t use hostname, only IP can be supported</span>
-    - 127.0.0.1
-  global:
-    <span class="c1">#  The working directory for OceanBase Database. OceanBase Database is started under this directory. This is a required field.</span>
-    home_path: /mnt/ob/observer
-    <span class="c1"># The directory for data storage. The default value is $home_path/store.</span>
-    data_dir: /mnt/ob/data
-    <span class="c1"># The directory for clog, ilog, and slog. The default value is the same as the data_dir value.</span>
-    redo_dir: /mnt/ob/redo
-    <span class="c1"># Please set devname as the network adaptor&#39;s name whose ip is  in the setting of severs.</span>
-    <span class="c1"># if set severs as &#34;127.0.0.1&#34;, please set devname as &#34;lo&#34;</span>
-    <span class="c1"># if current ip is 192.168.1.10, and the ip&#39;s network adaptor&#39;s name is &#34;eth0&#34;, please use &#34;eth0&#34;</span>
-    devname: lo
-    mysql_port: <span class="m">2881</span> <span class="c1"># External port for OceanBase Database. The default value is 2881. DO NOT change this value after the cluster is started.</span>
-    rpc_port: <span class="m">2882</span> <span class="c1"># Internal port for OceanBase Database. The default value is 2882. DO NOT change this value after the cluster is started.</span>
-    zone: zone1
-    cluster_id: <span class="m">1</span>
-    <span class="c1"># please set memory limit to a suitable value which is matching resource.</span>
-    memory_limit: 6G <span class="c1"># The maximum running memory for an observer</span>
-    system_memory: 1G <span class="c1"># The reserved system memory. system_memory is reserved for general tenants. The default value is 30G.</span>
-    datafile_size: 15G <span class="c1"># Size of the data file.</span>
-    log_disk_size: 10G <span class="c1"># The size of disk space used by the clog files.</span>
-    cpu_count: <span class="m">4</span>
-    production_mode: <span class="nb">false</span>
-    enable_syslog_wf: <span class="nb">false</span> <span class="c1"># Print system logs whose levels are higher than WARNING to a separate log file. The default value is true.</span>
-    enable_syslog_recycle: <span class="nb">true</span> <span class="c1"># Enable auto system log recycling or not. The default value is false.</span>
-    max_syslog_file_count: <span class="m">4</span> <span class="c1"># The maximum number of reserved log files before enabling auto recycling. The default value is 0.</span>
-    <span class="c1"># root_password: # root user password, can be empty</span>
----------------------------------------------------------------
-
-obd cluster destroy watchpoints //删除之前的，不要轻易执行
-
-<span class="c1"># 创建 </span>
-obd cluster deploy watchpoints -c ./mini-local-example.yaml
-
-obd cluster start watchpoints 
-Wait <span class="k">for</span> observer init ok
-+---------------------------------------------+
-<span class="p">|</span>                   observer                  <span class="p">|</span>
-+-----------+---------+------+-------+--------+
-<span class="p">|</span> ip        <span class="p">|</span> version <span class="p">|</span> port <span class="p">|</span> zone  <span class="p">|</span> status <span class="p">|</span>
-+-----------+---------+------+-------+--------+
-<span class="p">|</span> 127.0.0.1 <span class="p">|</span> 4.2.0.0 <span class="p">|</span> <span class="m">2881</span> <span class="p">|</span> zone1 <span class="p">|</span> ACTIVE <span class="p">|</span>
-+-----------+---------+------+-------+--------+
-obclient -h127.0.0.1 -P2881 -uroot -p<span class="s1">&#39;GC29IoH3V9NQk8hIM2yr&#39;</span> -Doceanbase -A
-
-
-obd cluster edit-config watchpoints 
-obd cluster start watchpoints // 启动不了怎么办？
-
-
-
-
-https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_area
-mysql&gt; SET @poly <span class="o">=</span>
-       <span class="s1">&#39;Polygon((0 0,0 3,3 0,0 0),(1 1,1 2,2 1,1 1))&#39;</span><span class="p">;</span>
-mysql&gt; SELECT ST_Area<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
-+---------------------------------+
-<span class="p">|</span> ST_Area<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span> <span class="p">|</span>
-+---------------------------------+
-<span class="p">|</span>                               <span class="m">4</span> <span class="p">|</span>
-+---------------------------------+
-
-
-SELECT ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
-
-obclient <span class="o">[</span>oceanbase<span class="o">]</span>&gt; SELECT ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
-+-----------------------------------------+
-<span class="p">|</span> ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span> <span class="p">|</span>
-+-----------------------------------------+
-<span class="p">|</span>                                       <span class="m">4</span> <span class="p">|</span>
-+-----------------------------------------+
-
-&gt; 画外音：走到这里说明 ST_ExteriorRing生效了，执行结果和ST_Area一样，是因为完全copy了ST_Area代码，下一步就是调用boost实现
-
-mysql&gt; SET @poly <span class="o">=</span>
-       <span class="s1">&#39;Polygon((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))&#39;</span><span class="p">;</span>
-mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">)))</span><span class="p">;</span>
-+----------------------------------------------------+
-<span class="p">|</span> ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">)))</span> <span class="p">|</span>
-+----------------------------------------------------+
-<span class="p">|</span> LINESTRING<span class="o">(</span><span class="m">0</span> 0,0 3,3 3,3 0,0 0<span class="o">)</span>                    <span class="p">|</span>
-+----------------------------------------------------+
-
- 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># DEBUG 构建</span>
+</span></span><span class="line"><span class="cl">bash build.sh debug --init
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里没有制作镜像，之间覆盖4.0版本的</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="m">3</span> &gt; /proc/sys/vm/drop_caches
+</span></span><span class="line"><span class="cl">tiup cluster stop watchpoints //关闭其他的
+</span></span><span class="line"><span class="cl">tiup cluster disable watchpoints  //关闭其他的
+</span></span><span class="line"><span class="cl"><span class="c1"># 制作本地镜像</span>
+</span></span><span class="line"><span class="cl">make <span class="nv">DESTDIR</span><span class="o">=</span>./ install <span class="o">&amp;&amp;</span> 
+</span></span><span class="line"><span class="cl">obd mirror create -n oceanbase-ce -V 4.2.0.1 -p ./usr/local -t my-oceanbase
+</span></span><span class="line"><span class="cl">Package ok
+</span></span><span class="line"><span class="cl">name: oceanbase-ce
+</span></span><span class="line"><span class="cl">version: 4.2.0.1
+</span></span><span class="line"><span class="cl">release:20230615110800
+</span></span><span class="line"><span class="cl">arch: x86_64
+</span></span><span class="line"><span class="cl">md5: dd828bcc94f6f4257d212bc73f7cbc42
+</span></span><span class="line"><span class="cl">Trace ID: d5ee1980-0b29-11ee-a4c9-000c29378c15
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 离线安装部署，禁用远程仓库</span>
+</span></span><span class="line"><span class="cl">obd mirror disable remote
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">配置文件：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@localhost oceanbase<span class="o">]</span><span class="c1"># cat mini-local-example.yaml</span>
+</span></span><span class="line"><span class="cl">oceanbase-ce:
+</span></span><span class="line"><span class="cl">  tag: my-oceanbase
+</span></span><span class="line"><span class="cl">  servers:
+</span></span><span class="line"><span class="cl">    <span class="c1"># Please don&#39;t use hostname, only IP can be supported</span>
+</span></span><span class="line"><span class="cl">    - 127.0.0.1
+</span></span><span class="line"><span class="cl">  global:
+</span></span><span class="line"><span class="cl">    <span class="c1">#  The working directory for OceanBase Database. OceanBase Database is started under this directory. This is a required field.</span>
+</span></span><span class="line"><span class="cl">    home_path: /mnt/ob/observer
+</span></span><span class="line"><span class="cl">    <span class="c1"># The directory for data storage. The default value is $home_path/store.</span>
+</span></span><span class="line"><span class="cl">    data_dir: /mnt/ob/data
+</span></span><span class="line"><span class="cl">    <span class="c1"># The directory for clog, ilog, and slog. The default value is the same as the data_dir value.</span>
+</span></span><span class="line"><span class="cl">    redo_dir: /mnt/ob/redo
+</span></span><span class="line"><span class="cl">    <span class="c1"># Please set devname as the network adaptor&#39;s name whose ip is  in the setting of severs.</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># if set severs as &#34;127.0.0.1&#34;, please set devname as &#34;lo&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># if current ip is 192.168.1.10, and the ip&#39;s network adaptor&#39;s name is &#34;eth0&#34;, please use &#34;eth0&#34;</span>
+</span></span><span class="line"><span class="cl">    devname: lo
+</span></span><span class="line"><span class="cl">    mysql_port: <span class="m">2881</span> <span class="c1"># External port for OceanBase Database. The default value is 2881. DO NOT change this value after the cluster is started.</span>
+</span></span><span class="line"><span class="cl">    rpc_port: <span class="m">2882</span> <span class="c1"># Internal port for OceanBase Database. The default value is 2882. DO NOT change this value after the cluster is started.</span>
+</span></span><span class="line"><span class="cl">    zone: zone1
+</span></span><span class="line"><span class="cl">    cluster_id: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># please set memory limit to a suitable value which is matching resource.</span>
+</span></span><span class="line"><span class="cl">    memory_limit: 6G <span class="c1"># The maximum running memory for an observer</span>
+</span></span><span class="line"><span class="cl">    system_memory: 1G <span class="c1"># The reserved system memory. system_memory is reserved for general tenants. The default value is 30G.</span>
+</span></span><span class="line"><span class="cl">    datafile_size: 15G <span class="c1"># Size of the data file.</span>
+</span></span><span class="line"><span class="cl">    log_disk_size: 10G <span class="c1"># The size of disk space used by the clog files.</span>
+</span></span><span class="line"><span class="cl">    cpu_count: <span class="m">4</span>
+</span></span><span class="line"><span class="cl">    production_mode: <span class="nb">false</span>
+</span></span><span class="line"><span class="cl">    enable_syslog_wf: <span class="nb">false</span> <span class="c1"># Print system logs whose levels are higher than WARNING to a separate log file. The default value is true.</span>
+</span></span><span class="line"><span class="cl">    enable_syslog_recycle: <span class="nb">true</span> <span class="c1"># Enable auto system log recycling or not. The default value is false.</span>
+</span></span><span class="line"><span class="cl">    max_syslog_file_count: <span class="m">4</span> <span class="c1"># The maximum number of reserved log files before enabling auto recycling. The default value is 0.</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># root_password: # root user password, can be empty</span>
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">obd cluster destroy watchpoints //删除之前的，不要轻易执行
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建 </span>
+</span></span><span class="line"><span class="cl">obd cluster deploy watchpoints -c ./mini-local-example.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">obd cluster start watchpoints 
+</span></span><span class="line"><span class="cl">Wait <span class="k">for</span> observer init ok
+</span></span><span class="line"><span class="cl">+---------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>                   observer                  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----------+---------+------+-------+--------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ip        <span class="p">|</span> version <span class="p">|</span> port <span class="p">|</span> zone  <span class="p">|</span> status <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----------+---------+------+-------+--------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> 127.0.0.1 <span class="p">|</span> 4.2.0.0 <span class="p">|</span> <span class="m">2881</span> <span class="p">|</span> zone1 <span class="p">|</span> ACTIVE <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----------+---------+------+-------+--------+
+</span></span><span class="line"><span class="cl">obclient -h127.0.0.1 -P2881 -uroot -p<span class="s1">&#39;GC29IoH3V9NQk8hIM2yr&#39;</span> -Doceanbase -A
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">obd cluster edit-config watchpoints 
+</span></span><span class="line"><span class="cl">obd cluster start watchpoints // 启动不了怎么办？
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://dev.mysql.com/doc/refman/5.7/en/gis-polygon-property-functions.html#function_area
+</span></span><span class="line"><span class="cl">mysql&gt; SET @poly <span class="o">=</span>
+</span></span><span class="line"><span class="cl">       <span class="s1">&#39;Polygon((0 0,0 3,3 0,0 0),(1 1,1 2,2 1,1 1))&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; SELECT ST_Area<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">+---------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ST_Area<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+---------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>                               <span class="m">4</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+---------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">SELECT ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">obclient <span class="o">[</span>oceanbase<span class="o">]</span>&gt; SELECT ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">+-----------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">))</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>                                       <span class="m">4</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+-----------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; 画外音：走到这里说明 ST_ExteriorRing生效了，执行结果和ST_Area一样，是因为完全copy了ST_Area代码，下一步就是调用boost实现
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; SET @poly <span class="o">=</span>
+</span></span><span class="line"><span class="cl">       <span class="s1">&#39;Polygon((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">)))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o">(</span>ST_GeomFromText<span class="o">(</span>@poly<span class="o">)))</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> LINESTRING<span class="o">(</span><span class="m">0</span> 0,0 3,3 3,3 0,0 0<span class="o">)</span>                    <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----------------------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="单元测试">单元测试</h3>
 <blockquote>
@@ -1059,7 +1039,7 @@ mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o"
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1074,30 +1054,24 @@ mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o"
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-1. cp test_geo_func_difference.cpp test_geo_func_exterior_ring.cpp 
-2. unittest\share\CMakeLists.txt 添加 
-3. 替换
- sed -i &#39;s/TestGeoFuncDifference/TestGeoFuncExte
- riorRring/g&#39; test_geo_func_exterior_ring.cpp 
-
-4. unittest/share/test_geo_func_exterior_ring.cpp
-
-//
-发现 ob 提供外环函数计算是不是不用boost提供接口了 bWkbGeogLinearRing&amp; ObWkbGeogPolygon::exterior_ring() ，发现boost 返回的不是简单值，是一个对象的化，bWkbGeogLinearRing&amp; ObWkbGeogPolygon::exterior_ring()用的模板，不行2个都试试吧
-
-
-
-这个得做一些测试吧。boost肯定是对的吧，经过那么多测试。如果返回的数据类型跟预期不符，是否可以转换一下？
-
-
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. cp test_geo_func_difference.cpp test_geo_func_exterior_ring.cpp 
+</span></span><span class="line"><span class="cl">2. unittest\share\CMakeLists.txt 添加 
+</span></span><span class="line"><span class="cl">3. 替换
+</span></span><span class="line"><span class="cl"> sed -i &#39;s/TestGeoFuncDifference/TestGeoFuncExte
+</span></span><span class="line"><span class="cl"> riorRring/g&#39; test_geo_func_exterior_ring.cpp 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">4. unittest/share/test_geo_func_exterior_ring.cpp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//
+</span></span><span class="line"><span class="cl">发现 ob 提供外环函数计算是不是不用boost提供接口了 bWkbGeogLinearRing&amp; ObWkbGeogPolygon::exterior_ring() ，发现boost 返回的不是简单值，是一个对象的化，bWkbGeogLinearRing&amp; ObWkbGeogPolygon::exterior_ring()用的模板，不行2个都试试吧
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">这个得做一些测试吧。boost肯定是对的吧，经过那么多测试。如果返回的数据类型跟预期不符，是否可以转换一下？
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="task3-st_exteriorringpoly">task3 ST_ExteriorRing(poly)</h3>
 <blockquote>
@@ -1120,7 +1094,7 @@ mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o"
 <h4 id="boostgeometry">boost::geometry</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1160,50 +1134,50 @@ mysql&gt; SELECT ST_AsText<span class="o">(</span>ST_ExteriorRing<span class="o"
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">brief：该函数返回多边形的外环。
-ingroup：该函数属于 exterior_ring 组。
-note：该函数符合 OGC 标准，即符合开放地理空间联盟的标准。与 &#34;ExteriorRing&#34; 不同，该函数使用 &#34;exterior ring&#34;。
-tparam：这是一个模板参数。Polygon 是将要从中获取外环的多边形的类型。
-param：这是函数的参数。polygon 是将要从中获取外环的多边形的引用。
-return：该函数返回一个指向外环的常量引用。
-
-/*!
-\brief Function to get the exterior ring of a polygon (const version)
-\ingroup exterior_ring
-\note OGC compliance: instead of ExteriorRing
-\tparam Polygon polygon type
-\param polygon the polygon to get the exterior ring from
-\return a const reference to the exterior ring
-
-\qbk{distinguish,const version}
-*/
-template &lt;typename Polygon&gt;
-inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
-        Polygon const&amp; polygon)
-{
-    return core_dispatch::exterior_ring
-        &lt;
-            typename tag&lt;Polygon&gt;::type,
-            Polygon const
-        &gt;::apply(polygon);
-}
-
-https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/exterior_ring.hpp
-
-https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
-https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ring_type.hpp //type_traits
-https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/tags.hpp //GIS数据类型 是类标识，不是枚举值作用是什么？参考stl中的设计。
-/workspaces/oceanbase/unittest/share/test_geo_func_difference.cpp
-
-https://github.com/watchpoints/master-cpp/blob/main/example/Boost/demo.cpp
-
-https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brief：该函数返回多边形的外环。
+</span></span><span class="line"><span class="cl">ingroup：该函数属于 exterior_ring 组。
+</span></span><span class="line"><span class="cl">note：该函数符合 OGC 标准，即符合开放地理空间联盟的标准。与 &#34;ExteriorRing&#34; 不同，该函数使用 &#34;exterior ring&#34;。
+</span></span><span class="line"><span class="cl">tparam：这是一个模板参数。Polygon 是将要从中获取外环的多边形的类型。
+</span></span><span class="line"><span class="cl">param：这是函数的参数。polygon 是将要从中获取外环的多边形的引用。
+</span></span><span class="line"><span class="cl">return：该函数返回一个指向外环的常量引用。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/*!
+</span></span><span class="line"><span class="cl">\brief Function to get the exterior ring of a polygon (const version)
+</span></span><span class="line"><span class="cl">\ingroup exterior_ring
+</span></span><span class="line"><span class="cl">\note OGC compliance: instead of ExteriorRing
+</span></span><span class="line"><span class="cl">\tparam Polygon polygon type
+</span></span><span class="line"><span class="cl">\param polygon the polygon to get the exterior ring from
+</span></span><span class="line"><span class="cl">\return a const reference to the exterior ring
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">\qbk{distinguish,const version}
+</span></span><span class="line"><span class="cl">*/
+</span></span><span class="line"><span class="cl">template &lt;typename Polygon&gt;
+</span></span><span class="line"><span class="cl">inline typename ring_return_type&lt;Polygon const&gt;::type exterior_ring(
+</span></span><span class="line"><span class="cl">        Polygon const&amp; polygon)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    return core_dispatch::exterior_ring
+</span></span><span class="line"><span class="cl">        &lt;
+</span></span><span class="line"><span class="cl">            typename tag&lt;Polygon&gt;::type,
+</span></span><span class="line"><span class="cl">            Polygon const
+</span></span><span class="line"><span class="cl">        &gt;::apply(polygon);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/exterior_ring.hpp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/ring_type.hpp //type_traits
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/include/boost/geometry/core/tags.hpp //GIS数据类型 是类标识，不是枚举值作用是什么？参考stl中的设计。
+</span></span><span class="line"><span class="cl">/workspaces/oceanbase/unittest/share/test_geo_func_difference.cpp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://github.com/watchpoints/master-cpp/blob/main/example/Boost/demo.cpp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我在编译过程中遇到下面问题，看例子：为什么可用编译通过</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1230,53 +1204,53 @@ https://github.com/boostorg/geometry/blob/develop/test/core/ring.cpp
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">// geography
-    OB_GEO_UNARY_FUNC_BEGIN(ObGeoFuncAreaImpl, ObWkbGeogPolygon, double)
-    {
-      INIT_SUCC(ret);
-      const ObSrsItem *srs = context.get_srs();
-      if (OB_ISNULL(srs))
-      {
-        ret = OB_ERR_NULL_VALUE;
-        LOG_WARN(&#34;srs is null&#34;, K(ret), K(g-&gt;get_srid()), K(g));
-      }
-      else
-      {
-        boost::geometry::srs::spheroid&lt;double&gt; geog_sphere(srs-&gt;semi_major_axis(), srs-&gt;semi_minor_axis());
-        boost::geometry::strategy::area::geographic&lt;&gt; area_strategy(geog_sphere);
-        const ObWkbGeogPolygon *geo = reinterpret_cast&lt;const ObWkbGeogPolygon *&gt;(g-&gt;val());
-        result = boost::geometry::area(*geo, area_strategy);
-      }
-      return ret;
-    }
-    https://www.boost.org/doc/libs/1_65_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_1.html
-    
-    template&lt;typename Geometry&gt;
-    default_area_result&lt;Geometry&gt;::type area(Geometry const &amp; geometry)
-    
-    
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// geography
+</span></span><span class="line"><span class="cl">    OB_GEO_UNARY_FUNC_BEGIN(ObGeoFuncAreaImpl, ObWkbGeogPolygon, double)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      INIT_SUCC(ret);
+</span></span><span class="line"><span class="cl">      const ObSrsItem *srs = context.get_srs();
+</span></span><span class="line"><span class="cl">      if (OB_ISNULL(srs))
+</span></span><span class="line"><span class="cl">      {
+</span></span><span class="line"><span class="cl">        ret = OB_ERR_NULL_VALUE;
+</span></span><span class="line"><span class="cl">        LOG_WARN(&#34;srs is null&#34;, K(ret), K(g-&gt;get_srid()), K(g));
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      else
+</span></span><span class="line"><span class="cl">      {
+</span></span><span class="line"><span class="cl">        boost::geometry::srs::spheroid&lt;double&gt; geog_sphere(srs-&gt;semi_major_axis(), srs-&gt;semi_minor_axis());
+</span></span><span class="line"><span class="cl">        boost::geometry::strategy::area::geographic&lt;&gt; area_strategy(geog_sphere);
+</span></span><span class="line"><span class="cl">        const ObWkbGeogPolygon *geo = reinterpret_cast&lt;const ObWkbGeogPolygon *&gt;(g-&gt;val());
+</span></span><span class="line"><span class="cl">        result = boost::geometry::area(*geo, area_strategy);
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      return ret;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    https://www.boost.org/doc/libs/1_65_0/libs/geometry/doc/html/geometry/reference/algorithms/area/area_1.html
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    template&lt;typename Geometry&gt;
+</span></span><span class="line"><span class="cl">    default_area_result&lt;Geometry&gt;::type area(Geometry const &amp; geometry)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>画外音：自己想很多原因，但是 没有想到结果是 boost::geometry::area(geo） 看走眼了，</p>
 <p>但是很奇怪，明明是2个不同类型没有报错</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">ype area(Geometry const &amp; geometry)
-class ObWkbGeomMultiPolygon
-这个通过带代码没有看清楚。
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ype area(Geometry const &amp; geometry)
+</span></span><span class="line"><span class="cl">class ObWkbGeomMultiPolygon
+</span></span><span class="line"><span class="cl">这个通过带代码没有看清楚。
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>编译错误2：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1290,26 +1264,26 @@ class ObWkbGeomMultiPolygon
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:10                                                                                                                     8:64: error: non-const lvalue reference to type &#39;double&#39; cannot bind to a value                                                                                                                      of unrelated type &#39;oceanbase::common::ObGeometry *&#39;
-  return ObGeoFuncExteriorRingImpl::eval_geo_func(gis_context, result);
-                                                               ^~~~~~
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:34:85: note:                                                                                                                      passing argument to parameter &#39;result&#39; here
-  static inline int eval_geo_func(const common::ObGeoEvalCtx &amp;gis_context, RetTy                                                                                                                     pe &amp;result);
-                                                                                                                                                                                                         ^
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:66:79: error                                                                                                                     : non-const lvalue reference to type &#39;oceanbase::common::ObGeometry *&#39; cannot bi                                                                                                                     nd to a value of unrelated type &#39;double&#39;
-      ret = Functype::template EvalTree&lt;ObCartesianPoint&gt; :: eval(g, context, re                                                                                                                     sult);
-      
-      
-      
-                                               
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:10                                                                                                                     8:64: error: non-const lvalue reference to type &#39;double&#39; cannot bind to a value                                                                                                                      of unrelated type &#39;oceanbase::common::ObGeometry *&#39;
+</span></span><span class="line"><span class="cl">  return ObGeoFuncExteriorRingImpl::eval_geo_func(gis_context, result);
+</span></span><span class="line"><span class="cl">                                                               ^~~~~~
+</span></span><span class="line"><span class="cl">/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:34:85: note:                                                                                                                      passing argument to parameter &#39;result&#39; here
+</span></span><span class="line"><span class="cl">  static inline int eval_geo_func(const common::ObGeoEvalCtx &amp;gis_context, RetTy                                                                                                                     pe &amp;result);
+</span></span><span class="line"><span class="cl">                                                                                                                                                                                                         ^
+</span></span><span class="line"><span class="cl">/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:66:79: error                                                                                                                     : non-const lvalue reference to type &#39;oceanbase::common::ObGeometry *&#39; cannot bi                                                                                                                     nd to a value of unrelated type &#39;double&#39;
+</span></span><span class="line"><span class="cl">      ret = Functype::template EvalTree&lt;ObCartesianPoint&gt; :: eval(g, context, re                                                                                                                     sult);
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">                                               
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>原因分析： SELECT ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly)));   ST_ExteriorRing 返回的一个是  LINESTRING 对象，现有表达式类型 都是 字符串，json int 没有st对象的定义呢？</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1339,35 +1313,35 @@ class ObWkbGeomMultiPolygon
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">int ObExprSTExteriorRing::calc_result_type1
-
-ST_ExteriorRing() handles its arguments as described in the introduction to this section.
-
-https://dev.mysql.com/doc/refman/8.0/en/gis-polygon-property-functions.html#function_st-exteriorring
-mysql&gt; SET @poly =
-       &#39;Polygon((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))&#39;;
-mysql&gt; SELECT ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly)));
-+----------------------------------------------------+
-| ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly))) |
-+----------------------------------------------------+
-| LINESTRING(0 0,0 3,3 3,3 0,0 0)                    |
-+----------------------------------------------------+
-
-ObExprSTAsText::ObExprSTAsText
-
-enum class ObGeoType
-{
-  GEOMETRY = 0,
-  POINT = 1,
-  LINESTRING = 2,
-  POLYGON = 3,
-  MULTIPOINT = 4,
-  MULTILINESTRING = 5,
-  MULTIPOLYGON = 6,
-  GEOMETRYCOLLECTION = 7,
-  GEOTYPEMAX = 31, // 5 bit for geometry type in column schema,set max 31
-};
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">int ObExprSTExteriorRing::calc_result_type1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ST_ExteriorRing() handles its arguments as described in the introduction to this section.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">https://dev.mysql.com/doc/refman/8.0/en/gis-polygon-property-functions.html#function_st-exteriorring
+</span></span><span class="line"><span class="cl">mysql&gt; SET @poly =
+</span></span><span class="line"><span class="cl">       &#39;Polygon((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))&#39;;
+</span></span><span class="line"><span class="cl">mysql&gt; SELECT ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly)));
+</span></span><span class="line"><span class="cl">+----------------------------------------------------+
+</span></span><span class="line"><span class="cl">| ST_AsText(ST_ExteriorRing(ST_GeomFromText(@poly))) |
+</span></span><span class="line"><span class="cl">+----------------------------------------------------+
+</span></span><span class="line"><span class="cl">| LINESTRING(0 0,0 3,3 3,3 0,0 0)                    |
+</span></span><span class="line"><span class="cl">+----------------------------------------------------+
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ObExprSTAsText::ObExprSTAsText
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">enum class ObGeoType
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  GEOMETRY = 0,
+</span></span><span class="line"><span class="cl">  POINT = 1,
+</span></span><span class="line"><span class="cl">  LINESTRING = 2,
+</span></span><span class="line"><span class="cl">  POLYGON = 3,
+</span></span><span class="line"><span class="cl">  MULTIPOINT = 4,
+</span></span><span class="line"><span class="cl">  MULTILINESTRING = 5,
+</span></span><span class="line"><span class="cl">  MULTIPOLYGON = 6,
+</span></span><span class="line"><span class="cl">  GEOMETRYCOLLECTION = 7,
+</span></span><span class="line"><span class="cl">  GEOTYPEMAX = 31, // 5 bit for geometry type in column schema,set max 31
+</span></span><span class="line"><span class="cl">};
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="参考">参考</h2>
 <p>[1] <a href="http://mysql.taobao.org/monthly/2021/07/06/">http://mysql.taobao.org/monthly/2021/07/06/</a></p>
@@ -1421,7 +1395,7 @@ enum class ObGeoType
 <p>编译1</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1455,45 +1429,43 @@ enum class ObGeoType
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
-</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_type.hpp:95:68: error: no type named &#39;type&#39; in &#39;boost::geometry::traits::interior_const_type&lt;const oceanbase::common::ObWkbGeomPolygon *&gt;&#39;
-            typename traits::interior_const_type&lt;nc_polygon_type&gt;::type,
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
-/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_type.hpp:153:37: note: in instantiation of template class &#39;boost::geometry::core_dispatch::interior_return_type&lt;boost::geometry::polygon_tag, const oceanbase::common::ObWkbGeomPolygon *const&gt;&#39; requested here
-    typedef typename core_dispatch::interior_return_type
-                                    ^
-/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_rings.hpp:135:17: note: in instantiation of template class &#39;boost::geometry::interior_return_type&lt;const oceanbase::common::ObWkbGeomPolygon *const&gt;&#39; requested here
-inline typename interior_return_type&lt;Polygon const&gt;::type interior_rings(
-                ^
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:81:10: note: while substituting deduced template arguments into function template &#39;interior_rings&#39; [with Polygon = const oceanbase::common::ObWkbGeomPolygon *]
- result= bg::interior_rings(geo);
-         ^
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:81:10: error: no matching function for call to &#39;interior_rings&#39;
- result= bg::interior_rings(geo);
-         ^~~~~~~~~~~~~~~~~~
-/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_rings.hpp:114:53: note: candidate template ignored: substitution failure [with Polygon = const oceanbase::common::ObWkbGeomPolygon *]
-inline typename interior_return_type&lt;Polygon&gt;::type interior_rings(Polygon&amp; polygon)
-                                                    ^
-/mnt/oceanbase/oceanbase/deps/3rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/interior_rings.hpp:135:59: note: candidate template ignored: substitution failure [with Polygon = const oceanbase::common::ObWkbGeomPolygon *]
-inline typename interior_return_type&lt;Polygon const&gt;::type interior_rings(
-                                                          ^
-In file included from /mnt/oceanbase/oceanbase/build_debug/deps/oblib/src/lib/CMakeFiles/oblib_lib.dir/Unity/unity_oblib_lib_geo/1_cxx.cxx:51:
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:99:19: error: assigning to &#39;oceanbase::common::ObGeometry *&#39; from incompatible type &#39;const oceanbase::common::ObWkbGeogLinearRing&#39;
-    result = geo-&gt;exterior_ring();
-             ~~~~~^~~~~~~~~~~~~~~
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:106:28: error: out-of-line definition of &#39;eval&#39; does not match any declaration in &#39;oceanbase::common::ObGeoFuncExteriorRing&#39;
-int ObGeoFuncExteriorRing::eval(const ObGeoEvalCtx &amp;gis_context, ObGeometry *&amp;result)
-                           ^~~~
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_func_exterior_ring.cpp:108:64: error: non-const lvalue reference to type &#39;double&#39; cannot bind to a value of unrelated type &#39;oceanbase::common::ObGeometry *&#39;
-  return ObGeoFuncExteriorRingImpl::eval_geo_func(gis_context, result);
-                                                               ^~~~~~
-/mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/ob_geo_dispatcher.h:34:85: note: passing argument to parameter &#39;result&#39; here
-  static inline int eval_geo_func(const common::ObGeoEvalCtx &amp;gis_context, RetType &amp;result);
-
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-zed" data-lang="zed"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/</span><span class="err">3</span><span class="nn">rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/</span><span class="n">interior_type</span><span class="p">.</span><span class="n">hpp</span><span class="o">:</span><span class="err">95</span><span class="o">:</span><span class="err">68</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">named</span><span class="w"> </span><span class="err">&#39;</span><span class="n">type</span><span class="err">&#39;</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="err">&#39;</span><span class="n">boost</span><span class="o">::</span><span class="n">geometry</span><span class="o">::</span><span class="n">traits</span><span class="o">::</span><span class="n">interior_const_type</span><span class="o">&lt;</span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeomPolygon</span><span class="w"> </span><span class="o">*&gt;</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">typename</span><span class="w"> </span><span class="n">traits</span><span class="o">::</span><span class="n">interior_const_type</span><span class="o">&lt;</span><span class="n">nc_polygon_type</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/</span><span class="err">3</span><span class="nn">rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/</span><span class="n">interior_type</span><span class="p">.</span><span class="n">hpp</span><span class="o">:</span><span class="err">153</span><span class="o">:</span><span class="err">37</span><span class="o">:</span><span class="w"> </span><span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">instantiation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="err">&#39;</span><span class="n">boost</span><span class="o">::</span><span class="n">geometry</span><span class="o">::</span><span class="n">core_dispatch</span><span class="o">::</span><span class="n">interior_return_type</span><span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">geometry</span><span class="o">::</span><span class="n">polygon_tag</span><span class="p">,</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeomPolygon</span><span class="w"> </span><span class="o">*</span><span class="n">const</span><span class="o">&gt;</span><span class="err">&#39;</span><span class="w"> </span><span class="n">requested</span><span class="w"> </span><span class="n">here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">typedef</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="n">core_dispatch</span><span class="o">::</span><span class="n">interior_return_type</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                    </span><span class="o">^</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/</span><span class="err">3</span><span class="nn">rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/</span><span class="n">interior_rings</span><span class="p">.</span><span class="n">hpp</span><span class="o">:</span><span class="err">135</span><span class="o">:</span><span class="err">17</span><span class="o">:</span><span class="w"> </span><span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">instantiation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="err">&#39;</span><span class="n">boost</span><span class="o">::</span><span class="n">geometry</span><span class="o">::</span><span class="n">interior_return_type</span><span class="o">&lt;</span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeomPolygon</span><span class="w"> </span><span class="o">*</span><span class="n">const</span><span class="o">&gt;</span><span class="err">&#39;</span><span class="w"> </span><span class="n">requested</span><span class="w"> </span><span class="n">here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">inline</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="n">interior_return_type</span><span class="o">&lt;</span><span class="n">Polygon</span><span class="w"> </span><span class="n">const</span><span class="o">&gt;::</span><span class="n">type</span><span class="w"> </span><span class="n">interior_rings</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="o">^</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/</span><span class="n">ob_geo_func_exterior_ring</span><span class="p">.</span><span class="n">cpp</span><span class="o">:</span><span class="err">81</span><span class="o">:</span><span class="err">10</span><span class="o">:</span><span class="w"> </span><span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">while</span><span class="w"> </span><span class="n">substituting</span><span class="w"> </span><span class="n">deduced</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="err">&#39;</span><span class="n">interior_rings</span><span class="err">&#39;</span><span class="w"> </span><span class="p">[</span><span class="n">with</span><span class="w"> </span><span class="n">Polygon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeomPolygon</span><span class="w"> </span><span class="o">*</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">result</span><span class="o">=</span><span class="w"> </span><span class="n">bg</span><span class="o">::</span><span class="n">interior_rings</span><span class="p">(</span><span class="n">geo</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="o">^</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/</span><span class="n">ob_geo_func_exterior_ring</span><span class="p">.</span><span class="n">cpp</span><span class="o">:</span><span class="err">81</span><span class="o">:</span><span class="err">10</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">matching</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">for</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="err">&#39;</span><span class="n">interior_rings</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">result</span><span class="o">=</span><span class="w"> </span><span class="n">bg</span><span class="o">::</span><span class="n">interior_rings</span><span class="p">(</span><span class="n">geo</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="o">^~~~~~~~~~~~~~~~~~</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/</span><span class="err">3</span><span class="nn">rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/</span><span class="n">interior_rings</span><span class="p">.</span><span class="n">hpp</span><span class="o">:</span><span class="err">114</span><span class="o">:</span><span class="err">53</span><span class="o">:</span><span class="w"> </span><span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">candidate</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="n">ignored</span><span class="o">:</span><span class="w"> </span><span class="n">substitution</span><span class="w"> </span><span class="n">failure</span><span class="w"> </span><span class="p">[</span><span class="n">with</span><span class="w"> </span><span class="n">Polygon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeomPolygon</span><span class="w"> </span><span class="o">*</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">inline</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="n">interior_return_type</span><span class="o">&lt;</span><span class="n">Polygon</span><span class="o">&gt;::</span><span class="n">type</span><span class="w"> </span><span class="n">interior_rings</span><span class="p">(</span><span class="n">Polygon</span><span class="o">&amp;</span><span class="w"> </span><span class="n">polygon</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                    </span><span class="o">^</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/</span><span class="err">3</span><span class="nn">rd/usr/local/oceanbase/deps/devel/include/boost/geometry/core/</span><span class="n">interior_rings</span><span class="p">.</span><span class="n">hpp</span><span class="o">:</span><span class="err">135</span><span class="o">:</span><span class="err">59</span><span class="o">:</span><span class="w"> </span><span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">candidate</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="n">ignored</span><span class="o">:</span><span class="w"> </span><span class="n">substitution</span><span class="w"> </span><span class="n">failure</span><span class="w"> </span><span class="p">[</span><span class="n">with</span><span class="w"> </span><span class="n">Polygon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeomPolygon</span><span class="w"> </span><span class="o">*</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">inline</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="n">interior_return_type</span><span class="o">&lt;</span><span class="n">Polygon</span><span class="w"> </span><span class="n">const</span><span class="o">&gt;::</span><span class="n">type</span><span class="w"> </span><span class="n">interior_rings</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                          </span><span class="o">^</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">In</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">included</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/build_debug/deps/oblib/src/lib/CMakeFiles/</span><span class="n">oblib_lib</span><span class="p">.</span><span class="nn">dir/Unity/unity_oblib_lib_geo/</span><span class="err">1</span><span class="n">_cxx</span><span class="p">.</span><span class="n">cxx</span><span class="o">:</span><span class="err">51</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/</span><span class="n">ob_geo_func_exterior_ring</span><span class="p">.</span><span class="n">cpp</span><span class="o">:</span><span class="err">99</span><span class="o">:</span><span class="err">19</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="n">assigning</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="err">&#39;</span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObGeometry</span><span class="w"> </span><span class="o">*</span><span class="err">&#39;</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">incompatible</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="err">&#39;</span><span class="n">const</span><span class="w"> </span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObWkbGeogLinearRing</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">geo</span><span class="o">-&gt;</span><span class="n">exterior_ring</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="o">~~~~~^~~~~~~~~~~~~~~</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/</span><span class="n">ob_geo_func_exterior_ring</span><span class="p">.</span><span class="n">cpp</span><span class="o">:</span><span class="err">106</span><span class="o">:</span><span class="err">28</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="n">out</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">line</span><span class="w"> </span><span class="kt">definition</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="err">&#39;</span><span class="n">eval</span><span class="err">&#39;</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">declaration</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="err">&#39;</span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObGeoFuncExteriorRing</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">int</span><span class="w"> </span><span class="n">ObGeoFuncExteriorRing</span><span class="o">::</span><span class="n">eval</span><span class="p">(</span><span class="n">const</span><span class="w"> </span><span class="n">ObGeoEvalCtx</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gis_context</span><span class="p">,</span><span class="w"> </span><span class="n">ObGeometry</span><span class="w"> </span><span class="o">*&amp;</span><span class="n">result</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                           </span><span class="o">^~~~</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/</span><span class="n">ob_geo_func_exterior_ring</span><span class="p">.</span><span class="n">cpp</span><span class="o">:</span><span class="err">108</span><span class="o">:</span><span class="err">64</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="n">non</span><span class="o">-</span><span class="n">const</span><span class="w"> </span><span class="n">lvalue</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="err">&#39;</span><span class="n">double</span><span class="err">&#39;</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">unrelated</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="err">&#39;</span><span class="n">oceanbase</span><span class="o">::</span><span class="n">common</span><span class="o">::</span><span class="n">ObGeometry</span><span class="w"> </span><span class="o">*</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">return</span><span class="w"> </span><span class="n">ObGeoFuncExteriorRingImpl</span><span class="o">::</span><span class="n">eval_geo_func</span><span class="p">(</span><span class="n">gis_context</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                                                               </span><span class="o">^~~~~~</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="nn">mnt/oceanbase/oceanbase/deps/oblib/src/lib/geo/</span><span class="n">ob_geo_dispatcher</span><span class="p">.</span><span class="n">h</span><span class="o">:</span><span class="err">34</span><span class="o">:</span><span class="err">85</span><span class="o">:</span><span class="w"> </span><span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">passing</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="err">&#39;</span><span class="n">result</span><span class="err">&#39;</span><span class="w"> </span><span class="n">here</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">static</span><span class="w"> </span><span class="n">inline</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">eval_geo_func</span><span class="p">(</span><span class="n">const</span><span class="w"> </span><span class="n">common</span><span class="o">::</span><span class="n">ObGeoEvalCtx</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gis_context</span><span class="p">,</span><span class="w"> </span><span class="n">RetType</span><span class="w"> </span><span class="o">&amp;</span><span class="n">result</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -1524,8 +1496,8 @@ int ObGeoFuncExteriorRing::eval(const ObGeoEvalCtx &amp;gis_context, ObGeometry 
             <span class="prev-text nav-default">成为oceanbase贡献者第四天：内置函数</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/2024/2024_03_10_ai_weekly_01/">
-            <span class="next-text nav-default">AI周刊</span>
+        <a class="next" href="/post/oceanbase/2024/02_08-27-day2_paxos/">
+            <span class="next-text nav-default">成为oceanbase贡献者第四天：内置函数</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -1,0 +1,3474 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为oceanbase贡献者第四天：内置函数 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习，专业上只能靠自己" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/02_08-27-day2_paxos/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为oceanbase贡献者第四天：内置函数" />
+<meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/02_08-27-day2_paxos/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-05-26T00:00:00+00:00" />
+
+<meta itemprop="name" content="成为oceanbase贡献者第四天：内置函数">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2023-05-26T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-05-26T00:00:00+00:00" />
+<meta itemprop="wordCount" content="15720">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为oceanbase贡献者第四天：内置函数"/>
+<meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为oceanbase贡献者第四天：内置函数</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-26 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 15720 字 </span>
+          <span class="more-meta"> 预计阅读 32 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#第一问题你期望解决什么问题核心问题是什么">第一问题：你期望解决什么问题，核心问题是什么？</a></li>
+        <li><a href="#第二个问题通过看什么文章阅读什么代码经过真实cey">第二个问题：通过看什么文章，阅读什么代码，经过真实cey</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#实现原理">实现原理：</a></li>
+        <li><a href="#推荐的相关文章或数据">推荐的相关文章或数据：</a></li>
+        <li><a href="#paxos-算法在-ceph-中的主要流程">Paxos 算法在 Ceph 中的主要流程：</a></li>
+        <li><a href="#流程图">流程图：</a></li>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2023-05-26T00:00:00" title="May 26, 2023">May 26, 2023</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>洞悉技术的本质，享受科技的乐趣 ，技术好的前提必然会高效沟通</p>
+<h1 id="一overview">#一、Overview</h1>
+<h3 id="第一问题你期望解决什么问题核心问题是什么">第一问题：你期望解决什么问题，核心问题是什么？</h3>
+<p>对于paxos小白来说就是高可用 三个节点，遇到故障，然后选出可用节点，然后使用相关产品足够用使用做项目了。</p>
+<ul>
+<li>网上都说难，具体难何处不直到，到底解决什么问题不知道</li>
+<li>网上都说好，具体好在哪里不清除，类似产品宣传都是99999然后不任何说明。</li>
+<li>到这里根本看不下去了，根本不知道怎么用，解决什么问题。</li>
+</ul>
+<h3 id="第二个问题通过看什么文章阅读什么代码经过真实cey">第二个问题：通过看什么文章，阅读什么代码，经过真实cey</h3>
+<ul>
+<li><em>左耳朵耗子</em>  提供分布式入门相关资料</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/872ee40b-cb77-4cd7-aa94-118fcb07a9cf.png" alt=""></p>
+<ol>
+<li>首先，推荐的是 <a href="https://www.zhihu.com/people/ab4aef6d6f80a7ccad3fd17da571edbd">@连城</a> 推荐的知行学社的《<a href="https://zhida.zhihu.com/search?q=%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F&amp;zhida_source=entity&amp;is_preview=1">分布式系统</a>与Paxos算法视频课程》： ，视频讲的非常好，很适合入门，循序渐进慢慢推导，我自己看了不下5遍，视频讲解理解更深，推荐大家都看看，视频末尾说有后续介绍，一直没有找到，如果有哪位大侠找到了通知下我，不胜感激。</li>
+</ol>
+<p><a href="https://www.bilibili.com/video/BV1Lt411m7cW/">https://www.bilibili.com/video/BV1Lt411m7cW/</a></p>
+<ol start="2">
+<li>
+<p>推荐刘杰的《<a href="https://lrita.github.io/images/posts/distribution/%E5%88%86%E5%B8%83%E5%BC%8F%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D.pdf">分布式系统原理介绍</a>》 ，里面有关于paxos的详细介绍，例子非常多，也有包括paxos协议的证明过程，大而全，质量相当高的一份学习资料！</p>
+</li>
+<li>
+<p><a href="https://www.zhihu.com/people/1353072704fa0f414d4c01068d5ec57d">@吴镝</a> 推荐的一份高质量ppt《可靠分布式系统基础 Paxos 的直观解释》，虽然是只是一份ppt没有讲解视频，但看ppt也能理解整个的paxos介绍和推导过程，写的很具体，配图很清晰明了；</p>
+<p><a href="https://blog.openacid.com/algo/paxos/">https://blog.openacid.com/algo/paxos/</a></p>
+</li>
+</ol>
+<p><a href="https://drmingdrmer.github.io/tech/distributed/2015/11/11/paxos-slide.html">https://drmingdrmer.github.io/tech/distributed/2015/11/11/paxos-slide.html</a></p>
+<ol start="4">
+<li>微信的几篇公众号文章：《微信PaxosStore：深入浅出Paxos算法协议》（<a href="https://link.zhihu.com/?target=https%3A//mp.weixin.qq.com/s/aJoXSQo9-zmukN2RsiZ3_g">微信PaxosStore：深入浅出Paxos算法协议</a> ）、《微信开源：生产级paxos类库PhxPaxos实现原理介绍》（<a href="https://link.zhihu.com/?target=https%3A//mp.weixin.qq.com/s/6VWUA5EDV2UIq4NqmQYWUA">微信自研生产级paxos类库PhxPaxos实现原理介绍</a> ），文章写的都挺好，但是博文有个缺点是知识比较零散，不适合入门，需要有一定基础才好理解；</li>
+<li>技术类的东西怎么能只停留在看上面，肯定要看代码啊，推荐微信开源的phxpaxos：<a href="https://link.zhihu.com/?target=https%3A//github.com/tencent-wechat/phxpaxos%EF%BC%8C%E7%BB%93%E5%90%88%E4%BB%A3%E7%A0%81%E5%AF%B9%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3%E6%9B%B4%E6%B7%B1%EF%BC%8C%E5%BE%88%E5%A4%9A%E6%97%B6%E5%80%99%E8%AF%B4%E4%BA%86%E4%B8%80%E5%A4%A7%E5%A0%86%E7%9C%8B%E4%BB%A3%E7%A0%81%E5%B0%B1%E6%98%AF%E4%B8%80%E4%B8%AAif%E6%88%96%E8%80%85for%E5%BE%AA%E7%8E%AF%EF%BC%8C%E7%9C%8B%E4%BA%86%E4%BB%A3%E7%A0%81%E8%B1%81%E7%84%B6%E5%BC%80%E6%9C%97%E3%80%82">https://github.com/tencent-wechat/phxpaxos，结合代码对协议理解更深，很多时候说了一大堆看代码就是一个if或者for循环，看了代码豁然开朗。</a></li>
+<li>如果英文可以的话，一定要看看paxos作者Lamport《paxos made simple》的论文</li>
+<li></li>
+</ol>
+<h1 id="二-ceph-猜想验证">二 ceph 猜想验证</h1>
+<p>Ceph 的 Paxos 算法在实际应用中遇到了哪些挑战，又是如何克服这些挑战的？</p>
+<p>Ceph 的 Paxos 算法在实际应用中遇到的挑战主要包括：</p>
+<ol>
+<li>
+<p><strong>成员变化（Membership Change）</strong>：Ceph Paxos 需要处理集群成员的变化，包括节点的加入和移除。这需要一个称为 Probing 的阶段来发现并更新集群节点信息，同时处理节点之间的数据差异。在 Probing 状态下，Monitor 节点会相互发送 prob 消息来探测对方存在并生成交互 Monmap 信息。这个过程可能会影响服务的连续性，因为整个 Paxos 集群在 Probing 过程中会停止对外提供服务。</p>
+</li>
+<li>
+<p><strong>日志截断（Log compaction）</strong>：随着集群服务的进行，Paxos 的日志数据会不断增加，这不仅占用存储资源，还会增加日志回放的时间。为了解决这个问题，Ceph 引入了日志截断机制，通过删除旧的日志数据来节省空间。这个过程由参数 <code>paxos_min</code> 控制，默认保留的日志长度为 500。在需要恢复数据时，如果请求的数据版本小于 <code>first_committed</code>，则会在 Synchronizing 过程中进行数据的全同步。</p>
+</li>
+<li>
+<p><strong>数据同步（Data Synchronization）</strong>：当 Leader 和 Peon 之间的日志差距较大时，拉取并重放 Log 的时间会很长。为了减少这种延迟，Ceph Monitor 在选主之前通过 Synchronizing 阶段将所有参与 Paxos 节点的日志信息差距缩小到一个较小的区间，这个区间的长度由 <code>paxos_max_join_drift</code> 参数配置，默认为 10。</p>
+</li>
+<li>
+<p><strong>性能与一致性的平衡</strong>：Ceph Paxos 的实现中，为了简化 Recovery 逻辑，每次只能有一个提案在执行中，这可能会影响性能。但是，Ceph 通过上层的聚合提交等机制来减少对一致性协议执行的频率，从而在一定程度上弥补了性能的牺牲。</p>
+</li>
+<li>
+<p><strong>容错和恢复（Fault Tolerance and Recovery）</strong>：在分布式系统中，节点故障是常见问题。Ceph Paxos 需要能够在节点故障后正确恢复，同时保持数据的一致性。这涉及到复杂的 Recovery 逻辑，包括从 Peon 到 Leader 和 Leader 到 Peon 的双向数据恢复。</p>
+</li>
+<li>
+<p><strong>网络分区和分区恢复</strong>：在网络分区发生时，Ceph Paxos 需要能够处理这种情况，并在分区恢复后继续提供一致性服务。这可能需要额外的机制来检测分区并采取适当的恢复措施。</p>
+</li>
+</ol>
+<p>为了克服这些挑战，Ceph Paxos 采取了一系列措施，包括使用 Lease 机制来优化只读请求，以及在 Leader 和 Peon 之间进行存活检测，以确保在 Lease 超时或 Leader 收不到 Lease Ack 时触发新的 Election。此外，Ceph 还通过 State Machine System 来处理幂等操作，并在 commit 后真正写入到状态机，从而简化了一致性算法的实现。</p>
+<p>文件：Paxos.h Paxos.cc</p>
+<p>庖丁解Ceph之Paxos</p>
+<p><a href="https://www.jianshu.com/p/7302e79ab534">https://www.jianshu.com/p/7302e79ab534</a></p>
+<p>点击链接查看和 Kimi 智能助手的对话 <a href="https://kimi.moonshot.cn/share/cr7shc3df0jbga8amn50">https://kimi.moonshot.cn/share/cr7shc3df0jbga8amn50</a></p>
+<p>User: 阅读代码 分析实现原理 推荐相关文章或者数据 // -<em>- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -</em>- 
+// vim: ts=8 sw=2 smarttab
+/*</p>
+<ul>
+<li>Ceph - scalable distributed file system
+*</li>
+<li>Copyright (C) 2004-2006 Sage Weil <a href="mailto:sage@newdream.net">sage@newdream.net</a>
+*</li>
+<li>This is free software; you can redistribute it and/or</li>
+<li>modify it under the terms of the GNU Lesser General Public</li>
+<li>License version 2.1, as published by the Free Software</li>
+<li>Foundation.  See file COPYING.</li>
+<li></li>
+</ul>
+<p>/*
+time&mdash;-&gt;</p>
+<p>cccccccccccccccccca????????????????????????????????????????
+cccccccccccccccccca????????????????????????????????????????
+cccccccccccccccccca???????????????????????????????????????? leader
+cccccccccccccccccc????????????????????????????????????????? 
+ccccc??????????????????????????????????????????????????????</p>
+<p>last_committed</p>
+<p>pn_from
+pn</p>
+<p>a 12v 
+b 12v
+c 14v
+d
+e 12v
+*/</p>
+<p>/**</p>
+<ul>
+<li>Paxos storage layout and behavior
+*</li>
+<li>Currently, we use a key/value store to hold all the Paxos-related data, but</li>
+<li>it can logically be depicted as this:
+*</li>
+<li>paxos:</li>
+<li>first_committed -&gt; 1</li>
+<li>
+<pre><code>last_committed -&gt; 4
+</code></pre>
+</li>
+<li>
+<pre><code>     1 -&gt; value_1
+</code></pre>
+</li>
+<li>
+<pre><code>     2 -&gt; value_2
+</code></pre>
+</li>
+<li>
+<pre><code>     3 -&gt; value_3
+</code></pre>
+</li>
+<li>
+<pre><code>     4 -&gt; value_4
+</code></pre>
+</li>
+</ul>
+<p>*</p>
+<ul>
+<li>Since we are relying on a k/v store supporting atomic transactions, we can</li>
+<li>guarantee that if &rsquo;last_committed&rsquo; has a value of &lsquo;4&rsquo;, then we have up to</li>
+<li>version 4 on the store, and no more than that; the same applies to</li>
+<li>&lsquo;first_committed&rsquo;, which holding &lsquo;1&rsquo; will strictly meaning that our lowest</li>
+<li>version is 1.
+*</li>
+<li>Each version&rsquo;s value (value_1, value_2, &hellip;, value_n) is a blob of data,</li>
+<li>incomprehensible to the Paxos. These values are proposed to the Paxos on</li>
+<li>propose_new_value() and each one is a transaction encoded in a ceph::buffer::list.
+*</li>
+<li>The Paxos will write the value to disk, associating it with its version,</li>
+<li>but will take a step further: the value shall be decoded, and the operations</li>
+<li>on that transaction shall be applied during the same transaction that will</li>
+<li>write the value&rsquo;s encoded ceph::buffer::list to disk. This behavior ensures that</li>
+<li>whatever is being proposed will only be available on the store when it is</li>
+<li>applied by Paxos, which will then be aware of such new values, guaranteeing</li>
+<li>the store state is always consistent without requiring shady workarounds.
+*</li>
+<li>So, let&rsquo;s say that FooMonitor proposes the following transaction, neatly</li>
+<li>encoded on a ceph::buffer::list of course:
+*</li>
+<li>Tx_Foo</li>
+<li>put(foo, last_committed, 3)</li>
+<li>put(foo, 3, foo_value_3)</li>
+<li>erase(foo, 2)</li>
+<li>erase(foo, 1)</li>
+<li>put(foo, first_committed, 3)
+*</li>
+<li>And knowing that the Paxos is proposed Tx_Foo as a ceph::buffer::list, once it is</li>
+<li>ready to commit, and assuming we are now committing version 5 of the Paxos,</li>
+<li>we will do something along the lines of:
+*</li>
+<li>Tx proposed_tx;</li>
+<li>proposed_tx.decode(Tx_foo_ceph::buffer::list);
+*</li>
+<li>Tx our_tx;</li>
+<li>our_tx.put(paxos, last_committed, 5);</li>
+<li>our_tx.put(paxos, 5, Tx_foo_ceph::buffer::list);</li>
+<li>our_tx.append(proposed_tx);
+*</li>
+<li>store_apply(our_tx);
+*</li>
+<li>And the store should look like this after we apply &lsquo;our_tx&rsquo;:
+*</li>
+<li>paxos:</li>
+<li>first_committed -&gt; 1</li>
+<li>
+<pre><code>last_committed -&gt; 5
+</code></pre>
+</li>
+<li>
+<pre><code>     1 -&gt; value_1
+</code></pre>
+</li>
+<li>
+<pre><code>     2 -&gt; value_2
+</code></pre>
+</li>
+<li>
+<pre><code>     3 -&gt; value_3
+</code></pre>
+</li>
+<li>
+<pre><code>     4 -&gt; value_4
+</code></pre>
+</li>
+<li>
+<pre><code>     5 -&gt; Tx_foo_ceph::buffer::list
+</code></pre>
+</li>
+<li>foo:</li>
+<li>first_committed -&gt; 3</li>
+<li>
+<pre><code>last_committed -&gt; 3
+</code></pre>
+</li>
+<li>
+<pre><code>     3 -&gt; foo_value_3
+</code></pre>
+</li>
+</ul>
+<p>*
+*/</p>
+<p>#ifndef CEPH_MON_PAXOS_H
+#define CEPH_MON_PAXOS_H</p>
+<p>#include &ldquo;include/types.h&rdquo;
+#include &ldquo;mon_types.h&rdquo;
+#include &ldquo;include/buffer.h&rdquo;
+#include &ldquo;msg/msg_types.h&rdquo;
+#include &ldquo;include/Context.h&rdquo;
+#include &ldquo;common/perf_counters.h&rdquo;
+#include &lt;errno.h&gt;</p>
+<p>#include &ldquo;MonitorDBStore.h&rdquo;
+#include &ldquo;mon/MonOpRequest.h&rdquo;</p>
+<p>class Monitor;
+class MMonPaxos;</p>
+<p>enum {
+l_paxos_first = 45800,
+l_paxos_start_leader,
+l_paxos_start_peon,
+l_paxos_restart,
+l_paxos_refresh,
+l_paxos_refresh_latency,
+l_paxos_begin,
+l_paxos_begin_keys,
+l_paxos_begin_bytes,
+l_paxos_begin_latency,
+l_paxos_commit,
+l_paxos_commit_keys,
+l_paxos_commit_bytes,
+l_paxos_commit_latency,
+l_paxos_collect,
+l_paxos_collect_keys,
+l_paxos_collect_bytes,
+l_paxos_collect_latency,
+l_paxos_collect_uncommitted,
+l_paxos_collect_timeout,
+l_paxos_accept_timeout,
+l_paxos_lease_ack_timeout,
+l_paxos_lease_timeout,
+l_paxos_store_state,
+l_paxos_store_state_keys,
+l_paxos_store_state_bytes,
+l_paxos_store_state_latency,
+l_paxos_share_state,
+l_paxos_share_state_keys,
+l_paxos_share_state_bytes,
+l_paxos_new_pn,
+l_paxos_new_pn_latency,
+l_paxos_last,
+};</p>
+<p>// i am one state machine.
+/**</p>
+<ul>
+<li>This library is based on the Paxos algorithm, but varies in a few key ways:</li>
+<li>1- Only a single new value is generated at a time, simplifying the recovery logic.</li>
+<li>2- Nodes track &ldquo;committed&rdquo; values, and share them generously (and trustingly)</li>
+<li>3- A &rsquo;leasing&rsquo; mechanism is built-in, allowing nodes to determine when it is</li>
+<li>
+<pre><code>safe to &quot;read&quot; their copy of the last committed value.
+</code></pre>
+</li>
+</ul>
+<p>*</p>
+<ul>
+<li>This provides a simple replication substrate that services can be built on top of.</li>
+<li>See PaxosService.h
+<em>/
+class Paxos {
+/</em>*
+<ul>
+<li>@defgroup Paxos_h_class Paxos</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>The Monitor to which this Paxos class is associated with.
+*/
+Monitor &amp;mon;</li>
+</ul>
+</li>
+</ul>
+<p>/// perf counter for internal instrumentations
+PerfCounters *logger;</p>
+<p>void init_logger();</p>
+<p>// my state machine info
+const std::string paxos_name;</p>
+<p>friend class Monitor;
+friend class PaxosService;</p>
+<p>std::list<a href="std::string">std::string</a> extra_state_dirs;</p>
+<p>// LEADER+PEON</p>
+<p>// &ndash; generic state &ndash;
+public:
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_states States on which the leader/peon may be.</li>
+<li>@{
+*/
+enum {</li>
+</ul>
+<pre><code>/**
+ * Leader/Peon is in Paxos' Recovery state
+ */
+STATE_RECOVERING,
+/**
+ * Leader/Peon is idle, and the Peon may or may not have a valid lease.
+ */
+STATE_ACTIVE,
+/**
+ * Leader/Peon is updating to a new value.
+ */
+STATE_UPDATING,
+/*
+ * Leader proposing an old value
+ */
+STATE_UPDATING_PREVIOUS,
+/*
+ * Leader/Peon is writing a new commit.  readable, but not
+ * writeable.
+ */
+STATE_WRITING,
+/*
+ * Leader/Peon is writing a new commit from a previous round.
+ */
+STATE_WRITING_PREVIOUS,
+// leader: refresh following a commit
+STATE_REFRESH,
+// Shutdown after WRITING or WRITING_PREVIOUS
+STATE_SHUTDOWN
+</code></pre>
+<p>};</p>
+<p>/**</p>
+<ul>
+<li>Obtain state name from constant value.
+*</li>
+<li>@note This function will raise a fatal error if @p s is not</li>
+<li>
+<pre><code>  a valid state value.
+</code></pre>
+*</li>
+<li>@param s State value.</li>
+<li>@return The state&rsquo;s name.
+*/
+static const std::string get_statename(int s) {</li>
+</ul>
+<pre><code>switch (s) {
+case STATE_RECOVERING:
+  return &quot;recovering&quot;;
+case STATE_ACTIVE:
+  return &quot;active&quot;;
+case STATE_UPDATING:
+  return &quot;updating&quot;;
+case STATE_UPDATING_PREVIOUS:
+  return &quot;updating-previous&quot;;
+case STATE_WRITING:
+  return &quot;writing&quot;;
+case STATE_WRITING_PREVIOUS:
+  return &quot;writing-previous&quot;;
+case STATE_REFRESH:
+  return &quot;refresh&quot;;
+case STATE_SHUTDOWN:
+  return &quot;shutdown&quot;;
+default:
+  return &quot;UNKNOWN&quot;;
+}
+</code></pre>
+<p>}</p>
+<p>private:
+/**</p>
+<ul>
+<li>The state we are in.
+<em>/
+int state;
+/</em>*</li>
+<li>@}
+*/
+int commits_started = 0;</li>
+</ul>
+<p>ceph::condition_variable shutdown_cond;</p>
+<p>public:
+/**</p>
+<ul>
+<li>Check if we are recovering.
+*</li>
+<li>@return &rsquo;true&rsquo; if we are on the Recovering state; &lsquo;false&rsquo; otherwise.
+<em>/
+bool is_recovering() const { return (state == STATE_RECOVERING); }
+/</em>*</li>
+<li>Check if we are active.
+*</li>
+<li>@return &rsquo;true&rsquo; if we are on the Active state; &lsquo;false&rsquo; otherwise.
+<em>/
+bool is_active() const { return state == STATE_ACTIVE; }
+/</em>*</li>
+<li>Check if we are updating.
+*</li>
+<li>@return &rsquo;true&rsquo; if we are on the Updating state; &lsquo;false&rsquo; otherwise.
+*/
+bool is_updating() const { return state == STATE_UPDATING; }</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Check if we are updating/proposing a previous value from a</li>
+<li>previous quorum
+*/
+bool is_updating_previous() const { return state == STATE_UPDATING_PREVIOUS; }</li>
+</ul>
+<p>/// @return &rsquo;true&rsquo; if we are writing an update to disk
+bool is_writing() const { return state == STATE_WRITING; }</p>
+<p>/// @return &rsquo;true&rsquo; if we are writing an update-previous to disk
+bool is_writing_previous() const { return state == STATE_WRITING_PREVIOUS; }</p>
+<p>/// @return &rsquo;true&rsquo; if we are refreshing an update just committed
+bool is_refresh() const { return state == STATE_REFRESH; }</p>
+<p>/// @return &rsquo;true&rsquo; if we are in the process of shutting down
+bool is_shutdown() const { return state == STATE_SHUTDOWN; }</p>
+<p>private:
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_recovery_vars Common recovery-related member variables</li>
+<li>@note These variables are common to both the Leader and the Peons.</li>
+<li>@{
+<em>/
+/</em>*
+*
+<em>/
+version_t first_committed;
+/</em>*</li>
+<li>Last Proposal Number
+*</li>
+<li>@todo Expand description
+<em>/
+version_t last_pn;
+/</em>*</li>
+<li>Last committed value&rsquo;s version.
+*</li>
+<li>On both the Leader and the Peons, this is the last value&rsquo;s version that</li>
+<li>was accepted by a given quorum and thus committed, that this instance</li>
+<li>knows about.
+*</li>
+<li>@note It may not be the last committed value&rsquo;s version throughout the</li>
+<li>
+<pre><code>  system. If we are a Peon, we may have not been part of the quorum
+</code></pre>
+</li>
+<li>
+<pre><code>  that accepted the value, and for this very same reason we may still
+</code></pre>
+</li>
+<li>
+<pre><code>  be a (couple of) version(s) behind, until we learn about the most
+</code></pre>
+</li>
+<li>
+<pre><code>  recent version. This should only happen if we are not active (i.e.,
+</code></pre>
+</li>
+<li>
+<pre><code>  part of the quorum), which should not happen if we are up, running
+</code></pre>
+</li>
+<li>
+<pre><code>  and able to communicate with others -- thus able to be part of the
+</code></pre>
+</li>
+<li>
+<pre><code>  monmap and trigger new elections.
+</code></pre>
+<em>/
+version_t last_committed;
+/</em>*</li>
+<li>Last committed value&rsquo;s time.
+*</li>
+<li>When the commit finished.
+<em>/
+utime_t last_commit_time;
+/</em>*</li>
+<li>The last Proposal Number we have accepted.
+*</li>
+<li>On the Leader, it will be the Proposal Number picked by the Leader</li>
+<li>itself. On the Peon, however, it will be the proposal sent by the Leader</li>
+<li>and it will only be updated if its value is higher than the one</li>
+<li>already known by the Peon.
+<em>/
+version_t accepted_pn;
+/</em>*</li>
+<li>The last_committed epoch of the leader at the time we accepted the last pn.
+*</li>
+<li>This has NO SEMANTIC MEANING, and is there only for the debug output.
+<em>/
+version_t accepted_pn_from;
+/</em>*</li>
+<li>Map holding the first committed version by each quorum member.
+*</li>
+<li>The versions kept in this map are updated during the collect phase.</li>
+<li>When the Leader starts the collect phase, each Peon will reply with its</li>
+<li>first committed version, which will then be kept in this map.
+<em>/
+std::map&lt;int,version_t&gt; peer_first_committed;
+/</em>*</li>
+<li>Map holding the last committed version by each quorum member.
+*</li>
+<li>The versions kept in this map are updated during the collect phase.</li>
+<li>When the Leader starts the collect phase, each Peon will reply with its</li>
+<li>last committed version, which will then be kept in this map.
+<em>/
+std::map&lt;int,version_t&gt; peer_last_committed;
+/</em>*</li>
+<li>@}
+*/</li>
+</ul>
+<p>// active (phase 2)
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_active_vars Common active-related member variables</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>When does our read lease expires.
+*</li>
+<li>Instead of performing a full commit each time a read is requested, we</li>
+<li>keep leases. Each lease will have an expiration date, which may or may</li>
+<li>not be extended. 
+<em>/
+ceph::real_clock::time_point lease_expire;
+/</em>*</li>
+<li>List of callbacks waiting for our state to change into STATE_ACTIVE.
+<em>/
+std::list&lt;Context</em>&gt; waiting_for_active;
+/**</li>
+<li>List of callbacks waiting for the chance to read a version from us.
+*</li>
+<li>Each entry on the list may result from an attempt to read a version that</li>
+<li>wasn&rsquo;t available at the time, or an attempt made during a period during</li>
+<li>which we could not satisfy the read request. The first case happens if</li>
+<li>the requested version is greater than our last committed version. The</li>
+<li>second scenario may happen if we are recovering, or if we don&rsquo;t have a</li>
+<li>valid lease.
+*</li>
+<li>The list will be woken up once we change to STATE_ACTIVE with an extended</li>
+<li>lease &ndash; which can be achieved if we have everyone on the quorum on board</li>
+<li>with the latest proposal, or if we don&rsquo;t really care about the remaining</li>
+<li>uncommitted values &ndash;, or if we&rsquo;re on a quorum of one.
+<em>/
+std::list&lt;Context</em>&gt; waiting_for_readable;
+/**</li>
+<li>@}
+*/</li>
+</ul>
+<p>// &ndash; leader &ndash;
+// recovery (paxos phase 1)
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_leader_recovery Leader-specific Recovery-related vars</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Number of replies to the collect phase we&rsquo;ve received so far.
+*</li>
+<li>This variable is reset to 1 each time we start a collect phase; it is</li>
+<li>incremented each time we receive a reply to the collect message, and</li>
+<li>is used to determine whether or not we have received replies from the</li>
+<li>whole quorum.
+<em>/
+unsigned   num_last;
+/</em>*</li>
+<li>Uncommitted value&rsquo;s version.
+*</li>
+<li>If we have, or end up knowing about, an uncommitted value, then its</li>
+<li>version will be kept in this variable.
+*</li>
+<li>@note If this version equals @p last_committed+1 when we reach the final</li>
+<li>
+<pre><code>  steps of recovery, then the algorithm will assume this is a value
+</code></pre>
+</li>
+<li>
+<pre><code>  the Leader does not know about, and trustingly the Leader will 
+</code></pre>
+</li>
+<li>
+<pre><code>  propose this version's value.
+</code></pre>
+<em>/
+version_t  uncommitted_v;
+/</em>*</li>
+<li>Uncommitted value&rsquo;s Proposal Number.
+*</li>
+<li>We use this variable to assess if the Leader should take into consideration</li>
+<li>an uncommitted value sent by a Peon. Given that the Peon will send back to</li>
+<li>the Leader the last Proposal Number it accepted, the Leader will be able</li>
+<li>to infer if this value is more recent than the one the Leader has, thus</li>
+<li>more relevant.
+<em>/
+version_t  uncommitted_pn;
+/</em>*</li>
+<li>Uncommitted Value.
+*</li>
+<li>If the system fails in-between the accept replies from the Peons and the</li>
+<li>instruction to commit from the Leader, then we may end up with accepted</li>
+<li>but yet-uncommitted values. During the Leader&rsquo;s recovery, it will attempt</li>
+<li>to bring the whole system to the latest state, and that means committing</li>
+<li>past accepted but uncommitted values.
+*</li>
+<li>This variable will hold an uncommitted value, which may originate either</li>
+<li>on the Leader, or learnt by the Leader from a Peon during the collect</li>
+<li>phase.
+<em>/
+ceph::buffer::list uncommitted_value;
+/</em>*</li>
+<li>Used to specify when an on-going collect phase times out.
+<em>/
+Context    <em>collect_timeout_event;
+/</em></em></li>
+<li>@}
+*/</li>
+</ul>
+<p>// active
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_leader_active Leader-specific Active-related vars</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Set of participants (Leader &amp; Peons) that have acked a lease extension.
+*</li>
+<li>Each Peon that acknowledges a lease extension will have its place in this</li>
+<li>set, which will be used to account for all the acks from all the quorum</li>
+<li>members, guaranteeing that we trigger new elections if some don&rsquo;t ack in</li>
+<li>the expected timeframe.
+<em>/
+std::set<!-- raw HTML omitted -->   acked_lease;
+/</em>*</li>
+<li>Callback responsible for extending the lease periodically.
+<em>/
+Context    <em>lease_renew_event;
+/</em></em></li>
+<li>Callback to trigger new elections once the time for acks is out.
+<em>/
+Context    <em>lease_ack_timeout_event;
+/</em></em></li>
+<li>@}
+<em>/
+/</em>*</li>
+<li>@defgroup Paxos_h_peon_active Peon-specific Active-related vars</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Callback to trigger new elections when the Peon&rsquo;s lease times out.
+*</li>
+<li>If the Peon&rsquo;s lease is extended, this callback will be reset (i.e.,</li>
+<li>we cancel the event and reschedule a new one with starting from the</li>
+<li>beginning).
+<em>/
+Context    <em>lease_timeout_event;
+/</em></em></li>
+<li>@}
+*/</li>
+</ul>
+<p>// updating (paxos phase 2)
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_leader_updating Leader-specific Updating-related vars</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>New Value being proposed to the Peons.
+*</li>
+<li>This ceph::buffer::list holds the value the Leader is proposing to the Peons, and</li>
+<li>that will be committed if the Peons do accept the proposal.
+<em>/
+ceph::buffer::list new_value;
+/</em>*</li>
+<li>Set of participants (Leader &amp; Peons) that accepted the new proposed value.
+*</li>
+<li>This set is used to keep track of those who have accepted the proposed</li>
+<li>value, so the leader may know when to issue a commit (when a majority of</li>
+<li>participants has accepted the proposal), and when to extend the lease</li>
+<li>(when all the quorum members have accepted the proposal).
+<em>/
+std::set<!-- raw HTML omitted -->   accepted;
+/</em>*</li>
+<li>Callback to trigger a new election if the proposal is not accepted by the</li>
+<li>full quorum within a given timeframe.
+*</li>
+<li>If the full quorum does not accept the proposal, then it means that the</li>
+<li>Leader may no longer be recognized as the leader, or that the quorum has</li>
+<li>changed, and the value may have not reached all the participants. Thus,</li>
+<li>the leader must call new elections, and go through a recovery phase in</li>
+<li>order to propagate the new value throughout the system.
+*</li>
+<li>This does not mean that we won&rsquo;t commit. We will commit as soon as we</li>
+<li>have a majority of acceptances. But if we do not have full acceptance</li>
+<li>from the quorum, then we cannot extend the lease, as some participants</li>
+<li>may not have the latest committed value.
+*/
+Context    *accept_timeout_event;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>List of callbacks waiting for it to be possible to write again.
+*</li>
+<li>@remarks It is not possible to write if we are not the Leader, or we are</li>
+<li>
+<pre><code>     not on the active state, or if the lease has expired.
+</code></pre>
+<em>/
+std::list&lt;Context</em>&gt; waiting_for_writeable;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Pending proposal transaction
+*</li>
+<li>This is the transaction that is under construction and pending</li>
+<li>proposal.  We will add operations to it until we decide it is</li>
+<li>time to start a paxos round.
+*/
+MonitorDBStore::TransactionRef pending_proposal;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Finishers for pending transaction
+*</li>
+<li>These are waiting for updates in the pending proposal/transaction</li>
+<li>to be committed.
+<em>/
+std::list&lt;Context</em>&gt; pending_finishers;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Finishers for committing transaction
+*</li>
+<li>When the pending_proposal is submitted, pending_finishers move to</li>
+<li>this list.  When it commits, these finishers are notified.
+<em>/
+std::list&lt;Context</em>&gt; committing_finishers;
+/**</li>
+<li>This function re-triggers pending_ and committing_finishers</li>
+<li>safely, so as to maintain existing system invariants. In particular</li>
+<li>we maintain ordering by triggering committing before pending, and</li>
+<li>we clear out pending_finishers prior to any triggers so that</li>
+<li>we don&rsquo;t trigger asserts on them being empty. You should</li>
+<li>use it instead of sending -EAGAIN to them with finish_contexts.
+*/
+void reset_pending_committing_finishers();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@defgroup Paxos_h_sync_warns Synchronization warnings</li>
+<li>@todo Describe these variables</li>
+<li>@{
+<em>/
+utime_t last_clock_drift_warn;
+int clock_drift_warned;
+/</em>*</li>
+<li>@}
+*/</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Should be true if we have proposed to trim, or are in the middle of</li>
+<li>trimming; false otherwise.
+*/
+bool trimming;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>true if we want trigger_propose to <em>not</em> propose (yet)
+*/
+bool plugged = false;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@defgroup Paxos_h_callbacks Callback classes.</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Callback class responsible for handling a Collect Timeout.
+<em>/
+class C_CollectTimeout;
+/</em>*</li>
+<li>Callback class responsible for handling an Accept Timeout.
+<em>/
+class C_AcceptTimeout;
+/</em>*</li>
+<li>Callback class responsible for handling a Lease Ack Timeout.
+*/
+class C_LeaseAckTimeout;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Callback class responsible for handling a Lease Timeout.
+*/
+class C_LeaseTimeout;</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Callback class responsible for handling a Lease Renew Timeout.
+*/
+class C_LeaseRenew;</li>
+</ul>
+<p>class C_Trimmed;
+/**
+*
+*/
+public:
+class C_Proposal : public Context {
+Context *proposer_context;
+public:
+ceph::buffer::list bl;
+// for debug purposes. Will go away. Soon.
+bool proposed;
+utime_t proposal_time;</p>
+<pre><code>C_Proposal(Context *c, ceph::buffer::list&amp; proposal_bl) :
+proposer_context(c),
+bl(proposal_bl),
+proposed(false),
+proposal_time(ceph_clock_now())
+  { }
+
+void finish(int r) override {
+  if (proposer_context) {
+proposer_context-&gt;complete(r);
+proposer_context = NULL;
+  }
+}
+</code></pre>
+<p>};
+/**</p>
+<ul>
+<li>@}
+<em>/
+private:
+/</em>*</li>
+<li>@defgroup Paxos_h_election_triggered Steps triggered by an election.
+*</li>
+<li>@note All these functions play a significant role in the Recovery Phase,</li>
+<li>
+<pre><code>  which is triggered right after an election once someone becomes
+</code></pre>
+</li>
+<li>
+<pre><code>  the Leader.
+</code></pre>
+</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Create a new Proposal Number and propose it to the Peons.
+*</li>
+<li>This function starts the Recovery Phase, which can be directly mapped</li>
+<li>onto the original Paxos&rsquo; Prepare phase. Basically, we&rsquo;ll generate a</li>
+<li>Proposal Number, taking @p oldpn into consideration, and we will send</li>
+<li>it to a quorum, along with our first and last committed versions. By</li>
+<li>sending these information in a message to the quorum, we expect to</li>
+<li>obtain acceptances from a majority, allowing us to commit, or be</li>
+<li>informed of a higher Proposal Number known by one or more of the Peons</li>
+<li>in the quorum.
+*</li>
+<li>@pre We are the Leader.</li>
+<li>@post Recovery Phase initiated by sending messages to the quorum.
+*</li>
+<li>@param oldpn A proposal number taken as the highest known so far, that</li>
+<li>
+<pre><code>     should be taken into consideration when generating a new 
+</code></pre>
+</li>
+<li>
+<pre><code>     Proposal Number for the Recovery Phase.
+</code></pre>
+<em>/
+void collect(version_t oldpn);
+/</em>*</li>
+<li>Handle the reception of a collect message from the Leader and reply</li>
+<li>accordingly.
+*</li>
+<li>Once a Peon receives a collect message from the Leader it will reply</li>
+<li>with its first and last committed versions, as well as information so</li>
+<li>the Leader may know if its Proposal Number was, or was not, accepted by</li>
+<li>the Peon. The Peon will accept the Leader&rsquo;s Proposal Number if it is</li>
+<li>higher than the Peon&rsquo;s currently accepted Proposal Number. The Peon may</li>
+<li>also inform the Leader of accepted but uncommitted values.
+*</li>
+<li>@invariant The message is an operation of type OP_COLLECT.</li>
+<li>@pre We are a Peon.</li>
+<li>@post Replied to the Leader, accepting or not accepting its PN.
+*</li>
+<li>@param collect The collect message sent by the Leader to the Peon.
+<em>/
+void handle_collect(MonOpRequestRef op);
+/</em>*</li>
+<li>Handle a response from a Peon to the Leader&rsquo;s collect phase.
+*</li>
+<li>The received message will state the Peon&rsquo;s last committed version, as</li>
+<li>well as its last proposal number. This will lead to one of the following</li>
+<li>scenarios: if the replied Proposal Number is equal to the one we proposed,</li>
+<li>then the Peon has accepted our proposal, and if all the Peons do accept</li>
+<li>our Proposal Number, then we are allowed to proceed with the commit;</li>
+<li>however, if a Peon replies with a higher Proposal Number, we assume he</li>
+<li>knows something we don&rsquo;t and the Leader will have to abort the current</li>
+<li>proposal in order to retry with the Proposal Number specified by the Peon.</li>
+<li>It may also occur that the Peon replied with a lower Proposal Number, in</li>
+<li>which case we assume it is a reply to an older value and we&rsquo;ll simply</li>
+<li>drop it.</li>
+<li>This function will also check if the Peon replied with an accepted but</li>
+<li>yet uncommitted value. In this case, if its version is higher than our</li>
+<li>last committed value by one, we assume that the Peon knows a value from a</li>
+<li>previous proposal that has never been committed, and we should try to</li>
+<li>commit that value by proposing it next. On the other hand, if that is</li>
+<li>not the case, we&rsquo;ll assume it is an old, uncommitted value, we do not</li>
+<li>care about and we&rsquo;ll consider the system active by extending the leases.
+*</li>
+<li>@invariant The message is an operation of type OP_LAST.</li>
+<li>@pre We are the Leader.</li>
+<li>@post We initiate a commit, or we retry with a higher Proposal Number,</li>
+<li>
+<pre><code>  or we drop the message.
+</code></pre>
+</li>
+<li>@post We move from STATE_RECOVERING to STATE_ACTIVE.
+*</li>
+<li>@param last The message sent by the Peon to the Leader.
+<em>/
+void handle_last(MonOpRequestRef op);
+/</em>*</li>
+<li>The Recovery Phase timed out, meaning that a significant part of the</li>
+<li>quorum does not believe we are the Leader, and we thus should trigger new</li>
+<li>elections.
+*</li>
+<li>@pre We believe to be the Leader.</li>
+<li>@post Trigger new elections.
+<em>/
+void collect_timeout();
+/</em>*</li>
+<li>@}
+*/</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@defgroup Paxos_h_updating_funcs Functions used during the Updating State</li>
+<li></li>
+<li>These functions may easily be mapped to the original Paxos Algorithm&rsquo;s</li>
+<li>phases. 
+*</li>
+<li>Taking into account the algorithm can be divided in 4 phases (Prepare,</li>
+<li>Promise, Accept Request and Accepted), we can easily map Paxos::begin to</li>
+<li>both the Prepare and Accept Request phases; the Paxos::handle_begin to</li>
+<li>the Promise phase; and the Paxos::handle_accept to the Accepted phase.</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Start a new proposal with the intent of committing @p value.
+*</li>
+<li>If we are alone on the system (i.e., a quorum of one), then we will</li>
+<li>simply commit the value, but if we are not alone, then we need to propose</li>
+<li>the value to the quorum.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_ACTIVE</li>
+<li>@post We commit, if we are alone, or we send a message to each quorum</li>
+<li>
+<pre><code>  member
+</code></pre>
+</li>
+<li>@post We are on STATE_ACTIVE, if we are alone, or on</li>
+<li>
+<pre><code>  STATE_UPDATING otherwise
+</code></pre>
+*</li>
+<li>@param value The value being proposed to the quorum
+<em>/
+void begin(ceph::buffer::list&amp; value);
+/</em>*</li>
+<li>Accept or decline (by ignoring) a proposal from the Leader.
+*</li>
+<li>We will decline the proposal (by ignoring it) if we have promised to</li>
+<li>accept a higher numbered proposal. If that is not the case, we will</li>
+<li>accept it and accordingly reply to the Leader.
+*</li>
+<li>@pre We are a Peon</li>
+<li>@pre We are on STATE_ACTIVE</li>
+<li>@post We are on STATE_UPDATING if we accept the Leader&rsquo;s proposal</li>
+<li>@post We send a reply message to the Leader if we accept its proposal
+*</li>
+<li>@invariant The received message is an operation of type OP_BEGIN
+*</li>
+<li>@param begin The message sent by the Leader to the Peon during the</li>
+<li>
+<pre><code>     Paxos::begin function
+</code></pre>
+*
+<em>/
+void handle_begin(MonOpRequestRef op);
+/</em>*</li>
+<li>Handle an Accept message sent by a Peon.
+*</li>
+<li>In order to commit, the Leader has to receive accepts from a majority of</li>
+<li>the quorum. If that does happen, then the Leader may proceed with the</li>
+<li>commit. However, the Leader needs the accepts from all the quorum members</li>
+<li>in order to extend the lease and move on to STATE_ACTIVE.
+*</li>
+<li>This function handles these two situations, accounting for the amount of</li>
+<li>received accepts.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_UPDATING</li>
+<li>@post We are on STATE_ACTIVE if we received accepts from the full quorum</li>
+<li>@post We extended the lease if we moved on to STATE_ACTIVE</li>
+<li>@post We are on STATE_UPDATING if we didn&rsquo;t received accepts from the</li>
+<li>
+<pre><code>  full quorum
+</code></pre>
+</li>
+<li>@post We have committed if we received accepts from a majority
+*</li>
+<li>@invariant The received message is an operation of type OP_ACCEPT
+*</li>
+<li>@param accept The message sent by the Peons to the Leader during the</li>
+<li>
+<pre><code>      Paxos::handle_begin function
+</code></pre>
+<em>/
+void handle_accept(MonOpRequestRef op);
+/</em>*</li>
+<li>Trigger a fresh election.
+*</li>
+<li>During Paxos::begin we set a Callback of type Paxos::C_AcceptTimeout in</li>
+<li>order to limit the amount of time we spend waiting for Accept replies.</li>
+<li>This callback will call Paxos::accept_timeout when it is fired.
+*</li>
+<li>This is essential to the algorithm because there may be the chance that</li>
+<li>we are no longer the Leader (i.e., others don&rsquo;t believe in us) and we</li>
+<li>are getting ignored, or we dropped out of the quorum and haven&rsquo;t realised</li>
+<li>it. So, our only option is to trigger fresh elections.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_UPDATING</li>
+<li>@post Triggered fresh elections
+<em>/
+void accept_timeout();
+/</em>*</li>
+<li>@}
+*/</li>
+</ul>
+<p>utime_t commit_start_stamp;
+friend struct C_Committed;</p>
+<p>/**</p>
+<ul>
+<li>Commit a value throughout the system.
+*</li>
+<li>The Leader will cancel the current lease (as it was for the old value),</li>
+<li>and will store the committed value locally. It will then instruct every</li>
+<li>quorum member to do so as well.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_UPDATING</li>
+<li>@pre A majority of quorum members accepted our proposal</li>
+<li>@post Value locally stored</li>
+<li>@post Quorum members instructed to commit the new value.
+<em>/
+void commit_start();
+void commit_finish();   ///&lt; finish a commit after txn becomes durable
+void abort_commit();    ///&lt; Handle commit finish after shutdown started
+/</em>*</li>
+<li>Commit the new value to stable storage as being the latest available</li>
+<li>version.
+*</li>
+<li>@pre We are a Peon</li>
+<li>@post The new value is locally stored</li>
+<li>@post Fire up the callbacks waiting on waiting_for_commit
+*</li>
+<li>@invariant The received message is an operation of type OP_COMMIT
+*</li>
+<li>@param commit The message sent by the Leader to the Peon during</li>
+<li>
+<pre><code>      Paxos::commit
+</code></pre>
+<em>/
+void handle_commit(MonOpRequestRef op);
+/</em>*</li>
+<li>Extend the system&rsquo;s lease.
+*</li>
+<li>This means that the Leader considers that it should now safe to read from</li>
+<li>any node on the system, since every quorum member is now in possession of</li>
+<li>the latest version. Therefore, the Leader will send a message stating just</li>
+<li>this to each quorum member, and will impose a limited timeframe during</li>
+<li>which acks will be accepted. If there aren&rsquo;t as many acks as expected</li>
+<li>(i.e, if at least one quorum member does not ack the lease) during this</li>
+<li>timeframe, then we will force fresh elections.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_ACTIVE</li>
+<li>@post A message extending the lease is sent to each quorum member</li>
+<li>@post A timeout callback is set to limit the amount of time we will wait</li>
+<li>
+<pre><code>  for lease acks.
+</code></pre>
+</li>
+<li>@post A timer is set in order to renew the lease after a certain amount</li>
+<li>
+<pre><code>  of time.
+</code></pre>
+<em>/
+void extend_lease();
+/</em>*</li>
+<li>Update the lease on the Peon&rsquo;s side of things.
+*</li>
+<li>Once a Peon receives a Lease message, it will update its lease_expire</li>
+<li>variable, reply to the Leader acknowledging the lease update and set a</li>
+<li>timeout callback to be fired upon the lease&rsquo;s expiration. Finally, the</li>
+<li>Peon will fire up all the callbacks waiting for it to become active,</li>
+<li>which it just did, and all those waiting for it to become readable,</li>
+<li>which should be true if the Peon&rsquo;s lease didn&rsquo;t expire in the mean time.
+*</li>
+<li>@pre We are a Peon</li>
+<li>@post We update the lease accordingly</li>
+<li>@post A lease timeout callback is set</li>
+<li>@post Move to STATE_ACTIVE</li>
+<li>@post Fire up all the callbacks waiting for STATE_ACTIVE</li>
+<li>@post Fire up all the callbacks waiting for readable if we are readable</li>
+<li>@post Ack the lease to the Leader
+*</li>
+<li>@invariant The received message is an operation of type OP_LEASE
+*</li>
+<li>@param lease The message sent by the Leader to the Peon during the</li>
+<li>
+<pre><code>   Paxos::extend_lease function
+</code></pre>
+<em>/
+void handle_lease(MonOpRequestRef op);
+/</em>*</li>
+<li>Account for all the Lease Acks the Leader receives from the Peons.
+*</li>
+<li>Once the Leader receives all the Lease Acks from the Peons, it will be</li>
+<li>able to cancel the Lease Ack timeout callback, thus avoiding calling</li>
+<li>fresh elections.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@post Cancel the Lease Ack timeout callback if we receive acks from all</li>
+<li>
+<pre><code>  the quorum members
+</code></pre>
+*</li>
+<li>@invariant The received message is an operation of type OP_LEASE_ACK
+*</li>
+<li>@param ack The message sent by a Peon to the Leader during the</li>
+<li>
+<pre><code>   Paxos::handle_lease function
+</code></pre>
+<em>/
+void handle_lease_ack(MonOpRequestRef op);
+/</em>*</li>
+<li>Call fresh elections because at least one Peon didn&rsquo;t acked our lease.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_ACTIVE</li>
+<li>@post Trigger fresh elections
+<em>/
+void lease_ack_timeout();
+/</em>*</li>
+<li>Extend lease since we haven&rsquo;t had new committed values meanwhile.
+*</li>
+<li>@pre We are the Leader</li>
+<li>@pre We are on STATE_ACTIVE</li>
+<li>@post Go through with Paxos::extend_lease
+<em>/
+void lease_renew_timeout();
+/</em>*</li>
+<li>Call fresh elections because the Peon&rsquo;s lease expired without being</li>
+<li>renewed or receiving a fresh lease.
+*</li>
+<li>This means that the Peon is no longer assumed as being in the quorum</li>
+<li>(or there is no Leader to speak of), so just trigger fresh elections</li>
+<li>to circumvent this issue.
+*</li>
+<li>@pre We are a Peon</li>
+<li>@post Trigger fresh elections
+*/
+void lease_timeout();        // on peon, if lease isn&rsquo;t extended</li>
+</ul>
+<p>/// restart the lease timeout timer
+void reset_lease_timeout();</p>
+<p>/**</p>
+<ul>
+<li>Cancel all of Paxos&rsquo; timeout/renew events. 
+<em>/
+void cancel_events();
+/</em>*</li>
+<li>Shutdown this Paxos machine
+*/
+void shutdown();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Generate a new Proposal Number based on @p gt
+*</li>
+<li>@todo Check what @p gt actually means and what its usage entails</li>
+<li>@param gt A hint for the geration of the Proposal Number</li>
+<li>@return A globally unique, monotonically increasing Proposal Number
+*/
+version_t get_new_proposal_number(version_t gt=0);</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@todo document sync function
+*/
+void warn_on_future_time(utime_t t, entity_name_t from);</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Begin proposing the pending_proposal.
+*/
+void propose_pending();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>refresh state from store
+*</li>
+<li>Called when we have new state for the mon to consume.  If we return false,</li>
+<li>abort (we triggered a bootstrap).
+*</li>
+<li>@returns true on success, false if we are now bootstrapping
+*/
+bool do_refresh();</li>
+</ul>
+<p>void commit_proposal();
+void finish_round();</p>
+<p>public:
+/**</p>
+<ul>
+<li>@param m A monitor</li>
+<li>@param name A name for the paxos service. It serves as the naming space</li>
+<li>of the underlying persistent storage for this service.
+*/
+Paxos(Monitor &amp;m, const std::string &amp;name) 
+: mon(m),
+logger(NULL),
+paxos_name(name),
+state(STATE_RECOVERING),
+first_committed(0),
+last_pn(0),
+last_committed(0),
+accepted_pn(0),
+accepted_pn_from(0),
+num_last(0),
+uncommitted_v(0), uncommitted_pn(0),
+collect_timeout_event(0),
+lease_renew_event(0),
+lease_ack_timeout_event(0),
+lease_timeout_event(0),
+accept_timeout_event(0),
+clock_drift_warned(0),
+trimming(false) { }</li>
+</ul>
+<p>~Paxos() {
+delete logger;
+}</p>
+<p>const std::string get_name() const {
+return paxos_name;
+}</p>
+<p>void dispatch(MonOpRequestRef op);</p>
+<p>void read_and_prepare_transactions(MonitorDBStore::TransactionRef tx,
+version_t from, version_t last);</p>
+<p>void init();</p>
+<p>/**</p>
+<ul>
+<li>dump state info to a formatter
+*/
+void dump_info(ceph::Formatter *f);</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>This function runs basic consistency checks. Importantly, if</li>
+<li>it is inconsistent and shouldn&rsquo;t be, it asserts out.
+*</li>
+<li>@return True if consistent, false if not.
+*/
+bool is_consistent();</li>
+</ul>
+<p>void restart();
+/**</p>
+<ul>
+<li>Initiate the Leader after it wins an election.
+*</li>
+<li>Once an election is won, the Leader will be initiated and there are two</li>
+<li>possible outcomes of this method: the Leader directly jumps to the active</li>
+<li>state (STATE_ACTIVE) if it believes to be the only one in the quorum, or</li>
+<li>will start recovering (STATE_RECOVERING) by initiating the collect phase. 
+*</li>
+<li>@pre Our monitor is the Leader.</li>
+<li>@post We are either on STATE_ACTIVE if we&rsquo;re the only one in the quorum,</li>
+<li>
+<pre><code>  or on STATE_RECOVERING otherwise.
+</code></pre>
+<em>/
+void leader_init();
+/</em>*</li>
+<li>Initiate a Peon after it loses an election.
+*</li>
+<li>If we are a Peon, then there must be a Leader and we are not alone in the</li>
+<li>quorum, thus automatically assume we are on STATE_RECOVERING, which means</li>
+<li>we will soon be enrolled into the Leader&rsquo;s collect phase.
+*</li>
+<li>@pre There is a Leader, and it?s about to start the collect phase.</li>
+<li>@post We are on STATE_RECOVERING and will soon receive collect phase&rsquo;s</li>
+<li>
+<pre><code>  messages.
+</code></pre>
+*/
+void peon_init();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Include an incremental state of values, ranging from peer_first_committed</li>
+<li>to the last committed value, on the message m
+*</li>
+<li>@param m A message</li>
+<li>@param peer_first_committed Lowest version to take into account</li>
+<li>@param peer_last_committed Highest version to take into account
+<em>/
+void share_state(MMonPaxos <em>m, version_t peer_first_committed,
+version_t peer_last_committed);
+/</em></em></li>
+<li>Store on disk a state that was shared with us
+*</li>
+<li>Basically, we received a set of version. Or just one. It doesn&rsquo;t matter.</li>
+<li>What matters is that we have to stash it in the store. So, we will simply</li>
+<li>write every single ceph::buffer::list into their own versions on our side (i.e.,</li>
+<li>onto paxos-related keys), and then we will decode those same ceph::buffer::lists</li>
+<li>we just wrote and apply the transactions they hold. We will also update</li>
+<li>our first and last committed values to point to the new values, if need</li>
+<li>be. All this is done tightly wrapped in a transaction to ensure we</li>
+<li>enjoy the atomicity guarantees given by our awesome k/v store.
+*</li>
+<li>@param m A message</li>
+<li>@returns true if we stored something new; false otherwise
+*/
+bool store_state(MMonPaxos *m);
+void _sanity_check_store();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Helper function to decode a ceph::buffer::list into a transaction and append it</li>
+<li>to another transaction.
+*</li>
+<li>This function is used during the Leader&rsquo;s commit and during the</li>
+<li>Paxos::store_state in order to apply the ceph::buffer::list&rsquo;s transaction onto</li>
+<li>the store.
+*</li>
+<li>@param t The transaction to which we will append the operations</li>
+<li>@param bl A ceph::buffer::list containing an encoded transaction
+*/
+static void decode_append_transaction(MonitorDBStore::TransactionRef t,
+ceph::buffer::list&amp; bl) {</li>
+</ul>
+<pre><code>auto vt(std::make_shared&lt;MonitorDBStore::Transaction&gt;());
+auto it = bl.cbegin();
+vt-&gt;decode(it);
+t-&gt;append(vt);
+</code></pre>
+<p>}</p>
+<p>/**</p>
+<ul>
+<li>@todo This appears to be used only by the OSDMonitor, and I would say</li>
+<li>
+<pre><code>  its objective is to allow a third-party to have a &quot;private&quot;
+</code></pre>
+</li>
+<li>
+<pre><code>  state dir. -JL
+</code></pre>
+*/
+void add_extra_state_dir(std::string s) {</li>
+</ul>
+<pre><code>extra_state_dirs.push_back(s);
+</code></pre>
+<p>}</p>
+<p>// &ndash; service interface &ndash;
+/**</p>
+<ul>
+<li>Add c to the list of callbacks waiting for us to become active.
+*</li>
+<li>@param c A callback
+*/
+void wait_for_active(MonOpRequestRef op, Context *c) {</li>
+</ul>
+<pre><code>if (op)
+  op-&gt;mark_event(&quot;paxos:wait_for_active&quot;);
+waiting_for_active.push_back(c);
+</code></pre>
+<p>}
+void wait_for_active(Context *c) {
+MonOpRequestRef o;
+wait_for_active(o, c);
+}</p>
+<p>/**</p>
+<ul>
+<li>Trim the Paxos state as much as we can.
+*/
+void trim();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Check if we should trim.
+*</li>
+<li>If trimming is disabled, we must take that into consideration and only</li>
+<li>return true if we are positively sure that we should trim soon.
+*</li>
+<li>@returns true if we should trim; false otherwise.
+*/
+bool should_trim() {</li>
+</ul>
+<pre><code>int available_versions = get_version() - get_first_committed();
+int maximum_versions = g_conf()-&gt;paxos_min + g_conf()-&gt;paxos_trim_min;
+
+if (trimming || (available_versions &lt;= maximum_versions))
+  return false;
+
+return true;
+</code></pre>
+<p>}</p>
+<p>bool is_plugged() const {
+return plugged;
+}
+void plug() {
+ceph_assert(plugged == false);
+plugged = true;
+}
+void unplug() {
+ceph_assert(plugged == true);
+plugged = false;
+}</p>
+<p>// read
+/**</p>
+<ul>
+<li>@defgroup Paxos_h_read_funcs Read-related functions</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Get latest committed version
+*</li>
+<li>@return latest committed version
+<em>/
+version_t get_version() { return last_committed; }
+/</em>*</li>
+<li>Get first committed version
+*</li>
+<li>@return the first committed version
+<em>/
+version_t get_first_committed() { return first_committed; }
+/</em>*</li>
+<li>Check if a given version is readable.
+*</li>
+<li>A version may not be readable for a myriad of reasons:</li>
+<li>@li the version @e v is higher that the last committed version</li>
+<li>@li we are not the Leader nor a Peon (election may be on-going)</li>
+<li>@li we do not have a committed value yet</li>
+<li>@li we do not have a valid lease
+*</li>
+<li>@param seen The version we want to check if it is readable.</li>
+<li>@return &rsquo;true&rsquo; if the version is readable; &lsquo;false&rsquo; otherwise.
+<em>/
+bool is_readable(version_t seen=0);
+/</em>*</li>
+<li>Read version @e v and store its value in @e bl
+*</li>
+<li>@param[in] v The version we want to read</li>
+<li>@param[out] bl The version&rsquo;s value</li>
+<li>@return &rsquo;true&rsquo; if we successfully read the value; &lsquo;false&rsquo; otherwise
+<em>/
+bool read(version_t v, ceph::buffer::list &amp;bl);
+/</em>*</li>
+<li>Read the latest committed version
+*</li>
+<li>@param[out] bl The version&rsquo;s value</li>
+<li>@return the latest committed version if we successfully read the value;</li>
+<li>
+<pre><code>    or 0 (zero) otherwise.
+</code></pre>
+<em>/
+version_t read_current(ceph::buffer::list &amp;bl);
+/</em>*</li>
+<li>Add onreadable to the list of callbacks waiting for us to become readable.
+*</li>
+<li>@param onreadable A callback
+*/
+void wait_for_readable(MonOpRequestRef op, Context *onreadable) {</li>
+</ul>
+<pre><code>ceph_assert(!is_readable());
+if (op)
+  op-&gt;mark_event(&quot;paxos:wait_for_readable&quot;);
+waiting_for_readable.push_back(onreadable);
+</code></pre>
+<p>}
+void wait_for_readable(Context <em>onreadable) {
+MonOpRequestRef o;
+wait_for_readable(o, onreadable);
+}
+/</em>*</p>
+<ul>
+<li>@}
+*/</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Check if we have a valid lease.
+*</li>
+<li>@returns true if the lease is still valid; false otherwise.
+<em>/
+bool is_lease_valid();
+// write
+/</em>*</li>
+<li>@defgroup Paxos_h_write_funcs Write-related functions</li>
+<li>@{
+<em>/
+/</em>*</li>
+<li>Check if we are writeable.
+*</li>
+<li>We are writeable if we are alone (i.e., a quorum of one), or if we match</li>
+<li>all the following conditions:</li>
+<li>@li We are the Leader</li>
+<li>@li We are on STATE_ACTIVE</li>
+<li>@li We have a valid lease
+*</li>
+<li>@return &rsquo;true&rsquo; if we are writeable; &lsquo;false&rsquo; otherwise.
+<em>/
+bool is_writeable();
+/</em>*</li>
+<li>Add c to the list of callbacks waiting for us to become writeable.
+*</li>
+<li>@param c A callback
+*/
+void wait_for_writeable(MonOpRequestRef op, Context *c) {</li>
+</ul>
+<pre><code>ceph_assert(!is_writeable());
+if (op)
+  op-&gt;mark_event(&quot;paxos:wait_for_writeable&quot;);
+waiting_for_writeable.push_back(c);
+</code></pre>
+<p>}
+void wait_for_writeable(Context *c) {
+MonOpRequestRef o;
+wait_for_writeable(o, c);
+}</p>
+<p>/**</p>
+<ul>
+<li>Get a transaction to submit operations to propose against
+*</li>
+<li>Apply operations to this transaction.  It will eventually be proposed</li>
+<li>to paxos.
+*/
+MonitorDBStore::TransactionRef get_pending_transaction();</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>Queue a completion for the pending proposal
+*</li>
+<li>This completion will get triggered when the pending proposal</li>
+<li>transaction commits.
+*/
+void queue_pending_finisher(Context *onfinished);</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>(try to) trigger a proposal
+*</li>
+<li>Tell paxos that it should submit the pending proposal.  Note that if it</li>
+<li>is not active (e.g., because it is already in the midst of committing</li>
+<li>something) that will be deferred (e.g., until the current round finishes).
+<em>/
+bool trigger_propose();
+/</em>*</li>
+<li>@}
+*/</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>@}
+*/
+protected:
+MonitorDBStore *get_store();
+};</li>
+</ul>
+<p>inline std::ostream&amp; operator&laquo;(std::ostream&amp; out, Paxos::C_Proposal&amp; p)
+{
+std::string proposed = (p.proposed ? &ldquo;proposed&rdquo; : &ldquo;unproposed&rdquo;);
+out &laquo; &quot; &quot; &laquo; proposed
+&laquo; &quot; queued &quot; &laquo; (ceph_clock_now() - p.proposal_time)
+&laquo; &quot; tx dump:\n&quot;;
+auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+auto p_it = p.bl.cbegin();
+t-&gt;decode(p_it);
+ceph::JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(out);
+return out;
+}</p>
+<p>#endif</p>
+<p>Kimi: 这段代码是 Ceph 分布式文件系统的一部分，具体来说是实现了 Paxos 一致性算法的 C++ 代码。Ceph 使用 Paxos 算法来达成分布式环境中多个节点之间的一致性。下面是对代码实现原理的分析和一些推荐的相关文章或数据：</p>
+<h3 id="实现原理">实现原理：</h3>
+<ol>
+<li>
+<p><strong>Paxos 算法的变体</strong>：代码实现了 Paxos 算法的一个变体，用于在分布式系统中达成一致性。它主要处理在分布式环境中如何安全地更新状态。</p>
+</li>
+<li>
+<p><strong>状态机</strong>：<code>Paxos</code> 类实现了一个状态机，其中包含多种状态（如 <code>STATE_RECOVERING</code>, <code>STATE_ACTIVE</code>, <code>STATE_UPDATING</code> 等），用于处理不同的操作阶段。</p>
+</li>
+<li>
+<p><strong>版本控制</strong>：通过 <code>version_t</code> 类型来控制版本，确保每个提案（proposal）都有一个唯一的版本号。</p>
+</li>
+<li>
+<p><strong>读写操作</strong>：代码处理了如何安全地进行读和写操作。在读操作中，系统需要检查是否有有效的租约（lease），在写操作中，系统需要确保当前节点是领导者（Leader）并且处于活动状态。</p>
+</li>
+<li>
+<p><strong>消息传递</strong>：代码中包含了多种消息类型（如 <code>OP_COLLECT</code>, <code>OP_BEGIN</code>, <code>OP_ACCEPT</code>, <code>OP_COMMIT</code> 等），用于在 Paxos 算法的不同阶段中节点之间通信。</p>
+</li>
+<li>
+<p><strong>持久化存储</strong>：通过 <code>MonitorDBStore</code> 类与键值存储进行交互，将提案的值持久化到磁盘。</p>
+</li>
+<li>
+<p><strong>租约机制</strong>：使用租约（lease）机制来优化读操作，避免每次都进行完整的 Paxos 算法流程。</p>
+</li>
+<li>
+<p><strong>回调和事件</strong>：使用 <code>Context</code> 类和条件变量来处理异步回调和事件，确保在特定条件下能够触发相应的操作。</p>
+</li>
+</ol>
+<h3 id="推荐的相关文章或数据">推荐的相关文章或数据：</h3>
+<ol>
+<li>
+<p><strong>Paxos 算法的详细介绍</strong>：<a href="https://www.cs.utexas.edu/users/lorenzo/corsi/fall2015/slides/paxos.pdf">Paxos Made Simple</a> - 这篇文章提供了 Paxos 算法的详细解释，有助于理解代码中的算法实现。</p>
+</li>
+<li>
+<p><strong>Ceph 官方文档</strong>：<a href="https://docs.ceph.com/en/latest/">Ceph Documentation</a> - Ceph 的官方文档提供了关于如何配置和使用 Ceph 的详细信息，包括 Paxos 算法在 Ceph 中的应用。</p>
+</li>
+<li>
+<p><strong>分布式一致性算法的比较</strong>：<a href="https://medium.com/@dgryski/distributed-consensus-for-dummies-71e4e6c6a65">Distributed Consensus for Dummies</a> - 这篇文章比较了不同的分布式一致性算法，包括 Paxos，有助于理解 Paxos 算法在更广泛的上下文中的位置。</p>
+</li>
+<li>
+<p><strong>Ceph 源代码</strong>：<a href="https://github.com/ceph/ceph">Ceph GitHub Repository</a> - Ceph 的源代码仓库，可以查看完整的 Paxos 实现和其他相关组件。</p>
+</li>
+<li>
+<p><strong>Paxos 算法的动画演示</strong>：<a href="https://www.youtube.com/watch?v=s9yWVmPoLFs">The Secret Lives of Data</a> - 这个视频通过动画形式展示了 Paxos 算法的工作原理，有助于直观理解算法流程。</p>
+</li>
+</ol>
+<p>通过阅读这些资料，可以获得更深入的理解 Paxos 算法在 Ceph 中的实现和应用。</p>
+<p>User: Ceph 的 Paxos 算法在实际应用中遇到了哪些挑战，又是如何克服这些挑战的？</p>
+<p>Kimi: Ceph 的 Paxos 算法在实际应用中遇到的挑战主要包括：</p>
+<ol>
+<li>
+<p><strong>成员变化（Membership Change）</strong>：Ceph Paxos 需要处理集群成员的变化，包括节点的加入和移除。这需要一个称为 Probing 的阶段来发现并更新集群节点信息，同时处理节点之间的数据差异。在 Probing 状态下，Monitor 节点会相互发送 prob 消息来探测对方存在并生成交互 Monmap 信息。这个过程可能会影响服务的连续性，因为整个 Paxos 集群在 Probing 过程中会停止对外提供服务。</p>
+</li>
+<li>
+<p><strong>日志截断（Log compaction）</strong>：随着集群服务的进行，Paxos 的日志数据会不断增加，这不仅占用存储资源，还会增加日志回放的时间。为了解决这个问题，Ceph 引入了日志截断机制，通过删除旧的日志数据来节省空间。这个过程由参数 <code>paxos_min</code> 控制，默认保留的日志长度为 500。在需要恢复数据时，如果请求的数据版本小于 <code>first_committed</code>，则会在 Synchronizing 过程中进行数据的全同步。</p>
+</li>
+<li>
+<p><strong>数据同步（Data Synchronization）</strong>：当 Leader 和 Peon 之间的日志差距较大时，拉取并重放 Log 的时间会很长。为了减少这种延迟，Ceph Monitor 在选主之前通过 Synchronizing 阶段将所有参与 Paxos 节点的日志信息差距缩小到一个较小的区间，这个区间的长度由 <code>paxos_max_join_drift</code> 参数配置，默认为 10。</p>
+</li>
+<li>
+<p><strong>性能与一致性的平衡</strong>：Ceph Paxos 的实现中，为了简化 Recovery 逻辑，每次只能有一个提案在执行中，这可能会影响性能。但是，Ceph 通过上层的聚合提交等机制来减少对一致性协议执行的频率，从而在一定程度上弥补了性能的牺牲。</p>
+</li>
+<li>
+<p><strong>容错和恢复（Fault Tolerance and Recovery）</strong>：在分布式系统中，节点故障是常见问题。Ceph Paxos 需要能够在节点故障后正确恢复，同时保持数据的一致性。这涉及到复杂的 Recovery 逻辑，包括从 Peon 到 Leader 和 Leader 到 Peon 的双向数据恢复。</p>
+</li>
+<li>
+<p><strong>网络分区和分区恢复</strong>：在网络分区发生时，Ceph Paxos 需要能够处理这种情况，并在分区恢复后继续提供一致性服务。这可能需要额外的机制来检测分区并采取适当的恢复措施。</p>
+</li>
+</ol>
+<p>为了克服这些挑战，Ceph Paxos 采取了一系列措施，包括使用 Lease 机制来优化只读请求，以及在 Leader 和 Peon 之间进行存活检测，以确保在 Lease 超时或 Leader 收不到 Lease Ack 时触发新的 Election。此外，Ceph 还通过 State Machine System 来处理幂等操作，并在 commit 后真正写入到状态机，从而简化了一致性算法的实现。</p>
+<p>参考：</p>
+<p>User: 阅读代码：绘制流程图 // -<em>- mode:C++; tab-width:8; c-basic-offset:2; indent-tabs-mode:t -</em>- 
+// vim: ts=8 sw=2 smarttab
+/*</p>
+<ul>
+<li>Ceph - scalable distributed file system
+*</li>
+<li>Copyright (C) 2004-2006 Sage Weil <a href="mailto:sage@newdream.net">sage@newdream.net</a>
+*</li>
+<li>This is free software; you can redistribute it and/or</li>
+<li>modify it under the terms of the GNU Lesser General Public</li>
+<li>License version 2.1, as published by the Free Software</li>
+<li>Foundation.  See file COPYING.</li>
+<li></li>
+</ul>
+<p>#include <!-- raw HTML omitted -->
+#include &ldquo;Paxos.h&rdquo;
+#include &ldquo;Monitor.h&rdquo;
+#include &ldquo;messages/MMonPaxos.h&rdquo;</p>
+<p>#include &ldquo;mon/mon_types.h&rdquo;
+#include &ldquo;common/config.h&rdquo;
+#include &ldquo;include/ceph_assert.h&rdquo;
+#include &ldquo;include/stringify.h&rdquo;
+#include &ldquo;common/Timer.h&rdquo;
+#include &ldquo;messages/PaxosServiceMessage.h&rdquo;</p>
+<p>using std::string;
+using std::unique_lock;</p>
+<p>using ceph::bufferlist;
+using ceph::Formatter;
+using ceph::JSONFormatter;
+using ceph::to_timespan;</p>
+<p>#define dout_subsys ceph_subsys_paxos
+#undef dout_prefix
+#define dout_prefix _prefix(_dout, mon, mon.name, mon.rank, paxos_name, state, first_committed, last_committed)
+static std::ostream&amp; _prefix(std::ostream *_dout, Monitor &amp;mon, const string&amp; name,
+int rank, const string&amp; paxos_name, int state,
+version_t first_committed, version_t last_committed)
+{
+return *_dout &laquo; &ldquo;mon.&rdquo; &laquo; name &laquo; &ldquo;@&rdquo; &laquo; rank
+&laquo; &ldquo;(&rdquo; &laquo; mon.get_state_name() &laquo; &ldquo;)&rdquo;
+&laquo; &ldquo;.paxos(&rdquo; &laquo; paxos_name &laquo; &quot; &quot; &laquo; Paxos::get_statename(state)
+&laquo; &quot; c &quot; &laquo; first_committed &laquo; &ldquo;..&rdquo; &laquo; last_committed
+&laquo; &ldquo;) &ldquo;;
+}</p>
+<p>class Paxos::C_Trimmed : public Context {
+Paxos *paxos;
+public:
+explicit C_Trimmed(Paxos *p) : paxos(p) { }
+void finish(int r) override {
+paxos-&gt;trimming = false;
+}
+};</p>
+<p>MonitorDBStore *Paxos::get_store()
+{
+return mon.store;
+}</p>
+<p>void Paxos::read_and_prepare_transactions(MonitorDBStore::TransactionRef tx,
+version_t first, version_t last)
+{
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; first &quot; &laquo; first &laquo; &quot; last &quot; &laquo; last &laquo; dendl;
+for (version_t v = first; v &lt;= last; ++v) {
+dout(30) &laquo; <strong>func</strong> &laquo; &quot; apply version &quot; &laquo; v &laquo; dendl;
+bufferlist bl;
+int err = get_store()-&gt;get(get_name(), v, bl);
+ceph_assert(err == 0);
+ceph_assert(bl.length());
+decode_append_transaction(tx, bl);
+}
+dout(15) &laquo; <strong>func</strong> &laquo; &quot; total versions &quot; &laquo; (last-first) &laquo; dendl;
+}</p>
+<p>void Paxos::init()
+{
+// load paxos variables from stable storage
+last_pn = get_store()-&gt;get(get_name(), &ldquo;last_pn&rdquo;);
+accepted_pn = get_store()-&gt;get(get_name(), &ldquo;accepted_pn&rdquo;);
+last_committed = get_store()-&gt;get(get_name(), &ldquo;last_committed&rdquo;);
+first_committed = get_store()-&gt;get(get_name(), &ldquo;first_committed&rdquo;);</p>
+<p>dout(10) &laquo; <strong>func</strong> &laquo; &quot; last_pn: &quot; &laquo; last_pn &laquo; &quot; accepted_pn: &quot;
+&laquo; accepted_pn &laquo; &quot; last_committed: &quot; &laquo; last_committed
+&laquo; &quot; first_committed: &quot; &laquo; first_committed &laquo; dendl;</p>
+<p>dout(10) &laquo; &ldquo;init&rdquo; &laquo; dendl;
+ceph_assert(is_consistent());
+}</p>
+<p>void Paxos::init_logger()
+{
+PerfCountersBuilder pcb(g_ceph_context, &ldquo;paxos&rdquo;, l_paxos_first, l_paxos_last);</p>
+<p>// Because monitors are so few in number, the resource cost of capturing
+// almost all their perf counters at USEFUL is trivial.
+pcb.set_prio_default(PerfCountersBuilder::PRIO_USEFUL);</p>
+<p>pcb.add_u64_counter(l_paxos_start_leader, &ldquo;start_leader&rdquo;, &ldquo;Starts in leader role&rdquo;);
+pcb.add_u64_counter(l_paxos_start_peon, &ldquo;start_peon&rdquo;, &ldquo;Starts in peon role&rdquo;);
+pcb.add_u64_counter(l_paxos_restart, &ldquo;restart&rdquo;, &ldquo;Restarts&rdquo;);
+pcb.add_u64_counter(l_paxos_refresh, &ldquo;refresh&rdquo;, &ldquo;Refreshes&rdquo;);
+pcb.add_time_avg(l_paxos_refresh_latency, &ldquo;refresh_latency&rdquo;, &ldquo;Refresh latency&rdquo;);
+pcb.add_u64_counter(l_paxos_begin, &ldquo;begin&rdquo;, &ldquo;Started and handled begins&rdquo;);
+pcb.add_u64_avg(l_paxos_begin_keys, &ldquo;begin_keys&rdquo;, &ldquo;Keys in transaction on begin&rdquo;);
+pcb.add_u64_avg(l_paxos_begin_bytes, &ldquo;begin_bytes&rdquo;, &ldquo;Data in transaction on begin&rdquo;, NULL, 0, unit_t(UNIT_BYTES));
+pcb.add_time_avg(l_paxos_begin_latency, &ldquo;begin_latency&rdquo;, &ldquo;Latency of begin operation&rdquo;);
+pcb.add_u64_counter(l_paxos_commit, &ldquo;commit&rdquo;,
+&ldquo;Commits&rdquo;, &ldquo;cmt&rdquo;);
+pcb.add_u64_avg(l_paxos_commit_keys, &ldquo;commit_keys&rdquo;, &ldquo;Keys in transaction on commit&rdquo;);
+pcb.add_u64_avg(l_paxos_commit_bytes, &ldquo;commit_bytes&rdquo;, &ldquo;Data in transaction on commit&rdquo;, NULL, 0, unit_t(UNIT_BYTES));
+pcb.add_time_avg(l_paxos_commit_latency, &ldquo;commit_latency&rdquo;,
+&ldquo;Commit latency&rdquo;, &ldquo;clat&rdquo;);
+pcb.add_u64_counter(l_paxos_collect, &ldquo;collect&rdquo;, &ldquo;Peon collects&rdquo;);
+pcb.add_u64_avg(l_paxos_collect_keys, &ldquo;collect_keys&rdquo;, &ldquo;Keys in transaction on peon collect&rdquo;);
+pcb.add_u64_avg(l_paxos_collect_bytes, &ldquo;collect_bytes&rdquo;, &ldquo;Data in transaction on peon collect&rdquo;, NULL, 0, unit_t(UNIT_BYTES));
+pcb.add_time_avg(l_paxos_collect_latency, &ldquo;collect_latency&rdquo;, &ldquo;Peon collect latency&rdquo;);
+pcb.add_u64_counter(l_paxos_collect_uncommitted, &ldquo;collect_uncommitted&rdquo;, &ldquo;Uncommitted values in started and handled collects&rdquo;);
+pcb.add_u64_counter(l_paxos_collect_timeout, &ldquo;collect_timeout&rdquo;, &ldquo;Collect timeouts&rdquo;);
+pcb.add_u64_counter(l_paxos_accept_timeout, &ldquo;accept_timeout&rdquo;, &ldquo;Accept timeouts&rdquo;);
+pcb.add_u64_counter(l_paxos_lease_ack_timeout, &ldquo;lease_ack_timeout&rdquo;, &ldquo;Lease acknowledgement timeouts&rdquo;);
+pcb.add_u64_counter(l_paxos_lease_timeout, &ldquo;lease_timeout&rdquo;, &ldquo;Lease timeouts&rdquo;);
+pcb.add_u64_counter(l_paxos_store_state, &ldquo;store_state&rdquo;, &ldquo;Store a shared state on disk&rdquo;);
+pcb.add_u64_avg(l_paxos_store_state_keys, &ldquo;store_state_keys&rdquo;, &ldquo;Keys in transaction in stored state&rdquo;);
+pcb.add_u64_avg(l_paxos_store_state_bytes, &ldquo;store_state_bytes&rdquo;, &ldquo;Data in transaction in stored state&rdquo;, NULL, 0, unit_t(UNIT_BYTES));
+pcb.add_time_avg(l_paxos_store_state_latency, &ldquo;store_state_latency&rdquo;, &ldquo;Storing state latency&rdquo;);
+pcb.add_u64_counter(l_paxos_share_state, &ldquo;share_state&rdquo;, &ldquo;Sharings of state&rdquo;);
+pcb.add_u64_avg(l_paxos_share_state_keys, &ldquo;share_state_keys&rdquo;, &ldquo;Keys in shared state&rdquo;);
+pcb.add_u64_avg(l_paxos_share_state_bytes, &ldquo;share_state_bytes&rdquo;, &ldquo;Data in shared state&rdquo;, NULL, 0, unit_t(UNIT_BYTES));
+pcb.add_u64_counter(l_paxos_new_pn, &ldquo;new_pn&rdquo;, &ldquo;New proposal number queries&rdquo;);
+pcb.add_time_avg(l_paxos_new_pn_latency, &ldquo;new_pn_latency&rdquo;, &ldquo;New proposal number getting latency&rdquo;);
+logger = pcb.create_perf_counters();
+g_ceph_context-&gt;get_perfcounters_collection()-&gt;add(logger);
+}</p>
+<p>void Paxos::dump_info(Formatter *f)
+{
+f-&gt;open_object_section(&ldquo;paxos&rdquo;);
+f-&gt;dump_unsigned(&ldquo;first_committed&rdquo;, first_committed);
+f-&gt;dump_unsigned(&ldquo;last_committed&rdquo;, last_committed);
+f-&gt;dump_unsigned(&ldquo;last_pn&rdquo;, last_pn);
+f-&gt;dump_unsigned(&ldquo;accepted_pn&rdquo;, accepted_pn);
+f-&gt;close_section();
+}</p>
+<p>// &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</p>
+<p>// PHASE 1</p>
+<p>// leader
+void Paxos::collect(version_t oldpn)
+{
+// we&rsquo;re recoverying, it seems!
+state = STATE_RECOVERING;
+ceph_assert(mon.is_leader());</p>
+<p>// reset the number of lasts received
+uncommitted_v = 0;
+uncommitted_pn = 0;
+uncommitted_value.clear();
+peer_first_committed.clear();
+peer_last_committed.clear();</p>
+<p>// look for uncommitted value
+if (get_store()-&gt;exists(get_name(), last_committed+1)) {
+version_t v = get_store()-&gt;get(get_name(), &ldquo;pending_v&rdquo;);
+version_t pn = get_store()-&gt;get(get_name(), &ldquo;pending_pn&rdquo;);
+if (v &amp;&amp; pn &amp;&amp; v == last_committed + 1) {
+uncommitted_pn = pn;
+} else {
+dout(10) &laquo; &ldquo;WARNING: no pending_pn on disk, using previous accepted_pn &quot; &laquo; accepted_pn
+&laquo; &quot; and crossing our fingers&rdquo; &laquo; dendl;
+uncommitted_pn = accepted_pn;
+}
+uncommitted_v = last_committed+1;</p>
+<pre><code>get_store()-&gt;get(get_name(), last_committed+1, uncommitted_value);
+ceph_assert(uncommitted_value.length());
+dout(10) &lt;&lt; &quot;learned uncommitted &quot; &lt;&lt; (last_committed+1)
+     &lt;&lt; &quot; pn &quot; &lt;&lt; uncommitted_pn
+     &lt;&lt; &quot; (&quot; &lt;&lt; uncommitted_value.length() &lt;&lt; &quot; bytes) from myself&quot; 
+     &lt;&lt; dendl;
+
+logger-&gt;inc(l_paxos_collect_uncommitted);
+</code></pre>
+<p>}</p>
+<p>// pick new pn
+accepted_pn = get_new_proposal_number(std::max(accepted_pn, oldpn));
+accepted_pn_from = last_committed;
+num_last = 1;
+dout(10) &laquo; &ldquo;collect with pn &quot; &laquo; accepted_pn &laquo; dendl;</p>
+<p>// send collect
+for (auto p = mon.get_quorum().begin();
+p != mon.get_quorum().end();
+++p) {
+if (*p == mon.rank) continue;</p>
+<pre><code>MMonPaxos *collect = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_COLLECT,
+			       ceph_clock_now());
+collect-&gt;last_committed = last_committed;
+collect-&gt;first_committed = first_committed;
+collect-&gt;pn = accepted_pn;
+mon.send_mon_message(collect, *p);
+</code></pre>
+<p>}</p>
+<p>// set timeout event
+collect_timeout_event = mon.timer.add_event_after(
+g_conf()-&gt;mon_accept_timeout_factor *
+g_conf()-&gt;mon_lease,
+new C_MonContext{&amp;mon, [this](int r) {
+if (r == -ECANCELED)
+return;
+collect_timeout();
+}});
+}</p>
+<p>// peon
+void Paxos::handle_collect(MonOpRequestRef op)
+{</p>
+<p>op-&gt;mark_paxos_event(&ldquo;handle_collect&rdquo;);</p>
+<p>auto collect = op-&gt;get_req<!-- raw HTML omitted -->();
+dout(10) &laquo; &ldquo;handle_collect &quot; &laquo; *collect &laquo; dendl;</p>
+<p>ceph_assert(mon.is_peon()); // mon epoch filter should catch strays</p>
+<p>// we&rsquo;re recoverying, it seems!
+state = STATE_RECOVERING;</p>
+<p>//update the peon recovery timeout 
+reset_lease_timeout();</p>
+<p>if (collect-&gt;first_committed &gt; last_committed+1) {
+dout(2) &laquo; <strong>func</strong>
+&laquo; &quot; leader&rsquo;s lowest version is too high for our last committed&rdquo;
+&laquo; &quot; (theirs: &quot; &laquo; collect-&gt;first_committed
+&laquo; &ldquo;; ours: &quot; &laquo; last_committed &laquo; &ldquo;) &ndash; bootstrap!&rdquo; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;need to bootstrap&rdquo;);
+mon.bootstrap();
+return;
+}</p>
+<p>// reply
+MMonPaxos *last = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_LAST,
+ceph_clock_now());
+last-&gt;last_committed = last_committed;
+last-&gt;first_committed = first_committed;</p>
+<p>version_t previous_pn = accepted_pn;</p>
+<p>// can we accept this pn?
+if (collect-&gt;pn &gt; accepted_pn) {
+// ok, accept it
+accepted_pn = collect-&gt;pn;
+accepted_pn_from = collect-&gt;pn_from;
+dout(10) &laquo; &ldquo;accepting pn &quot; &laquo; accepted_pn &laquo; &quot; from &quot; 
+&laquo; accepted_pn_from &laquo; dendl;</p>
+<pre><code>auto t(std::make_shared&lt;MonitorDBStore::Transaction&gt;());
+t-&gt;put(get_name(), &quot;accepted_pn&quot;, accepted_pn);
+
+dout(30) &lt;&lt; __func__ &lt;&lt; &quot; transaction dump:\n&quot;;
+JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(*_dout);
+*_dout &lt;&lt; dendl;
+
+logger-&gt;inc(l_paxos_collect);
+logger-&gt;inc(l_paxos_collect_keys, t-&gt;get_keys());
+logger-&gt;inc(l_paxos_collect_bytes, t-&gt;get_bytes());
+
+auto start = ceph::coarse_mono_clock::now();
+get_store()-&gt;apply_transaction(t);
+auto end = ceph::coarse_mono_clock::now();
+
+logger-&gt;tinc(l_paxos_collect_latency, to_timespan(end - start));
+</code></pre>
+<p>} else {
+// don&rsquo;t accept!
+dout(10) &laquo; &ldquo;NOT accepting pn &quot; &laquo; collect-&gt;pn &laquo; &quot; from &quot; &laquo; collect-&gt;pn_from
+&laquo; &ldquo;, we already accepted &quot; &laquo; accepted_pn
+&laquo; &quot; from &quot; &laquo; accepted_pn_from &laquo; dendl;
+}
+last-&gt;pn = accepted_pn;
+last-&gt;pn_from = accepted_pn_from;</p>
+<p>// share whatever committed values we have
+if (collect-&gt;last_committed &lt; last_committed)
+share_state(last, collect-&gt;first_committed, collect-&gt;last_committed);</p>
+<p>// do we have an accepted but uncommitted value?
+//  (it&rsquo;ll be at last_committed+1)
+bufferlist bl;
+if (collect-&gt;last_committed &lt;= last_committed &amp;&amp;
+get_store()-&gt;exists(get_name(), last_committed+1)) {
+get_store()-&gt;get(get_name(), last_committed+1, bl);
+ceph_assert(bl.length() &gt; 0);
+dout(10) &laquo; &quot; sharing our accepted but uncommitted value for &quot; 
+&laquo; last_committed+1 &laquo; &quot; (&rdquo; &laquo; bl.length() &laquo; &quot; bytes)&rdquo; &laquo; dendl;
+last-&gt;values[last_committed+1] = bl;</p>
+<pre><code>version_t v = get_store()-&gt;get(get_name(), &quot;pending_v&quot;);
+version_t pn = get_store()-&gt;get(get_name(), &quot;pending_pn&quot;);
+if (v &amp;&amp; pn &amp;&amp; v == last_committed + 1) {
+  last-&gt;uncommitted_pn = pn;
+} else {
+  // previously we didn't record which pn a value was accepted
+  // under!  use the pn value we just had...  :(
+  dout(10) &lt;&lt; &quot;WARNING: no pending_pn on disk, using previous accepted_pn &quot; &lt;&lt; previous_pn
+       &lt;&lt; &quot; and crossing our fingers&quot; &lt;&lt; dendl;
+  last-&gt;uncommitted_pn = previous_pn;
+}
+
+logger-&gt;inc(l_paxos_collect_uncommitted);
+</code></pre>
+<p>}</p>
+<p>// send reply
+collect-&gt;get_connection()-&gt;send_message(last);
+}</p>
+<p>/**</p>
+<ul>
+<li>@note This is Okay. We share our versions between peer_last_committed and</li>
+<li>our last_committed (inclusive), and add their bufferlists to the</li>
+<li>message. It will be the peer&rsquo;s job to apply them to its store, as</li>
+<li>these bufferlists will contain raw transactions.</li>
+<li>This function is called by both the Peon and the Leader. The Peon will</li>
+<li>share the state with the Leader during handle_collect(), sharing any</li>
+<li>values the leader may be missing (i.e., the leader&rsquo;s last_committed is</li>
+<li>lower than the peon&rsquo;s last_committed). The Leader will share the state</li>
+<li>with the Peon during handle_last(), if the peon&rsquo;s last_committed is</li>
+<li>lower than the leader&rsquo;s last_committed.
+*/
+void Paxos::share_state(MMonPaxos *m, version_t peer_first_committed,
+version_t peer_last_committed)
+{
+ceph_assert(peer_last_committed &lt; last_committed);</li>
+</ul>
+<p>dout(10) &laquo; &ldquo;share_state peer has fc &quot; &laquo; peer_first_committed 
+&laquo; &quot; lc &quot; &laquo; peer_last_committed &laquo; dendl;
+version_t v = peer_last_committed + 1;</p>
+<p>// include incrementals
+uint64_t bytes = 0;
+for ( ; v &lt;= last_committed; v++) {
+if (get_store()-&gt;exists(get_name(), v)) {
+get_store()-&gt;get(get_name(), v, m-&gt;values[v]);
+ceph_assert(m-&gt;values[v].length());
+dout(10) &laquo; &quot; sharing &quot; &laquo; v &laquo; &quot; (&rdquo;
+&laquo; m-&gt;values[v].length() &laquo; &quot; bytes)&rdquo; &laquo; dendl;
+bytes += m-&gt;values[v].length() + 16;  // paxos_ + 10 digits = 16
+}
+}
+logger-&gt;inc(l_paxos_share_state);
+logger-&gt;inc(l_paxos_share_state_keys, m-&gt;values.size());
+logger-&gt;inc(l_paxos_share_state_bytes, bytes);</p>
+<p>m-&gt;last_committed = last_committed;
+}</p>
+<p>/**</p>
+<ul>
+<li>Store on disk a state that was shared with us
+*</li>
+<li>Basically, we received a set of version. Or just one. It doesn&rsquo;t matter.</li>
+<li>What matters is that we have to stash it in the store. So, we will simply</li>
+<li>write every single bufferlist into their own versions on our side (i.e.,</li>
+<li>onto paxos-related keys), and then we will decode those same bufferlists</li>
+<li>we just wrote and apply the transactions they hold. We will also update</li>
+<li>our first and last committed values to point to the new values, if need</li>
+<li>be. All all this is done tightly wrapped in a transaction to ensure we</li>
+<li>enjoy the atomicity guarantees given by our awesome k/v store.
+*/
+bool Paxos::store_state(MMonPaxos *m)
+{
+auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+auto start = m-&gt;values.begin();
+bool changed = false;</li>
+</ul>
+<p>// build map of values to store
+// we want to write the range [last_committed, m-&gt;last_committed] only.
+if (start != m-&gt;values.end() &amp;&amp;
+start-&gt;first &gt; last_committed + 1) {
+// ignore everything if values start in the future.
+dout(10) &laquo; &ldquo;store_state ignoring all values, they start at &quot; &laquo; start-&gt;first
+&laquo; &quot; &gt; last_committed+1&rdquo; &laquo; dendl;
+return false;
+}</p>
+<p>// push forward the start position on the message&rsquo;s values iterator, up until
+// we run out of positions or we find a position matching &rsquo;last_committed&rsquo;.
+while (start != m-&gt;values.end() &amp;&amp; start-&gt;first &lt;= last_committed) {
+++start;
+}</p>
+<p>// make sure we get the right interval of values to apply by pushing forward
+// the &rsquo;end&rsquo; iterator until it matches the message&rsquo;s &rsquo;last_committed&rsquo;.
+auto end = start;
+while (end != m-&gt;values.end() &amp;&amp; end-&gt;first &lt;= m-&gt;last_committed) {
+last_committed = end-&gt;first;
+++end;
+}</p>
+<p>if (start == end) {
+dout(10) &laquo; &ldquo;store_state nothing to commit&rdquo; &laquo; dendl;
+} else {
+dout(10) &laquo; &ldquo;store_state [&rdquo; &laquo; start-&gt;first &laquo; &ldquo;..&rdquo; 
+&laquo; last_committed &laquo; &ldquo;]&rdquo; &laquo; dendl;
+t-&gt;put(get_name(), &ldquo;last_committed&rdquo;, last_committed);</p>
+<pre><code>// we should apply the state here -- decode every single bufferlist in the
+// map and append the transactions to 't'.
+for (auto it = start; it != end; ++it) {
+  // write the bufferlist as the version's value
+  t-&gt;put(get_name(), it-&gt;first, it-&gt;second);
+  // decode the bufferlist and append it to the transaction we will shortly
+  // apply.
+  decode_append_transaction(t, it-&gt;second);
+}
+
+// discard obsolete uncommitted value?
+if (uncommitted_v &amp;&amp; uncommitted_v &lt;= last_committed) {
+  dout(10) &lt;&lt; &quot; forgetting obsolete uncommitted value &quot; &lt;&lt; uncommitted_v
+       &lt;&lt; &quot; pn &quot; &lt;&lt; uncommitted_pn &lt;&lt; dendl;
+  uncommitted_v = 0;
+  uncommitted_pn = 0;
+  uncommitted_value.clear();
+}
+</code></pre>
+<p>}
+if (!t-&gt;empty()) {
+dout(30) &laquo; <strong>func</strong> &laquo; &quot; transaction dump:\n&rdquo;;
+JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(*_dout);
+*_dout &laquo; dendl;</p>
+<pre><code>logger-&gt;inc(l_paxos_store_state);
+logger-&gt;inc(l_paxos_store_state_bytes, t-&gt;get_bytes());
+logger-&gt;inc(l_paxos_store_state_keys, t-&gt;get_keys());
+
+auto start = ceph::coarse_mono_clock::now();
+get_store()-&gt;apply_transaction(t);
+auto end = ceph::coarse_mono_clock::now();
+
+logger-&gt;tinc(l_paxos_store_state_latency, to_timespan(end-start));
+
+// refresh first_committed; this txn may have trimmed.
+first_committed = get_store()-&gt;get(get_name(), &quot;first_committed&quot;);
+
+_sanity_check_store();
+changed = true;
+</code></pre>
+<p>}</p>
+<p>return changed;
+}</p>
+<p>void Paxos::_sanity_check_store()
+{
+version_t lc = get_store()-&gt;get(get_name(), &ldquo;last_committed&rdquo;);
+ceph_assert(lc == last_committed);
+}</p>
+<p>// leader
+void Paxos::handle_last(MonOpRequestRef op)
+{
+op-&gt;mark_paxos_event(&ldquo;handle_last&rdquo;);
+auto last = op-&gt;get_req<!-- raw HTML omitted -->();
+bool need_refresh = false;
+int from = last-&gt;get_source().num();</p>
+<p>dout(10) &laquo; &ldquo;handle_last &quot; &laquo; *last &laquo; dendl;</p>
+<p>if (!mon.is_leader()) {
+dout(10) &laquo; &ldquo;not leader, dropping&rdquo; &laquo; dendl;
+return;
+}</p>
+<p>// note peer&rsquo;s first_ and last_committed, in case we learn a new
+// commit and need to push it to them.
+peer_first_committed[from] = last-&gt;first_committed;
+peer_last_committed[from] = last-&gt;last_committed;</p>
+<p>if (last-&gt;first_committed &gt; last_committed + 1) {
+dout(5) &laquo; <strong>func</strong>
+&laquo; &quot; mon.&rdquo; &laquo; from
+&laquo; &quot; lowest version is too high for our last committed&rdquo;
+&laquo; &quot; (theirs: &quot; &laquo; last-&gt;first_committed
+&laquo; &ldquo;; ours: &quot; &laquo; last_committed &laquo; &ldquo;) &ndash; bootstrap!&rdquo; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;need to bootstrap&rdquo;);
+mon.bootstrap();
+return;
+}</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 1);</p>
+<p>// store any committed values if any are specified in the message
+need_refresh = store_state(last);</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 2);</p>
+<p>// is everyone contiguous and up to date?
+for (auto p = peer_last_committed.begin();
+p != peer_last_committed.end();
+++p) {
+if (p-&gt;second + 1 &lt; first_committed &amp;&amp; first_committed &gt; 1) {
+dout(5) &laquo; <strong>func</strong>
+&laquo; &quot; peon &quot; &laquo; p-&gt;first
+&laquo; &quot; last_committed (&rdquo; &laquo; p-&gt;second
+&laquo; &ldquo;) is too low for our first_committed (&rdquo; &laquo; first_committed
+&laquo; &ldquo;) &ndash; bootstrap!&rdquo; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;need to bootstrap&rdquo;);
+mon.bootstrap();
+return;
+}
+if (p-&gt;second &lt; last_committed) {
+// share committed values
+dout(10) &laquo; &quot; sending commit to mon.&rdquo; &laquo; p-&gt;first &laquo; dendl;
+MMonPaxos *commit = new MMonPaxos(mon.get_epoch(),
+MMonPaxos::OP_COMMIT,
+ceph_clock_now());
+share_state(commit, peer_first_committed[p-&gt;first], p-&gt;second);
+mon.send_mon_message(commit, p-&gt;first);
+}
+}</p>
+<p>// do they accept your pn?
+if (last-&gt;pn &gt; accepted_pn) {
+// no, try again.
+dout(10) &laquo; &quot; they had a higher pn than us, picking a new one.&rdquo; &laquo; dendl;</p>
+<pre><code>// cancel timeout event
+mon.timer.cancel_event(collect_timeout_event);
+collect_timeout_event = 0;
+
+collect(last-&gt;pn);
+</code></pre>
+<p>} else if (last-&gt;pn == accepted_pn) {
+// yes, they accepted our pn.  great.
+num_last++;
+dout(10) &laquo; &quot; they accepted our pn, we now have &quot; 
+&laquo; num_last &laquo; &quot; peons&quot; &laquo; dendl;</p>
+<pre><code>// did this person send back an accepted but uncommitted value?
+if (last-&gt;uncommitted_pn) {
+  if (last-&gt;uncommitted_pn &gt;= uncommitted_pn &amp;&amp;
+  last-&gt;last_committed &gt;= last_committed &amp;&amp;
+  last-&gt;last_committed + 1 &gt;= uncommitted_v) {
+uncommitted_v = last-&gt;last_committed+1;
+uncommitted_pn = last-&gt;uncommitted_pn;
+uncommitted_value = last-&gt;values[uncommitted_v];
+dout(10) &lt;&lt; &quot;we learned an uncommitted value for &quot; &lt;&lt; uncommitted_v
+	 &lt;&lt; &quot; pn &quot; &lt;&lt; uncommitted_pn
+	 &lt;&lt; &quot; &quot; &lt;&lt; uncommitted_value.length() &lt;&lt; &quot; bytes&quot;
+	 &lt;&lt; dendl;
+  } else {
+dout(10) &lt;&lt; &quot;ignoring uncommitted value for &quot; &lt;&lt; (last-&gt;last_committed+1)
+	 &lt;&lt; &quot; pn &quot; &lt;&lt; last-&gt;uncommitted_pn
+	 &lt;&lt; &quot; &quot; &lt;&lt; last-&gt;values[last-&gt;last_committed+1].length() &lt;&lt; &quot; bytes&quot;
+	 &lt;&lt; dendl;
+  }
+}
+
+// is that everyone?
+if (num_last == mon.get_quorum().size()) {
+  // cancel timeout event
+  mon.timer.cancel_event(collect_timeout_event);
+  collect_timeout_event = 0;
+  peer_first_committed.clear();
+  peer_last_committed.clear();
+
+  // almost...
+
+  // did we learn an old value?
+  if (uncommitted_v == last_committed+1 &amp;&amp;
+  uncommitted_value.length()) {
+dout(10) &lt;&lt; &quot;that's everyone.  begin on old learned value&quot; &lt;&lt; dendl;
+state = STATE_UPDATING_PREVIOUS;
+begin(uncommitted_value);
+  } else {
+// active!
+dout(10) &lt;&lt; &quot;that's everyone.  active!&quot; &lt;&lt; dendl;
+extend_lease();
+
+need_refresh = false;
+if (do_refresh()) {
+  finish_round();
+}
+  }
+}
+</code></pre>
+<p>} else {
+// no, this is an old message, discard
+dout(10) &laquo; &ldquo;old pn, ignoring&rdquo; &laquo; dendl;
+}</p>
+<p>if (need_refresh)
+(void)do_refresh();
+}</p>
+<p>void Paxos::collect_timeout()
+{
+dout(1) &laquo; &ldquo;collect timeout, calling fresh election&rdquo; &laquo; dendl;
+collect_timeout_event = 0;
+logger-&gt;inc(l_paxos_collect_timeout);
+ceph_assert(mon.is_leader());
+mon.bootstrap();
+}</p>
+<p>// leader
+void Paxos::begin(bufferlist&amp; v)
+{
+dout(10) &laquo; &ldquo;begin for &quot; &laquo; last_committed+1 &laquo; &quot; &quot; 
+&laquo; v.length() &laquo; &quot; bytes&rdquo;
+&laquo; dendl;</p>
+<p>ceph_assert(mon.is_leader());
+ceph_assert(is_updating() || is_updating_previous());</p>
+<p>// we must already have a majority for this to work.
+ceph_assert(mon.get_quorum().size() == 1 ||
+num_last &gt; (unsigned)mon.monmap-&gt;size()/2);</p>
+<p>// and no value, yet.
+ceph_assert(new_value.length() == 0);</p>
+<p>// accept it ourselves
+accepted.clear();
+accepted.insert(mon.rank);
+new_value = v;</p>
+<p>if (last_committed == 0) {
+auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+// initial base case; set first_committed too
+t-&gt;put(get_name(), &ldquo;first_committed&rdquo;, 1);
+decode_append_transaction(t, new_value);</p>
+<pre><code>bufferlist tx_bl;
+t-&gt;encode(tx_bl);
+
+new_value = tx_bl;
+</code></pre>
+<p>}</p>
+<p>// store the proposed value in the store. IF it is accepted, we will then
+// have to decode it into a transaction and apply it.
+auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+t-&gt;put(get_name(), last_committed+1, new_value);</p>
+<p>// note which pn this pending value is for.
+t-&gt;put(get_name(), &ldquo;pending_v&rdquo;, last_committed + 1);
+t-&gt;put(get_name(), &ldquo;pending_pn&rdquo;, accepted_pn);</p>
+<p>dout(30) &laquo; <strong>func</strong> &laquo; &quot; transaction dump:\n&quot;;
+JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(*_dout);
+auto debug_tx(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+auto new_value_it = new_value.cbegin();
+debug_tx-&gt;decode(new_value_it);
+debug_tx-&gt;dump(&amp;f);
+<em>_dout &laquo; &ldquo;\nbl dump:\n&rdquo;;
+f.flush(</em>_dout);
+*_dout &laquo; dendl;</p>
+<p>logger-&gt;inc(l_paxos_begin);
+logger-&gt;inc(l_paxos_begin_keys, t-&gt;get_keys());
+logger-&gt;inc(l_paxos_begin_bytes, t-&gt;get_bytes());</p>
+<p>auto start = ceph::coarse_mono_clock::now();
+get_store()-&gt;apply_transaction(t);
+auto end = ceph::coarse_mono_clock::now();</p>
+<p>logger-&gt;tinc(l_paxos_begin_latency, to_timespan(end - start));</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 3);</p>
+<p>if (mon.get_quorum().size() == 1) {
+// we&rsquo;re alone, take it easy
+commit_start();
+return;
+}</p>
+<p>// ask others to accept it too!
+for (auto p = mon.get_quorum().begin();
+p != mon.get_quorum().end();
+++p) {
+if (*p == mon.rank) continue;</p>
+<pre><code>dout(10) &lt;&lt; &quot; sending begin to mon.&quot; &lt;&lt; *p &lt;&lt; dendl;
+MMonPaxos *begin = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_BEGIN,
+			     ceph_clock_now());
+begin-&gt;values[last_committed+1] = new_value;
+begin-&gt;last_committed = last_committed;
+begin-&gt;pn = accepted_pn;
+
+mon.send_mon_message(begin, *p);
+</code></pre>
+<p>}</p>
+<p>// set timeout event
+accept_timeout_event = mon.timer.add_event_after(
+g_conf()-&gt;mon_accept_timeout_factor * g_conf()-&gt;mon_lease,
+new C_MonContext{&amp;mon, [this](int r) {
+if (r == -ECANCELED)
+return;
+accept_timeout();
+}});
+}</p>
+<p>// peon
+void Paxos::handle_begin(MonOpRequestRef op)
+{
+op-&gt;mark_paxos_event(&ldquo;handle_begin&rdquo;);
+auto begin = op-&gt;get_req<!-- raw HTML omitted -->();
+dout(10) &laquo; &ldquo;handle_begin &quot; &laquo; *begin &laquo; dendl;</p>
+<p>// can we accept this?
+if (begin-&gt;pn &lt; accepted_pn) {
+dout(10) &laquo; &quot; we accepted a higher pn &quot; &laquo; accepted_pn &laquo; &ldquo;, ignoring&rdquo; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;have higher pn, ignore&rdquo;);
+return;
+}
+ceph_assert(begin-&gt;pn == accepted_pn);
+ceph_assert(begin-&gt;last_committed == last_committed);</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 4);</p>
+<p>logger-&gt;inc(l_paxos_begin);</p>
+<p>// set state.
+state = STATE_UPDATING;
+lease_expire = {};  // cancel lease</p>
+<p>// yes.
+version_t v = last_committed+1;
+dout(10) &laquo; &ldquo;accepting value for &quot; &laquo; v &laquo; &quot; pn &quot; &laquo; accepted_pn &laquo; dendl;
+// store the accepted value onto our store. We will have to decode it and
+// apply its transaction once we receive permission to commit.
+auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+t-&gt;put(get_name(), v, begin-&gt;values[v]);</p>
+<p>// note which pn this pending value is for.
+t-&gt;put(get_name(), &ldquo;pending_v&rdquo;, v);
+t-&gt;put(get_name(), &ldquo;pending_pn&rdquo;, accepted_pn);</p>
+<p>dout(30) &laquo; <strong>func</strong> &laquo; &quot; transaction dump:\n&rdquo;;
+JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(*_dout);
+*_dout &laquo; dendl;</p>
+<p>logger-&gt;inc(l_paxos_begin_bytes, t-&gt;get_bytes());</p>
+<p>auto start = ceph::coarse_mono_clock::now();
+get_store()-&gt;apply_transaction(t);
+auto end = ceph::coarse_mono_clock::now();</p>
+<p>logger-&gt;tinc(l_paxos_begin_latency, to_timespan(end - start));</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 5);</p>
+<p>// reply
+MMonPaxos *accept = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_ACCEPT,
+ceph_clock_now());
+accept-&gt;pn = accepted_pn;
+accept-&gt;last_committed = last_committed;
+begin-&gt;get_connection()-&gt;send_message(accept);
+}</p>
+<p>// leader
+void Paxos::handle_accept(MonOpRequestRef op)
+{
+op-&gt;mark_paxos_event(&ldquo;handle_accept&rdquo;);
+auto accept = op-&gt;get_req<!-- raw HTML omitted -->();
+dout(10) &laquo; &ldquo;handle_accept &quot; &laquo; *accept &laquo; dendl;
+int from = accept-&gt;get_source().num();</p>
+<p>if (accept-&gt;pn != accepted_pn) {
+// we accepted a higher pn, from some other leader
+dout(10) &laquo; &quot; we accepted a higher pn &quot; &laquo; accepted_pn &laquo; &ldquo;, ignoring&rdquo; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;have higher pn, ignore&rdquo;);
+return;
+}
+if (last_committed &gt; 0 &amp;&amp;
+accept-&gt;last_committed &lt; last_committed-1) {
+dout(10) &laquo; &quot; this is from an old round, ignoring&rdquo; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;old round, ignore&rdquo;);
+return;
+}
+ceph_assert(accept-&gt;last_committed == last_committed ||   // not committed
+accept-&gt;last_committed == last_committed-1);  // committed</p>
+<p>ceph_assert(is_updating() || is_updating_previous());
+ceph_assert(accepted.count(from) == 0);
+accepted.insert(from);
+dout(10) &laquo; &quot; now &quot; &laquo; accepted &laquo; &quot; have accepted&rdquo; &laquo; dendl;</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 6);</p>
+<p>// only commit (and expose committed state) when we get <em>all</em> quorum
+// members to accept.  otherwise, they may still be sharing the now
+// stale state.
+// FIXME: we can improve this with an additional lease revocation message
+// that doesn&rsquo;t block for the persist.
+if (accepted == mon.get_quorum()) {
+// yay, commit!
+dout(10) &laquo; &quot; got majority, committing, done with update&quot; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;commit_start&rdquo;);
+commit_start();
+}
+}</p>
+<p>void Paxos::accept_timeout()
+{
+dout(1) &laquo; &ldquo;accept timeout, calling fresh election&rdquo; &laquo; dendl;
+accept_timeout_event = 0;
+ceph_assert(mon.is_leader());
+ceph_assert(is_updating() || is_updating_previous() || is_writing() ||
+is_writing_previous());
+logger-&gt;inc(l_paxos_accept_timeout);
+mon.bootstrap();
+}</p>
+<p>struct C_Committed : public Context {
+Paxos *paxos;
+explicit C_Committed(Paxos *p) : paxos(p) {}
+void finish(int r) override {
+ceph_assert(r &gt;= 0);
+std::lock_guard l(paxos-&gt;mon.lock);
+if (paxos-&gt;is_shutdown()) {
+paxos-&gt;abort_commit();
+return;
+}
+paxos-&gt;commit_finish();
+}
+};</p>
+<p>void Paxos::abort_commit()
+{
+ceph_assert(commits_started &gt; 0);
+&ndash;commits_started;
+if (commits_started == 0)
+shutdown_cond.notify_all();
+}</p>
+<p>void Paxos::commit_start()
+{
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; &quot; &laquo; (last_committed+1) &laquo; dendl;</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 7);</p>
+<p>auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());</p>
+<p>// commit locally
+t-&gt;put(get_name(), &ldquo;last_committed&rdquo;, last_committed + 1);</p>
+<p>// decode the value and apply its transaction to the store.
+// this value can now be read from last_committed.
+decode_append_transaction(t, new_value);</p>
+<p>dout(30) &laquo; <strong>func</strong> &laquo; &quot; transaction dump:\n&quot;;
+JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(*_dout);
+*_dout &laquo; dendl;</p>
+<p>logger-&gt;inc(l_paxos_commit);
+logger-&gt;inc(l_paxos_commit_keys, t-&gt;get_keys());
+logger-&gt;inc(l_paxos_commit_bytes, t-&gt;get_bytes());
+commit_start_stamp = ceph_clock_now();</p>
+<p>get_store()-&gt;queue_transaction(t, new C_Committed(this));</p>
+<p>if (is_updating_previous())
+state = STATE_WRITING_PREVIOUS;
+else if (is_updating())
+state = STATE_WRITING;
+else
+ceph_abort();
+++commits_started;</p>
+<p>if (mon.get_quorum().size() &gt; 1) {
+// cancel timeout event
+mon.timer.cancel_event(accept_timeout_event);
+accept_timeout_event = 0;
+}
+}</p>
+<p>void Paxos::commit_finish()
+{
+dout(20) &laquo; <strong>func</strong> &laquo; &quot; &quot; &laquo; (last_committed+1) &laquo; dendl;
+utime_t end = ceph_clock_now();
+logger-&gt;tinc(l_paxos_commit_latency, end - commit_start_stamp);</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 8);</p>
+<p>// cancel lease - it was for the old value.
+//  (this would only happen if message layer lost the &lsquo;begin&rsquo;, but
+//   leader still got a majority and committed with out us.)
+lease_expire = {};  // cancel lease</p>
+<p>last_committed++;
+last_commit_time = ceph_clock_now();</p>
+<p>// refresh first_committed; this txn may have trimmed.
+first_committed = get_store()-&gt;get(get_name(), &ldquo;first_committed&rdquo;);</p>
+<p>_sanity_check_store();</p>
+<p>// tell everyone
+for (auto p = mon.get_quorum().begin();
+p != mon.get_quorum().end();
+++p) {
+if (*p == mon.rank) continue;</p>
+<pre><code>dout(10) &lt;&lt; &quot; sending commit to mon.&quot; &lt;&lt; *p &lt;&lt; dendl;
+MMonPaxos *commit = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_COMMIT,
+			      ceph_clock_now());
+commit-&gt;values[last_committed] = new_value;
+commit-&gt;pn = accepted_pn;
+commit-&gt;last_committed = last_committed;
+
+mon.send_mon_message(commit, *p);
+</code></pre>
+<p>}</p>
+<p>ceph_assert(g_conf()-&gt;paxos_kill_at != 9);</p>
+<p>// get ready for a new round.
+new_value.clear();</p>
+<p>// WRITING -&gt; REFRESH
+// among other things, this lets do_refresh() -&gt; mon.bootstrap() -&gt;
+// wait_for_paxos_write() know that it doesn&rsquo;t need to flush the store
+// queue. and it should not, as we are in the async completion thread now!
+ceph_assert(is_writing() || is_writing_previous());
+state = STATE_REFRESH;
+ceph_assert(commits_started &gt; 0);
+&ndash;commits_started;</p>
+<p>if (do_refresh()) {
+commit_proposal();
+if (mon.get_quorum().size() &gt; 1) {
+extend_lease();
+}</p>
+<pre><code>ceph_assert(g_conf()-&gt;paxos_kill_at != 10);
+
+finish_round();
+</code></pre>
+<p>}
+}</p>
+<p>void Paxos::handle_commit(MonOpRequestRef op)
+{
+op-&gt;mark_paxos_event(&ldquo;handle_commit&rdquo;);
+auto commit = op-&gt;get_req<!-- raw HTML omitted -->();
+dout(10) &laquo; &ldquo;handle_commit on &quot; &laquo; commit-&gt;last_committed &laquo; dendl;</p>
+<p>logger-&gt;inc(l_paxos_commit);</p>
+<p>if (!mon.is_peon()) {
+dout(10) &laquo; &ldquo;not a peon, dropping&rdquo; &laquo; dendl;
+ceph_abort();
+return;
+}</p>
+<p>op-&gt;mark_paxos_event(&ldquo;store_state&rdquo;);
+store_state(commit);</p>
+<p>(void)do_refresh();
+}</p>
+<p>void Paxos::extend_lease()
+{
+ceph_assert(mon.is_leader());
+//assert(is_active());</p>
+<p>lease_expire = ceph::real_clock::now();
+lease_expire += ceph::make_timespan(g_conf()-&gt;mon_lease);
+acked_lease.clear();
+acked_lease.insert(mon.rank);</p>
+<p>dout(7) &laquo; &ldquo;extend_lease now+&rdquo; &laquo; g_conf()-&gt;mon_lease
+&laquo; &quot; (&rdquo; &laquo; lease_expire &laquo; &ldquo;)&rdquo; &laquo; dendl;</p>
+<p>// bcast
+for (auto p = mon.get_quorum().begin();
+p != mon.get_quorum().end(); ++p) {</p>
+<pre><code>if (*p == mon.rank) continue;
+MMonPaxos *lease = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_LEASE,
+			     ceph_clock_now());
+lease-&gt;last_committed = last_committed;
+lease-&gt;lease_timestamp = utime_t{lease_expire};
+lease-&gt;first_committed = first_committed;
+mon.send_mon_message(lease, *p);
+</code></pre>
+<p>}</p>
+<p>// set timeout event.
+//  if old timeout is still in place, leave it.
+if (!lease_ack_timeout_event) {
+lease_ack_timeout_event = mon.timer.add_event_after(
+g_conf()-&gt;mon_lease_ack_timeout_factor * g_conf()-&gt;mon_lease,
+new C_MonContext{&amp;mon, [this](int r) {
+if (r == -ECANCELED)
+return;
+lease_ack_timeout();
+}});
+}</p>
+<p>// set renew event
+auto at = lease_expire;
+at -= ceph::make_timespan(g_conf()-&gt;mon_lease);
+at += ceph::make_timespan(g_conf()-&gt;mon_lease_renew_interval_factor *
+g_conf()-&gt;mon_lease);
+lease_renew_event = mon.timer.add_event_at(
+at, new C_MonContext{&amp;mon, [this](int r) {
+if (r == -ECANCELED)
+return;
+lease_renew_timeout();
+}});
+}</p>
+<p>void Paxos::warn_on_future_time(utime_t t, entity_name_t from)
+{
+utime_t now = ceph_clock_now();
+if (t &gt; now) {
+utime_t diff = t - now;
+if (diff &gt; g_conf()-&gt;mon_clock_drift_allowed) {
+utime_t warn_diff = now - last_clock_drift_warn;
+if (warn_diff &gt;
+pow(g_conf()-&gt;mon_clock_drift_warn_backoff, clock_drift_warned)) {
+mon.clog-&gt;warn() &laquo; &ldquo;message from &quot; &laquo; from &laquo; &quot; was stamped &quot; &laquo; diff
+&laquo; &ldquo;s in the future, clocks not synchronized&rdquo;;
+last_clock_drift_warn = ceph_clock_now();
+++clock_drift_warned;
+}
+}
+}</p>
+<p>}</p>
+<p>bool Paxos::do_refresh()
+{
+bool need_bootstrap = false;</p>
+<p>// make sure we have the latest state loaded up
+auto start = ceph::coarse_mono_clock::now();
+mon.refresh_from_paxos(&amp;need_bootstrap);
+auto end = ceph::coarse_mono_clock::now();</p>
+<p>logger-&gt;inc(l_paxos_refresh);
+logger-&gt;tinc(l_paxos_refresh_latency, to_timespan(end - start));</p>
+<p>if (need_bootstrap) {
+dout(10) &laquo; &quot; doing requested bootstrap&rdquo; &laquo; dendl;
+mon.bootstrap();
+return false;
+}</p>
+<p>return true;
+}</p>
+<p>void Paxos::commit_proposal()
+{
+dout(10) &laquo; <strong>func</strong> &laquo; dendl;
+ceph_assert(mon.is_leader());
+ceph_assert(is_refresh());</p>
+<p>finish_contexts(g_ceph_context, committing_finishers);
+}</p>
+<p>void Paxos::finish_round()
+{
+dout(10) &laquo; <strong>func</strong> &laquo; dendl;
+ceph_assert(mon.is_leader());</p>
+<p>// ok, now go active!
+state = STATE_ACTIVE;</p>
+<p>dout(20) &laquo; <strong>func</strong> &laquo; &quot; waiting_for_acting&quot; &laquo; dendl;
+finish_contexts(g_ceph_context, waiting_for_active);
+dout(20) &laquo; <strong>func</strong> &laquo; &quot; waiting_for_readable&quot; &laquo; dendl;
+finish_contexts(g_ceph_context, waiting_for_readable);
+dout(20) &laquo; <strong>func</strong> &laquo; &quot; waiting_for_writeable&quot; &laquo; dendl;
+finish_contexts(g_ceph_context, waiting_for_writeable);</p>
+<p>dout(10) &laquo; <strong>func</strong> &laquo; &quot; done w/ waiters, state &quot; &laquo; get_statename(state) &laquo; dendl;</p>
+<p>if (should_trim()) {
+trim();
+}</p>
+<p>if (is_active() &amp;&amp; pending_proposal) {
+propose_pending();
+}
+}</p>
+<p>// peon
+void Paxos::handle_lease(MonOpRequestRef op)
+{
+op-&gt;mark_paxos_event(&ldquo;handle_lease&rdquo;);
+auto lease = op-&gt;get_req<!-- raw HTML omitted -->();
+// sanity
+if (!mon.is_peon() ||
+last_committed != lease-&gt;last_committed) {
+dout(10) &laquo; &ldquo;handle_lease i&rsquo;m not a peon, or they&rsquo;re not the leader,&rdquo;
+&laquo; &quot; or the last_committed doesn&rsquo;t match, dropping&quot; &laquo; dendl;
+op-&gt;mark_paxos_event(&ldquo;invalid lease, ignore&rdquo;);
+return;
+}</p>
+<p>warn_on_future_time(lease-&gt;sent_timestamp, lease-&gt;get_source());</p>
+<p>// extend lease
+if (auto new_expire = lease-&gt;lease_timestamp.to_real_time();
+lease_expire &lt; new_expire) {
+lease_expire = new_expire;</p>
+<pre><code>auto now = ceph::real_clock::now();
+if (lease_expire &lt; now) {
+  auto diff = now - lease_expire;
+  derr &lt;&lt; &quot;lease_expire from &quot; &lt;&lt; lease-&gt;get_source_inst() &lt;&lt; &quot; is &quot; &lt;&lt; diff &lt;&lt; &quot; seconds in the past; mons are probably laggy (or possibly clocks are too skewed)&quot; &lt;&lt; dendl;
+}
+</code></pre>
+<p>}</p>
+<p>state = STATE_ACTIVE;</p>
+<p>dout(10) &laquo; &ldquo;handle_lease on &quot; &laquo; lease-&gt;last_committed
+&laquo; &quot; now &quot; &laquo; lease_expire &laquo; dendl;</p>
+<p>// ack
+MMonPaxos *ack = new MMonPaxos(mon.get_epoch(), MMonPaxos::OP_LEASE_ACK,
+ceph_clock_now());
+ack-&gt;last_committed = last_committed;
+ack-&gt;first_committed = first_committed;
+ack-&gt;lease_timestamp = ceph_clock_now();
+encode(mon.session_map.feature_map, ack-&gt;feature_map);
+lease-&gt;get_connection()-&gt;send_message(ack);</p>
+<p>// (re)set timeout event.
+reset_lease_timeout();</p>
+<p>// kick waiters
+finish_contexts(g_ceph_context, waiting_for_active);
+if (is_readable())
+finish_contexts(g_ceph_context, waiting_for_readable);
+}</p>
+<p>void Paxos::handle_lease_ack(MonOpRequestRef op)
+{
+op-&gt;mark_paxos_event(&ldquo;handle_lease_ack&rdquo;);
+auto ack = op-&gt;get_req<!-- raw HTML omitted -->();
+int from = ack-&gt;get_source().num();</p>
+<p>if (!lease_ack_timeout_event) {
+dout(10) &laquo; &ldquo;handle_lease_ack from &quot; &laquo; ack-&gt;get_source()
+&laquo; &quot; &ndash; stray (probably since revoked)&rdquo; &laquo; dendl;</p>
+<p>} else if (acked_lease.count(from) == 0) {
+acked_lease.insert(from);
+if (ack-&gt;feature_map.length()) {
+auto p = ack-&gt;feature_map.cbegin();
+FeatureMap&amp; t = mon.quorum_feature_map[from];
+decode(t, p);
+}
+if (acked_lease == mon.get_quorum()) {
+// yay!
+dout(10) &laquo; &ldquo;handle_lease_ack from &quot; &laquo; ack-&gt;get_source()
+&laquo; &quot; &ndash; got everyone&rdquo; &laquo; dendl;
+mon.timer.cancel_event(lease_ack_timeout_event);
+lease_ack_timeout_event = 0;</p>
+<pre><code>} else {
+  dout(10) &lt;&lt; &quot;handle_lease_ack from &quot; &lt;&lt; ack-&gt;get_source()
+       &lt;&lt; &quot; -- still need &quot;
+       &lt;&lt; mon.get_quorum().size() - acked_lease.size()
+       &lt;&lt; &quot; more&quot; &lt;&lt; dendl;
+}
+</code></pre>
+<p>} else {
+dout(10) &laquo; &ldquo;handle_lease_ack from &quot; &laquo; ack-&gt;get_source()
+&laquo; &quot; dup (lagging!), ignoring&rdquo; &laquo; dendl;
+}</p>
+<p>warn_on_future_time(ack-&gt;sent_timestamp, ack-&gt;get_source());
+}</p>
+<p>void Paxos::lease_ack_timeout()
+{
+dout(1) &laquo; &ldquo;lease_ack_timeout &ndash; calling new election&rdquo; &laquo; dendl;
+ceph_assert(mon.is_leader());
+ceph_assert(is_active());
+logger-&gt;inc(l_paxos_lease_ack_timeout);
+lease_ack_timeout_event = 0;
+mon.bootstrap();
+}</p>
+<p>void Paxos::reset_lease_timeout()
+{
+dout(20) &laquo; &ldquo;reset_lease_timeout - setting timeout event&rdquo; &laquo; dendl;
+if (lease_timeout_event)
+mon.timer.cancel_event(lease_timeout_event);
+lease_timeout_event = mon.timer.add_event_after(
+g_conf()-&gt;mon_lease_ack_timeout_factor * g_conf()-&gt;mon_lease,
+new C_MonContext{&amp;mon, [this](int r) {
+if (r == -ECANCELED)
+return;
+lease_timeout();
+}});
+}</p>
+<p>void Paxos::lease_timeout()
+{
+dout(1) &laquo; &ldquo;lease_timeout &ndash; calling new election&rdquo; &laquo; dendl;
+ceph_assert(mon.is_peon());
+logger-&gt;inc(l_paxos_lease_timeout);
+lease_timeout_event = 0;
+mon.bootstrap();
+}</p>
+<p>void Paxos::lease_renew_timeout()
+{
+lease_renew_event = 0;
+extend_lease();
+}</p>
+<p>/*</p>
+<ul>
+<li>trim old states
+*/
+void Paxos::trim()
+{
+ceph_assert(should_trim());
+version_t end = std::min(get_version() - g_conf()-&gt;paxos_min,
+get_first_committed() + g_conf()-&gt;paxos_trim_max);</li>
+</ul>
+<p>if (first_committed &gt;= end)
+return;</p>
+<p>dout(10) &laquo; &ldquo;trim to &quot; &laquo; end &laquo; &quot; (was &quot; &laquo; first_committed &laquo; &ldquo;)&rdquo; &laquo; dendl;</p>
+<p>MonitorDBStore::TransactionRef t = get_pending_transaction();</p>
+<p>for (version_t v = first_committed; v &lt; end; ++v) {
+dout(10) &laquo; &ldquo;trim &quot; &laquo; v &laquo; dendl;
+t-&gt;erase(get_name(), v);
+}
+t-&gt;put(get_name(), &ldquo;first_committed&rdquo;, end);
+if (g_conf()-&gt;mon_compact_on_trim) {
+dout(10) &laquo; &quot; compacting trimmed range&rdquo; &laquo; dendl;
+t-&gt;compact_range(get_name(), stringify(first_committed - 1), stringify(end));
+}</p>
+<p>trimming = true;
+queue_pending_finisher(new C_Trimmed(this));
+}</p>
+<p>/*</p>
+<ul>
+<li>return a globally unique, monotonically increasing proposal number
+*/
+version_t Paxos::get_new_proposal_number(version_t gt)
+{
+if (last_pn &lt; gt) 
+last_pn = gt;</li>
+</ul>
+<p>// update. make it unique among all monitors.
+last_pn /= 100;
+last_pn++;
+last_pn *= 100;
+last_pn += (version_t)mon.rank;</p>
+<p>// write
+auto t(std::make_shared<a href="MonitorDBStore::Transaction">MonitorDBStore::Transaction</a>());
+t-&gt;put(get_name(), &ldquo;last_pn&rdquo;, last_pn);</p>
+<p>dout(30) &laquo; <strong>func</strong> &laquo; &quot; transaction dump:\n&rdquo;;
+JSONFormatter f(true);
+t-&gt;dump(&amp;f);
+f.flush(*_dout);
+*_dout &laquo; dendl;</p>
+<p>logger-&gt;inc(l_paxos_new_pn);</p>
+<p>auto start = ceph::coarse_mono_clock::now();
+get_store()-&gt;apply_transaction(t);
+auto end = ceph::coarse_mono_clock::now();</p>
+<p>logger-&gt;tinc(l_paxos_new_pn_latency, to_timespan(end - start));</p>
+<p>dout(10) &laquo; &ldquo;get_new_proposal_number = &quot; &laquo; last_pn &laquo; dendl;
+return last_pn;
+}</p>
+<p>void Paxos::cancel_events()
+{
+if (collect_timeout_event) {
+mon.timer.cancel_event(collect_timeout_event);
+collect_timeout_event = 0;
+}
+if (accept_timeout_event) {
+mon.timer.cancel_event(accept_timeout_event);
+accept_timeout_event = 0;
+}
+if (lease_renew_event) {
+mon.timer.cancel_event(lease_renew_event);
+lease_renew_event = 0;
+}
+if (lease_ack_timeout_event) {
+mon.timer.cancel_event(lease_ack_timeout_event);
+lease_ack_timeout_event = 0;
+}<br>
+if (lease_timeout_event) {
+mon.timer.cancel_event(lease_timeout_event);
+lease_timeout_event = 0;
+}
+}</p>
+<p>void Paxos::shutdown()
+{
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; cancel all contexts&rdquo; &laquo; dendl;</p>
+<p>state = STATE_SHUTDOWN;</p>
+<p>// discard pending transaction
+pending_proposal.reset();</p>
+<p>// Let store finish commits in progress
+// XXX: I assume I can&rsquo;t use finish_contexts() because the store
+// is going to trigger
+unique_lock l{mon.lock, std::adopt_lock};
+shutdown_cond.wait(l, [this] { return commits_started &lt;= 0; });
+// Monitor::shutdown() will unlock it
+l.release();</p>
+<p>finish_contexts(g_ceph_context, waiting_for_writeable, -ECANCELED);
+finish_contexts(g_ceph_context, waiting_for_readable, -ECANCELED);
+finish_contexts(g_ceph_context, waiting_for_active, -ECANCELED);
+finish_contexts(g_ceph_context, pending_finishers, -ECANCELED);
+finish_contexts(g_ceph_context, committing_finishers, -ECANCELED);
+if (logger)
+g_ceph_context-&gt;get_perfcounters_collection()-&gt;remove(logger);
+}</p>
+<p>void Paxos::leader_init()
+{
+cancel_events();
+new_value.clear();</p>
+<p>// discard pending transaction
+pending_proposal.reset();</p>
+<p>reset_pending_committing_finishers();</p>
+<p>logger-&gt;inc(l_paxos_start_leader);</p>
+<p>if (mon.get_quorum().size() == 1) {
+state = STATE_ACTIVE;
+return;
+}</p>
+<p>state = STATE_RECOVERING;
+lease_expire = {};
+dout(10) &laquo; &ldquo;leader_init &ndash; starting paxos recovery&rdquo; &laquo; dendl;
+collect(0);
+}</p>
+<p>void Paxos::peon_init()
+{
+cancel_events();
+new_value.clear();</p>
+<p>state = STATE_RECOVERING;
+lease_expire = {};
+dout(10) &laquo; &ldquo;peon_init &ndash; i am a peon&rdquo; &laquo; dendl;</p>
+<p>// start a timer, in case the leader never manages to issue a lease
+reset_lease_timeout();</p>
+<p>// discard pending transaction
+pending_proposal.reset();</p>
+<p>// no chance to write now!
+reset_pending_committing_finishers();
+finish_contexts(g_ceph_context, waiting_for_writeable, -EAGAIN);</p>
+<p>logger-&gt;inc(l_paxos_start_peon);
+}</p>
+<p>void Paxos::restart()
+{
+dout(10) &laquo; &ldquo;restart &ndash; canceling timeouts&rdquo; &laquo; dendl;
+cancel_events();
+new_value.clear();</p>
+<p>if (is_writing() || is_writing_previous()) {
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; flushing&rdquo; &laquo; dendl;
+mon.lock.unlock();
+mon.store-&gt;flush();
+mon.lock.lock();
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; flushed&quot; &laquo; dendl;
+}
+state = STATE_RECOVERING;</p>
+<p>// discard pending transaction
+pending_proposal.reset();</p>
+<p>reset_pending_committing_finishers();
+finish_contexts(g_ceph_context, waiting_for_active, -EAGAIN);</p>
+<p>logger-&gt;inc(l_paxos_restart);
+}</p>
+<p>void Paxos::reset_pending_committing_finishers()
+{
+committing_finishers.splice(committing_finishers.end(), pending_finishers);
+finish_contexts(g_ceph_context, committing_finishers, -EAGAIN);
+}</p>
+<p>void Paxos::dispatch(MonOpRequestRef op)
+{
+ceph_assert(op-&gt;is_type_paxos());
+op-&gt;mark_paxos_event(&ldquo;dispatch&rdquo;);</p>
+<p>if (op-&gt;get_req()-&gt;get_type() != MSG_MON_PAXOS) {
+dout(0) &laquo; &ldquo;Got unexpected message type &quot; &laquo; op-&gt;get_req()-&gt;get_type()
+&laquo; &quot; in Paxos::dispatch, aborting!&rdquo; &laquo; dendl;
+ceph_abort();
+}</p>
+<p>auto *req = op-&gt;get_req<!-- raw HTML omitted -->();</p>
+<p>// election in progress?
+if (!mon.is_leader() &amp;&amp; !mon.is_peon()) {
+dout(5) &laquo; &ldquo;election in progress, dropping &quot; &laquo; *req &laquo; dendl;
+return; <br>
+}</p>
+<p>// check sanity
+ceph_assert(mon.is_leader() || 
+(mon.is_peon() &amp;&amp; req-&gt;get_source().num() == mon.get_leader()));</p>
+<p>// NOTE: these ops are defined in messages/MMonPaxos.h
+switch (req-&gt;op) {
+// learner
+case MMonPaxos::OP_COLLECT:
+handle_collect(op);
+break;
+case MMonPaxos::OP_LAST:
+handle_last(op);
+break;
+case MMonPaxos::OP_BEGIN:
+handle_begin(op);
+break;
+case MMonPaxos::OP_ACCEPT:
+handle_accept(op);
+break;		
+case MMonPaxos::OP_COMMIT:
+handle_commit(op);
+break;
+case MMonPaxos::OP_LEASE:
+handle_lease(op);
+break;
+case MMonPaxos::OP_LEASE_ACK:
+handle_lease_ack(op);
+break;
+default:
+ceph_abort();
+}
+}</p>
+<p>// &mdash;&mdash;&mdash;&mdash;&mdash;&ndash;
+// service interface</p>
+<p>// &ndash; READ &ndash;</p>
+<p>bool Paxos::is_readable(version_t v)
+{
+bool ret;
+if (v &gt; last_committed)
+ret = false;
+else
+ret =
+(mon.is_peon() || mon.is_leader()) &amp;&amp;
+(is_active() || is_updating() || is_writing()) &amp;&amp;
+last_committed &gt; 0 &amp;&amp; is_lease_valid(); // must have a value alone, or have lease
+dout(5) &laquo; <strong>func</strong> &laquo; &quot; = &quot; &laquo; (int)ret
+&laquo; &quot; - now=&rdquo; &laquo; ceph_clock_now()
+&laquo; &quot; lease_expire=&quot; &laquo; lease_expire
+&laquo; &quot; has v&quot; &laquo; v &laquo; &quot; lc &quot; &laquo; last_committed
+&laquo; dendl;
+return ret;
+}</p>
+<p>bool Paxos::read(version_t v, bufferlist &amp;bl)
+{
+if (!get_store()-&gt;get(get_name(), v, bl))
+return false;
+return true;
+}</p>
+<p>version_t Paxos::read_current(bufferlist &amp;bl)
+{
+if (read(last_committed, bl))
+return last_committed;
+return 0;
+}</p>
+<p>bool Paxos::is_lease_valid()
+{
+return ((mon.get_quorum().size() == 1)
+|| (ceph::real_clock::now() &lt; lease_expire));
+}</p>
+<p>// &ndash; WRITE &ndash;</p>
+<p>bool Paxos::is_writeable()
+{
+return
+mon.is_leader() &amp;&amp;
+is_active() &amp;&amp;
+is_lease_valid();
+}</p>
+<p>void Paxos::propose_pending()
+{
+ceph_assert(is_active());
+ceph_assert(pending_proposal);</p>
+<p>cancel_events();</p>
+<p>bufferlist bl;
+pending_proposal-&gt;encode(bl);</p>
+<p>dout(10) &laquo; <strong>func</strong> &laquo; &quot; &quot; &laquo; (last_committed + 1)
+&laquo; &quot; &quot; &laquo; bl.length() &laquo; &quot; bytes&quot; &laquo; dendl;
+dout(30) &laquo; <strong>func</strong> &laquo; &quot; transaction dump:\n&quot;;
+JSONFormatter f(true);
+pending_proposal-&gt;dump(&amp;f);
+f.flush(*_dout);
+*_dout &laquo; dendl;</p>
+<p>pending_proposal.reset();</p>
+<p>committing_finishers.swap(pending_finishers);
+state = STATE_UPDATING;
+begin(bl);
+}</p>
+<p>void Paxos::queue_pending_finisher(Context *onfinished)
+{
+dout(5) &laquo; <strong>func</strong> &laquo; &quot; &quot; &laquo; onfinished &laquo; dendl;
+ceph_assert(onfinished);
+pending_finishers.push_back(onfinished);
+}</p>
+<p>MonitorDBStore::TransactionRef Paxos::get_pending_transaction()
+{
+ceph_assert(mon.is_leader());
+if (!pending_proposal) {
+pending_proposal.reset(new MonitorDBStore::Transaction);
+ceph_assert(pending_finishers.empty());
+}
+return pending_proposal;
+}</p>
+<p>bool Paxos::trigger_propose()
+{
+if (plugged) {
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; plugged, not proposing now&quot; &laquo; dendl;
+return false;
+} else if (is_active()) {
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; active, proposing now&quot; &laquo; dendl;
+propose_pending();
+return true;
+} else {
+dout(10) &laquo; <strong>func</strong> &laquo; &quot; not active, will propose later&quot; &laquo; dendl;
+return false;
+}
+}</p>
+<p>bool Paxos::is_consistent()
+{
+return (first_committed &lt;= last_committed);
+}</p>
+<p>Kimi: 由于代码量较大，我将重点描述 Paxos 算法在 Ceph 中的主要流程，并提供一个简化的流程图。</p>
+<h3 id="paxos-算法在-ceph-中的主要流程">Paxos 算法在 Ceph 中的主要流程：</h3>
+<ol>
+<li>
+<p><strong>初始化（Init）</strong>：</p>
+<ul>
+<li>从稳定存储中加载 Paxos 变量。</li>
+<li>初始化性能计数器。</li>
+</ul>
+</li>
+<li>
+<p><strong>选举（Election）</strong>：</p>
+<ul>
+<li>确定 Leader 和 Peon。</li>
+<li>Leader 初始化并开始恢复（Recovery）过程。</li>
+</ul>
+</li>
+<li>
+<p><strong>恢复（Recovery）</strong>：</p>
+<ul>
+<li>Leader 发起 <code>collect</code> 阶段，向所有 Peon 发送 <code>OP_COLLECT</code> 消息。</li>
+<li>Peon 响应 <code>OP_COLLECT</code> 消息，发送 <code>OP_LAST</code> 回复。</li>
+<li>Leader 处理 <code>OP_LAST</code> 消息，同步数据，可能触发新的选举或进入活跃状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>活跃状态（Active State）</strong>：</p>
+<ul>
+<li>Leader 和 Peon 处理读写请求。</li>
+<li>定期延长租约（Lease）。</li>
+</ul>
+</li>
+<li>
+<p><strong>更新（Updating）</strong>：</p>
+<ul>
+<li>Leader 提出新的值，进入 <code>STATE_UPDATING</code>。</li>
+<li>Peon 接受新值，如果接受成功，发送 <code>OP_ACCEPT</code> 消息。</li>
+<li>Leader 收到足够的 <code>OP_ACCEPT</code> 消息后，进入 <code>commit</code> 阶段。</li>
+</ul>
+</li>
+<li>
+<p><strong>提交（Commit）</strong>：</p>
+<ul>
+<li>Leader 将新值提交到存储，并通知所有 Peon。</li>
+<li>Peon 收到 <code>OP_COMMIT</code> 消息后，更新本地状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>租约延长（Lease Renewal）</strong>：</p>
+<ul>
+<li>Leader 定期发送 <code>OP_LEASE</code> 消息给 Peon，延长租约。</li>
+<li>Peon 确认租约延长，发送 <code>OP_LEASE_ACK</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>处理超时（Handle Timeouts）</strong>：</p>
+<ul>
+<li>如果在预定时间内未收到足够的响应，可能触发新的选举。</li>
+</ul>
+</li>
+<li>
+<p><strong>关闭（Shutdown）</strong>：</p>
+<ul>
+<li>取消所有事件，释放资源。</li>
+</ul>
+</li>
+</ol>
+<h3 id="流程图">流程图：</h3>
+<p>mermaid(美人鱼)，用文本语法来描述文档图形的工具</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph TD
+</span></span><span class="line"><span class="cl">    A[开始] --&gt; B[初始化]
+</span></span><span class="line"><span class="cl">    B --&gt; C[选举]
+</span></span><span class="line"><span class="cl">    C --&gt;|Leader| D[Leader 初始化]
+</span></span><span class="line"><span class="cl">    C --&gt;|Peon| E[Peon 初始化]
+</span></span><span class="line"><span class="cl">    D --&gt; F[恢复阶段]
+</span></span><span class="line"><span class="cl">    E --&gt; F
+</span></span><span class="line"><span class="cl">    F --&gt; G{是否已同步?}
+</span></span><span class="line"><span class="cl">    G --&gt;|是| H[活跃状态]
+</span></span><span class="line"><span class="cl">    G --&gt;|否| I[触发新的选举]
+</span></span><span class="line"><span class="cl">    H --&gt; J[更新提案]
+</span></span><span class="line"><span class="cl">    J --&gt; K[提交新值]
+</span></span><span class="line"><span class="cl">    K --&gt; H
+</span></span><span class="line"><span class="cl">    H --&gt; L[租约延长]
+</span></span><span class="line"><span class="cl">    L --&gt; H
+</span></span><span class="line"><span class="cl">    H --&gt; M[处理超时]
+</span></span><span class="line"><span class="cl">    M --&gt;|需要选举| C
+</span></span><span class="line"><span class="cl">    M --&gt;|继续活跃| H
+</span></span><span class="line"><span class="cl">    H --&gt; N[关闭]
+</span></span><span class="line"><span class="cl">    N --&gt; O[结束]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，这个流程图是一个高层次的概述，实际的 Paxos 算法实现要复杂得多，涉及许多细节和错误处理。此外，Ceph 的 Paxos 实现还包括对日志截断、成员变化处理、数据同步和一致性检查的高级处理。</p>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备一个图片，一段话，可以放在三页doc，三页ppt，或者文本计数器 描述清除</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>反馈：鸡蛋里挑骨头，经过客户，领导 ，公司认证，做事情价值和意义。听到否定愤怒反对 说明自己对这个事情还不了解。</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目</p>
+</li>
+</ol>
+<h2 id="参考">参考</h2>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-26 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/2024/01-2024-06-18-ob_study1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">成为oceanbase贡献者第四天：内置函数</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2024/2024_03_10_ai_weekly_01/">
+            <span class="next-text nav-default">AI周刊</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

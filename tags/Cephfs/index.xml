@@ -25,5 +25,14 @@
       <description>Cephfs探索之旅第一天 文章地址：http://localhost:1313/post/storage/1_2023_02_13_day1</description>
     </item>
     
+    <item>
+      <title>Cephfs探索之旅第一天：基础结构 链表</title>
+      <link>https://wangcy6.github.io/post/storage/01_20240806_database_list/</link>
+      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/01_20240806_database_list/</guid>
+      <description>Cephfs探索之旅第一天：基础结构 链表 双向链表 elist.h 点击链接查看和 Kimi 智能助手的对话 https://kimi.moonshot.cn/share/cqoselkudu6brb7tmdt0</description>
+    </item>
+    
   </channel>
 </rss>
