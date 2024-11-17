@@ -6,7 +6,34 @@
     <description>Recent content in tools on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 12 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>新手必看！Obsidian自定义美化&amp;使用插件推荐</title>
+      <link>https://wangcy6.github.io/post/2024/2024-11-17-tools-Obsidian/</link>
+      <pubDate>Sun, 17 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-11-17-tools-Obsidian/</guid>
+      <description>相关问题 解决obsidian无法加载第三方插件（社区插件） 在设置中找到“第三方插件”选项，并把安全模式关闭，但是在市场插件依然打不开 手工下载</description>
+    </item>
+    
+    <item>
+      <title>面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题</title>
+      <link>https://wangcy6.github.io/post/c&#43;&#43;/2024-11-10-cpp-day1/</link>
+      <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c&#43;&#43;/2024-11-10-cpp-day1/</guid>
+      <description>成为面试官 第一题 他们的Best Practices是什么 面试题：C++中shared_ptr是线程安全的吗？ 来源 ：一名毕业三年的女程序媛面试头</description>
+    </item>
+    
+    <item>
+      <title>Markdown 入门指南</title>
+      <link>https://wangcy6.github.io/post/man/markdown/1_how_to_use_marddown/</link>
+      <pubDate>Sat, 03 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/man/markdown/1_how_to_use_marddown/</guid>
+      <description>https://www.markdown.xyz/getting-started/ https://markdown.com.cn/ 应用：typora（已经开始收费） 整体修改CSS 依次点击Typora菜单栏的“文件”-“偏好设置”，然后点击“外观”-“打开主题文件夹”</description>
+    </item>
+    
     <item>
       <title>vivo蓝河操作系统创新赛准备材料</title>
       <link>https://wangcy6.github.io/post/2024/2024-03-03-11-rust-ai/</link>
@@ -40,7 +67,7 @@
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/2024/2024-03-06_readcode_ceph_threadpool/</guid>
-      <description>在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜的</description>
+      <description>/Users/wangchuanyi/doc/daily-interview/blog 在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜</description>
     </item>
     
     <item>

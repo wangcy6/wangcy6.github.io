@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为ob贡献者(6):如何阅读Paxos代码 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习，专业上只能靠自己" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/day6_make_ob/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为ob贡献者(6):如何阅读Paxos代码" />
+<meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/day6_make_ob/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-04T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-10-04T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为ob贡献者(6):如何阅读Paxos代码">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2024-10-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-10-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5876">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为ob贡献者(6):如何阅读Paxos代码"/>
+<meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为ob贡献者(6):如何阅读Paxos代码</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-10-04 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 5876 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一对学习下个定义简化简化简化">一、对学习下个定义：简化，简化，简化</a></li>
+    <li><a href="#二如何学习对照对照在对照">二、如何学习：对照，对照，在对照</a></li>
+    <li><a href="#三技术的组成部分和关键点">三、技术的组成部分和关键点</a></li>
+    <li><a href="#master选举与paxos的关系">Master<strong>选举与Paxos的关系</strong></a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考-1">参考</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>为了整理思路，文章采用模拟2人对话方式，文中比喻可能错误的，请注意区分。</p>
+<p>本文主要内容</p>
+<ol>
+<li>通过对学习数据库下 定义聚焦学习内容
+<blockquote>
+<p>如果关心代码，直接去看代码，如果关心SQL，直接看SQL，先满足第一需求。</p>
+</blockquote>
+</li>
+<li>通过OB定义一体化不是什么，是什么 聚焦学习方向</li>
+</ol>
+<blockquote>
+<p>一体化 在添加一个字： 像一体化，例如 多个节点像一个节点 来保证高并发和可扩展</p>
+</blockquote>
+<ol start="3">
+<li>采取对照组实验方式学习， 请说出他们相同点 和不同点确定关键部分。</li>
+</ol>
+<blockquote>
+<p>对照组：
+从一个最简单例子开始，这个自己很清楚，大家都知道
+从一个 工程实践组： 一个是踩过无数坑，经过无数考验，自己不知道，别人知道 。</p>
+</blockquote>
+<h2 id="一对学习下个定义简化简化简化">一、对学习下个定义：简化，简化，简化</h2>
+<p>风和日丽下午，小王与老王在咖啡馆相遇了，</p>
+<p>小王：我想学习数据库，但是笔记本配置低，最新的4.x至少8G内存，不方便安装了，即装 了也无法长时间运行？更别说编译了,该如何开始呢</p>
+<p>老王：咱们对学习下个定义</p>
+<ul>
+<li>如果业务开发人员，关心的是怎么写sql，可用使用OB Cloud 云数据库 30 天免费试用，先别考虑30是否太短。用完30天在说，不需要关心部署问题。</li>
+<li>如果源码爱好者，关心的是设计方案，代码流程 ，代码规范，如果提交代码，可用gitpod简单编译，不用担心没有经过充分测试  github提供大部分自动化测试用例。</li>
+<li>如果万能DBA 考虑更多。。。</li>
+</ul>
+<blockquote>
+<p>资源有限情况下，做出取舍，这样更加集中精力，咱们主要学习ob 并发情况下如何保证数据的一致性</p>
+</blockquote>
+<ul>
+<li>对ob下个定义：自研的一体化架构，兼顾分布式架构的扩展性与集中式架构的性能优势，</li>
+</ul>
+<p>小王疑问：</p>
+<p>一体化 不是把全部功能放在一块，这有点违反直觉，软件为了代码可读性和可维护性采用，
+“高内聚、松耦合” 设计，代码目录划分是不是回混乱？</p>
+<p>在存储领域， 海量非结构化存储的 有一体机说，软硬件一体化的设计。这这个意思吗？</p>
+<p>老王：
+OceanBase 为什么走向一体化 看一下这个文章
+<a href="https://open.oceanbase.com/blog/5022262784">https://open.oceanbase.com/blog/5022262784</a></p>
+<p>下面是我的另外一个理解</p>
+<p>对比熟悉产品他们没有一体化这个概念，他们是怎么解决这个高可用这样问题的？</p>
+<blockquote>
+<p>_Ceph：统一存储解决方案，三部分组
+Ceph 对象存储设备服务进程，简称 OSD。一个 OSD 守护进程与集群中的一个物理磁盘绑定
+Ceph 元数据服务器服务进程，简称 MDS
+Ceph 监视器服务进程，简称 MON。负责监控集群的监控状态,至少有3个
+Ceph monitor中实现了paxos算法。
+Ceph monitor 通过保存一份集群状态映射来维护整个集群的健康状态。它分别为每个组件维护映射信息，包括OSD map、MONmap、PG map和CRUSH map。所有群集节点都向MON节点汇报状态信息，并分享它们状态中的任何变化</p>
+</blockquote>
+<blockquote>
+<p>Redis  Sentinel 模式<br>
+Sentinel（哨兵）是一个独立运行的进程，三个节点（box）启动三个 Sentinel组成进程一个分布式系统。但是只有一个leader,leader来管理Redis 主从切换。</p>
+</blockquote>
+<p>一体化 概念不理解 就是抽象：是多个进程，抽象一个进程，每个进程里 可能不同功能线程组成。</p>
+<p><a href="https://ask.oceanbase.com/t/topic/11800002">OceanBase 数据库的那些线程,分别是做什么的？</a></p>
+<ul>
+<li>election worker：选举线程。</li>
+</ul>
+<p>因此看代码时候  直接main 函数从头到尾不合适了，这是大型工程，不是简单的例子，</p>
+<p>越是大型工程，必然内部必然清晰模划分，每个独立部分都是单独封装起来。</p>
+<p>Paxos 协议与选举协议为什么分开独立实现的？</p>
+<blockquote>
+<p>OceanBase 数据库的 Paxos 实现和选举协议一起构成了一致性协议（日志服务）的实现。
+两者有一定的相关性，但在实现上又尽量做到减少耦合。</p>
+</blockquote>
+<p>项目：必然符合，“高内聚、松耦合” 设计思想，这样保证代码的可读性和可维护性。</p>
+<p>不一定是通过进程区分，还是可以 通过线程</p>
+<blockquote>
+<p>题外话： 用多个进程，多个线程能实现一个数据库，协程呢，为什么大家都不用协程实现一个数据库。协程的特点不是更加高效，自主切换？？</p>
+</blockquote>
+<p>这里重点解释几个概念</p>
+<ul>
+<li>
+<p>Redis  主从模式 节点为单位存储数据，一个节点故障了，另外一个节点上数据代替。</p>
+<p>redis集群有槽点这划分，槽点放到节点上，</p>
+<p>单节点 性能有限？如果提高性能，直接添加机器固然可用，理论依据是什么</p>
+<p>看看硬件：</p>
+</li>
+<li>
+<p>网卡绑定，多个网卡像一个网卡一样使用。</p>
+<p>网卡绑定是将多块物理网卡虚拟成一块逻辑网卡的过程。
+多块物理网卡被视为一个整体，共同完成网络数据的传输任务。同时，当其中一块网卡出现故障时，其他网卡可以继续提供网络服务，增强了网络的稳定性。
+![[Pasted image 20241013170845.png]]</p>
+</li>
+<li>
+<p>硬RAID和软RAID 多个磁盘像一个磁盘一样</p>
+<p>RAID 全称叫廉价冗余磁盘阵列（Redundant Array of Inexpensive Disks)
+其设计初衷是为了将多个容量较小、相对廉价的磁盘进行有机组合，
+在实际应用领域中使用最多的 RAID 等级是 RAID0 、 RAID1 、 RAID4 、 RAID5 、RAID10 、JBOD</p>
+<p>软raid是通过操作系统和软件来实现raid功能，而硬raid则是使用专门的raid控制器来实现raid功能。<strong>硬Raid</strong> 通过<strong>raid</strong> 卡进行数据交换，占用系统I/O 极小，数据的交换与运算都是通过<strong>RAID</strong> 卡来完成的</p>
+</li>
+<li>
+<p>CEPH PG全称是placement groups，ceph的逻辑存储单元</p>
+</li>
+</ul>
+<p>简单是一个存储节点上 10个磁盘，一个磁盘对应一个osd服务。
+通过服务把三个节点上30个磁盘组成像一个磁盘一样，</p>
+<p>PG全称是placement groups，它是ceph的逻辑存储单元，可以把PG想象成存储了多个对象的逻辑容器，这个容器映射到多个具体的OSD</p>
+<p>如果没有PG，就难以管理和跟踪数以亿计的对象，它们分布在数百个OSD上。对ceph来说，管理PG比直接管理每个对象要简单得多。每个PG需要消耗一定的系统资源包括CPU、内存等</p>
+<p>![[Pasted image 20241013145523.png]]</p>
+<ul>
+<li>
+<p>说到这里CEPH PG 与ob 有点类似
+<img src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/7617181161/p195759.png" alt=""></p>
+</li>
+<li>
+<p>分区与副本
+由于 OceanBase 数据库的数据副本是以分区为单位的，所以同一个分区的数据会分布在多个 Zone 上。每个分区的主副本所在服务器被称为 Leader，所在的 Zone 被称为 Primary Zone</p>
+</li>
+<li>
+<p>可用区/区（Zone）</p>
+</li>
+</ul>
+<p>Zone 是 Availability Zone 的简称。一个 OceanBase 集群，由若干个可用区（Zone）组成。通常由一个机房内的若干服务器组成一个 Zone。为了数据安全性和高可用性，一般会把数据的多个副本分布在不同的 Zone 上，可以实现单个 Zone 故障不影响数据库服务。</p>
+<p>每个 Zone 会提供两种服务：总控服务（RootService）和分区服务（PartitionService）</p>
+<p>其中，每个 Zone 有一台 OBServer 会同时运行总控服务（RootService），用于执行集群管理、服务器管理、自动负载均衡等操作</p>
+<blockquote>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+tree -L 1 -d
+
+	├── logservice //这是4.x election
+	
+	├── observer 所有组件的“总装车间“ //当作无状态执行节点，负责接受客户端的连接，执行 SQL
+	
+	├── rootserver OB集群总控服务Rs，集群管理、数据分布以及副本管理 
+	  //就是元数据管理节点,每个zone上只有1个Rs，但是只有其中一个leader，其他fo l lfoll
+	
+	├── sql sql引擎 // 至少支持sql解析
+	
+	└── storage  存储引擎 //当作存储kv集群，至少支持put get存储一个值 
+
+
+observer 的日志存放在 `observer` 的安装目录的 `log` 目录下面，分为四种日志 `observer.log`、observer 日志
+`rootservice.log`、 RS 日志 
+`election.log` 和 选举日志
+`trace.log`，全链路追踪日志
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>旁白，
+一体化，总控服务RootService，ObServer等，如同金箍棒 一样 变小 变小再变小 用其他产品来比喻
+别看这么粗暴介绍OceanBase整体结构，
+至少目的了，方法有了，就展开看行动吧，至少1个月内完内✅ 2024-10-01&ndash;2024-11-01</p>
+</blockquote>
+<h2 id="二如何学习对照对照在对照">二、如何学习：对照，对照，在对照</h2>
+<p>小王：我准备好阅读代码工具 和和找到相关代码模块，如下 ，该如何下手呢？</p>
+<p>阅读代码工具选择 （只阅读不编译代码）</p>
+<ul>
+<li>In Windows, we recommend <code>Souce Insight</code> can be used</li>
+<li>in Mac or Linux, we recommend that <code>VSCode + ccls </code></li>
+</ul>
+<p>代码路径：</p>
+<p><img src="https://github.com/user-attachments/assets/8519d3f3-7303-4062-8d68-09a94ac5b232" alt="图片-01"></p>
+<p>其中 Palf 不是随便命名的，全名 “Paxos-backed Append-only Log File System”
+这个是对日志服务一个抽象，</p>
+<p>这里你发现：这里只有领导选举代码，并没有日志复制代码（和期望一样全部在一个模块不一样，别慌，你发现的绝对没问题），根据模块划分 原则，哪怕不知道完整代码，不影响阅读领导选举模块。</p>
+<blockquote>
+<p>小疑问 ：PALF 为什么领导者选举与共识协议分离开来？&mdash;&mdash;&mdash;开始
+原文1：PALF decouples leader election from the consensus protocol to manipulate the location of the database leader without sacrificing availabilit</p>
+</blockquote>
+<p>PALF 将领导者选举与共识协议分离开来&mdash;选择距离最近的。</p>
+<p>小王猜测可能从用户角度考虑，为了降低业务延迟，在业务部署时候，尽可能部署到Primary Zone。这样用户需就可以灵活指定领导者优先级 ，不仅仅根据谁日志编号大就是选择谁。
+回顾：配置2 领导者选举时候保证zone1  &gt; zone2 &gt; zong3 ，zone1故障恢复后，流量切换zone1</p>
+<p><img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1727309934006.png" alt=""></p>
+<p>Primary Zone 描述了 Leader 副本的偏好位置，而 Leader 副本承载了业务的强一致读写流量，即 Primary Zone 决定了 OceanBase 数据库的流量分布。假设某张表 <code>t1</code> 的 <code>primary_zone=&quot;Zone1&quot;</code>，则 <code>RootService</code> 会尽量将 <code>t1</code> 表的 Leader 调度到 Zone1 上来。
+在补充概念</p>
+<blockquote>
+<p>小疑问 ：PALF 为什么领导者选举与共识协议分离开来？&mdash;&mdash;&mdash;&mdash;结束
+原文2：For example, in cross-region deployment, users tend to make the upper application and the database leader in the same region to reduce latency，
+If the previous leader recovers from failure and its priority is still higher than current leader’s, leadership can be automatically transferred back to the recovered replica.</p>
+</blockquote>
+<p>下面是 小王概念简单理解：</p>
+<ul>
+<li>持久化： 联想到在  Redis persistence AOF，Append Only File，是指Redis将每一次的写操作（命令）都以日志的形式记录到一个AOF文件中，</li>
+<li>持久化内容： 日志 联想到 可以理解文件系统上一个文件，比较熟悉的是java业务中使用 log4j打印不同级别日志。</li>
+<li>持久化内容进行复制：在2024 年 8 月 26 日至 8 月 30 日  VLDB2024 会议上，OceanBase 的 2 篇论文《Replicated Write-Ahead Logging for Distributed Databases》和《Native Distributed Databases: Problems, Challenges and Opportunities》入选，获得了国际学术界的高度认可。</li>
+<li>
+<pre><code>PALF: Replicated Write-Ahead Logging for Distributed Databases
+</code></pre>
+<a href="https://www.vldb.org/pvldb/vol17/p3745-xu.pdf">https://www.vldb.org/pvldb/vol17/p3745-xu.pdf</a></li>
+</ul>
+<p><img src="https://github.com/user-attachments/assets/36c52dcd-38dc-4891-b540-4ea50e8077f6" alt="image"></p>
+<blockquote>
+<p>从上面内容看一会提到kv，Redis，java，VLDB2024 太发散了不知道到底说什么，
+一句话解释 增量变更内容日志形式持久存储下来，然后复制不同副本。
+复制方式很多种，从主从复制 升级到Paxos方式<br>
+请看下面完整定义</p>
+</blockquote>
+<p>Palf 是数据库的一个基础组件，它需要完成两大核心功能：</p>
+<ul>
+<li>
+<p>对于事务系统，具备以下特性：</p>
+<ul>
+<li>
+<p>满足事务系统 Write-Ahead Logging 的功能需求，实现事务的原子性和持久性。</p>
+</li>
+<li>
+<p>支持返回特定语义的时间戳，满足读写事务、备机弱读等生成事务版本号的需求。</p>
+</li>
+<li>
+<p>实现事务的高性能，同时做到多核下的可扩展。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>对于分布式，具备以下特性：</p>
+<ul>
+<li>
+<p>基于 Paxos 协议，保证数据在多数派副本持久化成功；同时通过成员变更提供容灾能力，实现高可用和高可靠。</p>
+</li>
+<li>
+<p>提供异步复制的能力。</p>
+</li>
+<li>
+<p>提供完善的诊断监控能力，实现可诊断、可运维。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>老王：自然对照组方式，一个最 简单demo方式实现 这个你清楚了解的，一个是踩过无数坑，经过无数考验实现 这个是你不清楚的，请说出他们相同点 和不同点。</p>
+<ul>
+<li>版本1.0: 采用Go语言 完全按照lamport的论文paxos-simple.pdf中的描述流程，没有任何优化实现</li>
+<li>版本4.0 ：采用c++实现的工业级实现的 multi-paxos</li>
+<li>Raft vs Paxos 方式</li>
+</ul>
+<h2 id="三技术的组成部分和关键点">三、技术的组成部分和关键点</h2>
+<h2 id="master选举与paxos的关系">Master<strong>选举与Paxos的关系</strong></h2>
+<ul>
+<li><strong>为什么需要Leader</strong></li>
+</ul>
+<p>Multi-Paxos允许并行提交，最坏情况要退化到Base Paxos</p>
+<ol>
+<li>如活锁问题：</li>
+</ol>
+<p>多个 proposor，轮流用更高的 proposal ID 运行 phase1，导致两者都没法进入 phase2，无法确定谁可以写入，形成活锁</p>
+<ol start="2">
+<li>用户无法自定义选举的优先级。</li>
+</ol>
+<p>所以我们并不希望长时间处于这种情况，Leader的作用是希望大部分时间都只有一个节点在提交。</p>
+<p>任一时刻，仅有一个节点成为Leader或者没有任何节点成为Leader</p>
+<ul>
+<li><strong>如何选举唯一的Master</strong></li>
+</ul>
+<p>Base Paxos 是通过2次RPC达成一个值，</p>
+<p>Master选举也是达成一致，是不是可以用Base Paxos ？</p>
+<p>或者</p>
+<p>是不是可以用选择一个编号最大的一个，ID最大一个？</p>
+<p>都可以。既然都可以没有统一的说明，这就是百花齐放，</p>
+<p>各自使用各自方式实现，让人感觉不好理解</p>
+<p><code>PALF</code> 是 OceanBase 数据库在 V4.0 版本中将日志同步服务进行打包后的一个框架简称，</p>
+<p>选举功能是该框架提供的子功能</p>
+<p>但是：</p>
+<p><strong>PALF: Replicated Write-Ahead Logging for Distributed Databases</strong></p>
+<p><strong>提到：重点介绍复制日志系统的设计，</strong></p>
+<p><strong>因此，我们将选举算法的实现细节留给另一篇论文也没有具体给出说明</strong></p>
+<p>This paper focuses the design of the replicated logging system, therefore, we leave implementation details of the election algorithm for another paper</p>
+<p>在万字解析：从 OceanBase 源码剖析 paxos 选举原理 ob作者提到</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1728389534298-62caee31-de19-4974-8781-8fc4e3f4d1b3.png" alt=""></p>
+<p>题外话：</p>
+<p>Paxos算法强调达成一致，但是没有告诉如何选举，</p>
+<p>或者认为选举就是很随意一个事情。这就是框架的灵活性，就c++一样，</p>
+<p>Master选举算法可以采用其他通用性的算法，它可以与任何强一致性算法搭配来完成，而无需要求一定是Paxos是算法。</p>
+<p>选举算法和Paxos日志同步可以分开来实现。</p>
+<p>题外话：</p>
+<p>在选举中哪个副本会被选为主？OceanBase 数据库的选举模如何保证选举到的 Leader 副本是更好的选择？ 这个是帮助理解，不需要记住，他们做不少优化</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1728394040594-567b632e-9515-449b-bc4a-f4ae6ef7c466.png" alt=""></p>
+<p>如何查看代码呢？</p>
+<ul>
+<li>租约（Lease）：租约是一把时间锁，是一段时间内的排他性保证，是目前已知的在分布式系统中保证唯一 <code>Leader</code> 又不会丧失活性的唯一手段，<strong>选举实际上是使用 basic-paxos 在副本间就租约达成共识。</strong></li>
+</ul>
+<p><strong>The candidate is elected by a lease-based election algorithm</strong></p>
+<ul>
+<li>election proposer：<code>proposer</code> 是 <code>paxos</code> 中的提案发起者，<code>proposer</code> 会提议开始一次选举，并尝试竞选成为 <code>Leader</code> 。</li>
+<li>election acceptor：<code>acceptor</code> 是 <code>paxos</code> 中的提案审议者，<code>acceptor</code> 会根据基本原则判断是否要接受一项提案（在选举中提案就是租约），并确保任意时刻集群中只有一个 <code>Leader</code> 。</li>
+</ul>
+<h1 id="oceanbase-数据库知识导图">OceanBase 数据库知识导图</h1>
+<p><a href="https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000324072">https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000324072</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1728394276721-9bfab5eb-d3af-4fb6-913b-f8b40b386077.png" alt=""></p>
+<h3 id="参考">参考</h3>
+<p>选举层面无主问题排查指南</p>
+<p><a href="https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000001230231">https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000001230231</a></p>
+<p>OceanBase 数据库选举</p>
+<p><a href="https://www.oceanbase.com/knowledge-base/oceanbase-database-20000000075">https://www.oceanbase.com/knowledge-base/oceanbase-database-20000000075</a></p>
+<p>类似的机制可以参考微信的 phxpaxos 的文章：<a href="https://zhuanlan.zhihu.com/p/21540239%E3%80%82">https://zhuanlan.zhihu.com/p/21540239。</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/21466932?refer=lynncui">https://zhuanlan.zhihu.com/p/21466932?refer=lynncui</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/21466932?refer=lynncui">https://zhuanlan.zhihu.com/p/21466932?refer=lynncui</a></p>
+<ul>
+<li>[1]万字解析：从 OceanBase 源码剖析 paxos 选举原理</li>
+</ul>
+<p><a href="https://zhuanlan.zhihu.com/p/630468476">https://zhuanlan.zhihu.com/p/630468476</a></p>
+<ul>
+<li>[2] 开源数据库OceanBase代码导读</li>
+</ul>
+<p><a href="https://www.zhihu.com/people/yang-zhi-feng-79/posts?page=2">https://www.zhihu.com/people/yang-zhi-feng-79/posts?page=2</a></p>
+<p><a href="http://oserror.com/uncategorized/yuque/OceanBase%E4%BB%A3%E7%A0%81%E5%AF%BC%E8%A7%88/">http://oserror.com/uncategorized/yuque/OceanBase%E4%BB%A3%E7%A0%81%E5%AF%BC%E8%A7%88/</a></p>
+<ul>
+<li><a href="https://www.vldb.org/pvldb/vol17/p3745-xu.pdf">https://www.vldb.org/pvldb/vol17/p3745-xu.pdf</a></li>
+</ul>
+<p>PALF: Replicated Write-Ahead Logging for Distributed Databases</p>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>准备一个图片，一段话，可以放在三页doc，三页ppt 描述你方案一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题二、这个技术的优势和劣势分别是什么三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景四、技术的组成部分和关键点。五、技术的底层原理和关键实现六、已有的实现和它之间的对比</li>
+<li>反馈：鸡蛋里挑骨头，经过客户，领导 ，公司认证，做事情价值和意义。听到否定愤怒反对 说明自己对这个事情还不了解。</li>
+<li>最后融合别人建议，然后完善你项目</li>
+</ol>
+<h2 id="参考-1">参考</h2>
+<ul>
+<li>
+<p>[1]  1. OceanBase Development Guide
+<a href="https://oceanbase.github.io/oceanbase/ide-settings/">https://oceanbase.github.io/oceanbase/ide-settings/</a></p>
+</li>
+<li>
+<p>[2] 2. <a href="https://lamport.azurewebsites.net/pubs/paxos-simple.pdf">https://lamport.azurewebsites.net/pubs/paxos-simple.pdf</a></p>
+</li>
+<li>
+<p>[1] 3.Redis persistence
+<a href="https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/">https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/</a></p>
+</li>
+<li>
+<p>[1] 4. <a href="https://github.com/tangwz/DistSysDeepDive">https://github.com/tangwz/DistSysDeepDive</a></p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> 5. # 万字解析：从 OceanBase 源码剖析 paxos 选举原理</p>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 6. <a href="https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000297643?back=kb"># V3.x物理恢复耗时过久的问题</a></p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> 7. 开源数据库OceanBase代码导读</p>
+</li>
+<li>
+<p><input disabled="" type="checkbox"> 8. 整体架构
+<a href="https://www.oceanbase.com/docs/oceanbase-database-cn">https://www.oceanbase.com/docs/oceanbase-database-cn</a></p>
+</li>
+<li>
+<p>9.https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/    done</p>
+</li>
+</ul>
+<ol start="10">
+<li>
+<h1 id="ceph-mon之paxos算法">ceph-mon之Paxos算法</h1>
+</li>
+</ol>
+<ul>
+<li><a href="https://bean-li.github.io/ceph-paxos/">https://bean-li.github.io/ceph-paxos/</a></li>
+<li><a href="https://bean-li.github.io/ceph-paxos-2/">https://bean-li.github.io/ceph-paxos-2/</a></li>
+<li><a href="https://segmentfault.com/a/1190000010417185">https://segmentfault.com/a/1190000010417185</a></li>
+</ul>
+<ol start="11">
+<li>pg组</li>
+</ol>
+<ul>
+<li><a href="https://www.xiaobo.li/notes/archives/1004">https://www.xiaobo.li/notes/archives/1004</a></li>
+<li>#杨传辉：从一体化架构，到一体化产品，为关键业务负载打造一体化数据库</li>
+</ul>
+<h4 id="小贴士">小贴士</h4>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-10-04 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/2024/07_make_ob_leader/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">成为ob贡献者(07):leader</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2024/06-tools-base-user-git/">
+            <span class="next-text nav-default">git常用命令手册</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

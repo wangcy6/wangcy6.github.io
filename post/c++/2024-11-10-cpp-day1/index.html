@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="成为面试官 第一题 他们的Best Practices是什么 面试题：C&#43;&#43;中shared_ptr是线程安全的吗？ 来源 ：一名毕业三年的女程序媛面试头" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/c&#43;&#43;/2024-11-10-cpp-day1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题" />
+<meta property="og:description" content="成为面试官 第一题 他们的Best Practices是什么 面试题：C&#43;&#43;中shared_ptr是线程安全的吗？ 来源 ：一名毕业三年的女程序媛面试头" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/c&#43;&#43;/2024-11-10-cpp-day1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-11-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-11-10T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题">
+<meta itemprop="description" content="成为面试官 第一题 他们的Best Practices是什么 面试题：C&#43;&#43;中shared_ptr是线程安全的吗？ 来源 ：一名毕业三年的女程序媛面试头"><meta itemprop="datePublished" content="2024-11-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-11-10T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2821">
+<meta itemprop="keywords" content="tools," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题"/>
+<meta name="twitter:description" content="成为面试官 第一题 他们的Best Practices是什么 面试题：C&#43;&#43;中shared_ptr是线程安全的吗？ 来源 ：一名毕业三年的女程序媛面试头"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-11-10 00:00 </span>
+        
+          <span class="more-meta"> 约 2821 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#面试题c中shared_ptr是线程安全的吗">面试题：C++中shared_ptr是线程安全的吗？</a></li>
+        <li><a href="#废话不多说直接开始面试官不喜欢-怎么回答">废话不多说直接开始，面试官不喜欢 怎么回答</a></li>
+      </ul>
+    </li>
+    <li><a href="#1--shared_ptr-的数据结构是什么">1.  shared_ptr 的数据结构是什么</a></li>
+    <li><a href="#2--原子操作的误解-多个原子操作组合是线程安全的吗">2.  原子操作的误解 ：多个原子操作组合是线程安全的吗？</a></li>
+    <li><a href="#3--举例-多线程无保护读写-shared_ptr-可能出现的-race-condition">3.  举例： 多线程无保护读写 shared_ptr 可能出现的 race condition</a></li>
+    <li><a href="#best-practices-候选人说不清楚解释不明白如何破局">Best Practices 候选人：说不清楚，解释不明白如何破局</a></li>
+    <li><a href="#更多阅读">更多阅读</a>
+      <ul>
+        <li><a href="#学习方法">学习方法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>成为面试官 第一题  他们的Best Practices是什么</p>
+<h3 id="面试题c中shared_ptr是线程安全的吗">面试题：C++中shared_ptr是线程安全的吗？</h3>
+<p>来源 ：一名毕业三年的女程序媛面试头条经验
+推荐阅读：</p>
+<ul>
+<li>深入理解C++11:C++11新特性解析与应用</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/54482/901129f0-d9ec-48a0-b040-d626c19ec6f5.png" alt=""></p>
+<ul>
+<li>Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/54482/5d4bdf72-4beb-4a88-85b3-68e63bf1d5f4.png" alt=""></p>
+<ul>
+<li>Linux多线程服务端编程：使用muduo C++网络库</li>
+</ul>
+<p><img src="https://s2.loli.net/2024/11/17/JndNQqwoHYUkheR.png" alt="image.png"></p>
+<p>为 防止网盘失效，请添加微信：watchpoints 直接 发送电子书
+<img src="https://s2.loli.net/2024/11/17/uSQ2Ohy3WG1lMbL.png" alt="image.png"></p>
+<blockquote>
+<p>为了节省读者时间 一句话描述
+shared_ptr 的引用计数本身是安全且无锁的，
+但对象的读写则不是，因为 shared_ptr 有两个数据成员，读写操作不能原子化</p>
+</blockquote>
+<p>本文则具体分析一下为什么“因为 shared_ptr 有两个数据成员，读写操作不能原子化”使得多线程读写同一个 shared_ptr 对象需要加锁</p>
+<h3 id="废话不多说直接开始面试官不喜欢-怎么回答">废话不多说直接开始，面试官不喜欢 怎么回答</h3>
+<p>前段时间我面试过几个校招生，每当我问到是否了解shared_ptr的时候，对方总能巴拉巴拉说出一大堆东西。
+会讲到引用计数、
+weak_ptr解决循环引用、
+自定义删除器的用法等等等等。
+感觉这些知识都是很八股的东西。</p>
+<p>我会立马打断去问一句：引用计数具体是怎么实现的？</p>
+<p>怎么做到多个shared_ptr之间的计数能共享，同步更新的呢</p>
+<h2 id="1--shared_ptr-的数据结构是什么">1.  shared_ptr 的数据结构是什么</h2>
+<p>shared_ptr 是引用计数型（reference counting）智能指针，
+几乎所有的实现都采用在堆（heap）上放个计数值（count）的办法</p>
+<p>具体的数据结构如图 1 所示，其中 deleter 和 allocator 是可选的。</p>
+<p><img src="https://images0.cnblogs.com/blog/112777/201301/28051715-e28b1c2264504cb1a275b916a641ecbb.png" alt="">
+为了简化并突出重点，后文只画出 use_count 的值</p>
+<p>代码如下：</p>
+<p><a href="https://github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/include/bits/shared_ptr.h">https://github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/include/bits/shared_ptr.h</a>
+<a href="https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/shared_ptr_base.h#L1795">https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/shared_ptr_base.h#L1795</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"> <span class="n">element_type</span><span class="o">*</span>	   <span class="n">_M_ptr</span><span class="p">;</span>         <span class="c1">// Contained pointer.  
+</span><span class="c1"></span> 
+ <span class="n">__shared_count</span><span class="o">&lt;</span><span class="n">_Lp</span><span class="o">&gt;</span>  <span class="n">_M_refcount</span><span class="p">;</span>    <span class="c1">// Reference counter.
+</span><span class="c1"></span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Yp</span><span class="o">&gt;</span>
+	<span class="n">_Assignable</span><span class="o">&lt;</span><span class="n">_Yp</span><span class="o">&gt;</span>
+<span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">__shared_ptr</span><span class="o">&lt;</span><span class="n">_Yp</span><span class="p">,</span> <span class="n">_Lp</span><span class="o">&gt;&amp;</span> <span class="n">__r</span><span class="p">)</span> <span class="k">noexcept</span>
+<span class="p">{</span>
+  <span class="n">_M_ptr</span> <span class="o">=</span> <span class="n">__r</span><span class="p">.</span><span class="n">_M_ptr</span><span class="p">;</span> <span class="c1">// 
+</span><span class="c1"></span>  <span class="n">_M_refcount</span> <span class="o">=</span> <span class="n">__r</span><span class="p">.</span><span class="n">_M_refcount</span><span class="p">;</span> <span class="c1">// __shared_count::op= doesn&#39;t throw
+</span><span class="c1"></span>  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+	
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://blog.noct.site/images/shared_ptr.png" alt=""></p>
+<p>也就是说对于引用计数这一变量的存储，是在堆上的，多个shared_ptr的对象都指向同一个堆地址。</p>
+<p>在多线程环境下，管理同一个数据的shared_ptr在进行计数的增加或减少的时候是线程安全的吗？</p>
+<p>答案是肯定的，这一操作是原子操作。</p>
+<blockquote>
+<p>To satisfy thread safety requirements, the reference counters are typically incremented using an equivalent of <strong>std::atomic::fetch_add</strong> with <strong>std::memory_order_relaxed</strong> (decrementing requires stronger ordering to safely destroy the control block)</p>
+</blockquote>
+<h2 id="2--原子操作的误解-多个原子操作组合是线程安全的吗">2.  原子操作的误解 ：多个原子操作组合是线程安全的吗？</h2>
+<p>基本概念</p>
+<p>原子操作指的是不可中断的操作序列，即在多线程环境下，该操作要么完全执行完毕，要么根本不执行，不会出现中间状态被其他线程看到的情况。
+这为解决并发编程中的数据竞争问题提供了基础。</p>
+<p>应用场景</p>
+<ul>
+<li><strong>计数器</strong>：如统计在线用户数量、请求次数等。</li>
+<li><strong>标志位</strong>：用于线程间的简单信号传递，如停止标志。</li>
+<li><strong>锁的替代</strong>：在某些场景下，原子操作可以作为轻量级锁的替代方案，减少锁带来的性能开销</li>
+</ul>
+<p><!-- raw HTML omitted -->前提是：只有一个操作<!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">shared_ptr&lt;Foo&gt; y = x;
+
+y=x 涉及两个成员的复制，这两步拷贝不会同时（原子）发生
+
+如果没有 mutex 保护，那么在多线程里就有 race condition
+
+例如： 无论ptr 和cnt 哪个先执行 都不是原子的
+
+例如 如果更新foo，还没有更新count=+1
+   
+     过程中，可能别其他线程 执行count-=1 ，结果被释放
+
+core 发生来了。
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://images0.cnblogs.com/blog/112777/201301/28051718-1701317d7aa844908a5a5a1ac3a47dee.png" alt="">
+<img src="https://images0.cnblogs.com/blog/112777/201301/28051718-fe9595cd458940bab9313d699d6cfb41.png" alt=""></p>
+<h2 id="3--举例-多线程无保护读写-shared_ptr-可能出现的-race-condition">3.  举例： 多线程无保护读写 shared_ptr 可能出现的 race condition</h2>
+<p>参考：https://www.cnblogs.com/Solstice/archive/2013/01/28/2879366.html</p>
+<h2 id="best-practices-候选人说不清楚解释不明白如何破局">Best Practices 候选人：说不清楚，解释不明白如何破局</h2>
+<p>〉 采取第一原理 在生活中，项目中 看中 什么问题， 不是弱引用问题。而是程序 不core</p>
+<ol>
+<li>挑战1:从来没用过，按照课本上提到名词，网上看过的名词，个人理解字面意思回答，别人问了，我回答了，
+这个可不是写作文，拼凑字数就可以了，至少保底分数。</li>
+</ol>
+<p>【 反馈：不自觉陷入敷衍交付，结果自己不满意，别人更不满意，工作大忌，最终交付都上线，真实环境考验，真实客户问题 都让敷衍交付现原形，最后给领导埋雷，没有人喜欢]</p>
+<ol start="2">
+<li>挑战2:看过部分代码，文章，然后说很难，很难，
+然后说其中各种难点，试图说自己不理解一些事情</li>
+</ol>
+<p>【反馈：不自觉陷入嘴里都是各种问题交付，说不清楚，解释不明白，怪别人太刁难，消极态度，更没有喜欢，不管什么原因，什么借口 在无法交付，不要完美 要完成，最简单方案是什么，最复杂方案又是什么，
+打工人，解决不了至少说清楚问题是什么，做哪些定位。
+最后什么输出都没有，很危险】</p>
+<p>回到 面试现场。</p>
+<ul>
+<li>无论怎么说 面试官都无动于衷，装作听不见，
+反问 仅仅这样回答蒙骗过关，  他们反问，仅仅靠这些回答进大厂？</li>
+</ul>
+<p>后候选人一脸茫然，该说的，能说全部说了，
+反复回答都是这几句话 ，还怎么回答还面试官等不到期望点，</p>
+<p>我已经回答了，怎么反复反问？</p>
+<ul>
+<li>
+<p>后悔记不住曾经 从哪里看过，听过。</p>
+</li>
+<li>
+<p>继续追问 让你产生自我怀疑 三，五年，十年 工作能力是学习方式搞错了，平时加班，忙，做项目 根本没时间总结，
+需要掌握掌握更多底层远离，看更多书？</p>
+</li>
+</ul>
+<blockquote>
+<p>从现在这一刻开始，就是最好时刻，
+你要明白一个事情，无论回去看多少书，掌握更多原理？花费更多时间，现在不明白 后面也不回明白。
+不要支支吾吾，你对明白 下定义</p>
+</blockquote>
+<ol>
+<li>无论怎么看 无法还原 c++发明者对它的理解，
+c++ 依赖库 开发前后整个背景过程</li>
+<li>无论怎么看，没有大量真实用户场景挑战。
+也无法真正 理解 实际用途。</li>
+<li>即使有一天又真实场景，真是需求到来，也被其他事情干扰，很难 专注解决这个问题。</li>
+</ol>
+<p>从现在这一刻开始，就是最好时刻，</p>
+<p>你就负责这个事情，你做到比任何人更明白，更适合。</p>
+<p>你让客户来告诉你这个怎么一个事情吗？
+你让测试人员告诉 这个事情怎么做 吗？
+你让经理项目设计一个操作步骤吗？
+你让其他同事来帮助解决事情事情吗？</p>
+<p>需要你 联系客户了解业务背景，
+需要你 联系测试 了解问题场景
+需要你 联系PM 抵御自己无法 处理事情
+需要你 其他同事 吸取一切经验</p>
+<p>不是证明 我掌握知识，我高高在上，不掌握我丢人
+不是彻底马上解决 一切完成全部事情，10年 20年事情才是
+交付</p>
+<p>唯有你做到比任何人更明白心态才能前行。</p>
+<blockquote>
+<p>在回到这个题目
+至少课本上看过，动手写过demo，项目上用过，其他组件使用过 足够你可以继续看下去。
+从这些 过往经历中.
+你就负责这个事情，你做到比任何人更明白，更适合
+做知识搬运工,从发现问题时刻，想法解决。问题 和过程答案更重要。</p>
+</blockquote>
+<p>这是一个很难突破的简单事情</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+<h2 id="更多阅读">更多阅读</h2>
+<p>[1] Boost.SmartPtr: The Smart Pointer</p>
+<ul>
+<li><a href="https://www.boost.org/doc/libs/1_86_0/libs/smart_ptr/doc/html/smart_ptr.html#shared_ptr">https://www.boost.org/doc/libs/1_86_0/libs/smart_ptr/doc/html/smart_ptr.html#shared_ptr</a></li>
+</ul>
+<p>[2] gcc13STL源码解析 std::shared_ptr</p>
+<ul>
+<li><a href="https://github.com/zyuchuan/unique_cpp/blob/master/ch04_smart_pointers.md">https://github.com/zyuchuan/unique_cpp/blob/master/ch04_smart_pointers.md</a>
+<a href="https://blog.noct.site/2024/03/22/gcc13_shared_ptr/">https://blog.noct.site/2024/03/22/gcc13_shared_ptr/</a></li>
+</ul>
+<h3 id="学习方法">学习方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+
+ 二、这个技术的优势和劣势分别是什么 
+
+
+ 三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+ 四、技术的组成部分和关键点。
+
+ 五、技术的底层原理和关键实现
+
+ 六、已有的实现和它之间的对比
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="c1">// Reference transformations.
+</span><span class="c1"></span>
+  
+
+<span class="c1">/// remove_reference
+</span><span class="c1"></span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">remove_reference</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&amp;&gt;</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&amp;&amp;&gt;</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="p">,</span> <span class="kt">bool</span> <span class="o">=</span> <span class="n">__is_referenceable</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">__add_lvalue_reference_helper</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">__add_lvalue_reference_helper</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="p">,</span> <span class="nb">true</span><span class="o">&gt;</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="c1">/// add_lvalue_reference
+</span><span class="c1"></span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">add_lvalue_reference</span>
+
+<span class="o">:</span> <span class="k">public</span> <span class="n">__add_lvalue_reference_helper</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="p">{</span> <span class="p">};</span>
+
+  
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="p">,</span> <span class="kt">bool</span> <span class="o">=</span> <span class="n">__is_referenceable</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">__add_rvalue_reference_helper</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">__add_rvalue_reference_helper</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="p">,</span> <span class="nb">true</span><span class="o">&gt;</span>
+
+<span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span><span class="o">&amp;&amp;</span> <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+  
+
+<span class="c1">/// add_rvalue_reference
+</span><span class="c1"></span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="k">struct</span> <span class="nc">add_rvalue_reference</span>
+
+<span class="o">:</span> <span class="k">public</span> <span class="n">__add_rvalue_reference_helper</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&gt;</span>
+
+<span class="p">{</span> <span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-11-10 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/tools/">tools</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2024/2024-11-10-build-my-appley-p1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">构建个人应用第一天</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2024/07_make_ob_leader/">
+            <span class="next-text nav-default">成为ob贡献者(07):leader</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为OB贡献者(5): - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习，专业上只能靠自己" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/06_day6/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为OB贡献者(5):" />
+<meta property="og:description" content="自我驱动学习，专业上只能靠自己" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/06_day6/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-26T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-05-26T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为OB贡献者(5):">
+<meta itemprop="description" content="自我驱动学习，专业上只能靠自己"><meta itemprop="datePublished" content="2023-05-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-05-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2175">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为OB贡献者(5):"/>
+<meta name="twitter:description" content="自我驱动学习，专业上只能靠自己"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为OB贡献者(5):</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-26 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 2175 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#目录结构">目录结构</a></li>
+    <li><a href="#sql-目录">sql 目录</a></li>
+    <li><a href="#storage-目录">storage 目录</a></li>
+    <li><a href="#rootserver-目录">rootserver 目录</a></li>
+    <li><a href="#observer-目录">observer 目录</a></li>
+    <li><a href="#election-目录">election 目录</a></li>
+    <li><a href="#clog-目录">clog 目录</a>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2023-05-26T00:00:00" title="May 26, 2023">May 26, 2023</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。</p>
+<p>风和日丽下午，小王与老王在咖啡馆相遇了，</p>
+<p>小王：我想学习oceanbase，但是笔记本配置低，最新的4.x至少8G内存，不方便安装了，及时安装了也无法长时间运行？更别说编译了。</p>
+<p>老王：咱们对学习下个定义</p>
+<ul>
+<li>
+<p>如果业务开发人员，关心的是怎么写sql，可用使用OB Cloud 云数据库 30 天免费试用，先别考虑30是否太短。用完30天在说，实在不行回退到msql，等待按照流量付费方式。</p>
+</li>
+<li>
+<p>如果源码爱好者，可用gitpod在线看看代码，不要担心代码没有经过充分测试自觉不放心，pr会经过官方自动化测试用例，更加关键是设计方案，代码流程  甚至代码规范。</p>
+</li>
+<li>
+<p>如果万能DBA 考虑更多。。。咱不是DBA 不考虑这些东西。</p>
+<p>小王：</p>
+<p><img src="D:%5Cdb%5Cdaily-interview%5Cblog%5Ccontent%5Cpost%5Coceanbase%5C2024%5Cassets%5Cimage-20240926194315902.png" alt="image-20240926194315902"></p>
+<h2 id="目录结构">目录结构</h2>
+<h2 id="sql-目录">sql 目录</h2>
+<p>sql 里有 parser、resolver、rewrite、optimizer、executor、dtl、code_generator、engine、plan_cache、session 等。</p>
+<ul>
+<li>parser：SQL 语法解析</li>
+<li>resolver：SQL 语义解析</li>
+<li>rewrite：SQL 重写</li>
+<li>optimizer：优化器</li>
+<li>execuctor：执行器</li>
+<li>dtl：数据传输层</li>
+<li>code_generator：由逻辑执行计划生成物理执行计划</li>
+<li>engine：各种物理算子的实现</li>
+<li>plan_cache：物理执行计划缓存</li>
+<li>session：数据库会话管理</li>
+</ul>
+</li>
+</ul>
+<h2 id="storage-目录">storage 目录</h2>
+<p>storage 里有 blocksstable、compaction、gts、memtable、replayengine、transaction 以及 storage 目录本身的代码文件。</p>
+<ul>
+<li>blocksstable：包括存储格式、各种缓存等</li>
+<li>compaction：LSM-Tree 存储中 compaction 相关的逻辑</li>
+<li>gts：全局时间戳实现，主要用于提供全局事务版本号</li>
+<li>memtable：LSM-Tree 引擎中 memtable 的实现</li>
+<li>replayengine：redo 日志回放的实现</li>
+<li>transaction：事务处理相关</li>
+<li>storage 目录本身的代码：基于上述代码提供读写等服务</li>
+</ul>
+<h2 id="rootserver-目录">rootserver 目录</h2>
+<p>rootserver 目录包括 backup、restore、virtual_table 和 rootserver 目录本身的代码</p>
+<ul>
+<li>backup：备份中 RootService 管理部分</li>
+<li>restore：恢复中 RootService 管理部分</li>
+<li>virtual_table：RootService 相关的虚拟表，是 OceanBase 中将内存中信息通过数据库表格方式展示的手段</li>
+<li>rootserver：包含了 Schema 元数据管理、路由信息管理、负载均衡、机器管理、资源规格管理等</li>
+</ul>
+<h2 id="observer-目录">observer 目录</h2>
+<p>observer 目录包括 omt、virtual_table、observer 目录本身的代码</p>
+<ul>
+<li>omt：ObServer 单机租户管理</li>
+<li>virtual_table：ObServer 级别的虚拟表</li>
+<li>observer 目录本身的代码：一些 ObServer 级别的服务，例如 ObServer 的启动，路由表的汇报等</li>
+</ul>
+<p>election是分布式选举模块，它是比较独立的，因为在运行时选举不出1号leader的话系统所有组件都不工作。它是独立于paxos协议的。该选举协议要求各节点<a href="https://zhida.zhihu.com/search?content_id=172528154&amp;content_type=Article&amp;match_order=1&amp;q=%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5&amp;zhida_source=entity">时钟同步</a>。clog最初的意思是<a href="https://zhida.zhihu.com/search?content_id=172528154&amp;content_type=Article&amp;match_order=1&amp;q=commitlog&amp;zhida_source=entity">commitlog</a>，现在成了专有词汇，特指OB的事务redo日志。<a href="https://zhida.zhihu.com/search?content_id=172528154&amp;content_type=Article&amp;match_order=2&amp;q=paxos&amp;zhida_source=entity">paxos</a>的实现也在这个目录下。archive是日志归档组件，备份恢复依赖其功能。</p>
+<p>rootserver目录是OB集群总控服务。这个命名是错的，准确说是rootservice，它不是独立进程，而是某些observer内部启动的一组服务。（细心的读者可以看看OB 0.4开源代码：）集群管理和自动容灾，系统自举，分区副本管理和<a href="https://zhida.zhihu.com/search?content_id=172528154&amp;content_type=Article&amp;match_order=1&amp;q=%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1&amp;zhida_source=entity">负载均衡</a>，以及DDL的执行都在这个组件中。</p>
+<p>share目录是被强行从“母体”oblib/src/common中剥离出来的公共类，所以它们的namespace是common而不是share也就可以理解了。</p>
+<p>sql就是sql。storage就是存储引擎。<a href="https://zhida.zhihu.com/search?content_id=172528154&amp;content_type=Article&amp;match_order=1&amp;q=%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86&amp;zhida_source=entity">事务管理</a>位于storage/transaction下。</p>
+<p>observer是所有组件的“总装车间”，入口是ob_server.h和ob_service.h。MySQL协议层的命令处理入口在observer/mysql。</p>
+<h2 id="election-目录">election 目录</h2>
+<p>包含了 PAXOS 选主相关的实现。</p>
+<h2 id="clog-目录">clog 目录</h2>
+<p>包含了 PAXOS 相关的实现。、</p>
+<p><a href="https://www.oceanbase.com/docs/community-observer-cn-10000000000901312">https://www.oceanbase.com/docs/community-observer-cn-10000000000901312</a></p>
+<p>将日志服务抽象为 &ldquo;Paxos Backed Append Only Log File System&rdquo;，简称 Palf。</p>
+<p>**本篇论文创新性地提出并阐述了分布式日志系统 PALF（Paxos-backed Append-only Log File System），该日志系统满足事务系统 WAL 的功能需求，实现事务的原子性与持久性，保障事务高性能；同时基于 Paxos 协议，支撑分布式系统的高可用、高可靠能力。**具体而言，本篇论文的主要贡献与成果包括：</p>
+<p>Vol:17 No:12 → PALF：分布式数据库的复制预写日志记录<a href="https://t.co/7RvIYj8fFH">https://vldb.org/pvldb/vol17/p3 745-xu.pdf </a></p>
+<h3 id="参考">参考</h3>
+<ul>
+<li>[1]万字解析：从 OceanBase 源码剖析 paxos 选举原理</li>
+</ul>
+<p>​       <a href="https://zhuanlan.zhihu.com/p/630468476">https://zhuanlan.zhihu.com/p/630468476</a></p>
+<ul>
+<li>[2] 开源数据库OceanBase代码导读</li>
+</ul>
+<p><a href="https://www.zhihu.com/people/yang-zhi-feng-79/posts?page=2">https://www.zhihu.com/people/yang-zhi-feng-79/posts?page=2</a></p>
+<p><a href="http://oserror.com/uncategorized/yuque/OceanBase%E4%BB%A3%E7%A0%81%E5%AF%BC%E8%A7%88/">http://oserror.com/uncategorized/yuque/OceanBase%E4%BB%A3%E7%A0%81%E5%AF%BC%E8%A7%88/</a></p>
+<ul>
+<li><a href="https://www.vldb.org/pvldb/vol17/p3745-xu.pdf">https://www.vldb.org/pvldb/vol17/p3745-xu.pdf</a></li>
+</ul>
+<p>PALF: Replicated Write-Ahead Logging for Distributed Databases</p>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备一个图片，一段话，可以放在三页doc，三页ppt 描述你方案</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>反馈：鸡蛋里挑骨头，经过客户，领导 ，公司认证，做事情价值和意义。听到否定愤怒反对 说明自己对这个事情还不了解。</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目</p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-26 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/storage/2_ceph_mon/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">日拱一卒：ceph-mon模块</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2024/05_day5-network/">
+            <span class="next-text nav-default">成为OB贡献者(5):从一道OBCE面试题再探Paxos</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

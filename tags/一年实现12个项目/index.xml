@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>一年实现12个项目 on Troy的网络博客</title>
+    <link>https://wangcy6.github.io/tags/%E4%B8%80%E5%B9%B4%E5%AE%9E%E7%8E%B012%E4%B8%AA%E9%A1%B9%E7%9B%AE/</link>
+    <description>Recent content in 一年实现12个项目 on Troy的网络博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/%E4%B8%80%E5%B9%B4%E5%AE%9E%E7%8E%B012%E4%B8%AA%E9%A1%B9%E7%9B%AE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>构建个人应用第一天</title>
+      <link>https://wangcy6.github.io/post/2024/2024-11-10-build-my-appley-p1/</link>
+      <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-11-10-build-my-appley-p1/</guid>
+      <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这</description>
+    </item>
+    
+  </channel>
+</rss>

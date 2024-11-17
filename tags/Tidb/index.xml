@@ -98,12 +98,12 @@
     </item>
     
     <item>
-      <title>TiKV 源码阅读三部曲（二）读流程</title>
-      <link>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days5_OOM/</link>
+      <title>T成为tikv贡献者第三天：</title>
+      <link>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days3_read/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days5_OOM/</guid>
-      <description>https://github.com/tikv/tikv/issues/16658 https://github.com/tikv/tikv/issues/16234 https://github.com/tikv/tikv/issues/17260</description>
+      <guid>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days3_read/</guid>
+      <description>成为tikv贡献者第三天：存储 本文是TiKV 源码阅读第三篇， 目标：snapshot进行进一步理解，一边理解rust语法，一边抽象模块之间关系</description>
     </item>
     
   </channel>

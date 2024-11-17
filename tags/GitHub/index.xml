@@ -6,7 +6,16 @@
     <description>Recent content in GitHub on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 09 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/GitHub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/GitHub/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git常用命令手册</title>
+      <link>https://wangcy6.github.io/post/2024/06-tools-base-user-git/</link>
+      <pubDate>Fri, 20 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/06-tools-base-user-git/</guid>
+      <description>并发迁移代码实现，联调90% 支持存力测试演示 git撤销已经push到远端的commit git reset 是把HEAD向后移动了一下，而git revert是</description>
+    </item>
+    
     <item>
       <title>在一台电脑上同时使用多个github账号(亲测有效)</title>
       <link>https://wangcy6.github.io/post/2024/2024-02-09-git-two-account/</link>

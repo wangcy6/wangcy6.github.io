@@ -6,7 +6,52 @@
     <description>Recent content in oceanbase on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 26 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/oceanbase/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/oceanbase/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>成为ob贡献者(07):leader</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2024/07_make_ob_leader/</link>
+      <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2024/07_make_ob_leader/</guid>
+      <description>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。 本文分为两个部分 捕捉想法: 一个节点故障后，假如上面有1万个分区，会经过1万次选举吗</description>
+    </item>
+    
+    <item>
+      <title>成为ob贡献者(6):如何阅读Paxos代码</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2024/day6_make_ob/</link>
+      <pubDate>Fri, 04 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2024/day6_make_ob/</guid>
+      <description>为了整理思路，文章采用模拟2人对话方式，文中比喻可能错误的，请注意区分。 本文主要内容 通过对学习数据库下 定义聚焦学习内容 如果关心代码，直接去看</description>
+    </item>
+    
+    <item>
+      <title>成为ob贡献者第四天</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2024/02-make-day4/</link>
+      <pubDate>Sat, 17 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2024/02-make-day4/</guid>
+      <description>#一、Overview 大家好， 成为ob贡献者第四篇文章。 本文主要对 内核实战教程第二期🥰认识数据库存储结构 学习进行记录 很容易可以了解内容部分 稍</description>
+    </item>
+    
+    <item>
+      <title>成为OB贡献者(5):</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2024/06_day6/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2024/06_day6/</guid>
+      <description>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。 风和日丽下午，小王与老王在咖啡馆相遇了， 小王：我想学习oceanbase，但是笔记</description>
+    </item>
+    
+    <item>
+      <title>成为OB贡献者(5):从一道OBCE面试题再探Paxos</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2024/05_day5-network/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2024/05_day5-network/</guid>
+      <description>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。 Basic-Paxos协议回顾 一天下午，小王同学正在津津有味回顾：&amp;laquo;成</description>
+    </item>
+    
     <item>
       <title>成为oceanbase贡献者第四天：内置函数</title>
       <link>https://wangcy6.github.io/post/oceanbase/1-2023-05-28-add-fun/</link>
@@ -23,6 +68,15 @@
       
       <guid>https://wangcy6.github.io/post/oceanbase/2024/01-2024-06-18-ob_study1/</guid>
       <description>#一、Overview 大家好， 本文主要描述是如何OceanBase 社区版实现一个 MySQL 5.7 新增的系统内建函数。 通过https://github.c</description>
+    </item>
+    
+    <item>
+      <title>成为oceanbase贡献者第四天：内置函数</title>
+      <link>https://wangcy6.github.io/post/oceanbase/2024/02_08-27-day2_paxos/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/oceanbase/2024/02_08-27-day2_paxos/</guid>
+      <description>洞悉技术的本质，享受科技的乐趣 ， #一、Overview 洞悉技术的本质，享受科技的乐趣 第一问题：你期望解决什么问题，核心问题是什么？ 对于pax</description>
     </item>
     
     <item>
