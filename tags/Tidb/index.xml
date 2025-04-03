@@ -6,14 +6,14 @@
     <description>Recent content in tidb on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 31 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tidb/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tidb/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>TiKV Contributors day3：</title>
-      <link>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days4_read/</link>
-      <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
+      <title>成为Tidb贡献者第四天: raft-rs最佳实践</title>
+      <link>https://wangcy6.github.io/post/tidb/2024/make_tidb_day6-raft-rs/</link>
+      <pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days4_read/</guid>
-      <description>成为tikv贡献者第三天：存储引擎 本文是TiKV 源码阅读第三篇， 目标：snapshot进行进一步理解，一边理解rust语法，一边抽象模块之间</description>
+      <guid>https://wangcy6.github.io/post/tidb/2024/make_tidb_day6-raft-rs/</guid>
+      <description>TiKV 源码解读 一、 别想太多，只管去提问,所有问题，都会有答案 一个项目需求，一个客户反馈，学习上遇到问题 都是提问来源 把问题说清楚，就等于把问题解决</description>
     </item>
     
     <item>

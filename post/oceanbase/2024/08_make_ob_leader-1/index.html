@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为ob贡献者(08):PALF: Replicated Write-Ahead Logging for Distributed Databases - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/08_make_ob_leader-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为ob贡献者(08):PALF: Replicated Write-Ahead Logging for Distributed Databases" />
+<meta property="og:description" content="自我驱动学习" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/08_make_ob_leader-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-19T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-10-19T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为ob贡献者(08):PALF: Replicated Write-Ahead Logging for Distributed Databases">
+<meta itemprop="description" content="自我驱动学习"><meta itemprop="datePublished" content="2024-10-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-10-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5021">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为ob贡献者(08):PALF: Replicated Write-Ahead Logging for Distributed Databases"/>
+<meta name="twitter:description" content="自我驱动学习"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为ob贡献者(08):PALF: Replicated Write-Ahead Logging for Distributed Databases</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-10-19 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 5021 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#todo1-翻译palf个人理解并非翻译全文">TODO1: 翻译PALF（个人理解，并非翻译全文）</a>
+      <ul>
+        <li><a href="#22-redesigned-architecture--重新设计架构设计">2.2 Redesigned Architecture  重新设计架构设计</a></li>
+        <li><a href="#31-replicated-wal-model">3.1 Replicated WAL Model</a></li>
+      </ul>
+    </li>
+    <li><a href="#32-palf-architecture">3.2 PALF Architecture</a>
+      <ul>
+        <li><a href="#34-implementation-of-consensus">3.4 Implementation of Consensus</a></li>
+      </ul>
+    </li>
+    <li><a href="#todo2paxos-试题看看你能得多少分">TODO2:Paxos 试题，看看你能得多少分</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-oceanbase-paxosstore-源码阅读">[1] Oceanbase PaxosStore 源码阅读</a></li>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>问题描述：
+问题描述：</p>
+<p>Mds 通过 dump indo查看 文件 in-&gt;snaprealm 存在</p>
+<p>通过 ll_get_inode() 查询返回in-&gt;snaprealm 不存在。</p>
+<p>这个什么情况下发生，现场环境 3万个文件查询，出现8个snaprealm 不存在情况</p>
+<p>记录是为了更好的思考 为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。
+本文分为两个部分</p>
+<ol>
+<li>
+<p>捕捉想法:<br>
+无数个问题同时出现，让思路更加混乱，但是描述不出来具体是什么问题。
+因此 集中精力 阅读  PALF: Replicated Write-Ahead Logging for Distributed Databases 开始。</p>
+</li>
+<li>
+<p>动手验证</p>
+</li>
+</ol>
+<blockquote>
+<p>任务1：翻译：PALF: Replicated Write-Ahead Logging for Distributed Databases</p>
+<p>任务2：做练习题：#Paxos 试题 看看你能得多少分</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">你是一位计算机专业翻译专家，掌握丰富的计算知识并且转化小白理解的语言，我希望你能帮我将以下英文视频的中文翻译结果重新意译和润色。
+
+规则：
+- 这些字幕包含计算机等专业知识相关，注意翻译时术语的准确性
+- 保留特定的英文术语、数字或名字，并在其前后加上空格
+- 基于直译结果重新意译，意译时务必对照原始英文，不要添加也不要遗漏内容，并以让翻译结果通俗易懂，符合中文表达习惯
+
+英文原文：
+{ 英文原文 }
+
+直译结果：
+{ 第一直译的结果 }
+
+重新意译和润色：
+{ 润色的结果 }
+
+语法分析：
+{ }
+
+结合专业知识 给出自己理解 
+整体理解:
+为了掌握可以给出三个题目进行练习？
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="todo1-翻译palf个人理解并非翻译全文">TODO1: 翻译PALF（个人理解，并非翻译全文）</h2>
+<h3 id="22-redesigned-architecture--重新设计架构设计">2.2 Redesigned Architecture  重新设计架构设计</h3>
+<p>OB4.0调整架构目的是什么 ，大公司大集群模式 不适用于中小公司。
+注释：最低8G内存就是一个例证
+&ldquo;As to&rdquo; 是一个英语短语，通常用于引入一个特定话题或问题，相当于“关于”、“至于”或“就……而言”。它可以用来引导一个句子或从句
+we found that the previous architecture is not as well suited to medium and small enterprises as to large-scale clusters  of large companies</p>
+<p>每个节点上有上万个分区，这些分区采用Paxos保证数据一致性，
+分区日志的复制占用大量资源。
+注释：  Paxos通过 2次RPC ，让多节点写入一个值达成一致
+上万个分区，上万次选举，日志复制 来达成一致
+这是上篇文章:成为ob贡献者(07):重新理解OB模块设计疑问 在这里找到答案.
+One of the problems is the overhead of log<br>
+replication. OceanBase enables users to create tens of thousands<br>
+of partitions in each server.
+This number of Paxos groups consume<br>
+significant resources for no real purpose, therefore raising the bar<br>
+for deployments and operations</p>
+<p>同样分区造成的事务问题
+一个这样的事务可能跨越数万个分区，这意味着在两阶段提交协议中有数万个参与者，
+这将系统不稳定并牺牲性能。</p>
+<p>Another challenge is the huge<br>
+transaction problem. One such transaction probably spans tens of<br>
+thousands of partitions, which means that there are tens of thousands of participants in the two-phase commit protocol, which will<br>
+destabilize the system and sacrifice performance</p>
+<p>为了解决这些问题，OceanBase 数据库的 4.0 版本对其内部架构进行了重新设计[47]。
+引入了一个名为 Stream 的新组件，该组件包括多个数据分区、一个复制的预写日志系统以及一个事务引擎。</p>
+<p>To address these challenges, the internal architecture of version<br>
+4.0 of the OceanBase database was redesigned [47].
+A new component, Stream, has been proposed, which consists of several data<br>
+partitions, a replicated write-ahead logging system, and a transaction engine</p>
+<p>Stream 的核心理念在于，尽管数据库中的表仍然被分区，但事务和日志操作的基本单位变成了 Stream 中的一组分区，而非单个分区。表分区本质上是存储在存储引擎中的一块数据。事务引擎负责生成重做日志，用以记录 Stream 内多个分区的修改，并把这些日志存储在 Stream 的预写日志（WAL）中。</p>
+<p>注释：这个和 MySQL中的三种日志（Undo Log、Redo Log和Binlog）有关系关系
+stream 概念 流式大数据处理框架。时序数据概念：
+百科定义：流数据是一组[顺序]大量、快速、连续到达的数据序列,一般情况下，流数据可被视为一个随时间延续而无限增长的动态数据集合。</p>
+<p>The key insight of the Stream is that tables in a database<br>
+are still partitioned, but the basic unit of transaction and logging is<br>
+a set of partitions in a Stream, rather than a single partition. A table<br>
+partition simply represents a piece of data stored in the storage<br>
+engine. The transaction engine generates redo logs for recording<br>
+modifications of multiple partitions within a Stream and stores logs<br>
+in the WAL of the Stream.</p>
+<p>Multiple replicas of a Stream are created on different servers.</p>
+<p>流的多个副本 分布在不同的服务器</p>
+<p>Only one of them will be elected as the leader and serve data writing requests.
+他们中只有一人会当选为领导人</p>
+<p>The number of replication groups in a cluster can be reduced to the number of servers to eliminate the overhead incurred by massive replication groups.
+集群中的复制组数量可以减少到与服务器数量相等，以消除由大量复制组带来的额外开销。</p>
+<p>旁白：</p>
+<p>如下图：P1&ndash;P4 组成一个 LS1，P4&ndash;P8 组成一个 LS2   ，三个节点调整三个LS.</p>
+<p>![[Pasted image 20241201162733.png]]</p>
+<h4 id="31-design-of-palfpal-的设计">3.1 DESIGN OF PALF(PAL 的设计)</h4>
+<p>PALF 的设计宗旨在于打造一个能够复制预写日志的系统，这个系统不仅要能够支持 OceanBase 数据库，还要具备足够的通用性，</p>
+<p>正是 PALF 的这一宗旨指导了其设计方向：采用分层架构来平衡数据库的特殊需求和日志系统的通用性。针对数据库的具体需求被抽象成 PALF 的基础原语，并被整合进不同的架构层级中。</p>
+<p>注释：能举出更多例子提供类似 PALF 的基础原语接口吗？liunx read write接口算不算，
+还有分布式存储提供接口</p>
+<p>The design purpose of PALF is to provide a replicated write-ahead<br>
+logging system, which should be capable of serving the OceanBase database and be general enough for building other distributed systems.</p>
+<p>This purpose of PALF drove its design: a hierarchical architecture for balancing particularity of database and generality<br>
+of the logging system. Database-specific requirements have been<br>
+abstracted as PALF primitives and integrated in different layers.</p>
+<p>PALF 作为 OceanBase 数据库的复制 WAL 系统，承担着记录所有事务日志并在多个副本之间复制这些日志以保证数据持久性和容错能力的重要职责。PALF 提供的接口是数据库与日志系统交互的桥梁，它们允许事务引擎有效地与 WAL 系统协同工作，执行事务提交和数据恢复等操作。</p>
+<p>当然一致性协议必然包含在其中
+the implementation of the consensus<br>
+protocol is described in detail</p>
+<h3 id="31-replicated-wal-model">3.1 Replicated WAL Model</h3>
+<p>回顾：像redis，mysql采用WAL（ Write Ahead Log ）保证单机故障恢复，如果多个节点呢，</p>
+<p>![[Pasted image 20241208170248.png]]</p>
+<p>翻译：</p>
+<p>分层设计 1， 应用层，2 事务引擎 和3 PAlF层</p>
+<p>事务引擎 修改内存变更 通过AOF方式追加文件中，通过PALF同步到其他副本节点</p>
+<p>如图 1 所示，</p>
+<ul>
+<li>
+<p>步骤 2-3  事务可以直接在内存存储引擎中修改数据。</p>
+</li>
+<li>
+<p>步骤 4  生成的日志记录会被追加到 PALF 中</p>
+</li>
+<li>
+<p>步骤 5 在领导者节点上，事务引擎将 PALF 当作本地的日志文件系统来处理，它只关心日志记录是否已经被刷新到磁盘。PALF 的职责是将领导者节点上执行的修改复制到其他跟随者节点上</p>
+</li>
+<li>
+<p>步骤 6 一旦 PALF 提交了日志，领导者节点就会通知事务引擎操作的结果</p>
+</li>
+<li>
+<p>步骤 7-8随后，跟随者节点会重放领导者节点执行过的所有修改</p>
+</li>
+</ul>
+<p>原文：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">In OceanBase database, the replicated logging system is abstracted  as an append-only log file, 
+
+transaction engine interacts with PALF  
+much as it interacts with local files.
+
+As depicted in Fig. 1, transactions modify data in the in-memory storage engine directly (step  
+2-3). 
+
+Therefore, the upper limit of a transaction’s size is greatly  
+expanded and is bounded only by the capacity of the storage engine. Log records are then generated and appended to PALF (step  
+4). The transaction engine of the leader treats PALF as a local log  
+file system, and it is only concerned with whether log records have  
+been flushed. The responsibility of PALF is to replicate modifications performed in the leader to followers (step 5). If a log has been  
+committed by PALF, the leader will inform the transaction engine  
+of the results (step 6), and followers will replay modifications that  
+the leader has performed to itself (step 7-8)
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="32-palf-architecture">3.2 PALF Architecture</h2>
+<p>![[Pasted image 20241213084724.png]]</p>
+<p>原文：
+As depicted in Fig. 2, PALF is a replicated logging system consisting<br>
+of multiple replication groups called PALF groups.</p>
+<p>In each PALF<br>
+group, multiple PALF replicas are placed on different servers for<br>
+fault tolerance.</p>
+<p>The transaction engine can append logs to a PALF<br>
+group and read logs from it, just like a normal append-only file</p>
+<p>翻译：</p>
+<p>如图2所示，PALF是一个分布式复制日志系统，由多个称为PALF组的复制组构成。</p>
+<p>每个PALF组中都部署了多个PALF副本在不同的服务器上，以此来提高系统的容错能力。
+事务引擎能够向PALF组中追加日志，并且可以从中读取日志，
+操作方式类似于处理一个普通的只写入文件。</p>
+<p>啥意思：</p>
+<p>transaction engine 通过PALF接口，像写本地日志文件一样，将数据安全复制其他节点。</p>
+<p>原文：
+PALF consists of three main layers: the interface layer, the PALF<br>
+replicas layer, and the PALF runtime environment. The lower two<br>
+layers take charge of log replication, reconfiguration, and log storage; the upper one provides user interfaces and coordinates the<br>
+states of PALF and the transaction engine.</p>
+<p>翻译：
+PALF系统由三个核心层次构成：接口层、PALF副本层以及PALF运行环境。
+其中，较低的两层负责处理日志复制、配置变更和日志存储等任务；
+而最上层则提供用户界面，并负责协调PALF系统与事务引擎之间的状态。</p>
+<p>啥意思：核心的配置变更，存储，复制都PALF 隐藏起来了</p>
+<p>原文：
+For each PALF group, records generated by the transaction engine are first appended to the leader. The log sequencer will assign a monotonically increasing log sequence number (LSN) to<br>
+each record, which uniquely identifies a log entry within the PALF<br>
+group. Records will be encapsulated as log entries and replicated<br>
+to and persisted by other PALF replicas (followers) in the order of<br>
+LSN through the Paxos protocol</p>
+<p>翻译：</p>
+<p>在PALF group，事务引擎生成的日志记录首先会被发送到领导者节点。
+随后，日志序列号器会为每条记录分配一个递增的日志序列号（LSN），这个LSN在PALF组内是唯一的，用于标识特定的日志条目。
+这些记录将被封装成日志条目，并通过Paxos协议按照LSN的顺序复制到其他PALF副本（跟随者节点）中，并在那里持久化存储。</p>
+<p>啥意思：</p>
+<ol>
+<li>描述PALF系统中领导者节点在日志记录处理中的作用。</li>
+<li>解释LSN在PALF系统中如何确保日志记录的唯一性和顺序性。</li>
+<li>讨论Paxos协议在PALF系统中如何实现日志记录的复制和持久化，并分析其对系统可靠性的影响</li>
+</ol>
+<p>翻译：关键模块</p>
+<blockquote>
+<p>leader election  和  log replication 是分开的 ,非绑定在一起</p>
+</blockquote>
+<ul>
+<li>
+<p>配置管理复制成员变更</p>
+</li>
+<li>
+<p>PALF runtime environment 就是RPC</p>
+</li>
+</ul>
+<p>原文：
+Unlike some  Paxos variants that bind the leader election and log replication<br>
+together[6, 24, 32, 34], the leader candidate in PALF is elected by an<br>
+independent election module. The reconfiguration module manages<br>
+membership of the PALF group</p>
+<p>原文：
+We generalize the interaction between PALF and the transaction<br>
+engine into the interface layer. This isolates the impact of database<br>
+features on PALF and improves PALF’s generality. The log notifier in the leader informs the transaction engine of whether logs<br>
+are committed. The log replayer in followers replays mutations<br>
+recorded in log entries to the transaction engine. If the role of a<br>
+PALF replica has been switched (i.e., leader to follower or follower<br>
+to leader), it will throw a role-changing signal to the role coordinator, the role coordinator forwards signals to transform the role of<br>
+the transaction engine</p>
+<p>啥意思：
+![[Pasted image 20241213084724.png]]</p>
+<p>这段描述了一个分布式系统中 PALF 组件与事务引擎通过接口层进行交互。
+接口层有三部分组成</p>
+<p>The log notifier：leader节点上日志通知模块告诉事务引擎 append请求执行结果
+log replayer: follower回访日志
+role coordinator：通知leader发生了转变。</p>
+<p>剩余部分是解释这些函数功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">int append(Record r, CSN refcsn, AppendCb *cb, LSN &amp;lsn, CSN &amp;csn);  
+int mirror(LSN lsn, LogEntry l);  
+
+int read(LSN lsn, Record &amp;r);  
+//The read method enables random access to log entries by a given  
+LSN
+//根据LSN随机读位置
+
+int locate(CSN csn, LSN &amp;lsn);  
+//A locate method is provided to map the change sequence  
+number to a log sequence number.
+
+int monitor_tail(TailCb *cb);  
+int monitor_role(RoleCb *cb);  
+
+int trim(LSN lsn);  
+//the trim method is designed to indicate useless log entries before the given LSN
+
+class AppendCb  
+{ virtual int success() = 0;  
+virtual int failure() = 0; }  
+
+class TailCb  
+{ virtual int tail(LSN lsn) = 0; }  
+
+When new logs are committed, PALF replicas  
+invoke the tail method to notify log consumers of current tail of  
+logs
+
+class RoleCb  
+{ virtual int to_leader() = 0;  
+virtual int to_follower() = 0; }
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="34-implementation-of-consensus">3.4 Implementation of Consensus</h3>
+<p>原文：</p>
+<p>The Paxos protocol and its variants [6, 24, 26, 27, 32, 34] are widely<br>
+recognized for resolving consensus in distributed systems [5, 9, 14,<br>
+23, 42, 48]. Raft[33] is a typical implementation of Paxos, which<br>
+offers good understandability and builds a solid foundation for<br>
+practical systems. PALF implements Paxos with a strong leader<br>
+approach, it keeps the log replication of Raft for simplicity. Different from Raft, PALF decouples leader election from the consensus<br>
+protocol to manipulate the location of the database leader without<br>
+sacrificing availability. More differences are summarized in §7</p>
+<p>翻译</p>
+<ul>
+<li>PALF通过选举leader 强一致性实现Paxos，并保留了Raft的日志复制机制以简化操作。</li>
+<li>与Raft不同，PALF将领导者选举与共识协议分开</li>
+</ul>
+<p>关键单词：</p>
+<p>keeps（保留）
+it keeps the log replication of Raft for simplicity</p>
+<h4 id="demands-for-leader-election">Demands for Leader Election</h4>
+<p>原文：</p>
+<p>In distributed databases, the<br>
+location of the leader affects almost all functions</p>
+<p>To address the problem, PALF decouples leader election from<br>
+the consensus protocol. Users own the flexibility to specify the<br>
+priorities of replicas elected as the leader</p>
+<p>If the  previous leader recovers from failure and its priority is still higher<br>
+than current leader’s, leadership can be automatically transferred<br>
+back to the recovered replica</p>
+<p>翻译：</p>
+<p>用户可用控制选举的leader节点分布。</p>
+<p>帮助理解：
+：primary zone=&lsquo;z1,z2,z3&quot;  leader副本的分布</p>
+<blockquote>
+<p>帮忙查看一下集群部署，主副本是怎么在observer节点分布的？
+<a href="https://ask.oceanbase.com/t/topic/35614045">https://ask.oceanbase.com/t/topic/35614045</a></p>
+</blockquote>
+<h4 id="role-transition角色转变">Role Transition（角色转变）</h4>
+<p>![[Pasted image 20241214153152.png]]</p>
+<p>一共有4个状态（比raft多了一个pending follower）</p>
+<p>At any given time, each replica is in one of<br>
+four roles: leader, follower, candidate, or pending follower.</p>
+<p>疑问：为什么多了pending follower状态
+从leader到pending follower状态，</p>
+<p>If the leader finds that the candidate is not itself anymore or the<br>
+leader receives messages from a new leader,
+it will revoke its leadership and switch to pending follower. The reason for switching to<br>
+pending follower rather than follower is that the transaction engine<br>
+may have appended some logs to the leader before the leadership<br>
+transfer. To determine the replication results of these pending logs,<br>
+the previous leader must enter the pending follower role and wait<br>
+for logs from the new leader (§4.1). After the status of all pending<br>
+logs is clear, the replica will switch to follower.
+、</p>
+<h2 id="todo2paxos-试题看看你能得多少分">TODO2:Paxos 试题，看看你能得多少分</h2>
+<h2 id="参考">参考</h2>
+<p><a href="https://leehao.me/%E5%9B%BE%E8%A7%A3-Paxos-%E7%AE%97%E6%B3%95/">https://leehao.me/%E5%9B%BE%E8%A7%A3-Paxos-%E7%AE%97%E6%B3%95/</a></p>
+<p>从做一个难而正确事情开始
+第一步 定投10分钟，把事情简化，
+一天写一行文字，一周一段，一月一篇文章，
+选标题，写大纲，填充内容
+第二步：排除无关不相关事情，看短视频，看综艺，看新闻，看博主 一个方法。多少粉丝多少流量
+给你你无关。</p>
+<h1 id="oceanbase-源码解读">OceanBase 源码解读</h1>
+<p>OceanBase 正式开源后，300 万行核心代码在社区官网同步上线，但这些代码有一些多年变迁的遗迹，新人上手殊为不易。通过本系列的源码解读文章，首先，你可以了解 OceanBase 数据库的基本原理，学到一个数据库是如何实现的。推而广之，你也可以把 OceanBase 的实现原理应用到其他数据库，这对你学习其他数据库也有帮助。其次，在熟悉了 OceanBase 的代码之后，如果有需要，你可以直接在未来的工作中使用我们的代码，或者为 OceanBase 贡献代码。</p>
+<p><a href="https://open.oceanbase.com/blog/topics/3983502080">https://open.oceanbase.com/blog/topics/3983502080</a></p>
+<h3 id="1-oceanbase-paxosstore-源码阅读">[1] Oceanbase PaxosStore 源码阅读</h3>
+<p><a href="https://zhuanlan.zhihu.com/p/395197545">https://zhuanlan.zhihu.com/p/395197545</a></p>
+<p>开源数据库OceanBase代码导读（13）</p>
+<ul>
+<li><a href="https://github.com/oceanbase/oceanbase-doc">https://github.com/oceanbase/oceanbase-doc</a></li>
+<li><a href="https://www.oceanbase.com/training/obcp">OBCP V3.0 培训教材</a></li>
+<li><a href="https://console.oceanbase.com/instances">https://console.oceanbase.com/instances</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU3OTc2MDQxNg==&amp;mid=2247483885&amp;idx=1&amp;sn=52bf5a7c8cbea04671f2327455fd16da&amp;chksm=fd6079a2ca17f0b456055a20d3b17ba2125704a2fb4a81d08d375c1ea69f2d4ce93c5f8fe04f&amp;scene=21#wechat_redirect"> OceanBase数据库实践入门——了解总控服务</a></li>
+</ul>
+<p>微信：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/L0uBV8s5gXagiylz4vYyOg">https://mp.weixin.qq.com/s/L0uBV8s5gXagiylz4vYyOg</a> # OceanBase 独立部署高级玩法三：副本数调整</li>
+<li>OceanBase 独立部署高级玩法二 ：2C8G版</li>
+<li>OceanBase 源码解读（十四）：集群位置信息的存储与汇报
+<a href="https://open.oceanbase.com/blog/10900275">https://open.oceanbase.com/blog/10900275</a></li>
+<li>OceanBase 数据库 V4.0 版本中有关 bootstrap 问题的排查
+<a href="https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000781056">https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000781056</a></li>
+</ul>
+<p>记录是为了更好的思考</p>
+<p>http://localhost:1313/post/oceanbase/2024/07_make_ob_leader/</p>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备一个图片，一段话，可以放在三页doc，三页ppt 描述你方案</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>反馈：鸡蛋里挑骨头，经过客户，领导 ，公司认证，做事情价值和意义。听到否定愤怒反对 说明自己对这个事情还不了解。</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目</p>
+</li>
+</ol>
+<p><a href="https://zhuanlan.zhihu.com/p/268558189">https://zhuanlan.zhihu.com/p/268558189</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-10-19 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/2024/07_make_ob_leader/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">成为ob贡献者(07):重新理解OB模块设计</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2024/day11_make_ob-1/">
+            <span class="next-text nav-default">成为ob贡献者(6):如何阅读Paxos代码</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

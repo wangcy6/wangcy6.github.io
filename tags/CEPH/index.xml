@@ -9,11 +9,20 @@
     <lastBuildDate>Thu, 28 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/CEPH/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>源码解析：ceph数据读写</title>
-      <link>https://wangcy6.github.io/post/storage/2024-3-08-ceph-read/</link>
+      <link>https://wangcy6.github.io/post/storage/05-2024-3-08-ceph-read/</link>
       <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/storage/2024-3-08-ceph-read/</guid>
-      <description>导读 系列文章：https://www.jianshu.com/u/5c59bd9b10db MDS源码分析-3 LOOKUP &amp;amp; GETATTR 文件锁（filelock）</description>
+      <guid>https://wangcy6.github.io/post/storage/05-2024-3-08-ceph-read/</guid>
+      <description>entity_id 这个能改变吗？ 通过S3FS调用icfs_setxattr接口。 参数client_type=&amp;ldquo;S3&amp;rdquo; Entity_id 是 /var/run/icfs-client.XXXX 其中xxx</description>
+    </item>
+    
+    <item>
+      <title>源码解析：ceph数据读写</title>
+      <link>https://wangcy6.github.io/post/storage/06-mds_sumbit_thread/</link>
+      <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/06-mds_sumbit_thread/</guid>
+      <description>1. 需求 【ceph】ceph-mds journal模块解读 Journaler类负责将内存中已经序列化的数据写入到对应metadata pool中</description>
     </item>
     
     <item>

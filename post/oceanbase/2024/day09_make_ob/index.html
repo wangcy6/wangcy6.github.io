@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为ob贡献者(09):如何证明采用了PALF设计就是安全的 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/day09_make_ob/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为ob贡献者(09):如何证明采用了PALF设计就是安全的" />
+<meta property="og:description" content="自我驱动学习" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/day09_make_ob/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-12-21T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-12-21T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为ob贡献者(09):如何证明采用了PALF设计就是安全的">
+<meta itemprop="description" content="自我驱动学习"><meta itemprop="datePublished" content="2024-12-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-12-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7649">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为ob贡献者(09):如何证明采用了PALF设计就是安全的"/>
+<meta name="twitter:description" content="自我驱动学习"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为ob贡献者(09):如何证明采用了PALF设计就是安全的</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-12-21 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 7649 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#leader-election">Leader Election</a></li>
+        <li><a href="#basic-paxos实现-最长日志-the-longest-logs重新确认reconfirmation算法">Basic Paxos实现 最长日志（ the longest logs）重新确认（reconfirmation）算法</a></li>
+        <li><a href="#举例说明">举例说明</a></li>
+        <li><a href="#日志复制-log-replication">日志复制 Log Replication</a></li>
+        <li><a href="#1什么是raft">1.什么是raft</a></li>
+        <li><a href="#entry格式">Entry格式</a></li>
+      </ul>
+    </li>
+    <li><a href="#raft算法保证的性质">raft算法保证的性质</a>
+      <ul>
+        <li><a href="#2--palf-日志复制">2.  PALF 日志复制</a></li>
+        <li><a href="#3-安全性不同地方在哪里">3 .安全性不同地方在哪里</a></li>
+        <li><a href="#log-replication">Log Replication</a></li>
+        <li><a href="#correctness">Correctness</a></li>
+      </ul>
+    </li>
+    <li><a href="#41-章节-明确的执行结果">4.1 章节 明确的执行结果</a></li>
+    <li><a href="#课后作业">课后作业</a></li>
+    <li><a href="#todo2paxos-试题看看你能得多少分">TODO2:Paxos 试题，看看你能得多少分</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-oceanbase-paxosstore-源码阅读">[1] Oceanbase PaxosStore 源码阅读</a></li>
+        <li><a href="#沟通步骤">沟通步骤</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <hr>
+<p>title: 成为ob贡献者(6):如何阅读Paxos代码
+date: 2024-10-04
+description: 自我驱动学习，专业上只能靠自己
+categories:</p>
+<ul>
+<li>oceanbase</li>
+</ul>
+<hr>
+<p><strong>温故而知新：</strong></p>
+<p>成为ob贡献者(08):接口层 PALF回顾</p>
+<p><strong>小王提问：</strong> 在PALF设计中提到副本的日志系统（replicated logging system），如何理解？</p>
+<p><strong>老王回答：</strong></p>
+<ul>
+<li>函数调用理解吗？</li>
+<li>RPC，就像调用本地函数一样调用其他节点上的函数，隐藏了网络通信的细节，这个也理解吧？</li>
+<li>Linux系统标准IO函数read、write理解吧？</li>
+<li>通过PALF接口层 ，事务引擎可以把redo日志像本地一样写到其他节点，因此强一致性协议实现，网络传输的细节
+同样，<strong>根据序列号，我们可以像读本地一样读其他节点的数据</strong>。理解了吧。
+<img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734621005559-c6125a15-dc1b-49d7-8ff8-33f23077f8af.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1256%2Climit_0" alt="1734621005559-c6125a15-dc1b-49d7-8ff8-33f23077f8af.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1256%2Climit_0"></li>
+</ul>
+<p><strong>通过本文你获得如下收益：</strong></p>
+<p>有了强一致性协议Paxos。</p>
+<ul>
+<li>领导选举算法可以用它。</li>
+<li>最长日志（ the longest logs）重新确认（reconfirmation）算法可以用它</li>
+<li>甚至日志复制 本身也可以用它。</li>
+</ul>
+<p>小王提问：太抽象了，不知道说是什么？该怎么入手呢</p>
+<p>老王回答：
+好吧，PALF中 pending follower 和state machine safety 提到4.1章节，
+重点看这个吧，然后完成下面2个作业</p>
+<blockquote>
+<ol>
+<li>如何证明证明 PALF 是安全的</li>
+<li>回答PALF 与raft差异</li>
+</ol>
+</blockquote>
+<p>raft转成下面3个子问题</p>
+<ul>
+<li>
+<p>Leader选举</p>
+</li>
+<li>
+<p>Log复制</p>
+</li>
+<li>
+<p>安全性保证
+PALF 转换下面5个子问题</p>
+</li>
+<li>
+<p>选举安全性（日志重新确认，根据优先级选举，然后获取最新日志来保证）</p>
+</li>
+<li>
+<p>领导者只追加模式、（ PALF 采用 Raft 的日志复制方案，raft保证了它是对的）</p>
+</li>
+<li>
+<p>日志匹配、（PALF 采用 Raft 的日志复制方案，raft保证了它是对的）</p>
+</li>
+<li>
+<p>领导者完整性（日志重新确认来保证）</p>
+</li>
+<li>
+<p>状态机安全性（已经写入不能被修改。<strong>如下图怎么证明呢</strong>）</p>
+</li>
+</ul>
+<p>英文单词</p>
+<ul>
+<li>election safety</li>
+<li>leader append-only</li>
+<li>log matching,</li>
+<li>leader completeness,</li>
+<li>state machine safety
+<img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734682545213-e4e46bcb-df76-4f40-a566-74c8b3a4db07.png?x-oss-process=image%2Fformat%2Cwebp" alt="图片1"></li>
+</ul>
+<ol>
+<li>捕捉想法:<br>
+无数个问题同时出现，让思路更加混乱，但是描述不出来具体是什么问题。
+凭着感觉  开始集中精力阅读重点文章</li>
+</ol>
+<ul>
+<li>PALF: Replicated Write-Ahead Logging for Distributed Databases</li>
+</ul>
+<ol start="2">
+<li>动手验证</li>
+</ol>
+<blockquote>
+<p>任务1：翻译：PALF: Replicated Write-Ahead Logging for Distributed Databases</p>
+<p>任务2：做练习题：#Paxos 试题 看看你能得多少分</p>
+</blockquote>
+<p>开始：</p>
+<h3 id="leader-election">Leader Election</h3>
+<p>![[Pasted image 20241217091033.png]]</p>
+<p>小王提问：什么是 pending follower,和上一个leader未提交的日志有关系吗？ （4.1章节有解释</p>
+<p><strong>pending follower：</strong>
+The reason for switching to  pending follower rather than follower is that the transaction engine<br>
+may have appended some logs to the leader before the <strong>leadership</strong><br>
+<strong>transfer</strong>.</p>
+<p>To determine the replication results of these pending logs,<br>
+**pending followerand wait<br>
+for logs from the new leader (§4.1). After the status of all pending<br>
+logs is clear, the replica will switch to follower.</p>
+<p>当一个服务器（前领导者）失去领导地位后，它不会立即变成普通的追随者（follower），而是先变成一个待定的追随者（pending follower）。</p>
+<p>这样做的原因是因为在领导权转移之前，事务引擎可能已经在领导者上追加了一些日志条目。</p>
+<p>为了确定这些待定日志的复制结果，前领导者必须进入待定追随者角色，并等待来自新领导者的日志。以下是这个过程的几个关键点：</p>
+<ol>
+<li>
+<p><strong>待定日志的处理</strong>：前领导者可能在其日志中有一些未被复制或未被提交的条目，这些被称为待定日志（pending logs）。这些日志的复制结果未知，需要通过与新领导者的通信来确定。</p>
+</li>
+<li>
+<p><strong>等待新领导者的日志</strong>：作为待定追随者，前领导者会等待新领导者发送的日志条目。这个过程中</p>
+</li>
+</ol>
+<p>具体等看到4.1章节时候才有明确答案。</p>
+<hr>
+<p><strong>选举算法</strong></p>
+<p>选举算法，作为 Basic Paxos算法的一个变体，其核心任务是选举出优先级最高的副本作为Leader。本文的焦点集中在日志复制上，而非选举算法本身。</p>
+<p><strong>辅助理解</strong></p>
+<ol>
+<li>选举算法的实现依托于Paxos算法，并非通过HA（高可用性）等其他方式来实现。</li>
+<li>Basic Paxos算法通过两次RPC 确定一个值。</li>
+<li>最高优先级 也是一个值，可用<strong>Basic Paxos</strong>实现</li>
+</ol>
+<p>原文：
+The election algorithm is  essentially a variant of <strong>Basic Paxos</strong>, it reaches a <strong>consensus</strong> about  which replica owns the highest priority in a majority</p>
+<p>This paper focuses the design of the replicated<br>
+logging system, therefore, we leave implementation details of the<br>
+election algorithm for another paper</p>
+<h3 id="basic-paxos实现-最长日志-the-longest-logs重新确认reconfirmation算法">Basic Paxos实现 最长日志（ the longest logs）重新确认（reconfirmation）算法</h3>
+<p>根据上文，领导选举是根据优先级选举的， 不是根据最长日志选举的，
+自然新的候选人日志远远落后其他节点，</p>
+<p>候选人日志不是最新日志，其他节点日志是最新的。
+这个场景不能按照候选人日志覆盖其他节点的日志</p>
+<p>因此需要多个节点对<strong>最大日志这一个数</strong>值达成一致。</p>
+<p>回顾：
+根据&laquo;成为OB贡献者第四天：从单点到多节点 i++并发方案 &raquo;
+<a href="https://open.oceanbase.com/blog/14180550530">https://open.oceanbase.com/blog/14180550530</a>
+<img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1726543331323.png" alt="img"></p>
+<blockquote>
+<p>自然Basic Paxos满足这个特点，（假如系统只写一个值）
+Paxos分为2个阶段 Prepare， Accept 。 &mdash;图2
+在并发情况下， 在Accept 阶段 已经写入提案（没有被大多数节点接受），但是提议者可见（运用多数派查询到）不能被修改。
+s1 发起3.1 提案，s5. 发起4.5提案， 2个不同的提案编号，但是写入都是同一个值x &ndash;图1</p>
+</blockquote>
+<p><img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1726543481005.png" alt=""></p>
+<pre><code>   图片1 情况2 提案被接受，提议者可见
+</code></pre>
+<p><img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1726543417539.png" alt=""></p>
+<pre><code>              图2： 
+</code></pre>
+<hr>
+<p>如图：最长日志（ the longest logs）确认算法</p>
+<p>（s5. 发起4.5提案，但是s1 发起3.1 提案部分写入， 2个不同的提案编号，但是写入都是同一个值x 是不是有点类似？<strong>对一个值达成一致</strong>）
+<img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734618996253-fce72585-110b-4cd3-a7a0-afbbc36177dd.png?x-oss-process=image%2Fformat%2Cwebp" alt=""></p>
+<p><strong>日志重新确认算法（Alg.1）</strong></p>
+<ol>
+<li><strong>准备阶段（Paxos Prepare消息广播）</strong>
+<ul>
+<li>候选人向所有副本广播带有高级ProposalID（领导任期的标识符）<code>𝑝𝑖𝑑 + 1</code>的Paxos Prepare消息（第2行）&mdash;pid 理解成提案编号</li>
+<li>每个副本将存储Prepare消息中的<code>𝑝𝑖𝑑</code>，并且只有当Prepare消息中的<code>𝑝𝑖𝑑</code>大于副本所见过的最大ProposalID <code>𝑝𝑖𝑑𝑚𝑎𝑥</code>时，才会向候选人响应其日志（第9行）。</li>
+<li>为了避免传输无用的日志，Prepare消息的确认只包含日志的尾部LSN。</li>
+</ul>
+</li>
+<li><strong>接受阶段（Paxos Accept）</strong>
+<ul>
+<li>一旦候选人从大多数副本收到投票（第3行），它就开始Paxos接受阶段：
+<ul>
+<li>选择日志最长的副本（第4行）
+//selecting the replica with the longest logs
+//对比 图片1 情况2 提案被接受，提议者可见.</li>
+<li>从该副本获取日志（第5行）。
+// int read(LSN lsn, Record &amp;r);  //根据LSN随机读位置 PALF。</li>
+<li>将这些日志复制到所有副本（第6行）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>启动工作日志复制</strong>
+<ul>
+<li>最后，候选人将StartWorking日志复制到所有副本（第8行）。</li>
+<li>注意，StartWorking日志是一种特殊的重新配置日志（§5.3），用于回滚前领导可能未提交的成员资格。</li>
+<li>只要StartWorking日志达到大多数，候选人就会担任领导职责。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>课后作业 对比Raft领导者变更的安全性</p>
+</blockquote>
+<h3 id="举例说明">举例说明</h3>
+<p>假设一个分布式系统中有以下场景：</p>
+<ul>
+<li><strong>前任领导者</strong>：在任期T1中，领导者尝试添加一个新的成员到集群中，但这个变更没有被提交（即没有复制到多数节点）。</li>
+<li><strong>领导者失效</strong>：随后，前任领导者因为某些原因失效。</li>
+<li><strong>新领导者选举</strong>：在任期T2中，新的领导者被选举出来。</li>
+</ul>
+<p>在Raft中，以下是发生的情况：</p>
+<ul>
+<li><strong>日志一致性检查</strong>：新领导者会发现前任领导者未提交的成员变更。由于这个变更没有被多数节点接受，新领导者不会将其视为有效变更。</li>
+<li><strong>覆盖不一致的日志</strong>：新领导者会继续复制其自己的日志条目，覆盖前任领导者未提交的变更。这确保了系统状态的一致性。</li>
+</ul>
+<p>在StartWorking日志的机制中：</p>
+<ul>
+<li><strong>StartWorking日志</strong>：新领导者会复制StartWorking日志到所有副本。这个日志会包含指令来回滚前任领导者未提交的成员变更。</li>
+<li><strong>回滚未提交变更</strong>：通过复制StartWorking日志，新领导者确保所有副本都认同回滚未提交的成员变更。这保证了即使在新领导者接管后，系统的配置状态也是一致的。</li>
+</ul>
+<hr>
+<p>原文：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Due to flexible leader election, the candidate may have fewer logs than other replicas. Before taking over as  a leader, the candidate should re-confirm the logs appended by the  
+previous leader to guarantee that its logs are not fewer than any  
+replica in a majority. The log reconfirmation (Alg.1) is essentially a  complete instance of Basic Paxos [27]. Specifically, the candidate  broadcasts the advanced ProposalID(identifier for the leader’s term)  𝑝𝑖𝑑 + 1 to all replicas with Paxos Prepare messages (line 2). 
+
+Each  replica will store the 𝑝𝑖𝑑 of the Prepare message, and respond to  
+the candidate with its logs, only if the 𝑝𝑖𝑑 in the Prepare message is.
+larger than the maximum ProposalID 𝑝𝑖𝑑𝑚𝑎𝑥 the replica has seen  
+(line 9). 
+
+To avoid transporting useless logs, the acknowledgement  
+of Prepare message only contains the tail LSN of logs.  
+
+Once the candidate receives votes from any majority of replicas  
+(line 3), it starts the Paxos accept phase: selecting the replica with  
+the longest logs (line 4), getting logs from it (line 5), and replicating  
+these logs to all replicas (line 6). 
+
+Finally, the candidate replicates a  
+StartWorking log to all replicas (line 8). Note that the StartWorking  
+log is a special reconfiguration log (§5.3), it is used to roll back  
+the possible uncommitted membership of the previous leader. 
+
+The  candidate will serve as the leader as long as the StartWorking log  
+reaches majority
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="日志复制-log-replication">日志复制 Log Replication</h3>
+<blockquote>
+<p>带着问题看文章 PALF 日志复制 和Raft类似，看到这句话小心，不一样地方在哪里</p>
+</blockquote>
+<ol>
+<li>首先看Raft是怎么做日志匹配的，</li>
+<li>与Raft不同点是什么?</li>
+<li>能举例说明吗？</li>
+</ol>
+<h3 id="1什么是raft">1.什么是raft</h3>
+<ul>
+<li>主要参考资料：Raft算法精读</li>
+<li>演示：https://raft.github.io/</li>
+<li><a href="https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf">https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf</a></li>
+<li><a href="https://pdos.csail.mit.edu/6.824/papers/raft-faq.txt">https://pdos.csail.mit.edu/6.824/papers/raft-faq.txt</a></li>
+</ul>
+<p>raft算法之所以简单的原因之一是它将问题分解成三个子问题，分别是：</p>
+<ol>
+<li>Leader选举</li>
+<li>Log复制</li>
+<li>安全性保证</li>
+</ol>
+<blockquote>
+<p>图3：持久化和非持久化状态：</p>
+</blockquote>
+<p>思考：Raft 协议中如何确保易失性状态（volatile state）在服务器重启后重建？</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734767369718-9ae087dd-f51c-4228-9923-f7062858104d.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_605%2Climit_0" alt="">
+图3：选举</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734767355086-d9dbed31-5a32-481e-b892-7e3360408aa9.png" alt="">
+<img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734767319402-4aaec552-9456-4101-a802-61e0510c7bf3.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_608%2Climit_0" alt=""></p>
+<h3 id="entry格式">Entry格式</h3>
+<p>Logs由Entries组成，每个Entry包含一个term和命令，格式如下</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734769716982-c4bec496-4892-4c96-84f6-f966ae8894aa.png?x-oss-process=image%2Fformat%2Cwebp" alt="Entries"></p>
+<h2 id="raft算法保证的性质">raft算法保证的性质</h2>
+<ol>
+<li><strong>Election Safety</strong>: at most one leader can be elected in a given term.</li>
+<li><strong>Leader Append-Only</strong>: a leader never overwrites or deletes entries in its log; it only appends new entries.</li>
+<li><strong>Log Matching</strong>: if two logs contain an entry with the same index and term, then the logs are identical in all entries up through the given index.</li>
+<li><strong>Leader Completeness</strong>: if a log entry is committed in a given term, then that entry will be present in the logs of the leaders for all higher-numbered terms.</li>
+<li><strong>State Machine Safety</strong>: if a server has applied a log entry at a given index to its state</li>
+<li>machine, no other server will ever apply a different log entry for the same index.
+暂时可以先不看，需要知道的是raft所有的规则都是为了保证上面的这些性质，而这些性质又是保证raft正确的前提。</li>
+</ol>
+<p><strong>要想理解raft，其实就是搞明白：</strong></p>
+<ol>
+<li>leader和follower需要维护哪些变量，每个变量的含义</li>
+<li>leader什么时候发送AppendEntries RPC，携带哪些参数，follower收到请求后做什么？leader收到响应后做什么？</li>
+<li>candidate什么时候发送RequestVote RPC，携带哪些参数，follower收到请求后做什么？candidate收到响应后做什么？</li>
+</ol>
+<p>安全性：
+什么情况下Entry可以被commit？满足以下<strong>两个</strong>条件：</p>
+<ol>
+<li>A log entry is committed once the leader that created the entry has replicated it on a majority of the servers.（leader将该entry拷贝到大部分server中）</li>
+<li><strong>不能commit term比当前leader的term小的Entry。和前面leader选举限制一样，这也是论文在5.4 Safety这一小节给的一个restriction</strong>。不是很好理解，论文在5.4.2节给出了解释
+<img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734767032169-43a91eb6-bc60-4d7a-9ab2-919966ef7464.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_694%2Climit_0" alt=""></li>
+</ol>
+<p>T1： 图c： A被选举成leader， 此时有上一个任期的term=2 ，index=2，和term=4 index=3的日志</p>
+<p>假如 先处理index=2的日志，这个做法是错误的，</p>
+<p>T2：index=2 term=2的日志复制的S3节点，但是没有commited确认，此时S1 crash。</p>
+<p>T3：图d  S5当选leader
+为什么，只有S1 term=4 反对 其他同意。S5当选领导。</p>
+<blockquote>
+<p>该怎么做: index=2，term=2，index=3，term=4 一块复制</p>
+</blockquote>
+<p>如果S1现在奔溃了，S5不可能成为leader（S5的最后一个Entry的term=3，S1, S2, S3都会拒绝投票，因为它们的logs更up-to-date），也就不可能出现commit的Entry被覆盖的情况。</p>
+<blockquote>
+<p>关键：S5不可能成为leader 是日志中包含term，先同步当前任期请求，在处理历史任期请求。
+如果当前term没有请求，构造空的请求，然后一起和历史任期请求一块处理</p>
+</blockquote>
+<p>小王：这个违背尝试呀？这个没有严格index，从小到大处理</p>
+<p>作业：对比PALF怎么实现的处理上一个任期的日志呢</p>
+<h3 id="2--palf-日志复制">2.  PALF 日志复制</h3>
+<p>a log sequence number (LSN)</p>
+<p>简单的描述</p>
+<ol>
+<li>
+<p>领导者根据LSN产生日志（log entry），复制完成后，最后 按LSN的顺序由领导者提交（committed）</p>
+</li>
+<li>
+<p>当follower 收到新的新的日志（log entry），</p>
+<ul>
+<li>必须保证历史日志（preceding logs）被接受（accepted）然后接受当前日志</li>
+<li>如果同一个位置有冲突，按照最提案编号来截取。</li>
+</ul>
+</li>
+</ol>
+<p>注意 accepted 和committed区别，并且 根据LSN顺序处理。</p>
+<blockquote>
+<p>顺序处理 中间有空日志吗？ 具体更需细节文章没有描述，需要查资料确认</p>
+</blockquote>
+<p>a log sequence number (LSN) 大小等于 last the LSN + 当前日志大小</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734682322323-9b615841-3646-4621-8778-70dad23dab8c.png?x-oss-process=image%2Fformat%2Cwebp" alt=""></p>
+<h3 id="3-安全性不同地方在哪里">3 .安全性不同地方在哪里</h3>
+<p>得益于 Raft 中的安全性论证，我们只需验证 PALF 是否确保以下特性：</p>
+<ul>
+<li>选举安全性（日志重新确认，根据优先级选举，然后获取最新日志）</li>
+<li>领导者只追加模式、（raft模式 PALF 采用 Raft 的日志复制方案）</li>
+<li>日志匹配、（raft模式 PALF 自然采用 Raft 的日志复制方案）</li>
+<li>领导者完整性（日志重新确认）</li>
+<li>状态机安全性（已经写入不能被修改）</li>
+</ul>
+<p>Raft和PALF之间的关键区别在于日志重新确认。
+候选者执行一次基本Paxos实例，以从接受大多数日志的副本中学习缺失的日志。</p>
+<p>如果前任领导者提交的日志条目已被多数接受，那么候选人必须看到并学习到这一点，
+从而确保了选举的安全性和领导者的完整性</p>
+<p><strong>状态机安全性举例说明</strong></p>
+<p>这个是例子，完整证明看4.1章节
+We leave the proof of the state  machine safety property in §4.1</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/215144/1734682545213-e4e46bcb-df76-4f40-a566-74c8b3a4db07.png?x-oss-process=image%2Fformat%2Cwebp" alt=""></p>
+<p>如图6，一个系统有三个节点A,B,C组成，（a）（b）（c） 代表三个时刻。</p>
+<ol>
+<li>
+<p>a时间点：节点A是leader，已经接受日志log1、log2和log3。
+其中日志log1已经提交到全部节点，log2 写入大多数节点，log3 没有开始复制</p>
+</li>
+<li>
+<p>b时间点：
+A暂时与B和C失去连接 C被选为新的领导者，利用reconfirmed从B那里重新确认了当前最长日志log2，然后复制到B 和C节点</p>
+</li>
+<li>
+<p>c时间点:
+当网络恢复后（参见图6c），副本A转变为待定的追随者状态，因为它的选举租期已经过期。它开始从新领导者C那里接收日志，A中的log2由于已被新领导者提交，将被接受。</p>
+</li>
+</ol>
+<p>与此相反，A中的log3将被截断，因为C中有一个包含更大ProposalID的另一个log3。</p>
+<p>The state machine safety property of the consensus protocol is<br>
+ensured by the explicit replication results. If a log has been <strong>committed,</strong> it must have been applied to the leader and will be replayed<br>
+to the follower. If PALF fails to reach consensus on the log, state<br>
+machine of the <strong>previous leader will be rolled back</strong> by calling the<br>
+failure function.</p>
+<p><img src="https://cdn.nlark.com/yuque/__mermaid_v3/bbcd7921529875f7b7ba215178cf7754.svg" alt=""></p>
+<p>原文：</p>
+<h3 id="log-replication">Log Replication</h3>
+<ul>
+<li><strong>Responsibility of the Leader</strong>: Once a leader is elected in PALF, it becomes responsible for replicating and committing log entries across the cluster.</li>
+<li><strong>Log Sequence Number (LSN)</strong>: When log entries are appended to the leader, each entry is assigned an LSN, which represents the physical offset in the log blocks where the entry is stored. The LSN for the next log entry is the sum of the current log&rsquo;s LSN and the size of the log.</li>
+<li><strong>Log Storage</strong>: Log entries are stored in log blocks in LogStorage, and the LSN system allows clients to interact with PALF as if it were a normal file system.</li>
+<li><strong>Order of Log Acceptance</strong>: Followers will only accept a log entry if all preceding entries have been accepted. If there&rsquo;s a conflict with a higher proposal number, PALF will truncate the conflicting logs, similar to Raft.</li>
+</ul>
+<h3 id="correctness">Correctness</h3>
+<ul>
+<li><strong>Properties to Validate</strong>: To ensure correctness, PALF must validate properties such as election safety, leader append-only, log matching, leader completeness, and state machine safety.</li>
+<li><strong>Natural Properties</strong>: Leader append-only and log matching properties are naturally provided by PALF since it uses the same log replication scheme as Raft.</li>
+<li><strong>Log Reconfirmation</strong>: The key difference from Raft is the log reconfirmation process. A candidate for leadership performs an instance of Basic Paxos to learn missing logs from the replica that has accepted the most logs in a majority. This ensures election safety and leader completeness.</li>
+<li><strong>State Machine Safety</strong>: The proof of state machine safety is deferred to a later section (§4.1) because it relates to how logs are applied to the transaction engine.</li>
+</ul>
+<h2 id="41-章节-明确的执行结果">4.1 章节 明确的执行结果</h2>
+<p>第4章节 介绍了为OceanBase数据库的事务引擎设计的PALF（基于共识协议实现）的特性。</p>
+<blockquote>
+<p>通过阅读4.1章节 期望回答 网络分区情况下，还能保证数据一致性吗？</p>
+</blockquote>
+<ol>
+<li><strong>什么是pending logs，不处理有什么影响</strong></li>
+</ol>
+<p>例如：事务引擎 通过PALF接口添加一个记录（record）</p>
+<p>如果因为网络故障 产生新的选举，
+新的领导 不知道 前任领导者新增的日志条目（appended log<br>
+entries）是否提交，这些尚未确认的日志被称为“待定日志”(pending logs)。</p>
+<p>PALF接口必须返回明确的执行结果，是成功 还是失败，事务引擎 根据返回判断该事务是commit or rollback。</p>
+<ol start="2">
+<li><strong>谁负责解决上个领导未处理的请求</strong></li>
+</ol>
+<p>自然是PALFl来解决（什么情况下无法解决呢 ）</p>
+<blockquote>
+<p>PALF guarantees that the transaction engine will be explicitly<br>
+notified of replication results unless the leader crashes or the network is interrupted permanently</p>
+</blockquote>
+<p>如果领导权转移到了另一个副本，</p>
+<ul>
+<li>
+<p>前任领导者会变成“待定跟随者”（pending follower）</p>
+</li>
+<li>
+<p>当这个“待定跟随者”从新的领导者那里接收到日志时，这些待定日志的复制结果就会变得明确——要么被确认提交，要么被截断。</p>
+</li>
+</ul>
+<p>When the pending follower receives logs from the<br>
+new leader, the replication results of pending logs become explicit<br>
+(committed or truncated)</p>
+<ul>
+<li>
+<p>对于已提交的日志，系统会通过调用成功函数来通知事务引擎；</p>
+</li>
+<li>
+<p>而对于被截断的日志，则会通过调用失败函数来通知复制失败。</p>
+</li>
+</ul>
+<p>因此，前任领导者必须转换为“待定跟随者”，等待新领导者的日志，
+然后才能正式成为跟随者</p>
+<ol start="3">
+<li><strong>怎么解决，这个证明过程没看懂跳过</strong></li>
+</ol>
+<p>原文：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Data synchronization tools (such as Change Data Capture) usually consume transactions in the order of logs; however, the LSN  
+is incompetent for tracking the order of transactions because it  
+is locally ordered within single PALF group. For scalability, data  
+partitions are usually distributed among multiple Streams. If different transactions modify data partitions in different Streams, the  
+LSNs of their logs are incomparable. To track the order of transactions with logs across PALF groups, a natural approach is to record  
+commit versions of transactions in the payloads of log entries, as  
+some systems have done [18, 42]. This approach does work, but it  
+has disadvantages. For instance, commit versions may not strictly  
+increase with LSN due to parallel executions of transactions (i.e.,  
+assigning smaller LSN to logs of transactions with greater commit
+</code></pre></td></tr></table>
+</div>
+</div><p>原文</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">The OceanBase database provides globally meaningful commit  
+versions to transactions using CSN. 
+
+When a transaction is going to  
+be committed, the transaction engine fetches a timestamp from a  
+global timestamp oracle and appends the commit record with the  
+timestamp as 𝑅𝑒𝑓 𝐶𝑆𝑁 . The 𝐶𝑆𝑁 returned by the append method  
+tracks the order indicated by 𝑅𝑒𝑓 𝐶𝑆𝑁 and acts as the commit version of the transaction. 
+
+Note that the 𝐶𝑆𝑁 is not generated by  
+the global timestamp oracle, which may have a value greater than  
+the current global timestamp.
+
+As a result, the transaction may  
+be invisible to a future read request that fetches a smaller readable version from the global timestamp oracle. 
+
+To avoid this, the  
+transaction engine will not respond to the client until the global  
+timestamp is greater than the 𝐶𝑆𝑁 . Through cooperation between  
+the transaction engine and PALF, CSN successfully tracks the order  
+of transactions across PALF groups
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="课后作业">课后作业</h2>
+<ol>
+<li>Raft 与PALF在处理上一个任期的日志有什么差异
+4.1 Explicit Replication Results  给出pending logs 证明过程但是没看懂</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">你是一位计算机专业翻译专家，掌握丰富的计算知识并且转化小白理解的语言，我希望你能帮我将以下英文视频的中文翻译结果重新意译和润色。
+
+规则：
+- 这些字幕包含计算机等专业知识相关，注意翻译时术语的准确性
+- 保留特定的英文术语、数字或名字，并在其前后加上空格
+- 基于直译结果重新意译，意译时务必对照原始英文，不要添加也不要遗漏内容，并以让翻译结果通俗易懂，符合中文表达习惯
+
+英文原文：
+{ 英文原文 }
+
+直译结果：
+{ 第一直译的结果 }
+
+重新意译和润色 和排版美化
+{ 润色的结果 }
+
+语法分析：
+{ }
+
+结合专业知识 给出自己理解 使用用Mermaid语法绘制流程图，并且是手绘风格
+整体理解:
+为了掌握可以给出三个题目进行练习？
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="todo2paxos-试题看看你能得多少分">TODO2:Paxos 试题，看看你能得多少分</h2>
+<h2 id="参考">参考</h2>
+<p><a href="https://leehao.me/%E5%9B%BE%E8%A7%A3-Paxos-%E7%AE%97%E6%B3%95/">https://leehao.me/%E5%9B%BE%E8%A7%A3-Paxos-%E7%AE%97%E6%B3%95/</a></p>
+<p>从做一个难而正确事情开始
+第一步 定投10分钟，把事情简化，
+一天写一行文字，一周一段，一月一篇文章，
+选标题，写大纲，填充内容
+第二步：排除无关不相关事情，看短视频，看综艺，看新闻，看博主 一个方法。多少粉丝多少流量
+给你你无关。</p>
+<h1 id="oceanbase-源码解读">OceanBase 源码解读</h1>
+<p>OceanBase 正式开源后，300 万行核心代码在社区官网同步上线，但这些代码有一些多年变迁的遗迹，新人上手殊为不易。通过本系列的源码解读文章，首先，你可以了解 OceanBase 数据库的基本原理，学到一个数据库是如何实现的。推而广之，你也可以把 OceanBase 的实现原理应用到其他数据库，这对你学习其他数据库也有帮助。其次，在熟悉了 OceanBase 的代码之后，如果有需要，你可以直接在未来的工作中使用我们的代码，或者为 OceanBase 贡献代码。</p>
+<p><a href="https://open.oceanbase.com/blog/topics/3983502080">https://open.oceanbase.com/blog/topics/3983502080</a></p>
+<h3 id="1-oceanbase-paxosstore-源码阅读">[1] Oceanbase PaxosStore 源码阅读</h3>
+<p><a href="https://zhuanlan.zhihu.com/p/395197545">https://zhuanlan.zhihu.com/p/395197545</a></p>
+<p>开源数据库OceanBase代码导读（13）</p>
+<ul>
+<li><a href="https://github.com/oceanbase/oceanbase-doc">https://github.com/oceanbase/oceanbase-doc</a></li>
+<li><a href="https://www.oceanbase.com/training/obcp">OBCP V3.0 培训教材</a></li>
+<li><a href="https://console.oceanbase.com/instances">https://console.oceanbase.com/instances</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU3OTc2MDQxNg==&amp;mid=2247483885&amp;idx=1&amp;sn=52bf5a7c8cbea04671f2327455fd16da&amp;chksm=fd6079a2ca17f0b456055a20d3b17ba2125704a2fb4a81d08d375c1ea69f2d4ce93c5f8fe04f&amp;scene=21#wechat_redirect"> OceanBase数据库实践入门——了解总控服务</a></li>
+</ul>
+<p>微信：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/L0uBV8s5gXagiylz4vYyOg">https://mp.weixin.qq.com/s/L0uBV8s5gXagiylz4vYyOg</a> # OceanBase 独立部署高级玩法三：副本数调整</li>
+<li>OceanBase 独立部署高级玩法二 ：2C8G版</li>
+<li>OceanBase 源码解读（十四）：集群位置信息的存储与汇报
+<a href="https://open.oceanbase.com/blog/10900275">https://open.oceanbase.com/blog/10900275</a></li>
+<li>OceanBase 数据库 V4.0 版本中有关 bootstrap 问题的排查
+<a href="https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000781056">https://www.oceanbase.com/knowledge-base/oceanbase-database-1000000000781056</a></li>
+</ul>
+<p>记录是为了更好的思考</p>
+<p>http://localhost:1313/post/oceanbase/2024/07_make_ob_leader/</p>
+<h3 id="沟通步骤">沟通步骤</h3>
+<ol>
+<li>
+<p>准备一个图片，一段话，可以放在三页doc，三页ppt 描述你方案</p>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+</li>
+<li>
+<p>反馈：鸡蛋里挑骨头，经过客户，领导 ，公司认证，做事情价值和意义。听到否定愤怒反对 说明自己对这个事情还不了解。</p>
+</li>
+<li>
+<p>最后融合别人建议，然后完善你项目</p>
+</li>
+</ol>
+<p><a href="https://zhuanlan.zhihu.com/p/268558189">https://zhuanlan.zhihu.com/p/268558189</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-12-21 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/ARTS/2024/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5N0.14-2025-1-2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">只管去做践N0.14</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2024/day10/">
+            <span class="next-text nav-default">成为ob贡献者(09):如何证明采用了PALF设计就是安全的</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

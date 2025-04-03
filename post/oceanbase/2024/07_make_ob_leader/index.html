@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>成为ob贡献者(07):leader - Troy的网络博客</title>
+  <title>成为ob贡献者(07):重新理解OB模块设计 - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -38,19 +38,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="成为ob贡献者(07):leader" />
+<meta property="og:title" content="成为ob贡献者(07):重新理解OB模块设计" />
 <meta property="og:description" content="自我驱动学习" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/07_make_ob_leader/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-10-19T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2024-10-19T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="成为ob贡献者(07):leader">
+<meta itemprop="name" content="成为ob贡献者(07):重新理解OB模块设计">
 <meta itemprop="description" content="自我驱动学习"><meta itemprop="datePublished" content="2024-10-19T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2024-10-19T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2641">
+<meta itemprop="wordCount" content="3014">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="成为ob贡献者(07):leader"/>
+<meta name="twitter:title" content="成为ob贡献者(07):重新理解OB模块设计"/>
 <meta name="twitter:description" content="自我驱动学习"/>
 
 <!--[if lte IE 9]>
@@ -123,15 +123,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">成为ob贡献者(07):leader</h1>
+      <h1 class="post-title">成为ob贡献者(07):重新理解OB模块设计</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2024-10-19 00:00 </span>
         <div class="post-category">
             <a href="/categories/oceanbase/"> oceanbase </a>
             </div>
-          <span class="more-meta"> 约 2641 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+          <span class="more-meta"> 约 3014 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -146,9 +146,10 @@
         <li><a href="#1-捕捉想法-一个节点故障后假如上面有1万个分区会经过1万次选举吗">1. 捕捉想法: 一个节点故障后，假如上面有1万个分区，会经过1万次选举吗？</a></li>
       </ul>
     </li>
-    <li><a href="#选举算法">选举算法</a></li>
+    <li><a href="#选举算法单独抽象出-用于不同组件">选举算法单独抽象出 用于不同组件</a></li>
     <li><a href="#参考">参考</a>
       <ul>
+        <li><a href="#1-oceanbase-paxosstore-源码阅读">[1] Oceanbase PaxosStore 源码阅读</a></li>
         <li><a href="#沟通步骤">沟通步骤</a></li>
       </ul>
     </li>
@@ -157,110 +158,72 @@
   </div>
 </div>
     <div class="post-content">
-      <p>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。
+      <p>2.2 Redesigned Architecture</p>
+<p>一天一行，一周一段，一月一篇</p>
+<p>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。
 本文分为两个部分</p>
 <ol>
-<li>
-<p>捕捉想法:  一个节点故障后，假如上面有1万个分区，会经过1万次选举吗？</p>
+<li>捕捉想法:  一个节点故障后，假如上面有1万个分区，会经过1万次选举吗？
 <blockquote>
 <p>根据第一感受，无论是什么，都是真实发生的，都是捕捉来源,都可以大胆猜想</p>
 </blockquote>
 </li>
-<li>
-<p>动手验证</p>
-</li>
+<li>动手验证</li>
 </ol>
 <blockquote>
 <p>搜集已知 书籍，文章，代码  推理分析小心求证。</p>
 </blockquote>
 <h3 id="1-捕捉想法-一个节点故障后假如上面有1万个分区会经过1万次选举吗">1. 捕捉想法: 一个节点故障后，假如上面有1万个分区，会经过1万次选举吗？</h3>
-<p>小王提问：</p>
+<p><strong>小王提问1：</strong></p>
 <p>看了 # &laquo;成为ob贡献者(6):如何阅读Paxos代码&raquo; 上面提到 数据副本是以分区为单位，每个分区的主副本所在服务器被称为 Leader，我就不理解了</p>
 <p>根据强一致性协议，假如3个节点，一个节点故障了，会选举另外一个节点当作领导，三个节点同一 时刻，只有一个leader ，这个很容易理解，
 但是引入分区后，数据会分布在多个节点， 这样 每个节点都有主副本，
 假如一个节点故障了，上面可能有很多主副本，每个分区都要做选举吗？</p>
-<p>假如上面有1万个分区，最坏情况会经过1万次选举吗？</p>
+<p>假如上面有一个节点上有1万个分区，最坏情况会经过1万次选举吗？</p>
 <blockquote>
+<ol>
+<li>
 <p>简化问题：primary zone=&lsquo;z1,z2,z3&quot;  leader副本的分布
 帮忙查看一下集群部署，主副本是怎么在observer节点分布的？
 <a href="https://ask.oceanbase.com/t/topic/35614045">https://ask.oceanbase.com/t/topic/35614045</a></p>
+</li>
+<li>
+<p>RS（Root Service）高可用 和副本高可用 是同一个事情吗？
+<a href="https://ask.oceanbase.com/t/topic/35614056">https://ask.oceanbase.com/t/topic/35614056</a>
+3.  <a href="https://ask.oceanbase.com/t/topic/35607427">关于OceanBase RootService切主的一些疑问</a> 也提出类似问题，
+是指RS模块不会主动切主，切主是后台选举模块根据多种优先级综合决定的，宕机会触发切主，但不是RS发起的切主，RS只是把server的status改掉了</p>
+</li>
+</ol>
 </blockquote>
 <p>老王回答：</p>
 <p>成为ob贡献者(6) 对一体化定义为多个节点像一个节点一样。</p>
 <ul>
 <li>单节点： 一个网卡故障怎么处理，采用多个网卡绑定一个虚拟网卡，一个网卡故障，不影响虚拟网卡正常使用</li>
 <li>同样道理一个节点故障怎么处理，多个节点组成一个虚拟节点个 。
-如 图片1 显示9个节点，把三个zone看成三个节点虚拟，
-一个虚拟节点 可能1个 物理节点组成，也可能三个，可能更多。
+如 图片1：系统架构中  显示9个节点，把三个zone看成三个节点虚拟，一个虚拟节点 可能1个 物理节点组成，也可能三个，可能更多。
 <ul>
-<li>一个节点故障了，整个虚拟节点 是可用的，但是不是100%可用，因此采用副本方式 三个虚拟节点组成一个集群。</li>
+<li>一个节点故障了，整个虚拟节点 是可用的，
+<strong>注意不是100%可用</strong>，故障的数据无法访问。因此采用副本方式 三个虚拟节点组成一个集群。</li>
 </ul>
 </li>
 </ul>
-<p>数据与元数据关系</p>
+<p><strong>数据与元数据关系</strong></p>
 <ul>
 <li>一个zone 包含完整分区，自然分摊得到每个节点只存储一部分。</li>
-<li>需要维护一份完整分区与节点之间关系，俗称元数据。</li>
-<li>图片3 个元数据全部在一个节点上，需要高可用。一个节点故障后，简单利用HA机制，或者多数派保证高可用。</li>
-<li>图片2 副本在多个节点上，证明如下</li>
+<li>需要维护一份完整分区与节点之间关系，俗称元数据。
+图片2： RootServer 管理整个元数据信息，RootServer自身也保证高可用.</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">N1节点 有3个副本 P1，P2，P3
-
-每个副本都在对应对应节点
-p1--N1，N2，N3
-P2--N1，N2，N3
-P3--N1，N2，N3
-
-N1故障时候，（N1是一个进程，但是合并存储服务，元数据服务，sql引擎服务 简单理解三个不同服务进程 合并1个进程）
-
-N1 假如是RS Rs通过选举算法保证自身高可用
-
-N1 假如 副本数据，上面 3个副本
-P1，P2，P3 对应Paxos组都经过3次选举。
-
-最笨方式：1万个分区，就1万次选举，至少维护1万个状态，而不是1个状态（大胆猜想）
-
-优化方式就是合并。
-
-</code></pre></td></tr></table>
-</div>
-</div><p>三个图表示下面关系</p>
+<p>思考这样一个问题：在单机数据库中，数据库中的表都存储在本地，但在 OceanBase 这样的分布式数据库中，一张实体表可能存在多个分区，每个分区又有多个副本，分散在集群中的多个 server 上。那么当用户想去查询一张实体表时，数据库内部如何在众多 server 上定位这张表呢？</p>
+<p>OceanBase 依靠内部的一套系统表来实现实体表的位置发现过程，这套系统表我们一般统称为 meta table</p>
 <p><img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1727255056742.png" alt="图片:# 系统架构"></p>
 <blockquote>
 <p>图片1:系统架构</p>
 </blockquote>
-<p><img src="https://s2.loli.net/2024/10/20/KOTaG2uWjhsLw6g.jpg" alt="image.png"></p>
+<p>![[Pasted image 20241119213144.png]]</p>
 <blockquote>
 <p>图片2 元数据与数据关系 来源 大规模分布式存储系统：原理解析与架构实战</p>
 </blockquote>
-<p><img src="https://s2.loli.net/2024/10/20/YRavV6ywuEqjdPX.jpg" alt="image.png"></p>
-<blockquote>
-<p>图片3 元数据与数据 高可用 来呀 大规模分布式存储系统：原理解析与架构实战</p>
-</blockquote>
-<p><img src="https://s2.loli.net/2024/10/20/ZblVoCBtOfjrxmw.png" alt="image.png">
-图片4:表，分区 ，tablet关系</p>
+<p><strong>表，分区 ，tablet关系</strong></p>
 <p>数据划分 相关概念</p>
 <ul>
 <li>
@@ -270,11 +233,11 @@ BIgtable维护的是tablet到tablet server的映射关系，
 当需要迁移数据的时候，也是与tablet为单位。</p>
 </li>
 <li>
-<p>分区：</p>
-<p>​       OB 把普通的表的数据按照一定的规则划分到不同的区块内，同一区块的数据物理上存储在一起。
-​       这种划分区块的表叫做分区表，其中的每一个区块称作分区。</p>
-<p>​    也就是说明 大表拆分为更多更小的结构相同的独立对象，即分区。</p>
-<p>​       tablet_size 用于设置分区内部并行处理时每个分片的大小，通过文字推断出 一个分区包括多个分片</p>
+<p>分区：
+​       OB 把普通的表的数据按照一定的规则划分到不同的区块内，同一区块的数据物理上存储在一起。
+​       这种划分区块的表叫做分区表，其中的每一个区块称作分区。
+​    也就是说明 大表拆分为更多更小的结构相同的独立对象，即分区。
+​       tablet_size 用于设置分区内部并行处理时每个分片的大小，通过文字推断出 一个分区包括多个分片</p>
 </li>
 <li>
 <p>副本</p>
@@ -290,28 +253,28 @@ BIgtable维护的是tablet到tablet server的映射关系，
 </ul>
 <p>​         根据租户 Primary Zone 等因素，均衡各机器分区 Leader 数目。</p>
 <blockquote>
-<p>后记：# <a href="https://ask.oceanbase.com/t/topic/35607427">关于OceanBase RootService切主的一些疑问</a> 也提出类似问题，</p>
-<p>是指RS模块不会主动切主，切主是后台选举模块根据多种优先级综合决定的，宕机会触发切主，但不是RS发起的切主，RS只是把server的status改掉了</p>
+<p>小王提问2: 不要说这么多名词听着糊涂，Ob对外表现为一个进程，内部却有不同功能划分，
+RootService以单节点为单位，存储整个表元数据信息，单节点保持高可用传统HA机制，也可用分布式协议，
+OBserver分区为单位，每个节点存储部分分区数据，整个虚拟节点 存储完整分区数据，为保障高可用采取分布式协议
+一般根据选举选举到谁谁就是主分区，但是ob控制选举指定虚拟节点zone，还有每个节点上分区 可能全部是leader，我了解，不过有个问题 RootService虽然提供高可用，但是单点呀？承担全部流量。单点不存在瓶颈吗？</p>
 </blockquote>
-<p>请问RS 故障后，怎么选择主，上面多个副本，副本之间怎么选举，
-<a href="https://ask.oceanbase.com/t/topic/35614056">https://ask.oceanbase.com/t/topic/35614056</a>
-上面回答很模糊。
-这里站看大胆猜想：节点与服务关系 ，一个节点上无数个服务，不是节点为单位，服务为单位。</p>
-<blockquote>
-</blockquote>
-<h2 id="选举算法">选举算法</h2>
+<p>老王回答：</p>
+<p>大规模分布式存储系统：原理解析与架构实战8.4.5章节解释</p>
+<p>从容量，网络，磁盘分析单机下读写性能</p>
+<p>![[Pasted image 20241122215223.png]]</p>
+<p>![[Pasted image 20241122215202.png]]</p>
+<h2 id="选举算法单独抽象出-用于不同组件">选举算法单独抽象出 用于不同组件</h2>
 <blockquote>
 <p>老王：请停止在 上面细节不停的思考，至少明白了，要把一个obsever进程 看成三个进程，
 一个是：查询进程，这个无状态，挂了拉起来继续查询
 一个是：存储进程，通过分区副本保证一致性，通过自发选举 ，选举结果 这些信息通过心跳方式上报元数据管理模块
-一个是：元数据管理进程，维护存储进程选举结果。</p>
+一个是：元数据管理进程，维护存储进程选举结果，一个集群只有一个<code>rootservice</code>服务</p>
 </blockquote>
-<p>区别是什么，存储进程之间选举是独立的，与元数据管理无关，
-但是元数据管理通过帮助存储进程选举的，
-例如 如何判断节点状态。可以通过加速方式。
-不要纠结为何 通过副本查询，一个节点为 2个状态leader，follower。
-上面副本分部不一定这样。</p>
-<p>集群启动过程：</p>
+<p>因此 选举算法单独抽象出来 可用在分区，也可用在rootservice.</p>
+<p>如下：</p>
+<p>更多阅读：
+<a href="https://mp.weixin.qq.com/s?__biz=MzU3OTc2MDQxNg==&amp;mid=2247483885&amp;idx=1&amp;sn=52bf5a7c8cbea04671f2327455fd16da&amp;chksm=fd6079a2ca17f0b456055a20d3b17ba2125704a2fb4a81d08d375c1ea69f2d4ce93c5f8fe04f&amp;scene=21#wechat_redirect"> OceanBase数据库实践入门——了解总控服务</a>
+集群启动过程：</p>
 <p>目前<code>rootservice</code>功能包括：</p>
 <ul>
 <li>
@@ -324,8 +287,23 @@ BIgtable维护的是tablet到tablet server的映射关系，
 分区的选举由选举模块负责，<code>rootservice</code>只是根据一些规则(如<code>primary_zone</code>或<code>locality</code>)影响分区的<code>leader</code>选举</p>
 </li>
 </ul>
-<p>因此 选举算法 单独拿出来。</p>
+<p>阅读资料</p>
+<ol>
+<li>《PALF: Replicated Write-Ahead Logging for Distributed Databases》</li>
+</ol>
+<p>第一篇论文 PALF: Replicated Write-Ahead Logging for Distributed Databases 从技术视角，阐述了 OceanBase 4.0 分布式日志系统 PALF (Paxos-backed Append-only Log File System) 的架构设计，及其在有效支撑 OceanBase 高可用、高可靠、极致性能等特性方面的技术优势。
+2. 万字解析：从 OceanBase 源码剖析 paxos 选举原理</p>
+<p>从做一个难而正确事情开始
+第一步 定投10分钟，把事情简化，
+一天写一行文字，一周一段，一月一篇文章，
+选标题，写大纲，填充内容
+第二步：排除无关不相关事情，看短视频，看综艺，看新闻，看博主 一个方法。多少粉丝多少流量
+给你你无关。</p>
 <h2 id="参考">参考</h2>
+<p>一天一行，一周一段，一月一篇</p>
+<h3 id="1-oceanbase-paxosstore-源码阅读">[1] Oceanbase PaxosStore 源码阅读</h3>
+<p><a href="https://zhuanlan.zhihu.com/p/395197545">https://zhuanlan.zhihu.com/p/395197545</a></p>
+<p>开源数据库OceanBase代码导读（13）</p>
 <ul>
 <li><a href="https://github.com/oceanbase/oceanbase-doc">https://github.com/oceanbase/oceanbase-doc</a></li>
 <li><a href="https://www.oceanbase.com/training/obcp">OBCP V3.0 培训教材</a></li>
@@ -385,13 +363,13 @@ BIgtable维护的是tablet到tablet server的映射关系，
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/c&#43;&#43;/2024-11-10-cpp-day1/">
+        <a class="prev" href="/post/tidb/2024/make_tidb_day6-raft-rs/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题</span>
+            <span class="prev-text nav-default">成为Tidb贡献者第四天: raft-rs最佳实践</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/oceanbase/2024/day6_make_ob/">
-            <span class="next-text nav-default">成为ob贡献者(6):如何阅读Paxos代码</span>
+        <a class="next" href="/post/oceanbase/2024/08_make_ob_leader-1/">
+            <span class="next-text nav-default">成为ob贡献者(08):PALF: Replicated Write-Ahead Logging for Distributed Databases</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -442,7 +420,7 @@ BIgtable维护的是tablet到tablet server的映射关系，
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2024
+    2025
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

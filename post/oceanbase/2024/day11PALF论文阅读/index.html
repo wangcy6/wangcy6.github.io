@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为ob贡献者(10) - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/day11PALF%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为ob贡献者(10)" />
+<meta property="og:description" content="自我驱动学习" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/day11PALF%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-12-21T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-12-21T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为ob贡献者(10)">
+<meta itemprop="description" content="自我驱动学习"><meta itemprop="datePublished" content="2024-12-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-12-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5046">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为ob贡献者(10)"/>
+<meta name="twitter:description" content="自我驱动学习"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为ob贡献者(10)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-12-21 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 5046 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-原文"><strong>1. 原文：</strong></a></li>
+    <li><a href="#2-核心论点">2 核心论点：</a></li>
+    <li><a href="#3-支持论据翻译句子">3. <em>支持论据（翻译句子）</em></a></li>
+    <li><a href="#4-重点单词与语法">4. 重点单词与语法</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#段落1">段落1</a>
+      <ul>
+        <li><a href="#段落2">段落2</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#palf-论文阅读计划每天-2-分钟"><strong>PALF 论文阅读计划（每天 2 分钟）</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#第一个月掌握论文背景与核心概念"><strong>第一个月：掌握论文背景与核心概念</strong></a>
+      <ul>
+        <li><a href="#第-1-周论文概述与研究背景"><strong>第 1 周：论文概述与研究背景</strong></a></li>
+        <li><a href="#第-2-周相关工作与-wal-背景"><strong>第 2 周：相关工作与 WAL 背景</strong></a></li>
+        <li><a href="#第-3-周palf-系统架构"><strong>第 3 周：PALF 系统架构</strong></a></li>
+        <li><a href="#第-4-周palf-日志复制与一致性"><strong>第 4 周：PALF 日志复制与一致性</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#第二个月palf-的优化与实验分析"><strong>第二个月：PALF 的优化与实验分析</strong></a>
+      <ul>
+        <li><a href="#第-5-周故障恢复机制"><strong>第 5 周：故障恢复机制</strong></a></li>
+        <li><a href="#第-6-周性能优化"><strong>第 6 周：性能优化</strong></a></li>
+        <li><a href="#第-7-周实验设计与评估"><strong>第 7 周：实验设计与评估</strong></a></li>
+        <li><a href="#第-8-周论文总结与未来工作"><strong>第 8 周：论文总结与未来工作</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#第三个月复习与应用"><strong>第三个月：复习与应用</strong></a>
+      <ul>
+        <li><a href="#第-9-周---10-周总结与深入思考"><strong>第 9 周 - 10 周：总结与深入思考</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>为了整理思路，文章采用模拟2人对话方式，如有误，欢迎留言。
+本文分为两个部分</p>
+<ol>
+<li>捕捉想法:
+通过别人分享 我了解到，在写数据库 之前，别人是看论文搞清楚基本原理才这个事实。
+这样事情我能不模仿，
+首先遇到的第一问题，你又不是研究生学历不够，没有相关氛围熏陶，自我否定！
+第二个事情是学10几年英语 还是哑巴英语 根本没信心 ！
+第三个事情 哪有时间呀 ，看完了有什么价值呢，无法开始行动！</li>
+<li>动手验证：
+第一步：资料是公开的，你可以不可以下载？ 1分钟完成。
+第二步：不懂核心思想，能不能一句一句翻译？可以。
+第三步：制定计划一共多少章节，需要多少天完成，精确到每天至少看多句子。
+从单词到句子到文章拆分。
+3.最小行动：每天拿出 2分钟看一个句子 ，完成任务就下班收工。多一句别看。</li>
+</ol>
+<h1 id="第5章节数据变更同步">第5章节：数据变更同步</h1>
+<p><img src="https://foruda.gitee.com/images/1739357371842613036/cc118291_116887.png" alt="输入图片说明" title="屏幕截图">
+原文：</p>
+<p>Besides serving transactions, distributed databases also act as the<br>
+source of data flow. Downstream applications can be deployed to<br>
+provide various services by synchronizing data changes recorded<br>
+in physical logs.</p>
+<p>This section introduces two typical physical log<br>
+synchronization scenarios in OceanBase, describes what challenges<br>
+they bring to PALF, and depicts how to address these challenges by<br>
+utilizing features of PALF.</p>
+<p><strong>翻译：</strong></p>
+<p>除了处理事务，分布式数据库还充当数据流的源头。下游应用可以通过同步物理日志中记录的数据更改来部署，从而提供各种服务。</p>
+<p>本节介绍了OceanBase中两种典型的物理日志同步场景，描述了它们给PALF带来的挑战，并阐述了如何利用PALF的特性来解决这些挑战。</p>
+<p><strong>通俗理解：</strong></p>
+<p>分布式数据库不仅仅是处理事务（如存取数据）的地方，它们还扮演着数据流的起点。下游系统（指其他依赖这些数据的应用或服务）可以通过获取数据库中记录的数据变化（比如用户修改了什么信息），来实现各种功能，比如数据分析、实时报告等。</p>
+<p>在OceanBase数据库中，有两种常见的方式来同步这些数据变化。本节主要讲解这两种方式，以及它们给数据库的高可用性（PALF）带来了哪些问题，最后介绍如何利用PALF的特性来解决这些问题。</p>
+<p>简单来说，数据库不仅存储和处理数据，还能把数据的变动告诉其他系统，这样其他系统就能根据最新的数据做相应的处理。而OceanBase在这方面有两种常用的方法，但这些方法也带来了一些挑战，文中会讲解应该如何应对这些挑战。</p>
+<h1 id="51-第一段">5.1 第一段</h1>
+<p>原文：
+When clients write data to databases, records of modifications are<br>
+appended to the leader of the PALF group and replicated to followers.</p>
+<p>Besides replicating logs within the database, data changes can<br>
+be synchronized out of the database for richer functions.</p>
+<p>There are  two typical scenarios in the OceanBase database:
+physical standby  databases and database restore</p>
+<p>翻译：</p>
+<p>当客户端向数据库写入数据时，修改记录会被追加到PALF组的主节点，并复制到从节点。在数据库内部复制日志的同时，数据变化也可以被同步到数据库外部，以实现更丰富的功能。在OceanBase数据库中，主要有两种典型场景：物理备用数据库和数据库恢复</p>
+<p><strong>通俗理解</strong>：</p>
+<p>想象一下，你在银行存钱，每次存钱都会记录一条转账记录。银行的系统会把这条记录同时保存到主要的记录本（主节点）和几个副本记录本（从节点），这样即使主要记录本坏了，副本记录本还能保证数据不丢失。</p>
+<p>除了在银行内部保存这些记录，银行还可以把这些记录送到其他地方，比如给审计部门或者数据分析部门，用于更广泛的用途。在OceanBase数据库中，这种技术有两种主要用途：</p>
+<ol>
+<li>
+<p><strong>物理备用数据库</strong>：就像银行有多个分行各自保存一份记录副本，数据库也可以有多个物理备用数据库，确保在主数据库出问题时，备用数据库能立即接管，保证服务不中断。</p>
+</li>
+<li>
+<p><strong>数据库恢复</strong>：如果数据库因为意外情况（比如系统故障）导致数据丢失，可以通过之前保存的记录快速恢复数据，确保数据安全。</p>
+</li>
+</ol>
+<h1 id="第51章节-第二段">第5.1章节 第二段</h1>
+<h2 id="1-原文"><strong>1. 原文：</strong></h2>
+<p>As shown in Figure 7, the physical standby database is an【independent】 database in which the data are identical to the primary database.</p>
+<p>It could serve part of read requests to relieve pressure on the primary database.</p>
+<p>Compared to traditional primary-backup architecture,
+it offers higher availability because each database clus-ter can tolerate failures.</p>
+<p>One of the most important features of the physical standby database is Database-Level Data Protection and Disaster Recovery, a physical standby database can be switched to be the primary database by a failover operation if the original primary database becomes unavailable,</p>
+<p>which distinguish it from replica-level protection such as Paxos learners [7].‘</p>
+<p>In production databases, database restore is a core component of the high-reliability feature.</p>
+<p>If data have been lost due to storage media damage or human errors,archived logs stored in offline storage (such as NFS or Cloud ObjectStores) could be used to restore an identical database</p>
+<h2 id="2-核心论点">2 核心论点：</h2>
+<ul>
+<li>物理备库相当于主数据库的一个“影子副本”，它可以用来处理部分查询请求，减少主数据库的压力。</li>
+<li>传统的主-备架构中，主库故障可能导致整个系统不可用，而物理备库可以随时“顶上”，确保业务不中断。</li>
+<li>物理备库比 Paxos 复制更强，它不仅存储数据副本，还能直接切换为主库运行。</li>
+<li>在真实业务场景中，如果数据库出现故障，备份日志（存储在云端或 NAS）可以帮助恢复数据，避免灾难性数据丢失。</li>
+</ul>
+<p><strong>简单来说，物理备库不仅是数据的备份，还能“接管”主数据库的工作，确保系统稳定运行！</strong> 🚀</p>
+<h2 id="3-支持论据翻译句子">3. <em>支持论据（翻译句子）</em></h2>
+<ul>
+<li><strong>物理备库（physical standby database）</strong> 是一个独立的数据库，其数据与主数据库（primary database）相同。它可以处理部分读取请求，减轻主数据库的负担。</li>
+<li><strong>与传统的主-备架构相比</strong>，物理备库提供了更高的可用性，因为数据库集群可以容忍故障。</li>
+<li><strong>物理备库的核心特性</strong> 是数据库级别的数据保护和灾难恢复（disaster recovery）。如果主数据库不可用，物理备库可以通过故障转移（failover）操作变为主数据库。</li>
+<li><strong>这一点区别于</strong> 复制级别的保护（如 Paxos 学习者），因为 Paxos 学习者只是复制数据，而物理备库可以真正接管主数据库的角色。</li>
+<li><strong>在生产环境中</strong>，数据库恢复（restore）是高可靠性的关键部分。如果由于存储介质损坏或人为错误导致数据丢失，存储在离线存储（如 NFS 或云对象存储）的归档日志（archived logs）可以用于恢复数据库。</li>
+</ul>
+<hr>
+<h2 id="4-重点单词与语法">4. 重点单词与语法</h2>
+<ul>
+<li>
+<p>Figure 示意图，架构图</p>
+</li>
+<li>
+<p>physical standby database —— 物理备用数据库</p>
+</li>
+<li>
+<p><strong>independent</strong> —— 独立的
+这里指物理备用数据库是一个独立的数据库，而不仅仅是数据副本。</p>
+</li>
+<li>
+<p><strong>distinguish A from B</strong>：使 A 有别于 B</p>
+</li>
+<li>
+<p>这里指物理备用数据库与 Paxos 复制的不同之处在于，它可以成为主数据库，而 Paxos 仅仅是复制数据</p>
+</li>
+</ul>
+<p><strong>archived logs</strong> —— 归档日志</p>
+<ul>
+<li><strong>archived</strong>（已归档的）+ <strong>logs</strong>（日志）</li>
+<li>这些日志用于在数据丢失后恢复数据库。</li>
+</ul>
+<h4 id="第三段">第三段</h4>
+<p>原文：</p>
+<p>The basic idea behind physical standby databases or database restore is similar: synchronizing data changes recorded in physical logs from the primary database or external storage to the standby database or the restoring database.<br>
+物理备用数据库或数据库恢复的基本原理相似：通过同步主数据库或外部存储中记录的物理日志数据变更，以保持备用数据库或恢复中数据库的数据一致性。</p>
+<p>For the OceanBase database, one of the challenges in implementing these features is synchronizing logs from one PALF group (or external storage) to another PALF group.<br>
+对于 OceanBase 数据库，实现这些功能的一大难点在于：需要将日志从一个 PALF 组（或外部存储）同步到另一个 PALF 组。</p>
+<p>In addition, these PALF groups should be independently available.<br>
+此外，这些 PALF 组应具备独立可用性，以确保系统的高可靠性和稳定性。</p>
+<p>A naïve solution is to read log entries from the PALF group in the primary database and append the logs to the corresponding PALF group in the standby database, as shown in Fig. 3.<br>
+一种较为直接的方案是从主数据库的 PALF 组中读取日志条目，并将其追加到备用数据库中对应的 PALF 组中，如图 3 所示。</p>
+<p>However, the consensus protocol will attach a log header to the appended record for replication, which results in inconsistency between the log format of the primary database and that of the standby database.<br>
+然而，共识协议会在追加的日志记录上附加日志头以用于数据复制，这会导致主数据库和备用数据库的日志格式不一致。</p>
+<p>小王提问：</p>
+<p>特性：备库同步主库数据，采用不是Paxos learners 方式。
+采用讲一个PALF group 日志复制到另外一个PALF group
+遇到的问题是 日志格式 不一致？这个不理解，从哪里看到解释</p>
+<p>老王：目前回答不了？</p>
+<h1 id="52-palf-group-mirror">5.2 PALF Group Mirror</h1>
+<h2 id="段落1">段落1</h2>
+<p>We abstracted the requirements of synchronizing data changes across PALF groups as a primitive: the PALF group mirror, which is an independent PALF group that performs the same consensus protocol as described in §3.4.
+我们将跨 PALF 组同步数据变更的需求抽象为一种原语：PALF 组镜像，它是一个独立的 PALF 组，执行与 §3.4 中描述的相同的共识协议。</p>
+<p>It 【maintains】 a mirror of the data change prefixes, which are stored in the primary PALF group or external storage.
+它维护着存储在主 PALF 组或外部存储中的数据变更前缀的镜像。</p>
+<p>【The PALF group mirror】 can be reconfigured independently and be switched to a primary group as needed.
+PALF 组镜像可以独立地进行重新配置，并根据需要切换为主组。</p>
+<p>小王提问：data change prefixes 这个属于什么操作？</p>
+<p>老王回答：
+<strong>举个例子：</strong></p>
+<ul>
+<li>想象你在一本笔记本上记账：
+<ul>
+<li>第一次记账：<code>[001] 小明 -100 元</code></li>
+<li>第二次记账：<code>[002] 小红 +200 元</code></li>
+<li>第三次记账：<code>[003] 小明 +50 元</code></li>
+</ul>
+</li>
+<li>这里的 <code>[001]</code>、<code>[002]</code>、<code>[003]</code> 就是 <strong>data change prefixes</strong>。它们表示每次数据变更的顺序和标识。</li>
+</ul>
+<h3 id="段落2">段落2</h3>
+<p>One of the most important differences between the primary PALF group and PALF group mirrors is the pattern of writing log records. 主 PALF 组与 PALF 组镜像之间最重要的区别之一在于日志记录的写入模式。</p>
+<p>In primary PALF group, a log record is appended to the PALF group, attached with a log header, and replicated to replicas by the consensus protocol. 在主 PALF 组中，日志记录会被追加到 PALF 组中，并附加上日志头，然后通过共识协议复制到副本上。</p>
+<p>As for the PALF group mirror, it only accepts logs committed by a primary PALF group. 而对于 PALF 组镜像，它只接受由主 PALF 组提交的日志。</p>
+<p>When a committed log is mirrored to the leader, some fields of the log header (e.g., ProposalID) will be replaced with the leader’s own values. 当已提交的日志被镜像到领导者（leader）时，日志头中的某些字段（例如 ProposalID）会被替换为领导者自身的值。</p>
+<p>The leader reuses the LSN and CSN of the original log entries, stores logs to the LSN, and replicates logs to followers. 领导者会重用原始日志条目的 LSN 和 CSN，将日志存储到对应的 LSN，并将日志复制给跟随者（followers）</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>OceanBase4.0跟我学&ndash;分布式到底可靠不可靠，到底丢不丢数&ndash;终于学完了</li>
+<li><a href="https://wnso49yyot.feishu.cn/file/ElgzbJ196o2FKlxF6aPcQN4mnId">https://wnso49yyot.feishu.cn/file/ElgzbJ196o2FKlxF6aPcQN4mnId</a></li>
+</ul>
+<h1 id="提示词">提示词</h1>
+<p>请双语翻译，满足 信达雅原则 并检查3遍， 一句英文，一句中文 方面对照阅读学习英语方式输出</p>
+<pre><code> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+</code></pre>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+<h3 id="palf-论文阅读计划每天-2-分钟"><strong>PALF 论文阅读计划（每天 2 分钟）</strong></h3>
+<p><strong>目标：</strong></p>
+<ul>
+<li><strong>每天</strong> 阅读一句话（理解关键点）。</li>
+<li><strong>每周</strong> 至少阅读一个段落（加深理解）。</li>
+<li><strong>每月</strong> 至少阅读一个章节（完成论文）。</li>
+<li><strong>共 10 章节，预计 3 个月完成</strong>。</li>
+</ul>
+<hr>
+<h2 id="第一个月掌握论文背景与核心概念"><strong>第一个月：掌握论文背景与核心概念</strong></h2>
+<h3 id="第-1-周论文概述与研究背景"><strong>第 1 周：论文概述与研究背景</strong></h3>
+<p>📌 <strong>目标：理解论文的研究问题和动机</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 1</strong></td>
+<td>论文标题、作者、摘要第一句</td>
+<td>了解论文主题</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td>摘要第二句</td>
+<td>PALF 研究的核心问题</td>
+</tr>
+<tr>
+<td><strong>Day 3</strong></td>
+<td>摘要第三句</td>
+<td>PALF 主要贡献</td>
+</tr>
+<tr>
+<td><strong>Day 4</strong></td>
+<td>摘要第四句</td>
+<td>论文的实验结果概览</td>
+</tr>
+<tr>
+<td><strong>Day 5</strong></td>
+<td>摘要第五句</td>
+<td>PALF 如何改进现有方法</td>
+</tr>
+<tr>
+<td><strong>Day 6</strong></td>
+<td>论文引言第一句</td>
+<td>研究动机</td>
+</tr>
+<tr>
+<td><strong>Day 7</strong></td>
+<td><strong>阅读完整引言段落</strong></td>
+<td>论文的背景与问题定义</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>第一周阅读成果：</strong> 掌握 PALF 研究动机、贡献和论文总体结构。</p>
+<hr>
+<h3 id="第-2-周相关工作与-wal-背景"><strong>第 2 周：相关工作与 WAL 背景</strong></h3>
+<p>📌 <strong>目标：理解 WAL 在分布式系统中的作用</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 8</strong></td>
+<td>相关工作第一句</td>
+<td>现有 WAL 复制方案</td>
+</tr>
+<tr>
+<td><strong>Day 9</strong></td>
+<td>相关工作第二句</td>
+<td>现有方法的局限性</td>
+</tr>
+<tr>
+<td><strong>Day 10</strong></td>
+<td>相关工作第三句</td>
+<td>为什么需要 PALF？</td>
+</tr>
+<tr>
+<td><strong>Day 11</strong></td>
+<td>PALF 目标第一句</td>
+<td>PALF 设计原则</td>
+</tr>
+<tr>
+<td><strong>Day 12</strong></td>
+<td>PALF 目标第二句</td>
+<td>PALF 如何优化 WAL 复制</td>
+</tr>
+<tr>
+<td><strong>Day 13</strong></td>
+<td>PALF 目标第三句</td>
+<td>PALF 设计的核心创新</td>
+</tr>
+<tr>
+<td><strong>Day 14</strong></td>
+<td><strong>阅读完整相关工作段落</strong></td>
+<td>现有 WAL 方法的不足</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>第二周阅读成果：</strong> 了解 PALF 相比现有 WAL 方法的优势。</p>
+<hr>
+<h3 id="第-3-周palf-系统架构"><strong>第 3 周：PALF 系统架构</strong></h3>
+<p>📌 <strong>目标：理解 PALF 如何设计日志复制系统</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 15</strong></td>
+<td>PALF 架构第一句</td>
+<td>PALF 组件介绍</td>
+</tr>
+<tr>
+<td><strong>Day 16</strong></td>
+<td>PALF 架构第二句</td>
+<td>日志管理模块</td>
+</tr>
+<tr>
+<td><strong>Day 17</strong></td>
+<td>PALF 架构第三句</td>
+<td>日志存储策略</td>
+</tr>
+<tr>
+<td><strong>Day 18</strong></td>
+<td>PALF 架构第四句</td>
+<td>日志复制机制</td>
+</tr>
+<tr>
+<td><strong>Day 19</strong></td>
+<td>PALF 架构第五句</td>
+<td>数据一致性保障</td>
+</tr>
+<tr>
+<td><strong>Day 20</strong></td>
+<td><strong>阅读完整 PALF 架构段落</strong></td>
+<td>了解 PALF 关键组件</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>第三周阅读成果：</strong> 掌握 PALF 的架构与核心机制。</p>
+<hr>
+<h3 id="第-4-周palf-日志复制与一致性"><strong>第 4 周：PALF 日志复制与一致性</strong></h3>
+<p>📌 <strong>目标：理解 PALF 如何确保日志复制的高效性</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 21</strong></td>
+<td>PALF 复制流程第一句</td>
+<td>复制数据的触发点</td>
+</tr>
+<tr>
+<td><strong>Day 22</strong></td>
+<td>PALF 复制流程第二句</td>
+<td>日志传输优化</td>
+</tr>
+<tr>
+<td><strong>Day 23</strong></td>
+<td>PALF 复制流程第三句</td>
+<td>事务提交逻辑</td>
+</tr>
+<tr>
+<td><strong>Day 24</strong></td>
+<td>PALF 复制流程第四句</td>
+<td>复制协议的细节</td>
+</tr>
+<tr>
+<td><strong>Day 25</strong></td>
+<td>PALF 复制流程第五句</td>
+<td>网络故障处理策略</td>
+</tr>
+<tr>
+<td><strong>Day 26</strong></td>
+<td><strong>阅读完整 PALF 复制流程段落</strong></td>
+<td>理解日志复制细节</td>
+</tr>
+<tr>
+<td><strong>Day 27 - 30</strong></td>
+<td><strong>总结第 1 章</strong></td>
+<td>回顾第 1 章要点</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>第四周阅读成果：</strong> 掌握 PALF 复制流程的关键点。</p>
+<hr>
+<h2 id="第二个月palf-的优化与实验分析"><strong>第二个月：PALF 的优化与实验分析</strong></h2>
+<h3 id="第-5-周故障恢复机制"><strong>第 5 周：故障恢复机制</strong></h3>
+<p>📌 <strong>目标：掌握 PALF 如何在崩溃后快速恢复</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 31 - 37</strong></td>
+<td>逐步阅读 PALF 故障恢复章节</td>
+<td>事务回滚、数据一致性保障</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>成果：</strong> 理解 PALF 如何确保数据库崩溃后可恢复。</p>
+<hr>
+<h3 id="第-6-周性能优化"><strong>第 6 周：性能优化</strong></h3>
+<p>📌 <strong>目标：理解 PALF 如何提高吞吐量和降低延迟</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 38 - 44</strong></td>
+<td>逐步阅读 PALF 优化策略</td>
+<td>WAL 压缩、存储优化</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>成果：</strong> 了解 PALF 如何优化数据库性能。</p>
+<hr>
+<h3 id="第-7-周实验设计与评估"><strong>第 7 周：实验设计与评估</strong></h3>
+<p>📌 <strong>目标：理解 PALF 的实验数据和结论</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 45 - 51</strong></td>
+<td>逐步阅读 PALF 实验部分</td>
+<td>实验设置、对比方法、数据分析</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>成果：</strong> 掌握 PALF 真实场景下的性能表现。</p>
+<hr>
+<h3 id="第-8-周论文总结与未来工作"><strong>第 8 周：论文总结与未来工作</strong></h3>
+<p>📌 <strong>目标：回顾 PALF 的贡献和可能改进方向</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 52 - 58</strong></td>
+<td>逐步阅读论文总结</td>
+<td>论文的主要贡献、局限性、未来研究方向</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>成果：</strong> 总结 PALF 的整体价值，并思考未来改进方向。</p>
+<hr>
+<h2 id="第三个月复习与应用"><strong>第三个月：复习与应用</strong></h2>
+<h3 id="第-9-周---10-周总结与深入思考"><strong>第 9 周 - 10 周：总结与深入思考</strong></h3>
+<p>📌 <strong>目标：完整掌握 PALF 并应用到自己的研究中</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>天数</strong></th>
+<th><strong>任务</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 59 - 65</strong></td>
+<td>总结论文核心技术</td>
+<td>复盘所有章节的内容</td>
+</tr>
+<tr>
+<td><strong>Day 66 - 72</strong></td>
+<td>论文应用场景分析</td>
+<td>PALF 在分布式数据库中的适用性</td>
+</tr>
+<tr>
+<td><strong>Day 73 - 80</strong></td>
+<td>与其他 WAL 方案对比</td>
+<td>结合 Raft、Paxos 进行分析</td>
+</tr>
+<tr>
+<td><strong>Day 81 - 90</strong></td>
+<td>论文最终总结</td>
+<td>整理阅读笔记，写出个人理解</td>
+</tr>
+</tbody>
+</table>
+<p>📖 <strong>最终成果：</strong> <strong>深入掌握 PALF 论文的所有关键点，并能够应用到自己的研究或技术学习中！</strong> 🎯</p>
+<hr>
+<p><strong>🎯 计划总结：</strong><br>
+✅ <strong>每天 2 分钟，坚持 90 天，完整掌握 PALF 论文！</strong><br>
+✅ <strong>从核心概念 → 关键技术 → 细节分析 → 应用总结，层层深入！</strong></p>
+<p>这个计划适合你吗？要不要调整某些部分？😊</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-12-21 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/2024/day10/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">成为ob贡献者(09):如何证明采用了PALF设计就是安全的</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/2024/%E5%8F%AA%E7%AE%A1%E5%8E%BB%E5%81%9A%E8%B7%B5%E8%A1%8C%E8%AE%B02024-11%E6%9C%88-%E7%AC%AC46%E5%91%A8/">
+            <span class="next-text nav-default">只管去做践行记：2024-11月-第46周</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

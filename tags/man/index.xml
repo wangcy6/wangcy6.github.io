@@ -13,7 +13,16 @@
       <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_class/</guid>
-      <description>函数 参数传递：值传递 与引用传递 1 2 3 4 5 void usage(const string &amp;amp;name) { } 谈谈你对 const string &amp;amp; 数据结构 数组 初始化 1 2 char buf[128]; memset(buf, 0xcc, sizeof(buf)); map c++ map查找key 1 2 3 4 5 6 7 8 9 10 11</description>
+      <description>C++ string 成员函数 length() size() 和 C strlen() 的区别 当 string 中含有空字符’\0’，使用 strlen() 获取 string 的长度时会被截断，使用成员函数 length() 和 size() 可以返回 string 的真实长度。 // 构造时使用 string strTest(buf,</description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43;代码编程规范</title>
+      <link>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</guid>
+      <description>成为面试官 第一练 未了节省读者时间一句话解释 shared_ptr 的引用计数本身是安全且无锁的，但对象的读写则不是， 因为 shared_ptr 有两个数据成员，读写操作不能原子 一个 shared_ptr 对</description>
     </item>
     
     <item>
@@ -22,15 +31,15 @@
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/c&#43;&#43;/01_c&#43;&#43;_new/</guid>
-      <description>14400 内存管理 C++中通过new和delete两个关键字进行动态内存管理。 c语言通过 malloc 和free 两个关键字进行动态内存管理 函数支持重载，运算符同</description>
+      <description>&amp;laquo;&amp;laquo;&amp;laquo;&amp;lt; HEAD # 代码评审（Code Review） ======= 14400 293f2e598d8da34a01eebf8c3ffae13524256be8 架构/设计 a. 单一职责原则 一个类只做一类相关的事情。 一个方法，最好只做一件事情。 b. 代码是否污染 代码</description>
     </item>
     
     <item>
       <title>践行时间管理方法</title>
-      <link>https://wangcy6.github.io/post/book/01_thing/</link>
+      <link>https://wangcy6.github.io/post/book/101_thing/</link>
       <pubDate>Thu, 04 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/book/01_thing/</guid>
+      <guid>https://wangcy6.github.io/post/book/101_thing/</guid>
       <description>个人学习使用 强哥思考笔记 1. 关于改变 很多人所谓的“改变”，其实都是在做“无用功”，比如说希望这次能够升职加薪，怎么办呢？要跟老板好好沟通，所以</description>
     </item>
     

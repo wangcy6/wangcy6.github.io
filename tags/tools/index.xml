@@ -6,32 +6,14 @@
     <description>Recent content in tools on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 17 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>新手必看！Obsidian自定义美化&amp;使用插件推荐</title>
-      <link>https://wangcy6.github.io/post/2024/2024-11-17-tools-Obsidian/</link>
-      <pubDate>Sun, 17 Nov 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2024/2024-11-17-tools-Obsidian/</guid>
-      <description>相关问题 解决obsidian无法加载第三方插件（社区插件） 在设置中找到“第三方插件”选项，并把安全模式关闭，但是在市场插件依然打不开 手工下载</description>
-    </item>
-    
-    <item>
-      <title>面试官：C&#43;&#43;中shared_ptr是线程安全的吗？-头条面试题</title>
-      <link>https://wangcy6.github.io/post/c&#43;&#43;/2024-11-10-cpp-day1/</link>
+      <title>c&#43;&#43;面试题</title>
+      <link>https://wangcy6.github.io/post/2024/2024-11-10-cppd-day1/</link>
       <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c&#43;&#43;/2024-11-10-cpp-day1/</guid>
-      <description>成为面试官 第一题 他们的Best Practices是什么 面试题：C++中shared_ptr是线程安全的吗？ 来源 ：一名毕业三年的女程序媛面试头</description>
-    </item>
-    
-    <item>
-      <title>Markdown 入门指南</title>
-      <link>https://wangcy6.github.io/post/man/markdown/1_how_to_use_marddown/</link>
-      <pubDate>Sat, 03 Aug 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/man/markdown/1_how_to_use_marddown/</guid>
-      <description>https://www.markdown.xyz/getting-started/ https://markdown.com.cn/ 应用：typora（已经开始收费） 整体修改CSS 依次点击Typora菜单栏的“文件”-“偏好设置”，然后点击“外观”-“打开主题文件夹”</description>
+      <guid>https://wangcy6.github.io/post/2024/2024-11-10-cppd-day1/</guid>
+      <description>没有行动拆分出来，无法目标转换行动，意志力这个时候失效了 今天一天安排（写不清楚就就无法行动） 起床仪式整理：10分钟完成 不用闹钟 6点自动起来，</description>
     </item>
     
     <item>
@@ -71,24 +53,6 @@
     </item>
     
     <item>
-      <title>do_book</title>
-      <link>https://wangcy6.github.io/post/2023/2_do_book/</link>
-      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/2023/2_do_book/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>do_book</title>
-      <link>https://wangcy6.github.io/post/book/2_2023_do_book/</link>
-      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/book/2_2023_do_book/</guid>
-      <description>http://localhost:1313/post/2023/2_do_book/ 少有人走的路 https://www.holisticedu.us/wechat/The_Road_Less_Traveled.pdf D2-NO1-803-问题和痛苦 金句: 替代品带来的痛苦，甚至比逃避的痛苦更为强烈 真正的健康者 寥寥无几。有的逃避问题者，宁可躲</description>
-    </item>
-    
-    <item>
       <title>AI周刊</title>
       <link>https://wangcy6.github.io/post/2024/2024_03_10_ai_weekly_01/</link>
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
@@ -99,10 +63,19 @@
     
     <item>
       <title>ChatGPT从入门到精通</title>
-      <link>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</link>
+      <link>https://wangcy6.github.io/post/money/002_/</link>
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/01_gpt_from_new_to_master/</guid>
+      <guid>https://wangcy6.github.io/post/money/002_/</guid>
+      <description>魔改小爱音箱 打造你的专属语音助手（保姆级教程建议收藏） 大家好，我是小王同学，希望本文在AIGC赋能小米音响上对你有帮助 昵称：一个只会写代码程</description>
+    </item>
+    
+    <item>
+      <title>ChatGPT从入门到精通</title>
+      <link>https://wangcy6.github.io/post/money/01_gpt_from_new_to_master/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/money/01_gpt_from_new_to_master/</guid>
       <description>一次只使用一个工具，其他装作看不见。 第一章：概念 ChatGPT是什么 https://mp.weixin.qq.com/s/Dns5GSsiledxCV2SIhNgrw 第二章：提示词 写专利 例如：绘制时序图 1 2 请绘制 mermaid sequence diagram ： mds 启动 recov</description>
     </item>
     
@@ -122,6 +95,15 @@
       
       <guid>https://wangcy6.github.io/post/2023/13_ai_tool/</guid>
       <description>一次只使用一个工具，其他装作看不见。 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二</description>
+    </item>
+    
+    <item>
+      <title>魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）</title>
+      <link>https://wangcy6.github.io/post/money/002_xiao_ai/</link>
+      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/money/002_xiao_ai/</guid>
+      <description>魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） 耗时一天 放弃，被pyton版本搞怕了。 大家好，我是小王同学，希望帮助掌握</description>
     </item>
     
   </channel>

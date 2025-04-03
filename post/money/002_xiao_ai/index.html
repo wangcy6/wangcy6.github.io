@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） 耗时一天 放弃，被pyton版本搞怕了。 大家好，我是小王同学，希望帮助掌握" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/money/002_xiao_ai/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）" />
+<meta property="og:description" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） 耗时一天 放弃，被pyton版本搞怕了。 大家好，我是小王同学，希望帮助掌握" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/money/002_xiao_ai/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-13T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-05-13T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）">
+<meta itemprop="description" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） 耗时一天 放弃，被pyton版本搞怕了。 大家好，我是小王同学，希望帮助掌握"><meta itemprop="datePublished" content="2023-05-13T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-05-13T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2250">
+<meta itemprop="keywords" content="tools," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）"/>
+<meta name="twitter:description" content="魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） 耗时一天 放弃，被pyton版本搞怕了。 大家好，我是小王同学，希望帮助掌握"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-13 00:00 </span>
+        
+          <span class="more-meta"> 约 2250 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一-用户故事">一. 用户故事</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#方案1-httpsgithubcomyihong0618xiaogptfork">方案1 <a href="https://github.com/yihong0618/xiaogpt/fork">https://github.com/yihong0618/xiaogpt/fork</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#3-取小米音响did">3 .取小米音响DID</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#类似产品">类似产品</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2023-05-13T00:00:00" title="May 13, 2023">May 13, 2023</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）</p>
+<p>耗时一天 放弃，被pyton版本搞怕了。</p>
+<p>大家好，我是小王同学，希望帮助掌握更好定位</p>
+<ul>
+<li><strong>昵称</strong>：20点下班就是一件很幸福事情</li>
+<li><strong>愿景</strong>：帮助百万人一天节省1秒钟。</li>
+<li><strong>相关作品</strong>：无</li>
+<li><strong>如果有需求请留言</strong>：</li>
+</ul>
+<ol>
+<li>Wechat/GitHub：watchpoints</li>
+</ol>
+<h2 id="一-用户故事">一. 用户故事</h2>
+<p>相关术语</p>
+<ol>
+<li>
+<p>定义：用户故事 在软件开发和产品管理中，
+一个用户故事是一个非正式的，自然语言描述的一个或多个软件系统功能。” - 维基百科</p>
+</li>
+<li>
+<p>如何获取：交谈（Conversation）
+用户故事背后的细节来源于和客户或者产品负责人的交流沟通；
+确保各方对故事的理解正确。</p>
+</li>
+<li>
+<p>用户故事组成：卡片(Card)</p>
+</li>
+</ol>
+<p>卡片的正面书写故事的描述，格式为：</p>
+<ul>
+<li>作为一个&lt;角色&gt;, 我想要&lt;完成活动&gt;, 以便于&lt;实现价值&gt;描述需求；</li>
+<li>卡片背面书写完成用户故事的规则和完成标准，格式为：Given…When…Then。</li>
+</ul>
+<p><img src="https://foruda.gitee.com/images/1738925684729386144/1652974e_116887.png" alt="输入图片说明" title="屏幕截图">
+<img src="https://foruda.gitee.com/images/1738925744177262269/8945a7ca_116887.png" alt="输入图片说明" title="屏幕截图">
+4. 确认（Confirmation）形成闭环</p>
+<p>每个故事应具有验收标准（验收条件），能够确认被正确完成。</p>
+<ul>
+<li>以始为终，先行确认以怎样的结果，来判断开发任务的完成；</li>
+<li>它保证每个故事都是独立的、完整的逻辑，可以单独交付；</li>
+<li>它为驱动测试驱动开发、行为驱动开发和持续集成提供可能</li>
+</ul>
+<h1 id="二-系统设计这个方案可行">二、 系统设计（这个方案可行）</h1>
+<p>整体流程</p>
+<h1 id="三-模块设计怎么做到">三、 模块设计（怎么做到）</h1>
+<h1 id="四操作手册">四、操作手册</h1>
+<h3 id="方案1-httpsgithubcomyihong0618xiaogptfork">方案1 <a href="https://github.com/yihong0618/xiaogpt/fork">https://github.com/yihong0618/xiaogpt/fork</a></h3>
+<p>小米小爱音箱接入了新的 ChatGPT api 现在跟实际对话一样了，太流畅了，欢迎来玩
+<a href="https://www.youtube.com/watch?v=K4YA8YwzOOA">https://www.youtube.com/watch?v=K4YA8YwzOOA</a></p>
+<p>1.. 下载代码：
+git clone <a href="mailto:git@github.com">git@github.com</a>:watchpoints/xiaogpt.git</p>
+<p>遇到拦路虎
+ssh: connect to host github.com port 22: Connection timed out
+致命错误：无法读取远程仓库</p>
+<ul>
+<li>通过设置host方式无效 路径受阻 换个路径</li>
+<li>scp方式 mac下载上传服务器
+scp ./xiaogpt-main.zip <a href="mailto:root@101.43.xx.xx">root@101.43.xx.xx</a>:/root/money
+<code>scp</code>（Secure Copy Protocol，安全复制协议）是 Linux 和 macOS 上用于<strong>远程安全传输文件</strong>的命令。它基于 SSH（Secure Shell）协议，因此传输数据是<strong>加密的</strong>，保证了文件安全性</li>
+</ul>
+<ol start="2">
+<li>编译代码</li>
+</ol>
+<p>python 版本：
+sudo yum install -y python3.9
+sudo alternatives &ndash;config python
+python -m pip install &ndash;upgrade pip</p>
+<p>pip install -r requirements.txt</p>
+<p>遇到拦路虎：解决</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/yihong0618/xiaogpt/issues/570
+https://packaging.python.org/en/latest/tutorials/installing-packages/
+
+修改版本：3.9
+
+
+国内镜像：
+cat ~/.pip/pip.conf
+[global]
+index-url = http://mirrors.tencentyun.com/pypi/simple
+
+trusted-host = mirrors.tencentyun.com
+
+
+python -m site
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="3-取小米音响did">3 .取小米音响DID</h2>
+<p>这个小爱音箱app 绑定小米音箱</p>
+<p><img src="https://foruda.gitee.com/images/1739086639294215177/190e61dd_116887.png" alt="输入图片说明" title="屏幕截图"></p>
+<table>
+<thead>
+<tr>
+<th>系统和Shell</th>
+<th>Linux *sh</th>
+<th>Windows CMD用户</th>
+<th>Windows PowerShell用户</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、安装包</td>
+<td><code>pip install miservice_fork</code></td>
+<td><code>pip install miservice_fork</code></td>
+<td><code>pip install miservice_fork</code></td>
+</tr>
+<tr>
+<td>2、设置变量</td>
+<td><code>export MI_USER=xxx</code>  <!-- raw HTML omitted --><code>export MI_PASS=xxx</code></td>
+<td><code>set MI_USER=xxx</code>  <!-- raw HTML omitted --><code>set MI_PASS=xxx</code></td>
+<td><code>$env:MI_USER=&quot;xxx&quot;</code>  <!-- raw HTML omitted --><code>$env:MI_PASS=&quot;xxx&quot;</code></td>
+</tr>
+<tr>
+<td>3、取得MI_DID</td>
+<td><code>micli list</code></td>
+<td><code>micli list</code></td>
+<td><code>micli list</code></td>
+</tr>
+<tr>
+<td>4、设置MI_DID</td>
+<td><code>export MI_DID=xxx</code></td>
+<td><code>set MI_DID=xxx</code></td>
+<td><code>$env:MI_DID=&quot;xxx&quot;</code></td>
+</tr>
+<tr>
+<td>上面的方法 运行结果不正确 去源码 执行</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/Yonsm/MiService">https://github.com/Yonsm/MiService</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/Yonsm/MiService
+
+pip install aiohttp aiofiles miservice
+micli.py list
+
+
+[
+
+  {
+
+    &#34;name&#34;: &#34;小米AI音箱&#34;,
+
+    &#34;model&#34;: &#34;xiaomi.wifispeaker.s12&#34;,
+
+    &#34;did&#34;: &#34;xxxxxx&#34;,
+
+    &#34;token&#34;: &#34;xxxxxx&#34;
+
+  }
+
+]
+
+
+micli.py mina
+ 
+
+// 先设置账号  这个小爱音箱app 绑定小米音箱的账号
+export MI_USER=&lt;Username&gt;
+export MI_PASS=&lt;Password&gt;
+
+
+  &#34;deviceID&#34;: &#34;1184405a-e530-418e-808e-723eb68f0554&#34;,
+
+    &#34;serialNumber&#34;: &#34;18090/981833983&#34;,
+
+    &#34;name&#34;: &#34;小米AI音箱&#34;,
+
+    &#34;alias&#34;: &#34;小米AI音箱&#34;,
+
+    &#34;current&#34;: false,
+
+    &#34;presence&#34;: &#34;online&#34;,
+
+    &#34;address&#34;: &#34;112.36.205.231&#34;,
+
+    &#34;miotDID&#34;: &#34;113966988&#34;,
+
+    &#34;hardware&#34;: &#34;S12A&#34;,
+    
+</code></pre></td></tr></table>
+</div>
+</div><p>可能遇到的问题：# 验证出错：KeyError: &lsquo;userId&rsquo;
+<a href="https://github.com/yihong0618/xiaogpt/issues/6">https://github.com/yihong0618/xiaogpt/issues/6</a></p>
+<p>这个 是云主机上被限制 ，在mas上么事 ，太坑人来哦</p>
+<h4 id="调用通义千问api">调用通义千问API</h4>
+<p><a href="https://help.aliyun.com/zh/model-studio/getting-started/first-api-call-to-qwen">https://help.aliyun.com/zh/model-studio/getting-started/first-api-call-to-qwen</a></p>
+<p>sk-a2a0a2d883224c338dcc62e786b360cb</p>
+<h4 id="启动">启动：</h4>
+<p>//使用 <code>venv</code> 安装
+python3 -m venv myenv</p>
+<p>Virtualenv是一个用于创建独立的Python环境的工具，主要目的是解决不同项目间的依赖、版本以及权限问题。通过virtualenv，每个项目可以拥有自己的依赖，而不会影响到其他项目，这对于管理复杂的Python应用来说极为重要</p>
+<p>source myenv/bin/activate</p>
+<p>python3 xiaogpt.py &ndash;config xiao_config.yaml</p>
+<p>启动相关问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Exception: Error [https://api2.mina.mi.com/admin/v2/device_list?master=0&amp;requestId=app_ios_yKOqps4gU21xidmhAjol7IWeJ38nMT](https://api2.mina.mi.com/admin/v2/device_list?master=0&amp;requestId=app_ios_yKOqps4gU21xidmhAjol7IWeJ38nMT): Login failed
+
+这是不是被小米屏蔽了...同样的部署在本地mac可以，在腾讯云windows服务器上就不行了。
+https://github.com/yihong0618/xiaogpt/issues/240
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>解决办法： 改为macos执行。云主机不行。</p>
+<p>遇到问题1：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">	你的 macOS 可能是通过 `brew` 安装的 Python，而 `brew` 现在默认将 Python 设为“外部管理环境”（**externally managed environment**），不允许直接用 `pip` 安装全局包。你可以使用以下方法之一来解决这个问题。
+
+export https_proxy=http://127.0.0.1:7890 
+http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
+
+取消代理
+unset https_proxy
+unset http_proxy 
+unset all_proxy
+
+
+
+### **方法 1：使用 `venv` 安装（推荐 ✅）**
+
+由于 Homebrew 不允许直接安装 `PyYAML`，建议使用 `venv` 创建一个虚拟环境，然后在里面安装：
+
+sh
+
+`python3 -m venv myenv source myenv/bin/activate  # 激活虚拟环境 pip install pyyaml`
+
+
+这个方式不行
+
+
+### **方法 3：使用 `pipx` 安装（适用于命令行工具）**
+
+如果你只需要 `PyYAML` 用于某个 Python 工具，而不是作为开发库，可以使用 `pipx`：
+
+sh
+
+复制编辑
+
+`brew install pipx pipx install pyyaml`
+
+
+/usr/local/lib/python3.11/site-packages/dataclasses.py&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>问：pip3 默认路径/usr/local/bin 不是 /usr/bin 目录下的</p>
+<p>设置环境变量：
+export PATH=/usr/bin:/usr/local/bin:$PATH</p>
+<p>问：python多版本管理：</p>
+<p>brew install pyenv
+pyenv 2.5.2
+pyenv install -l # 查看 pyenv 可以安装哪些Python版本
+pyenv versions # 所有已经安装的版本
+pyenv install 3.9.10
+pyenv local 3.7.3 # 当前目录及其目录切换
+python -V # 验证一下是否切换成功
+pyenv local &ndash;unset # 解除local设置</p>
+<p>方法2:https://www.youtube.com/watch?v=WYyJ8UQuydI</p>
+<h2 id="类似产品">类似产品</h2>
+<p><a href="https://github.com/lss233/chatgpt-mirai-qq-bot">https://github.com/lss233/chatgpt-mirai-qq-bot</a>
+一键部署！真正的 AI 聊天机器人！支持ChatGPT、DeepSeek、Claude、Gemini、ChatGLM、文心一言、讯飞星火，多账号，人设调教，虚拟女仆、图片渲染、语音发送 | 支持 QQ、Telegram、Discord、微信 等平台</p>
+<p>相关资料</p>
+<ul>
+<li><a href="https://github.com/ruanyf/weekly/issues/4582">https://github.com/ruanyf/weekly/issues/4582</a></li>
+<li><a href="https://github.com/yihong0618/xiaogpt">https://github.com/yihong0618/xiaogpt</a></li>
+<li><a href="https://github.com/idootop/mi-gpt?tab=readme-ov-file">https://github.com/idootop/mi-gpt?tab=readme-ov-file</a></li>
+<li><a href="https://web.vip.miui.com/page/info/mio/mio/detail?isTop=0&amp;postId=48906984&amp;fromBoardId=&amp;fromPage=mioPcSearch&amp;fromPathname=mioPcSearch&amp;app_version=dev.230112">小爱音箱第三期答疑解惑</a></li>
+<li><a href="https://www.zhihu.com/question/277413232">小米小爱音箱和小米AI音箱有何区别？</a>  名字上区别，太忽悠人了。</li>
+<li>把小爱音箱接入大语言模型：打造你的语音助手 | 开源日报 No.258</li>
+<li><a href="https://blog.laoda.de/archives/docker-install-mi-gpt">https://blog.laoda.de/archives/docker-install-mi-gpt</a></li>
+</ul>
+<p>【1】 <a href="https://www.youtube.com/watch?v=K4YA8YwzOOA">https://www.youtube.com/watch?v=K4YA8YwzOOA</a>【正在看】</p>
+<ul>
+<li><a href="https://www.cnblogs.com/137point5/p/15000954.html">https://www.cnblogs.com/137point5/p/15000954.html</a> 【Python 修改 pip 源为国内源 done】</li>
+<li><a href="https://pypi.org/project/aiohappyeyeballs/#files">https://pypi.org/project/aiohappyeyeballs/#files</a> [done]
+[2] 小米音箱型号</li>
+<li><a href="https://github.com/yihong0618/xiaogpt/issues/323">https://github.com/yihong0618/xiaogpt/issues/323</a></li>
+<li>登录验证失败 <a href="https://github.com/yihong0618/xiaogpt/issues/21">https://github.com/yihong0618/xiaogpt/issues/21</a></li>
+<li>验证出错：KeyError: &lsquo;userId&rsquo; <a href="https://github.com/yihong0618/xiaogpt/issues/6">https://github.com/yihong0618/xiaogpt/issues/6</a> [云主机不行]</li>
+<li><a href="https://github.com/yihong0618/xiaogpt/issues/540">https://github.com/yihong0618/xiaogpt/issues/540</a> 【架构流程】</li>
+</ul>
+<p>耗时一天 放弃，被pyton版本搞怕了。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-13 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/tools/">tools</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2023/13_ai_tool/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">学会使用工具：ai</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tidb/20230_05_05_tikv/">
+            <span class="next-text nav-default">跟着tikv源码学rust P01</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为Tidb贡献者第四天: raft-rs最佳实践 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="Tidb" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/tidb/2024/make_tidb_day6-raft-rs/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为Tidb贡献者第四天: raft-rs最佳实践" />
+<meta property="og:description" content="Tidb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/tidb/2024/make_tidb_day6-raft-rs/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-10-25T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为Tidb贡献者第四天: raft-rs最佳实践">
+<meta itemprop="description" content="Tidb"><meta itemprop="datePublished" content="2024-10-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-10-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3442">
+<meta itemprop="keywords" content="Tidb," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为Tidb贡献者第四天: raft-rs最佳实践"/>
+<meta name="twitter:description" content="Tidb"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为Tidb贡献者第四天: raft-rs最佳实践</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-10-25 00:00 </span>
+        
+          <span class="more-meta"> 约 3442 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一-别想太多只管去提问所有问题都会有答案">一、 别想太多，只管去提问,所有问题，都会有答案</a>
+      <ul>
+        <li><a href="#11-我遇到的问题直接看tikv-batchsystem模块有难度看不懂呀">1.1 我遇到的问题：直接看TIkv BatchSystem模块有难度，看不懂呀，</a></li>
+        <li><a href="#12-别人给出答案">1.2 别人给出答案:</a></li>
+        <li><a href="#13-我采取行动2个事情只能同时做一个">1.3 我采取行动：2个事情只能同时做一个</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#任务01在gitpodio-创建项目运行环境--耗时5分钟">任务01:在gitpod.io 创建项目运行环境  [耗时5分钟]</a></li>
+    <li><a href="#任务02通过代码准备最少rust语法知识60分钟">任务02:通过代码准备最少rust语法知识【60分钟】</a></li>
+    <li><a href="#任务03-描述five_mem_node功能然后绘制流程图">任务03: 描述five_mem_node功能，然后绘制流程图</a></li>
+    <li><a href="#任务04-how-to-use-raft-rs">任务04: How to use raft-rs</a></li>
+    <li><a href="#任务04-根据执行结果看代码怎么运行的">任务04 根据执行结果看代码怎么运行的</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#-tikv-源码解析系列文章二raft-rs-proposal-示例情景分析"># TiKV 源码解析系列文章（二）raft-rs proposal 示例情景分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>TiKV 源码解读</p>
+<h2 id="一-别想太多只管去提问所有问题都会有答案">一、 别想太多，只管去提问,所有问题，都会有答案</h2>
+<blockquote>
+<p>一个项目需求，一个客户反馈，学习上遇到问题 都是提问来源</p>
+</blockquote>
+<blockquote>
+<p>把问题说清楚，就等于把问题解决了一半，
+但是不要抱怨说整个大环境都这样这样问题，
+作为程序员完全一切权力在客户，公司，测试，运维，
+改变他们不是你目的，加速公司100%发展你也没这个能力，也不是责任
+基于这样假设提问 就是无效沟通
+别人根本不接受，你在这方面根本没有经过他们考验
+你思考漏洞百出，拿不出更好方案，拿不出任何成果。
+相反他们在这样模式下构建百万千万项目，构建高楼大厦，构建成功案例</p>
+</blockquote>
+<p>转变思路，你想自己提问，看看自己如何解决。</p>
+<blockquote>
+</blockquote>
+<h3 id="11-我遇到的问题直接看tikv-batchsystem模块有难度看不懂呀">1.1 我遇到的问题：直接看TIkv BatchSystem模块有难度，看不懂呀，</h3>
+<h3 id="12-别人给出答案">1.2 别人给出答案:</h3>
+<blockquote>
+<p>思路1  <code>TIKV</code> 的 <code>BatchSystem</code> 是实现 <code>MultiRaft</code> 的关键模块。在阅读本文章前，大家可以先参</p>
+</blockquote>
+<p>TiKV 依赖的周边库 <a href="https://github.com/pingcap/raft-rs">raft-rs</a> 是参照 ETCD 的 RAFT 库编写的 RUST 版本</p>
+<p>翻译：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">	When we began to build TiKV, we researched and investigated many Raft implementations. We eventually decided to go with etcd’s Raft implementation and built our own [Raft](https://github.com/pingcap/raft-rs) using [Rust](https://www.rust-lang.org/),
+	
+	Although etcd’s Raft implementation is written in Go, it has a simple API with no specific Go feature, thus can be easily ported to Rust.
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>思路2：Talent Plan 实战竞技赛之分布式数据库 TinyKV 开发</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>程名称</strong></td>
+<td><strong>主要内容</strong></td>
+<td><strong>课时</strong></td>
+<td><strong>课程时间</strong></td>
+<td><strong>主讲人</strong></td>
+</tr>
+<tr>
+<td>TinyKV 项目概述</td>
+<td>1. 概要介绍 TinyKV 内容与课程安排  <!-- raw HTML omitted -->2. 介绍初赛规则  <!-- raw HTML omitted -->3. TinyKV 开发演示</td>
+<td>45min～90min</td>
+<td>2024/10/22 19:00-20:30</td>
+<td>董菲</td>
+</tr>
+<tr>
+<td>Project1 辅导 - Standalone KV 实现</td>
+<td>1. 理解 KV 数据库的工作模式  <!-- raw HTML omitted -->2. 了解 Standalone KV 程序框架</td>
+<td>45min～90min</td>
+<td>2024/10/23 19:00-20:30</td>
+<td>张擎洋，张家坤</td>
+</tr>
+<tr>
+<td>Project2 辅导 - Part1: Raft 算法实现</td>
+<td>1. 理解领导人选举、日志复制等功能的实现方法  <!-- raw HTML omitted -->2. 了解 Tiny KV 项目中 Raft 算法的框架  <!-- raw HTML omitted -->3. 了解 Client 层与 Raft 层间消息的收发和处理流程。</td>
+<td>45min～90min</td>
+<td>2024/10/24 19:00-20:30</td>
+<td>杨洪宇，张驭云</td>
+</tr>
+<tr>
+<td>Project2 辅导 - Part2: Snapshot 实现</td>
+<td>1. 理解 TinyKV 中 Store、Peer 和 Region 的关系  <!-- raw HTML omitted -->2. 了解指令传递、处理和数据持久化的流程。  <!-- raw HTML omitted -->3. 了解 Snapshot 相关内容，包括日志压缩、快照生成、快照收发和快照应用。  <!-- raw HTML omitted -->4. 了解 TinyKV 中对于 Snapshot 的处理流程。</td>
+<td>45min～90min</td>
+<td>2024/10/25 19:00-20:30</td>
+<td>贾然钧，叶泽坤</td>
+</tr>
+<tr>
+<td>Project3 辅导 - Part1: Multi- Raft 实现</td>
+<td>1. 理解 Muti-Raft  <!-- raw HTML omitted -->2. 理解 TransferLeader、ConfChange 和 Split 行为  <!-- raw HTML omitted -->3. 了解 TinyKV 中 TransferLeader、ConfChange 和 Split 的处理流程</td>
+<td>45min～90min</td>
+<td>2024/10/26 19:00-20:30</td>
+<td>黄必胜</td>
+</tr>
+<tr>
+<td>Project3 辅导 - Part2: Scheduler 实现</td>
+<td>1. 理解 Scheduler 的作用和工作原理  <!-- raw HTML omitted -->2. 了解心跳信息的处理流程  <!-- raw HTML omitted -->3. 了解调度处理流程</td>
+<td>45min～90min</td>
+<td>2024/10/27 19:00-20:30</td>
+<td>黄必胜</td>
+</tr>
+<tr>
+<td>Project4 辅导 - 事务实现</td>
+<td>1. 理解 MVCC 原理并掌握代码实现要点。  <!-- raw HTML omitted -->2. 理解分布式事务两阶段提交原理。  <!-- raw HTML omitted -->3. 了解 TinyKV 中两阶段提交的实现要点与执行流程</td>
+<td>45min～90min</td>
+<td>2024/10/28 19:00-20:30</td>
+<td>翁思扬</td>
+</tr>
+<tr>
+<td>TinyKV 项目总结</td>
+<td>1. 回顾之前课程主题要点  <!-- raw HTML omitted -->2. 集中总结常见问题  <!-- raw HTML omitted -->3. 介绍后期安排</td>
+<td>45min～90min</td>
+<td>2024/10/29 19:00-20:30</td>
+<td>董菲</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-我采取行动2个事情只能同时做一个">1.3 我采取行动：2个事情只能同时做一个</h3>
+<p>-放弃思路2： 报名Talent Plan 实战竞技赛之分布式数据库 TinyKV 开发 但是你根本时间，最后完不成因此放弃，比赛放弃，但是 TinyKV难度相对低，资源多，从边做一题边写文章方式
+<a href="https://competition.atomgit.com/competitionInfo?id=234192bbf9b96466d67f25c585661d90">https://competition.atomgit.com/competitionInfo?id=234192bbf9b96466d67f25c585661d90</a>
+<a href="https://github.com/watchpoints/tinykv/tree/course">https://github.com/watchpoints/tinykv/tree/course</a></p>
+<ul>
+<li>
+<p>采取思路1：写一篇 raft-rs最佳实践，
+<a href="https://github.com/watchpoints/raft-rs">https://github.com/watchpoints/raft-rs</a></p>
+</li>
+<li></li>
+</ul>
+<h1 id="二当作项目一样管理-说出那些功能实现方案-需要代码量多少人月完成-提供整体视图">二、当作项目一样管理 ，说出，那些功能，实现方案 ，需要代码量，多少人月完成 提供整体视图。</h1>
+<blockquote>
+<p>根本无法说出什么功能，
+跟无法预估学习多次时间，
+完全行不通，也无法保证截至日期完成任务。</p>
+<p>这是看到哪里拿，完全小作坊模式，最后被预期投入很多时间，也完不成。
+比赛是1个月，但是上班根本没时间，里面大纲参考
+<a href="https://competition.atomgit.com/competitionInfo?id=234192bbf9b96466d67f25c585661d90">https://competition.atomgit.com/competitionInfo?id=234192bbf9b96466d67f25c585661d90</a>
+<a href="https://learn.pingcap.cn/learner/course/390002">https://learn.pingcap.cn/learner/course/390002</a></p>
+</blockquote>
+<h2 id="任务01在gitpodio-创建项目运行环境--耗时5分钟">任务01:在gitpod.io 创建项目运行环境  [耗时5分钟]</h2>
+<ul>
+<li>代码地址：
+<a href="https://github.com/watchpoints/raft-rs/blob/master/examples/five_mem_node/main.rs">https://github.com/watchpoints/raft-rs/blob/master/examples/five_mem_node/main.rs</a></li>
+</ul>
+<p>仓库中的 <code>examples/five_mem_node/main.rs</code> </p>
+<p>它创建了一个 5 节点的 Raft 系统，并进行了 100 个 proposal 的请求和提交</p>
+<p>环境搭建：gitpod.io</p>
+<p><img src="https://s2.loli.net/2024/10/22/wKpRHMfThSZx6i7.png" alt="image.png"></p>
+<ul>
+<li>明白一些命令</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">curl https://sh.rustup.rs -sSf | sh
+export PATH=&#34;/workspace/.cargo/bin:$PATH&#34;
+source  ~/.bashrc
+rustc -V
+
+//02--Rust toolchain
+rustup toolchain install nightly
+
+rustc 1.80.0 (051478957 2024-07-21)
+</code></pre></td></tr></table>
+</div>
+</div><p><code>Raft</code> is built using the latest version of <code>stable</code> Rust, using <a href="https://doc.rust-lang.org/edition-guide/rust-2018/">the 2018 edition</a>. Minimum supported version is <code>1.44.0</code>.</p>
+<p>Using <code>rustup</code> you can get started this way:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">rustup component add clippy
+rustup component add rustfmt
+</code></pre></td></tr></table>
+</div>
+</div><p>In order to have your PR merged running the following must finish without error:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+cargo run  //首先对项目进行编译， 然后再运行 cargo build
+cargo run --release 提高运行速度  
+./target/release/world_hello
+
+当项目大了后，cargo run 和 cargo build 不可避免的会变慢，那么有没有更快的方式来验证代码的正确性呢？
+cargo check //快速的检查一下代码能否编译通过
+
+cargo <span class="nb">test</span> --all <span class="o">&amp;&amp;</span> <span class="se">\ </span> 
+cargo clippy --all --all-targets -- -D clippy::all   <span class="o">&amp;&amp;</span> <span class="se">\ </span>
+//用于捕捉常见错误和改进 Rust 代码
+// Clippy 是一个 Rust 代码的静态分析工具，
+//用于检测代码中的潜在错误、不规范的代码风格以及其他问题
+
+//<span class="sb">`</span>--all<span class="sb">`</span>：这个选项告诉 Clippy 检查所有的包，包括依赖的包
+//<span class="sb">`</span>--all-targets<span class="sb">`</span>：这个选项指示 Clippy 不仅检查库代码，还会检查所有的二进制目标（
+
+// 并禁用 Clippy 的所有默认 lints，例如当开发者想要使用 Clippy 检查代码，但又不想受到 Clippy 默认 lints 的限制时
+cargo fmt --all -- --check    //通过 rustfmt 自动格式化
+</code></pre></td></tr></table>
+</div>
+</div><p>You may optionally want to install <code>cargo-watch</code> to allow for automated rebuilding while editing:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">cargo watch -s <span class="s2">&#34;cargo check&#34;</span>
+
+gitpod /workspace/raft-rs <span class="o">(</span>master<span class="o">)</span> $ cargo watch -s <span class="s2">&#34;cargo check&#34;</span>
+<span class="o">[</span>Running <span class="s1">&#39;cargo check&#39;</span><span class="o">]</span>
+    Checking crossbeam-utils v0.8.20
+   Compiling raft-proto v0.7.0 <span class="o">(</span>/workspace/raft-rs/proto<span class="o">)</span>
+    Checking crossbeam-channel v0.5.13
+    Checking slog-async v2.8.0
+    Checking slog-envlogger v2.2.0
+    Checking raft v0.7.0 <span class="o">(</span>/workspace/raft-rs<span class="o">)</span>
+    Finished <span class="sb">`</span>dev<span class="sb">`</span> profile <span class="o">[</span>unoptimized + debuginfo<span class="o">]</span> target<span class="o">(</span>s<span class="o">)</span> in 2.76s
+<span class="o">[</span>Finished running. Exit status: 0<span class="o">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="任务02通过代码准备最少rust语法知识60分钟">任务02:通过代码准备最少rust语法知识【60分钟】</h2>
+<p>Q1：vector 为什么不实例化就可以调用new</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">tx_vec</span><span class="p">,</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">rx_vec</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nb">Vec</span>::<span class="n">new</span><span class="p">(),</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">new</span><span class="p">());</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="sd">/// Constructs a new, empty `Vec&lt;T&gt;`.
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="sd">///
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="sd">/// The vector will not allocate until elements are pushed onto it.
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="sd">///
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="sd">/// # Examples
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="c1">// 方法的参数并没有 &amp;self
+</span><span class="c1"></span><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">
+</span><span class="w">        </span><span class="nb">Vec</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">buf</span>: <span class="nc">RawVec</span>::<span class="n">NEW</span><span class="p">,</span><span class="w"> </span><span class="n">len</span>: <span class="mi">0</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>代码1：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="w">
+</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">tx_stop</span><span class="p">,</span><span class="w"> </span><span class="n">rx_stop</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpsc</span>::<span class="n">channel</span><span class="p">();</span><span class="w">
+</span><span class="w"> 
+</span><span class="w"> </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">channel</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="p">(</span><span class="n">Sender</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">Receiver</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>原文：</p>
+<p>Creates a new asynchronous channel, returning the sender/receiver halves. All data sent on the <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Sender.html" title="struct std::sync::mpsc::Sender"><code>Sender</code></a> will become available on the <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Receiver.html" title="struct std::sync::mpsc::Receiver"><code>Receiver</code></a> in the same order as it was sent, and no <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Sender.html#method.send" title="method std::sync::mpsc::Sender::send"><code>send</code></a> will block the calling thread (this channel has an “infinite buffer”, unlike <a href="https://doc.rust-lang.org/std/sync/mpsc/fn.sync_channel.html" title="fn std::sync::mpsc::sync_channel"><code>sync_channel</code></a>, which will block after its buffer limit is reached). <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Receiver.html#method.recv" title="method std::sync::mpsc::Receiver::recv"><code>recv</code></a> will block until a message is available while there is at least one <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Sender.html" title="struct std::sync::mpsc::Sender"><code>Sender</code></a> alive (including clones).</p>
+<p>翻译：</p>
+<p>创建一个新的异步通道，返回发送方/接收方的一半。 <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Sender.html" title="struct std::sync::mpsc::Sender"><code>Sender</code></a>发送的所有数据将按照发送顺序在<a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Receiver.html" title="struct std::sync::mpsc::Receiver"><code>Receiver</code></a>上可用，并且任何<a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Sender.html#method.send" title="method std::sync::mpsc::Sender::send"><code>send</code></a>都不会阻塞调用线程（此通道具有“无限缓冲区”，与<a href="https://doc.rust-lang.org/std/sync/mpsc/fn.sync_channel.html" title="fn std::sync::mpsc::sync_channel"><code>sync_channel</code></a>不同，后者在其缓冲区限制达到后将阻塞）达到）。在至少有一个<a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Sender.html" title="struct std::sync::mpsc::Sender"><code>Sender</code></a> （包括克隆）存在的情况下， <a href="https://doc.rust-lang.org/std/sync/mpsc/struct.Receiver.html#method.recv" title="method std::sync::mpsc::Receiver::recv"><code>recv</code></a>将阻塞，直到消息可用为止。</p>
+<p>原文：</p>
+<blockquote>
+<p>pub fn try_recv(&amp;self) -&gt; Result&lt;T, TryRecvError&gt;</p>
+</blockquote>
+<p>Attempts to return a pending value on this receiver without blocking.</p>
+<p>This method will never block the caller in order to wait for data to become available.
+Instead, this will always return immediately with a possible option of pending data on the channel.</p>
+<p>翻译： 同步阻塞 IO vs 同步非阻塞 IO vs异步 io
+类比：ssize_t read(int fd, void *buf, size_t len);</p>
+<p><img src="https://www.cyhone.com/img/noblocking-io/block-read.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read</td>
+<td>阻塞下</td>
+<td>非阻塞</td>
+</tr>
+<tr>
+<td>无数据</td>
+<td>一直等待</td>
+<td>立马返回-1，error置为EAGAIN</td>
+</tr>
+<tr>
+<td>有数据</td>
+<td>返回数据的大小（不超过指定的读入大小）</td>
+<td>返回数据的大小（不超过指定的读入大小）</td>
+</tr>
+<tr>
+<td>cpu</td>
+<td>不占用过多cpu</td>
+<td>不停重试占用过多cpu</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>o_uring 是 2019 年 Linux 5.1 内核首次引入的高性能 异步 I/O 框架，能显著加速 I/O 密集型应用的性能。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>$ cat /etc/ceph/ceph.conf
+[osd]
+bluestore_ioring = true
+&hellip;
+<strong>代码2</strong> Arc::clone</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> let proposals: Arc&lt;Mutex&lt;VecDeque&lt;Proposal&gt;&gt;&gt; = Arc::clone(&amp;proposals);
+
+  
+  Stack                    Heap
+  -----                    ----
+
+
+  annas:
++--------+               +------------+
+| ptr: o-|--------------&gt;| count: 3   |
++--------+    ^          | data: 🐢   |
+              |          +------------+
+ peters:      |
++--------+    |
+| ptr: o-|----+
++--------+    ^
+              |
+  bobs:       |
++--------+    |
+| ptr: o-|----+
++--------+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Q3:Rust创建线程中 move || 是什么含义</p>
+</blockquote>
+<p><a href="https://course.rs/advance/concurrency-with-threads/thread.html">https://course.rs/advance/concurrency-with-threads/thread.html</a></p>
+<ul>
+<li>c++ lambda capture</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[=]</td>
+<td>以值的形式捕获所有外部变量</td>
+</tr>
+<tr>
+<td>[&amp;]</td>
+<td>以引用形式捕获所有外部变量</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>rust ||  一个固定参数 类似c++捕获方式
+ - thread::spawn(move ||
+在线程闭包中使用 move</li>
+</ul>
+<blockquote>
+<p>Q4:  Ok(Msg::Raft(m)) ok是什么用法？</p>
+</blockquote>
+<ul>
+<li>Understanding Rust Option and Result enums</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="sd">/// Contains the success value
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="cp">#[lang = </span><span class="s">&#34;Ok&#34;</span><span class="cp">]</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="cp">#[stable(feature = </span><span class="s">&#34;rust1&#34;</span><span class="cp">, since = </span><span class="s">&#34;1.0.0&#34;</span><span class="cp">)]</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="cp">#[stable(feature = </span><span class="s">&#34;rust1&#34;</span><span class="cp">, since = </span><span class="s">&#34;1.0.0&#34;</span><span class="cp">)]</span><span class="w"> </span><span class="n">T</span><span class="p">),</span><span class="w">
+</span><span class="w">
+</span><span class="w">  
+</span><span class="w">
+</span><span class="w">    </span><span class="sd">/// Contains the error value
+</span><span class="sd"></span><span class="w">
+</span><span class="w">    </span><span class="cp">#[lang = </span><span class="s">&#34;Err&#34;</span><span class="cp">]</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="cp">#[stable(feature = </span><span class="s">&#34;rust1&#34;</span><span class="cp">, since = </span><span class="s">&#34;1.0.0&#34;</span><span class="cp">)]</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="nb">Err</span><span class="p">(</span><span class="cp">#[stable(feature = </span><span class="s">&#34;rust1&#34;</span><span class="cp">, since = </span><span class="s">&#34;1.0.0&#34;</span><span class="cp">)]</span><span class="w"> </span><span class="n">E</span><span class="p">),</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="任务03-描述five_mem_node功能然后绘制流程图">任务03: 描述five_mem_node功能，然后绘制流程图</h2>
+<ul>
+<li></li>
+</ul>
+<p>开始日期：2024-11-01</p>
+<p>结束日期2024-11-?</p>
+<p>主要资料</p>
+<ul>
+<li><a href="https://raft.github.io/">https://raft.github.io/</a></li>
+</ul>
+<p><strong>应用启动</strong></p>
+<p>Node 是使用 RAFT 的外部应用，代表 RAFT 的一个节点应用程序</p>
+<p><strong>相关结接口</strong></p>
+<p> // Propose some conf changes so that followers can be initialized.
+  add_all_followers(proposals.as_ref());</p>
+<p>配置变更指的是从当前集群中增加一部分节点或者删除一部分节点。
+节点上线，下线操作,当然hot-配置变更
+如果不加限制，直接往一个集群中增加或者删除一批节点，那可能会选举出两个leader出来，
+这破坏了raft的安全性。</p>
+<p><strong>相关类定义</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="w">
+</span><span class="w"></span><span class="k">struct</span> <span class="nc">Proposal</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="n">normal</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">u16</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// key is an u16 integer, and value is a string.
+</span><span class="c1"></span><span class="w">
+</span><span class="w">    </span><span class="n">conf_change</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="n">ConfChange</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// conf change.
+</span><span class="c1"></span><span class="w">
+</span><span class="w">    </span><span class="n">transfer_leader</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="c1">// If it&#39;s proposed, it will be set to the index of the entry.
+</span><span class="c1"></span><span class="w">
+</span><span class="w">    </span><span class="n">proposed</span>: <span class="kt">u64</span><span class="p">,</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="n">propose_success</span>: <span class="nc">SyncSender</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="任务04-how-to-use-raft-rs">任务04: How to use raft-rs</h2>
+<ul>
+<li>Step 1: Create the Raft node</li>
+<li>Step 2: Drive and Run the Raft node</li>
+<li>Step 3: Process the <code>Ready</code> State</li>
+</ul>
+<h2 id="任务04-根据执行结果看代码怎么运行的">任务04 根据执行结果看代码怎么运行的</h2>
+<h2 id="参考">参考</h2>
+<p>信息来源：</p>
+<ul>
+<li>TiKV 源码解析系列文章（二）raft-rs proposal 示例情景分析</li>
+<li><a href="https://cn.pingcap.com/blog/tikv-source-code-reading-2/">https://cn.pingcap.com/blog/tikv-source-code-reading-2/</a></li>
+<li>TiKV 源码解析系列文章（六）raft-rs 日志复制过程分析</li>
+<li><a href="https://cn.pingcap.com/blog/tikv-source-code-reading-6/">https://cn.pingcap.com/blog/tikv-source-code-reading-6/</a></li>
+<li>etcd-raft 源码学习笔记</li>
+<li>raft-rust 初体验</li>
+</ul>
+<p><strong>2024-10-25</strong></p>
+<ul>
+<li>
+<p>Implement Raft in Rust
+<a href="https://www.pingcap.com/blog/implement-raft-in-rust/">https://www.pingcap.com/blog/implement-raft-in-rust/</a></p>
+</li>
+<li>
+<h1 id="raft-rs-示例程序源码解读">raft-rs 示例程序源码解读</h1>
+<p><a href="https://tidb.net/blog/c7b79ced">https://tidb.net/blog/c7b79ced</a></p>
+</li>
+<li>
+<p>TIKV BatchSystem 概述
+<a href="https://tidb.net/blog/bdf740f2">https://tidb.net/blog/bdf740f2</a></p>
+</li>
+</ul>
+<h3 id="-tikv-源码解析系列文章二raft-rs-proposal-示例情景分析"># TiKV 源码解析系列文章（二）raft-rs proposal 示例情景分析</h3>
+<p>参考资料</p>
+<ul>
+<li>
+<p>Raft-rs 最佳实践与使用</p>
+</li>
+<li>
+<p><a href="https://github.com/watchpoints/raft-rs">https://github.com/watchpoints/raft-rs</a></p>
+</li>
+<li>
+<p><a href="https://tidb.net/blog/e95e5c6b">https://tidb.net/blog/e95e5c6b</a></p>
+</li>
+<li>
+<p>TiKV 源码解析系列文章（二）raft-rs proposal 示例情景分析
+<a href="https://cn.pingcap.com/blog/tikv-source-code-reading-2/">https://cn.pingcap.com/blog/tikv-source-code-reading-2/</a></p>
+</li>
+<li>
+<p>TiKV 源码解析系列文章（十九）read index 和 local read 情景分析</p>
+</li>
+<li>
+<p>TiKV 源码解析系列文章（十）Snapshot 的发送和接收</p>
+</li>
+<li>
+<p>PointGet的一生</p>
+</li>
+<li>
+<p>Rust 参考手册 中文版</p>
+</li>
+<li>
+<p>TiKV RocksDB读写原理整理</p>
+</li>
+<li>
+<p>TinyKV Course: RaftStore执行流程</p>
+</li>
+<li>
+<p>TiDB 技术内幕 – 说存储</p>
+</li>
+<li>
+<p>TiKV 源码解析系列 - Raft 的优化</p>
+</li>
+</ul>
+<p>[11] # 浅谈Raft配置变更(成员变更)策略 [10%]</p>
+<ul>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/375059508">https://zhuanlan.zhihu.com/p/375059508</a></p>
+</li>
+<li>
+<p><a href="https://www.inlighting.org/archives/raft-membership-change">https://www.inlighting.org/archives/raft-membership-change</a>
+之前一直没有深入了解过 Raft 的成员变更，实现也就是在 TinyKV 中搞了一个单步成员变更，以至于在面试的时候，甚至想当然以为成员变更一定要被 apply 后才生效，结果就被挂了。故这里重新梳理一遍，内容是到处扒来的，不一定正确
+[12] <a href="https://www.zhaowenyu.com/etcd-doc/principle/what-is-raft.html">https://www.zhaowenyu.com/etcd-doc/principle/what-is-raft.html</a></p>
+<p><a href="https://raft.github.io/raft.pdf">https://raft.github.io/raft.pdf</a></p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-10-25 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Tidb/">Tidb</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2024/2024-11-09-how-to-user-gdb/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">GDB调试指南（1）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2024/07_make_ob_leader/">
+            <span class="next-text nav-default">成为ob贡献者(07):重新理解OB模块设计</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

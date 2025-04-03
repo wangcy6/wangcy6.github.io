@@ -6,7 +6,16 @@
     <description>Recent content in GitHub on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 20 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/GitHub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/GitHub/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GDB调试指南（1）</title>
+      <link>https://wangcy6.github.io/post/2024/2024-11-09-how-to-user-gdb/</link>
+      <pubDate>Sat, 09 Nov 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2024/2024-11-09-how-to-user-gdb/</guid>
+      <description>目前仅有管软节点的backend参与元数据同步，元数据同步可仿gpair独立创建落盘的对象，并且实现多节点backend同时承接不同的任务，</description>
+    </item>
+    
     <item>
       <title>git常用命令手册</title>
       <link>https://wangcy6.github.io/post/2024/06-tools-base-user-git/</link>
