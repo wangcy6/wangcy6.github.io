@@ -48,7 +48,7 @@
 <meta itemprop="name" content="ContextOS 模块开发与架构解析笔记">
 <meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2025-04-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1900">
+<meta itemprop="wordCount" content="2130">
 <meta itemprop="keywords" content="小而美,ContextOS," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ContextOS 模块开发与架构解析笔记"/>
 <meta name="twitter:description" content="c&#43;&#43;"/>
@@ -128,8 +128,8 @@
       <div class="post-meta">
         <span class="post-time"> 2025-04-07 00:00 </span>
         
-          <span class="more-meta"> 约 1900 字 </span>
-          <span class="more-meta"> 预计阅读 4 分钟 </span>
+          <span class="more-meta"> 约 2130 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -368,6 +368,9 @@ open http://localhost:9020
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">
@@ -385,9 +388,12 @@ open http://localhost:9020
 <span class="p">)</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">ice</span><span class="p">.</span><span class="nf">Run</span><span class="p">())</span> 
-<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">ice</span><span class="p">.</span><span class="nf">Run</span><span class="p">())</span>  
+	<span class="c1">//负责解析参数、初始化框架、启动服务
+</span><span class="c1"></span>	<span class="c1">//启动后编译这里看不到界面
+</span><span class="c1"></span><span class="p">}</span>
 <span class="c1">// golang init函数：初始化顺序：全局变量初始化-&gt;init()-&gt;main()
+</span><span class="c1">//这个也是入口
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
 	<span class="nx">ice</span><span class="p">.</span><span class="nx">Info</span><span class="p">.</span><span class="nx">CodeMain</span> <span class="p">=</span> <span class="s">&#34;src/operation/portal.go&#34;</span>
 	<span class="nx">ice</span><span class="p">.</span><span class="nx">Info</span><span class="p">.</span><span class="nx">NodeMain</span> <span class="p">=</span> <span class="s">&#34;web.team.operation.portal&#34;</span>
@@ -395,9 +401,42 @@ open http://localhost:9020
 
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="bug反馈">bug反馈</h2>
+</div><h4 id="疑问main-和-init--哪个是入口">疑问：main 和 init  哪个是入口？</h4>
+<p>目的：模块化方式加载到操作系统上，</p>
+<blockquote>
+<p>类比 liunx 内核模块加载，运行时加重设计？这个道理估计体会很长时间。</p>
+</blockquote>
 <ul>
-<li>bug001&ndash;目前 编译平台不支持 mac  <em>Intel</em> 的x86 CPU 编译。&mdash;</li>
+<li>ice.Run=src/operation/portal.go  【一个模块理解一个单独的服务。】</li>
+<li>如果没有init 会有什么后果？【这个不不清楚，为此需要分析】✅</li>
+<li>ice.Info.CodeMain 是 ice.info 结构体中的一个字段，用于指定项目的主要代码文件路径</li>
+<li>
+<ol>
+<li>ice.Info.CodeMain 是 ice.info 结构体中的一个字段，用于指定项目的主要代码文件路径。</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>当 ice.Run() 函数被调用时，框架会：</li>
+</ol>
+<ul>
+<li>
+<p>初始化框架环境和配置</p>
+</li>
+<li>
+<p>根据 ice.Info.CodeMain 指定的路径加载主代码文件</p>
+</li>
+<li>
+<p>根据 ice.Info.NodeMain 找到对应的入口模块</p>
+</li>
+<li>
+<p>启动应用服务
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250407180840.png" alt="image.png"></p>
+</li>
+</ul>
+<h2 id="bug反馈">bug反馈</h2>
+<ul>
+<li>bug001</li>
 </ul>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
