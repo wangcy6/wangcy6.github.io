@@ -26,6 +26,15 @@
     </item>
     
     <item>
+      <title>源码解析：文件系统扩展属性操作(setfattr, getfattr)</title>
+      <link>https://wangcy6.github.io/post/storage/2025/01-ceph-feature-getfattr/</link>
+      <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2025/01-ceph-feature-getfattr/</guid>
+      <description>小王提问： ceph getfattr -nicfs.dir.rfiles 这个命令 如何获取一个目录下文件数量，给出参考来源 和原理分析，不清楚不要回答? 如果创建一个文件，如果引起目录下文件数量发生变化</description>
+    </item>
+    
+    <item>
       <title>日拱一卒：ceph-mds 业务操作</title>
       <link>https://wangcy6.github.io/post/storage/3_ceph_msd/</link>
       <pubDate>Fri, 02 Jun 2023 00:00:00 +0000</pubDate>

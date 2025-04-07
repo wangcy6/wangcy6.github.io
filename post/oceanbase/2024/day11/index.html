@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>成为ob贡献者(09):如何证明采用了PALF设计就是安全的 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="自我驱动学习" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/oceanbase/2024/day11/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="成为ob贡献者(09):如何证明采用了PALF设计就是安全的" />
+<meta property="og:description" content="自我驱动学习" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/oceanbase/2024/day11/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-12-21T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-12-21T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="成为ob贡献者(09):如何证明采用了PALF设计就是安全的">
+<meta itemprop="description" content="自我驱动学习"><meta itemprop="datePublished" content="2024-12-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-12-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1187">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="成为ob贡献者(09):如何证明采用了PALF设计就是安全的"/>
+<meta name="twitter:description" content="自我驱动学习"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">成为ob贡献者(09):如何证明采用了PALF设计就是安全的</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-12-21 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/oceanbase/"> oceanbase </a>
+            </div>
+          <span class="more-meta"> 约 1187 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#51">5.1</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>来监督，哪天没打卡 私信我</p>
+<h1 id="第5章节数据变更同步">第5章节：数据变更同步</h1>
+<p><img src="https://foruda.gitee.com/images/1739357371842613036/cc118291_116887.png" alt="输入图片说明" title="屏幕截图">
+原文：</p>
+<p>Besides serving transactions, distributed databases also act as the<br>
+source of data flow. Downstream applications can be deployed to<br>
+provide various services by synchronizing data changes recorded<br>
+in physical logs.</p>
+<p>This section introduces two typical physical log<br>
+synchronization scenarios in OceanBase, describes what challenges<br>
+they bring to PALF, and depicts how to address these challenges by<br>
+utilizing features of PALF.</p>
+<p><strong>翻译：</strong></p>
+<p>除了处理事务，分布式数据库还充当数据流的源头。下游应用可以通过同步物理日志中记录的数据更改来部署，从而提供各种服务。</p>
+<p>本节介绍了OceanBase中两种典型的物理日志同步场景，描述了它们给PALF带来的挑战，并阐述了如何利用PALF的特性来解决这些挑战。</p>
+<p><strong>通俗理解：</strong></p>
+<p>分布式数据库不仅仅是处理事务（如存取数据）的地方，它们还扮演着数据流的起点。下游系统（指其他依赖这些数据的应用或服务）可以通过获取数据库中记录的数据变化（比如用户修改了什么信息），来实现各种功能，比如数据分析、实时报告等。</p>
+<p>在OceanBase数据库中，有两种常见的方式来同步这些数据变化。本节主要讲解这两种方式，以及它们给数据库的高可用性（PALF）带来了哪些问题，最后介绍如何利用PALF的特性来解决这些问题。</p>
+<p>简单来说，数据库不仅存储和处理数据，还能把数据的变动告诉其他系统，这样其他系统就能根据最新的数据做相应的处理。而OceanBase在这方面有两种常用的方法，但这些方法也带来了一些挑战，文中会讲解应该如何应对这些挑战。</p>
+<h2 id="51">5.1</h2>
+<p>原文：
+When clients write data to databases, records of modifications are<br>
+appended to the leader of the PALF group and replicated to followers.</p>
+<p>Besides replicating logs within the database, data changes can<br>
+be synchronized out of the database for richer functions.</p>
+<p>There are  two typical scenarios in the OceanBase database:
+physical standby  databases and database restore</p>
+<p>翻译：</p>
+<p>当客户端向数据库写入数据时，修改记录会被追加到PALF组的主节点，并复制到从节点。在数据库内部复制日志的同时，数据变化也可以被同步到数据库外部，以实现更丰富的功能。在OceanBase数据库中，主要有两种典型场景：物理备用数据库和数据库恢复</p>
+<p><strong>通俗理解</strong>：</p>
+<p>想象一下，你在银行存钱，每次存钱都会记录一条转账记录。银行的系统会把这条记录同时保存到主要的记录本（主节点）和几个副本记录本（从节点），这样即使主要记录本坏了，副本记录本还能保证数据不丢失。</p>
+<p>除了在银行内部保存这些记录，银行还可以把这些记录送到其他地方，比如给审计部门或者数据分析部门，用于更广泛的用途。在OceanBase数据库中，这种技术有两种主要用途：</p>
+<ol>
+<li>
+<p><strong>物理备用数据库</strong>：就像银行有多个分行各自保存一份记录副本，数据库也可以有多个物理备用数据库，确保在主数据库出问题时，备用数据库能立即接管，保证服务不中断。</p>
+</li>
+<li>
+<p><strong>数据库恢复</strong>：如果数据库因为意外情况（比如系统故障）导致数据丢失，可以通过之前保存的记录快速恢复数据，确保数据安全。</p>
+</li>
+</ol>
+<p>原文：</p>
+<p>As shown in Figure 7, the physical standby database is an independent database in which the data are identical to the primary<br>
+database. It could serve part of read requests to relieve pressure<br>
+on the primary database. Compared to traditional primary-backup<br>
+architecture, it offers higher availability because each database cluster can tolerate failures. One of the most important features of the<br>
+physical standby database is database-level data protection and disaster recovery, a physical standby database can be switched to be<br>
+the primary database by a failover operation if the original primary<br>
+database becomes unavailable, which distinguish it from replicalevel protection such as Paxos learners [7]. In production databases,<br>
+database restore is a core component of the high-reliability feature.<br>
+If data have been lost due to storage media damage or human errors,<br>
+archived logs stored in offline storage (such as NFS or Cloud Object<br>
+Stores) could be used to restore an identical database</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-12-21 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/oceanbase/2024/day10/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">成为ob贡献者(09):如何证明采用了PALF设计就是安全的</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/oceanbase/2024/day11PALF%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">
+            <span class="next-text nav-default">成为ob贡献者(10)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

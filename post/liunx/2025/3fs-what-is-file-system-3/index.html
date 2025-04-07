@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从青铜到王者系列：3FS如何实现一个文件系统 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="从青铜到王者" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/liunx/2025/3fs-what-is-file-system-3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从青铜到王者系列：3FS如何实现一个文件系统" />
+<meta property="og:description" content="从青铜到王者" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/liunx/2025/3fs-what-is-file-system-3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-03-23T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-03-23T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从青铜到王者系列：3FS如何实现一个文件系统">
+<meta itemprop="description" content="从青铜到王者"><meta itemprop="datePublished" content="2025-03-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-03-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6633">
+<meta itemprop="keywords" content="code_reading," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从青铜到王者系列：3FS如何实现一个文件系统"/>
+<meta name="twitter:description" content="从青铜到王者"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从青铜到王者系列：3FS如何实现一个文件系统</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-03-23 00:00 </span>
+        
+          <span class="more-meta"> 约 6633 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#读者对象可选">读者对象(可选)</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#拆分问题1-c内存管理">拆分问题1： c++内存管理</a>
+      <ul>
+        <li><a href="#1-问题是什么">1. 问题是什么？</a></li>
+        <li><a href="#2-为了解决这个问题准备哪些事情技术路线">2. 为了解决这个问题准备哪些事情(技术路线)</a></li>
+        <li><a href="#3--参考答案-整理过程">3  参考答案 （整理过程）</a></li>
+        <li><a href="#gcclibc和libstdc之间有什么关系呢">GCC、Libc和Libstdc++之间有什么关系呢？</a></li>
+        <li><a href="#详细对比glibc-vs-libc-vs-libstdc"><strong>详细对比：<code>glibc</code> vs <code>libc++</code> vs <code>libstdc++</code></strong></a></li>
+        <li><a href="#-gcc各版本对c的支持情况"># GCC各版本对C++的支持情况</a></li>
+        <li><a href="#为什么-new-不是-libstdc-函数"><strong>为什么 <code>new</code> 不是 <code>libstdc++</code> 函数</strong></a></li>
+        <li><a href="#为什么-new-被视为高级抽象"><strong>为什么 <code>new</code> 被视为高级抽象？</strong></a></li>
+        <li><a href="#总结"><strong>总结</strong></a></li>
+        <li><a href="#小总结">小总结</a></li>
+        <li><a href="#3-2-libstdcllvm项目源码探索过程">3. 2 libstdc++/llvm项目源码探索过程</a></li>
+        <li><a href="#什么是弱符号-weak-definition"><strong>什么是弱符号 (weak definition)?</strong></a></li>
+        <li><a href="#3fs项目">3FS项目</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#1-问题是什么如何-异步io提高性能">1. 问题是什么？如何 异步I/O提高性能</a></li>
+    <li><a href="#2-为了解决这个问题准备哪些事情">2. 为了解决这个问题准备哪些事情</a>
+      <ul>
+        <li><a href="#文章">文章</a></li>
+        <li><a href="#项目看别人怎么使用">项目：看别人怎么使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#3--结果是什么">3  结果是什么</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#参考">参考</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>深入浅出理解DeepSeek 3FS (3) 说出来你可能不信：C++11发布13年了！</p>
+<p>大家好，我是小王同学，</p>
+<p>本文希望帮你深入理解分布式存储系统3FS更进一步</p>
+<h3 id="读者对象可选">读者对象(可选)</h3>
+<h4 id="1-目标冲击大厂拿百万年薪"><strong>1. 目标：冲击大厂，拿百万年薪</strong></h4>
+<ul>
+<li>想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+<li>通过目标驱动行动</li>
+</ul>
+<h4 id="2-现状缺乏实战渴望提升动手能力"><strong>2. 现状：缺乏实战，渴望提升动手能力</strong></h4>
+<ul>
+<li>
+<p>公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</p>
+</li>
+<li>
+<p>想通过阅读优秀的源码，提高代码能力，从“不会写”到“敢写”，提升C++编程自信。</p>
+</li>
+<li>
+<p>需要掌握高效学习和实践的方法，弥补缺乏实战经验的短板。</p>
+</li>
+</ul>
+<h4 id="3-价值优秀完成任务成为团队公司都认可的核心人才">3. 价值：优秀完成任务，成为团队、公司都认可的核心人才</h4>
+<p><strong>错误示范</strong>：</p>
+<ul>
+<li>不少同学工作很忙，天天加班，做了很多公司的事情。
+但是 不是本团队事情，不是本部门事情，领导不认可。</li>
+<li>只埋头写代码，从不和团队沟通，导致没人知道你做了什么。</li>
+<li>做低优先级的任务，无法利他，自然不会有人“推”你向上。</li>
+</ul>
+<p>陷入沉迷权利大棒的公司/领导不屑争吵小手段（跟自媒体内容创作和流量平台一个道理）不停完成任务而非优秀的完成。</p>
+<ul>
+<li>刻意提高工作难度</li>
+<li>工作中不公平对待</li>
+<li>突然换了一副嘴脸</li>
+<li>拉帮结派</li>
+<li>制造恶性竞争</li>
+<li>刻意放大缺点</li>
+<li>捧杀</li>
+</ul>
+<p><strong>优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</strong></p>
+<blockquote>
+<p><strong>“If you can’t measure it, you can’t manage it.”</strong></p>
+</blockquote>
+<p><strong>案例对比</strong>（谁对团队贡献更大？）</p>
+<ul>
+<li>
+<p><strong>A程序员</strong>：一个月写不出一行代码，一个bug不解决，一个测试不完成。</p>
+</li>
+<li>
+<p><strong>B程序员</strong>：每个月写1000行代码，彻底解决3个核心bug，完成20个测试。</p>
+</li>
+</ul>
+<p>答案不言而喻——优秀就是这么“俗气”。</p>
+<h1 id="讲一个故事">讲一个故事</h1>
+<p>一天 老王 交给 小王同学一个任务
+ceph 在硬盘读写太慢了，请调查协程实现方式，实现适合自己的业务的协程，
+然后给出能提升多少，调查报告</p>
+<p>小王思路：
+于是 开启漫长调研，自己实现不会呢，并且现在为什么磁盘慢，提升多少怎么验证
+反复讨论三个月过去了。</p>
+<ul>
+<li>我纠结为什么自己实现呢，自己实现不会呢</li>
+<li>现在为什么磁盘慢</li>
+</ul>
+<p>看到 提问：
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250328162018.png" alt="image.png"></p>
+<p>目前适合用c++17 gcc版本7.4 编译，为什么不能最新版本，在企业这个忌讳。
+不用最新版本</p>
+<p>因此</p>
+<blockquote>
+<p>为什么deepseek的3fs主要用c++20 开发，采用C++20的现代特性特征，如何避坑的</p>
+</blockquote>
+<h2 id="拆分问题1-c内存管理">拆分问题1： c++内存管理</h2>
+<p>代码地址：</p>
+<ul>
+<li><a href="https://github.com/watchpoints/master-cpp">https://github.com/watchpoints/master-cpp</a>
+演示平台：https://gitpod.io/new</li>
+</ul>
+<h3 id="1-问题是什么">1. 问题是什么？</h3>
+<ul>
+<li>一个类如何定制自己的new和delete，代替默认的 new 和delete？</li>
+</ul>
+<h3 id="2-为了解决这个问题准备哪些事情技术路线">2. 为了解决这个问题准备哪些事情(技术路线)</h3>
+<h5 id="step1--c学习路线和资料想要电子书关注-回复-电子书">step1  c++学习路线和资料（想要电子书关注 回复 电子书）</h5>
+<ul>
+<li>【Effective C++】条款49~52：定制new和delete</li>
+<li>More Effective C++  Item 8: Understand the different meanings of new
+and delete
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250327181737.png" alt="image.png"></li>
+</ul>
+<p><a href="https://github.com/steveLauwh/Effective-C-Plus-Plus/tree/master">https://github.com/steveLauwh/Effective-C-Plus-Plus/tree/master</a>
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250327182220.png" alt="image.png"></p>
+<ul>
+<li>
+<p>C++内存模型</p>
+</li>
+<li>
+<p><a href="https://github.com/isocpp/CppCoreGuidelines">https://github.com/isocpp/CppCoreGuidelines</a></p>
+</li>
+<li>
+<p>经典文章</p>
+<p>C++三部曲之二：C++内存管理全景指南]
+C++三部曲之三：C++模版的本质
+C++的最后一道坎|百万年薪的程序员</p>
+</li>
+</ul>
+<h5 id="step2-参考源码">step2 参考源码</h5>
+<p>（1）<strong>C++ 标准库实现</strong></p>
+<p>如果你想研究 <code>new/delete</code> 的底层实现，可以查看 GCC 或 Clang 的 C++ 标准库源码：</p>
+<ul>
+<li>
+<p><strong>GCC libstdc++</strong>: <a href="https://gcc.gnu.org/libstdc++/">https://gcc.gnu.org/libstdc++/</a></p>
+</li>
+<li>
+<p><strong>LLVM libc++</strong>: <a href="https://libcxx.llvm.org/">https://libcxx.llvm.org/</a></p>
+</li>
+</ul>
+<p>在标准库实现中，你可以找到 <code>std::allocator</code>、<code>std::unique_ptr</code> 和 <code>std::shared_ptr</code> 的实现方式。</p>
+<p>2）<strong>开源项目</strong></p>
+<p>一些高性能的 C++ 项目也有自定义 <code>new/delete</code> 的实现，你可以参考它们的代码：</p>
+<ul>
+<li><strong>Google TCMalloc</strong>（高性能内存分配器）<br>
+<a href="https://github.com/google/tcmalloc">https://github.com/google/tcmalloc</a></li>
+<li>oceanbase</li>
+</ul>
+<h5 id="step3-进一步探索">step3 进一步探索</h5>
+<h3 id="3--参考答案-整理过程">3  参考答案 （整理过程）</h3>
+<h3 id="gcclibc和libstdc之间有什么关系呢">GCC、Libc和Libstdc++之间有什么关系呢？</h3>
+<h3 id="详细对比glibc-vs-libc-vs-libstdc"><strong>详细对比：<code>glibc</code> vs <code>libc++</code> vs <code>libstdc++</code></strong></h3>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>glibc （libc）</strong></th>
+<th><strong>libc++</strong></th>
+<th><strong>libstdc++</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用途</strong></td>
+<td>提供 C 语言标准库实现</td>
+<td>提供 C++ 标准库实现</td>
+<td>提供 C++ 标准库实现</td>
+</tr>
+<tr>
+<td><strong>支持平台</strong></td>
+<td>主要用于 Linux 操作系统</td>
+<td>主要与 Clang 编译器配合使用</td>
+<td>主要与 GCC 编译器配合使用</td>
+</tr>
+<tr>
+<td><strong>内容</strong></td>
+<td>包括所有 C 标准库函数，操作系统接口、线程支持等</td>
+<td>提供 C++ 标准库的模板库（STL）、IO流等</td>
+<td>提供 C++ 标准库的模板库（STL）、IO流等</td>
+</tr>
+<tr>
+<td><strong>库功能</strong></td>
+<td>系统调用、内存管理、线程库、文件操作等</td>
+<td>C++ STL，算法，IO流等</td>
+<td>C++ STL，算法，IO流等</td>
+</tr>
+<tr>
+<td><strong>重入性与线程安全</strong></td>
+<td>提供线程安全的库支持，包含锁等线程控制功能</td>
+<td>提供线程安全支持（但不一定是内建的）</td>
+<td>提供线程安全支持，包含多线程功能</td>
+</tr>
+</tbody>
+</table>
+<p>GCC、Libc和Libstdc++之间有什么关系呢？
+简单来说，GCC是编译器，它负责将C++源代码编译成可执行程序。在这个过程中，GCC会链接到Libc和Libstdc++这两个库。Libc为GCC提供了底层的C语言接口，而Libstdc++则为GCC提供了C++标准库的实现</p>
+<h3 id="-gcc各版本对c的支持情况"># GCC各版本对C++的支持情况</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250327210032.png" alt="image.png"></p>
+<p>从c++11 诞生 2011年8月1到现在14年了。
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250327213446.png" alt="image.png"></p>
+<h4 id="libstdcso6与c标准的对应关系">libstdc++.so.6与C++标准的对应关系</h4>
+<p>libstdc++库实现了ISO C++标准。</p>
+<p>这个标准库定义了C++程序中应该包含哪些组件，例如输入输出流、字符串处理、容器、算法和迭代器等。随着C++标准的演进，libstdc++也在不断更新</p>
+<p>划重点： gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)  现在默认版本号11.4了</p>
+<blockquote>
+<p>划重点：</p>
+</blockquote>
+<p>GCC，全称GNU Compiler Collection，是GNU项目下的一个开源编译器套件。它支持多种编程语言，包括C、C++、Objective-C、Fortran、Ada、Go等。GCC不仅仅是一个编译器，它还包含了其他与编译相关的工具，如链接器、汇编器等。</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250327194324.png" alt="image.png"></p>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><code>new</code> 关键字</th>
+<th><code>operator new</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>是否可以重载？</strong></td>
+<td>❌ 不能</td>
+<td>✅ 可以</td>
+</tr>
+<tr>
+<td><strong>作用</strong></td>
+<td>分配内存并调用构造函数</td>
+<td>只分配内存</td>
+</tr>
+<tr>
+<td><strong>是否可以直接调用？</strong></td>
+<td>❌ 不能</td>
+<td>✅ 直接调用</td>
+</tr>
+<tr>
+<td><strong>能否影响 <code>new</code> 行为？</strong></td>
+<td>❌ 不能</td>
+<td>✅ 影响 <code>new</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>why:</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>new</code> <strong>并不是</strong> <code>libstdc++</code> 标准库的函数，而是 C++ <strong>语言级别的运算符</strong>，它的实现依赖于标准库中的 <code>operator new</code> 函数。</p>
+<h3 id="为什么-new-不是-libstdc-函数"><strong>为什么 <code>new</code> 不是 <code>libstdc++</code> 函数</strong></h3>
+<p><strong><code>new</code></strong> 运算符可以看作是 C++ 语言中的一种 <strong>高级抽象</strong>，其提供了一种方便的方式来在堆上分配内存并构造对象，而不需要用户显式地调用底层的内存分配函数（例如 <code>malloc</code>）。</p>
+<h3 id="为什么-new-被视为高级抽象"><strong>为什么 <code>new</code> 被视为高级抽象？</strong></h3>
+<ol>
+<li>
+<p><strong>内存管理的封装</strong>：</p>
+<ul>
+<li>
+<p>在 C 中，如果你想在堆上分配内存，你通常会使用 <code>malloc</code> 或 <code>calloc</code>，然后需要手动管理内存，包括初始化对象。</p>
+</li>
+<li>
+<p>在 C++ 中，<code>new</code> 运算符提供了一个更高级的抽象，<strong>不仅仅是内存分配</strong>，还自动调用对象的构造函数来初始化对象。</p>
+</li>
+<li>
+<p>这种封装隐藏了底层内存管理的细节，简化了内存分配的使用，使开发者不需要关注内存分配与对象初始化的分离。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>异常安全</strong>：</p>
+<ul>
+<li>使用 <code>new</code> 时，如果内存分配失败，它会抛出一个 <code>std::bad_alloc</code> 异常，这使得开发者不需要显式地检查 <code>malloc</code> 返回的 <code>NULL</code> 值。这样的异常处理提供了一种更加安全和优雅的内存管理方式。</li>
+</ul>
+</li>
+<li>
+<p><strong>对内存分配的透明管理</strong>：</p>
+<ul>
+<li>虽然底层的 <code>operator new</code> 函数可以被重载，但 C++ 语言本身提供了透明的内存分配接口，允许开发者使用 <code>new</code> 运算符而不关心内存分配的细节。这种抽象化让开发者集中于高层次的程序逻辑，而不是低级的内存管理。</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://en.cppreference.com/w/cpp/memory">https://en.cppreference.com/w/cpp/memory</a></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250327203824.png" alt="image.png"></p>
+<p>代码：https://github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/libsupc++/new_op.cc</p>
+<p>c++目的</p>
+<p>Direct mapping of language constructs to hardware facilities
+• Zero-overhead abstraction
+• Make the language simpler! •
+Add these two essential features now!! •
+Don’t break (any of) my code!!!</p>
+<h3 id="总结"><strong>总结</strong></h3>
+<ul>
+<li>
+<p><strong><code>new</code> 运算符的确是 C++ 中的一种高级抽象</strong>，它封装了内存分配和对象构造的细节，提供了比 <code>malloc</code> 更高层次的内存管理方式。</p>
+</li>
+<li>
+<p>它使得代码更简洁、更安全，同时隐藏了复杂的底层细节，减少了手动管理内存的复杂性。</p>
+</li>
+</ul>
+<p>这种抽象方式是 C++ 提供的一个重要特性，使得开发者可以更加专注于业务逻辑而不是底层的内存管理。</p>
+<blockquote>
+<p>划重点：malloc 和 operator new 在内存管理上都是 称作 <a href="https://en.cppreference.com/w/cpp/memory/new" title="cpp/memory/new">Low level memory management</a>,高级方式呢</p>
+<p>Smart pointers enable automatic, exception-safe, object lifetime management.</p>
+</blockquote>
+<p>c++ 语言本身不提供 内存池管理方式，想其他语言，对应的库。</p>
+<blockquote>
+</blockquote>
+<p><strong>对比 <code>malloc</code> 和 <code>new</code></strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><code>malloc</code> <strong>(函数)</strong></th>
+<th><code>new</code> <strong>(运算符)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否是函数？</td>
+<td>✅ 是普通函数</td>
+<td>不是函数，是运算符</td>
+</tr>
+<tr>
+<td>是否调用构造函数？</td>
+<td>不会调用</td>
+<td>✅ 会调用构造函数</td>
+</tr>
+<tr>
+<td>返回类型</td>
+<td><code>void*</code>，需要强制转换</td>
+<td>直接返回正确的指针类型</td>
+</tr>
+<tr>
+<td>是否可以重载？</td>
+<td>❌ 不能重载</td>
+<td>✅ <code>operator new</code> 可以被重载</td>
+</tr>
+<tr>
+<td>是否支持类型安全？</td>
+<td>❌ 需要手动转换类型</td>
+<td>✅ 自动匹配类型</td>
+</tr>
+<tr>
+<td>释放方式</td>
+<td><code>free(ptr);</code></td>
+<td><code>delete ptr;</code></td>
+</tr>
+<tr>
+<td>失败时返回</td>
+<td><code>nullptr</code> / <code>NULL</code></td>
+<td><strong>抛出异常</strong>（<code>std::bad_alloc</code>）</td>
+</tr>
+<tr>
+<td><strong>总结</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>✅ <code>new</code> 关键字是 <strong>C++ 语法的一部分，不能被重载</strong>。<br>
+✅ <code>operator new</code> 是 <strong>内存分配函数，它可以被重载</strong>，并且 <code>new</code> 关键字会调用它。</p>
+<h3 id="小总结">小总结</h3>
+<p>new 是c++高级抽象，具体怎么实现的只能通过汇编来推断</p>
+<p>string *ptr = new string(&ldquo;Memory Management&rdquo;);</p>
+<ol>
+<li>
+<p>内存分配 调用全局的 operator new 函数为对象分配足够大小的内存（例如 sizeof(std::string) 字节）。</p>
+</li>
+<li>
+<p>构造对象 使用分配得到的内存地址调用 std::string 的构造函数，并传入常量字符串 &ldquo;Memory Management&rdquo; 作为参数。</p>
+</li>
+<li>
+<p>返回对象指针 构造完毕后返回分配并初始化后的对象指针</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+# 假设 sizeof(std::string) 为 32 字节（仅示例，实际值依实现而定）
+mov    $32, %edi             # 将32字节作为参数放入 edi (operator new 的参数)
+call   operator_new         # 调用全局 operator new 分配内存，返回指针在 %rax
+
+mov    %rax, %rdi           # 将返回的内存指针作为第一个参数传递给构造函数
+lea    .LC0(%rip), %rsi     # 将 &#34;Memory Management&#34; 字符串常量的地址加载到 rsi
+						 
+# 调用 std::string(const char*) 构造函数，名称会被编译器 mangling 处理，示例名称如下：
+call   _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEC1EPKc
+
+# 构造完成后，%rax 中保存着对象指针
+针
+</code></pre></td></tr></table>
+</div>
+</div><p>大局观</p>
+<p>首先, 我们要知道, GOT和PLT只是一种<code>重定向</code>的实现方式. 所以为了理解他们的作用,<br>
+就要先知道什么是重定向, 以及我们为什么需要重定向
+推荐阅读：
+程序员的自我修养&ndash;链接、装载与库
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250328113045.png" alt="image.png"></p>
+<h3 id="3-2-libstdcllvm项目源码探索过程">3. 2 libstdc++/llvm项目源码探索过程</h3>
+<p>glibc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="err">代码位置：</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/libsupc++/new_op.cc
+</span><span class="c1"></span>
+
+
+<span class="c1">// 使用弱符号 (weak definition)，允许用户提供自定义的 operator new 覆盖该实现
+</span><span class="c1"></span><span class="n">_GLIBCXX_WEAK_DEFINITION</span> <span class="kt">void</span> <span class="o">*</span>
+<span class="k">operator</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">sz</span><span class="p">)</span> <span class="n">_GLIBCXX_THROW</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bad_alloc</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>  <span class="c1">// 用于存储 malloc 分配的内存指针
+</span><span class="c1"></span>
+  <span class="cm">/* 
+</span><span class="cm">     C++ 规范要求 operator new(0) 不能返回 nullptr，所以如果 sz == 0，强制分配至少 1 字节。
+</span><span class="cm">  */</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">__builtin_expect</span><span class="p">(</span><span class="n">sz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">))</span> <span class="c1">// `__builtin_expect` 用于优化 CPU 预测分支，提高性能
+</span><span class="c1"></span>    <span class="n">sz</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="cm">/* 
+</span><span class="cm">     进入循环尝试分配内存，直到 malloc 成功或 new_handler 处理失败。
+</span><span class="cm">     如果 malloc 返回 nullptr，意味着内存分配失败，尝试调用 new_handler 释放一些内存。
+</span><span class="cm">  */</span>
+  <span class="k">while</span> <span class="p">((</span><span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">sz</span><span class="p">))</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+  <span class="p">{</span>
+      <span class="c1">// 获取当前程序全局的 new_handler
+</span><span class="c1"></span>      <span class="n">new_handler</span> <span class="n">handler</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get_new_handler</span><span class="p">();</span>
+
+      <span class="c1">// 如果没有注册 new_handler，抛出 std::bad_alloc 异常或终止程序
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">handler</span><span class="p">)</span>
+        <span class="n">_GLIBCXX_THROW_OR_ABORT</span><span class="p">(</span><span class="n">bad_alloc</span><span class="p">());</span>
+
+      <span class="c1">// 调用用户提供的 new_handler，尝试释放一些内存
+</span><span class="c1"></span>      <span class="n">handler</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 成功分配内存后，返回指针
+</span><span class="c1"></span>  <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+
+<span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/llvm/llvm-project/blob/main/libcxx/src/new.cpp
+</span><span class="c1"></span>
+<span class="c1">// ------------------ BEGIN COPY ------------------
+</span><span class="c1">// Implement all new and delete operators as weak definitions
+</span><span class="c1">// in this shared library, so that they can be overridden by programs
+</span><span class="c1">// that define non-weak copies of the functions.
+</span><span class="c1"></span>
+
+<span class="nl">https</span><span class="p">:</span><span class="c1">//gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a00035_source.html#l00187
+</span><span class="c1"></span>
+
+<span class="err">面试官</span><span class="o">:</span><span class="err">你知道</span><span class="n">C</span><span class="o">++</span><span class="err">函数重载吗</span><span class="o">?</span><span class="err">为什么</span><span class="n">C语言不支持函数重载</span>
+
+<span class="err">升级</span> <span class="n">C语言解决函数重载</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="什么是弱符号-weak-definition"><strong>什么是弱符号 (weak definition)?</strong></h3>
+<p><strong>弱符号 (weak symbol)</strong> 是指：</p>
+<ul>
+<li>
+<p><strong>链接器 (linker)</strong> 允许多个相同名称的定义共存，但会优先选择<strong>非弱符号 (strong definition)</strong>。</p>
+</li>
+<li>
+<p>如果没有找到<strong>非弱符号</strong>，则使用弱符号提供的默认实现。</p>
+</li>
+<li>
+<p><strong>适用于动态库 (shared library) 中的默认实现</strong>，以允许应用程序提供自定义版本。</p>
+</li>
+</ul>
+<p>在 GCC 和 Clang 中，可以使用 <code>__attribute__((weak))</code> 标注弱符号：</p>
+<p>void* operator new(std::size_t size) __attribute__((weak));
+void operator delete(void* ptr) __attribute__((weak));</p>
+<p>在C语言中，函数和初始化的全局变量（包括显示初始化为0）是强符号，未初始化的全局变量是弱符号。</p>
+<p>对于它们，下列三条规则使用：</p>
+<p>① 同名的强符号只能有一个，否则编译器报&quot;重复定义&quot;错误。</p>
+<p>② 允许一个强符号和多个弱符号，但定义会选择强符号的。</p>
+<p>③ 当有多个弱符号相同时，<a href="https://zhida.zhihu.com/search?content_id=238104535&amp;content_type=Article&amp;match_order=1&amp;q=%E9%93%BE%E6%8E%A5%E5%99%A8&amp;zhida_source=entity">链接器</a>选择占用内存空间最大的那个
+下面一段话摘自 wikipedia：</p>
+<p>In computing, a weak symbol is a symbol definition in an object file or dynamic library that may be overridden by other symbol definitions. Its value will be zero if no definition is found by the loader.</p>
+<h3 id="3fs项目">3FS项目</h3>
+<p>3FS项目实现了一个灵活的自定义内存分配系统，通过重载全局的new/delete操作符，将内存分配重定向到自定义的分配器</p>
+<p>代码位置：</p>
+<p>src\memory\common\GlobalMemoryAllocator.h
+src\memory\common\OverrideCppNewDelete.h</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// Override global new/delete with custom memory allocator.
+void *operator new(size_t size) { return hf3fs::memory::allocate(size); }
+
+inline void *allocate(size_t size) { return std::malloc(size); }
+
+个文件通过条件编译宏 OVERRIDE_CXX_NEW_DELETE 控制是否启用自定义内存分配器。当启用时，全局的new和delete操作符会被重定向到 hf3fs::memory 命名空间中的 allocate 和 deallocate 函数。
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="cp">#define GET_MEMORY_ALLOCATOR_FUNC_NAME &#34;getMemoryAllocator&#34;
+</span><span class="cp"></span>
+<span class="k">namespace</span> <span class="n">hf3fs</span><span class="o">::</span><span class="n">memory</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">MemoryAllocatorInterface</span> <span class="p">{</span>
+
+ <span class="k">public</span><span class="o">:</span>
+
+  <span class="k">virtual</span> <span class="o">~</span><span class="n">MemoryAllocatorInterface</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">allocate</span><span class="p">(</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">deallocate</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">mem</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">memalign</span><span class="p">(</span><span class="n">size_t</span> <span class="n">alignment</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">logstatus</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">profiling</span><span class="p">(</span><span class="kt">bool</span> <span class="n">active</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prefix</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">};</span>
+
+
+<span class="k">using</span> <span class="n">GetMemoryAllocatorFunc</span> <span class="o">=</span> <span class="n">MemoryAllocatorInterface</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="p">)();</span>
+
+<span class="p">}</span>  <span class="c1">// namespace hf3fs::memory
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Let me explain this line of code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">GetMemoryAllocatorFunc</span> <span class="n">func</span> <span class="o">=</span> <span class="p">(</span><span class="n">GetMemoryAllocatorFunc</span><span class="p">)</span><span class="o">::</span><span class="n">dlsym</span><span class="p">(</span><span class="n">lib</span><span class="p">,</span> <span class="s">&#34;getMemoryAllocator&#34;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This is a dynamic library function loading operation that consists of several parts:</p>
+<ol>
+<li>
+<p><strong>dlsym function</strong>:</p>
+<ul>
+<li><code>::dlsym</code> is a POSIX function for loading symbols from dynamic libraries</li>
+<li>First parameter <code>lib</code> is the handle to the loaded dynamic library</li>
+<li>Second parameter <code>&quot;getMemoryAllocator&quot;</code> is the symbol name to look up</li>
+</ul>
+</li>
+<li>
+<p><strong>Type casting</strong>:</p>
+<ul>
+<li><code>(GetMemoryAllocatorFunc)</code> casts the void pointer returned by dlsym to our function pointer type</li>
+<li>This cast is necessary because <code>dlsym</code> returns <code>void*</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Function pointer assignment</strong>:</p>
+<ul>
+<li>The casted function pointer is assigned to <code>func</code></li>
+<li>After this, <code>func</code> can be called like a normal function to get the memory allocator instance</li>
+</ul>
+</li>
+</ol>
+<p>Example usage:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">// Load the library
+</span><span class="c1"></span><span class="kt">void</span><span class="o">*</span> <span class="n">lib</span> <span class="o">=</span> <span class="n">dlopen</span><span class="p">(</span><span class="s">&#34;memory_allocator.so&#34;</span><span class="p">,</span> <span class="n">RTLD_NOW</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">lib</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Get the function pointer
+</span><span class="c1"></span>    <span class="n">GetMemoryAllocatorFunc</span> <span class="n">func</span> <span class="o">=</span> <span class="p">(</span><span class="n">GetMemoryAllocatorFunc</span><span class="p">)</span><span class="o">::</span><span class="n">dlsym</span><span class="p">(</span><span class="n">lib</span><span class="p">,</span> <span class="s">&#34;getMemoryAllocator&#34;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Call the function to get allocator instance
+</span><span class="c1"></span>        <span class="n">MemoryAllocatorInterface</span><span class="o">*</span> <span class="n">allocator</span> <span class="o">=</span> <span class="n">func</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This mechanism allows 3FS to:</p>
+<ul>
+<li>Load custom memory allocators at runtime</li>
+<li>Switch between different allocator implementations without recompiling</li>
+<li>Maintain a clean separation between the core system and specific allocator implementations</li>
+</ul>
+<p>让我通过一个具体的例子来说明这个函数指针类型的使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp:d:\工作记录\code\money\3FS\src\memory\jemalloc\JemallocAllocator.h" data-lang="cpp:d:\工作记录\code\money\3FS\src\memory\jemalloc\JemallocAllocator.h"><span class="cp">#pragma once
+</span><span class="cp">#include</span> <span class="cpf">&#34;memory/common/MemoryAllocatorInterface.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="n">namespace</span> <span class="n">hf3fs</span><span class="o">::</span><span class="n">memory</span> <span class="p">{</span>
+
+<span class="c1">// 自定义内存分配器实现
+</span><span class="c1"></span><span class="n">class</span> <span class="nl">JemallocAllocator</span> <span class="p">:</span> <span class="n">public</span> <span class="n">MemoryAllocatorInterface</span> <span class="p">{</span>
+<span class="nl">public</span><span class="p">:</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">allocate</span><span class="p">(</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="n">override</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">je_malloc</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>  <span class="c1">// 使用jemalloc的分配函数
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">deallocate</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">mem</span><span class="p">)</span> <span class="n">override</span> <span class="p">{</span>
+        <span class="n">je_free</span><span class="p">(</span><span class="n">mem</span><span class="p">);</span>  <span class="c1">// 使用jemalloc的释放函数
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="o">*</span><span class="n">memalign</span><span class="p">(</span><span class="n">size_t</span> <span class="n">alignment</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="n">override</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">je_aligned_alloc</span><span class="p">(</span><span class="n">alignment</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">logstatus</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="n">override</span> <span class="p">{</span>
+        <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="s">&#34;Jemalloc allocator status&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">profiling</span><span class="p">(</span><span class="kt">bool</span> <span class="n">active</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prefix</span><span class="p">)</span> <span class="n">override</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">active</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// 导出函数实现
+</span><span class="c1"></span><span class="k">extern</span> <span class="s">&#34;C&#34;</span> <span class="p">{</span>
+    <span class="c1">// 这个函数的类型就是 GetMemoryAllocatorFunc
+</span><span class="c1"></span>    <span class="n">MemoryAllocatorInterface</span><span class="o">*</span> <span class="n">getMemoryAllocator</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">static</span> <span class="n">JemallocAllocator</span> <span class="n">allocator</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">&amp;</span><span class="n">allocator</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">}</span> <span class="c1">// namespace hf3fs::memory
+</span></code></pre></td></tr></table>
+</div>
+</div><p>使用示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp:d:\工作记录\code\money\3FS\src\memory\jemalloc\example_usage.cpp" data-lang="cpp:d:\工作记录\code\money\3FS\src\memory\jemalloc\example_usage.cpp"><span class="cp">#include</span> <span class="cpf">&#34;JemallocAllocator.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;dlfcn.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">example</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 1. 直接使用函数指针类型
+</span><span class="c1"></span>    <span class="n">GetMemoryAllocatorFunc</span> <span class="n">allocatorFunc</span><span class="p">;</span>
+    
+    <span class="c1">// 2. 从动态库加载函数
+</span><span class="c1"></span>    <span class="kt">void</span><span class="o">*</span> <span class="n">lib</span> <span class="o">=</span> <span class="n">dlopen</span><span class="p">(</span><span class="s">&#34;libjemalloc_allocator.so&#34;</span><span class="p">,</span> <span class="n">RTLD_NOW</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lib</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 将动态库中的符号转换为函数指针
+</span><span class="c1"></span>        <span class="n">allocatorFunc</span> <span class="o">=</span> <span class="p">(</span><span class="n">GetMemoryAllocatorFunc</span><span class="p">)</span><span class="n">dlsym</span><span class="p">(</span><span class="n">lib</span><span class="p">,</span> <span class="n">GET_MEMORY_ALLOCATOR_FUNC_NAME</span><span class="p">);</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">allocatorFunc</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 3. 调用函数获取分配器实例
+</span><span class="c1"></span>            <span class="n">MemoryAllocatorInterface</span><span class="o">*</span> <span class="n">allocator</span> <span class="o">=</span> <span class="n">allocatorFunc</span><span class="p">();</span>
+            
+            <span class="c1">// 4. 使用分配器
+</span><span class="c1"></span>            <span class="kt">void</span><span class="o">*</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">allocator</span><span class="o">-&gt;</span><span class="n">allocate</span><span class="p">(</span><span class="mi">1024</span><span class="p">);</span>  <span class="c1">// 分配1024字节
+</span><span class="c1"></span>            <span class="n">allocator</span><span class="o">-&gt;</span><span class="n">deallocate</span><span class="p">(</span><span class="n">memory</span><span class="p">);</span>             <span class="c1">// 释放内存
+</span><span class="c1"></span>        <span class="p">}</span>
+        
+        <span class="n">dlclose</span><span class="p">(</span><span class="n">lib</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这个例子展示了：</p>
+<ol>
+<li>
+<p><strong>函数指针类型定义</strong>：<code>GetMemoryAllocatorFunc</code> 定义了一个返回 <code>MemoryAllocatorInterface*</code> 的函数指针类型</p>
+</li>
+<li>
+<p><strong>函数实现</strong>：<code>getMemoryAllocator</code> 函数符合这个类型定义，它返回一个分配器实例</p>
+</li>
+<li>
+<p><strong>动态加载</strong>：展示了如何从动态库中加载并使用这个函数</p>
+</li>
+<li>
+<p><strong>实际使用</strong>：展示了如何通过函数指针获取和使用分配器实例</p>
+</li>
+</ol>
+<p>这种设计模式允许：</p>
+<ul>
+<li>在运行时动态加载不同的内存分配器</li>
+<li>保持接口统一性</li>
+<li>实现插件式的内存分配器架构</li>
+<li>方便进行内存分配器的切换和测试</li>
+</ul>
+<p>对于operator new 来说，分为<strong>全局重载</strong>和<strong>类重载</strong>，全局重载是void* ::operator new(size_t size)，</p>
+<h1 id="拆分问题2-磁盘读写">拆分问题2： 磁盘读写</h1>
+<h2 id="1-问题是什么如何-异步io提高性能">1. 问题是什么？如何 异步I/O提高性能</h2>
+<p>一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</p>
+<p>二、这个技术的优势和劣势分别是什么</p>
+<p>三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景</p>
+<p>四、技术的组成部分和关键点。</p>
+<p>五、技术的底层原理和关键实现</p>
+<p>六、已有的实现和它之间的对比</p>
+<h2 id="2-为了解决这个问题准备哪些事情">2. 为了解决这个问题准备哪些事情</h2>
+<h3 id="文章">文章</h3>
+<ul>
+<li>[译] Linux 异步 I_O 框架 io_uring：基本原理、程序示例与性能压测（2020）</li>
+</ul>
+<p>既然性能跟传统 AIO 差不多，那为什么还称 <code>io_uring</code> 为革命性技术呢？</p>
+<ol>
+<li>
+<p>它首先和最大的贡献在于：<strong>统一了 Linux 异步 I/O 框架</strong>，</p>
+<ul>
+<li>Linux AIO <strong>只支持 direct I/O</strong> 模式的<strong>存储文件</strong> （storage file），而且主要用在<strong>数据库这一细分领域</strong>；</li>
+<li><code>io_uring</code> 支持存储文件和网络文件（network sockets），也支持更多的异步系统调用 （<code>accept/openat/stat/...</code>），而非仅限于 <code>read/write</code> 系统调用。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a href="https://github.com/axboe/liburing/blob/liburing-2.0/examples/io_uring-test.c">https://github.com/axboe/liburing/blob/liburing-2.0/examples/io_uring-test.c</a></li>
+</ul>
+<h3 id="项目看别人怎么使用">项目：看别人怎么使用</h3>
+<ul>
+<li>ceph bluestore  支持 io_uring  提升多少
+<a href="https://github.com/ceph/ceph/pull/27392">https://github.com/ceph/ceph/pull/27392</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+4k  +14%
+8k  +42%
+16k  +59%
+32k  +89%
+64k  +85%
+128k  +102%
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>redis</strong>：</li>
+</ul>
+<p>以下是 redis 在 event poll 和 io_uring 下的 qps 对比：</p>
+<ol>
+<li>高负载情况下，io_uring 相比 event poll，吞吐提升 8%~11%。</li>
+<li>开启 sqpoll 时，吞吐提升 24%~32%。 这里读者可能会有个疑问，开启 sqpoll 额外使用了一个 CPU，性能为什么才提升 30% 左右？那是因为 redis 运行时同步读写就消耗了 70% 以上的 CPU，而 sq_thread 只能使用一个 CPU 的能力，把读写工作交给 sq_thread 之后，理论上 QPS 最多能提升 40% 左右（1/0.7 - 1 = 0.42），再加上 sq_thread 还需要处理中断以及本身的开销，因此只能有 30% 左右的提升。</li>
+</ol>
+<ul>
+<li>IO-uring speed the RocksDB &amp; TiKV</li>
+</ul>
+<h2 id="3--结果是什么">3  结果是什么</h2>
+<h1 id="拆分问题-协程序">拆分问题： 协程序</h1>
+<p><a href="https://wx.zsxq.com/search/%E5%86%85%E5%AD%98%E6%B1%A0?groupId=51122582242854&amp;searchUid=0.1545150984662378">https://wx.zsxq.com/search/%E5%86%85%E5%AD%98%E6%B1%A0?groupId=51122582242854&amp;searchUid=0.1545150984662378</a></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250328153322.png" alt="image.png"></p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>《Thriving in a Crowded and Changing World: C++ 2006–2020》 C++ 之父的这篇论文，详细描写了 2006 - 2020 这些年 C++ 的变化过程，值得一看。</li>
+<li>LD_PRELOAD的偷梁换柱之能</li>
+<li><a href="https://gcc.gnu.org/onlinedocs/libstdc++/faq.html">https://gcc.gnu.org/onlinedocs/libstdc++/faq.html</a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/files.html">https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/files.html</a></li>
+<li><a href="https://stackoverflow.com/questions/1885849/difference-between-new-operator-and-operator-new">https://stackoverflow.com/questions/1885849/difference-between-new-operator-and-operator-new</a></li>
+<li><a href="https://www.cnblogs.com/pannengzhi/p/2018-04-09-about-got-plt.html" title="发布于 2018-04-09 16:52">深入了解GOT,PLT和动态链接</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/372151448">https://zhuanlan.zhihu.com/p/372151448</a></li>
+<li>人人都能学的会C++协程原理剖析与自我实现</li>
+<li>程序员的自我修养&ndash;链接、装载与库</li>
+<li>
+<ul>
+<li>深入解析dlsym函数调用：探秘计算机系统的神奇之处！</li>
+</ul>
+</li>
+<li><a href="https://wx.zsxq.com/group/51122582242854/topic/418811812251528">https://wx.zsxq.com/group/51122582242854/topic/418811812251528</a></li>
+<li>C++ 深入解析new关键字，::new、operator new函数，placement new表达式</li>
+<li><a href="https://blog.csdn.net/aishuirenjia/article/details/102979457">https://blog.csdn.net/aishuirenjia/article/details/102979457</a> ✅</li>
+<li>[ Linux 异步 I_O 框架 io_uring：基本原理、程序示例与性能压测（2020）.md ✅</li>
+<li>【NO.327】图解｜揭开协程的神秘面纱.md</li>
+</ul>
+<p>虽然异步+回调在现实生活中看着也很简单，但是在程序设计上却很让人头痛，在某些场景下会让整个程序的可读性非常差，而且也不好写，相反同步IO虽然效率低，但是很好写，
+<a href="https://camo.githubusercontent.com/1e84343c42aa960b3762da9101c8be462f2fbe20383bb5b13f05ff7d5bf63482/68747470733a2f2f706963322e7a68696d672e636f6d2f38302f76322d39613032613530313236373236336161353036623430396239653039646337355f373230772e77656270"><img src="https://camo.githubusercontent.com/1e84343c42aa960b3762da9101c8be462f2fbe20383bb5b13f05ff7d5bf63482/68747470733a2f2f706963322e7a68696d672e636f6d2f38302f76322d39613032613530313236373236336161353036623430396239653039646337355f373230772e77656270" alt="img"></a></p>
+<p>还是以为异步图片下载为例，图片服务中台提供了异步接口，发起者请求之后立即返回，图片服务此时给了发起者一个唯一标识ID，等图片服务完成下载后把结果放到一个消息队列，此时需要发起者不断消费这个MQ才能拿到下载结果。</p>
+<p>整个过程相比同步IO来说，<strong>原来整体的逻辑被拆分为好几个部分，各个子部分有状态的迁移，对大部分程序员来说维护状态简直就是噩梦，日后必然是bug的高发地</strong>。</p>
+<h2 id="about">About</h2>
+<p>2023年最新整理 c++后端开发，1000篇优秀博文，含内存，网络，架构设计，高性能，数据结构，基础组件，中间件，分布式相关
+<a href="https://github.com/0voice/cpp_backend_awsome_blog/tree/main">https://github.com/0voice/cpp_backend_awsome_blog/tree/main</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-03-23 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/code_reading/">code_reading</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/2025/how_to_learn_3fs_4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深入浅出理解DeepSeek 3FS (3) 步步引导轻松理解内存管理，面试必看</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/liunx/2025/3fs-what-is-file-system/">
+            <span class="next-text nav-default">从青铜到王者系列：3FS如何实现一个文件系统</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

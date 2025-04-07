@@ -6,7 +6,25 @@
     <description>Recent content in tools on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>大模型上下文协议——MCP详解</title>
+      <link>https://wangcy6.github.io/post/money/P1_what_is_MCP/</link>
+      <pubDate>Sun, 23 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/money/P1_what_is_MCP/</guid>
+      <description>一、这个技术出现的背景 是什么 24年11月初的时候Anthropic发了一篇技术博客，推出了他们的模型上下文协议MCP，同时也开源了基于该协议</description>
+    </item>
+    
+    <item>
+      <title>源码阅读：OpenManus</title>
+      <link>https://wangcy6.github.io/post/money/2025-03-23-code_OpenManus/</link>
+      <pubDate>Sat, 22 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/money/2025-03-23-code_OpenManus/</guid>
+      <description>大家好，我是小王同学，希望本文在了解OpenManus对你有帮助 昵称：做一个为自己写代码的程序员 愿景：成为AIGCC落地解决方案积极参与者 相</description>
+    </item>
+    
     <item>
       <title>c&#43;&#43;面试题</title>
       <link>https://wangcy6.github.io/post/2024/2024-11-10-cppd-day1/</link>
@@ -68,15 +86,6 @@
       
       <guid>https://wangcy6.github.io/post/money/002_/</guid>
       <description>魔改小爱音箱 打造你的专属语音助手（保姆级教程建议收藏） 大家好，我是小王同学，希望本文在AIGC赋能小米音响上对你有帮助 昵称：一个只会写代码程</description>
-    </item>
-    
-    <item>
-      <title>ChatGPT从入门到精通</title>
-      <link>https://wangcy6.github.io/post/money/01_gpt_from_new_to_master/</link>
-      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/money/01_gpt_from_new_to_master/</guid>
-      <description>一次只使用一个工具，其他装作看不见。 第一章：概念 ChatGPT是什么 https://mp.weixin.qq.com/s/Dns5GSsiledxCV2SIhNgrw 第二章：提示词 写专利 例如：绘制时序图 1 2 请绘制 mermaid sequence diagram ： mds 启动 recov</description>
     </item>
     
     <item>

@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从青铜到王者系列：对象存储服务性能调优 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="如何学习 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/liunx/docker/2025-2-28-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从青铜到王者系列：对象存储服务性能调优" />
+<meta property="og:description" content="如何学习 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/liunx/docker/2025-2-28-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-11-20T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从青铜到王者系列：对象存储服务性能调优">
+<meta itemprop="description" content="如何学习 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这"><meta itemprop="datePublished" content="2022-11-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2022-11-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="8637">
+<meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从青铜到王者系列：对象存储服务性能调优"/>
+<meta name="twitter:description" content="如何学习 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从青铜到王者系列：对象存储服务性能调优</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-11-20 00:00 </span>
+        
+          <span class="more-meta"> 约 8637 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#如何学习">如何学习</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#存储节点服务器网络检查命令">存储节点服务器网络检查命令</a>
+      <ul>
+        <li><a href="#1-ifconfig">1 ifconfig</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-ethtoolethtool-网卡诊断调整工具网卡性能优化-解决丢包严重">2 【ethtool】ethtool 网卡诊断、调整工具、网卡性能优化| 解决丢包严重</a>
+      <ul>
+        <li><a href="#3-netstat">3. netstat</a></li>
+        <li><a href="#4-实时查看网卡流量-sar--n-dev-2">4. 实时查看网卡流量 sar -n DEV 2</a></li>
+        <li><a href="#一重传现象的直接解读"><strong>一、重传现象的直接解读</strong></a></li>
+        <li><a href="#二排查方向"><strong>二、排查方向</strong></a></li>
+        <li><a href="#三优化和解决措施"><strong>三、优化和解决措施</strong></a></li>
+        <li><a href="#四高级诊断工具"><strong>四、高级诊断工具</strong></a></li>
+        <li><a href="#五总结"><strong>五、总结</strong></a></li>
+        <li><a href="#提问io_submit-io_getevents-之间-需要做其他处理嘛-例如-epoll监控什么">提问：io_submit io_getevents 之间 需要做其他处理嘛？ 例如 epoll监控什么？</a></li>
+        <li><a href="#一持久化方案的分类"><strong>一、持久化方案的分类</strong></a></li>
+        <li><a href="#二异步持久化的实现机制"><strong>二、异步持久化的实现机制</strong></a></li>
+        <li><a href="#三性能优化补充"><strong>三、性能优化补充</strong></a></li>
+        <li><a href="#四总结"><strong>四、总结</strong></a></li>
+        <li><a href="#提问4redis-的biocreatebackgroundjob是后台任务处理的核心接口用于将阻塞式操作如磁盘-io内存回收等提交到后台线程异步执行避免主线程阻塞以下是其实现原理的详细分析">提问4：Redis 的 <code>bioCreateBackgroundJob</code> 是后台任务处理的核心接口，用于将<strong>阻塞式操作</strong>（如磁盘 I/O、内存回收等）提交到后台线程异步执行，避免主线程阻塞。以下是其实现原理的详细分析：</a></li>
+        <li><a href="#一后台线程的初始化"><strong>一、后台线程的初始化</strong></a></li>
+        <li><a href="#二任务提交biocreatebackgroundjob"><strong>二、任务提交（bioCreateBackgroundJob）</strong></a></li>
+        <li><a href="#三任务处理bioprocessbackgroundjobs"><strong>三、任务处理（bioProcessBackgroundJobs）</strong></a></li>
+        <li><a href="#四关键设计点"><strong>四、关键设计点</strong></a></li>
+        <li><a href="#五典型应用场景"><strong>五、典型应用场景</strong></a></li>
+        <li><a href="#总结"><strong>总结</strong></a></li>
+        <li><a href="#提问redis-在处理-aofrdb-等磁盘持久化任务时选择通过单线程事件循环--后台-bio-线程的机制实现异步化而非直接使用-linux-内核的异步-ioaio这种设计是出于以下哪些考量">提问：&ldquo;Redis 在处理 AOF/RDB 等磁盘持久化任务时，选择通过单线程事件循环 + 后台 BIO 线程的机制实现异步化，而非直接使用 Linux 内核的异步 I/O（AIO）。这种设计是出于以下哪些考量？</a></li>
+        <li><a href="#1-线程调度优先级差异化scheduling-priority"><strong>1. 线程调度优先级差异化（Scheduling Priority）</strong></a></li>
+        <li><a href="#2-独立监控-bio-线程状态observability"><strong>2. 独立监控 BIO 线程状态（Observability）</strong></a></li>
+        <li><a href="#类比理解"><strong>类比理解</strong></a></li>
+        <li><a href="#总结-1"><strong>总结</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#提问6redis-可配置-bio-优先级在redisconf-怎么配置">提问6：Redis 可配置 BIO 优先级在redis.CONF 怎么配置</a>
+      <ul>
+        <li><a href="#1-bluestore-的异步-io-架构"><strong>1. BlueStore 的异步 I/O 架构</strong></a></li>
+        <li><a href="#2-nvme-ssd-高队列深度的适配"><strong>2. NVMe SSD 高队列深度的适配</strong></a></li>
+        <li><a href="#3-性能问题排查与调优"><strong>3. 性能问题排查与调优</strong></a></li>
+        <li><a href="#1格式化磁盘的作用">1. <strong>格式化磁盘的作用</strong></a></li>
+        <li><a href="#2挂载磁盘的作用">2. <strong>挂载磁盘的作用</strong></a></li>
+        <li><a href="#3为什么必须先格式化再挂载">3. <strong>为什么必须先格式化再挂载</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2022-11-20T00:00:00" title="November 20, 2022">November 20, 2022</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h2 id="如何学习">如何学习</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 
+
+ 二、这个技术的优势和劣势分别是什么 
+
+三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+四、技术的组成部分和关键点。
+
+五、技术的底层原理和关键实现
+
+六、已有的实现和它之间的对比
+</code></pre></td></tr></table>
+</div>
+</div><p>带宽: 每秒的吞吐量，即每 秒可以完成读/写的数据量
+OPS：每  秒可以处理客户端业务请求的个 数</p>
+<h1 id="网络调优">网络调优</h1>
+<h2 id="存储节点服务器网络检查命令">存储节点服务器网络检查命令</h2>
+<h3 id="1-ifconfig">1 ifconfig</h3>
+<p>ifconfig - configure a network interface</p>
+<p>查看接口数是否正常， IP地址是否正常，“ errors”、“ overruns”、“ frame”计<br>
+数是否正常。所谓异常</p>
+<p>所谓异常：<br>
+– 使用的接口无统计数据。<br>
+– 与后端10GE交换机相连的网口“ error”、“ overruns”、“ frame”统计数据<br>
+不为0。</p>
+<p>overruns有计数，需要检查对应[交换机]接口有没有配置flow-control；
+frame有 计数，需要抓包确认有没有重传。</p>
+<p>– SLOT5-0、 SLOT4-0收发包数差距很大。</p>
+<ul>
+<li>
+<p>对于存储节点的RoCE网卡（ 10GE组网），还应包含名称为SLOT4-0.2或<br>
+SLOT5-0.2的网口的显示结果</p>
+</li>
+<li>
+<p>产品名称：200G网卡 Mellanox CX6 MCX653106A HDAT HDR IB卡 双口
+ 
+  该网卡适用于高速数据中心网络，支持InfiniBand（IB）网络技术，
+  适用于高性能计算（HPC）、云计算、大数据分析等场景。
+ </p>
+</li>
+</ul>
+<h4 id="接口错误计数errorsoverrunsframe"><strong>接口错误计数（errors/overruns/frame）</strong></h4>
+<ul>
+<li>
+<p><strong>关键统计项</strong>：</p>
+<ul>
+<li><strong>errors</strong>: 物理层或协议栈错误（CRC错误、畸形包）。</li>
+<li><strong>overruns</strong>: 输入队列满导致内核丢弃数据包，通常因处理速度不足。</li>
+<li><strong>frame</strong>: 帧格式错误（如长度不匹配、对齐问题）。</li>
+</ul>
+</li>
+</ul>
+<p>|<code>frame</code>|校验错误或重传|物理层故障、MTU不匹配、重传冲突|更换硬件、统一MTU、抓包优化|</p>
+<p>ens47f0: &lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt; <strong>mtu 1500</strong> qdisc mq master bond0 state UP group default qlen 8192</p>
+<h4 id="数据包分片与重组"><strong>数据包分片与重组</strong></h4>
+<ul>
+<li>若发送方 MTU（例如 <code>9000</code>） &gt; 路径中某设备 MTU（例如 <code>1500</code>）：<br>
+发送方未设置 <code>DF（Don't Fragment）</code> 标志：数据包被分片传输，降低效率。<br>
+发送方设置 <code>DF</code> 标志：接收端返回 <code>ICMP Fragmentation Needed</code> 错误，导致通信失败</li>
+</ul>
+<h2 id="2-ethtoolethtool-网卡诊断调整工具网卡性能优化-解决丢包严重">2 【ethtool】ethtool 网卡诊断、调整工具、网卡性能优化| 解决丢包严重</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+ethtool - query or control network driver and hardware settings
+
+ethtool ens49f1
+Settings for ens49f1:
+        Supported ports: [ TP ]
+        Supported link modes:   10baseT/Half 10baseT/Full
+                                100baseT/Half 100baseT/Full
+                                1000baseT/Full
+        Supported pause frame use: Symmetric
+        Supports auto-negotiation: Yes
+        Supported FEC modes: Not reported
+        Advertised link modes:  10baseT/Half 10baseT/Full
+                                100baseT/Half 100baseT/Full
+                                1000baseT/Full
+        Advertised pause frame use: Symmetric
+        Advertised auto-negotiation: Yes
+        Advertised FEC modes: Not reported
+        Speed: 1000Mb/s
+        Duplex: Full
+        Port: Twisted Pair
+        PHYAD: 1
+        Transceiver: internal
+        Auto-negotiation: on
+        MDI-X: on (auto)
+        Supports Wake-on: pumbg
+        Wake-on: d
+        Current message level: 0x00000007 (7)
+                               drv probe link
+        Link detected: yes
+
+</code></pre></td></tr></table>
+</div>
+</div><p>ethtool -i SLOT4-1：  看网口驱动版本，可以识别接口类型和厂商，比如cxgb4是<br>
+Chelsio卡， ixgbe是Intel 10GE卡。</p>
+<p>lspci |grep Ether：确认用的是什么型号的网卡</p>
+<h3 id="3-netstat">3. netstat</h3>
+<p>netstat -s |grep Retrans检查重传个数，确认是否有重传。<br>
+TCPLostRetransmit: 1146</p>
+<h3 id="4-实时查看网卡流量-sar--n-dev-2">4. 实时查看网卡流量 sar -n DEV 2</h3>
+<ul>
+<li>
+<p>sar - Collect, report, or save system activity information</p>
+</li>
+<li>
+<p>sar -r -n DEV -f /var/log/sa/sa16</p>
+</li>
+</ul>
+<p>-n { keyword [,&hellip;] | ALL }
+Report network statistics.</p>
+<p>查看网口收发数据的速率。</p>
+<p>对于存储节点的RoCE网卡（ 10GE组网），此命令无法查询到该网卡的收发速<br>
+率。</p>
+<p><a href="https://my.oschina.net/u/4279744/blog/3881002">https://my.oschina.net/u/4279744/blog/3881002</a></p>
+<p><a href="https://blog.csdn.net/volitationLong/article/details/81741754">https://blog.csdn.net/volitationLong/article/details/81741754</a></p>
+<h3 id="一重传现象的直接解读"><strong>一、重传现象的直接解读</strong></h3>
+<ul>
+<li><strong>TCPLostRetransmit</strong>: 此计数器表示：
+<ul>
+<li><strong><code>显式触发的重传</code></strong>（如超时重传或快速重传）。</li>
+<li>值持续增长说明网络在持续丢包或延迟突变。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="二排查方向"><strong>二、排查方向</strong></h3>
+<h4 id="1-确定是否为偶发或持续问题"><strong>1. 确定是否为偶发或持续问题</strong></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 每隔 2 秒统计一次（观察趋势）</span>
+watch -n2 <span class="s2">&#34;netstat -s | grep -i retrans&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>偶发性增长</strong>：可能与应用突发流量或短暂网络抖动相关。</li>
+<li><strong>持续增长</strong>：表明存在根因（如链路故障、MTU 不匹配、硬件故障）。</li>
+</ul>
+<hr>
+<h4 id="2-关联-mtu-问题参考历史会话"><strong>2. 关联 MTU 问题</strong>（参考历史会话）</h4>
+<ul>
+<li>
+<p><strong>确认 MTU 一致性</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 检查服务端、客户端、交换机的 MTU 配置</span>
+ip link show eth0 <span class="p">|</span> grep mtu         <span class="c1"># Linux</span>
+show interfaces GigabitEthernet1/1   <span class="c1"># Cisco</span>
+display interface GigabitEthernet0/0/1 <span class="p">|</span> include MTU  <span class="c1"># 华为</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>MTU 不匹配的典型影响</strong>：引起分片（ICMP Fragmentation Needed），若 <code>DF</code> 位被设置，则直接丢包，触发 TCP 重传。</p>
+</li>
+</ul>
+<hr>
+<h4 id="3-网络路径排查"><strong>3. 网络路径排查</strong></h4>
+<ul>
+<li>
+<p><strong>路径延迟和抖动</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 测试到目标地址的延迟和抖动</span>
+mtr -n -r -c <span class="m">100</span> &lt;目标IP&gt;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>路径丢包检测</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 持续 ping 观察丢包率</span>
+ping -c <span class="m">1000</span> -i 0.1 &lt;目标IP&gt; <span class="p">|</span> grep <span class="s2">&#34;packet loss&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h4 id="4-深入分析-tcp-连接状态"><strong>4. 深入分析 TCP 连接状态</strong></h4>
+<ul>
+<li>
+<p><strong>查看活跃连接的 RTT 和重传细节</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ss -ti  <span class="c1"># 关注 `rtt` 和 `retrans`</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>输出示例</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-plaintext" data-lang="plaintext">ESTAB  0      0      192.168.1.100:ssh   192.168.1.2:58234
+cubic wscale:6,7 rto:234 rtt:102.3/24.3 ato:40 retrans:5
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>rto</code>（重传超时时间）、<code>rtt</code>（往返时间）、<code>retrans</code>（该连接的重传次数）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="5-硬件或驱动问题"><strong>5. 硬件或驱动问题</strong></h4>
+<ul>
+<li>
+<p><strong>检查网卡错误计数</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ethtool -S eth0 <span class="p">|</span> grep -E <span class="s2">&#34;err|drop|fail&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>高 <code>rx/tx_errors</code> 或 <code>discards</code> 表明网卡或驱动异常。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="三优化和解决措施"><strong>三、优化和解决措施</strong></h3>
+<h4 id="1-基础网络优化"><strong>1. 基础网络优化</strong></h4>
+<ul>
+<li>
+<p><strong>调整 TCP 参数</strong>（Linux 示例）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 增大 TCP 缓冲区</span>
+sysctl -w net.ipv4.tcp_rmem<span class="o">=</span><span class="s1">&#39;4096 87380 6291456&#39;</span>
+sysctl -w net.ipv4.tcp_wmem<span class="o">=</span><span class="s1">&#39;4096 16384 4194304&#39;</span>
+
+<span class="c1"># 启用 TCP 窗口缩放</span>
+sysctl -w net.ipv4.tcp_window_scaling<span class="o">=</span><span class="m">1</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>启用 BBR 拥塞控制算法</strong>（对抗丢包）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sysctl -w net.ipv4.tcp_congestion_control<span class="o">=</span>bbr
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h4 id="2-mtu-问题修复"><strong>2. MTU 问题修复</strong></h4>
+<ul>
+<li>若确认 MTU 不匹配（如跨设备 MTU 不一致），需全局统一 MTU。</li>
+</ul>
+<hr>
+<h4 id="3-qos-或流量限速"><strong>3. QoS 或流量限速</strong></h4>
+<ul>
+<li>
+<p>对关键业务流量实施优先级标记（DSCP/TOS）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Linux 使用 tc 限速和优先级调度</span>
+tc qdisc add dev eth0 root handle 1: htb
+tc class add dev eth0 parent 1: classid 1:10 htb rate 1gbit prio <span class="m">0</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h4 id="4-替换故障硬件"><strong>4. 替换故障硬件</strong></h4>
+<ul>
+<li>若网卡错误计数持续增长，尝试更换网卡或使用多网卡绑定（Bonding）。</li>
+</ul>
+<hr>
+<h3 id="四高级诊断工具"><strong>四、高级诊断工具</strong></h3>
+<h4 id="1-抓包分析重传详情"><strong>1. 抓包分析重传详情</strong></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 抓取与目标 IP 的 TCP 流量（保存到文件）</span>
+tcpdump -i eth0 host &lt;目标IP&gt; and tcp -w retrans.pcap
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>Wireshark 分析</strong>：
+<ul>
+<li>过滤 <code>tcp.analysis.retransmission</code> 查看具体重传包。</li>
+<li>确认重传是 <code>超时重传</code>（间隔长）还是 <code>快速重传</code>（连续重复 ACK）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="2-内核跟踪工具linux"><strong>2. 内核跟踪工具（Linux）</strong></h4>
+<ul>
+<li>
+<p><strong>动态追踪重传事件</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">perf record -e tcp:tcp_retransmit_skb -ag
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h3 id="五总结"><strong>五、总结</strong></h3>
+<table>
+<thead>
+<tr>
+<th><strong>现象</strong></th>
+<th><strong>可能原因</strong></th>
+<th><strong>优先级排查项</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP 重传持续增长</td>
+<td>网络丢包、高延迟、MTU 不匹配</td>
+<td>1. 路径丢包率  <!-- raw HTML omitted -->2. MTU 一致性</td>
+</tr>
+<tr>
+<td>伴随机 NIC 错误计数增长</td>
+<td>网卡硬件/驱动故障</td>
+<td><code>ethtool -S</code> 和 dmesg 日志</td>
+</tr>
+<tr>
+<td>仅限于特定服务</td>
+<td>应用层配置或服务器性能问题</td>
+<td>检查服务日志和资源占用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键点</strong>：</p>
+<ol>
+<li><strong>先区分偶发还是持续性问题</strong>，再确定是否需要深入排查。</li>
+<li><strong>高重传率常见于跨公网传输或无线网络环境</strong>，若在内网中持续出现需视为严重故障。</li>
+<li><strong>结合 MTU 配置、路径质量、硬件状态多维度分析</strong>。</li>
+</ol>
+<h3 id="提问io_submit-io_getevents-之间-需要做其他处理嘛-例如-epoll监控什么">提问：io_submit io_getevents 之间 需要做其他处理嘛？ 例如 epoll监控什么？</h3>
+<p>Redis 通过<strong>子进程持久化</strong>、<strong>异步刷盘线程（bio）</strong> 和 <strong>写时复制（COW）</strong> 技术，保证持久化操作不阻塞单线程主事件循环。具体流程如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>步骤</strong></th>
+<th><strong>主线程</strong></th>
+<th><strong>子进程/后台线程</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RDB 生成</td>
+<td><code>fork()</code> 创建子进程</td>
+<td>遍历内存生成 RDB 文件</td>
+</tr>
+<tr>
+<td>AOF 日志追加</td>
+<td>写命令追加到 <code>aof_buf</code> 缓冲区</td>
+<td>——</td>
+</tr>
+<tr>
+<td>AOF 刷盘（默认）</td>
+<td>——</td>
+<td>后台线程每秒调用 <code>fsync</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计精髓</strong>：所有磁盘 I/O 操作均委托给子进程或后台线程，<strong>主线程专注于内存数据操作和网络事件处理</strong>，确保单线程模型的高效性</p>
+<p>另外感叹一下 antirez 代码层面上的架构能力，几年前看过 redis 2.8 的代码，从 2.8 的分支直接切到 5.0 之后，原来阅读的位置并没有偏离主线太远。历经几个大版本的迭代，加了 N 多功能之后，代码主体逻辑依旧没有大改，真的是做到了对修改关闭，对扩展开放。向大佬学习</p>
+<p><a href="https://www.bookstack.cn/read/aliyun-rds-core/0bca1b2aa30e6bb3.md">https://www.bookstack.cn/read/aliyun-rds-core/0bca1b2aa30e6bb3.md</a></p>
+<p>redis是单线程的，持久化写操作比较耗时，怎么解决的
+Redis 虽然是<strong>单线程事件循环模型</strong>的主线程设计，但通过<strong>多线程辅助</strong>和<strong>异步持久化策略</strong>解决了持久化写操作的耗时问题。具体实现包括以下关键点：</p>
+<hr>
+<h3 id="一持久化方案的分类"><strong>一、持久化方案的分类</strong></h3>
+<p>Redis 提供两种持久化方式，均采用<strong>子进程</strong>或<strong>后台线程</strong>异步执行，避免主线程阻塞：</p>
+<ol>
+<li>
+<p><strong>RDB（快照持久化）</strong>：</p>
+<ul>
+<li><strong>触发方式</strong>：<code>save</code>（阻塞主线程，已弃用） / <code>bgsave</code>（后台异步）。</li>
+<li><strong>原理</strong>：主线程 <code>fork</code> 子进程生成内存快照并写入磁盘。</li>
+<li><strong>优势</strong>：全量备份，恢复速度快；文件紧凑，占磁盘空间小。</li>
+<li><strong>缺点</strong>：可能丢失最后一次快照后的数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>AOF（追加写日志）</strong>：</p>
+<ul>
+<li><strong>触发方式</strong>：<code>always</code>（同步写，高安全）/ <code>everysec</code>（每秒异步刷盘，默认）/ <code>no</code>（内核决定刷盘时间）。</li>
+<li><strong>原理</strong>：记录所有写操作命令，支持重写压缩（<code>bgrewriteaof</code>）。</li>
+<li><strong>优势</strong>：数据丢失风险低；可读性强。</li>
+<li><strong>缺点</strong>：文件体积大；恢复速度慢。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="二异步持久化的实现机制"><strong>二、异步持久化的实现机制</strong></h3>
+<h4 id="1-rdb-异步处理"><strong>1. RDB 异步处理</strong></h4>
+<ul>
+<li>
+<p><strong>主线程</strong>：仅负责接收写请求并更新内存数据，<code>bgsave</code> 命令触发时会 <code>fork</code> 出一个子进程。</p>
+</li>
+<li>
+<p><strong>子进程</strong>：专用于执行 <code>rdbSave()</code>，生成 RDB 文件。</p>
+<ul>
+<li><strong>写时复制（Copy-On-Write）</strong>：子进程共享父进程内存页，仅在内存修改时复制脏页，减少内存开销。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/rdb.c
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">rdbSave</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 子进程独立完成磁盘写入
+</span><span class="c1"></span>    <span class="n">snprintf</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">),</span> <span class="s">&#34;temp-%d.rdb&#34;</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">getpid</span><span class="p">());</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">);</span>
+    <span class="c1">// 遍历数据库生成快照数据...
+</span><span class="c1"></span>    <span class="n">fflush</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+    <span class="n">fsync</span><span class="p">(</span><span class="n">fileno</span><span class="p">(</span><span class="n">fp</span><span class="p">));</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+    <span class="c1">// 原子替换旧RDB文件
+</span><span class="c1"></span>    <span class="n">rename</span><span class="p">(</span><span class="n">tmpfile</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h4 id="2-aof-异步处理"><strong>2. AOF 异步处理</strong></h4>
+<ul>
+<li>
+<p><strong>写缓冲（AOF Buffer）</strong>：主线程将写操作追加到 <code>aof_buf</code> 内存缓冲区。</p>
+</li>
+<li>
+<p><strong>刷盘策略</strong>：</p>
+<ul>
+<li><strong><code>everysec</code>（默认）</strong>：由后台线程 <code>bio</code>（Background I/O）每秒调用 <code>fsync</code> 同步到磁盘。</li>
+<li><strong>流程分离</strong>：主线程仅负责追加到缓冲区，后台线程负责刷盘，互不阻塞。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/aof.c
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">flushAppendOnlyFile</span><span class="p">(</span><span class="kt">int</span> <span class="n">force</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 刷盘操作由 bio 线程异步执行
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">server</span><span class="p">.</span><span class="n">aof_fsync</span> <span class="o">==</span> <span class="n">AOF_FSYNC_EVERYSEC</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">force</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 提交异步任务到 bio 队列
+</span><span class="c1"></span>        <span class="n">bioCreateBackgroundJob</span><span class="p">(</span><span class="n">BIO_AOF_FSYNC</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">fsync</span><span class="p">(</span><span class="n">server</span><span class="p">.</span><span class="n">aof_fd</span><span class="p">);</span> <span class="c1">// 同步操作（仅强制时由主线程执行）
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h4 id="3-后台线程bio"><strong>3. 后台线程（Bio）</strong></h4>
+<p>Redis 在启动时会初始化 <strong>3 类后台线程</strong>（默认配置未开启，需手动启用）：</p>
+<ul>
+<li><strong>BIO_CLOSE_FILE</strong>：延迟关闭大文件句柄。</li>
+<li><strong>BIO_AOF_FSYNC</strong>：异步执行 AOF 刷盘（<code>fsync</code>）。</li>
+<li><strong>BIO_LAZY_FREE</strong>：异步内存回收（如 <code>UNLINK</code> 命令）。</li>
+</ul>
+<p><strong>关键函数</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/bio.c
+</span><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">bioProcessBackgroundJobs</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">listNode</span> <span class="o">*</span><span class="n">ln</span> <span class="o">=</span> <span class="n">listFirst</span><span class="p">(</span><span class="n">bio_jobs</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+        <span class="n">bio_job</span> <span class="o">*</span><span class="n">job</span> <span class="o">=</span> <span class="n">ln</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+        
+        <span class="c1">// 根据任务类型执行操作（如 fsync、free 等）
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">BIO_AOF_FSYNC</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fsync</span><span class="p">(</span><span class="n">job</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">BIO_LAZY_FREE</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">job</span><span class="o">-&gt;</span><span class="n">arg1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">listDelNode</span><span class="p">(</span><span class="n">bio_jobs</span><span class="p">[</span><span class="n">type</span><span class="p">],</span> <span class="n">ln</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="三性能优化补充"><strong>三、性能优化补充</strong></h3>
+<h4 id="写时复制cow的取舍"><strong>写时复制（COW）的取舍</strong></h4>
+<ul>
+<li><strong>优势</strong>：子进程无需阻塞主线程，内存复制量最小化。</li>
+<li><strong>风险</strong>：若主线程频繁修改数据（如大规模写入），子进程需复制大量脏页，导致 <strong>内存膨胀</strong> 和 <strong>CPU 开销</strong>。</li>
+<li><strong>建议</strong>：避免在持久化期间执行大量写入操作。</li>
+</ul>
+<hr>
+<h4 id="aof-重写优化"><strong>AOF 重写优化</strong></h4>
+<ul>
+<li><strong>机制</strong>：<code>bgrewriteaof</code> 命令触发子进程生成新的 AOF 文件，与主线程共享内存数据。</li>
+<li><strong>增量写入</strong>：重写期间的新写操作会被记录到 AOF 重写缓冲区，确保数据一致性。</li>
+</ul>
+<hr>
+<h3 id="四总结"><strong>四、总结</strong></h3>
+<p>Redis 通过<strong>子进程持久化</strong>、<strong>异步刷盘线程（bio）</strong> 和 <strong>写时复制（COW）</strong> 技术，保证持久化操作不阻塞单线程主事件循环。具体流程如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>步骤</strong></th>
+<th><strong>主线程</strong></th>
+<th><strong>子进程/后台线程</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RDB 生成</td>
+<td><code>fork()</code> 创建子进程</td>
+<td>遍历内存生成 RDB 文件</td>
+</tr>
+<tr>
+<td>AOF 日志追加</td>
+<td>写命令追加到 <code>aof_buf</code> 缓冲区</td>
+<td>——</td>
+</tr>
+<tr>
+<td>AOF 刷盘（默认）</td>
+<td>——</td>
+<td>后台线程每秒调用 <code>fsync</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计精髓</strong>：所有磁盘 I/O 操作均委托给子进程或后台线程，<strong>主线程专注于内存数据操作和网络事件处理</strong>，确保单线程模型的高效性。</p>
+<p>reids bioCreateBackgroundJob 怎么实现的</p>
+<h3 id="提问4redis-的biocreatebackgroundjob是后台任务处理的核心接口用于将阻塞式操作如磁盘-io内存回收等提交到后台线程异步执行避免主线程阻塞以下是其实现原理的详细分析">提问4：Redis 的 <code>bioCreateBackgroundJob</code> 是后台任务处理的核心接口，用于将<strong>阻塞式操作</strong>（如磁盘 I/O、内存回收等）提交到后台线程异步执行，避免主线程阻塞。以下是其实现原理的详细分析：</h3>
+<hr>
+<h3 id="一后台线程的初始化"><strong>一、后台线程的初始化</strong></h3>
+<p>Redis 在启动时（<code>main()</code> 函数）
+通过 <code>InitServerLast()</code> 调用 <code>bioInit()</code> 初始化后台线程池。
+其核心步骤如下：</p>
+<ol>
+<li><strong>线程池创建</strong>：<br>
+默认创建 <strong>3 类后台线程</strong>（通过 <code>BIO_NUM_OPS</code> 控制类型数量）：
+<ul>
+<li><code>BIO_CLOSE_FILE</code>（异步关闭大文件句柄）</li>
+<li><code>BIO_AOF_FSYNC</code>（异步执行 AOF 刷盘）</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<ul>
+<li><code>BIO_LAZY_FREE</code>（异步内存回收）</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>
+<p><strong>任务队列初始化</strong>：<br>
+每个后台线程类型对应一个任务队列（链表结构 <code>bio_jobs[BIO_NUM_OPS]</code>），
+用于存储待处理的任务。</p>
+</li>
+<li>
+<p><strong>线程启动</strong>：<br>
+每个线程执行 <code>bioProcessBackgroundJobs</code> 函数，循环监听任务队列。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/bio.c
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">bioInit</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">BIO_NUM_OPS</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pthread_t</span> <span class="n">tid</span><span class="p">;</span>
+        <span class="n">pthread_mutex_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_mutex</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_newjob_cond</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_step_cond</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="n">bio_jobs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">listCreate</span><span class="p">();</span>  <span class="c1">// 初始化任务队列
+</span><span class="c1"></span>        
+        <span class="c1">// 创建线程，绑定处理函数 bioProcessBackgroundJobs
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">attr</span><span class="p">,</span> <span class="n">bioProcessBackgroundJobs</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="kt">long</span><span class="p">)</span><span class="n">j</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">serverLog</span><span class="p">(</span><span class="n">LL_WARNING</span><span class="p">,</span> <span class="s">&#34;Bio thread for job type %d can&#39;t be initialized: %s&#34;</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">bio_threads</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tid</span><span class="p">;</span>  <span class="c1">// 记录线程ID
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="二任务提交biocreatebackgroundjob"><strong>二、任务提交（bioCreateBackgroundJob）</strong></h3>
+<p>当需要异步执行任务时（如 AOF 刷盘），主线程通过 <code>bioCreateBackgroundJob</code> 将任务添加到对应类型的任务队列：</p>
+<ol>
+<li>
+<p><strong>任务参数封装</strong>：<br>
+将任务类型、待操作的文件描述符（<code>fd</code>）或其他参数（如释放的内存地址）封装到 <code>bio_job</code> 结构体。</p>
+</li>
+<li>
+<p><strong>线程安全入队</strong>：<br>
+对目标任务队列加锁，将任务插入链表尾部，并通知后台线程有新任务待处理。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/bio.c
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">bioCreateBackgroundJob</span><span class="p">(</span><span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg2</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">bio_job</span> <span class="o">*</span><span class="n">job</span> <span class="o">=</span> <span class="n">zmalloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">job</span><span class="p">));</span>
+    <span class="n">job</span><span class="o">-&gt;</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">job</span><span class="o">-&gt;</span><span class="n">arg1</span> <span class="o">=</span> <span class="n">arg1</span><span class="p">;</span>  <span class="c1">// 例如：AOF的fd、待释放的内存地址
+</span><span class="c1"></span>    <span class="n">job</span><span class="o">-&gt;</span><span class="n">arg2</span> <span class="o">=</span> <span class="n">arg2</span><span class="p">;</span>
+    <span class="n">job</span><span class="o">-&gt;</span><span class="n">arg3</span> <span class="o">=</span> <span class="n">arg3</span><span class="p">;</span>
+
+    <span class="c1">// 加锁保护任务队列
+</span><span class="c1"></span>    <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_mutex</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+    <span class="n">listAddNodeTail</span><span class="p">(</span><span class="n">bio_jobs</span><span class="p">[</span><span class="n">type</span><span class="p">],</span> <span class="n">job</span><span class="p">);</span>  <span class="c1">// 插入队列尾部
+</span><span class="c1"></span>    
+    <span class="c1">// 通知后台线程有新任务
+</span><span class="c1"></span>    <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_newjob_cond</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span><span class="c1">//不通知别人wait
+</span><span class="c1"></span>    <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_mutex</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="三任务处理bioprocessbackgroundjobs"><strong>三、任务处理（bioProcessBackgroundJobs）</strong></h3>
+<p>后台线程的核心逻辑是循环监听任务队列，按顺序执行任务：</p>
+<ol>
+<li>
+<p><strong>阻塞等待新任务</strong>：<br>
+若任务队列为空，线程通过条件变量 <code>pthread_cond_wait()</code> 进入阻塞状态，等待主线程唤醒。</p>
+</li>
+<li>
+<p><strong>获取并执行任务</strong>：<br>
+从队列头部取出任务，执行对应的操作（如 <code>fsync</code>、<code>close</code>、<code>free</code> 等）。</p>
+</li>
+<li>
+<p><strong>任务清理</strong>：<br>
+任务执行完毕后，释放 <code>bio_job</code> 结构体内存。</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/bio.c
+</span><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">bioProcessBackgroundJobs</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">listNode</span> <span class="o">*</span><span class="n">ln</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">type</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">arg</span><span class="p">;</span>
+
+        <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_mutex</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">listLength</span><span class="p">(</span><span class="n">bio_jobs</span><span class="p">[</span><span class="n">type</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 等待新任务通知
+</span><span class="c1"></span>            <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_newjob_cond</span><span class="p">[</span><span class="n">type</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">bio_mutex</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 获取队列头部任务
+</span><span class="c1"></span>        <span class="n">ln</span> <span class="o">=</span> <span class="n">listFirst</span><span class="p">(</span><span class="n">bio_jobs</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+        <span class="n">bio_job</span> <span class="o">*</span><span class="n">job</span> <span class="o">=</span> <span class="n">ln</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+
+        <span class="c1">// 执行任务：根据类型调用 fsync()、close()、free() 等
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">BIO_AOF_FSYNC</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fsync</span><span class="p">((</span><span class="kt">long</span><span class="p">)</span><span class="n">job</span><span class="o">-&gt;</span><span class="n">arg1</span><span class="p">);</span>  <span class="c1">// arg1 对应 AOF 文件描述符
+</span><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">BIO_CLOSE_FILE</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">close</span><span class="p">((</span><span class="kt">long</span><span class="p">)</span><span class="n">job</span><span class="o">-&gt;</span><span class="n">arg1</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">BIO_LAZY_FREE</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">job</span><span class="o">-&gt;</span><span class="n">arg1</span><span class="p">);</span>  <span class="c1">// arg1 对应待释放的内存地址
+</span><span class="c1"></span>        <span class="p">}</span>
+
+        <span class="c1">// 移除已完成任务
+</span><span class="c1"></span>        <span class="n">listDelNode</span><span class="p">(</span><span class="n">bio_jobs</span><span class="p">[</span><span class="n">type</span><span class="p">],</span> <span class="n">ln</span><span class="p">);</span>
+        <span class="n">zfree</span><span class="p">(</span><span class="n">job</span><span class="p">);</span>
+        <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bio_mutex</span><span class="p">[</span><span class="n">type</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="四关键设计点"><strong>四、关键设计点</strong></h3>
+<table>
+<thead>
+<tr>
+<th><strong>机制</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>无锁主线程</strong></td>
+<td>主线程提交任务仅需对队列加锁，无时间敏感操作，不会长时间阻塞主线程。</td>
+</tr>
+<tr>
+<td><strong>线程隔离</strong></td>
+<td>每个后台线程处理独立任务类型，避免竞争（例如 AOF 刷盘与内存回收互不影响）。</td>
+</tr>
+<tr>
+<td><strong>轻量化封装</strong></td>
+<td><code>bio_job</code> 结构简单，仅存储必要参数，减少内存开销。</td>
+</tr>
+<tr>
+<td><strong>唤醒机制</strong></td>
+<td>条件变量通知确保后台线程及时响应新任务，降低延迟。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="五典型应用场景"><strong>五、典型应用场景</strong></h3>
+<h4 id="1-aof-刷盘everysec策略"><strong>1. AOF 刷盘（<code>everysec</code> 策略）</strong></h4>
+<ul>
+<li><strong>主线程</strong>：将写命令追加到 <code>aof_buf</code> 缓冲区。</li>
+<li><strong>后台线程</strong>：每秒执行一次 <code>fsync</code>，将缓冲区数据刷盘。</li>
+</ul>
+<h4 id="2-惰性删除unlink命令"><strong>2. 惰性删除（<code>UNLINK</code> 命令）</strong></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// redis/src/db.c
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">dbAsyncDelete</span><span class="p">(</span><span class="n">redisDb</span> <span class="o">*</span><span class="n">db</span><span class="p">,</span> <span class="n">robj</span> <span class="o">*</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dictDelete</span><span class="p">(</span><span class="n">db</span><span class="o">-&gt;</span><span class="n">dict</span><span class="p">,</span> <span class="n">key</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">)</span> <span class="o">==</span> <span class="n">DICT_OK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 异步释放内存
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">server</span><span class="p">.</span><span class="n">lazyfree_lazy_user_async</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">bioCreateBackgroundJob</span><span class="p">(</span><span class="n">BIO_LAZY_FREE</span><span class="p">,</span> <span class="n">key</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="总结"><strong>总结</strong></h3>
+<p>Redis 通过 <code>bioCreateBackgroundJob</code> 将阻塞操作分配至后台线程，其核心设计是：</p>
+<ol>
+<li><strong>主线程与后台线程解耦</strong>：主线程仅负责提交任务，避免 I/O 阻塞。</li>
+<li><strong>任务队列机制</strong>：使用线程安全的队列和条件变量实现任务调度。</li>
+<li><strong>资源隔离</strong>：不同类型任务由独立线程处理，避免相互干扰。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">## write不够，需要fsync 
+int fsync(int fd);
+fsync的功能是确保文件fd所有已修改的内容已经正确同步到硬盘上，该调用会阻塞等待直到设备报告IO完成
+</code></pre></td></tr></table>
+</div>
+</div><p>//https://www.bookstack.cn/read/aliyun-rds-core/0bca1b2aa30e6bb3.md</p>
+<h3 id="提问redis-在处理-aofrdb-等磁盘持久化任务时选择通过单线程事件循环--后台-bio-线程的机制实现异步化而非直接使用-linux-内核的异步-ioaio这种设计是出于以下哪些考量">提问：&ldquo;Redis 在处理 AOF/RDB 等磁盘持久化任务时，选择通过单线程事件循环 + 后台 BIO 线程的机制实现异步化，而非直接使用 Linux 内核的异步 I/O（AIO）。这种设计是出于以下哪些考量？</h3>
+<p>这句话的核心是强调 <strong>BIO 线程的资源隔离性</strong>，即 Redis 通过 BIO 线程将磁盘操作（如持久化）与主线程的事件循环解耦，从而实现<strong>资源使用的可观测性和可控性</strong>。具体可从以下两个层面理解：</p>
+<hr>
+<h3 id="1-线程调度优先级差异化scheduling-priority"><strong>1. 线程调度优先级差异化（Scheduling Priority）</strong></h3>
+<ul>
+<li><strong>操作系统的线程调度策略</strong>允许为不同线程设置优先级（例如 Linux 的 <code>nice</code> 值或 <code>sched_setscheduler</code>），Redis 可配置 BIO 线程的优先级略低于主线程：
+<ul>
+<li><strong>示例</strong>：主线程负责处理客户端命令，需要快速响应，因此被设置为较高优先级（如 <code>nice=-10</code>）；
+-而 BIO 线程执行后台持久化任务，设置为较低优先级（如 <code>nice=10</code>）。</li>
+<li><strong>效果</strong>：当 CPU 资源紧张时，内核调度器会优先执行主线程任务，避免磁盘刷盘阻塞用户请求处理。</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<hr>
+<h3 id="2-独立监控-bio-线程状态observability"><strong>2. 独立监控 BIO 线程状态（Observability）</strong></h3>
+<ul>
+<li>
+<p><strong>线程级独立监控</strong>：因为 BIO 线程独立于主线程存在，运维团队可以直接观察其状态：</p>
+<ul>
+<li><strong>挂起检测</strong>：BIO 线程若因同步 I/O（如 <code>fsync</code>）长时间阻塞，可通过 <code>top</code>/<code>htop</code> 查看线程状态（如 <code>D</code> 状态表示不可中断 sleep），或通过 <code>strace -p &lt;tid&gt;</code> 跟踪系统调用。</li>
+<li><strong>延迟分析</strong>：针对 BIO 线程独立的性能指标（如 <code>bio_delay</code>）可以快速定位磁盘性能问题，避免与主线程的延迟指标混淆。</li>
+</ul>
+</li>
+<li>
+<p><strong>资源隔离的工程意义</strong>：</p>
+<ul>
+<li><strong>熔断能力</strong>：若 BIO 线程堆积过多任务（如 AOF 持久化过慢），可直接触发告警并降级持久化策略（如关闭 AOF）。</li>
+<li><strong>性能调优</strong>：通过调整 BIO 线程数量（Redis 默认启动 3 个 BIO 线程）或绑定 CPU 核，优化磁盘吞吐与主线程延迟的平衡。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="类比理解"><strong>类比理解</strong></h3>
+<p>想象一个公司的客服团队：</p>
+<ul>
+<li><strong>主线程是客服热线接线员</strong>（高优先级）：需要快速接听电话，直接服务客户，若让接线员同时处理财务报销（类比磁盘 I/O），会导致电话响应延迟。</li>
+<li><strong>BIO 线程是财务部</strong>（低优先级）：财务流程可以独立运作（线程隔离），即使报销流程积压（磁盘负载高），客服团队仍能正常接听电话。财务部的效率也可以通过独立监控（如报销处理时长报表）来优化。</li>
+</ul>
+<hr>
+<h3 id="总结-1"><strong>总结</strong></h3>
+<p>“资源隔离”是通过<strong>优先级区分</strong>和<strong>独立监控</strong>两个机制实现的：</p>
+<ol>
+<li><strong>优先保障主线程的低延迟</strong>：通过调度策略确保主线程优先获取 CPU。</li>
+<li><strong>持久化操作的影响可观测、可控制</strong>：BIO 线程的运行状态与主线程解耦，运维干预更精、</li>
+</ol>
+<p>Redis 可配置 BIO 线程的优先级略低于主线程：</p>
+<h2 id="提问6redis-可配置-bio-优先级在redisconf-怎么配置">提问6：Redis 可配置 BIO 优先级在redis.CONF 怎么配置</h2>
+<h3 id="1-bluestore-的异步-io-架构"><strong>1. BlueStore 的异步 I/O 架构</strong></h3>
+<p>BlueStore 直接管理裸设备（如 <code>/dev/nvme0n1</code>），绕过文件系统，直接使用 <code>libaio</code> 提交异步 I/O 请求。其核心流程如下：</p>
+<h4 id="1-io-请求的提交"><strong>(1) I/O 请求的提交</strong></h4>
+<ul>
+<li><strong>写入路径</strong>：
+<ul>
+<li>客户端请求通过 OSD 接收后，数据先写入 <strong>RocksDB 的 WAL（Write-Ahead Log）</strong>（基于 <code>libaio</code> 异步刷盘）。</li>
+<li>主数据通过 <strong>BlueFS</strong>（BlueStore 内部日志管理）异步提交到 NVMe SSD 的数据区域。</li>
+</ul>
+</li>
+<li><strong>读取路径</strong>：
+<ul>
+<li>直接从 NVMe SSD 异步读取数据块，通过回调机制将数据返回给客户端。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-多线程与队列深度控制"><strong>(2) 多线程与队列深度控制</strong></h4>
+<ul>
+<li><strong>线程池模型</strong>：
+<ul>
+<li>每个 OSD 实例配置 <strong><code>osd_iodepth_threads</code></strong> 参数（默认值通常为 2-4，根据硬件调整）。</li>
+<li>每个线程独立处理一批 I/O 请求，通过 <code>libaio</code> 批量提交给内核。</li>
+</ul>
+</li>
+<li><strong>队列深度（iodepth）</strong>：
+<ul>
+<li>每个线程维护一个 <strong>AIO 队列</strong>，队列深度由 <code>bluestore_iodepth</code>（默认 32） 控制，表示单个线程同时未完成的 I/O 请求数。</li>
+<li>总并发能力 = <code>osd_iodepth_threads</code> × <code>bluestore_iodepth</code>。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ini" data-lang="ini"><span class="c1"># 示例配置（ceph.conf）</span>
+<span class="k">[osd]</span>
+<span class="na">bluestore_iodepth</span> <span class="o">=</span> <span class="s">32       # 每个线程的 AIO 队列深度</span>
+<span class="na">osd_iodepth_threads</span> <span class="o">=</span> <span class="s">8      # 并发处理 I/O 的线程数</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-libaio-的事件回调"><strong>(3) libaio 的事件回调</strong></h4>
+<ul>
+<li><strong>完成事件轮询</strong>：
+<ul>
+<li>线程通过 <code>io_getevents</code> 系统调用异步获取已完成的 I/O 请求事件。</li>
+<li>完成事件触发回调函数，更新元数据（如 RocksDB 中的对象状态）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-nvme-ssd-高队列深度的适配"><strong>2. NVMe SSD 高队列深度的适配</strong></h3>
+<p>NVMe SSD 的硬件队列深度可支持 <strong>数万级并发请求</strong>（如 64K 队列），Ceph 通过以下设计匹配这一特性：</p>
+<h4 id="1-多线程扩展"><strong>(1) 多线程扩展</strong></h4>
+<ul>
+<li>提高 <code>osd_iodepth_threads</code>（如设置为 NVMe SSD 的 CPU 核数），增加并行提交 I/O 的通道。</li>
+<li>每个线程绑定独立的 CPU 核心，避免多线程竞争（需结合 <code>cgroup</code> 或 <code>taskset</code> 手动绑核）。</li>
+</ul>
+<h4 id="2-队列深度调优"><strong>(2) 队列深度调优</strong></h4>
+<ul>
+<li>增大 <code>bluestore_iodepth</code>（如 128），允许单个线程提交更多未完成请求，填充 NVMe SSD 的硬件队列。</li>
+<li><strong>动态调整</strong>：BlueStore 根据负载自动扩缩队列深度，避免因突发流量导致队列枯竭。</li>
+</ul>
+<h4 id="3-批量请求合并"><strong>(3) 批量请求合并</strong></h4>
+<ul>
+<li>对小块随机写入（如 4K）合并为更大的连续请求（如 64K），减少 I/O 次数并提高 SSD 吞吐量（需 NVMe 支持 NVMe 命令融合）。</li>
+</ul>
+<hr>
+<h3 id="3-性能问题排查与调优"><strong>3. 性能问题排查与调优</strong></h3>
+<h4 id="1-监控指标"><strong>(1) 监控指标</strong></h4>
+<ul>
+<li>
+<p><strong>OSD 延迟分布</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph osd perf      <span class="c1"># 查看每个 OSD 的 commit/apply 延迟</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>AIO 队列状态</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ceph daemon osd.&lt;id&gt; perf dump <span class="p">|</span> grep bluestore -A <span class="m">20</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="2-调优建议"><strong>(2) 调优建议</strong></h4>
+<ul>
+<li><strong>SSD 配置</strong>：</li>
+</ul>
+<p><a href="https://www.cnblogs.com/Unna/p/16217116.html" title="发布于 2022-05-02 22:13">centos7.6 挂载镜像配置本地yum源</a></p>
+<p>mount -o loop /opt/CentOS-7-x86_64-DVD-2003.iso /var/www/html/centos7/</p>
+<p>条命令的作用是将一个ISO镜像文件挂载到一个指定的目录，以便可以通过网络或其他方式访问其内容。具体来说，命令的各个部分含义如下：</p>
+<ol>
+<li>
+<p><strong><code>mount</code></strong>：这是Linux系统中的一个命令，用于将文件系统（如硬盘分区、光盘、USB存储设备或ISO镜像文件等）挂载到一个指定的挂载点，使其内容可以被访问。</p>
+</li>
+<li>
+<p><strong><code>-o loop</code></strong>：这是一个选项，表示使用循环设备（loop device）。循环设备是一种虚拟设备，允许将一个文件（如ISO镜像文件）当作一个块设备来挂载。这样，ISO文件中的内容就可以像一个真实的磁盘分区一样被访问。</p>
+</li>
+<li>
+<p><strong><code>/opt/CentOS-7-x86_64-DVD-2003.iso</code></strong>：这是要挂载的ISO镜像文件的路径。ISO文件通常是一个光盘镜像文件，包含了操作系统的安装文件或其他数据。</p>
+</li>
+<li>
+<p><strong><code>/var/www/html/centos7/</code></strong>：这是挂载点的路径，即ISO文件将被挂载到的目录。挂载完成后，ISO文件中的内容将可以通过这个目录访问</p>
+</li>
+</ol>
+<p>若客户现场使用了infiniband网络，请安装第三方Mellanox驱动 。驱动信息如下：</p>
+<p>l   下载地址：<a href="http://www.mellanox.com/page/software_overview_ib">http://www.mellanox.com/page/software_overview_ib</a></p>
+<p>l   版本信息：MLNX_OFED_LINUX-5.0-2.1.8.0-rhel7.8-x86_64<a href="#_msocom_1">[JZ(1]</a> 。</p>
+<hr>
+<p> <a href="#_msoanchor_1">[JZ(1]</a>已修改</p>
+<p>在 Linux 系统中，磁盘格式化和挂载是两个重要的步骤，它们的顺序和作用是相互关联的。以下是为什么需要先格式化磁盘再进行挂载的原因：</p>
+<h3 id="1格式化磁盘的作用">1. <strong>格式化磁盘的作用</strong></h3>
+<ul>
+<li>
+<p><strong>创建文件系统</strong>：格式化磁盘的目的是在磁盘上创建一个文件系统（如 <code>ext4</code>、<code>xfs</code> 等）。文件系统是操作系统用来组织和管理磁盘数据的结构，它定义了如何存储、检索和管理文件和目录。</p>
+</li>
+<li>
+<p><strong>分配存储空间</strong>：格式化会将磁盘划分为多个逻辑区域，例如元数据（如文件名、权限、时间戳等）和实际数据存储区域。没有文件系统，操作系统无法识别磁盘上的数据结构。</p>
+</li>
+<li>
+<p><strong>初始化磁盘</strong>：格式化会清除磁盘上的旧数据（如果磁盘之前有数据），并初始化磁盘的文件系统结构，使其处于一个干净的状态。</p>
+</li>
+</ul>
+<h3 id="2挂载磁盘的作用">2. <strong>挂载磁盘的作用</strong></h3>
+<ul>
+<li>
+<p><strong>将磁盘与文件系统关联</strong>：挂载是将格式化后的磁盘（或分区）与一个已存在的目录（挂载点）关联起来。挂载后，操作系统可以通过挂载点访问磁盘上的数据。</p>
+</li>
+<li>
+<p><strong>使磁盘可用</strong>：挂载操作使得磁盘上的文件系统成为文件树的一部分，用户可以通过标准的文件操作命令（如 <code>ls</code>、<code>cp</code>、<code>mv</code> 等）访问和管理磁盘上的数据。</p>
+</li>
+<li>
+<p><strong>指定挂载点</strong>：挂载点是一个目录路径，它决定了磁盘数据在文件系统中的位置。例如，将 <code>/dev/sdb</code> 挂载到 <code>/data/beegfs/beegfs_mgmtd/</code>，意味着 <code>/data/beegfs/beegfs_mgmtd/</code> 下的所有文件和目录实际上存储在 <code>/dev/sdb</code> 上。</p>
+</li>
+</ul>
+<h3 id="3为什么必须先格式化再挂载">3. <strong>为什么必须先格式化再挂载</strong></h3>
+<ul>
+<li>
+<p><strong>文件系统是基础</strong>：挂载操作依赖于磁盘上已经存在的文件系统。如果没有先格式化磁盘，磁盘上没有文件系统结构，操作系统无法识别磁盘的内容，也就无法将其挂载到文件系统中。</p>
+</li>
+<li>
+<p><strong>避免数据混乱</strong>：如果直接挂载一个未格式化的磁盘，操作系统可能会将其视为一个空设备，或者因为无法识别其内容而报错。格式化可以确保磁盘有一个清晰的结构，避免数据混乱或损坏。</p>
+</li>
+<li>
+<p><strong>初始化存储</strong>：格式化磁盘是一个初始化过程，它为磁盘分配了存储空间和</p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-11-20 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/book/">book</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/docker/2025-03-15-window11-install-docker/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从青铜到王者系列(1):手把手教你用WSL 2在Windows 11家庭版上安装Docker，开发必备教程！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/liunx/2022_11_29_liunx_memory_/">
+            <span class="next-text nav-default">从青铜到王者系列：故障定位</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

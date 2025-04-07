@@ -26,6 +26,15 @@
     </item>
     
     <item>
+      <title>成为tikv贡献者第四天：通过 TiKV 入门 Rust</title>
+      <link>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days4_/</link>
+      <pubDate>Wed, 29 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days4_/</guid>
+      <description>前提条件：已经学会TIKV编译和环境搭建 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 环境: window11 + WSL（Windows Subsystem for Linux） git clone</description>
+    </item>
+    
+    <item>
       <title>源码解读第一天：raft 与Paxos</title>
       <link>https://wangcy6.github.io/post/tidb/2024/rust_for_tikv_days100_1/</link>
       <pubDate>Wed, 29 May 2024 00:00:00 +0000</pubDate>

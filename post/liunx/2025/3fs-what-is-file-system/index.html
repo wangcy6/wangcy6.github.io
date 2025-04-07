@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从青铜到王者系列：3FS如何实现一个文件系统 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="从青铜到王者" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/liunx/2025/3fs-what-is-file-system/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从青铜到王者系列：3FS如何实现一个文件系统" />
+<meta property="og:description" content="从青铜到王者" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/liunx/2025/3fs-what-is-file-system/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-03-23T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-03-23T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从青铜到王者系列：3FS如何实现一个文件系统">
+<meta itemprop="description" content="从青铜到王者"><meta itemprop="datePublished" content="2025-03-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-03-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="8279">
+<meta itemprop="keywords" content="code_reading," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从青铜到王者系列：3FS如何实现一个文件系统"/>
+<meta name="twitter:description" content="从青铜到王者"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从青铜到王者系列：3FS如何实现一个文件系统</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-03-23 00:00 </span>
+        
+          <span class="more-meta"> 约 8279 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#作业-实现-hello-world-的文件系统-并说出io流程">作业 实现 hello world 的文件系统 ，并说出IO流程</a></li>
+    <li><a href="#一导读">一、导读</a></li>
+    <li><a href="#提问linux-系统启动过程">提问：Linux 系统启动过程</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#二提问linux-文件系统是怎么工作的">二、提问：Linux 文件系统是怎么工作的？</a>
+      <ul>
+        <li></li>
+        <li><a href="#ext4-inode-结构中的-15-个指针"><strong>EXT4 Inode 结构中的 15 个指针</strong></a></li>
+        <li><a href="#单个文件最大支持大小计算"><strong>单个文件最大支持大小计算</strong></a></li>
+        <li><a href="#最终计算最大单个文件大小"><strong>最终计算（最大单个文件大小）</strong></a></li>
+        <li><a href="#结论"><strong>结论</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#三ext4文件系统为例子-cat-mnticfsfilea-判断文件filea是否存在">三、ext4文件系统为例子 cat /mnt/icfs/fileA 判断文件fileA是否存在</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#1-fuse-是什么">1. FUSE 是什么？</a></li>
+    <li><a href="#2-fuse-原理是什么">2. FUSE 原理是什么</a>
+      <ul>
+        <li><a href="#应用juicefs-fuse-用户态分布式文件系统">应用：JuiceFS ：FUSE 用户态分布式文件系统</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用-将-ceph-文件系统挂载为-fuse-客户端">应用： 将 Ceph 文件系统挂载为 FUSE 客户端</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#参考想要电子书可以私信">参考【想要电子书可以私信】</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>从青铜到王者系列:深入浅出理解DeepSeek 3FS (2)从内核到用户态文件系统的设计之路</p>
+<p>大家好，我是小王同学，</p>
+<p>本文希望帮你深入理解分布式存储系统3FS更进一步</p>
+<ul>
+<li><strong>昵称</strong>：20点下班就是一件很幸福事情</li>
+<li><strong>愿景</strong>：让小孩都可以听得懂我在讲什么。</li>
+<li><strong>我能提供什么</strong>：多问自己一次为什么这样用</li>
+<li><strong>不明白的留言</strong>：</li>
+</ul>
+<ol>
+<li>Wechat/GitHub：watchpoints</li>
+</ol>
+<p><img src="https://files.mdnice.com/user/5197/619f94e3-143d-4c87-b967-1bcfdb5f7d62.png" alt=""></p>
+<h2 id="作业-实现-hello-world-的文件系统-并说出io流程">作业 实现 hello world 的文件系统 ，并说出IO流程</h2>
+<p>参考答案</p>
+<ul>
+<li><a href="https://www.qiyacloud.cn/2021/05/2021-06-07/">https://www.qiyacloud.cn/2021/05/2021-06-07/</a></li>
+<li><a href="https://github.com/libfuse/libfuse/blob/master/example/hello.c">https://github.com/libfuse/libfuse/blob/master/example/hello.c</a></li>
+</ul>
+<p>没有FUSE的IO流程示意图</p>
+<p><img src="https://files.mdnice.com/user/5197/3313ee72-057f-4768-8e49-a131d64c3138.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/8bdff1ff-7384-4b4e-a565-6e0fc5a2db39.png" alt=""></p>
+<p>带FUSE的IO流程示意图</p>
+<p><img src="https://files.mdnice.com/user/5197/cfa47aa2-5c69-4251-864e-9cf7ebeef126.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/882d8f2a-5511-4dd0-8609-3aa9de0cefd7.png" alt=""></p>
+<h2 id="一导读">一、导读</h2>
+<p>从青铜到王者系列：深入浅出理解 DeepSeek 3FS（1）</p>
+<p>我整理 大模型训练</p>
+<ul>
+<li>在checkpoint时候对大的文件读写，</li>
+<li>在批量查询的时候对小文件读写</li>
+</ul>
+<p>目前</p>
+<ul>
+<li>谷歌的GFS 适合 大文件顺序读写，</li>
+<li>Ceph  mds 元数据 存在瓶颈 8k作用</li>
+</ul>
+<p>幻方为什么要搞3FS？
+AI训练与推理的业务需求，传统分布式文件系统已经难以满足：</p>
+<ol>
+<li>海量数据顺序读（语料输入）</li>
+<li>检查点（分步骤重算）</li>
+<li>顺序写（模型参数保存）；</li>
+<li>随机读</li>
+</ol>
+<p>因此重新实现一个新的文件系统</p>
+<blockquote>
+<p>不考虑分布式，个人笔记或者购买云主机文件系统
+如何支持大小文件读写，并且满足高效查询</p>
+</blockquote>
+<h2 id="提问linux-系统启动过程">提问：Linux 系统启动过程</h2>
+<p>划重点：重点是文件系统部分，扩展虚拟机（KVM）与内核部分。</p>
+<p><img src="https://files.mdnice.com/user/5197/f2b0ec1d-bd25-400c-8efe-93668ddd27b9.png" alt=""></p>
+<p>电脑通电后，加载主板上的BIOS(basic input output system)程序</p>
+<p>BIOS是电脑启动时加载的第一个软件。
+它是一组固化到计算机内主板上一个ROM芯片上的程序</p>
+<h5 id="boot">boot：</h5>
+<p>虚拟机（KVM）如何设置引导硬盘顺序</p>
+<p>什么是 KVM？
+基于内核的虚拟机（KVM）是 Linux® 操作系统的一种开源虚拟化技术。借助 KVM，Linux 可作为虚拟机监控程序运行多个独立的虚拟机（VM）</p>
+<p>BIOS&ndash;》boot
+第1引导顺序：hard drive 硬盘</p>
+<p>第2引导顺序：cdrom 光驱  &mdash;-》安装系统</p>
+<p>第3引导顺序：removable device 可移动设备&ndash;》u盘，移动硬盘  &ndash;》安装系统</p>
+<p>第4引导顺序：Network  &ndash;》从网络启动&ndash;》网络中安装服务器启动  &ndash;》安装</p>
+<h4 id="文件系统部分">文件系统部分</h4>
+<p>启动流程：</p>
+<ol>
+<li>
+<p>内核加载完成</p>
+</li>
+<li>
+<p>执行mount操作</p>
+</li>
+</ol>
+<p>挂载文件系统想要操作文件系统，</p>
+<p>第一件事情就是挂载文件系统</p>
+<ol start="3">
+<li>读取超级块</li>
+<li>定位inode 2</li>
+<li>将其挂载为根目录</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">系统启动过程：
++----------------+     +---------------+     +------------------+
+| 读取超级块     | --&gt; | 定位inode 2   | --&gt; | 挂载为根目录(/)  |
++----------------+     +---------------+     +------------------+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://files.mdnice.com/user/5197/19959a5e-7bf2-44c5-8bb6-7ca9f37d6349.png" alt=""></p>
+<p>在 Linux 启动过程中，加载 ext4 文件系统主要经历以下几个阶段：</p>
+<ol>
+<li>
+<p><strong>内核加载与初始化</strong></p>
+<ul>
+<li>当系统通过 BIOS/UEFI 加载引导加载程序（如 GRUB）后，内核被加载到内存中。</li>
+<li>内核初始化时，会建立 VFS（虚拟文件系统）核心数据结构，如 dentry 哈希表和 inode 哈希表，并加载必要的文件系统驱动（ext4 驱动可以是内置的或作为模块加载）。</li>
+</ul>
+</li>
+<li>
+<p><strong>挂载根文件系统</strong></p>
+<ul>
+<li>内核根据启动参数（例如 root=/dev/sda1）确定根文件系统所在的设备。</li>
+<li>调用函数如 <strong>vfs_kern_mount()</strong>（进一步调用 ext4_mount()）来挂载 ext4 文件系统。</li>
+<li>在挂载过程中，ext4 驱动会读取设备上的超级块（superblock），验证 ext4 的魔数（magic number）和其它元数据，同时初始化 inode 表、日志（journal）等内部数据结构。</li>
+<li>ext4 文件系统的根目录在挂载时根据约定总是分配 inode 号 2。</li>
+</ul>
+</li>
+<li>
+<p><strong>切换根文件系统（pivot_root/switch_root）</strong></p>
+<ul>
+<li>如果系统使用了 initrd 或 initramfs 作为临时根文件系统，内核会在加载完真正的 ext4 文件系统后，通过 pivot_root 或 switch_root 将根目录切换到挂载的 ext4 文件系统上。</li>
+<li>此时，init（或 systemd）进程启动，用户空间接管并继续后续的初始化工作。</li>
+</ul>
+</li>
+</ol>
+<p>这样，整个过程确保了 ext4 文件系统的元数据和数据块被正确加载，并最终成为系统的根文件系统，使用户和应用程序可以正常访问文件数据。</p>
+<h4 id="作业为什么不同挂载点的inode号码都是2">作业：为什么不同挂载点的inode号码都是2</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@watchpoints ~]# lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+loop0    7:0    0   1G  0 loop /mnt/icfs
+sr0     11:0    1  19M  0 rom
+vda    253:0    0  50G  0 disk
+└─vda1 253:1    0  50G  0 part /
+[root@watchpoints ~]# ls -id /
+2 /
+[root@watchpoints ~]# ls -id /mnt/icfs
+2 /mnt/icfs
+
+同理
+
+我们有3个不同的文件系统分别挂载到了3个不同的挂载点(目录)。
+EXT4格式的文件系统我们分了3个，
+分别挂载了/，
+/boot，
+/home。
+
+那么这里的了/，/boot，/home就是3个不同的挂载点。
+
+</code></pre></td></tr></table>
+</div>
+</div><p><a href="https://github.com/torvalds/linux/blob/master/fs/ext4/ext4.h">https://github.com/torvalds/linux/blob/master/fs/ext4/ext4.h</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/*
+</span><span class="cm"> * Special inodes numbers
+</span><span class="cm"> */</span>
+<span class="cp">#define	EXT4_BAD_INO		 1	</span><span class="cm">/* Bad blocks inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_ROOT_INO		 2	</span><span class="cm">/* Root inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_USR_QUOTA_INO	 3	</span><span class="cm">/* User quota inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_GRP_QUOTA_INO	 4	</span><span class="cm">/* Group quota inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_BOOT_LOADER_INO	 5	</span><span class="cm">/* Boot loader inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_UNDEL_DIR_INO	 6	</span><span class="cm">/* Undelete directory inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_RESIZE_INO		 7	</span><span class="cm">/* Reserved group descriptors inode */</span><span class="cp">
+</span><span class="cp">#define EXT4_JOURNAL_INO	 8	</span><span class="cm">/* Journal inode */</span><span class="cp">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二提问linux-文件系统是怎么工作的">二、提问：Linux 文件系统是怎么工作的？</h2>
+<p><img src="https://files.mdnice.com/user/5197/fbb9cc2e-e131-4b9b-96b5-d8b36b4666be.png" alt=""></p>
+<p>通过这张图，你可以看到，在 VFS 的下方，Linux 支持各种各样的文件系统，如 Ext4、XFS、NFS 等等。按照存储位置的不同，</p>
+<p>这些文件系统可以分为三类。</p>
+<ul>
+<li>
+<p>类是基于磁盘的文件系统，也就是把数据直接存储在计算机本地挂载的磁盘中。
+见的 Ext4、XFS、OverlayFS 等，都是这类文件系统。</p>
+</li>
+<li>
+<p>类是基于内存的文件系统，也就是我们常说的虚拟文件系统。</p>
+</li>
+<li>
+<p>类是网络文件系统，</p>
+</li>
+</ul>
+<p>也就是用来访问其他计算机数据的文件系统，比如 NFS、SMB、iSCSI 等。</p>
+<p>网络文件系统 NFS：首次突破内核态</p>
+<p>随着计算需求的增长，单台计算机的性能逐渐无法满足日益增长的计算和存储要求。</p>
+<p>人们开始引入多台计算机，以分担负载并提高整体效率。</p>
+<p>在这一场景下，一个应用程序往往需要访问分布在多台计算机上的数据。</p>
+<p>为了解决这一问题，人们提出了在网络中引入虚拟存储层的概念，将远程计算机的文件系统（如某个目录）通过网络接口挂载到本地计算机的节点上。</p>
+<p>这样做的目的是使本地计算机能够无缝地访问远程计算机的数据，就好像这些数据存储在本地一样。</p>
+<p><img src="https://files.mdnice.com/user/5197/a9c943c9-78b6-441a-ad56-12c5d1d28df4.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/fa006f13-edfb-4e80-94f1-183aa24b56e9.png" alt=""></p>
+<p>linux分析利刃之sar命令详解</p>
+<p>参考：
+<a href="https://www.cnblogs.com/zsql/p/11628766.html">https://www.cnblogs.com/zsql/p/11628766.html</a>
+sar -n DEV 1 1#统计网络信息  这个有用带宽统计</p>
+<p>查看进行哪些线程</p>
+<h4 id="文件系统的格式">文件系统的格式</h4>
+<p>来源：
+<a href="https://zh.wikipedia.org/wiki/Ext4">https://zh.wikipedia.org/wiki/Ext4</a></p>
+<p>第四代扩展文件系统（英语：Fourth extended filesystem，缩写为ext4）是Linux系统下的日志文件系统</p>
+<p>文件系统(六)：一文看懂linux ext4文件系统工作原理</p>
+<p>ext4它突出的特点有：数据分段管理、多块分配、延迟分配、持久预分配、日志校验、支持更大的文件系统和文件大小。</p>
+<p>ext4文件系统的具体实现比较复杂，本文尝试用比较简单的方式用一篇文章的篇幅来简单地介绍一下它的工作原理。</p>
+<p>命令：dumpe2fs /dev/loop0</p>
+<p><img src="https://files.mdnice.com/user/5197/c07c56ac-f09c-4c06-aa8b-8cffdc03de4f.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/7f401eb1-0b91-4867-b6b6-d07f7eb6fe3b.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/94061f23-39f7-464f-bd01-dce0d673ee66.png" alt=""></p>
+<p>从上面dumpe2fs的数据上我们可以看出，一个1GB大小的空间，ext4 文件系统将它分隔成了0~7的8个Group。</p>
+<p>其中，每个Group中又有superblock、Group descriptors、bitmap、Inode table、usrer data、还有一些保留空间，细分之后的空间布局如下：
+ext4 的总体磁盘布局如下：</p>
+<p><img src="https://files.mdnice.com/user/5197/34cf07ac-24f6-432d-a0ac-92160e5e6067.png" alt=""></p>
+<p>具体含义内：
+ext4文件系统信息表</p>
+<p>从上面《1.1 ext4文件系统信息表》中可以知道Primary superblock在第0号block，每个block的大小为4096Byte</p>
+<p>文件系统信息、块大小和块组信息、Inode 相关信息、文件系统大小和使用情况、日志相关信息、挂载信息、校验和和备份信息。</p>
+<p>这里面我还需要重点说一下，超级块和块组描述符表都是全局信息，而且这些数据很重要。</p>
+<p>如果这些数据丢失了，整个文件系统都打不开了，这比一个文件的一个块损坏更严重。所以，这两部分我们都需要备份，但是采取不同的策略。默认情况下，超级块和块组描述符表都有副本保存在每一个块组里面</p>
+<p>其实使用dumpe2fs命令查看的ext4文件系统信息就是从superblock上的数据解析而来。</p>
+<p>除了Primary superblock，还在不同的group中有备份superblock，其内容与Primary superblock原始数据相同，Primary superblock损坏的时候可以从备份区恢复回来</p>
+<p><img src="https://files.mdnice.com/user/5197/e0275fef-c23a-4b7d-978d-9c32ca904527.png" alt=""></p>
+<p>回顾：</p>
+<p>在 Linux 内核挂载 ext4 文件系统时，挂载流程大致如下：</p>
+<ol>
+<li>
+<p><strong>系统调用 mount() 启动挂载流程</strong><br>
+当用户或内核启动参数（如 root=/dev/sda1）触发挂载时，会调用通用的 mount 系统调用，进而进入 VFS 层的挂载流程。</p>
+</li>
+<li>
+<p><strong>进入 ext4 挂载入口 ext4_mount()</strong><br>
+ext4 文件系统在内核中注册为一种文件系统类型，其挂载入口函数通常为 ext4_mount()（定义在 fs/ext4/super.c 中）。<br>
+在该函数中，会调用 ext4_fill_super()，用来读取磁盘上的超级块（superblock）并验证 ext4 文件系统的完整性。</p>
+</li>
+<li>
+<p><strong>解析超级块与加载根 inode</strong><br>
+ext4_fill_super() 会从设备上读取超级块数据，然后填充超级块结构体。在超级块中保存了文件系统全局信息，其中就包括 ext4 文件系统的根目录 inode 的固定编号（EXT4_ROOT_INO 定义为 2，见 fs/ext4/ext4.h）。<br>
+紧接着，内核通过 ext4_iget()（或相关函数）加载 inode 2，这个 inode 就代表了文件系统的根目录。</p>
+</li>
+<li>
+<p><strong>构造根目录 dentry 并完成挂载</strong><br>
+加载根 inode 后，内核会创建相应的 dentry（目录项），并将该根 dentry 作为挂载点的根，最终将整个文件系统挂载为根目录（/）。</p>
+</li>
+</ol>
+<p>相关源码主要分布在内核源代码的 fs/ext4/ 目录下，具体可以查看 ext4_mount()、ext4_fill_super() 以及 ext4_iget() 等函数。</p>
+<h4 id="ext4-文件系统特点的">ext4 文件系统特点的</h4>
+<ul>
+<li>带着问题去 阅读：ext4文件系统单个文件存储大小是多少？4TB 还是16TB</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/6b247a88-b726-45be-9650-a112f9ce3ec9.png" alt=""></p>
+<blockquote>
+<p>Linux的ext4文件系统，为什么inode里只有12个指向数据块的直接指针？</p>
+</blockquote>
+<ul>
+<li>
+<p>Ext4只有12个指向数据块的直接指针是沿用的Ext3的设计，为了保证前向兼容。对于Ext4文件系统来说，12个直接块可以解决大部分小文件的场景。如果文件太大，通过直接块的方式元数据将会占用太多空间。</p>
+</li>
+<li>
+<p>EXT3 适合中小规模存储，不适合超大文件（&gt;2TB）</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+
+<span class="err">代码位置：</span>
+<span class="o">-</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/fs/ext4/ext4.h#L771
+</span><span class="c1"></span>
+
+<span class="k">struct</span> <span class="nc">ext4_inode</span> <span class="p">{</span>
+  <span class="n">__le32</span>  <span class="n">i_block</span><span class="p">[</span><span class="n">EXT4_N_BLOCKS</span><span class="p">];</span><span class="cm">/* Pointers to blocks */</span> <span class="n">n</span><span class="o">=</span><span class="mi">15</span>
+<span class="p">};</span>
+
+<span class="cm">/*
+</span><span class="cm"> * Constants relative to the data blocks
+</span><span class="cm"> */</span>
+<span class="cp">#define	EXT4_NDIR_BLOCKS		12
+</span><span class="cp">#define	EXT4_IND_BLOCK			EXT4_NDIR_BLOCKS
+</span><span class="cp">#define	EXT4_DIND_BLOCK			(EXT4_IND_BLOCK + 1)
+</span><span class="cp">#define	EXT4_N_BLOCKS			(EXT4_TIND_BLOCK + 1) </span><span class="c1">//14
+</span></code></pre></td></tr></table>
+</div>
+</div><p>具体如何保存的呢？</p>
+<ul>
+<li>
+<p>EXT4_N_BLOCKS 有如下的定义，计算下来一共有 15 项。</p>
+</li>
+<li>
+<p>在 ext2 和 ext3 中，其中前 12 项直接保存了块的位置，也
+就是说，我们可以通过 i_block[0-11]，直接得到保存文件内容的块。</p>
+</li>
+<li>
+<p>如果一个文件比较大，12 块放不下 i_block[12]指向一个块，这个块里面不放数据块，而是放数据块的位置，
+这个块我们称为间接块。</p>
+</li>
+</ul>
+<p>也就是说，我们在 i_block[12]里面放间接块的位置，通过 i_block[12]找到间接块后，间接块里面放数据块的位置，通过间接块可以找到数据块。</p>
+<ul>
+<li>如果文件再大一些，i_block[13]会指向一个块，我们可以用二次间接块【指针的指针】</li>
+<li>如果文件再大一些，i_block[14]会指向三次间接块</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/8859f9aa-96ce-4c66-a651-21027837e477.png" alt=""></p>
+<p>EXT4 文件系统采用 <strong>索引节点（inode）结构</strong> 来管理文件，其中 <strong>inode 结构中包含 15 个指针</strong>，用于定位文件数据块。</p>
+<h3 id="ext4-inode-结构中的-15-个指针"><strong>EXT4 Inode 结构中的 15 个指针</strong></h3>
+<table>
+<thead>
+<tr>
+<th>指针类型</th>
+<th>数量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>直接块指针（Direct Block）</strong></td>
+<td>12</td>
+<td>直接指向数据块，每个指针可寻址 1 个数据块。</td>
+</tr>
+<tr>
+<td><strong>一次间接指针（Singly Indirect）</strong></td>
+<td>1</td>
+<td>指向一个块，该块内存储多个直接块指针。</td>
+</tr>
+<tr>
+<td><strong>二次间接指针（Doubly Indirect）</strong></td>
+<td>1</td>
+<td>指向一个块，该块内的指针指向多个一次间接块。</td>
+</tr>
+<tr>
+<td><strong>三次间接指针（Triply Indirect）</strong></td>
+<td>1</td>
+<td>指向一个块，该块内的指针指向多个二次间接块。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="单个文件最大支持大小计算"><strong>单个文件最大支持大小计算</strong></h3>
+<p>假设 <strong>块大小（block size）为 4KB</strong>（EXT4 常用设置），计算单个文件最大大小：</p>
+<ol>
+<li>
+<p><strong>直接块存储数据</strong>：</p>
+<ul>
+<li>12 个直接指针 × 4KB = <strong>48KB</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>一次间接块存储数据</strong>：</p>
+<ul>
+<li>1 个指针块存储 1024 个指针（4KB / 4B = 1024）</li>
+<li>1024 × 4KB = <strong>4MB</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>二次间接块存储数据</strong>：</p>
+<ul>
+<li>1 个指针块存储 1024 个一次间接指针</li>
+<li>1024 × 4MB = <strong>4GB</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>三次间接块存储数据</strong>：</p>
+<ul>
+<li>1 个指针块存储 1024 个二次间接指针</li>
+<li>1024 × 4GB = <strong>4TB</strong></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="最终计算最大单个文件大小"><strong>最终计算（最大单个文件大小）</strong></h3>
+<ul>
+<li><strong>直接块</strong>：48KB</li>
+<li><strong>一次间接块</strong>：4MB</li>
+<li><strong>二次间接块</strong>：4GB</li>
+<li><strong>三次间接块</strong>：4TB</li>
+<li><strong>总计</strong> ≈ <strong>4TB + 4GB + 4MB + 48KB ≈ 4TB</strong></li>
+</ul>
+<hr>
+<h3 id="结论"><strong>结论</strong></h3>
+<ul>
+<li><strong>EXT4 单个文件最大可达 16TB</strong>（如果启用了 <strong>更大的 block size，比如 64KB</strong>）。</li>
+<li><strong>在 4KB 块大小下，单个文件最大 ≈ 4TB</strong>（由于索引结构限制）。</li>
+<li><strong>相比 EXT3（单文件最大 2TB），EXT4 更适合大文件存储</strong>。</li>
+</ul>
+<p>如果需要存储超过 4TB 的单个文件，可以：</p>
+<ol>
+<li><strong>使用更大的块大小（如 64KB，最大 16TB）</strong>。</li>
+<li><strong>考虑使用其他文件系统（如 XFS、Btrfs、ZFS）</strong>。</li>
+</ol>
+<p>对比：</p>
+<p><img src="https://files.mdnice.com/user/5197/ffc8e407-cf9b-4deb-a3d5-ea75bfb10930.png" alt=""></p>
+<blockquote>
+<p>带着问题去 阅读：ext4如何存储大文件的，遇得什么麻烦</p>
+</blockquote>
+<blockquote>
+<p>对于大文件来讲，我们要多次读取硬盘才能找到相应的块，这样访问速度就会比较慢。</p>
+</blockquote>
+<p>为了解决这个问题，ext4 做了一定的改变。
+它引入了一个新的概念，叫做 Extents。</p>
+<p>我们来解释一下 Extents。</p>
+<p>比方说，一个文件大小为 128M，如果使用 4k 大小的块进行存储，需要 32k 个块。</p>
+<p>如果按照 ext2 或者 ext3 那样散着放，数量太大了。</p>
+<p>但是 Extents 可以用于存放连续的块，也就是说，我们可以把 128M 放在一个 Extents 里面。</p>
+<p>这样的话，对大文件的读写性能提高了，文件碎片也减少了。</p>
+<p><img src="https://files.mdnice.com/user/5197/716e46fc-c67c-4067-91fc-119a343cf696.png" alt=""></p>
+<p>除了根节点，其他的节点都保存在一个块4k里面，4k扣除ext4_extent_header的12个byte，剩下的能够放340项，每个extent最大能表示128MB的数据，340个extent会使你的表示的文件达到42.5GB。</p>
+<h2 id="三ext4文件系统为例子-cat-mnticfsfilea-判断文件filea是否存在">三、ext4文件系统为例子 cat /mnt/icfs/fileA 判断文件fileA是否存在</h2>
+<p>✅前置条件：</p>
+<p>在 Linux 中，文件系统（如 ext4）通常只能在块设备（block device）上创建和操作，例如：</p>
+<ul>
+<li>
+<p>物理磁盘 (/dev/sda, /dev/nvme0n1)</p>
+</li>
+<li>
+<p>磁盘分区 (/dev/sda1, /dev/nvme0n1p1)</p>
+</li>
+<li>
+<p>虚拟块设备（如 LVM 逻辑卷 /dev/mapper/vg-lv）</p>
+</li>
+</ul>
+<p>如果 没有额外的磁盘，但你仍然需要：
+👉 你可以使用 Loop 设备（/dev/loopX）将普通文件当作块设备</p>
+<p>📌 例子：用 Loop 设备模拟一个 ext4 文件系统</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 1. 创建一个 1GB 的普通文件文件</span>
+dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/root/temp/virtual_disk.img <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span><span class="m">1024</span>
+//bs 块大小为bytes个字节
+<span class="c1"># 2. 绑定到 Loop 设备（让 Linux 认为它是一个磁盘）</span>
+losetup /dev/loop0 /root/temp/virtual_disk.img
+//loop 设备是一种伪设备<span class="o">(</span>pseudo-device<span class="o">)</span>
+
+ls -l /dev/loop0
+brw-rw---- <span class="m">1</span> root disk 7, <span class="m">0</span> 3月  <span class="m">24</span> 11:25 /dev/loop0
+
+要从 ls -l 的结果的第一位标识位看出来。
+- 表示普通文件；
+d 表示文件夹；
+c 表示字符设备文件，
+b 表示块设备文件，
+s 表示套接字 socket 文件，
+l 表示符号链接
+
+<span class="c1"># 3. 在 /dev/loop0 上创建 ext4 文件系统</span>
+mkfs.ext4 /dev/loop0
+//mkfs.ext4命令来自英文词组make filesystem Ext4的缩写，其功能是对磁盘设备进行EXT4格式化操作。
+
+创建含有 <span class="m">262144</span> 个块（每块 4k）和 <span class="m">65536</span> 个inode的文件系统
+
+
+
+<span class="c1"># 4. 挂载到 /mnt 目录</span>
+mkdir /mnt/icfs
+mount /dev/loop0 /mnt/icfs
+//mount - mount a filesystem
+<span class="c1"># 5. 检查挂载情况</span>
+df -h <span class="p">|</span> grep mydisk
+ls /mnt/mydisk
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="提问-cat-mnticfsfile-查找过程是什么">提问 cat /mnt/icfs/file 查找过程是什么</h1>
+<p><img src="https://files.mdnice.com/user/5197/a6d61712-9f04-467a-8ee4-37e7bac4a0c6.jpg" alt=""></p>
+<p>准备：</p>
+<p>strace 作为一种动态跟踪工具，strace 底层使用内核的 ptrace 特性来实现其功能</p>
+<p>，ptrace可以让一个进程监视和控制另一个进程的执行,并且修改被监视进程的内存、寄器等,主要应用于断点调试和系统调用跟踪，strace和gdb工具就是基于ptrace编写的</p>
+<p><img src="https://files.mdnice.com/user/5197/6a8c4d1e-a595-427a-b875-1b6254029fad.png" alt=""></p>
+<p>Open 系统调用说起</p>
+<p><img src="https://files.mdnice.com/user/5197/6ef7cdf2-0aa3-4cf7-942d-044dc5c3fdbc.jpg" alt=""></p>
+<p>这张图十分重要，一定要掌握。因为我们后面的字符设备、块设备、管道、进程间通信、网络等等，全部都要用到这里面的知识。
+希望当你再次遇到它的时候，能够马上说出各个数据结构之间的关系</p>
+<h1 id="从mount到fuse客户端">从mount到fuse客户端</h1>
+<h2 id="1-fuse-是什么">1. FUSE 是什么？</h2>
+<p>Linux内核官方文档对 FUSE 的解释如下：</p>
+<p>What is FUSE?
+FUSE is a userspace filesystem framework.
+It consists of a kernel module (fuse.ko),
+a userspace library (libfuse.*)
+and a mount utility (fusermount).</p>
+<p>思考问题：内核的 fuse.ko 模块，还有 libfuse 库。这两个角色是的作用？</p>
+<p>这两个模块一个位于内核，一个位于用户态，是配套使用的，最核心的功能是协议封装和解析。</p>
+<p>举给例子，内核 fuse.ko 用于承接 vfs 下来的 io 请求，然后封装成 FUSE 数据包，转发给用户态。</p>
+<p>这个时候，用户态文件系统收到这个 FUSE 数据包，它如果想要看懂这个数据包，就必须实现一套 FUSE 协议的代码，这套代码是公开透明的，属于 FUSE 框架的公共的代码</p>
+<p>，这种代码不能够让所有的用户文件系统都重复实现一遍，于是 libfuse 用户库就诞生了。</p>
+<p>划重点：FUSE 是一个用来实现用户态文件系统的框架</p>
+<p>用户态文件系统是区别于内核文件系统的，在用户态文件系统没有出现之前，
+常见的文件系统如Ext2、Ext4等都是在内核中直接实现的。</p>
+<p><img src="https://files.mdnice.com/user/5197/66b3bd0e-c3aa-4d2c-8355-2845c87e5438.png" alt="">
+通过这张图，你可以看到，在 VFS 的下方，Linux 支持各种各样的文件系统，如 Ext4、XFS、NFS 等等。按照存储位置的不同，</p>
+<p>这些文件系统可以分为三类。</p>
+<ul>
+<li>
+<p>类是基于磁盘的文件系统，也就是把数据直接存储在计算机本地挂载的磁盘中。
+见的 Ext4、XFS、OverlayFS 等，都是这类文件系统。</p>
+</li>
+<li>
+<p>类是基于内存的文件系统，也就是我们常说的虚拟文件系统。
+类文件系统，不需要任何磁盘分配存储空间，但会占用内存。我们经常用到的 /proc 文件系统</p>
+</li>
+<li>
+<p>类是网络文件系统，</p>
+</li>
+</ul>
+<p>也就是用来访问其他计算机数据的文件系统，比如 NFS、SMB、iSCSI 等。</p>
+<h2 id="2-fuse-原理是什么">2. FUSE 原理是什么</h2>
+<p>代码：
+<a href="https://github.com/libfuse/libfuse/blob/master/example/hello.c">https://github.com/libfuse/libfuse/blob/master/example/hello.c</a></p>
+<p><img src="https://files.mdnice.com/user/5197/5f0ee6c7-ccb5-4ac3-ac01-1f503535d0f4.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/7a5d505b-3b65-475d-b4ef-a8f1ef0a4cb8.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/4b730f9d-ae88-4267-a03d-dcbf6a2126f2.png" alt=""></p>
+<p>这个图的意思是：</p>
+<p>背景：一个用户态文件系统，挂载点为 /tmp/fuse ，用户二进制程序文件为 ./hello ；</p>
+<p>当执行 ls -l /tmp/fuse 命令的时候，</p>
+<p>流程如下：
+IO 请求先进内核，经 vfs 传递给内核 FUSE 文件系统模块；</p>
+<p>内核 FUSE 模块把请求发给到用户态，由 ./hello 程序接收并且处理。</p>
+<p>处理完成之后，响应原路返回；</p>
+<p>划重点：</p>
+<p>实现了 FUSE 的用户态文件系统有非常多的例子，比如，GlusterFS，SSHFS，CephFS，Lustre，GmailFS，EncFS，S3FS</p>
+<h3 id="应用juicefs-fuse-用户态分布式文件系统">应用：JuiceFS ：FUSE 用户态分布式文件系统</h3>
+<p>收益：</p>
+<p>FUSE 通过将用户空间与内核空间解耦，为开发者提供了在用户空间实现文件系统的巨大灵活性和便利性。</p>
+<p>特别是在云计算和分布式存储等现代计算环境中，FUSE 使得构建和维护复杂的存储系统变得更加高效、可定制和易于扩展。</p>
+<p><img src="https://files.mdnice.com/user/5197/8ec2aabf-968e-44a2-8954-d3d1c7d42c07.png" alt=""></p>
+<p>以用户挂载 JuiceFS 后，open 其中一个文件的流程为例。</p>
+<p>请求首先通过内核 VFS，然后传递给内核的 FUSE 模块，经过 /dev/fuse 设备与 JuiceFS 的客户端进程通信。</p>
+<p>具体步骤如下：</p>
+<p>当 JuiceFS mount 后，JuiceFS 内部的 go-fuse 模块会 open /dev/fuse 获取 mount fd，并启动几个线程读取内核的 FUSE 请求;</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>JuiceFS mount 后，JuiceFS 内部的 go-fuse 模块会 open /dev/fuse 获取 mount fd，并启动几个线程读取内核的 FUSE 请求;</li>
+<li>用 open 函数，通过 C 库和系统调用进入 VFS 层，VFS 层再将请求转给内核的 FUSE 模块；</li>
+<li>FUSE 模块根据协议将 open 请求放入 JuiceFS mount 的 fd 对应的队列中，并唤醒 go-fuse 的读请求线程，等待处理结果；</li>
+<li>的 go-fuse 模块读取 FUSE 请求并在解析请求后调用 JuiceFS 的对应实现；</li>
+<li>fuse 将本次请求的处理结果写入 mount fd，即放入 FUSE 结果队列，然后唤醒业务等待线程；</li>
+<li>程被唤醒，得到本次请求的处理结果，然后再返回到上层。</li>
+</ol>
+<h2 id="应用-将-ceph-文件系统挂载为-fuse-客户端">应用： 将 Ceph 文件系统挂载为 FUSE 客户端</h2>
+<p>参考代码：
+src\ceph_fuse.cc</p>
+<p>基本用法：</p>
+<p><img src="https://files.mdnice.com/user/5197/d463bcec-c11e-4575-ae58-93fd192e6576.png" alt=""></p>
+<p><img src="https://files.mdnice.com/user/5197/c490b41a-99fd-43c8-8e3f-ec1ea40b9391.png" alt=""></p>
+<ul>
+<li>用户可以用 Ceph 提供的 ceph-fuse 挂载 CephFS 进行访问</li>
+</ul>
+<p>ceph-fuse处理IO流程</p>
+<p>举个例子 lookup /fuse，从lookup /fuse到ceph-fuse的流程图如下</p>
+<p><img src="https://files.mdnice.com/user/5197/092aa4df-4505-473d-87e5-f080edc0cd67.png" alt=""></p>
+<p>MDS返回结果给ceph-fuse进程。从ceph-fuse到lookup /fuse的流程图如下
+<img src="https://files.mdnice.com/user/5197/d0d58e74-e600-4f90-b210-d88da39b24d9.png" alt=""></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">const</span> <span class="k">static</span> <span class="k">struct</span> <span class="nc">fuse_lowlevel_ops</span> <span class="n">fuse_ll_oper</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="nl">init</span><span class="p">:</span> <span class="n">do_init</span><span class="p">,</span>
+ <span class="nl">destroy</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+ <span class="nl">lookup</span><span class="p">:</span> <span class="n">fuse_ll_lookup</span><span class="p">,</span>
+ <span class="nl">forget</span><span class="p">:</span> <span class="n">fuse_ll_forget</span><span class="p">,</span>
+ <span class="nl">getattr</span><span class="p">:</span> <span class="n">fuse_ll_getattr</span><span class="p">,</span>
+ <span class="nl">setattr</span><span class="p">:</span> <span class="n">fuse_ll_setattr</span><span class="p">,</span>
+ <span class="nl">readlink</span><span class="p">:</span> <span class="n">fuse_ll_readlink</span><span class="p">,</span>
+ <span class="nl">mknod</span><span class="p">:</span> <span class="n">fuse_ll_mknod</span><span class="p">,</span>
+ <span class="nl">mkdir</span><span class="p">:</span> <span class="n">fuse_ll_mkdir</span><span class="p">,</span>
+ <span class="nl">unlink</span><span class="p">:</span> <span class="n">fuse_ll_unlink</span><span class="p">,</span>
+ <span class="nl">rmdir</span><span class="p">:</span> <span class="n">fuse_ll_rmdir</span><span class="p">,</span>
+ <span class="nl">symlink</span><span class="p">:</span> <span class="n">fuse_ll_symlink</span><span class="p">,</span>
+ <span class="nl">rename</span><span class="p">:</span> <span class="n">fuse_ll_rename</span><span class="p">,</span>
+ <span class="nl">link</span><span class="p">:</span> <span class="n">fuse_ll_link</span><span class="p">,</span>
+ <span class="nl">open</span><span class="p">:</span> <span class="n">fuse_ll_open</span><span class="p">,</span>
+ <span class="nl">read</span><span class="p">:</span> <span class="n">fuse_ll_read</span><span class="p">,</span>
+ <span class="nl">write</span><span class="p">:</span> <span class="n">fuse_ll_write</span><span class="p">,</span>
+ <span class="nl">flush</span><span class="p">:</span> <span class="n">fuse_ll_flush</span><span class="p">,</span>
+ <span class="nl">release</span><span class="p">:</span> <span class="n">fuse_ll_release</span><span class="p">,</span>
+ <span class="nl">fsync</span><span class="p">:</span> <span class="n">fuse_ll_fsync</span><span class="p">,</span>
+ <span class="nl">opendir</span><span class="p">:</span> <span class="n">fuse_ll_opendir</span><span class="p">,</span>
+ <span class="nl">readdir</span><span class="p">:</span> <span class="n">fuse_ll_readdir</span><span class="p">,</span>
+ <span class="nl">releasedir</span><span class="p">:</span> <span class="n">fuse_ll_releasedir</span><span class="p">,</span>
+ <span class="nl">fsyncdir</span><span class="p">:</span> <span class="n">fuse_ll_fsyncdir</span><span class="p">,</span>
+ <span class="nl">statfs</span><span class="p">:</span> <span class="n">fuse_ll_statfs</span><span class="p">,</span>
+ <span class="nl">setxattr</span><span class="p">:</span> <span class="n">fuse_ll_setxattr</span><span class="p">,</span>
+
+<span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>cephfs：用户态客户端write</p>
+<p>从fuse到cephfs客户端的函数流程如下</p>
+<p><img src="https://files.mdnice.com/user/5197/93b6c341-6830-4800-b318-1d5ca4f720e1.png" alt=""></p>
+<ul>
+<li>例子 mkdir /mnt/ceph-fuse/test</li>
+</ul>
+<p>mkdir就是创建目录，客户端并不直接创建目录，而是将mkdir的请求（op为CEPH_MDS_OP_MKDIR）发给MDS，然后MDS执行mkdir的操作，并返回创建的目录的元数据。</p>
+<p>客户端无非就是发送请求和处理回复。</p>
+<p><img src="https://files.mdnice.com/user/5197/71ba2ae4-b1da-45a7-9424-d9b968adbbee.png" alt=""></p>
+<p>cephfs：用户态客户端getattr（1）</p>
+<p>从libfuse到cephfs用户态客户端的过程
+<img src="https://files.mdnice.com/user/5197/f30ded85-ee8f-49c6-9df3-2be393da0765.png" alt=""></p>
+<p>cephfs用户态客户端是从fuse_ll_getattr开始，fuse_ll_getattr的作用是通过cfuse-&gt;client-&gt;ll_getattr获取inode，填充struct stat信息，并返回该stat信息。</p>
+<p><img src="https://files.mdnice.com/user/5197/df48c1da-843f-4776-a009-589f2c22df64.png" alt=""></p>
+<p>cephfs：用户态客户端getattr（2）</p>
+<p>客户端获得的inode来自于MDS（元数据服务器），所以当客户端缓存的某个inode需要更新时，会向MDS发送op为CEPH_MDS_OP_GETATTR的请求。MDS回复的消息中带有最新的inode数据。这种情况下，就得了解发请求和处理请求的流程。</p>
+<p><img src="https://files.mdnice.com/user/5197/d2a2413b-5534-42ea-90bf-01fbd7c55dc1.png" alt=""></p>
+<p>划重点：</p>
+<ul>
+<li>将 Ceph 文件系统挂载为内核客户端 这里不讨论</li>
+</ul>
+<h1 id="提问s3fs-fuse">提问：s3fs-fuse</h1>
+<p><img src="https://files.mdnice.com/user/5197/1f8001d8-4526-4b05-a9e2-c3f2647253fb.png" alt=""></p>
+<p>s3fs-fuse 是一个基于 FUSE（Filesystem in Userspace）的文件系统，允许 Linux、macOS 和 FreeBSD 系统通过 FUSE 挂载 Amazon S3 存储桶。</p>
+<p>通过 s3fs-fuse，用户可以像操作本地文件系统一样操作 S3 存储桶中的文件和目录。该项目的主要编程语言是 C++。</p>
+<p>为什么使用fuse &ndash;小团队开发 简单为主</p>
+<p><img src="https://files.mdnice.com/user/5197/b0079726-1c01-40b3-a437-089de50026c0.png" alt=""></p>
+<h2 id="参考想要电子书可以私信">参考【想要电子书可以私信】</h2>
+<ul>
+<li>【1】 Linux 性能优化实战&ndash; IO章节</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/356a4bf3-9b8f-4308-bb0a-f508f4910c62.png" alt=""></p>
+<ul>
+<li>【2】趣谈 Linux 操作系统 核心原理篇：第五部分 文件系统 (4讲)</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/325d15f8-994b-47b3-8aa9-7b07cff208f7.png" alt=""></p>
+<ul>
+<li>[3] 鸟哥的Linux私房菜 基础学习篇 第四版</li>
+</ul>
+<p><img src="https://files.mdnice.com/user/5197/ad54163e-1235-49cc-ad3c-432170ef657d.png" alt=""></p>
+<ul>
+<li>【4】</li>
+</ul>
+<p><a href="https://www.kernel.org/doc/html/latest/filesystems/fuse.html">https://www.kernel.org/doc/html/latest/filesystems/fuse.html</a></p>
+<ul>
+<li>【5】公共号 奇伢
+<a href="https://www.qiyacloud.cn/">https://www.qiyacloud.cn/</a></li>
+</ul>
+<p><a href="https://www.cnblogs.com/liwen01/p/18237062">https://www.cnblogs.com/liwen01/p/18237062</a></p>
+<ul>
+<li>[6] JuiceFS 是一款面向云原生设计的高性能分布式文件系统
+<a href="https://juicefs.com/zh-cn/blog/engineering/fuse-file-system-design">https://juicefs.com/zh-cn/blog/engineering/fuse-file-system-design</a></li>
+</ul>
+<p><a href="https://juicefs.com/zh-cn/blog/engineering/deepseek-3fs-vs-juicefs">https://juicefs.com/zh-cn/blog/engineering/deepseek-3fs-vs-juicefs</a></p>
+<p>-[7] ceph</p>
+<ul>
+<li>
+<p><a href="https://docs.ceph.com/en/quincy/radosgw/nfs/">https://docs.ceph.com/en/quincy/radosgw/nfs/</a></p>
+</li>
+<li>
+<p>DeepSeek 3FS 源码解读——客户端篇</p>
+</li>
+<li>
+<p>[8] 3FS
+<a href="https://www.high-flyer.cn/blog/3fs-2/">https://www.high-flyer.cn/blog/3fs-2/</a></p>
+</li>
+</ul>
+<p><a href="https://zhuanlan.zhihu.com/p/27742193940">https://zhuanlan.zhihu.com/p/27742193940</a></p>
+<p>DeepSeek 3FS 源码解读——协程&amp;RDMA篇</p>
+<p>DeepSeek 3FS 源码解读——磁盘 IO 篇</p>
+<h2 id="总结">总结</h2>
+<ul>
+<li>文件系统的根目录的indoe号是多少？为什么</li>
+<li>文件系统单个文件最大存储文件数量？为什么</li>
+<li>大文件如何实现高效查询，采用数据数据结构？</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-03-23 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/code_reading/">code_reading</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/2025/3fs-what-is-file-system-3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从青铜到王者系列：3FS如何实现一个文件系统</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/money/P1_what_is_MCP/">
+            <span class="next-text nav-default">大模型上下文协议——MCP详解</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
