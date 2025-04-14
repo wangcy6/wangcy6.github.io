@@ -62,15 +62,6 @@
     </item>
     
     <item>
-      <title>python入门教程</title>
-      <link>https://wangcy6.github.io/post/leetcode/pytho3/python01/</link>
-      <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/leetcode/pytho3/python01/</guid>
-      <description>第一天 window python 环境安装 官网地址： https://www.python.org/downloads/release/python-396/ python环境变量：path D:\local\python3 pip环境变量 path D:\local\python3\Scripts window可以默认按照自动设置。其他手工设置 用于检测当前W</description>
-    </item>
-    
-    <item>
       <title>SRS官方文档和学习路径</title>
       <link>https://wangcy6.github.io/post/2020/01_srs/</link>
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>

@@ -48,7 +48,7 @@
 <meta itemprop="name" content="深入浅出理解DeepSeek 3FS (3) 步步引导轻松理解内存管理，面试必看">
 <meta itemprop="description" content="面试之美"><meta itemprop="datePublished" content="2025-03-31T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2025-03-31T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="9036">
+<meta itemprop="wordCount" content="9198">
 <meta itemprop="keywords" content="面试之美,架构之美,源码之美," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="深入浅出理解DeepSeek 3FS (3) 步步引导轻松理解内存管理，面试必看"/>
 <meta name="twitter:description" content="面试之美"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2025-03-31 00:00 </span>
         
-          <span class="more-meta"> 约 9036 字 </span>
+          <span class="more-meta"> 约 9198 字 </span>
           <span class="more-meta"> 预计阅读 19 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -167,6 +167,7 @@
         <li><a href="#2-包装函数wrapper-function的工作机制">2. 包装函数（wrapper function）的工作机制</a></li>
       </ul>
     </li>
+    <li><a href="#小总">小总</a></li>
     <li><a href="#链接我">链接我</a>
       <ul>
         <li><a href="#阅读对象也是我正在做事情">阅读对象（也是我正在做事情）</a></li>
@@ -1449,6 +1450,12 @@ inline void *allocate(size_t size) { return std::malloc(size); }
 <li>使用：程序运行期间</li>
 <li>卸载：程序退出时通过 shutdown 函数清理</li>
 </ul>
+<h2 id="小总">小总</h2>
+<p><code>__attribute__((weak))</code> 是 GCC 和 Clang 提供的一个特性，
+用于声明一个符号为 &ldquo;弱符号&rdquo;（weak symbol），
+在链接层面提供更多的灵活性。
+注意并不是 C 语言标准的一部分
+<a href="https://fenglielie.top/p/36786e00/">https://fenglielie.top/p/36786e00/</a></p>
 <h2 id="链接我">链接我</h2>
 <p>如果对上面提到c++学习路径 推荐书籍感兴趣</p>
 <p>关注公共号：后端开发成长指南  回复电子书</p>
@@ -1490,6 +1497,21 @@ inline void *allocate(size_t size) { return std::malloc(size); }
 <li>制造恶性竞争</li>
 <li>捧杀</li>
 </ol>
+<ul>
+<li>L1 cache reference 0.5 ns</li>
+<li>Branch mispredict 5 ns</li>
+<li>L2 cache reference 7 ns</li>
+<li>Mutex lock/unlock 100 ns</li>
+<li>Main memory reference 100 ns</li>
+<li>Compress 1K bytes with Zippy 10,000 ns</li>
+<li>Send 2K bytes over 1 Gbps network 20,000 ns</li>
+<li>Read 1 MB sequentially from memory 250,000 ns</li>
+<li>Round trip within same datacenter 500,000 ns</li>
+<li>Disk seek 10,000,000 ns</li>
+<li>Read 1 MB sequentially from network 10,000,000 ns</li>
+<li>Read 1 MB sequentially from disk 30,000,000 ns</li>
+<li>Send packet CA-&gt;Netherlands-&gt;CA 150,000,000 ns</li>
+</ul>
 
     </div>
 

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>字节二面：原题215  查找数组中第K大元素，时间复杂度多少 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/leetcode/array/01_what_is_contextos-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="字节二面：原题215  查找数组中第K大元素，时间复杂度多少" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/leetcode/array/01_what_is_contextos-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="字节二面：原题215  查找数组中第K大元素，时间复杂度多少">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2302">
+<meta itemprop="keywords" content="算法之美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="字节二面：原题215  查找数组中第K大元素，时间复杂度多少"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">字节二面：原题215  查找数组中第K大元素，时间复杂度多少</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-07 00:00 </span>
+        
+          <span class="more-meta"> 约 2302 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一为什么刷题">一、为什么刷题</a></li>
+    <li><a href="#二-如何刷题">二、 如何刷题</a></li>
+    <li><a href="#三---数组中的第k个最大元素">三.   数组中的第K个最大元素</a>
+      <ul>
+        <li><a href="#思路1数组全部排序然后选择-第k大元素">思路1:数组全部排序，然后选择 第k大元素</a></li>
+        <li><a href="#思路2基于快速排序">思路2:基于快速排序</a></li>
+        <li><a href="#c代码看不懂对着手敲一边一定要动手">c++代码（看不懂对着手敲一边，一定要动手）</a></li>
+      </ul>
+    </li>
+    <li><a href="#思路3堆排序">思路3:堆排序</a>
+      <ul>
+        <li><a href="#-举个例子">📌 举个例子：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>这是 &laquo;<!-- raw HTML omitted -->算法之美<!-- raw HTML omitted -->&raquo;系列<!-- raw HTML omitted -->第四篇<!-- raw HTML omitted --> 文章</p>
+<ul>
+<li>
+<p>题目：数组中的<!-- raw HTML omitted -->第K<!-- raw HTML omitted -->个最大元素</p>
+</li>
+<li>
+<p>主要考察的  时间复杂度<!-- raw HTML omitted -->如何推算出来<!-- raw HTML omitted --></p>
+<ol>
+<li>提示1. 思路2 采用快速选择排序：为什么平均时间复杂度: O(n)，而不是O(nlog⁡n) ，最坏情况优化方式 vs 严蔚敏《数据结构》标准分割函数区别？</li>
+<li>提示2: 堆排序 建队时间为什么: O(n)
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412180851.png" alt="image.png"></li>
+</ol>
+</li>
+<li>
+<p>难度：中等</p>
+</li>
+<li>
+<p>分类：数组,排序</p>
+</li>
+</ul>
+<h2 id="一为什么刷题">一、为什么刷题</h2>
+<p>小王同学在拿到一个题目时候 ，总是不自觉遇到如下问题</p>
+<p>❌ 阿里，腾讯 字节 三面算法太难了，根本无法通过，刷题还有什么意义，摆摆浪费时间。
+✅ 在学习算法过程中，放弃各种复杂技巧，学习不是为了读者感觉高大名词引入复杂设计。</p>
+<p>❌这么多题目 你刷的过来吗，整天加班没时间。
+✅ 专注数据接结部分，这个可能来源项目，例如数据库，存储，操作系统，并不一定通过题目全完成获取。</p>
+<p>❌ 周围人都不做，厉害人根不做，我做什么？
+✅  不要指望别人，公司安排组织一起学习，这自己kpi。</p>
+<h2 id="二-如何刷题">二、 如何刷题</h2>
+<ul>
+<li>解决这个问题，采用数据<!-- raw HTML omitted -->数据结构<!-- raw HTML omitted -->（对应上学课本大纲）</li>
+<li>数据结构基本操作<!-- raw HTML omitted -->优缺点<!-- raw HTML omitted -->是什么？（与项目中使用 增删改查方法结合起来）</li>
+<li>采用<!-- raw HTML omitted -->什么算法<!-- raw HTML omitted -->完实现什么功能（对应比赛，算法课程大纲）</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412155417.png" alt="image.png"></p>
+<h2 id="三---数组中的第k个最大元素">三.   数组中的第K个最大元素</h2>
+<p><a href="https://leetcode.com/problems/kth-largest-element-in-an-array/">215. Kth Largest Element in an Array</a></p>
+<p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <em>the</em> <code>kth</code> <em>largest element in the array</em>.</p>
+<p><strong>Example 1:</strong>
+<strong>Input:</strong> nums = [3,2,1,5,6,4], k = 2
+<strong>Output:</strong> 5</p>
+<h3 id="思路1数组全部排序然后选择-第k大元素">思路1:数组全部排序，然后选择 第k大元素</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412160829.png" alt="排序时间复杂度"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412161143.png" alt="常见数据结构"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">findKthLargest</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 获取数组的大小
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        
+        <span class="c1">// 对数组进行升序排序
+</span><span class="c1"></span>        <span class="n">sort</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span> <span class="n">end</span><span class="p">(</span><span class="n">nums</span><span class="p">));</span>
+        
+        <span class="c1">// 返回第 k 大的元素（从后往前数第 k 个元素）
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">nums</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="n">k</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted -->时间复杂度<!-- raw HTML omitted -->  能在优化吗？</p>
+<h3 id="思路2基于快速排序">思路2:基于快速排序</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412162420.png" alt="image.png"></p>
+<p>我们要找到第 k 个最大元素 number，实际上我们并不关心比它大和比它小的那些元素的具体排序。</p>
+<p>我们只希望那些比 number大的元素都集中到其左侧，比它小的元素都集中到其右侧，那么 nums[k-1] 就是第 k 个最大元素。【排序了又没完全排】</p>
+<p>如果 不是怎么办？
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412162707.png" alt="image.png"></p>
+<p>如上图所示，这么一次操作后就可以确定选择的元素 nums[p] 的顺序了。假设其当前位置为 p'，则有以下三种情况：</p>
+<ul>
+<li>p' == k-1，找到了第 k 大的元素，直接返回；</li>
+<li>p' &lt; k - 1，说明第 k 大的元素是比当前元素 nums[p]要靠后的，在其右侧区间进行递归搜索。</li>
+<li>p' &gt; k - 1，说明第 k 大的元素是比当前元素 nums[p]要靠前的，在其左侧区间进行递归搜索</li>
+</ul>
+<h5 id="小王疑问平均时间复杂度-on而不是onlogn这个是怎么计算的遇到最坏情况怎么处理">小王疑问：平均时间复杂度: O(n)，而不是O(nlog⁡n)，这个是怎么计算的？遇到最坏情况怎么处理？</h5>
+<ul>
+<li>
+<p>在平均情况下，每次划分都比较平衡</p>
+</li>
+<li>
+<p>第一次划分需要处理 n 个元素</p>
+</li>
+<li>
+<p>第二次划分需要处理 n/2 个元素</p>
+</li>
+<li>
+<p>第三次划分需要处理 n/4 个元素</p>
+</li>
+<li>
+<p>以此类推&hellip;</p>
+</li>
+<li>
+<p>总和可以表示为：无穷等比数列 <!-- raw HTML omitted -->n + n/2 + n/4 + n/8 + &hellip; = 2n<!-- raw HTML omitted --></p>
+</li>
+</ul>
+<p>补充：时间复杂度
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412163550.png" alt="image.png"></p>
+<p>最坏时间复杂度: O(n²)</p>
+<ul>
+<li>
+<p>当数组已经排序或者所有元素都相同时会出现</p>
+</li>
+<li>
+<p>每次划分都极度不平衡（比如每次都把数组划分成 1 和 n-1 个元素）</p>
+</li>
+<li>
+<p>需要递归 n 次，每次需要遍历 n 个元素</p>
+</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250412165417.png" alt="最坏时间复杂度"></p>
+<h3 id="c代码看不懂对着手敲一边一定要动手">c++代码（看不懂对着手敲一边，一定要动手）</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>内容</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分区方式</td>
+<td>左右指针对撞法（Hoare）</td>
+<td></td>
+</tr>
+<tr>
+<td>兼容性</td>
+<td>更符合你原来的代码风格</td>
+<td></td>
+</tr>
+<tr>
+<td>防止超时</td>
+<td>引入随机 pivot</td>
+<td></td>
+</tr>
+<tr>
+<td>快速选择</td>
+<td>保持 O(n) 平均复杂度</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">findKthLargest</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">quickSelect</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">);</span> <span class="c1">// 第k大的数 == 第(n-k)小
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="nf">quickSelect</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k_smallest</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;=</span> <span class="n">right</span><span class="p">)</span> <span class="k">return</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">];</span> <span class="c1">//结束条件，返回值 ？？
+</span><span class="c1"></span>
+        <span class="c1">// 随机选择 pivot 避免退化
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">pivot_index</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">pivot_final</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">pivot_index</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">pivot_final</span> <span class="o">==</span> <span class="n">k_smallest</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">nums</span><span class="p">[</span><span class="n">pivot_final</span><span class="p">];</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">pivot_final</span> <span class="o">&gt;</span> <span class="n">k_smallest</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">quickSelect</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">pivot_final</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k_smallest</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">quickSelect</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">pivot_final</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">k_smallest</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 不使用 swap，采用左右移动方式分区
+</span><span class="c1"></span>    <span class="c1">//对比和严蔚敏《数据结构》标准分割函数区别是什么？
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot_index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">pivot</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">pivot_index</span><span class="p">];</span> <span class="c1">// ----中间值 ，不一定 在最left 
+</span><span class="c1"></span>        <span class="n">nums</span><span class="p">[</span><span class="n">pivot_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">];</span> <span class="c1">// 将 pivot 移到最左边，保存其值，为什么
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">right</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pivot</span><span class="p">)</span> <span class="n">j</span><span class="o">--</span><span class="p">;</span> <span class="c1">// 从右向左找小于 pivot 的
+</span><span class="c1"></span>            <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>                     <span class="c1">// 右侧元素填到左边空位
+</span><span class="c1"></span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivot</span><span class="p">)</span> <span class="n">i</span><span class="o">++</span><span class="p">;</span> <span class="c1">// 从左向右找大于 pivot 的
+</span><span class="c1"></span>            <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>                     <span class="c1">// 左侧元素填到右边空位
+</span><span class="c1"></span>        <span class="p">}</span>
+
+        <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pivot</span><span class="p">;</span> <span class="c1">// 最后将 pivot 填入正确位置
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">i</span><span class="p">;</span>        <span class="c1">// 返回 pivot 的最终位置
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>对比差别 对left 预留位置</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">//严蔚敏《数据结构》标准分割函数
+</span><span class="c1"></span> <span class="kt">int</span> <span class="nf">Paritition1</span><span class="p">(</span><span class="kt">int</span> <span class="n">A</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
+   <span class="kt">int</span> <span class="n">pivot</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">];</span>
+   <span class="k">while</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">while</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="n">high</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
+       <span class="o">--</span><span class="n">high</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">high</span><span class="p">];</span>
+     <span class="k">while</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="n">high</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
+       <span class="o">++</span><span class="n">low</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="n">A</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">];</span>
+   <span class="p">}</span>
+   <span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="o">=</span> <span class="n">pivot</span><span class="p">;</span>
+   <span class="k">return</span> <span class="n">low</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="kt">void</span> <span class="nf">QuickSort</span><span class="p">(</span><span class="kt">int</span> <span class="n">A</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">)</span> <span class="c1">//快排母函数
+</span><span class="c1"></span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
+     <span class="kt">int</span> <span class="n">pivot</span> <span class="o">=</span> <span class="n">Paritition1</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">);</span>
+     <span class="n">QuickSort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">pivot</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>   <span class="c1">//全部排序
+</span><span class="c1"></span>     <span class="n">QuickSort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">pivot</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="p">);</span> <span class="c1">// 
+</span><span class="c1"></span>   <span class="p">}</span>
+ <span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="思路3堆排序">思路3:堆排序</h2>
+<p>假设 建立一个 <strong>最小堆（小顶堆）大小为 k</strong>最小堆，始终保存当前遇到的 <!-- raw HTML omitted -->最大的 k 个元素<!-- raw HTML omitted -->。</p>
+<ul>
+<li>此时堆顶是这 k 个元素中 <strong>最小的那个</strong>，等于m</li>
+<li>如果新插入一个元素n，如果当前元素 比 堆顶最小值还小。n &lt; m, 一定不是跳过</li>
+<li>n 大于 m，说明 m一定不是，当前的m</li>
+<li>所以，当遍历完所有元素后，堆顶就是 <strong>第 k 大的元素</strong>。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="c1">//总时间复杂度为 O(n log k)
+</span><span class="c1"></span>
+<span class="c1">// 空间复杂度：O(k) - 需要维护一个大小为 k 的堆
+</span><span class="c1"></span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+<span class="kt">int</span> <span class="n">findKthLargest</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="n">priority_queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">greater</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">pq</span><span class="p">;</span>
+	
+	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">n</span> <span class="p">:</span> <span class="n">nums</span><span class="p">)</span> 
+	<span class="p">{</span>   
+	    <span class="c1">//n 不可能是第第k大的元素 这个优化点
+</span><span class="c1"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">pq</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">k</span> <span class="o">&amp;&amp;</span> <span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+		
+		<span class="k">if</span> <span class="p">(</span><span class="n">pq</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">pq</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+		<span class="p">}</span>
+	    <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="p">}.</span>   
+  
+  <span class="k">return</span> <span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="-举个例子">📌 举个例子：</h3>
+<p>我们要找第 <code>k = 3</code> 大的数，当前堆是：</p>
+<p><code>pq = [5, 6, 7，]   // 注意是最小堆，堆顶是 5</code></p>
+<p>现在来个新数 <code>n = 3</code>：</p>
+<ul>
+<li>
+<p><code>pq.size() == 3</code></p>
+</li>
+<li>
+<p><code>pq.top() = 5</code>，而 <code>n = 3</code> 更小</p>
+</li>
+</ul>
+<p>➡️ 那么 3 比当前 k 大的最小数还小，<strong>肯定排不进前 3 大，直接跳过！</strong></p>
+<p>参考</p>
+<ul>
+<li>作者：画图小匠
+链接：https://leetcode.cn/problems/kth-largest-element-in-an-array/solutions/2647778/javapython3cdui-pai-xu-kuai-su-pai-xu-ji-jcb9/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</li>
+<li><a href="https://github.com/sisterAn/JavaScript-Algorithms/issues/62">https://github.com/sisterAn/JavaScript-Algorithms/issues/62</a></li>
+<li><a href="https://www.runoob.com/w3cnote/quick-sort-2.html">https://www.runoob.com/w3cnote/quick-sort-2.html</a></li>
+<li><a href="https://afteracademy.com/problems/find-kth-largest-element-in-an-array/">https://afteracademy.com/problems/find-kth-largest-element-in-an-array/</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E/">算法之美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode/template/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">ContextOS 模块开发与架构解析笔记</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/liunx/2025/4_how_to_learn_c&#43;&#43;/">
+            <span class="next-text nav-default">当面试官问 C&#43;&#43; 20 新特性的时候，应该怎样回答？</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
