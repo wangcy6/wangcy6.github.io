@@ -6,7 +6,16 @@
     <description>Recent content in do book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 03 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用Obsidian打造自己的写作系统</title>
+      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Obsidian/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Obsidian/</guid>
+      <description>写作步骤哪些 选题&amp;ndash;素材&amp;mdash;整理 检查 Q1：经常有错别字，句子不通顺 怎么办？ Obsidian LanguageTool 插件是一个为 Obsidian 文本编辑器提供的高级语法和拼</description>
+    </item>
+    
     <item>
       <title>如何批量投递简历</title>
       <link>https://wangcy6.github.io/post/ai/01_how_to_quickly_submit_resumes/</link>
@@ -14,6 +23,15 @@
       
       <guid>https://wangcy6.github.io/post/ai/01_how_to_quickly_submit_resumes/</guid>
       <description>1. 基础 回顾：程序员的一天 开发 流程 聚焦在高价值需求上 需要什么团队 时间盒子 2. 用户故事是什么 用户故事：应届生快速投递与简历优化工具 金三银四 快过去了</description>
+    </item>
+    
+    <item>
+      <title>如何批量投递简历</title>
+      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Copilot/</link>
+      <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Copilot/</guid>
+      <description>利用DeepSeek-V3和 Obsidian 构建个人知识库 通过阅读本篇文章你获得如何收益 按下 Ctrl+Shift+I (Windows/Linux) 或 Cmd+Option+I (Mac) 组合 步骤1 Why integrate Obsidian and DeepSeek? DeepSeek 的网页界面免费访问它，但不断的</description>
     </item>
     
     <item>

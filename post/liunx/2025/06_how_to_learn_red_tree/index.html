@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试官：为啥 Redis 使用跳表 而不是使用 红黑树？ - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="面试之美" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/liunx/2025/06_how_to_learn_red_tree/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试官：为啥 Redis 使用跳表 而不是使用 红黑树？" />
+<meta property="og:description" content="面试之美" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/liunx/2025/06_how_to_learn_red_tree/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-14T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-14T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试官：为啥 Redis 使用跳表 而不是使用 红黑树？">
+<meta itemprop="description" content="面试之美"><meta itemprop="datePublished" content="2025-04-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-14T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7259">
+<meta itemprop="keywords" content="面试之美,架构之美,源码之美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试官：为啥 Redis 使用跳表 而不是使用 红黑树？"/>
+<meta name="twitter:description" content="面试之美"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试官：为啥 Redis 使用跳表 而不是使用 红黑树？</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-14 00:00 </span>
+        
+          <span class="more-meta"> 约 7259 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#用户故事">用户故事</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#开始">开始</a>
+      <ul>
+        <li><a href="#问什么是跳表数据结构是什么redis实现为例子">问：什么是跳表，数据结构是什么（Redis实现为例子）</a></li>
+        <li><a href="#问跳表-插入删除查找-基本步骤是什么">问：跳表 插入，删除，查找 基本步骤是什么</a></li>
+        <li><a href="#插入操作">插入操作：</a></li>
+        <li><a href="#问map结构为什么采用红黑树">问：Map结构为什么采用红黑树</a></li>
+        <li><a href="#问redis为什么用跳表skiplist而不hashmap红黑树">问：Redis为什么用跳表skiplist，而不HashMap，红黑树？</a></li>
+        <li><a href="#问数据库为采用b-tree放弃跳表红黑树">问：数据库为采用B+ tree，放弃跳表/红黑树</a></li>
+        <li><a href="#问数据库采用lsm-树为什么放弃了b-tree">问：数据库采用LSM 树，为什么放弃了B+ tree</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结最坏情况分析">总结：（最坏情况分析）</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#链接我">链接我</a>
+      <ul>
+        <li><a href="#为什么写这篇文章">为什么写这篇文章</a></li>
+      </ul>
+    </li>
+    <li><a href="#历史文章">历史文章</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>大家好，这是<!-- raw HTML omitted -->大厂面试拆解&ndash;数据结构与算法<!-- raw HTML omitted -->系列的第<!-- raw HTML omitted -->2<!-- raw HTML omitted -->篇文章</p>
+<p>如果你面试 或者工作中遇到相关问题，欢迎<!-- raw HTML omitted -->留言<!-- raw HTML omitted -->！</p>
+<p>阅读本文 你获得如下收益</p>
+<ol>
+<li>✅ 通过跳表了解，数组，哈希表，红黑树，B+ 数据结构<!-- raw HTML omitted -->不同使用场景<!-- raw HTML omitted -->。</li>
+<li>✅ 从感觉理解 Map 容器 采用红黑树，Redis为采用跳表，Mysql采用B+ 存储 升级<!-- raw HTML omitted -->准确理解<!-- raw HTML omitted -->。</li>
+<li>✅坚持思考，就会很酷！有错误的地方，请大家指正。这次采用对比 和可视化演示加速理解。
+<ul>
+<li>直接回答跳表有什么优点 不好回答？哈希表不支持范围查询，在坏情况下 查询性能退化o（n），跳表解决支持范围查询和 top k 查询。</li>
+<li>直接回答跳表有什么优点 不好回答？ 红黑树在输入有序数据，导致 不“平衡方式”，然后调整？跳表通过概率方式 保证与输入数据无关，插入链表后 不需要在调整 “平衡”</li>
+</ul>
+</li>
+</ol>
+<p>大纲如下：
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415005705.png" alt="数据结构"></p>
+<h2 id="用户故事">用户故事</h2>
+<p>面试官：什么是跳表（Skip List）？</p>
+<p>小义：我开始认真思考这个问题：</p>
+<ul>
+<li>之前我研究得很透彻，但现在因为连续加班半年，已经忘得一干二净了，不知该如何回答。</li>
+<li>紧张，自责，说出来你可能不信。</li>
+</ul>
+<p>老王：打住，忘记很正常</p>
+<ul>
+<li>过去半年想不明白的事情，<!-- raw HTML omitted -->就算<!-- raw HTML omitted -->再给你半年也想不明白</li>
+<li><!-- raw HTML omitted -->离开面试现场这个环境，回答到工作场景中去<!-- raw HTML omitted -->，同样因为加班这事情个优先级 高于学习这个事情，导致<!-- raw HTML omitted -->不停的推迟<!-- raw HTML omitted -->，无奈推迟，最后<!-- raw HTML omitted -->忘记<!-- raw HTML omitted -->。</li>
+<li>可能感觉无用，可能是不知道从哪里下手 才是隐藏冰山下<!-- raw HTML omitted -->真正阻力<!-- raw HTML omitted -->，</li>
+<li>就像一只公鸡投入长时间研究却仍然不会，会觉得丢人吗？同行会怎么看？其他鸡又会怎么看。 才是隐藏冰山下<!-- raw HTML omitted -->真正阻力<!-- raw HTML omitted --></li>
+</ul>
+<p>老王：  <!-- raw HTML omitted -->现在<!-- raw HTML omitted -->就是最好的时候，<!-- raw HTML omitted -->不是课下回家 在学习<!-- raw HTML omitted --> 。</p>
+<ul>
+<li><!-- raw HTML omitted -->现在<!-- raw HTML omitted -->你就是面试官，你刷题无数，<!-- raw HTML omitted -->这次<!-- raw HTML omitted -->你来面试别人一次，</li>
+<li><!-- raw HTML omitted -->现在<!-- raw HTML omitted -->你就是一个丰富经验的项目经理，你最清楚方案，<!-- raw HTML omitted -->这次<!-- raw HTML omitted -->你就来讨论这次方案</li>
+<li><!-- raw HTML omitted -->现在<!-- raw HTML omitted -->你就是领导，你根本不懂开发这个事情，<!-- raw HTML omitted -->这次<!-- raw HTML omitted -->你用权利让别人想你汇报。</li>
+</ul>
+<p><!-- raw HTML omitted -->画外音<!-- raw HTML omitted -->：</p>
+<ul>
+<li>面试最忌讳的，需求是别人分析，代码是别人设计的，问题是别人解决&ndash;<!-- raw HTML omitted -->我干了啥<!-- raw HTML omitted --></li>
+<li>职场忌讳：什么有价值事情做什么，不是在<!-- raw HTML omitted -->不停加班1年做无用事情<!-- raw HTML omitted -->，别人不会多看你一眼睛， 职场不是慈善机构，判断事情标准发生变化。这也是什么整天开会，确定优先级，确定问题紧急程度。</li>
+<li>想一想 哪怕不能100%去了解，但是看到了，听到，见到了，从<!-- raw HTML omitted -->第一行原理了解<!-- raw HTML omitted -->，<!-- raw HTML omitted -->私下吃饭 时候交流了？尝试上级争取了吗<!-- raw HTML omitted -->，不要受限于岗位，分工 ，这样不可控因素印象。</li>
+</ul>
+<p>小义：</p>
+<h4 id="1假如我根本不懂-font-colorff0000---我就问-font">（1）假如我根本不懂 <!-- raw HTML omitted -->&mdash;&gt;我就问 <!-- raw HTML omitted --></h4>
+<ul>
+<li>
+<p>什么是跳表，</p>
+</li>
+<li>
+<p>什么场景使用</p>
+</li>
+<li>
+<p>什么场景不会使用</p>
+<p><!-- raw HTML omitted -->画外音<!-- raw HTML omitted -->：</p>
+<ul>
+<li>我不了解，我等着你告我？让我相信。</li>
+<li>太细节我听不懂，但是场景能使用，什么场景不能使用 我还是了解的。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-假如我了解单链表你了解到">（2） 假如我了解单链表，你了解到</h4>
+<ul>
+<li>单链表如何删除我清楚，必须查找到前面要一个元素。</li>
+<li>单链表如何插入我清楚，至少定义2个指针。</li>
+</ul>
+<p><!-- raw HTML omitted -->&mdash;&ndash;&gt; 我就会问 跳表插入，删除，查询步骤是什么？<!-- raw HTML omitted --></p>
+<h4 id="3假如软件开发中经常使用-unordered_map你了解到">（3）假如软件开发中经常使用 unordered_map，你了解到</h4>
+<ul>
+<li>数据结构是<strong>哈希表</strong>（hash table或者HashMap ，又称散列表，查询的平均时间复杂度 O(1)</li>
+<li><strong>哈希表</strong> 的key是唯一的，但是不同的key可能产生相同的hashCode，不同hashCode都落通一个bucket桶呢，在最坏情况下，查询时间时间复杂度复杂度 O(n)</li>
+<li>在jdk1.8版本后，Java对HashMap做了改进，在链表长度大于8的时候，将后面的数据存在红黑树中，以加快检索速度</li>
+</ul>
+<p><!-- raw HTML omitted -->    &mdash;&ndash;&gt; 我就问：跳表是怎么查询的，时间 复杂度多少？<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->画外音<!-- raw HTML omitted -->：</p>
+<ul>
+<li>链表查询一个元素时候，时间复杂度是o（n），不要发明新 算法，换个跳表这个结构可以吗？</li>
+<li>能不活学活用 用跳表代替红黑树。</li>
+</ul>
+<h5 id="4假如你知道你在实时系统中经常使用font-colorff0000mapfont-存储业务数据">（4）假如你知道你在实时系统中经常使用<!-- raw HTML omitted -->map<!-- raw HTML omitted --> 存储业务数据。</h5>
+<ul>
+<li>经常用操作就是<!-- raw HTML omitted -->插入操作，删除操作<!-- raw HTML omitted --> ，</li>
+<li>并且 删除一个元素,其他迭代器（无论前向或后向）依然<strong>保持有效</strong>，不会受到影响。</li>
+<li>红黑树天然更容易配合 STL 的语义（迭代器、顺序、稳定性）</li>
+<li>map 不支持并发，不考虑红黑树并发的问题。</li>
+</ul>
+<p>&mdash;&ndash;&gt; <!-- raw HTML omitted -->我就问：什么情况下 redis为什么要使用skiplist跳表，不用 红黑树，hash表<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->画外音<!-- raw HTML omitted -->：</p>
+<ul>
+<li>红黑树维护树的高度上没有AVL树，但是在插入和删除旋转较少更少，更适实时更新业务</li>
+<li>不考虑并发问题</li>
+</ul>
+<h4 id="5-假如-我了解一点mysql数据库">（5） 假如 我了解一点mysql数据库</h4>
+<ul>
+<li>
+<p>查询：无法将数据全部加载进内存 ，<!-- raw HTML omitted -->需要将数据索引信息（主键），存储内存中<!-- raw HTML omitted -->，一般采用B+ 树索引</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->4 层的 B+ 存储220 亿条<!-- raw HTML omitted -->：</p>
+<p>MySQL InnoDB 的实现，假设每个节点大小为 16KB，每个键为 8 字节，每个指针为 6 字节，则每个键指针对占用 14 字节。​因此，每个非叶子节点最多可以包含约 1170 个键指针对。 ​</p>
+<p>在一个 4 层的 B+ 树中，结构如下：​</p>
+<ul>
+<li><strong>第 1 层（根节点）</strong>：​1 个节点，包含约 1170 个指针，指向第 2 层的节点。​</li>
+<li><strong>第 2 层</strong>：​1170 个节点，每个节点包含约 1170 个指针，指向第 3 层的节点。​</li>
+<li><strong>第 3 层</strong>：​1170 × 1170 = 1,368,900 个节点，每个节点包含约 1170 个指针，指向第 4 层的叶子节点。​</li>
+<li><strong>第 4 层（叶子节点）</strong>：​1170 × 1170 × 1170 ≈ 1.6 × 10^9 个节点。​</li>
+</ul>
+<p>如果每个叶子节点存储 16 条记录（假设每条记录为 1KB），则总共可以存储约：​</p>
+<p>1170 × 1170 × 1170 × 16 ≈ 2.2 × 10^10 条记录。（💡 这个地方没有累加，想象为什么）</p>
+</li>
+</ul>
+<p>因此，一个 4 层的 B+ 树在上述假设下，最多可以存储约 220 亿条记录</p>
+<p><!-- raw HTML omitted -->4 层的 B+ 存储220 亿条<!-- raw HTML omitted -->  占用<!-- raw HTML omitted -->256GB<!-- raw HTML omitted -->空间</p>
+<ul>
+<li><strong>第 1 层（根节点）</strong>：
+<ul>
+<li>节点数：​1​</li>
+<li>大小：​1 × 4KB = 4KB​</li>
+</ul>
+</li>
+<li><strong>第 2 层</strong>：
+<ul>
+<li>节点数：​400</li>
+<li>大小：​400 × 4KB = 1.6MB​</li>
+</ul>
+</li>
+<li><strong>第 3 层</strong>：
+<ul>
+<li>节点数：​400 × 400 = 160,000​</li>
+<li>大小：​160,000 × 4KB = 640MB​</li>
+</ul>
+</li>
+<li><strong>第 4 层（叶子节点）</strong>：
+<ul>
+<li>节点数：​400 × 400 × 400 = 64,000,000​</li>
+<li>大小：​64,000,000 × 4KB = 256GB</li>
+</ul>
+</li>
+</ul>
+<p>4KB（第 1 层） + 1.6MB（第 2 层） + 640MB（第 3 层） + 256GB（第 4 层） ≈ 256.6GB</p>
+<p><!-- raw HTML omitted -->画外音<!-- raw HTML omitted -->：</p>
+<ul>
+<li><!-- raw HTML omitted -->4 层的 B+ 存储220 亿条<!-- raw HTML omitted -->  占用<!-- raw HTML omitted -->256GB<!-- raw HTML omitted -->空间 这些这些数据<!-- raw HTML omitted -->不需要全部加载内存<!-- raw HTML omitted --></li>
+<li>对于一个 4 层的 B+ 树，4KB（第 1 层） + 1.6MB（第 2 层） + 640MB ≈ 640MB <!-- raw HTML omitted -->前三层<!-- raw HTML omitted -->的内部节点其实都可以存储在内存中，只有<!-- raw HTML omitted -->第四层<!-- raw HTML omitted -->的叶子节点才需要存储在磁盘中。</li>
+<li>这样一来，我们就只需要读取一次磁盘即可。这也是为什么，B+ 树要将内部节点和叶子节点区分开的原因。</li>
+<li>通过这种只让内部节点存储索引数据的设计，我们就能更容易地把<!-- raw HTML omitted -->内部节点全部加载到内存中了。<!-- raw HTML omitted --></li>
+</ul>
+<p><!-- raw HTML omitted -->&mdash;&ndash;&gt;  为什么MySQL用B+树而不用B树呢，跳表呢<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->&mdash;&ndash;&gt;  如何使用B+树对海量磁盘数据建立索引<!-- raw HTML omitted --></p>
+<h4 id="6-假如-我了解其他kv数据库你可能了解到">（6） 假如 我了解其他kv数据库，你可能了解到</h4>
+<ul>
+<li>如果是一个日志系统，每秒钟要写入上千条甚至上万条数据，这样的磁盘操作代价会使得系统性能急剧下降，甚至无法使用。</li>
+<li>B+ 树的数据都存储在叶子节点中，而叶子节点一般都存储在磁盘中。因此，每次插入的新数据都需要随机写入磁盘，而<!-- raw HTML omitted -->随机写入的性能非常慢<!-- raw HTML omitted -->。</li>
+</ul>
+<p><!-- raw HTML omitted -->&mdash;&ndash;&gt;  为什么日志系统主要用LSM（Log Structured Merge Trees）树而非B+树？<!-- raw HTML omitted --></p>
+<p>划重点：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>🪜 跳表 (Skip List)</th>
+<th>🌳 红黑树 (Red-Black Tree)</th>
+<th>🧩 哈希表 (Hash Table)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>查找 - 平均</strong></td>
+<td>O(logN)</td>
+<td>O(logN)</td>
+<td>O(1)（理想）</td>
+</tr>
+<tr>
+<td><strong>查找 - 最坏</strong></td>
+<td>O(logN)</td>
+<td>O(logN)</td>
+<td>❌ O(n)（哈希冲突严重时）</td>
+</tr>
+<tr>
+<td><strong>插入/删除 - 平均</strong></td>
+<td>O(logN)</td>
+<td>O(logN)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><strong>插入/删除 - 最坏</strong></td>
+<td>O(logN)</td>
+<td>O(logN)</td>
+<td>❌ O(n)</td>
+</tr>
+<tr>
+<td><strong>是否有序</strong></td>
+<td>✅ 支持有序遍历</td>
+<td>✅ 天生有序</td>
+<td>❌ 无序</td>
+</tr>
+<tr>
+<td><strong>结构复杂度</strong></td>
+<td>中（链表+概率）</td>
+<td>高（旋转+颜色维护）</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>实现难度</strong></td>
+<td>简单～中</td>
+<td>高</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>空间开销</strong></td>
+<td>高（需多层索引）</td>
+<td>中</td>
+<td>中（需哈希表+链）</td>
+</tr>
+<tr>
+<td><strong>并发友好性</strong></td>
+<td>✅ 好（可分段加锁）</td>
+<td>❌ 差（全局旋转难并发）</td>
+<td>一般（需无锁/加锁）</td>
+</tr>
+<tr>
+<td><strong>范围查找（如区间）</strong></td>
+<td>✅ 支持</td>
+<td>✅ 支持</td>
+<td>❌ 不支持（只能找某个 key）</td>
+</tr>
+<tr>
+<td><strong>典型使用场景</strong></td>
+<td>Redis SortedSet</td>
+<td>C++ STL <code>map/set</code></td>
+<td>C++ <code>unordered_map</code> 等</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>🔵 AVL树</th>
+<th>🔴 红黑树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询效率</td>
+<td>✅ 更快（更平衡）</td>
+<td>稍慢（不如AVL平衡）</td>
+</tr>
+<tr>
+<td>插入操作</td>
+<td>❌ 慢一些，需要较多旋转（最多 O(logN) 次）</td>
+<td>✅ 快一些，旋转较少（最多 2 次）</td>
+</tr>
+<tr>
+<td>删除操作</td>
+<td>❌ 最慢，重平衡代价高（最多 O(logN) 次旋转）</td>
+<td>✅ 快，最多 3 次旋转 + 染色</td>
+</tr>
+<tr>
+<td>平衡条件</td>
+<td>严格：任意节点左右子树高度差 ≤ 1</td>
+<td>宽松：满足红黑规则即可</td>
+</tr>
+<tr>
+<td>旋转次数</td>
+<td>插入/删除时可能频繁，最多 O(logN) 次</td>
+<td>插入最多 2 次，删除最多 3 次</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>查询为主的场景，如数据库索引</td>
+<td>插入/删除频繁，如 STL <code>map/set</code>、OS调度等</td>
+</tr>
+</tbody>
+</table>
+<h2 id="开始">开始</h2>
+<h3 id="问什么是跳表数据结构是什么redis实现为例子">问：什么是跳表，数据结构是什么（Redis实现为例子）</h3>
+<p>下面是我的理解：</p>
+<p>定义：</p>
+<ul>
+<li>支持<!-- raw HTML omitted -->范围<!-- raw HTML omitted -->查询**的<!-- raw HTML omitted --> 多层 有序<!-- raw HTML omitted -->链表</li>
+<li>相比 单链表不支持随机查找，在插入一个元素 ，跳表在每个节点上随机产生<!-- raw HTML omitted -->多个<!-- raw HTML omitted -->指向下一个节点指针，指针个数层数</li>
+<li>层数特点 （1） 跟输入数据顺序无关，这个根据概率生成器来产生的</li>
+<li>层数特点 （2）在插入和删除之后 依然保持层数 平衡，<!-- raw HTML omitted -->不需要额外维护<!-- raw HTML omitted -->（其他平衡二叉在插入，删除一个之后<!-- raw HTML omitted -->破坏<!-- raw HTML omitted -->定义平衡关系需要调整）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>跳表</th>
+<th>平衡树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现复杂度</td>
+<td>无需旋转/再平衡操作</td>
+<td>需要复杂旋转和平衡维护逻辑</td>
+</tr>
+<tr>
+<td>并发性能</td>
+<td>天然支持高效并发操作</td>
+<td>并发实现复杂</td>
+</tr>
+<tr>
+<td>空间开销</td>
+<td>平均1.33指针/元素</td>
+<td>通常需要2-3指针/元素</td>
+</tr>
+<tr>
+<td>查询性能稳定性</td>
+<td>概率保证O(log n)</td>
+<td>严格保证O(log n)</td>
+</tr>
+<tr>
+<td>持久化结构</td>
+<td>更易实现无锁版本</td>
+<td>无锁实现难度大</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>数据结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/redis/redis/blob/unstable/src/server.h
+</span><span class="c1"></span><span class="cm">/* ZSETs use a specialized version of Skiplists */</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">zskiplistNode</span> <span class="p">{</span>
+    <span class="n">sds</span> <span class="n">ele</span><span class="p">;</span>
+    <span class="c1">// 分值
+</span><span class="c1"></span>    <span class="kt">double</span> <span class="n">score</span><span class="p">;</span>
+    <span class="c1">// 后退指针
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">zskiplistNode</span> <span class="o">*</span><span class="n">backward</span><span class="p">;</span>
+    <span class="c1">// 层
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">zskiplistLevel</span> <span class="p">{</span>
+       <span class="c1">// 前进指针
+</span><span class="c1"></span>        <span class="k">struct</span> <span class="nc">zskiplistNode</span> <span class="o">*</span><span class="n">forward</span><span class="p">;</span>
+        <span class="c1">// 记录当前节点到下一个节点的距离，用于 `ZRANK` 等排名操作。
+</span><span class="c1"></span>        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">span</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">level</span><span class="p">[];</span> <span class="c1">//柔性数组，表示节点的层级（长度在运行时动态决定），默认 `32`
+</span><span class="c1"></span>    
+<span class="p">}</span> <span class="n">zskiplistNode</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">zskiplist</span> <span class="p">{</span>
+    <span class="c1">// 头节点，尾节点
+</span><span class="c1"></span>    <span class="c1">//是一个虚拟头节点，层级固定为 `ZSKIPLIST_MAXLEVEL`（默认 32）
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">zskiplistNode</span> <span class="o">*</span><span class="n">header</span><span class="p">,</span> <span class="o">*</span><span class="n">tail</span><span class="p">;</span>
+    <span class="c1">// 节点数量
+</span><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">length</span><span class="p">;</span>
+    <span class="c1">// 目前表内节点的最大层数
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">level</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">zskiplist</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted -->小提示：<!-- raw HTML omitted --></p>
+<ul>
+<li>不可能像学物理，数学一样定义一个概念，一个共识，不需要这么严谨，根据特性拿出理解就行</li>
+<li>直接放弃 课本上，网络上 对 跳表下定义</li>
+<li>为了直观看看跳表构建的过程，可以使用 Claude3.5 做了一个跳表可视化页面。
+可以指定跳表的最大层高，以及调整递增层高的概率，
+然后可以随机初始化跳表，或者插入、删除、查找节点，观察跳表结构的变</li>
+<li><a href="https://algo.hufeifei.cn/SkipList.html">https://algo.hufeifei.cn/SkipList.html</a>
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415180327.png" alt="图1-跳表"></li>
+</ul>
+<h3 id="问跳表-插入删除查找-基本步骤是什么">问：跳表 插入，删除，查找 基本步骤是什么</h3>
+<h4 id="创建">创建</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">zskiplist</span> <span class="o">*</span><span class="nf">zslCreate</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+    <span class="n">zskiplist</span> <span class="o">*</span><span class="n">zsl</span><span class="p">;</span>
+    
+    <span class="n">zsl</span> <span class="o">=</span> <span class="n">zmalloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">zsl</span><span class="p">));</span> <span class="c1">// 分配跳表内存
+</span><span class="c1"></span>    <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>             <span class="c1">// 初始层级为1
+</span><span class="c1"></span>    <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1">// 没有任何一个元素
+</span><span class="c1"></span>    <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span> <span class="o">=</span> <span class="n">zslCreateNode</span><span class="p">(</span><span class="n">ZSKIPLIST_MAXLEVEL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span> <span class="c1">// 创建头节点
+</span><span class="c1"></span>    <span class="c1">//头节点 header​ 是一个虚拟节点，层级固定为 `ZSKIPLIST_MAXLEVEL`（32）。
+</span><span class="c1"></span>    
+    <span class="c1">// 初始化头节点的每一层 forward 和 span
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">ZSKIPLIST_MAXLEVEL</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">forward</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">span</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span><span class="o">-&gt;</span><span class="n">backward</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="c1">// 头节点的后退指针为 NULL
+</span><span class="c1"></span>    <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>           <span class="c1">// 尾节点初始为 NULL
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">zsl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="插入操作">插入操作：</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415201447.png" alt="图2-插入操作"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cm">/* 
+</span><span class="cm"> * 向跳表 zsl 中插入一个新节点，键为 ele (SDS字符串)，值为 score (排序依据)
+</span><span class="cm"> * 调用者需确保 ele 在跳表中不存在（通常由上层哈希表检查）
+</span><span class="cm"> * 跳表会接管 ele 的内存所有权
+</span><span class="cm"> * 返回值：新插入的节点指针
+</span><span class="cm"> */</span>
+<span class="n">zskiplistNode</span> <span class="o">*</span><span class="nf">zslInsert</span><span class="p">(</span><span class="n">zskiplist</span> <span class="o">*</span><span class="n">zsl</span><span class="p">,</span> <span class="kt">double</span> <span class="n">score</span><span class="p">,</span> <span class="n">sds</span> <span class="n">ele</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">zskiplistNode</span> <span class="o">*</span><span class="n">update</span><span class="p">[</span><span class="n">ZSKIPLIST_MAXLEVEL</span><span class="p">],</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span>  <span class="c1">// update[] 记录每层的前驱节点
+</span><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">rank</span><span class="p">[</span><span class="n">ZSKIPLIST_MAXLEVEL</span><span class="p">];</span>         <span class="c1">// rank[] 记录前驱节点的累积跨度
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">level</span><span class="p">;</span>
+    <span class="c1">//zskiplistNode
+</span><span class="c1"></span>    <span class="n">x</span> <span class="o">=</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span><span class="p">;</span>  <span class="c1">// 从头节点开始遍历
+</span><span class="c1"></span>
+    <span class="cm">/* 1. 查找插入位置：从最高层向下逐层搜索 */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 初始化当前层的 rank（高层 rank 继承自低层）
+</span><span class="c1"></span>        <span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+        <span class="c1">// 向右查找，直到找到第一个 score 大于等于目标或到达链表末尾
+</span><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span> <span class="o">&amp;&amp;</span>
+               <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span><span class="o">-&gt;</span><span class="n">score</span> <span class="o">&lt;</span> <span class="n">score</span> <span class="o">||</span>
+                <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span><span class="o">-&gt;</span><span class="n">score</span> <span class="o">==</span> <span class="n">score</span> <span class="o">&amp;&amp;</span>
+                 <span class="n">sdscmp</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span><span class="o">-&gt;</span><span class="n">ele</span><span class="p">,</span> <span class="n">ele</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">span</span><span class="p">;</span>  <span class="c1">// 累加跨度
+</span><span class="c1"></span>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span><span class="p">;</span>      <span class="c1">// 移动到下一个节点
+</span><span class="c1"></span>        <span class="p">}</span>
+        <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">// 记录当前层的前驱节点
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="cm">/* 2. 生成新节点的随机层高（幂次定律） */</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">zslRandomLevel</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">level</span> <span class="o">&gt;</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 若新层高超过当前跳表层高，需扩展层级
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// 新层级的初始 rank 为 0
+</span><span class="c1"></span>            <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span><span class="p">;</span>  <span class="c1">// 新层级的前驱节点初始化为头节点
+</span><span class="c1"></span>            <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">span</span> <span class="o">=</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>  <span class="c1">// 新层级的初始跨度为跳表长度
+</span><span class="c1"></span>        <span class="p">}</span>
+        <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span><span class="p">;</span>  <span class="c1">// 更新跳表的最大层高
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="cm">/* 3. 创建新节点并分层插入 */</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">zslCreateNode</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">ele</span><span class="p">);</span>  <span class="c1">// 分配节点内存，复制 ele
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span> <span class="o">=</span> <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span><span class="p">;</span>  <span class="c1">// 新节点指向原前驱的后继
+</span><span class="c1"></span>        <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">forward</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">// 前驱节点指向新节点
+</span><span class="c1"></span>
+        <span class="c1">// 更新跨度：新节点跨度 = 原前驱跨度 - (rank[0] - rank[i])
+</span><span class="c1"></span>        <span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">span</span> <span class="o">=</span> <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">span</span> <span class="o">-</span> <span class="p">(</span><span class="n">rank</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">span</span> <span class="o">=</span> <span class="p">(</span><span class="n">rank</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// 前驱节点跨度更新
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="cm">/* 4. 处理未触及的层级：仅增加前驱节点的跨度 */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">level</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">span</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* 5. 设置新节点的后退指针和尾节点 */</span>
+    <span class="n">x</span><span class="o">-&gt;</span><span class="n">backward</span> <span class="o">=</span> <span class="p">(</span><span class="n">update</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">header</span><span class="p">)</span> <span class="o">?</span> <span class="nb">NULL</span> <span class="o">:</span> <span class="n">update</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">forward</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">x</span><span class="o">-&gt;</span><span class="n">level</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">forward</span><span class="o">-&gt;</span><span class="n">backward</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">// 更新后继节点的后退指针
+</span><span class="c1"></span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">// 若新节点是最后一个节点，更新跳表尾指针
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="n">zsl</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">++</span><span class="p">;</span>  <span class="c1">// 跳表长度增加
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">// 返回新节点
+</span><span class="c1"></span><span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>插入元素后 维护 前驱节点 和span。</li>
+<li>控制高度</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415203008.png" alt="图3-高度控制"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">int zslRandomLevel(void) {
+    int level = 1;
+    while ((random() &amp; 0xFFFF) &lt; (ZSKIPLIST_P * 0xFFFF)) // ZSKIPLIST_P = 0.25
+        level++;
+    return (level &lt; ZSKIPLIST_MAXLEVEL) ? level : ZSKIPLIST_MAXLEVEL;
+}
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>​<strong>​<code>p=0.25</code>​</strong>​（<code>ZSKIPLIST_P</code>），即：
+<ul>
+<li><code>level=1</code> 概率：75%</li>
+<li><code>level=2</code> 概率：18.75%</li>
+<li><code>level=3</code> 概率：4.6875%</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>最大层级 <code>ZSKIPLIST_MAXLEVEL=32</code></li>
+</ul>
+<h3 id="问map结构为什么采用红黑树">问：Map结构为什么采用红黑树</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415165357.png" alt="图4-红黑树">
+红黑树为什么综合性能好？</p>
+<ul>
+<li>
+<p>在《算法（第4版）》中说过，红黑树等价于2-3树，换句话说，对于每个2-3树，都存在至少一个数据元素是同样次序的红黑树。</p>
+</li>
+<li>
+<p>在2-3树上的插入和删除操作也等同于在红黑树中颜色翻转和旋转。这使得2-3树成为理解红黑树背后的逻辑的重要工具，这也是很多介绍算法的教科书在红黑树之前介绍2-3树的原因，尽管2-3树在实践中不经常使用。</p>
+</li>
+</ul>
+<p>其中2-节点等价于普通平衡二叉树的节点，3-节点本质上是非平衡性的缓存。</p>
+<ul>
+<li>
+<p>当需要再平衡（rebalance）时，增删操作时，2-节点与3-节点间的转化会吸收不平衡性，<!-- raw HTML omitted -->减少旋转次数，使再平衡尽快结束。<!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>在综合条件下，增删操作相当时，数据的随机性强时，3-节点的非平衡性缓冲效果越明显。因此红黑树的综合性能更优。</p>
+</li>
+</ul>
+<p>继续追根溯源，红黑树的性能优势，本质上是用空间换时间。</p>
+<p>演示：https://algo.hufeifei.cn/RedBlack.html
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415170149.png" alt="图5-可视化红黑树"></p>
+<ul>
+<li>avl <a href="https://www.cs.usfca.edu/~galles/visualization/AVLtree.html">https://www.cs.usfca.edu/~galles/visualization/AVLtree.html</a>
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415170414.png" alt="图6-可视化avl"></li>
+</ul>
+<h3 id="问redis为什么用跳表skiplist而不hashmap红黑树">问：Redis为什么用跳表skiplist，而不HashMap，红黑树？</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415154203.png" alt="图6-为什么"></p>
+<ul>
+<li><!-- raw HTML omitted --> Redis 支持ZRANGE 范围查询<!-- raw HTML omitted -->，HashMap 是无序存储不支持范围查询,只能做单个key的查找,在最坏情况，哈希值冲突情况下，查找时间复增加到O（n）</li>
+<li>Redis 根据积分进行<!-- raw HTML omitted -->排行榜查询<!-- raw HTML omitted -->，也就是<!-- raw HTML omitted -->Top（k<!-- raw HTML omitted -->）问题，跳表支持。红黑树也指出，改造成本上跳表更低。红黑树要维护每个根节点上，增加<code>size</code> 字段，表示子树个数。</li>
+<li>Redis  采用单线程处理模型，因此不存在并发访问跳表的诉求。</li>
+<li>如果未来 类似 rocksdb 则采用多线程处理模型，并发读写内存数据结构时，需要兼顾数据一致以及操作性能，此时就需要使用到并发安全的跳表结构.</li>
+<li>跳过列表也非常适合并发多线程访问，尤其是更新和删除</li>
+<li>如何控制平衡：输入有序插入时候，通过概率维护平衡 插入数据，而不是 先插入 破坏定义平衡 然后在调整容易的多（不能消除最坏 退化成单链表）。</li>
+</ul>
+<p>Balancing a data structure probabilistically is easier than
+explicitly maintaining the balance
+用概率来平衡数据结构比明确地维持平衡更容易</p>
+<p>Skip lists are balanced by consulting a random number generator. Although skip lists have bad worst-case performance</p>
+<p>随机数生成器来平衡</p>
+<p>no input sequence consistently produces the worst-case performance (much like quicksort when the pivot element is chosen randomly).</p>
+<p>Because these
+data structures are linked lists with extra pointers that skip
+over intermediate nodes, I named them skip lists
+由于这些数据结构是带有额外指针的链表，这些指针可以跳过中间节点，因此我将它们命名为“跳过列表”</p>
+<p>top k查询 对应原文：</p>
+<blockquote>
+<p>Using skip lists, it is easy to do most (all?) the sorts of operations you might wish to do with a balanced tree such as use search fingers, merge skip lists and allow ranking operations (e.g., determine the kth element of a skip list)</p>
+</blockquote>
+<p>划重点：</p>
+<ul>
+<li>红黑树可以精准支持排名查询，理论上已有良好支持</li>
+<li>强树就是 <strong>Order-Statistic Tree（顺序统计树）</strong>，其底层就是红黑树，只是每个节点额外维护了 <code>size</code> 字段。在插入、删除时维护 <code>size</code> 字段即可</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">        15<span class="o">(</span><span class="nv">size</span><span class="o">=</span>7<span class="o">)</span>
+       /         <span class="se">\
+</span><span class="se"></span>   6<span class="o">(</span><span class="nv">size</span><span class="o">=</span>3<span class="o">)</span>   18<span class="o">(</span><span class="nv">size</span><span class="o">=</span>3<span class="o">)</span>
+  /     <span class="se">\ </span>       /
+ 3<span class="o">(</span>1<span class="o">)</span>  7<span class="o">(</span>1<span class="o">)</span>   17<span class="o">(</span>1<span class="o">)</span>
+
+查询第3小的元素（<span class="sb">`</span><span class="nv">i</span><span class="o">=</span>3<span class="sb">`</span>）：
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>为来更容易 理解 完成 count-complete-tree-nodes题目 统计节点个数</li>
+<li>查询top k算法
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415123550.png" alt="图7-红黑树支持topk查询 "></li>
+</ul>
+<p><strong>画外音</strong>：</p>
+<ul>
+<li>面试官：海量无序数据，寻找第 K 大的数，越快越好 就用skiplist好了。</li>
+</ul>
+<h3 id="问数据库为采用b-tree放弃跳表红黑树">问：数据库为采用B+ tree，放弃跳表/红黑树</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415161228.png" alt="图8:n-1层加载到内存"></p>
+<ul>
+<li><!-- raw HTML omitted -->4 层的 B+ 存储220 亿条<!-- raw HTML omitted -->  占用<!-- raw HTML omitted -->256GB<!-- raw HTML omitted -->空间， <!-- raw HTML omitted -->前三层<!-- raw HTML omitted -->的内部节点其实都可以存储在内存中（640MB），只有<!-- raw HTML omitted -->第四层<!-- raw HTML omitted -->的叶子节点才需要存储在磁盘中（256GB）。&mdash;减少io访问次数</li>
+<li>B+树 可以利用索引的“最左前缀”来定位记录。&mdash;多个值进行排序</li>
+<li>演示https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250415162934.png" alt="image.png"></li>
+</ul>
+<h3 id="问数据库采用lsm-树为什么放弃了b-tree">问：数据库采用LSM 树，为什么放弃了B+ tree</h3>
+<ul>
+<li>这个后续专门写一篇文章。这里没有深入了解不过多讨论。</li>
+</ul>
+<h2 id="总结最坏情况分析">总结：（最坏情况分析）</h2>
+<ul>
+<li>数组支持随机访问，链表不支持随机访问</li>
+<li>有序数组 采用二分查找 时间复杂度是O（logn），有序链表 查找一个元素时间复杂度o（n）。</li>
+<li>哈希表支持key查询，不支持范围查询，最坏情况下，查询 hash冲突 性能下降o(n)</li>
+<li>二叉搜索树 天然解决hash冲突问题，最坏情况 退化成单链表</li>
+<li>红黑树 和avl都是平衡二叉查找树，在频繁插入和删除操作中，avl每个节点维护子树个数。红黑树最多2-3次 选装完成。【这个没有深入研究】</li>
+<li>跳表 通过概率方式 维持平衡，根输入数据无关，在 插入和删除方面 不考虑插入后是否影影响平衡。</li>
+<li>目前Redis 单线程操作跳表，但是跳表通过改造 非常适合并发多线程访问。（插入，删除后影响节点范围）</li>
+<li>上面数据结构都是使用内存，不适合磁盘存储存储。</li>
+</ul>
+<p><strong>遗留任务</strong></p>
+<ul>
+<li><a href="https://leetcode.cn/problems/count-complete-tree-nodes/">https://leetcode.cn/problems/count-complete-tree-nodes/</a> 写算法统计节点个数</li>
+<li>实现并发 无锁 跳表</li>
+<li>跳表 不同语言 golang  c++，java等实现。</li>
+<li>lsm tree</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>STL源码剖析 第三章 #迭代器与traits编程技法</li>
+<li>Redis 设计与实现</li>
+<li>Skip Lists: A Probabilistic Alternative to Balanced Trees</li>
+<li><a href="http://zhangtielei.com/posts/blog-redis-skiplist.html">http://zhangtielei.com/posts/blog-redis-skiplist.html</a></li>
+<li><a href="https://news.ycombinator.com/item?id=1171423">https://news.ycombinator.com/item?id=1171423</a></li>
+<li><a href="https://ketansingh.me/posts/lets-talk-skiplist/">https://ketansingh.me/posts/lets-talk-skiplist/</a>（go语言实现）</li>
+<li>order-statistic tree | augmented red-black tree | easy explained</li>
+<li>数据结构算法可视化（MIT官方教材）</li>
+<li><a href="https://gallery.selfboot.cn/zh/algorithms/skiplist">https://gallery.selfboot.cn/zh/algorithms/skiplist</a></li>
+<li>记一次生产慢sql查询的解决</li>
+<li>NoSQL检索：为什么日志系统主要用LSM树而非B+树？</li>
+<li><a href="https://selfboot.cn/2024/09/09/leveldb_source_skiplist/">https://selfboot.cn/2024/09/09/leveldb_source_skiplist/</a></li>
+<li><a href="https://visualgo.net/en">https://visualgo.net/en</a> ## 通过动画可视化数据结构和算法</li>
+</ul>
+<h2 id="链接我">链接我</h2>
+<p>如果对上面提到c++学习路径 推荐书籍感兴趣</p>
+<p>关注公共号：后端开发成长指南  回复电子书</p>
+<p>如果更进一步交流 添加 微信：wang_cyi</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="链接我"></p>
+<h3 id="为什么写这篇文章">为什么写这篇文章</h3>
+<h4 id="1-目标冲击大厂拿百万年薪"><strong>1. 目标：冲击大厂，拿百万年薪</strong></h4>
+<ul>
+<li>想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+</ul>
+<h4 id="2-现状缺乏实战渴望提升动手能力"><strong>2. 现状：缺乏实战，渴望提升动手能力</strong></h4>
+<ul>
+<li>
+<p>公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</p>
+</li>
+<li>
+<p>想通过阅读优秀的源码，提高代码能力，从&quot;不会写&quot;到&quot;敢写&quot;，提升C++编程自信。</p>
+</li>
+<li>
+<p>需要掌握高效学习和实践的方法，弥补缺乏实战经验的短板。</p>
+</li>
+</ul>
+<h4 id="3-价值成为优秀完成任务成为团队公司都认可的核心骨干">3. 价值：成为优秀完成任务，成为团队、公司都认可的核心骨干。</h4>
+<p><strong>优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</strong></p>
+<p><strong>错误示范</strong>：</p>
+<ul>
+<li>不少同学工作很忙，天天加班，做了很多公司的事情。
+但是 不是本团队事情，不是本部门事情，领导不认可，绩效不高</li>
+<li>做低优先级的任务，无法利他，绩效不高</li>
+<li>被招进来后可能随时被裁掉的一些征兆：
+<ol>
+<li>刻意提高工作难度</li>
+<li>工作中遭受不公平对待</li>
+<li>遭遇恶性竞争</li>
+<li>被捧杀</li>
+</ol>
+</li>
+</ul>
+<h2 id="历史文章">历史文章</h2>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-14 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%9D%A2%E8%AF%95%E4%B9%8B%E7%BE%8E/">面试之美</a>
+          <a href="/tags/%E6%9E%B6%E6%9E%84%E4%B9%8B%E7%BE%8E/">架构之美</a>
+          <a href="/tags/%E6%BA%90%E7%A0%81%E4%B9%8B%E7%BE%8E/">源码之美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/2025/07_interview_pm_netwang/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">如何判断一个进程是否存活</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ai/02_how_to_use_Obsidian/">
+            <span class="next-text nav-default">用Obsidian打造自己的写作系统</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

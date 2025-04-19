@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试题——谈谈指针和引用的区别 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="面试之美" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/liunx/2025/07_Interview_C&#43;&#43;_pointer/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试题——谈谈指针和引用的区别" />
+<meta property="og:description" content="面试之美" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/liunx/2025/07_Interview_C&#43;&#43;_pointer/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-03-31T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-03-31T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试题——谈谈指针和引用的区别">
+<meta itemprop="description" content="面试之美"><meta itemprop="datePublished" content="2025-03-31T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-03-31T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2473">
+<meta itemprop="keywords" content="面试之美,架构之美,源码之美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试题——谈谈指针和引用的区别"/>
+<meta name="twitter:description" content="面试之美"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试题——谈谈指针和引用的区别</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-03-31 00:00 </span>
+        
+          <span class="more-meta"> 约 2473 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#什么场景必须用指针不能使用引用">什么场景必须用指针,不能使用引用。</a></li>
+        <li><a href="#2-大局观用指针智能指针-表示对资源所有权引用只是借用">2. 大局观：用指针/智能指针 表示对资源“所有权“，引用只是借用。</a></li>
+        <li><a href="#3">3.</a></li>
+        <li><a href="#参考书籍">参考书籍</a></li>
+      </ul>
+    </li>
+    <li><a href="#什么场景下必须用引用-不能用指针">什么场景下必须用引用 不能用指针</a></li>
+    <li><a href="#二-整理素材">二. 整理素材</a></li>
+    <li><a href="#三-内容">三 内容</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#什么场景必须用指针不能使用引用-1">什么场景必须用指针,不能使用引用。</a></li>
+        <li><a href="#2-大局观用指针智能指针-表示对资源所有权引用只是借用-1">2. 大局观：用指针/智能指针 表示对资源“所有权“，引用只是借用。</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#什么场景必须用引用不能使用指针">什么场景必须用引用，不能使用指针</a></li>
+      </ul>
+    </li>
+    <li><a href="#链接我">链接我</a>
+      <ul>
+        <li><a href="#阅读对象也是我正在做事情">阅读对象（也是我正在做事情）</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="一-大纲">一、 大纲</h1>
+<h3 id="什么场景必须用指针不能使用引用">什么场景必须用指针,不能使用引用。</h3>
+<h4 id="1-大局观重要的数据结构-必须用指针表示">1. 大局观：重要的数据结构 必须用指针表示</h4>
+<ul>
+<li>STL 提供容器vector map ,set</li>
+<li>STL提供智能指针，自定义一些类</li>
+<li>基本操 创建，插入，删除时候 <strong>经常发生变化</strong> 因此必须用指针</li>
+<li><strong>画外音</strong>：平衡二叉搜索树：红黑树,AVL 树，哈希表：数组+链表 就是下一个问题</li>
+</ul>
+<h3 id="2-大局观用指针智能指针-表示对资源所有权引用只是借用">2. 大局观：用指针/智能指针 表示对资源“所有权“，引用只是借用。</h3>
+<ul>
+<li>
+<p>提示：
+c/c++ 特点 就是不从语法层面发明一些新概念，通过最佳实践 自我约定<strong>的概念
+在 C++ 中</strong>，所有权是主要是通过<strong>原始指针</strong>或<strong>智能指针</strong>来表达。
+<strong>在 Rust 中</strong>，所有权是<strong>语言级别内建规则</strong></p>
+</li>
+<li>
+<p>指针有所有权（ownership）管理，<strong>引用是别名而非资源管理者</strong>
+通过c语言提供malloc free 只操作，指针，不操作引用。</p>
+</li>
+<li>
+<p>Smart Pointers 自定义的类。</p>
+</li>
+<li>
+<p>Item 18: Use std::<strong>unique_ptr</strong> for exclusive-ownership resource management.
+禁止拷贝和复制，<strong>同一时间只能有一个</strong> <code>unique_ptr</code> 指向资源。</p>
+</li>
+<li>
+<p>Item 19: Use std::shared_ptr for shared-ownership resource managemen</p>
+</li>
+<li>
+<p>tem 20: Use std::weak_ptr for std::shared_ptr-like pointers that can dangle.</p>
+</li>
+<li>
+<p>函数：std::move()
+错误理解：根据英文字母move理解，实现<strong>移动语义</strong>，这个❌理解。 引用不管理资源。
+正确理解：<strong>本身只做类型转换 ，返回右值引用</strong>，**自己的类中实现移动构等自定义函数等，才能完成资源所有权转移</p>
+</li>
+</ul>
+<blockquote>
+<p>引用只拥有指针部分功能，上面场景不能代替指针，<strong>涉及动态分配、容器、多态、共享、生命周期管理时</strong>用指针（最好是智能指针）</p>
+</blockquote>
+<h3 id="3">3.</h3>
+<h3 id="参考书籍">参考书籍</h3>
+<ul>
+<li>侯捷老师的《STL原码剖析》</li>
+<li></li>
+</ul>
+<p>你是10年经验c++架构师 在虚函数 场景必须用指针不能引用</p>
+<p>你是10年经验c++架构师，什么场景下必须用引用 不能用指针
+区别意思是什么场景必须用指针不能引用，什么场景下必须用引用 不能用指针</p>
+<p>潜台词</p>
+<ol>
+<li>实际开发项目中怎么使用的怎么回答，不要背诵 不要背诵。</li>
+<li>问的c++，但是对C语言特别熟悉，其他语言golang，rust 也一定了解。</li>
+</ol>
+<p>提示：### std::move()</p>
+<p><strong>为了减少临时变量的copy</strong></p>
+<h2 id="什么场景下必须用引用-不能用指针">什么场景下必须用引用 不能用指针</h2>
+<p>Item 3: Never treat arrays polymorphically.
+Item 28: Understand smart pointers</p>
+<ul>
+<li>
+<p><strong>所有权（Ownership）</strong> 就是你拥有这本书，可以随便读、改、烧掉、卖掉。</p>
+</li>
+<li>
+<p><strong>借用（Borrowing）</strong> 就是你把这本书借给朋友</p>
+</li>
+</ul>
+<p>读者提问：</p>
+<p>为什么 我刚回答引用是对象别名，不能为空 &hellip;.
+还没回答完毕，面试官 直接打断说，还有吗？
+我继续回答 指针 跳转 。。。
+面试官 就到这里吧，等通知。</p>
+<p>老王回答：
+这个和工作汇报领导一个道理，时间就是金钱，</p>
+<h2 id="二-整理素材">二. 整理素材</h2>
+<ul>
+<li>侯捷老师的《STL原码剖析》 vector</li>
+</ul>
+<p>高性能库设计，如 <code>std::vector::emplace_back</code> 能根据传入的是左值还是右值，分别调用拷贝构造或移动构造​<a href="https://www.cnblogs.com/ishen/p/13771991.html?utm_source=chatgpt.com"></a></p>
+<ul>
+<li>
+<p><strong>左值引用</strong> <code>T&amp;</code>：只能绑左值，<code>const T&amp;</code> 可绑右值。</p>
+</li>
+<li>
+<p><strong>右值引用</strong> <code>T&amp;&amp;</code>：只能绑右值，用于移动语义。</p>
+</li>
+<li>
+<p><strong>万能引用</strong> <code>T&amp;&amp;</code>（出现在模板或 <code>auto</code> 推导中）：能绑左值也能绑右值，用于完美转发
+<a href="https://en.wikipedia.org/wiki/Reference_%28C%2B%2B%29?utm_source=chatgpt.com#Rvalue_reference">https://en.wikipedia.org/wiki/Reference_%28C%2B%2B%29?utm_source=chatgpt.com#Rvalue_reference</a></p>
+</li>
+</ul>
+<p>move semantics, or perfect forwardin
+<a href="https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers">https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers</a></p>
+<p><a href="https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers">https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers</a></p>
+<p><strong>C++ 智能指针遇到的坑</strong>，- 无脑只使用 shared_ptr
+在10万次对象创建测试中，unique_ptr返回与裸指针直接 new 的性能差异小于1%</p>
+<h2 id="三-内容">三 内容</h2>
+<h1 id="一-最佳实践">一、 最佳实践</h1>
+<h3 id="什么场景必须用指针不能使用引用-1">什么场景必须用指针,不能使用引用。</h3>
+<h4 id="1-大局观重要的数据结构-必须用指针表示-1">1. 大局观：重要的数据结构 必须用指针表示</h4>
+<ul>
+<li>
+<p> STL 提供容器vector map ,set，智能指针，自定义类。</p>
+</li>
+<li>
+<p>基本操 创建，插入，删除时候 <strong>经常发生变化</strong> 因此必须用指针</p>
+</li>
+<li>
+<p><strong>画外音</strong>：平衡二叉搜索树：红黑树,AVL 树，哈希表：数组+链表 就是下一个问题</p>
+</li>
+</ul>
+<h3 id="2-大局观用指针智能指针-表示对资源所有权引用只是借用-1">2. 大局观：用指针/智能指针 表示对资源“所有权“，引用只是借用。</h3>
+<ul>
+<li>提示：</li>
+</ul>
+<p>    c/c++ 特点 就是不从语法层面发明一些新概念，通过最佳实践 自我约定**的概念</p>
+<p>    在 C++ 中**，所有权是主要是通过**原始指针**或**智能指针**来表达。</p>
+<p>    <strong>在 Rust 中</strong>，所有权是<strong>语言级别内建规则</strong></p>
+<ul>
+<li>
+<p>指针有所有权（ownership）管理，<strong>引用是别名而非资源管理者</strong>,free 函数传递指针，不传递引用。</p>
+</li>
+<li>
+<p>引用只具备指针部分工能，nullptr,ptr++，ptr**, sizeof 虚函数  都是小区别</p>
+</li>
+<li>
+<p><strong>画外音</strong> ：右值,右值引用, move(),移动语义，类的移动赋值函数, 智能指针理解</p>
+</li>
+</ul>
+<h1 id="二-最佳实实践">二、 最佳实实践</h1>
+<h3 id="什么场景必须用引用不能使用指针">什么场景必须用引用，不能使用指针</h3>
+<p><!-- raw HTML omitted -->大局观：引用分为三个类型，左值引用，右值引用，万能引用<!-- raw HTML omitted --></p>
+<ul>
+<li>左值引用：只借用，不负声明周期管理，在类的拷贝构造函数，复制操作函数使用。指向存在对象（左值）</li>
+<li>右值引用：指向 右值（临时值，代表马上销毁），std:move 函数能把一个左值变成右值。配合当前自定义类或者使用容器 <!-- raw HTML omitted -->重载移动构造函数，移动复制运算符<!-- raw HTML omitted -->
+例如：unique_ptr <strong>不能进行复制操作只能进行移动操作</strong> 。</li>
+</ul>
+<p> - 返回值是unique_ptr：C++17和之后的版本中，由于强制开启了返回值优化，所以 move 操作也不需要了，进行了RVO优化</p>
+<ul>
+<li>万能引用：右值引用 在参数传递过程中 变为左值。配合std:forwd 使用，根据不同参数调用不同重载函数。</li>
+</ul>
+<p>描述 push_back(move(t)) 过程</p>
+<ol>
+<li>​<strong>​模板推导​</strong>​：<code>std::move</code>将<code>t</code>转为右值引用；</li>
+<li>​<strong>​函数重载​</strong>​：容器选择右值引用版本的<code>push_back</code>；</li>
+<li>​<strong>​资源转移​</strong>​：调用元素类型的<!-- raw HTML omitted -->移动构造函<!-- raw HTML omitted -->数完成高效资源转移(类实现移动构造函)</li>
+</ol>
+<p>画外音：C++ 智能指针<!-- raw HTML omitted -->避坑指南<!-- raw HTML omitted --></p>
+<p>push_back(std::move(head)); push_back 怎么知道 head类型是什么，实现 移动语义操作</p>
+<p>push_back(std::move(head)); push_back 怎么知道 head类型是什么，实</p>
+<h2 id="链接我">链接我</h2>
+<p>坚持思考，方向比努力更重要。</p>
+<p>关注公共号：后端开发成长指南  回复电子书</p>
+<p>如果更进一步交流 添加 微信：wang_cyi</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="image.png"></p>
+<p>我是小王同学，</p>
+<p>希望帮你深入理解分布式存储系统3FS更进一步 ，
+为了更容易理解设计背后原理，这里从一个真实面试场故事开始的。</p>
+<h3 id="阅读对象也是我正在做事情">阅读对象（也是我正在做事情）</h3>
+<h4 id="1-目标冲击大厂拿百万年薪"><strong>1. 目标：冲击大厂，拿百万年薪</strong></h4>
+<ul>
+<li>想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+</ul>
+<h4 id="2-现状缺乏实战渴望提升动手能力"><strong>2. 现状：缺乏实战，渴望提升动手能力</strong></h4>
+<ul>
+<li>
+<p>公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</p>
+</li>
+<li>
+<p>想通过阅读优秀的源码，提高代码能力，从“不会写”到“敢写”，提升C++编程自信。</p>
+</li>
+<li>
+<p>需要掌握高效学习和实践的方法，弥补缺乏实战经验的短板。</p>
+</li>
+</ul>
+<h4 id="3-价值成为优秀完成任务成为团队公司都认可的核心骨干">3. 价值：成为优秀完成任务，成为团队、公司都认可的核心骨干。</h4>
+<p><strong>优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</strong></p>
+<p><strong>错误示范</strong>：</p>
+<ul>
+<li>不少同学工作很忙，天天加班，做了很多公司的事情。
+但是 不是本团队事情，不是本部门事情，领导不认可，绩效不高</li>
+<li>做低优先级的任务，无法利他，绩效不高</li>
+<li>招进来最后变成了随时被裁掉的一些征兆</li>
+</ul>
+<ol>
+<li>刻意提高工作难度</li>
+<li>工作中不公平对待</li>
+<li>制造恶性竞争</li>
+<li>捧杀</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://cloud.tencent.com/developer/article/1784441">https://cloud.tencent.com/developer/article/1784441</a> 【】</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-03-31 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%9D%A2%E8%AF%95%E4%B9%8B%E7%BE%8E/">面试之美</a>
+          <a href="/tags/%E6%9E%B6%E6%9E%84%E4%B9%8B%E7%BE%8E/">架构之美</a>
+          <a href="/tags/%E6%BA%90%E7%A0%81%E4%B9%8B%E7%BE%8E/">源码之美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/2025/how_to_learn_3fs_4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">深入浅出理解DeepSeek 3FS (3) 步步引导轻松理解内存管理，面试必看</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/liunx/2025/3fs-what-is-file-system-3/">
+            <span class="next-text nav-default">从青铜到王者系列：3FS如何实现一个文件系统</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

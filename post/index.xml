@@ -6,7 +6,43 @@
     <description>Recent content in Posts on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 07 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>面试题：系统慢 怎么优化</title>
+      <link>https://wangcy6.github.io/post/liunx/2025/10_interview_design_performance.md/</link>
+      <pubDate>Fri, 18 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2025/10_interview_design_performance.md/</guid>
+      <description>坚持思考，就会很酷, 大家好，这是大厂面试拆解&amp;ndash;项目实战系列的第2篇文章。 本文通过分布式文件系统ceph 服务 为例子 描述 性能优化的一</description>
+    </item>
+    
+    <item>
+      <title>如何判断一个进程是否存活</title>
+      <link>https://wangcy6.github.io/post/liunx/2025/07_interview_pm_netwang/</link>
+      <pubDate>Thu, 17 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2025/07_interview_pm_netwang/</guid>
+      <description>大家好，这是大厂面试拆解&amp;ndash;项目篇 系列的第2篇文章 如果你面试 或者工作中遇到相关问题，欢迎留言！ 一、 如何学（可以跳过不看） 1. 问题是什</description>
+    </item>
+    
+    <item>
+      <title>面试官：为啥 Redis 使用跳表 而不是使用 红黑树？</title>
+      <link>https://wangcy6.github.io/post/liunx/2025/06_how_to_learn_red_tree/</link>
+      <pubDate>Mon, 14 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2025/06_how_to_learn_red_tree/</guid>
+      <description>大家好，这是大厂面试拆解&amp;ndash;数据结构与算法系列的第2篇文章 如果你面试 或者工作中遇到相关问题，欢迎留言！ 阅读本文 你获得如下收益 ✅ 通过</description>
+    </item>
+    
+    <item>
+      <title>用Obsidian打造自己的写作系统</title>
+      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Obsidian/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Obsidian/</guid>
+      <description>写作步骤哪些 选题&amp;ndash;素材&amp;mdash;整理 检查 Q1：经常有错别字，句子不通顺 怎么办？ Obsidian LanguageTool 插件是一个为 Obsidian 文本编辑器提供的高级语法和拼</description>
+    </item>
+    
     <item>
       <title>ContextOS 模块开发与架构解析笔记</title>
       <link>https://wangcy6.github.io/post/ContextOS/01_what_is_contextos/</link>
@@ -53,6 +89,24 @@
     </item>
     
     <item>
+      <title>如何批量投递简历</title>
+      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Copilot/</link>
+      <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Copilot/</guid>
+      <description>利用DeepSeek-V3和 Obsidian 构建个人知识库 通过阅读本篇文章你获得如何收益 按下 Ctrl+Shift+I (Windows/Linux) 或 Cmd+Option+I (Mac) 组合 步骤1 Why integrate Obsidian and DeepSeek? DeepSeek 的网页界面免费访问它，但不断的</description>
+    </item>
+    
+    <item>
+      <title>什么是块存储</title>
+      <link>https://wangcy6.github.io/post/liunx/2025/06_file_system_block/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2025/06_file_system_block/</guid>
+      <description>本文的写作宗旨是：绝不装逼，一定要简单，简单，再简单！ 作为个人学习实践笔记，可能存在错误或遗漏，欢迎指正_ 大纲 对象存储、文件存储和块存储的区</description>
+    </item>
+    
+    <item>
       <title>深入浅出理解DeepSeek 3FS (3) 步步引导轻松理解内存管理，面试必看</title>
       <link>https://wangcy6.github.io/post/liunx/2025/05-how_is_ctdb/</link>
       <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
@@ -77,6 +131,15 @@
       
       <guid>https://wangcy6.github.io/post/liunx/2025/how_to_learn_3fs_4/</guid>
       <description>🌟 大家好，我是小王同学， 今天带你们一起探秘内存分配的奥秘！ 本文主要描述了如何为一个类自定义new实现 大胆猜测，小心求证过程中 C++的new实</description>
+    </item>
+    
+    <item>
+      <title>面试题——谈谈指针和引用的区别</title>
+      <link>https://wangcy6.github.io/post/liunx/2025/07_Interview_C&#43;&#43;_pointer/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2025/07_Interview_C&#43;&#43;_pointer/</guid>
+      <description>一、 大纲 什么场景必须用指针,不能使用引用。 1. 大局观：重要的数据结构 必须用指针表示 STL 提供容器vector map ,set STL提供智能指针，自定义一些类 基</description>
     </item>
     
     <item>
@@ -1890,6 +1953,15 @@
     
     <item>
       <title></title>
+      <link>https://wangcy6.github.io/post/2025-04-03/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/2025-04-03/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://wangcy6.github.io/post/ARTS/2023/%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%86%8C%E7%AC%AC%E5%9B%9B%E6%9C%9F/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -1899,20 +1971,20 @@
     
     <item>
       <title></title>
-      <link>https://wangcy6.github.io/post/plan/%E5%A6%82%E4%BD%95%E7%9D%A1%E4%B8%AA%E5%A5%BD%E8%A7%89/</link>
+      <link>https://wangcy6.github.io/post/liunx/2025/10_Interview_desgin_slow/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/plan/%E5%A6%82%E4%BD%95%E7%9D%A1%E4%B8%AA%E5%A5%BD%E8%A7%89/</guid>
-      <description>title: &amp;ldquo;如何才能睡个好觉？&amp;rdquo; date: 2024-02-24 draft: false categories: [&amp;ldquo;plan&amp;rdquo;] 大家好， 今天分享的主题是 如何睡个好觉。 第一部分： 第二部分： 第三部分：黄金行为 关于</description>
+      <guid>https://wangcy6.github.io/post/liunx/2025/10_Interview_desgin_slow/</guid>
+      <description></description>
     </item>
     
     <item>
       <title></title>
-      <link>https://wangcy6.github.io/post/plan/%E6%8F%90%E9%AB%98%E6%95%88%E7%8E%87%E6%98%8E%E7%A1%AE%E4%BB%BB%E5%8A%A1%E5%8A%A0%E5%BC%BA%E6%B2%9F%E9%80%9A/</link>
+      <link>https://wangcy6.github.io/post/plan/today/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/plan/%E6%8F%90%E9%AB%98%E6%95%88%E7%8E%87%E6%98%8E%E7%A1%AE%E4%BB%BB%E5%8A%A1%E5%8A%A0%E5%BC%BA%E6%B2%9F%E9%80%9A/</guid>
-      <description>title: &amp;ldquo;工作日志：日报，周报，月，季度&amp;rdquo; date: 2022-09-25 draft: false categories: [&amp;ldquo;work&amp;rdquo;] 12月 //伪代码示例 这是什么用法 lock.unlock(); helo() lock.lock();</description>
+      <guid>https://wangcy6.github.io/post/plan/today/</guid>
+      <description>每天专注一个事情 文件系统 %% kanban:settings 1 {&amp;#34;kanban-plugin&amp;#34;:&amp;#34;board&amp;#34;,&amp;#34;list-collapse&amp;#34;:[false]} %%</description>
     </item>
     
     <item>
