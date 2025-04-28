@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>git常用命令手册 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="并发迁移代码实现，联调90% 支持存力测试演示 git撤销已经push到远端的commit git reset 是把HEAD向后移动了一下，而git revert是" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interviewSystemDesgin/06-tools-base-user-git/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="git常用命令手册" />
+<meta property="og:description" content="并发迁移代码实现，联调90% 支持存力测试演示 git撤销已经push到远端的commit git reset 是把HEAD向后移动了一下，而git revert是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interviewSystemDesgin/06-tools-base-user-git/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-09-20T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="git常用命令手册">
+<meta itemprop="description" content="并发迁移代码实现，联调90% 支持存力测试演示 git撤销已经push到远端的commit git reset 是把HEAD向后移动了一下，而git revert是"><meta itemprop="datePublished" content="2024-09-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-09-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="678">
+<meta itemprop="keywords" content="GitHub," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="git常用命令手册"/>
+<meta name="twitter:description" content="并发迁移代码实现，联调90% 支持存力测试演示 git撤销已经push到远端的commit git reset 是把HEAD向后移动了一下，而git revert是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">git常用命令手册</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-09-20 00:00 </span>
+        
+          <span class="more-meta"> 约 678 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#commit_editmsg">COMMIT_EDITMSG</a>
+      <ul>
+        <li><a href="#step1-base">step1 base</a></li>
+        <li><a href="#step2-do-it">step2 do it</a></li>
+        <li><a href="#step3-future">step3 future</a></li>
+      </ul>
+    </li>
+    <li><a href="#查看-指定文件是谁提交的-变更历史">查看 指定文件是谁提交的 变更历史</a></li>
+    <li><a href="#参考">参考</a></li>
+    <li><a href="#联系我-">联系我 ：</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <ol>
+<li>
+<p>并发迁移代码实现，联调90%</p>
+</li>
+<li>
+<p>支持存力测试演示</p>
+</li>
+</ol>
+<h1 id="git撤销已经push到远端的commit">git撤销已经push到远端的commit</h1>
+<p>git reset 是把HEAD向后移动了一下，而git revert是HEAD继续前进，只是新的commit的内容和要revert的内容正好相反，能够抵消要被revert的内容。</p>
+<p>提交时候需分支好</p>
+<p>提交时候需分支好</p>
+<p>git push  xxx origin/XXXX</p>
+<h2 id="commit_editmsg">COMMIT_EDITMSG</h2>
+<h3 id="step1-base">step1 base</h3>
+<p>Why does the COMMIT_EDITMSG open when I try to commit in vscode?</p>
+<p>change-id</p>
+<p>是 Git 中的一个临时文件，它用于保存提交消息（commit message）的编辑内容。当你执行<code> git commit</code> 命令时，Git 会打开一个编辑器，供你输入提交消息</p>
+<p>其中包含</p>
+<p>Change-Id 是 gerrit (代码审核平台)的概念，是gerrit 用以追踪具体提交的机制 与 git (版本管理) 是没有关系的.</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/9c46ad75c8792ad2b92a573bfb6c4c82.png" alt="在这里插入图片描述"></p>
+<p>gerrit 的 Change-Id 机制</p>
+<p>已经用 git push 将代码提交 gerrit 审核了,这时你发现代码中有疏漏,修改了一下,</p>
+<p>执行 git commit &ndash;amend, 再次推送还可以成功. 这就是因为 gerrit 检查到两次 push 的 commit 有同一个 change-id,</p>
+<p>就认为是同一个提交,因此可以 amend</p>
+<p>Gerrit 提供了标准的“commit-msg”钩子来实现。</p>
+<p>Git 提供了4个提交<a href="https://so.csdn.net/so/search?q=%E5%B7%A5%E4%BD%9C%E6%B5%81&amp;spm=1001.2101.3001.7020">工作流</a>钩子：pre-commit、prepare-commit-msg、commit-msg、post-commit。其中 commit-msg 钩子，会在我们执行 git commit 时被执行</p>
+<h3 id="step2-do-it">step2 do it</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">git checkout -b branch_name origin/branch_name
+git branch
+
+
+git status
+git cherry-pick --continue	
+
+要撤销git add命令，可以使用git reset命令
+https://worktile.com/kb/ask/232168.html
+git commit --amend
+git puhs origin  xx:ref/for/XXX
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step3-future">step3 future</h3>
+<ul>
+<li>一次只提交一个功能</li>
+</ul>
+<h2 id="查看-指定文件是谁提交的-变更历史">查看 指定文件是谁提交的 变更历史</h2>
+<ul>
+<li>git-blame - 显示文件每一行的最后修改版本和作者</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+-L &lt;start&gt;,&lt;end&gt;
+
+
+git blame xxx
+git blame -L 58，100 xxxx
+
+git show commitd
+
+
+# 统计每位作者的作品数
+git blame --line-porcelain file |
+sed -n &#39;s/^author //p&#39; |
+sort | uniq -c | sort -rn
+https://git-scm.com/docs/git-blame/zh_HANS-CN
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<p>【1】 <a href="https://www.nowcoder.com/discuss/516086200147382272">https://www.nowcoder.com/discuss/516086200147382272</a></p>
+<h2 id="联系我-">联系我 ：</h2>
+<p>微信号：watchpoints</p>
+<p><img src="https://s2.loli.net/2024/02/09/yLDuCszWrIQbfj2.jpg" alt="image.png"></p>
+<p>知识星球：</p>
+<p><img src="https://s2.loli.net/2024/02/09/xpkYzBu93NZMv2a.png" alt="image.png"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-09-20 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/GitHub/">GitHub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2024/06-tools-base-user-git/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">git常用命令手册</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/c&#43;&#43;/02_master_c&#43;&#43;_class/">
+            <span class="next-text nav-default">c&#43;&#43;代码编程规范</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

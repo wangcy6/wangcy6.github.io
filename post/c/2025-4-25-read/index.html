@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试题：read 返回0是否代表一定对方连接已经关闭？ - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/c/2025-4-25-read/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试题：read 返回0是否代表一定对方连接已经关闭？" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/c/2025-4-25-read/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试题：read 返回0是否代表一定对方连接已经关闭？">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2682">
+<meta itemprop="keywords" content="LINUX系统调用," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试题：read 返回0是否代表一定对方连接已经关闭？"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试题：read 返回0是否代表一定对方连接已经关闭？</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2682 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#问达文件尾是什么意思">问：达文件尾是什么意思？</a></li>
+    <li><a href="#大bosssocket-read函数返回0一定代表-对方关闭吗">大boss：socket read函数返回0，一定代表 对方关闭吗？</a>
+      <ul>
+        <li><a href="#问ext4文件系统举例--说-read-io流程">问：ext4文件系统举例  说 read io流程</a></li>
+        <li><a href="#5tcp协议层处理伪代码">5.TCP协议层处理(伪代码)</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>坚持思考，就会很酷。</p>
+<p>大家好，这是<!-- raw HTML omitted -->进入大厂面试准备 第1篇文章<!-- raw HTML omitted --></p>
+<p>知识地图：LINUX系统调用</p>
+<p>问：read 返回0是否一定表示对端关闭？</p>
+<p>答：</p>
+<ul>
+<li>
+<p>​​普通文件​​：当读取位置到达文件末尾（EOF）时，返回 0（跟设置 阻塞和非阻无关）</p>
+</li>
+<li>
+<p><strong>管道/套接字​</strong>​：<!-- raw HTML omitted -->当对端关闭写端且缓冲区无数据时<!-- raw HTML omitted -->，返回 0
+if (sk-&gt;sk_state == TCP_CLOSE) {
+if (!copied)
+return 0;   // 返回EOF
+}</p>
+</li>
+<li>
+<p>为了搞清楚socket的行为，必须要研究一下对应的kernel的代码。</p>
+<ol>
+<li>何时返回值为0；</li>
+<li>对端关闭（shutdown）后，<!-- raw HTML omitted -->是否可以继续读取对端关闭前发送的数据呢<!-- raw HTML omitted -->？</li>
+</ol>
+</li>
+</ul>
+<hr>
+<p><!-- raw HTML omitted -->下面是是从0到1的学习过程。<!-- raw HTML omitted --></p>
+<p>阅读本文你讲收益如下</p>
+<p>✅ 普通文件为设置非阻塞无效</p>
+<p>✅ socket read函数返回0代表什么含义</p>
+<ol>
+<li>何时返回值为0；</li>
+<li>对端关闭（shutdown）后，<!-- raw HTML omitted -->是否可以继续读取对端关闭前发送的数据呢<!-- raw HTML omitted -->？</li>
+</ol>
+<p><strong>什么是read函数？</strong></p>
+<ul>
+<li>read函数是 c语言标准库（ Standard C library  glibc）提供的POSIX接口</li>
+<li>glibc 封装了对Linux系统调用。</li>
+<li>系统调用访问Linux内核能力。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="c1">//read - read from a file descriptor
+</span><span class="c1">// System Call
+</span><span class="c1"></span><span class="n">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">count</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>普通文件读设置 O_NONBLOCK有效吗？</strong></p>
+<ul>
+<li>对磁盘文件，O_NONBLOCK 不起作用，read() 总是阻塞，遇 EOF 返回 0</li>
+<li>非阻塞 I/O ：管道、FIFO、字符设备，网络socket  才有效</li>
+<li>针对普通文件无需考虑非阻塞</li>
+<li>最佳实践： 对于普通文件 I/O，使用异步 I/O（AIO）或 mmap 更合适</li>
+<li>对于网络/管道操作，使用非阻塞 + 事件驱动模型</li>
+</ul>
+<p><strong>非阻塞模式读普通文件无效如何证明？</strong></p>
+<ul>
+<li>看官方文档Note that this flag has no effect for r<strong>egular files and block devices</strong>; 请注意，此标志对常规文件无效，并且 块设备</li>
+<li>也就是说对普通问设置了 O_NONBLOCK照样阻塞读写。</li>
+<li>案例：<strong>D 状态（Uninterruptible Sleep）的本质​</strong>​
+D 状态表示进程正在等待​<strong>​不可中断的内核操作​</strong>​（如硬件 I/O 完成、文件系统锁等），
+此时进程无法被信号唤醒或终止，必须等待操作完成</li>
+</ul>
+<p>问：<strong>为什么进程有不可中断的睡眠状态 (D 状态)？</strong></p>
+<p><strong>内核实现机制</strong>
+尽管这种状态有时可能导致系统响应变慢，
+确保数据一致性和系统稳定性</p>
+<p>D 状态的特点</p>
+<ul>
+<li>不响应任何信号（包括 SIGKILL）</li>
+<li>无法通过 kill -9 强制终止</li>
+<li>必须等待 I/O 完成或系统重启才能解除</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​特征​</strong>​</th>
+<th>​<strong>​不可中断状态（D）​</strong>​</th>
+<th>​<strong>​可中断状态（S）​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​响应信号​</strong>​</td>
+<td>不响应任何信号</td>
+<td>可被信号唤醒</td>
+</tr>
+<tr>
+<td>​<strong>​典型场景​</strong>​</td>
+<td>磁盘 I/O、硬件交互</td>
+<td>等待用户输入、定时器睡眠</td>
+</tr>
+<tr>
+<td>​<strong>​内核操作类型​</strong>​</td>
+<td>必须原子完成的底层操作</td>
+<td>可安全暂停的用户态操作</td>
+</tr>
+<tr>
+<td>​<strong>​性能影响​</strong>​</td>
+<td>减少上下文切换，优化吞吐量</td>
+<td>频繁唤醒可能增加调度开销</td>
+</tr>
+</tbody>
+</table>
+<p>问：请举例说明？</p>
+<p>案例1：磁盘硬件故障导致 I/O 操作无法完成，数据库服务器无法响应请求
+案例2：宕机 3 小时的 IO HANG</p>
+<p>场景：</p>
+<ul>
+<li>当需要将脏页面写回磁盘时，文件系统会调用 <code>writeback</code> 机制</li>
+<li>当需要将页面交换到磁盘时，涉及的函数通常位于 <code>mm/swap.c</code></li>
+<li>当进程等待块设备的 I/O 操作完成时，进程也会进入不可中断的睡眠状态</li>
+</ul>
+<p>问：<strong>socket read的返回值？</strong></p>
+<ul>
+<li>阻塞情况下 read的返回值一共有三种情况：</li>
+</ul>
+<ol>
+<li>大于0：成功读取的字节数；</li>
+<li>等于0：到达文件尾；</li>
+<li>-1：发生错误，通过errno确定具体错误值。</li>
+</ol>
+<p> &gt; On success, the number of bytes read is returned (zero indicates end of file)</p>
+<ul>
+<li>
+<p>非阻塞情况（O_NONBLOCK） read ，条件不满足可能如下</p>
+</li>
+<li>
+<p><strong>EAGAIN</strong> or <strong>EWOULDBLOCK</strong></p>
+</li>
+</ul>
+<h2 id="问达文件尾是什么意思">问：达文件尾是什么意思？</h2>
+<ul>
+<li>EOF 是 End Of File 的缩写。</li>
+<li>EOF 并不是一个字符，也不是文件中实际存在的内容</li>
+<li>例如</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#define EOF (-1)  </span><span class="c1">// 通常在 &lt;stdio.h&gt;
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Enter text (Ctrl+D/Ctrl+Z to end):</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">ch</span><span class="p">;</span> <span class="c1">//非 `char` 类型
+</span><span class="c1"></span>    <span class="c1">//char `c` 被提升为 `int` 类型的 `0xFFFFFFFF`，与 `EOF` 相等，
+</span><span class="c1"></span>    <span class="k">while</span> <span class="p">((</span><span class="n">ch</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">())</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">)</span> <span class="p">{</span> 
+     <span class="c1">// 从键盘输入读取字符，手动触发 EOF 结束[6](@ref)
+</span><span class="c1"></span>        <span class="n">putchar</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="大bosssocket-read函数返回0一定代表-对方关闭吗">大boss：socket read函数返回0，一定代表 对方关闭吗？</h2>
+<ul>
+<li>
+<p><strong>管道/套接字​</strong>​：当对端关闭写端且缓冲区无数据时，返回 0</p>
+</li>
+<li>
+<p>为了搞清楚socket的行为，必须要研究一下对应的kernel的代码。</p>
+</li>
+</ul>
+<ol>
+<li>何时返回值为0；</li>
+<li>对端关闭（shutdown）后，<!-- raw HTML omitted -->是否可以继续读取对端关闭前发送的数据呢<!-- raw HTML omitted -->？</li>
+</ol>
+<h3 id="问ext4文件系统举例--说-read-io流程">问：ext4文件系统举例  说 read io流程</h3>
+<ul>
+<li>整体流程</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">
+<span class="err">用户态调用</span> <span class="n">read</span><span class="p">()</span>
+    <span class="err">↓</span>
+<span class="n">SYSCALL_DEFINE3</span><span class="p">(</span><span class="n">read</span><span class="p">)</span> <span class="p">[</span><span class="n">fs</span><span class="o">/</span><span class="n">read_write</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">ksys_read</span><span class="p">()</span> <span class="p">[</span><span class="n">fs</span><span class="o">/</span><span class="n">read_write</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">vfs_read</span><span class="p">()</span> <span class="p">[</span><span class="n">fs</span><span class="o">/</span><span class="n">read_write</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">__vfs_read</span><span class="p">()</span> <span class="p">[</span><span class="n">fs</span><span class="o">/</span><span class="n">read_write</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">file</span><span class="o">-&gt;</span><span class="n">f_op</span><span class="o">-&gt;</span><span class="n">read_iter</span><span class="p">()</span> <span class="p">[</span><span class="n">net</span><span class="o">/</span><span class="n">socket</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">sock_read_iter</span><span class="p">()</span> <span class="p">[</span><span class="n">net</span><span class="o">/</span><span class="n">socket</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">sock_recvmsg</span><span class="p">()</span> <span class="p">[</span><span class="n">net</span><span class="o">/</span><span class="n">socket</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">sock</span><span class="o">-&gt;</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">recvmsg</span><span class="p">()</span> <span class="p">[</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">tcp</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+    <span class="err">↓</span>
+<span class="n">tcp_recvmsg</span><span class="p">()</span> <span class="p">[</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">tcp</span><span class="p">.</span><span class="n">c</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>具体函数调用</li>
+</ul>
+<h5 id="1-用户空间--内核入口系统调用"><strong>1. 用户空间 → 内核入口（系统调用）​</strong></h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// glibc/sysdeps/unix/sysv/linux/read.c
+</span><span class="c1"></span><span class="n">ssize_t</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">count</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">SYSCALL_CANCEL</span> <span class="p">(</span><span class="n">read</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">count</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">syscall</span> <span class="err">指令，</span>
+
+<span class="err">通过中断或快速系统调用进入内核态，参数通过寄存器传递（`</span><span class="n">fd</span><span class="err">`</span><span class="p">,</span> <span class="err">`</span><span class="n">buf</span><span class="err">`</span><span class="p">,</span> <span class="err">`</span><span class="n">count</span><span class="err">`）</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="2-虚拟文件系统vfs层">2. <strong>虚拟文件系统（VFS）层​</strong></h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/fs/read_write.c
+</span><span class="c1">// kernel/fs/read_write.c
+</span><span class="c1">//fd --file
+</span><span class="c1"></span><span class="n">ssize_t</span> <span class="n">vfs_read</span><span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">file</span><span class="p">,</span> <span class="kt">char</span> <span class="n">__user</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">count</span><span class="p">,</span> <span class="n">loff_t</span> <span class="o">*</span><span class="n">pos</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ssize_t</span> <span class="n">ret</span><span class="p">;</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">f_mode</span> <span class="o">&amp;</span> <span class="n">FMODE_READ</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">EBADF</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">f_mode</span> <span class="o">&amp;</span> <span class="n">FMODE_CAN_READ</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">EINVAL</span><span class="p">;</span>
+        
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">rw_verify_area</span><span class="p">(</span><span class="n">READ</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">count</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+        
+    <span class="k">return</span> <span class="nf">__vfs_read</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">pos</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="err">​</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="3-socket层处理">3. Socket层处理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/net/socket.c
+</span><span class="c1">// kernel/net/socket.c
+</span><span class="c1"></span><span class="k">static</span> <span class="n">ssize_t</span> <span class="n">sock_read_iter</span><span class="p">(</span><span class="k">struct</span> <span class="n">kiocb</span> <span class="o">*</span><span class="n">iocb</span><span class="p">,</span> <span class="k">struct</span> <span class="n">iov_iter</span> <span class="o">*</span><span class="n">to</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">file</span> <span class="o">=</span> <span class="n">iocb</span><span class="o">-&gt;</span><span class="n">ki_filp</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">socket</span> <span class="o">*</span><span class="n">sock</span> <span class="o">=</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">private_data</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">msghdr</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">.</span><span class="n">msg_iter</span> <span class="o">=</span> <span class="o">*</span><span class="n">to</span><span class="p">,</span>
+    <span class="p">};</span>
+    
+    <span class="k">return</span> <span class="nf">sock_recvmsg</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">msg_flags</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>数据结构</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/net/socket.c#L156C1-L161C31
+</span><span class="c1">// static: 表示该结构体只在当前文件可见
+</span><span class="c1">// const: 表示结构体内容不可修改
+</span><span class="c1"></span>
+<span class="c1">// 结构体初始化语法 现代方式（使用 . 操作符）
+</span><span class="c1"></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">file_operations</span> <span class="n">socket_file_ops</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="p">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span> <span class="c1">// 所属模块
+</span><span class="c1"></span>	<span class="p">.</span><span class="n">read_iter</span> <span class="o">=</span> <span class="n">sock_read_iter</span><span class="p">,</span> <span class="c1">// 读取操作
+</span><span class="c1"></span>	<span class="p">.</span><span class="n">write_iter</span> <span class="o">=</span> <span class="n">sock_write_iter</span><span class="p">,</span> <span class="c1">// 写入操作
+</span><span class="c1"></span>	<span class="p">.</span><span class="n">poll</span> <span class="o">=</span> <span class="n">sock_poll</span><span class="p">,</span> <span class="c1">// 轮询操作
+</span><span class="c1"></span>	<span class="p">.</span><span class="n">unlocked_ioctl</span> <span class="o">=</span> <span class="n">sock_ioctl</span><span class="p">,</span> <span class="c1">// IO控制操作
+</span><span class="c1"></span><span class="p">};</span>
+
+
+<span class="c1">// file_operations 结构体中的函数指针定义
+</span><span class="c1"></span><span class="k">struct</span> <span class="n">file_operations</span> <span class="p">{</span>
+    <span class="c1">// 读操作函数指针
+</span><span class="c1"></span>    <span class="n">ssize_t</span> <span class="p">(</span><span class="o">*</span><span class="n">read_iter</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">kiocb</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">iov_iter</span> <span class="o">*</span><span class="p">);</span>
+    
+    <span class="c1">// 写操作函数指针
+</span><span class="c1"></span>    <span class="n">ssize_t</span> <span class="p">(</span><span class="o">*</span><span class="n">write_iter</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">kiocb</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">iov_iter</span> <span class="o">*</span><span class="p">);</span>
+    
+    <span class="c1">// 轮询函数指针
+</span><span class="c1"></span>    <span class="n">__poll_t</span> <span class="p">(</span><span class="o">*</span><span class="n">poll</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">poll_table_struct</span> <span class="o">*</span><span class="p">);</span>
+    
+    <span class="c1">// IO控制函数指针
+</span><span class="c1"></span>    <span class="kt">long</span> <span class="p">(</span><span class="o">*</span><span class="n">unlocked_ioctl</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span><span class="p">);</span>
+<span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5tcp协议层处理伪代码">5.TCP协议层处理(伪代码)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">//https://github.com/torvalds/linux/blob/master/net/ipv4/tcp.c
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">tcp_recvmsg</span><span class="p">(</span><span class="k">struct</span> <span class="n">sock</span> <span class="o">*</span><span class="n">sk</span><span class="p">,</span> <span class="k">struct</span> <span class="n">msghdr</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">len</span><span class="p">,</span>
+                <span class="kt">int</span> <span class="n">nonblock</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">addr_len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">tcp_sock</span> <span class="o">*</span><span class="n">tp</span> <span class="o">=</span> <span class="n">tcp_sk</span><span class="p">(</span><span class="n">sk</span><span class="p">);</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/net/ipv4/tcp.c#L3073
+</span><span class="c1"></span>
+
+<span class="c1">// 位置：net/ipv4/tcp.c
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">tcp_recvmsg</span><span class="p">(</span><span class="k">struct</span> <span class="n">sock</span> <span class="o">*</span><span class="n">sk</span><span class="p">,</span> <span class="k">struct</span> <span class="n">msghdr</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">len</span><span class="p">,</span>
+                <span class="kt">int</span> <span class="n">nonblock</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">addr_len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">tcp_sock</span> <span class="o">*</span><span class="n">tp</span> <span class="o">=</span> <span class="n">tcp_sk</span><span class="p">(</span><span class="n">sk</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">copied</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">// 已复制的数据长度
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>      <span class="c1">// 错误码
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">target</span><span class="p">;</span>       <span class="c1">// 目标读取长度
+</span><span class="c1"></span>    <span class="kt">long</span> <span class="n">timeo</span><span class="p">;</span>       <span class="c1">// 超时时间
+</span><span class="c1"></span>    
+    <span class="c1">// 1. 正常数据读取
+</span><span class="c1"></span>    <span class="k">do</span> <span class="p">{</span>
+        <span class="c1">// 检查接收队列
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">skb_queue_empty</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sk</span><span class="o">-&gt;</span><span class="n">sk_receive_queue</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// 无数据可读，进入等待
+</span><span class="c1"></span>            <span class="n">sk_wait_data</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">timeo</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 从接收队列复制数据
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">((</span><span class="n">copied</span> <span class="o">=</span> <span class="n">tcp_copy_to_user</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">len</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">copied</span><span class="p">;</span>  <span class="c1">// 成功读取数据
+</span><span class="c1"></span>            
+        <span class="c1">// 2. 连接关闭检查
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">sk</span><span class="o">-&gt;</span><span class="n">sk_state</span> <span class="o">==</span> <span class="n">TCP_CLOSE</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">copied</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// 返回EOF
+</span><span class="c1"></span>        <span class="p">}</span>
+        
+        <span class="c1">// 3. 错误检查
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">sk</span><span class="o">-&gt;</span><span class="n">sk_err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">copied</span> <span class="o">=</span> <span class="n">sock_error</span><span class="p">(</span><span class="n">sk</span><span class="p">);</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>       <span class="c1">// 跳转到错误处理
+</span><span class="c1"></span>        <span class="p">}</span>
+        
+        <span class="c1">// 4. 信号中断检查
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">signal_pending</span><span class="p">(</span><span class="n">current</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">copied</span><span class="p">)</span>
+                <span class="n">copied</span> <span class="o">=</span> <span class="o">-</span><span class="n">ERESTARTSYS</span><span class="p">;</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="nl">out</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">copied</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>图片来源：The Linux Programming Interface</p>
+<p><img src="https://man7.org/tlpi/cover/TLPI-front-cover.png" alt=""></p>
+<h2 id="总结">总结</h2>
+<ol>
+<li>对端关闭后，是否可以读取对端在<!-- raw HTML omitted -->关闭之前发送的数据<!-- raw HTML omitted --> &mdash;可以</li>
+</ol>
+<ul>
+<li>继续读取缓冲区数据，直到<code>read()</code>返回0</li>
+<li>当<code>read()</code>返回0时，应主动关闭本端套接字以释放资源，防止长时间处于<code>CLOSE_WAIT</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​行为​</strong>​</th>
+<th>​<strong>​能否读取关闭前数据​</strong>​</th>
+<th>​<strong>​<code>read()</code>返回值​</strong>​</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对端<code>close()</code></td>
+<td>是（直到缓冲区空）</td>
+<td>0（缓冲区空时）</td>
+<td><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td>对端<code>shutdown(SHUT_WR)</code></td>
+<td>是（直到缓冲区空）</td>
+<td>0（缓冲区空时）</td>
+<td><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td>对端异常终止</td>
+<td>否（可能部分数据丢失）</td>
+<td>-1（错误）</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮，
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/LINUX%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">LINUX系统调用</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/c/2025-4-26_lock/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Ceph分布式锁的设计哲学与工程实践</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/c/2025-4-25_tcp_close/">
+            <span class="next-text nav-default">面试题：TCP 四次挥手能变成三次挥手吗?</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

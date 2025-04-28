@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>深入理解 新一代存储引擎BlueStore,需四步 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="从原理到实践，全面解析BlueStore存储引擎的设计理念、核心架构与性能优化策略" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/2025/2025-04-27-what-is-BlueStore/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="深入理解 新一代存储引擎BlueStore,需四步" />
+<meta property="og:description" content="从原理到实践，全面解析BlueStore存储引擎的设计理念、核心架构与性能优化策略" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/2025/2025-04-27-what-is-BlueStore/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-27T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="深入理解 新一代存储引擎BlueStore,需四步">
+<meta itemprop="description" content="从原理到实践，全面解析BlueStore存储引擎的设计理念、核心架构与性能优化策略"><meta itemprop="datePublished" content="2025-04-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7712">
+<meta itemprop="keywords" content="CEPH," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="深入理解 新一代存储引擎BlueStore,需四步"/>
+<meta name="twitter:description" content="从原理到实践，全面解析BlueStore存储引擎的设计理念、核心架构与性能优化策略"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">深入理解 新一代存储引擎BlueStore,需四步</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-27 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/CEPH/"> CEPH </a>
+            </div>
+          <span class="more-meta"> 约 7712 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一bluestore出现的背景初衷">一、BlueStore出现的背景、初衷</a></li>
+        <li><a href="#看版本变化">看版本变化</a></li>
+        <li><a href="#二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</a></li>
+        <li><a href="#三技术的组成部分和关键点">三、技术的组成部分和关键点。</a></li>
+        <li><a href="#四技术的底层原理和关键实现">四、技术的底层原理和关键实现</a></li>
+        <li><a href="#42-bluestore-io流程">4.2 BlueStore IO流程</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#链接我">链接我</a>
+      <ul>
+        <li><a href="#我正在做的事情是">我正在做的事情是</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>大家好我是小义同学，这是<!-- raw HTML omitted -->大厂面试拆解——项目实战<!-- raw HTML omitted -->系列的第<!-- raw HTML omitted -->5<!-- raw HTML omitted -->篇文章，</p>
+<p>”走暗路、耕瘦田、进窄门、见微光”  
+告诉我  面试关键就 深入理解自己项目 这个才是最考察基本功的地方。</p>
+<p>知识地图：KV存储引擎&mdash;BlueStore</p>
+<p><a href="https://mp.weixin.qq.com/s/fyISV_UjNBaF2ZMBZxJoDw">Ceph分布式锁的设计哲学与工程实践</a>  提到 为了支持海量并发，
+满足多客户端，主副本等多节点数据达成一致，设计了分布式锁，
+分布式锁特点如下：</p>
+<ol>
+<li>根据不同状态自驱转换，减少用户操作复杂性</li>
+<li>持久化存储（BlueStore）</li>
+</ol>
+<p>本文 主要介绍什么是BlueStore，如何快速理解BlueStore并且进行优化。</p>
+<h3 id="一bluestore出现的背景初衷">一、BlueStore出现的背景、初衷</h3>
+<h3 id="看版本变化">看版本变化</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250427125143.png" alt="Ceph 12.2.0 正式版本发布"></p>
+<ul>
+<li>
+<p>2016年4月21 Jewel版本10.2.0，首次引入 <strong>BlueStore 存储引擎</strong></p>
+</li>
+<li>
+<p>2017年8月29，Ceph 12.2.0 正式版本发布， 代号 Luminous，<strong>BlueStore 成为默认存储引擎</strong></p>
+</li>
+</ul>
+<p><!-- raw HTML omitted -->BlueStore 是一个从头开始设计的存储后端，<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->旨在解决使用本地文件系统后端所面临的挑战。<!-- raw HTML omitted --></p>
+<p>BlueStore 仅用两年时间就实现了所有这些目标， 并成为 Ceph 的默认存储后端</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250427162927.png" alt=" 文件系统作为分布式存储后端：从 Ceph 十年进化中汲 取的教训"></p>
+<p>上图看出 ceph不停变换后端从FileStore到BlueStore</p>
+<p>BlueStore 的一些主要目标包括：</p>
+<ol>
+<li>快速元数据操作（第 4.1 节）</li>
+<li>对象写入无一致性开销（第 4.1 节）</li>
+<li>基于写时复制的克隆操作 （第 4.2 节）</li>
+<li>无日志记录的双重写入（第 4.2 节）</li>
+<li>优化了 HDD 和 SSD 的 I/O 模式（第 4.2 节）</li>
+</ol>
+<p>对比如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>BlueStore vs FileStore</strong></th>
+<th>FileStore (基于文件系统)</th>
+<th>BlueStore (直接管理裸设备)</th>
+<th>核心优势说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>系统架构</strong></td>
+<td>XFS + LevelDB</td>
+<td>RocksDB + 块设备</td>
+<td>绕过文件系统直接管理磁盘，降低软件栈复杂度</td>
+</tr>
+<tr>
+<td><strong>双写问题</strong></td>
+<td>存在</td>
+<td>无（原子写操作）</td>
+<td>消除写放大，提升性能</td>
+</tr>
+<tr>
+<td><strong>批量读取</strong></td>
+<td>通过 XFS 文件系统读取（百万级别）</td>
+<td>RocksDB 元数据 + 直接块设备访问</td>
+<td>减少 I/O 路径延迟</td>
+</tr>
+<tr>
+<td><strong>对象列举</strong></td>
+<td>需对 XFS 文件排序</td>
+<td>RocksDB 预排序键值(LSM 树结构**)</td>
+<td>列表操作快 10 倍以上</td>
+</tr>
+<tr>
+<td><strong>批量删除</strong></td>
+<td>逐个删除 XFS 文件</td>
+<td>批量删除 RocksDB 键值，批量事务</td>
+<td>删除速度提升 50-100 倍</td>
+</tr>
+<tr>
+<td><strong>对象读缓存</strong></td>
+<td>依赖 XFS 缓存机制</td>
+<td>需用户态实现（如 LRU 缓存）</td>
+<td>灵活性更高，可定制化</td>
+</tr>
+</tbody>
+</table>
+<h4 id="克服本地文件系统面临什么挑战">克服本地文件系统面临什么挑战</h4>
+<h5 id="挑战-1高效事务">挑战 1：高效事务</h5>
+<h5 id="挑战-2快速元数据操作">挑战 2：快速元数据操作</h5>
+<ul>
+<li>Ceph 与 FileStore 后端的关键元数据 挑战之一来自在大目录上的缓慢目录枚举（ readdir ） 操作，</li>
+<li>以及返回结果的缺乏排序。</li>
+</ul>
+<h5 id="挑战-3支持新的存储硬件">挑战 3：支持新的存储硬件</h5>
+<h3 id="二这个技术的优势和劣势分别是什么">二、这个技术的优势和劣势分别是什么</h3>
+<ul>
+<li>还有更强的</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250427165317.png" alt="# Crimson: Next-generation Ceph OSD for Multi-core Scalability"></p>
+<p>Crimson 是基于 Seastar C++ 框架实现的 Ceph 下一代 OSD，用以提升多核可扩展性与 I/O 性能。</p>
+<p>Crimson 被设计为高性能对象存储守护程序 （OSD），针对 NVMe 等快速存储设备进行了优化。</p>
+<p>为了实现这些目标，Crimson 使用包括 SPDK、DPDK 和 C++ Seastar 框架在内的尖端技术从头开始构建。</p>
+<p>Crimson 继续沿用 BlueStore 作为底层存储后端</p>
+<p><strong>并在未来计划通过原生 Seastore 存储后端摆脱对 BlueStore 的依赖</strong></p>
+<h3 id="三技术的组成部分和关键点">三、技术的组成部分和关键点。</h3>
+<p>架构如下：
+<img src="https://blog.wjin.org/assets/img/post/ceph_bluestore.png" alt=""></p>
+<p><!-- raw HTML omitted --> BlueStore主要4个技术点<!-- raw HTML omitted -->：</p>
+<h4 id="用户态直接写快设备-blockdevice">用户态直接写快设备( BlockDevice.)</h4>
+<ol>
+<li>BlueStore 直接读写原始块设备（如 SSD/NVMe）</li>
+<li>在用户态使用linux aio直接操作块设备，去除了本地文件系统的消耗</li>
+</ol>
+<p><strong>聪明你可能你会疑问</strong>：</p>
+<ol>
+<li>绕过文件系统，在用户态，怎么完成IO读写？</li>
+<li>RocksDB本身并不支持对裸设备的操？还是使用文件系统？矛盾</li>
+<li>远离文件系统不能更好支持 - 对全SSD及全NVMe SSD闪存适配？</li>
+</ol>
+<h4 id="轻量文件系统">轻量文件系统</h4>
+<ol>
+<li>BlueFS基于裸设备模拟一个简易的用户态文件系统，用于支持RocksDB。</li>
+<li>支持 SSD/NVMe新硬件</li>
+</ol>
+<p><strong>聪明你可能你会疑问</strong> ：
+为了使用RocksDB，有写一个文件系统？</p>
+<ol>
+<li>POSIX文件系统作为通用的文件系统，其很多功能对于RocksDB来说并不是必须的，为了进一步提升RocksDB的性能，RocksDB的场景量身定制一套本地文件系统，BlueFS也就应运而</li>
+<li>BlueRocksEnv封装文件系统的抽象接</li>
+</ol>
+<h4 id="文件系统磁盘空间管理和缓存管理">文件系统磁盘空间管理和缓存管理</h4>
+<ol>
+<li>失去默认文件系统支持，要一个磁盘的空间管理系统，Bluestore采用Allocator进行裸设备的空间管理，目前支持StupidAllocator和BitmapAllocator两种方式；</li>
+<li>BlueStore 实现为用户态并通过 DirectIO 直接访问裸盘，因此不实用 kernel 提供的 page cache，为了提升读的性能，需要自行管理Cache。</li>
+</ol>
+<p><strong>聪明你可能你会疑问</strong> ：</p>
+<ol>
+<li>为了规避一个问题，出现更多问题，我复习基本Direct I/O 是啥吧？</li>
+</ol>
+<h4 id="rocksdb-键值存储元数据">​​RocksDB 键值存储元数据​​：</h4>
+<p>​​1. 慢速层（Block）​​：存储对象数据，通常使用 HDD。
+​​2. 高速层（DB）​​：存储 RocksDB 的 SST 文件，通常使用 SSD。
+​​3. 超高速层（WAL）​​：存储 RocksDB 日志，通常使用 NVMe</p>
+<p>BlueStore是基于RocksDB和BlockDevice实现的ceph的对象存储</p>
+<h3 id="四技术的底层原理和关键实现">四、技术的底层原理和关键实现</h3>
+<h4 id="41-先测试在了解">4.1 先测试，在了解</h4>
+<p>目的：假设你需要对BlueStore优化，必须了解 IO过程是什么</p>
+<h5 id="测试-方法1测试你的磁盘">测试 方法1：测试你的磁盘</h5>
+<h5 id="fio测试nvme-ssd裸盘的性能并观察iostat状态">FIO测试NVMe SSD裸盘的性能,并观察iostat状态</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">fio</span> <span class="o">-</span><span class="nx">name</span><span class="o">=</span><span class="nx">iouring_test</span> 
+<span class="o">-</span><span class="nx">filename</span><span class="o">=</span><span class="err">/mnt/vdd/testfile </span>
+<span class="o">-</span><span class="nx">iodepth</span><span class="o">=</span><span class="mi">32</span> <span class="c1">//I/O 引擎若使用异步模式，保持队列深度
+</span><span class="c1"></span><span class="o">-</span><span class="nx">thread</span> 
+<span class="o">-</span><span class="nx">rw</span><span class="o">=</span><span class="nx">randread</span> 
+<span class="c1">//定义 IO 类型。
+</span><span class="c1">//随机读 randread、
+</span><span class="c1">//随机写 randwrite、顺序读 read、顺序写 write、顺序读写 
+</span><span class="c1">//rw readwrite ，随机混合读写 randrw
+</span><span class="c1"></span>
+<span class="o">-</span><span class="nx">ioengine</span><span class="o">=</span><span class="nx">io_uring</span> <span class="c1">//IO 引擎。同步模式psync、异步模式io_uring
+</span><span class="c1"></span><span class="o">-</span><span class="nx">sqthread_poll</span><span class="o">=</span><span class="mi">1</span> 
+
+<span class="o">-</span><span class="nx">direct</span><span class="o">=</span><span class="mi">1</span>  
+<span class="c1">//是否使用 direct io，测试过程不使用OS 自带的buffer，使测试磁盘的结果更真实 
+</span><span class="c1">//direct io，跳过缓存，直接读写SSD
+</span><span class="c1"></span>
+
+<span class="o">-</span><span class="nx">bs</span><span class="o">=</span><span class="mi">4</span><span class="nx">k</span>  <span class="c1">//IO 的块大小。默认 4k
+</span><span class="c1"></span><span class="o">-</span><span class="nx">size</span><span class="o">=</span><span class="mi">10</span><span class="nx">G</span> 
+<span class="o">-</span><span class="nx">numjobs</span><span class="o">=</span><span class="mi">1</span>  <span class="c1">//thread number
+</span><span class="c1"></span><span class="o">-</span><span class="nx">runtime</span><span class="o">=</span><span class="mi">120</span>  <span class="nx">告诉fio在指定的时间段后终止处理</span><span class="err">。</span>
+<span class="o">-</span><span class="nx">group_reporting</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试结果：</p>
+<ol>
+<li>32 io_uring  iops： qps：80w 完全发挥NVMe特性</li>
+<li>fio的numjob,iodepth提高NVMe SSD的性能.</li>
+</ol>
+<h4 id="测试-方法2--测试您的-ceph-集群">测试 方法2  测试您的 Ceph 集群</h4>
+<p>推荐的基准测试工具</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">1. fio -ioengine<span class="o">=</span>rbd -direct<span class="o">=</span><span class="m">1</span> -name<span class="o">=</span><span class="nb">test</span> -bs<span class="o">=</span>4M -iodepth<span class="o">=</span><span class="m">16</span> -rw<span class="o">=</span>write -pool<span class="o">=</span>rpool_hdd -runtime<span class="o">=</span><span class="m">60</span> -rbdname<span class="o">=</span>testimg
+2. fio -ioengine<span class="o">=</span>rbd -direct<span class="o">=</span><span class="m">1</span> -name<span class="o">=</span><span class="nb">test</span> -bs<span class="o">=</span>4k -iodepth<span class="o">=</span><span class="m">1</span> -rw<span class="o">=</span>randwrite -pool<span class="o">=</span>rpool_hdd -runtime<span class="o">=</span><span class="m">60</span> -rbdname<span class="o">=</span>testimg
+3. fio -ioengine<span class="o">=</span>rbd -direct<span class="o">=</span><span class="m">1</span> -name<span class="o">=</span><span class="nb">test</span> -bs<span class="o">=</span>4k -iodepth<span class="o">=</span><span class="m">128</span> -rw<span class="o">=</span>randwrite -pool<span class="o">=</span>rpool_hdd -runtime<span class="o">=</span><span class="m">60</span> -rbdname<span class="o">=</span>testimg
+
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>测试方法1 绕过文件系统，读NVMe_ ssd进行fio的读盘操作 iops 10w-80w</p>
+</blockquote>
+<p><!-- raw HTML omitted --> 针对测试CEPH集群的性能时，nvme ssd的读写iops总量不超过4w+    why?<!-- raw HTML omitted --></p>
+<h4 id="方法1-和方法2为何差距这么大">方法1 和方法2为何差距这么大</h4>
+<p>首先的青铜猜想是：</p>
+<ul>
+<li>在 Ceph 在 HDD 上并不慢：</li>
+<li>Bluestore 的理论单线程随机写入性能是驱动器 IOPS 的 66%（2/3），</li>
+<li>Ceph 的线性读写速度并不慢</li>
+<li>当你用 SSD 替换 HDD 并使用快速网络时，Ceph 的速度应该会几乎一样快,天真了 ❎</li>
+<li>Ceph 都很难实现低于 0.5 毫秒的随机读取延迟和低于 1 毫秒的随机写入延迟。[</li>
+<li>单线程下，这意味着随机读取 IOPS 和随机写入 IOPS 分别只有 2000 和 1000，即使能达到这个结果[0.5-1毫秒 一个请求，一个秒多少个？]</li>
+<li>Ceph &ldquo;软件栈&quot;引入了额外的 I/O 打包、网络传输与协议层延迟，使得 OSD 在压力下无法压满 NVMe，</li>
+<li><code>fio</code> 只是本地落盘，时延极小，因此能将 SSD 压。</li>
+</ul>
+<p>大师理解的猜想
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250428111642.png" alt="image.png"></p>
+<blockquote>
+<p>Ceph OSD 多层软件栈开销</p>
+</blockquote>
+<ul>
+<li>Ceph 默认在 BlueStore 层使用 RocksDB 存储元数据，写请求要先进入 WAL，再写入 MemTable，后台异步 Compaction 会带来 100–300 µs 级别的额外延迟</li>
+<li><strong>RADOS &amp; PG 流程</strong>：每次写操作需要通过 RADOS 协议，将数据发送到 Primary OSD 并复制到 Secondary OSD 后才确认，网络 RTT 累加典型在 0.1–0.5 ms 范围，吞吐受限</li>
+<li><strong>TCP/IP vs RDMA</strong>：Ceph 原生使用 Kernel TCP/IP，产生 system CPU、iowait 和软中断开销；采用 RDMA（iWARP/RoCE）可减少复制延迟并降低 CPU 占用，使 4K 随机写 IOPS 提升 17%–</li>
+<li>NUMA 与 CPU 亲和</li>
+</ul>
+<h4 id="42-事务特性--和延迟统计">4.2 事务特性  和延迟统计</h4>
+<ul>
+<li><code>BlueStore</code>可以理解为一个支持<code>ACID</code>事物型的 本地日志文件系统。</li>
+<li>所有的读写都是以Transaction进行。</li>
+<li>BlueStore通过状态机的方式控制整个IO流程。</li>
+<li>queue_transactions接口 向 BlueStore 提交 事务组完成一系列写请
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250428125445.png" alt="iBlueStore写状态机"></li>
+</ul>
+<h6 id="新手视角">新手视角</h6>
+<p>基本流程</p>
+<ul>
+<li><strong>准备（Prepare）</strong>：在内存中组装本次要执行的写入与元数据操作，事务尚未落盘。</li>
+<li><strong>编码（Encode）</strong>：将内存中的操作打包并转化为块设备可识别的 I/O 请求，包括预写日志（WAL）记录或直接写入命令。</li>
+<li><strong>提交（Submit）</strong>：通过同步或异步 I/O 接口，将事务操作写入底层存储设备。</li>
+<li><strong>确认（Commit）</strong>：等待 I/O 完成后，标记事务已持久化，确保断电或崩溃时数据不丢失。 [</li>
+<li><strong>应用（Apply）</strong>：把已提交的变更应用到内存中的索引或缓存，更新对象元数据
+write transaction that Ceph will apply atomically
+关注重点</li>
+<li><strong>原子性与持久性</strong>：只要事务完成，用户无需关心具体底层细节；</li>
+</ul>
+<h4 id="大师视角">大师视角</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">get_state_name</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">switch</span> <span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">case</span> <span class="nl">STATE_PREPARE</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;prepare&#34;</span><span class="p">;</span> 
+
+<span class="c1">//主要工作：
+</span><span class="c1">//该阶段主要是IO前的准备工作
+</span><span class="c1">//这个阶段会调用`_txc_add_transaction`将OSD层面的事物转换为BlueStore层面的事物
+</span><span class="c1"></span>
+<span class="c1">//延迟指标：
+</span><span class="c1">//l_bluestore_state_prepare_lat，从进入状态机到prepare阶段完成，
+</span><span class="c1"></span>
+<span class="k">case</span> <span class="nl">STATE_AIO_WAIT</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;aio_wait&#34;</span><span class="p">;</span>
+<span class="c1">//主要工作：
+</span><span class="c1">//该阶段等待aio的完成
+</span><span class="c1">//aio完成后在回调函数中将事务状态设置为STATE_IO_DONE
+</span><span class="c1"></span>
+<span class="c1">//延迟指标：
+</span><span class="c1">//l_bluestore_state_aio_wait_lat，从prepare阶段完成开始到AIO完成，
+</span><span class="c1">//平均延迟受限于设备，SSD 0.03ms左右。
+</span><span class="c1"></span>
+<span class="k">case</span> <span class="nl">STATE_IO_DONE</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;io_done&#34;</span><span class="p">;</span>
+
+<span class="c1">//主要工作：
+</span><span class="c1">//该阶段完对IO进行保序，保证kv事务的顺序性。
+</span><span class="c1">//按顺序设置事务状态为STATE_KV_QUEUED，将事务放入kv_queue
+</span><span class="c1"></span>
+<span class="c1">//通知kv_sync_thread进行,去同步IO和元数据
+</span><span class="c1">//kv_sync_thread 线程调用 db-&gt;submit_transaction 将批量更新写入 RocksDB
+</span><span class="c1">//IO保序可能会block。
+</span><span class="c1"></span>
+<span class="c1">//延迟指标：
+</span><span class="c1">//l_bluestore_state_io_done_lat，
+</span><span class="c1">//平均延迟在0.004ms，通常很小主要耗在对SimpleWrite的IO保序处理上。
+</span><span class="c1">//下个阶段：STATE_KV_QUEUED阶段
+</span><span class="c1"></span>
+
+<span class="k">case</span> <span class="nl">STATE_KV_QUEUED</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;kv_queued&#34;</span><span class="p">;</span>
+<span class="c1">//主要工作：
+</span><span class="c1">//1 该阶段主要deal kv_sync_thread线程中把aio的元数据写入kv数据库
+</span><span class="c1">//2 将状态设置为STATE_KV_SUBMITTED。
+</span><span class="c1">//3 然后将事务放入kv_committing_to_finalize队列，并通知_kv_finalize_thread线程处理
+</span><span class="c1"></span>
+<span class="c1">//延迟指标：
+</span><span class="c1">//l_bluestore_state_kv_queued_lat，
+</span><span class="c1"></span><span class="k">case</span> <span class="nl">STATE_KV_COMMITTING</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;kv_committing&#34;</span><span class="p">;</span>
+
+<span class="c1">//主要工作：等待kv元数据和IO数据的Sync完成，回调finisher线程
+</span><span class="c1">//该阶段主要在 kv_finalize_thread线程中将状态设置为STATE_KV_DONE
+</span><span class="c1"></span>	<span class="c1">//并将回调函数放入finisher队列，在finisher线程中给客户端返回应答
+</span><span class="c1"></span>
+<span class="c1">//延迟指标：
+</span><span class="c1">//l_bluestore_state_kv_done_lat
+</span><span class="c1"></span>
+<span class="k">case</span> <span class="nl">STATE_KV_DONE</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;kv_done&#34;</span><span class="p">;</span>
+
+<span class="c1">//主要工作
+</span><span class="c1">//如果没有延迟IO，则直接将状态设置为STATE_FINISHING；
+</span><span class="c1">//如果有延时IO，则将状态设置为STATE_DEFERRED_QUEUED
+</span><span class="c1"></span>
+<span class="k">case</span> <span class="nl">STATE_WAL_QUEUED</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;wal_queued&#34;</span><span class="p">;</span>
+
+<span class="k">case</span> <span class="nl">STATE_WAL_APPLYING</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;wal_applying&#34;</span><span class="p">;</span>
+
+<span class="k">case</span> <span class="nl">STATE_WAL_AIO_WAIT</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;wal_aio_wait&#34;</span><span class="p">;</span>
+
+<span class="k">case</span> <span class="nl">STATE_WAL_CLEANUP</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;wal_cleanup&#34;</span><span class="p">;</span>
+
+<span class="k">case</span> <span class="nl">STATE_WAL_DONE</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;wal_done&#34;</span><span class="p">;</span>
+
+<span class="k">case</span> <span class="nl">STATE_FINISHING</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;finishing&#34;</span><span class="p">;</span>
+
+<span class="k">case</span> <span class="nl">STATE_DONE</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#34;done&#34;</span><span class="p">;</span>
+
+<span class="c1">//延迟统计
+</span><span class="c1"></span><span class="k">enum</span> <span class="p">{</span>
+
+ <span class="n">l_bluestore_state_prepare_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_aio_wait_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_io_done_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_kv_queued_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_kv_committing_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_kv_done_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_wal_queued_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_wal_applying_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_wal_aio_wait_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_wal_cleanup_lat</span><span class="p">,</span>
+
+ <span class="n">l_bluestore_state_finishing_lat</span><span class="p">,</span>
+
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="技术点1线程队列">技术点1：线程+队列</h4>
+<ul>
+<li>
+<p>线程+队列是BlueStore事物状态机的重要组成部分</p>
+</li>
+<li>
+<p>aio_thread线程：属于KernelDevice模块的，主要作用写物理磁盘 。</p>
+</li>
+<li>
+<p>kv_sync_thread：更新元数据k/v，这些必须按顺序操作。BlueStore::_kv_sync_thread</p>
+</li>
+<li>
+<p>kv_finalize_thread：BlueStore::_kv_finalize_thread()，设置状态为STATE_KV_DONE</p>
+</li>
+</ul>
+<h4 id="技术点2保证io的顺序性以及并发性">技术点2：保证IO的顺序性以及并发性</h4>
+<ul>
+<li>因为BlueStore使用异步IO，<strong>后提交的IO可能比早提交的IO完成的早，所以更要保证IO的顺序</strong></li>
+</ul>
+<h3 id="42-bluestore-io流程">4.2 BlueStore IO流程</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250428131729.png" alt="BlueStore IO流程"></p>
+<h5 id="bluestore-io流程simple-write">BlueStore IO流程：Simple Write</h5>
+<ul>
+<li>对于simple write场景，先把数据写入新的block，然后把元数据写入k/v数据库中</li>
+<li>写新block状态转换：STATE_PREPARE -&gt; STATE_AIO_WAIT -&gt; STATE_IO_DONE -&gt; STATE_KV_QUEUED</li>
+<li>元数据写k/v数据库状态转换：STATE_KV_QUEUED -&gt; STATE_KV_SUBMITTED -&gt; STATE_KV_DONE -&gt; STATE_FINISHING -&gt; STATE_DONE</li>
+</ul>
+<p>在处理simple-write时，
+需要考虑offset、length是否对齐到block_size(4KB)以进行补零对齐的操作。</p>
+<h6 id="bluestore-io流程deferred-write">BlueStore IO流程：Deferred Write</h6>
+<p><img src="" alt="Deferred Write">(<a href="https://blog.wjin.org/assets/img/post/ceph_bluestore_deferred_write.png">https://blog.wjin.org/assets/img/post/ceph_bluestore_deferred_write.png</a>)</p>
+<ul>
+<li>对于deferred write场景，延迟IO数据封装在k/v事务中，</li>
+<li>写入kv数据库后给客户端返回应答，然后在后台执行延迟IO数据的写操作。</li>
+</ul>
+<p>写k/v日志:</p>
+<blockquote>
+<p>STATE_PREPARE -&gt; STATE_IO_DONE -&gt; STATE_KV_QUEUED -&gt; STATE_KV_SUBMITTED -&gt; STATE_KV_DONE -&gt; STATE_DEFERRED_QUEUE</p>
+</blockquote>
+<p>写数据:</p>
+<blockquote>
+<p>STATE_DEFERRED_QUEUE -&gt; STATE_DEFERRED_CLEANUP -&gt; STATE_FINISHING -&gt; STATE_DONE</p>
+</blockquote>
+<h4 id="主要步骤延迟写入的基本流程">主要步骤：延迟写入的基本流程:</h4>
+<ol>
+<li>
+<p>当写入请求到来时,BlueStore 首先将数据写入 KV 数据库(RocksDB),并立即返回成功给客户端</p>
+</li>
+<li>
+<p>实际的数据写入被延迟到后台处理,主要涉及以下几个关键数据结构:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>bluestore_deferred_op_t: 封装单个延迟写操作</p>
+</li>
+<li>
+<p>bluestore_deferred_transaction_t: 包含多个延迟写操作的事务</p>
+</li>
+<li>
+<p>DeferredBatch: 批量处理多个延迟写事务，将多个写操作合并处理</p>
+</li>
+<li>
+<p>OpSequencer:  确保写操作按正确顺序执行</p>
+</li>
+</ul>
+<p>慢点集中在哪里？</p>
+<ul>
+<li>ceph daemon osd.8 perf dump | egrep &ldquo;wait|lat&rdquo;</li>
+</ul>
+<p>综合来看，<strong>RocksDB 同步提交（阶段4）</strong> 和 <strong>AIO 等待（阶段2）</strong> 是占比最高的两部分，
+共计可超过 80% 的</p>
+<p><strong>64K随机写入（QD=16场景）</strong></p>
+<ul>
+<li><strong>总延迟</strong>：2.268ms（其中Store层占比达93%）
+<ul>
+<li><strong>Store层细分</strong>：
+<ul>
+<li><strong>state_aio_wait_lat</strong>：0.797ms（较QD=1增长14.7倍）</li>
+<li><strong>state_kv_queued_lat</strong>：0.544ms（元数据队列等待，增长107倍）</li>
+<li><strong>state_kv_commiting_lat</strong>：0.689ms（RocksDB提交耗时，增长9.5倍）</li>
+</ul>
+</li>
+<li><strong>瓶颈根源</strong>：
+<ol>
+<li><strong>单线程设计</strong>：<code>kv_sync_thread</code>需串行处理元数据提交，导致高QD下队列堆积（如<code>kv_queued_lat</code>从0.005ms升至0.544ms</li>
+<li><strong>异步I/O竞争</strong>：Linux AIO的<code>io_submit</code>在高并发时需频繁上下文切换，占用CPU核心资源</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="小结三步走">小结（三步走）</h1>
+<ol>
+<li>FIO压测 ：即便在读客户端压力足够的情况下 软 件层不能给到下层足够的I/O压力，不能利用起NVME强大的硬件并发性能。工具：fio,iostat,vmstat,iotop</li>
+<li>读请求各阶段耗时分析 降低延迟。工具：ceph daemon osd.10  perf dump/perf /gdbpmp，慢的原因在哪里能说清楚吗？<strong>性能优化：上千提升上万，过10万是不可能的？为什么</strong></li>
+<li>如何证明：Ceph &ldquo;软件栈&quot;引入了额外的 I/O 打包、网络传输与协议层延迟，使得 OSD 在压力下无法压满 NVMe。</li>
+</ol>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮，
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+<h2 id="链接我">链接我</h2>
+<p><strong>刚刚好，是最难得的美好</strong></p>
+<p>我就在这里 ，我刚刚好。</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="image.png"></p>
+<h3 id="我正在做的事情是">我正在做的事情是</h3>
+<h4 id="1-目标拿百万年薪"><strong>1. 目标：拿百万年薪</strong></h4>
+<ul>
+<li>想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+</ul>
+<h4 id="2-现状缺乏实战渴望提升动手能力"><strong>2. 现状：缺乏实战，渴望提升动手能力</strong></h4>
+<ul>
+<li>
+<p>公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</p>
+</li>
+<li>
+<p>想通过阅读优秀的源码，提高代码能力，从&quot;不会写&quot;到&quot;敢写&rdquo;，提升C++编程自信。</p>
+</li>
+<li>
+<p>需要掌握高效学习和实践的方法，弥补缺乏实战经验的短板。</p>
+</li>
+</ul>
+<h4 id="3-价值成为优秀完成任务成为团队公司都认可的核心骨干">3. 价值：成为优秀完成任务，成为团队、公司都认可的核心骨干。</h4>
+<p><strong>优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</strong></p>
+<p><strong>错误示范</strong>：</p>
+<ul>
+<li>不少同学工作很忙，天天加班，做了很多公司的事情。
+但是 不是本团队事情，不是本部门事情，领导不认可，绩效不高</li>
+<li>做低优先级的任务，绩效不高，随时被优化</li>
+</ul>
+<h2 id="参考">参考</h2>
+<h6 id="1-file-systems-unfit-as-distributed-storage-backends-lessons-from-10-years-of-ceph-evolution">【1】 File Systems Unfit as Distributed Storage Backends: Lessons from 10 Years of Ceph Evolution</h6>
+<ul>
+<li>文件系统作为分布式存储后端：从 Ceph 十年进化中汲 取的教训</li>
+<li><a href="https://dl.acm.org/doi/pdf/10.1145/3341301.3359656">https://dl.acm.org/doi/pdf/10.1145/3341301.3359656</a></li>
+</ul>
+<h6 id="2ceph-osd-crimson-next-generation-ceph-osd-for-multi-core-scalabilit">【2】Ceph OSD Crimson: Next-generation Ceph OSD for Multi-core Scalabilit</h6>
+<ul>
+<li><a href="https://ceph.io/en/news/blog/2023/crimson-multi-core-scalability/">https://ceph.io/en/news/blog/2023/crimson-multi-core-scalability/</a></li>
+<li>ceph-osd-cpu-scaling</li>
+<li><a href="https://ceph.io/en/news/crimson/">https://ceph.io/en/news/crimson/</a></li>
+<li><a href="https://seastar.io/">https://seastar.io/</a></li>
+</ul>
+<h5 id="5--io_uring-so-fast-its-scary---paul-moore-microsoft">[5]  io_uring: So Fast. It&rsquo;s Scary. - Paul Moore, Microsoft</h5>
+<ul>
+<li>IO uring gets Zero Copy network operations</li>
+<li>随着存储和网络设备性能越来越高，用户发现kernel那厚重的存储栈和网络栈效率越发低下，分分推出kernel bypass技术，但这类技术有一个通病，就是接口设计不统一，无法兼容，所以业界迫切期待内核推出一套成熟高效通用的异步编程框架，来缓解厚重模块带来的影响</li>
+<li>io_uring只通过提供3个系统调用接口，就统一了网络和存储异步IO编程框架，使得上层开发人员无需过多关注其接口的可扩展性</li>
+<li>深入理解io_uring（一）设计初衷</li>
+<li>深入理解io_uring（二）设计原理</li>
+<li>strace -c dd if=/dev/zero of=test bs=1M count=1000</li>
+<li>深入理解io_uring（七）零拷贝发送网络请求</li>
+<li>深入理解io_uring（三）一个完整请求</li>
+</ul>
+<h5 id="6-understanding-bluestore-cephs-new-storage-backend---tim-serong-suse">[6] Understanding BlueStore, Ceph&rsquo;s New Storage Backend - Tim Serong, SUSE</h5>
+<ul>
+<li><a href="https://yourcmc.ru/wiki/index.php?mobileaction=toggle_view_desktop&amp;title=Ceph_performance#Why_is_it_so_slow">https://yourcmc.ru/wiki/index.php?mobileaction=toggle_view_desktop&amp;title=Ceph_performance#Why_is_it_so_slow</a></li>
+<li>2018-May-29 :: Ceph Code Walkthrough: BlueStore part 1 [视频 ]</li>
+<li>Ceph BlueStore的状态机</li>
+<li>Block I/O Layer Tracing using blktrace</li>
+<li>你可以通过 iostat、blktrace 工具分析瓶颈是在应用层还是内核层、硬件层。其中 blktrace 是 blkio 层的磁盘 I/O 分析利器，它可记录 IO 进入通用块层、IO 请求生成插入请求队列、IO 请求分发到设备驱动、设备驱动处理完成这一系列操作的时间，帮助你发现磁盘 I/O 瓶颈发生的阶段</li>
+<li>BlueStore IO 流程代码梳理 [看完 ]</li>
+<li>BlueStore源码分析之事物状态机</li>
+<li><a href="https://blog.wjin.org/categories.html">https://blog.wjin.org/categories.html</a></li>
+<li>Ceph性能瓶颈分析与优化一部曲：rados(mix)</li>
+</ul>
+<h5 id="7-httpscephioennewsblog2024ceph-a-journey-to-1tibps">【7】 <a href="https://ceph.io/en/news/blog/2024/ceph-a-journey-to-1tibps">https://ceph.io/en/news/blog/2024/ceph-a-journey-to-1tibps</a></h5>
+<ul>
+<li>希望将其基于 HDD 的 Ceph 集群迁移到 10PB 的 NVMe</li>
+<li>客户的网络配置设计精良，68 node/memory:192g/amd/network:100GB<em>2/ disk:nvme</em>10</li>
+<li>FIO  4MB 和 4KB IO 测试，每次持续 300 秒 [自己测试上层业务功能1个月，根本没有工具和全部，自己感觉，不断测试浪费大量时间，老板不认，这是自己测试的。期望 写完代码完成，根本不后续]</li>
+<li>Iperf Iperf 网络测试显示每个节点的速率接近 200Gb/s</li>
+<li>一个 Ceph 结果也远低于我们的期望，始研究单节点，甚至单 OSD 配置</li>
+<li>最初的单 OSD 测试在处理大量读写操作时表现非常出色</li>
+<li>一旦运行 8-OSD 测试，我们就会发现性能下降</li>
+<li>只要不引入多 OSD 测试，性能就能保持较高水平</li>
+<li>Why would running an 8 OSD test cause the kernel to start blocking in io_submit during future single OSD tests</li>
+<li>一个多星期以来，我们尝试了各种方法，包括 BIOS 设置、NVMe 多路径、NVMe 底层调试、更改内核/Ubuntu 版本，以及检查我们能想到的每一个内核、操作系统和 Ceph 设置。但这些方法都无法完全解决问题。</li>
+<li>我们开始让硬件供应商参与进来。最终发现这完全没有必要。我们只做了一个小修复和两个大修复，事情就回到了正轨</li>
+<li>用户已通过禁用C-State获得10-20%性能提升，但未达预期目标。C-state是intel CPU处于空闲时的一种状态，其核心逻辑是：当CPU无任务处理时，自动进入不同深度的休眠状态（C1、C2、C3等），从而在性能和功耗之间实现动态平衡，，禁用C-State后性能仍不，- 使用更高主频的CPU（如AMD EPYC 7xx3系列）以提升单线程处理能力。</li>
+<li><strong>Ceph的延迟敏感性</strong>：Ceph的分布式存储操作（如元数据处理、网络协议栈、RocksDB写入）依赖高频率的CPU响应。若频繁触发C-State切换，累积的延迟会导致I/O处理效率下降，尤其在小文件随机读写（4K IOPS）场景下更为明显。</li>
+<li>raw_spin_lock_irqsave，禁用IOMMU通过消除自旋锁争用释放了大块I/O的潜力</li>
+<li>在更新 IOMMU 映射时，内核中有大量时间用于争用自旋锁。他在内核中禁用了 IOMMU，在 8 节点测试中立即看到了性能的大幅提升。我们多次重复这些测试，并多次看到 4MB 读写性能的显著提升。客户值得一提。然而，4KB 随机写入仍然存在问题</li>
+<li>如果未使用正确的 cmake 标志和编译器优化进行编译，Ceph 可能会非常慢。</li>
+<li>Ceph can be very slow when not properly compiled with TCMalloc support.</li>
+<li>TCMalloc通过<strong>线程本地缓存</strong>和<strong>细粒度内存管理</strong>大幅降低多线程环境下的锁竞争，尤其在Ceph的高并发I/O场景中</li>
+<li>启用TCMalloc后，4KB随机写入IOPS从30K提升至42K（+40%），尾延迟降低80%</li>
+<li><strong>禁用调试符号</strong>：Debug模式（-O0）会导致性能下降50%以上，仅限开发环境使用</li>
+<li>
+<ol>
+<li>disables c-states,获得10-20%性能提升</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>disabled IOMMU</li>
+</ol>
+</li>
+<li>Ceph can be very slow when not compiled with the right cmake flags and compiler optimizations</li>
+<li>32 nodes 31 client nodes</li>
+<li>630 OSD</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-27 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/CEPH/">CEPH</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/python/01_how_to_install_python/">
+            <span class="next-text nav-default">Cursor 实战技巧：如何快速配置 Python 环境</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

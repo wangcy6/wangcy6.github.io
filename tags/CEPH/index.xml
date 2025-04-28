@@ -6,7 +6,16 @@
     <description>Recent content in CEPH on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 28 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/CEPH/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/CEPH/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入理解 新一代存储引擎BlueStore,需四步</title>
+      <link>https://wangcy6.github.io/post/storage/2025/2025-04-27-what-is-BlueStore/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2025/2025-04-27-what-is-BlueStore/</guid>
+      <description>大家好我是小义同学，这是大厂面试拆解——项目实战系列的第5篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 深入理解自己项目 这个才是</description>
+    </item>
+    
     <item>
       <title>源码解析：ceph数据读写</title>
       <link>https://wangcy6.github.io/post/storage/05-2024-3-08-ceph-read/</link>
@@ -35,6 +44,15 @@
     </item>
     
     <item>
+      <title>终于搞懂了如何做性能优化</title>
+      <link>https://wangcy6.github.io/post/storage/2025/01-ceph-feature-getfattr-1/</link>
+      <pubDate>Thu, 28 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2025/01-ceph-feature-getfattr-1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>日拱一卒：ceph-mds 业务操作</title>
       <link>https://wangcy6.github.io/post/storage/3_ceph_msd/</link>
       <pubDate>Fri, 02 Jun 2023 00:00:00 +0000</pubDate>
@@ -50,15 +68,6 @@
       
       <guid>https://wangcy6.github.io/post/storage/3_ceph_help/</guid>
       <description>http://localhost:1313/post/storage/2_ceph_mon/ 服务平滑重启 任何一个成熟的项目，必须要提供出接口，就像探针一样，可以让我们探查进程内部的运行情况，进程不能是一个黑盒子。对于ceph而言，</description>
-    </item>
-    
-    <item>
-      <title>日拱一卒：操作手册</title>
-      <link>https://wangcy6.github.io/post/storage/4_icfs_help/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/storage/4_icfs_help/</guid>
-      <description>系统罐装 1. Linux 如何查看网络带宽是千兆还是万兆 1 2 ethtool ens160 Speed: 10000Mb/s 2 .CentOS 8 网络管理：使用 nmcli 和 nmtui 进行高效配置 3, ssh 设置远程登录 /etc/ssh/sshd_config cifs [mds减少mds 进程个数]</description>
     </item>
     
   </channel>

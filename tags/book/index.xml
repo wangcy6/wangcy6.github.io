@@ -36,11 +36,29 @@
     
     <item>
       <title>shell从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/liunx/shell%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8-1/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/shell%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8-1/</guid>
+      <description>1. shell 命令获取随机获取 2位的整数? 方法1：使用内置变量 $RANDOM 1 echo $(( RANDOM % 90 + 10 )) 原理： $RANDOM 生成一个0到32767之间的随机数，% 90 得到0到89的余数，</description>
+    </item>
+    
+    <item>
+      <title>shell从青铜到王者</title>
       <link>https://wangcy6.github.io/post/liunx/shell%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8/</link>
       <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/liunx/shell%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8/</guid>
       <description>1. shell 命令获取随机获取 2位的整数? 方法1：使用内置变量 $RANDOM 1 echo $(( RANDOM % 90 + 10 )) 原理： $RANDOM 生成一个0到32767之间的随机数，% 90 得到0到89的余数，</description>
+    </item>
+    
+    <item>
+      <title>从三万英尺介绍:文件系统Ceph架构</title>
+      <link>https://wangcy6.github.io/post/liunx/2025/11what_is_Ceph_temp/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/liunx/2025/11what_is_Ceph_temp/</guid>
+      <description>把面试官当陪练，在找工作中才会越战越勇 把面试官当陪练，在找工作中才会越战越勇 大家好我是小义同学，这是大厂面试拆解——项目实战系列的第3篇文章</description>
     </item>
     
     <item>
@@ -59,6 +77,15 @@
       
       <guid>https://wangcy6.github.io/post/liunx/2025/2025-03-22_3fs_2/</guid>
       <description>导读 从青铜到王者系列：深入浅出理解 DeepSeek 3FS（2） 我整理 大模型训练 在checkpoint时候对大的文件读写， 在批量查询的时候对小文件读写 目前 谷</description>
+    </item>
+    
+    <item>
+      <title>慢盘问题：从青铜到王者的处理思路</title>
+      <link>https://wangcy6.github.io/post/storage/2025/2025-04-25-slow-disk/</link>
+      <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2025/2025-04-25-slow-disk/</guid>
+      <description>大家好我是小义同学，这是大厂面试拆解——项目实战系列的第4篇文章， 知识地图：数据可靠性-磁盘亚健康处理 为了解决故障后数据一致性问题，数据需要</description>
     </item>
     
     <item>

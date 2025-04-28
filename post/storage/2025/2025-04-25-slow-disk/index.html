@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>慢盘问题：从青铜到王者的处理思路 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第4篇文章， 知识地图：数据可靠性-磁盘亚健康处理 为了解决故障后数据一致性问题，数据需要" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/2025/2025-04-25-slow-disk/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="慢盘问题：从青铜到王者的处理思路" />
+<meta property="og:description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第4篇文章， 知识地图：数据可靠性-磁盘亚健康处理 为了解决故障后数据一致性问题，数据需要" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/2025/2025-04-25-slow-disk/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-08-11T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-08-11T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="慢盘问题：从青铜到王者的处理思路">
+<meta itemprop="description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第4篇文章， 知识地图：数据可靠性-磁盘亚健康处理 为了解决故障后数据一致性问题，数据需要"><meta itemprop="datePublished" content="2023-08-11T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-08-11T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3954">
+<meta itemprop="keywords" content="book," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="慢盘问题：从青铜到王者的处理思路"/>
+<meta name="twitter:description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第4篇文章， 知识地图：数据可靠性-磁盘亚健康处理 为了解决故障后数据一致性问题，数据需要"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">慢盘问题：从青铜到王者的处理思路</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-08-11 00:00 </span>
+        
+          <span class="more-meta"> 约 3954 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#慢盘有什么危害">慢盘有什么危害</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#目前有哪些解决方案">目前有哪些解决方案</a>
+      <ul>
+        <li><a href="#方法1-一点不神奇直接用命令写shell脚本">方法1： 一点不神奇，直接用命令,写shell脚本</a></li>
+        <li><a href="#方法-2-本地磁盘云盘型组raid">方法 2： 本地磁盘（云盘）型组RAID</a></li>
+        <li><a href="#方法-3通过高可用集群让部分节点下线">方法 3：通过高可用集群，让部分节点下线</a></li>
+      </ul>
+    </li>
+    <li><a href="#别人怎么选择的">别人怎么选择的</a>
+      <ul>
+        <li><a href="#1--场景1bcache--用ssd代替内存作为hdd盘缓存">1.  场景1：Bcache&ndash;用SSD代替内存，作为HDD盘缓存</a></li>
+        <li><a href="#2-场景2去中心化架构ceph-盘坏--下线对应的存储服务">2. 场景2：去中心化架构Ceph ，盘坏&ndash;下线对应的存储服务。</a></li>
+        <li><a href="#3-google-gfs">3. Google GFS</a></li>
+        <li><a href="#4-数据库场景事后发现节点缩容">4. 数据库场景：事后发现，节点缩容。</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考资料">参考资料</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2023-08-11T00:00:00" title="August 11, 2023">August 11, 2023</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>大家好我是小义同学，这是<!-- raw HTML omitted -->大厂面试拆解——项目实战<!-- raw HTML omitted -->系列的第<!-- raw HTML omitted -->4<!-- raw HTML omitted -->篇文章，</p>
+<p>知识地图：数据可靠性-磁盘亚健康处理</p>
+<p>为了解决故障后数据一致性问题，数据需要持久化存储，
+（如何证明用户写入数据 和存储数据一致性的）</p>
+<p>我们视角先离开CAP，ACID,MQ，分布式这样概念。</p>
+<p>**这里假设单机，单机情况下遇到常见盲区（盲区定义别人知道，自己不知道）</p>
+<ol>
+<li>自己一直在用，一直在说，在工作总必然发生，但是系统都封装好了，根本不知道怎么回事。</li>
+<li>在生产环境偶尔出现，但是别人完全解决了，自己根本不知道这样情况。</li>
+</ol>
+<p>本文慢盘为例子，看看不同系统怎么处理。</p>
+<ol>
+<li>慢盘 危害,常见的解决方法？</li>
+</ol>
+<ul>
+<li>IO抖动，严重影响业务。</li>
+<li>IO hang 服务不可用，致命。</li>
+<li>iostat命令检测</li>
+<li>组RAID（业务保持不变）</li>
+<li>标记节点下线</li>
+</ul>
+<ol>
+<li>普通业务的产品是如何选择？</li>
+</ol>
+<ul>
+<li>硬件：组RAID</li>
+<li>Bcache&ndash;用SSD作为HDD盘缓存</li>
+<li>软件：慢盘检测 +标记线下。</li>
+</ul>
+<hr>
+<h2 id="慢盘有什么危害">慢盘有什么危害</h2>
+<h5 id="环境信息">环境信息：</h5>
+<table>
+<thead>
+<tr>
+<th><strong>机器配置</strong></th>
+<th><strong>详情</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>场景</td>
+<td>企业级服务器</td>
+</tr>
+<tr>
+<td><strong>CPU</strong></td>
+<td>Intel(R) Xeon(R) Gold 5218R @ 2.30GHz</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>192G（6 * 32G）</td>
+</tr>
+<tr>
+<td>网卡</td>
+<td>1 张 千兆 + 1张万兆</td>
+</tr>
+<tr>
+<td>磁盘</td>
+<td>HDD：36 个盘<!-- raw HTML omitted -->SSD： 2个 NVME</td>
+</tr>
+</tbody>
+</table>
+<h5 id="从os角度说对业务产生影响">从os角度说对业务产生影响</h5>
+<ol>
+<li>单个节点磁盘异常 场景下的IO抖动问题，影响业务.</li>
+<li>I/O hang:IO hang是指在系统运行过程中，因某些IO耗时过长而引起的系统不稳定甚至宕机。</li>
+<li>IO hang 发生在I/O 路径的不同层， 往往表现为进程进入不可中断睡眠（D态），系统整体 I/O 吞吐骤降或“卡死”。</li>
+</ol>
+<h2 id="目前有哪些解决方案">目前有哪些解决方案</h2>
+<h3 id="方法1-一点不神奇直接用命令写shell脚本">方法1： 一点不神奇，直接用命令,写shell脚本</h3>
+<p>青铜真实感受：</p>
+<ol>
+<li>36个盘 都上架到机柜了，我怎么知道那个盘有问题，放到我面前我也不知道，开始躲避。</li>
+<li>最大问题是什么，简单一个命令，老板不会指派我处理的，因为没有积累足够信任，客户很重要，必须信任人才可以。</li>
+<li>这是典型的，想的太多，不出活。多检查自己写脚本 这个认真仔细。其他就是冲冲冲等着解决问题呢。
+思路：</li>
+</ol>
+<blockquote>
+<ol>
+<li>写shell脚本，利用smartctl统计等评估磁盘健康状态，及时发现磁盘损坏,。</li>
+<li>无法提前预测磁盘故障，属于后知后觉要求</li>
+<li>不要看简单粗暴不<!-- raw HTML omitted -->从网络查询命令,手写命令,<!-- raw HTML omitted -->事故发生了,必须马上5分钟手写出来。就是命令，练出来，<!-- raw HTML omitted -->自己平时多手敲 手敲 手敲几次。变成肌肉记忆。shell的for循环 命令执行2个要点。<!-- raw HTML omitted --></li>
+</ol>
+</blockquote>
+<h5 id="smartctl命令">smartctl命令</h5>
+<p>是Linux下的一款用于监控和管理硬盘健康状态的工具</p>
+<p>用法：</p>
+<ol>
+<li>无检测云服务商主机的虚拟磁盘 例如 在 KVM 中 QEMU 虚拟出来的virtio 磁盘。</li>
+</ol>
+<p>扩展阅读</p>
+<ol>
+<li>KVM（Kernel-based Virtual Machine）是一种基于Linux内核的开源硬件虚拟化技术。它利用Linux内核的虚拟化模块，将物理服务器划分为多个虚拟机。</li>
+<li><strong>KVM虚拟化架构</strong>
+KVM虚拟化架构主要包括以下几个部分：
+<ul>
+<li><strong>KVM内核模块</strong>：负责虚拟CPU和内存的管理。</li>
+<li><strong>QEMU（Quick Emulator）</strong>：作为KVM的虚拟机监控程序，提供虚拟机的用户空间支持，模拟各种硬件设备。</li>
+<li><strong>Libvirt</strong>：管理虚拟机和虚拟化功能的工具，提供统一的API和命令行接口。</li>
+</ul>
+</li>
+</ol>
+<p>lsblk - list block devices</p>
+<h5 id="iostat-命令">iostat 命令</h5>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>r/s</th>
+<th>w/s</th>
+<th>r_await</th>
+<th>w_await</th>
+<th>await</th>
+<th>%util</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sda</td>
+<td>50.0</td>
+<td>20.0</td>
+<td>4.00</td>
+<td>2.50</td>
+<td>3.33</td>
+<td>30.0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>读请求</strong>：每秒 50 次，平均每次读耗时 4 ms。</li>
+<li><strong>写请求</strong>：每秒 20 次，平均每次写耗时 2.5 ms。</li>
+<li><strong>整体平均</strong>：综合读写后，每次 I/O 平均等待 3.33 ms。</li>
+<li><strong>设备利用率</strong>：30%，说明还有较多空闲带宽。</li>
+</ul>
+<p>关键指标：</p>
+<ol>
+<li>
+<p><strong>await</strong>: is the average time (in milliseconds) for I/O requests issued to the device to be served.</p>
+</li>
+<li>
+<p>它既包含了一个 IO 在 IO 软件栈中处理的时间，也包含了磁盘的处理时间。</p>
+</li>
+<li>
+<p>因此 await 冲高现象是 IO 抖动问题中比较典型的特征。</p>
+<p>r_await = （该周期内所有已完成读请求的等待时间总和）
+÷ （该周期内已完成的读请求总数）
+w_await = （该周期内所有已完成写请求的等待时间总和）
+÷ （该周期内已完成的写请求总数）</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>低值</strong>（通常 &lt; 5 ms）：说明磁盘响应迅速，I/O 子系统运行良好。</p>
+</li>
+<li>
+<p><strong>中等值</strong>（5–20 ms）：在机械盘上较为常见，或 SSD 在负载较高时可能出现。</p>
+</li>
+<li>
+<p><strong>高值</strong>（&gt; 20 ms）：可能代表磁盘瓶颈、排队积压，或下层（如 RAID 控制器、网络存储）出现延</p>
+<p>对于 HDD：
+每一秒执行一次 iostat 命令，await 超过 3s 为一次慢盘。</p>
+<p>对于 SSD：
+每一秒执行一次 iostat 命令，await 超过 1.5s 为一次慢</p>
+</li>
+</ul>
+<h3 id="方法-2-本地磁盘云盘型组raid">方法 2： 本地磁盘（云盘）型组RAID</h3>
+<p>青铜真实感受：</p>
+<ul>
+<li>我对软件很多副本，一致性协议，负载均衡，这个我还没搞明白你，远离RAID这个事情，<!-- raw HTML omitted -->对眼前问题不管不问，鸵鸟策略<!-- raw HTML omitted -->。</li>
+<li>没有大量生产环境实践操作，开始动手操作，<!-- raw HTML omitted -->做事方法完全不对 ，别人根本不是这样做的<!-- raw HTML omitted -->。</li>
+</ul>
+<p>王者视角：</p>
+<ul>
+<li><!-- raw HTML omitted -->不用写一行代码<!-- raw HTML omitted -->，购买磁盘 ，购买网卡，这不完成了，至于如何生产的 我不关心，有问题找厂家，前端业务完全感知不到“慢盘”对业务的影响，这样业务改造成本 ，双手赞成。</li>
+<li>我需要了解的什么软RAID，什么硬RAID，</li>
+<li>我需要了解RAID里奇偶校验&ndash;异或运算。</li>
+<li>与多副本相比，RAID组有什么提升，例如硬件寿命，读写性能 这些对比数据 这个才是我最关心的，</li>
+<li>多压测，给出最佳实践才是最重要的。本地RAID 绝对超过多副本垮节点一致性，拿出数据来，找老板要资源去。</li>
+</ul>
+<h4 id="什么是raid">什么是RAID</h4>
+<p>RAID是Redundant Array of Independent Disks（“独立磁盘冗余阵列”）的缩写。
+它是一种将多个硬盘相结合以存储数据的技术，是目前商用服务器常见的磁盘管理技术。</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250425122454.png" alt="RAID阵列类型"></p>
+<p>有人说  <strong>双重RAID是迄今为止对付“慢盘”效应最有效的办法。</strong></p>
+<ol>
+<li>硬件故障隔离，避免出现Ceph三副本 随机读写慢盘/满盘，情况出现。Ceph还真的就是这样设计的，因为Ceph没法保证新的对象是否落在空盘而不落在满盘，所以Ceph选择在有盘满了时，就拒绝服务.</li>
+<li><strong>在线</strong>替换更大容量的NVMe固态硬盘，缓存加速。</li>
+</ol>
+<h4 id="raid阵列类型">RAID阵列类型</h4>
+<ol>
+<li><strong>RAID 0</strong> ：设计的目标是为了提升读写性能单块盘的 N 倍，不具有冗余信息，任何一块磁盘损坏，整个 RAID 不可用</li>
+<li><strong>RAID 1</strong>：镜像(Mirroring)，为每份数据都提供一份或多分数据冗余,至少需要两个硬盘，只要其中一个硬盘运行正常。占用N倍空间</li>
+<li>RAID 1+0（RAID10）: RAID 1+0 由于兼具可靠性和好的性能，在商业应用中很广泛</li>
+<li>RAID 2 的设计目标就是在 RAID 0 级别的基础上，加入了海明纠错码，<!-- raw HTML omitted -->目前已经基本被淘汰<!-- raw HTML omitted -->了</li>
+<li>RAID 3 就是把数据按照<strong>字节</strong>分别存在不同的磁盘中，并且最后一个磁盘提冗余纠错。XOR 算法。但是却无法做到并发 I/O。</li>
+<li>RAID 4 是把数据按照<strong>分块</strong>分别存在不同的磁盘中，并且最后一个磁盘提供纠错冗余，RAID 4 面临淘汰</li>
+<li>RAID 5 是把数据块按照分块分别存在不同的磁盘中，并且冗余信息也会分块分布在多块磁盘中。
+RAID 5 可以理解为是 RAID 0 和 RAID 1 的折中方案。
+RAID 5 可以为系统提供数据安全保障，但保障程度要比镜像低而磁盘空间利用率比镜像高。****</li>
+<li>RAID 6 是把数据块按照分块分别存在不同的磁盘中，并且冗余信息为两份奇偶校验码，分布在多块磁盘中。坏掉一块盘，RAID 还能正常工作</li>
+<li>2个类型：软 RAID 和硬 RAID</li>
+</ol>
+<h3 id="方法-3通过高可用集群让部分节点下线">方法 3：通过高可用集群，让部分节点下线</h3>
+<h2 id="别人怎么选择的">别人怎么选择的</h2>
+<blockquote>
+<p>分布式存储的性能不是由最快的磁盘决定，而是由最慢的磁盘所决定,木桶效应.</p>
+</blockquote>
+<h3 id="1--场景1bcache--用ssd代替内存作为hdd盘缓存">1.  场景1：Bcache&ndash;用SSD代替内存，作为HDD盘缓存</h3>
+<p><strong>Bcache</strong>：</p>
+<blockquote>
+<p>Bcache is a Linux kernel block layer cache.
+It allows one or more fast disk drives such as flash-based solid state drives (SSDs) to act as a cache for one or more slower hard disk drives.</p>
+</blockquote>
+<p>场景：</p>
+<ul>
+<li>使用SSD盘在IO速度较慢的HDD盘上面做一层缓存，从而来提高HDD盘的IO速率</li>
+<li>bcache 执行的缓存操作在块设备级别进行.</li>
+<li>经常访问的热数据会缓存在固态硬盘中并直接返回给应用程序</li>
+</ul>
+<p>原理：</p>
+<ul>
+<li>缓存的实现方式是使用 SSD 来存储与执行的随机读写相关的数据，接近于零的寻道时间是 SSD 最显著的特性</li>
+<li>缓存写入操作支持回写和直写 （默认）两种策略</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>稳定 - 现已投入生产使用。</li>
+<li>单个缓存设备可用于缓存任意数量的后备设备</li>
+<li>从非正常关机中恢复 - 直到缓存与后备设备保持一致，写入才会完成（bcache 内部不区分正常关机和非正常关机）。</li>
+</ul>
+<h3 id="2-场景2去中心化架构ceph-盘坏--下线对应的存储服务">2. 场景2：去中心化架构Ceph ，盘坏&ndash;下线对应的存储服务。</h3>
+<p>去中心化架构以Ceph为代表</p>
+<p>其主要技术特征在于：</p>
+<ol>
+<li>业务数据切分为固定大小的数据块（如4MB大小的Object），</li>
+<li>通过伪随机CRUSH算法计算得出该数据块的位置。这个不需要元数据存储。</li>
+<li>尽可能将数据均匀分布在各个节点各个磁盘上。</li>
+</ol>
+<p>解决方式：那个盘故障，下线那个osd</p>
+<ol>
+<li>检测到盘故障</li>
+<li>通知mon下线osd</li>
+<li>osd准备下线</li>
+</ol>
+<h3 id="3-google-gfs">3. Google GFS</h3>
+<p>中心化架构以Google GFS 等分布式文件系统为代表
+其主要技术特征在于：</p>
+<ul>
+<li>采用中心化元数据服务器来保存和查询数据块的具体位置信息，</li>
+<li>而数据块由元数据服务器按照某种条带（Strip）算法或伪随机算法为数据块分配地址空间</li>
+</ul>
+<p>解决办法：</p>
+<ul>
+<li>我估计不是处理，本来运行廉价设备上。</li>
+</ul>
+<h3 id="4-数据库场景事后发现节点缩容">4. 数据库场景：事后发现，节点缩容。</h3>
+<p>问题描述： 一次SSD磁盘寿命耗尽导致的TiDB集群写入变慢问题处理</p>
+<p>背景：
+最近处理了一起由于 SSD 磁盘寿命耗尽导致的 xxx 集群写入变慢的问题，
+服务器磁盘是 SATA SSD、RAID 10。</p>
+<p>排除过程：</p>
+<ul>
+<li>iops 为0 ，也就是在一秒内，磁盘进行多少次 I/O 读写</li>
+<li>缩容操作</li>
+</ul>
+<h2 id="总结">总结</h2>
+<ul>
+<li>熟悉iostat -dxm  命令，看await指标</li>
+<li>了解io流程，每个io步骤到 io hang</li>
+<li>分布式存储的性能不是由最快的磁盘决定，而是由最慢的磁盘所决定</li>
+<li>本地：Bcache 和RAID方案</li>
+<li>分布式集群 高可用特性，支持节点缩容。</li>
+</ul>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“**点赞” 按钮，
+您的“点赞” 将是我最大的写作动力</p>
+<h2 id="参考资料">参考资料</h2>
+<h5 id="工程师如何在工作中提升自己">工程师如何在工作中提升自己?</h5>
+<ul>
+<li>个人的成长70%来自于岗位实践，20%来自向他人学习，10%来自于培训。</li>
+<li>离日暮西山的行业，做有积累的事情，一边走一边看，切勿一条道走到黑</li>
+<li>有清晰的结果导向思维。功劳和苦劳不是一回事</li>
+</ul>
+<h5 id="写给工程师的十条精进原则">写给工程师的十条精进原则</h5>
+<ul>
+<li>原则二：时间观念</li>
+<li>工作安排要有计划性：精确的开发时间，进而再合理地安排开发、联调、测试计划，关键时间点要可检查</li>
+<li>工作安排要分清楚主次：要学会分辨出这些干扰的工作项，保证重要紧急的事情能够按时交付，避免这种“本末倒置”的工作方式</li>
+</ul>
+<h5 id="程序员需要知道的raid基本原理">程序员需要知道的RAID基本原理</h5>
+<h5 id="风云再续他抖任他抖io诊断在我手">风云再续：他抖任他抖，IO诊断在我手</h5>
+<ul>
+<li>如何对付臭名昭著的 IO 夯</li>
+<li>一个 IO 的生命周期</li>
+<li>史诗级的IO架</li>
+</ul>
+<h5 id="wikibcache">wiki/Bcache</h5>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-08-11 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/book/">book</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/2025/2025-03-22_3fs_2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从青铜到王者系列：深入浅出理解 DeepSeek 3FS（2）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/storage/3_ceph_msd/">
+            <span class="next-text nav-default">日拱一卒：ceph-mds 业务操作</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
