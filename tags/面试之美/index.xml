@@ -62,6 +62,15 @@
     </item>
     
     <item>
+      <title>从青铜到王者系列——谈谈指针和引用的区别</title>
+      <link>https://wangcy6.github.io/post/c/2025-4-29-Interview_pointer/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/2025-4-29-Interview_pointer/</guid>
+      <description>大局观 问：指针和引用有什么区别？从青铜到王者怎么回答 提示： 从项目系统设计开发角度，怎么设计，怎么开发，怎么编译，测试的 就是从大局观角度回答 项</description>
+    </item>
+    
+    <item>
       <title>深入浅出理解DeepSeek 3FS (3) 步步引导轻松理解内存管理，面试必看</title>
       <link>https://wangcy6.github.io/post/liunx/2025/05-how_is_ctdb/</link>
       <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>

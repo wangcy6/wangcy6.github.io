@@ -48,7 +48,7 @@
 <meta itemprop="name" content="Cursor 实战技巧：如何快速配置 Python 环境">
 <meta itemprop="description" content="从青铜到王者"><meta itemprop="datePublished" content="2025-04-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2025-04-24T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="529">
+<meta itemprop="wordCount" content="767">
 <meta itemprop="keywords" content="python," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cursor 实战技巧：如何快速配置 Python 环境"/>
 <meta name="twitter:description" content="从青铜到王者"/>
@@ -128,7 +128,7 @@
       <div class="post-meta">
         <span class="post-time"> 2025-04-24 00:00 </span>
         
-          <span class="more-meta"> 约 529 字 </span>
+          <span class="more-meta"> 约 767 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -141,7 +141,12 @@
   <ul>
     <li><a href="#1-安装-cursor">1. 安装 Cursor</a></li>
     <li><a href="#2-安装python">2. 安装python</a></li>
-    <li><a href="#3-cursor-配置python开发环境">3. Cursor 配置Python开发环境</a></li>
+    <li><a href="#3-cursor-配置python开发环境">3. Cursor 配置Python开发环境</a>
+      <ul>
+        <li><a href="#window">window</a></li>
+        <li><a href="#mac-环境-cursor配置虚拟python环境">mac 环境： Cursor配置虚拟python环境</a></li>
+      </ul>
+    </li>
     <li><a href="#链接我">链接我</a></li>
   </ul>
 </nav>
@@ -175,6 +180,7 @@ Python 3.13.3</p>
 一键录制：自动生成代码 后面不跟参数时默认打开Chromium的空白浏览器，如果跟一个网址参数，会自动打开此网址的浏览器</li>
 </ul>
 <h2 id="3-cursor-配置python开发环境">3. Cursor 配置Python开发环境</h2>
+<h3 id="window">window</h3>
 <p>三步走：</p>
 <ol>
 <li>在应用商店（Ctrl+Shift+X打开）安装python插件</li>
@@ -184,6 +190,51 @@ Python 3.13.3</p>
 </ol>
 <p>Python解释器是一个可以理解和执行Python代码的程序</p>
 <p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250424201748.png" alt="image.png"></p>
+<h3 id="mac-环境-cursor配置虚拟python环境">mac 环境： Cursor配置虚拟python环境</h3>
+<p>mac环境安装第三方依赖 需要虚拟环境</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+<span class="err">删除历史虚拟环境</span> 
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">venv</span>
+
+<span class="err">历史版本</span> <span class="n">Python</span> <span class="mf">3.9</span><span class="o">.</span><span class="mi">6</span>
+<span class="err">这是</span> <span class="n">macOS</span> <span class="err">系统自带的</span> <span class="n">Python</span><span class="err">，位于</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="err">。</span>
+<span class="err">这个是系统</span> <span class="n">Python</span><span class="err">，不建议删除它，</span>
+<span class="err">因为一些系统功能可能依赖于它。</span>
+
+
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">12</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">venv</span>
+
+<span class="n">source</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span> 
+<span class="o">&amp;&amp;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">apscheduler</span> <span class="n">playwright</span>
+<span class="n">playwright</span> <span class="n">install</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>选择一个 Python 解释器</p>
+<ul>
+<li>可用解释器列表，包括虚拟环境</li>
+<li>说明 在mac环境下，不允许执行 pip命令，必须设置虚拟环境，虚拟环境设置后，cursor 选择对应解释器为虚拟环境的解释器。</li>
+</ul>
 <h2 id="链接我">链接我</h2>
 <p>关注公共号：后端开发成长指南</p>
 <p>如果更进一步交流 添加 微信：wang_cyi</p>
