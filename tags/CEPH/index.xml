@@ -8,6 +8,15 @@
     <language>zh-cn</language>
     <lastBuildDate>Sun, 27 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/CEPH/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>IO的一生</title>
+      <link>https://wangcy6.github.io/post/storage/2025/2025-05-02-what-is-io/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/storage/2025/2025-05-02-what-is-io/</guid>
+      <description>大家好我是小义同学，这是大厂面试拆解——项目实战系列的第6篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 深入理解自己项目 这个才是</description>
+    </item>
+    
+    <item>
       <title>深入理解 新一代存储引擎BlueStore,需四步</title>
       <link>https://wangcy6.github.io/post/storage/2025/2025-04-27-what-is-BlueStore/</link>
       <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>

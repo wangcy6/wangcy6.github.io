@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>IO的一生 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第6篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 深入理解自己项目 这个才是" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/2025/2025-05-02-what-is-io/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="IO的一生" />
+<meta property="og:description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第6篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 深入理解自己项目 这个才是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/2025/2025-05-02-what-is-io/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-27T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="IO的一生">
+<meta itemprop="description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第6篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 深入理解自己项目 这个才是"><meta itemprop="datePublished" content="2025-04-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6318">
+<meta itemprop="keywords" content="CEPH," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IO的一生"/>
+<meta name="twitter:description" content="大家好我是小义同学，这是大厂面试拆解——项目实战系列的第6篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 深入理解自己项目 这个才是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">IO的一生</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-27 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/CEPH/"> CEPH </a>
+            </div>
+          <span class="more-meta"> 约 6318 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一--准备环境">一.  准备环境</a>
+      <ul>
+        <li><a href="#11-机器配置">1.1 机器配置</a></li>
+        <li><a href="#21-块设备io跟踪">2.1 块设备IO跟踪</a></li>
+        <li><a href="#23从块层面-io优化">2.3从块层面 IO优化</a></li>
+      </ul>
+    </li>
+    <li><a href="#二--io栈全景图">二.  IO栈全景图</a></li>
+    <li><a href="#三io性能优化采用手段">三、IO性能优化采用手段</a></li>
+    <li><a href="#参考资料">参考资料</a>
+      <ul>
+        <li><a href="#1-linux问题分析与性能优化">1 Linux问题分析与性能优化</a></li>
+        <li><a href="#2-深入理解-linux的-io-系统">2 深入理解 Linux的 I/O 系统</a></li>
+        <li><a href="#3--ext4">3  EXT4</a></li>
+        <li><a href="#4--打通io栈一次编译服务器性能优化实战">4  打通IO栈：一次编译服务器性能优化实战</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#学习bio计划">【】学习bio计划</a></li>
+        <li><a href="#学习目标">学习目标</a></li>
+        <li><a href="#实践任务">实践任务</a></li>
+        <li><a href="#学习目标-1">学习目标</a></li>
+        <li><a href="#学习资源">学习资源</a></li>
+        <li><a href="#学习目标-2">学习目标</a></li>
+        <li><a href="#学习资源-1">学习资源</a></li>
+        <li><a href="#实践任务-1">实践任务</a></li>
+        <li><a href="#学习目标-3">学习目标</a></li>
+        <li><a href="#学习资源-2">学习资源</a></li>
+        <li><a href="#实践任务-2">实践任务</a></li>
+        <li><a href="#5-资料-the-linux-process-journey--jbd2">5. 资料 The Linux Process Journey — “jbd2”</a></li>
+        <li><a href="#小结">小结</a></li>
+        <li><a href="#6--linux-io过程自顶向下分析">6. # linux io过程自顶向下分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>大家好我是小义同学，这是<!-- raw HTML omitted -->大厂面试拆解——项目实战<!-- raw HTML omitted -->系列的第<!-- raw HTML omitted -->6<!-- raw HTML omitted -->篇文章，</p>
+<p>”走暗路、耕瘦田、进窄门、见微光”  
+告诉我  面试关键就 深入理解自己项目 这个才是最考察基本功的地方。</p>
+<p>知识地图：KV存储引擎&mdash;IO栈</p>
+<p><!-- raw HTML omitted -->本文 主要描述 read/write为例子普通文件 IO过程是什么？<!-- raw HTML omitted -->，</p>
+<p>分析这个问题关键思路在哪里？</p>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮，
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+<p>上篇文章 <a href="https://mp.weixin.qq.com/s/iIGui5RywsKC13daAogRJA">新一代存储引擎BlueStore,需四步</a></p>
+<p>在创建一个文件时候，Ceph的BlueStore ，</p>
+<ol>
+<li>将文件的数据直接写块设备</li>
+<li>将文件的元数据写RocksDB</li>
+<li>BlueStore IO流程 先写数据，还是先写元数据顺序不同 ，提供不同策略。</li>
+<li>Ceph IO 软件栈开销原因 <strong>无实现低于 0.5 毫秒的随机读取延迟和低于 1 毫秒的随机写入延迟</strong></li>
+</ol>
+<p>普通文件写是否区分元数据 和 数据，这些请求最后怎么写入磁盘 呢？</p>
+<p>因为内容太多，分批梳理。</p>
+<p>大纲如下：</p>
+<p>（1） 预备知识：</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250502215215.png" alt="了解目前有哪些文件系统"></p>
+<p>（2） 通过工具 了解IO栈
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250502215326.png" alt="IO栈">
+（3） 性能优化</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250502232459.png" alt="性能优化"></p>
+<h2 id="一--准备环境">一.  准备环境</h2>
+<h3 id="11-机器配置">1.1 机器配置</h3>
+<p>✅ 购买2C2G云主机 成本一年不超过100元</p>
+<p>✅ 创建1G的大文件充代替块设备，因为没有额外的磁盘</p>
+<p>📌 例子：用 Loop 设备模拟一个 ext4 文件系统</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 1. 创建一个 1GB 的普通文件文件</span>
+
+dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/root/temp/virtual_disk.img <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">count</span><span class="o">=</span><span class="m">1024</span>
+
+<span class="c1"># 2. 绑定到 Loop 设备（让 Linux 认为它是一个磁盘）</span>
+
+losetup /dev/loop0 /root/temp/virtual_disk.img
+
+ls -l /dev/loop0
+
+brw-rw---- <span class="m">1</span> root disk 7, <span class="m">0</span> 3月  <span class="m">24</span> 13:51 /dev/loop0。
+
+
+b 表示块设备文件，
+
+s 表示套接字 socket 文件，
+
+l 表示符号链接
+
+<span class="c1"># 3. 在 /dev/loop0 上创建 ext4 文件系统</span>
+
+mkfs.ext4 /dev/loop0
+
+
+<span class="c1"># 4. 挂载到 /mnt 目录</span>
+
+mkdir /mnt/icfs
+
+		mount  /dev/loop0 /mnt/icfs  <span class="c1">#/ordered</span>
+		
+mount -o nodelalloc，data<span class="o">=</span>writeback /dev/loop0 /mnt/icfs 
+
+
+<span class="c1">## 日记(journal)、 顺序(ordered)和 回写(writeback)</span>
+<span class="c1">##  ext4挂载参数：delallocExt4文件系统的一个新特性——Delay Allocation 禁用</span>
+
+<span class="c1"># 5. 如何查看当前的日志模式</span>
+
+<span class="m">5</span> <span class="m">1</span> 通过dmesg命令查看Linux系统的内核日志
+
+dmesg <span class="p">|</span> grep  <span class="s2">&#34;mounted filesystem&#34;</span>
+EXT4-fs <span class="o">(</span>vda1<span class="o">)</span>: mounted filesystem with ordered data mode. Opts: <span class="o">(</span>null<span class="o">)</span>
+
+
+5.2 现磁盘的永久挂载  开机启动 /etc/fstab file 检查
+
+ /dev/loop0  /mnt/icfs  ext4 <span class="nv">data</span><span class="o">=</span>writeback <span class="m">0</span> <span class="m">0</span>
+
+5.3  has_journal
+ 
+dumpe2fs /dev/vda1 &gt;1
+
+Filesystem features:      
+<span class="m">1</span> has_journal 
+<span class="m">2</span> ext_attr 
+<span class="m">3</span> resize_inode 
+<span class="m">4</span> dir_index filetype needs_recovery extent 64bit flex_bg sparse_super large_file huge_file dir_nlink extra_isize metadata_csum
+
+
+1. 查看IO调度器
+
+cat /sys/block/loop0/queue/scheduler
+<span class="o">[</span>mq-deadline<span class="o">]</span> 
+kyber 
+
+bfq ：
+​特性​​：
+按进程分配 I/O 带宽，保障多任务公平性
+完全公平队列调度器
+
+none 
+特性​​：无调度策略，直接传递请求到硬件层
+适用场景​：高速存储设备（如 NVMe SSD）或已由宿主机管理 I/O 的虚拟化环境
+
+</code></pre></td></tr></table>
+</div>
+</div><p>划重点：参数含义说明</p>
+<p>文件系统支持的三种日志模式 是什么</p>
+<ul>
+<li>ext4挂载参数: data</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Journal​<strong>​特性​</strong>​</th>
+<th>Journal</th>
+<th>Ordered（默认）</th>
+<th>Writeback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​数据记录​</strong>​</td>
+<td>元数据+数据均记录日志</td>
+<td>仅元数据日志</td>
+<td>仅元数据日志</td>
+</tr>
+<tr>
+<td>​<strong>​数据写入顺序​</strong>​</td>
+<td>严格同步</td>
+<td>数据先于元数据写入</td>
+<td>无强制顺序</td>
+</tr>
+<tr>
+<td>​<strong>​性能​</strong>​</td>
+<td>最低</td>
+<td>中等</td>
+<td>最高</td>
+</tr>
+<tr>
+<td>​<strong>​崩溃恢复​</strong>​</td>
+<td>完全一致</td>
+<td>数据可能部分丢失</td>
+<td>数据可能大量丢失</td>
+</tr>
+<tr>
+<td>​<strong>​典型场景​</strong>​</td>
+<td>数据库、关键业务</td>
+<td>服务器、日常办公</td>
+<td>高性能计算</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>If <code>data=writeback</code>, dirty data blocks are not flushed to the disk before the metadata are written to disk through the journal.</li>
+<li>内核有专门的机制负责将页缓存中的数据<strong>异步地</strong>写入磁盘，这个过程称为<strong>写回（writeback）</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>延迟分配​<strong>​场景​</strong>​</th>
+<th>​<strong>​推荐选项​</strong>​</th>
+<th>​<strong>​原因​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​高吞吐量顺序写入​</strong>​</td>
+<td><code>delalloc</code></td>
+<td>利用批量分配优化连续写入性能（如日志服务器、大数据处理）<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td>​<strong>​低延迟关键业务​</strong>​</td>
+<td><code>nodelalloc</code></td>
+<td>避免单次写入延迟波动（如数据库事务、实时系统）<!-- raw HTML omitted --></td>
+</tr>
+</tbody>
+</table>
+<h3 id="21-块设备io跟踪">2.1 块设备IO跟踪</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp"># 安装blktrace包
+</span><span class="cp"></span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">blktrace</span>
+
+<span class="cp"># blktrace包安装后有blktrace、blkparse、btt、blkiomon这4个命令
+</span><span class="cp">#blktrace负责采集I/O事件数据，
+</span><span class="cp"># blkparse负责将每一个I/O事件数据解析为纯文本方便阅读，
+</span><span class="cp">## btt、blkiomon负责统计分析
+</span><span class="cp"></span>
+<span class="cp"># blktrace依赖debugfs，需要挂载它  
+</span><span class="cp"></span><span class="n">sudo</span> <span class="n">mount</span> <span class="o">-</span><span class="n">t</span> <span class="n">debugfs</span> <span class="n">none</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">debug</span>
+<span class="cp">## debugfs 是 Linux 内核提供的一个专用文件系统，动态创建、无需重新编译内核
+</span><span class="cp"></span><span class="err">验证</span>
+<span class="n">ls</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span>
+<span class="n">mount</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">debugfs</span> 
+
+<span class="n">debugfs</span> <span class="n">on</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">debug</span> <span class="n">type</span> <span class="n">debugfs</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">relatime</span><span class="p">)</span>
+
+<span class="n">dd</span> <span class="k">if</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">zero</span> <span class="n">of</span><span class="o">=/</span><span class="n">mnt</span><span class="o">/</span><span class="n">icfs</span><span class="o">/</span><span class="n">test</span> <span class="n">bs</span><span class="o">=</span><span class="mi">1</span><span class="n">k</span> <span class="n">count</span><span class="o">=</span><span class="mi">16</span>
+
+<span class="n">blktrace</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span> <span class="o">|</span><span class="n">blkparse</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span>
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>一、字段含义与事件链分析</p>
+<ol>
+<li>​<strong>​字段解析​</strong>​（参考示例行：<code>7,0 1 226 52.043115656 3815652 Q WS 1104864 +8 [jbd2/loop0-8]</code>）
+<ul>
+<li>​<strong>​7,0​</strong>​：设备号（主设备号:次设备号），表示 <code>/dev/loop0</code>（虚拟块设备）。</li>
+<li>​<strong>​1​</strong>​：CPU 核编号（此处为 CPU 1）。</li>
+<li>​<strong>​226​</strong>​：事件序列号。</li>
+<li>​<strong>​52.043115656​</strong>​：时间戳（秒级精度）。</li>
+<li>​<strong>​3815652​</strong>​：进程 PID（jbd2 内核线程）。</li>
+<li>​<strong>​Q/WS​</strong>​：事件类型（Q=请求进入队列，WS=写同步操作）。</li>
+<li>​<strong>​1104864 +8​</strong>​：起始块号 <code>1104864</code>，操作大小 <code>8</code> 个块（通常 1 块=4KB，即 32KB 写操作）。</li>
+<li>​<strong>​[jbd2/loop0-8]​</strong>​：进程名，表示 <code>jbd2</code> 线程管理 <code>/dev/loop0</code> 设备的日志功能。</li>
+</ul>
+</li>
+<li>​<strong>​事件链分析​</strong>​（关键阶段）
+<ul>
+<li>​<strong>​Q→G 阶段​</strong>​（请求生成）：<br>
+示例：<code>Q WS 1104864 +8</code> → <code>G WS 1104864 +8</code><br>
+表示 I/O 请求进入块层后分配 <code>request</code> 结构体（耗时约微秒级）。</li>
+<li>​<strong>​I 阶段​</strong>​（插入调度器队列）：<br>
+多行 <code>I WS</code> 事件显示请求被插入 I/O 调度器队列（如 <code>mq-deadline</code>）。</li>
+<li>​<strong>​D 阶段​</strong>​（下发到驱动）：<br>
+<code>D WS</code> 表示请求被发送至设备驱动层，进入物理设备处理。</li>
+<li>​<strong>​U/FN 阶段​</strong>​：<br>
+<code>U N</code> 表示队列解绑操作；<code>D FN</code> 可能涉及屏障（Barrier）或刷新操作。</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">  
+jbd2 进程负责 ext4 文件系统的日志提交操作。
+
+<span class="nb">echo</span> <span class="m">1</span> &gt; /sys/kernel/debug/tracing/events/ext4/ext4_sync_file_enter/enable
+<span class="nb">echo</span> <span class="m">1</span> &gt; /sys/kernel/debug/tracing/events/jbd2/jbd2_commit_flushing/enable
+
+     barad_agent-621691  <span class="o">[</span>000<span class="o">]</span> .... 16365334.481433: ext4_sync_file_enter: dev 253,1 ino <span class="m">922856</span> parent <span class="m">927477</span> datasync 1 
+
+     jbd2/vda1-8-367     <span class="o">[</span>000<span class="o">]</span> .... 16365334.482411: jbd2_commit_flushing: dev 253,1 transaction <span class="m">23610801</span> sync <span class="m">0</span>
+
+     barad_agent-621691  <span class="o">[</span>001<span class="o">]</span> .... 16365334.485209: ext4_sync_file_enter: dev 253,1 ino <span class="m">922856</span> parent <span class="m">927477</span> datasync 1 
+
+     barad_agent-621691  <span class="o">[</span>001<span class="o">]</span> .... 16365334.485976: ext4_sync_file_enter: dev 253,1 ino <span class="m">923617</span> parent <span class="m">927477</span> datasync 1 
+
+     barad_agent-621691  <span class="o">[</span>001<span class="o">]</span> .... 16365334.488730: ext4_sync_file_enter: dev 253,1 ino <span class="m">928166</span> parent <span class="m">927477</span> datasync 1 
+
+     jbd2/vda1-8-367     <span class="o">[</span>001<span class="o">]</span> .... 16365334.489345: jbd2_commit_flushing: dev 253,1 transaction <span class="m">23610802</span> sync <span class="m">0</span>
+
+     barad_agent-621691  <span class="o">[</span>001<span class="o">]</span> .... 16365334.492786: ext4_sync_file_enter: dev 253,1 ino <span class="m">928166</span> parent <span class="m">927477</span> datasync 1 
+
+     barad_agent-621691  <span class="o">[</span>001<span class="o">]</span> .... 16365334.493294: ext4_sync_file_enter: dev 253,1 ino <span class="m">923617</span> parent <span class="m">927477</span> datasync 1 
+
+     barad_agent-621691  <span class="o">[</span>001<span class="o">]</span> .... 16365334.494829: ext4_sync_file_enter: dev 253,1 ino <span class="m">922856</span> parent <span class="m">927477</span> datasync 1 
+
+     jbd2/vda1-8-367     <span class="o">[</span>000<span class="o">]</span> .... 16365334.495552: jbd2_commit_flushing: dev <span class="m">2</span>
+
+
+strace -c -f -e <span class="nv">trace</span><span class="o">=</span>file,sync,fsync,fdatasync -p <span class="m">20949</span>
+
+jbd2 线程与 Linux 通用块层紧密协作：
+从构造 BIO、
+
+调用 <span class="sb">`</span>submit_bio<span class="o">()</span><span class="sb">`</span>、
+
+依赖块层的合并与调度，
+到接收 <span class="sb">`</span>bio_end_io<span class="sb">`</span> 回调，
+
+形成了一个端到端的、具备高优先级保障的日志写入通道，
+确保 ext4/ext3 文件系统在崩溃恢复时能够快速且可靠地回放与提交事务。
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="23从块层面-io优化">2.3从块层面 IO优化</h3>
+<h2 id="二--io栈全景图">二.  IO栈全景图</h2>
+<ul>
+<li><a href="https://www.thomas-krenn.com/de/wikiDE/images/e/e8/Linux-storage-stack-diagram_v6.9.png">https://www.thomas-krenn.com/de/wikiDE/images/e/e8/Linux-storage-stack-diagram_v6.9.png</a></li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250502165459.png" alt="image.png"></p>
+<p>为了掌握IO栈必须了解的基本知识</p>
+<ul>
+<li>什么是虚拟内存，与磁盘有什么关系？ 这个是了解 块设备bio层基础</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250502163052.png" alt="—个 VM 系统是如何使用主存作为缓存">
+它将主存看成是一个存储在磁盘上的地址空间的 高速缓存，
+在主存中只保存活动区域，
+并根据需要在磁盘和主存之间来回传送数据，
+通过 这种方式，它高效地使用了主存</p>
+<p>在任意时刻，虚拟页面的集合都分为三个不相交的子集：
+•未分配的：VM 系统还未分配(或者创建）的页。
+未分配的块没有任何数据和它们相 关联，因此也就不占用任何磁盘空间。
+•缓存的：当前已缓存在物理内存中的已分配页。
+•未缓存的：未缓存在物理内存中的已分配页</p>
+<ul>
+<li>
+<p>地址空间（address space)是一个非负整数地址的有序集合【地址和数据关系】</p>
+</li>
+<li>
+<p>—个 VM 系统是如何使用主存作为缓存</p>
+</li>
+<li>
+<p>在虚拟内存的习惯说法中，DRAM 缓存不命中称为缺页（page fault)</p>
+</li>
+<li>
+<p>在磁盘和内存之间传送页的活 动叫做交换（swapping)或者页 面调度（paging)。页从磁盘换入（或者页面调入）DRAM 和从 DRAM 换出（或者页面调出）磁盘。</p>
+</li>
+<li>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250502174539.png" alt="Linux kernel Block I/O Layer"></p>
+</li>
+</ul>
+<h2 id="三io性能优化采用手段">三、IO性能优化采用手段</h2>
+<h2 id="参考资料">参考资料</h2>
+<h3 id="1-linux问题分析与性能优化">1 Linux问题分析与性能优化</h3>
+<ul>
+<li>地址：https://mp.weixin.qq.com/s/ZDq5_bVGidW1UcPI2TpRb</li>
+</ul>
+<h3 id="2-深入理解-linux的-io-系统">2 深入理解 Linux的 I/O 系统</h3>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/435029164">https://zhuanlan.zhihu.com/p/435029164</a></li>
+</ul>
+<h3 id="3--ext4">3  EXT4</h3>
+<ul>
+<li><a href="https://blog.csdn.net/wmzjzwlzs/article/details/143608926">https://blog.csdn.net/wmzjzwlzs/article/details/143608926</a></li>
+<li>一次 write 系统调用竟然消耗了 147ms，很明显地，问题出在 write 系统调用上。</li>
+<li>**猜测因为 journal 触发了脏页落盘，而脏页落盘导致 write 被阻塞，所以解决 journal 问题就可以解决接口超时问题。</li>
+<li><a href="https://oenhan.com/rwsem-realtime-task-hung">https://oenhan.com/rwsem-realtime-task-hung</a> 问题终于处理清楚了，如此坑爹的问题，陆陆续续的搞了有近月的时间</li>
+<li>
+<blockquote>
+<p>延迟分配(delayed allocation)：ext4 文件系统在应用程序调用 write system call 时并不为缓存页面分配对应的物理磁盘块，当文件的缓存页面真正要被刷新至磁盘中时，才会为所有未分配物理磁盘块的页面缓存分配尽量连续的磁盘块。</p>
+</blockquote>
+</li>
+<li><a href="https://man7.org/linux/man-pages/man5/ext4.5.html">https://man7.org/linux/man-pages/man5/ext4.5.html</a></li>
+<li><strong>nodelalloc</strong>
+Disable delayed allocation. Blocks are allocated when data
+is copied from user to page cache.</li>
+<li>日前线上在升级到Ext4文件系统后出现应用写操作延迟开销增大的问题。造成这一问题的根源目前已经查明，是由于Ext4文件系统的一个新特性——Delay Allocation造成的。（后面简称delalloc）</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>delalloc:
+lat (usec): min=2 , max=193466 , avg= 5.86, stdev=227.91</p>
+<p>nodelalloc:</p>
+<h3 id="4--打通io栈一次编译服务器性能优化实战">4  打通IO栈：一次编译服务器性能优化实战</h3>
+<ul>
+<li>通过通用块层把页缓存里的数据回刷到磁盘中</li>
+<li>bio层记录了磁盘块与内存页之间的关系</li>
+<li>在request层把多个物理块连续的bio合并成一个request</li>
+<li>
+<h1 id="linux阅码场原创精华文章汇总">Linux阅码场原创精华文章汇总</h1>
+</li>
+</ul>
+<p><a href="https://www.cnblogs.com/sky-heaven/p/15987836.html">https://www.cnblogs.com/sky-heaven/p/15987836.html</a></p>
+<ul>
+<li>文件系统和IO</li>
+<li>
+<h1 id="宋宝华-文件读写bio波澜壮阔的一生">宋宝华： 文件读写（BIO）波澜壮阔的一生</h1>
+</li>
+</ul>
+<p>网上关于BIO和块设备读写流程的文章何止千万，但是能够让你彻底读懂读明白的文章实在难找，可以说是越读越糊涂！</p>
+<p>我曾经跨过山和大海 也穿过人山人海</p>
+<p>我曾经问遍整个世界 从来没得到答案
+本文的写作宗旨是：绝不装逼，一定要简单，简单，再简单！</p>
+<p>在Linux里面，用于描述硬盘里面要真实操作的位置与page cache的页映射关系的数据结构是bio。相信大家已经见到bio一万次s</p>
+<p>把bio转化为request，把request放入进程本地的plug队列；蓄势多个request后，再进行泄洪。</p>
+<h3 id="学习bio计划">【】学习bio计划</h3>
+<p>本计划以 8 周为期，分阶段由浅入深，结合<strong>文档学习</strong>、<strong>源码阅读</strong>与<strong>动手实践</strong>。</p>
+<hr>
+<p>前期准备（第 0 周）</p>
+<ul>
+<li>
+<p><strong>环境搭建</strong>：准备一台可刷写内核的测试机或虚拟机，安装常用开发工具（<code>git</code>、<code>make</code>、<code>gcc</code>、<code>perf</code>、<code>blktrace</code> 等）。</p>
+</li>
+<li>
+<p><strong>基础知识回顾</strong>：</p>
+<ul>
+<li>
+<p>阅读 Linux 块设备层概览【Cornell 教材】(<a href="https://www.cs.cornell.edu/courses/cs4410/2021fa/assets/material/lecture24_blk_layer.pdf?utm_source=chatgpt.com" title="[PDF] Linux kernel Block I/O Layer">计算机科学系</a>)</p>
+</li>
+<li>
+<p>熟悉页缓存与生物（bio）模型：<code>struct bio</code>、<code>submit_bio()</code> 流程【HackMD 讲解】(<a href="https://hackmd.io/%40ztex/SJaMGhjfD?utm_source=chatgpt.com" title="Block device, BIO in linux kernel - HackMD">HackMD</a>)</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>阶段 1：Bio 与 Request 层（第 1–2 周）</p>
+<h3 id="学习目标">学习目标</h3>
+<ul>
+<li>理解 bio 如何映射到页缓存与磁盘块</li>
+<li>掌握 <code>struct bio</code> 与 <code>struct request</code> 的关系</li>
+</ul>
+<h3 id="实践任务">实践任务</h3>
+<ol>
+<li>
+<p>用 <code>printk</code> 或 ftrace 打点 <code>submit_bio()</code> 与 <code>generic_make_request()</code> 路径。</p>
+</li>
+<li>
+<p>编写一个简单的 RAM-disk 驱动（<code>blk_queue_make_request</code>）并观察 bio 到 request 层的流转。</p>
+</li>
+</ol>
+<hr>
+<p>阶段 2：I/O 调度器源码研读（第 3–4 周）</p>
+<h3 id="学习目标-1">学习目标</h3>
+<ul>
+<li>深入阅读 <code>block/elevator.c</code>，理解合并逻辑：
+<ul>
+<li>
+<p><code>elv_bio_merge_ok()</code>：判断 bio 与 request 是否可合并</p>
+</li>
+<li>
+<p><code>elv_merge()</code>、<code>elv_attempt_insert_merge()</code>、<code>elv_merged_request()</code>、<code>elv_merge_requests()</code> 等函数</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="学习资源">学习资源</h3>
+<ul>
+<li>
+<p><strong>GitHub 上的 <code>elevator.c</code></strong>：最新内核源码(<a href="https://github.com/torvalds/linux/blob/master/block/elevator.c?utm_source=chatgpt.com" title="linux/block/elevator.c at master · torvalds/linux - GitHub">GitHub</a>, <a href="https://android.googlesource.com/kernel/common/%2B/refs/tags/ASB-2019-02-05_4.19/block/elevator.c?utm_source=chatgpt.com" title="block/elevator.c - kernel/common - Git at Google">Android Git Repositories</a>)</p>
+</li>
+<li>
+<p><strong>Android Git 源</strong>：含注释的 <code>elv_bio_merge_ok</code> 实现([Android Git Repositories](<a href="https://android.googlesource.com/kernel/common/%2B/baa23246e93f/block/elevator.c?utm_source=chatgpt.com">https://android.googlesource.com/kernel/common/%2B/baa23246e93f/block/elevator.c?utm_source=chatgpt.com</a> &ldquo;block/elevator.c - kernel/common - Git at Google</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<p>阶段 3：深度跟踪与性能分析（第 5–6 周）</p>
+<h3 id="学习目标-2">学习目标</h3>
+<ul>
+<li>掌握 <code>blktrace</code>、<code>blkparse</code> 与 <code>btt</code> 的用法</li>
+<li>分析 I/O 生命周期，识别调度与设备瓶颈</li>
+</ul>
+<h3 id="学习资源-1">学习资源</h3>
+<ul>
+<li>
+<p><strong>Medium 实战教程</strong>：<code>blktrace</code> 基本用法与示例(<a href="https://medium.com/%40bilsted/i-o-tracing-with-blktrace-72a1b6f092f8?utm_source=chatgpt.com" title="I/O tracing with blktrace - Medium">Medium</a>)
+<a href="https://bean-li.github.io/blktrace-to-report/">https://bean-li.github.io/blktrace-to-report/</a>
+Q – 即将生成IO请求 | G – IO请求生成 | I – IO请求进入IO Scheduler队列 | D – IO请求进入driver |</p>
+</li>
+<li>
+<p><strong>Brooker 博文</strong>：超越 <code>iostat</code> 的存储分析(<a href="https://brooker.co.za/blog/2013/07/14/io-performance.html?utm_source=chatgpt.com" title="Beyond iostat: Storage performance analysis with blktrace">brooker.co.za</a>)</p>
+</li>
+<li>
+<p><strong>Red Hat 性能调优指南</strong>：<code>btt</code> 深度分析方法(<a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/performance_tuning_guide/sect-red_hat_enterprise_linux-performance_tuning_guide-storage_and_file_systems-monitoring_and_diagnosing_performance_problems?utm_source=chatgpt.com" title="8.2. Monitoring and Diagnosing Performance Problems | Red Hat ...">红帽文档</a>)</p>
+</li>
+</ul>
+<h3 id="实践任务-1">实践任务</h3>
+<ol>
+<li>
+<p>对比不同调度策略（<code>noop</code>/<code>deadline</code>/<code>cfq</code>）下的跟踪结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">blktrace -d /dev/sda -o - <span class="p">|</span> blkparse -i -
+btt -i trace.blktrace.*.0 <span class="p">|</span> less
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>通过 <code>Q</code>,<code>I</code>,<code>D</code>,<code>C</code> 事件时序，判断调度与驱动延迟所在，并输出可视化报告。</p>
+</li>
+<li>
+<p>调整 <code>elevator</code>（<code>cat /sys/block/sda/queue/scheduler</code>），重新跟踪验证。</p>
+</li>
+</ol>
+<hr>
+<p>阶段 4：多队列与自定义驱动（第 7–8 周）</p>
+<h3 id="学习目标-3">学习目标</h3>
+<ul>
+<li>
+<p>理解并使用多队列块层（blk-mq）</p>
+</li>
+<li>
+<p>在驱动中自定义 <code>make_request_fn</code> 或迁移至 blk-mq 接口</p>
+</li>
+</ul>
+<h3 id="学习资源-2">学习资源</h3>
+<ul>
+<li>
+<p><strong>Kernel.org 文档</strong>：blk-mq 原理与 API(<a href="https://docs.kernel.org/block/blk-mq.html?utm_source=chatgpt.com" title="Multi-Queue Block IO Queueing Mechanism (blk-mq)">Linux内核文档</a>, <a href="https://www.kernel.org/doc/html/v5.11/block/blk-mq.html?utm_source=chatgpt.com" title="Multi-Queue Block IO Queueing Mechanism (blk-mq)">内核.org</a>)</p>
+</li>
+<li>
+<p><strong>Thomas Krenn Wiki</strong>：blk-mq 性能分析(<a href="https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechanism_%28blk-mq%29_Details?utm_source=chatgpt.com" title="Linux Multi-Queue Block IO Queueing Mechanism (blk-mq) Details">Thomas-Krenn.AG</a>)</p>
+</li>
+<li>
+<p><strong>社区讨论</strong>：如何在 6.x 上扩展 <code>make_request_fn</code>（dattobd/submit_bio）(<a href="https://www.reddit.com/r/kernel/comments/13oh2lu/block_filter_driver_for_kernel_6x/?utm_source=chatgpt.com" title="Block filter driver for kernel 6.x - Reddit">Reddit</a>)</p>
+</li>
+</ul>
+<h3 id="实践任务-2">实践任务</h3>
+<ol>
+<li>
+<p>在支持多队列的设备上启用 blk-mq（检查 <code>QUEUE_FLAG_MQ_PCI</code> 等标志）。</p>
+</li>
+<li>
+<p>将示例驱动改为 <code>blk_mq_alloc_sq_tags()</code> + <code>blk_mq_queue</code> 模式，实现 per-CPU 软件队列。</p>
+</li>
+<li>
+<p>使用 <code>perf</code> 分析多队列下的中断与上下文切换开销，优化 <code>tag_set</code> 配置。</p>
+</li>
+</ol>
+<hr>
+<p>如何评估进阶／大师水平</p>
+<ul>
+<li>
+<p><strong>代码阅读</strong>：能在 ≥ 30 分钟内定位并讲解 <code>elv_bio_merge_ok()</code>、<code>blk_try_merge()</code> 等核心点；</p>
+</li>
+<li>
+<p><strong>参数调优</strong>：熟练使用 <code>nomerges</code>、<code>nr_requests</code>、<code>scheduler</code> 等并在真实场景中给出合理配置；</p>
+</li>
+<li>
+<p><strong>跟踪分析</strong>：用 <code>blktrace</code>/<code>btt</code> 输出瓶颈报告，并提出改进方案；</p>
+</li>
+<li>
+<p><strong>驱动开发</strong>：完成一个支持 blk-mq 的自定义块驱动，确保在高并发 I/O 下稳定且性能优良。</p>
+</li>
+</ul>
+<p>通过以上系统化、阶梯化的学习与实践，你将从“新手”逐步晋级至真正的“块层 I/O 大师”。祝学习顺利！</p>
+<h3 id="5-资料-the-linux-process-journey--jbd2">5. 资料 The Linux Process Journey — “jbd2”</h3>
+<ul>
+<li>“JBD” stands for “Journal Block Device</li>
+<li><a href="https://elixir.bootlin.com/linux/v6.2.1/source/fs/jbd2/journal.c#L277">https://elixir.bootlin.com/linux/v6.2.1/source/fs/jbd2/journal.c#L277</a></li>
+<li><a href="https://elixir.bootlin.com/linux/v6.2.1/source/fs/jbd2/journal.c#L152">https://elixir.bootlin.com/linux/v6.2.1/source/fs/jbd2/journal.c#L152</a></li>
+<li>An Introduction to the Linux Kernel Block I/O Stack</li>
+<li>Device-Mapper（dm）和 Linux 软件 RAID（md）都是基于虚拟块设备（stacked block device）的核心技术</li>
+<li>Linux 内核中的 Device Mapper 机制</li>
+<li>LVM2是Linux 下的逻辑卷管理器，它可以对磁盘进行分区等。但是我们这里用LVM主要是利用用户空间的device mapper 库以及它提供的 dmsetup 工具</li>
+<li>通过使用 LVM 标记， <code>lvm</code> 子命令能够通过查询与 OSD 关联的设备来存储和重新发现这些设备，以便可以激活这些设备。 这还包括对基于 lvm 的技术 (例如 <code>dm-cache</code> ) 的支持。</li>
+<li>虚拟块设备（stacked block device）</li>
+<li> 是通过信号完成异步通知的吗？</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​特性​</strong>​</th>
+<th>​<strong>​内核中断+回调机制​</strong>​</th>
+<th>​<strong>​用户态信号（如 SIGIO）​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​触发源​</strong>​</td>
+<td>硬件中断（IRQ）</td>
+<td>内核向进程发送信号（如 <code>fcntl(F_NOTIFY)</code>）</td>
+</tr>
+<tr>
+<td>​<strong>​延迟​</strong>​</td>
+<td>微秒级（直接由中断处理）</td>
+<td>毫秒级（需上下文切换到用户态）</td>
+</tr>
+<tr>
+<td>​<strong>​适用场景​</strong>​</td>
+<td>块设备驱动、内核 I/O 栈</td>
+<td>文件描述符就绪事件（如网络套接字）</td>
+</tr>
+<tr>
+<td>​<strong>​数据安全​</strong>​</td>
+<td>无用户态上下文切换，高效安全</td>
+<td>需处理信号竞争和重入问题</td>
+</tr>
+</tbody>
+</table>
+<p>similar to high speed networking, with high speed storage targets it can be
+beneficial to use Polling instead of Waiting for Interrupts to handle request
+completion 新手和专家 理解</p>
+<table>
+<thead>
+<tr>
+<th>方面</th>
+<th>轮询 (Polling)</th>
+<th>中断 (Interrupt)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>延迟</strong></td>
+<td>最低：纳秒级完成检测</td>
+<td>较高：微秒级中断开销</td>
+</tr>
+<tr>
+<td><strong>CPU 利用</strong></td>
+<td>较高：持续忙等会占用 CPU 周期</td>
+<td>低：只有 I/O 完成瞬间才消耗少量 CPU</td>
+</tr>
+<tr>
+<td><strong>吞吐</strong></td>
+<td>高并发场景表现优异（减少中断风暴）</td>
+<td>中断风暴可能成为瓶颈</td>
+</tr>
+<tr>
+<td><strong>复杂度</strong></td>
+<td>需要仔细调度、线程亲和及轮询时长（budget）管理 和 fallback</td>
+<td>简单，操作系统自动管理</td>
+</tr>
+<tr>
+<td><strong>blk‑mq 的核心思想</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>多提交队列（per‑CPU submit queues）</strong>：每个 CPU 核有自己的一小队列，提交 I/O 时先放到本核的队列里，减少跨核抢锁。</p>
+</li>
+<li>
+<p><strong>多硬件队列映射</strong>：内核将每个 CPU 的提交队列和存储设备的<strong>硬件队列</strong>一一对应，I/O 完成时也回到同一个 CPU 去处理，保证缓存局部性。</p>
+</li>
+<li>
+<p><strong>减少共享状态</strong>：提交和完成都在本核完成，尽量不在 CPU 之间传递数据，降低延迟和锁竞争</p>
+</li>
+</ul>
+<p>与 Linux 块层的关系</p>
+<ul>
+<li>
+<p><strong>并不绕开块层</strong>：io_uring 的 SQE 填写只是告诉内核要做哪种 I/O，真正的读写还是走 <strong>submit_bio → request → 调度 → 驱动</strong> 的标准块层路径。</p>
+</li>
+<li>
+<p><strong>异步化＋批量化</strong>：原来应用是「一次 syscall → 一次 I/O」，io_uring 则可以「一次 enter 提交多条 SQE → 批量下发多条 bio → 批量回收 CQE」，大大减少 syscalls/上下文切换。</p>
+</li>
+<li>
+<p><strong>可选 Direct I/O/Busy‑Poll</strong>：对于支持的设备（NVMe），SQE 可以带 <code>RWF_HIPRI</code> 或 io_uring iopoll 标志，利用块层的 <strong>polling</strong> 特性进一步压低延迟。</p>
+</li>
+</ul>
+<hr>
+<h3 id="小结">小结</h3>
+<ul>
+<li>
+<p><strong>三大数据结构</strong>：SQ ring、CQ ring、SQE array；</p>
+</li>
+<li>
+<p><strong>流程</strong>：用户填 SQE → 更新 SQ → 内核回调标准 syscall 后端 → submit_bio → 块层调度 → bio_end_io → 写 CQE → 用户读 CQ；</p>
+</li>
+<li>
+<p><strong>关系</strong>：io_uring 是用户态到内核态的「高效提交／完成框架」，真正的磁盘 I/O 仍由 Linux 通用块层（bio/request/elevator 或 blk‑mq）完成</p>
+</li>
+</ul>
+<h3 id="6--linux-io过程自顶向下分析">6. # linux io过程自顶向下分析</h3>
+<ul>
+<li>进程是内核对CPU的抽象，虚拟内存是对物理内存的抽象，文件是对所有IO对象的抽象（在本文，则主要是指对磁盘的抽象）</li>
+<li>通用块层的核心–bio</li>
+<li>本进程内，fd的最直观操作是open、close、mmap、ioctl、poll这</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-27 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/CEPH/">CEPH</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/storage/2025/2025-04-27-what-is-BlueStore/">
+            <span class="next-text nav-default">深入理解 新一代存储引擎BlueStore,需四步</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
