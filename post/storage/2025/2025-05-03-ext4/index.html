@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从青铜到王者系列：跟着文件系统学数据结构 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="从原理到实践，全面解析文件系统的设计理念、核心架构与性能优化策略" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/storage/2025/2025-05-03-ext4/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从青铜到王者系列：跟着文件系统学数据结构" />
+<meta property="og:description" content="从原理到实践，全面解析文件系统的设计理念、核心架构与性能优化策略" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/storage/2025/2025-05-03-ext4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-27T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从青铜到王者系列：跟着文件系统学数据结构">
+<meta itemprop="description" content="从原理到实践，全面解析文件系统的设计理念、核心架构与性能优化策略"><meta itemprop="datePublished" content="2025-04-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="8306">
+<meta itemprop="keywords" content="CEPH," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从青铜到王者系列：跟着文件系统学数据结构"/>
+<meta name="twitter:description" content="从原理到实践，全面解析文件系统的设计理念、核心架构与性能优化策略"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从青铜到王者系列：跟着文件系统学数据结构</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-27 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/CEPH/"> CEPH </a>
+            </div>
+          <span class="more-meta"> 约 8306 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#答疑1通过提供数据结构来数据ext4文件系统">答疑1：通过提供数据结构来数据EXT4文件系统</a>
+      <ul>
+        <li><a href="#11-目录项-采用什么数据结构存储">1.1 目录项 采用什么数据结构存储</a></li>
+        <li><a href="#12--inode采用什么数据结构进行存储">1.2  inode采用什么数据结构进行存储？</a></li>
+        <li><a href="#31-根节点4个extent插入过程">3.1 根节点4个extent插入过程</a></li>
+        <li><a href="#32-根节点下的叶子节点extent插入过程">3.2 根节点下的叶子节点extent插入过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#疑问2io读写过程">疑问2：IO读写过程</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#流程分析">流程分析</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#青铜疑问在写文件过程中">青铜疑问：在写文件过程中</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#3-linux内核源码ext4-extent详解">3. Linux内核源码：ext4 extent详解</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>老师好，小义同学，这是<!-- raw HTML omitted -->大厂面试拆解——项目实战<!-- raw HTML omitted -->系列的第<!-- raw HTML omitted -->8<!-- raw HTML omitted -->篇文章。</p>
+<p>知识地图：深入理解计算机系统&mdash;文件子系统</p>
+<p>一次只讲清楚一个问题：</p>
+<p>阅读本文你将获得以下收益：</p>
+<ul>
+<li>✅ ext4文件系统为了支持单个文件最大16TB存储，采用哪些数据结构？</li>
+<li>✅ 文件在创建、打开、读取过程中与上述数据结构有什么关系？(分析中)</li>
+</ul>
+<p>&ldquo;走暗路、耕瘦田、进窄门、见微光&quot;告诉我，面试关键就在于深入理解自己的项目，这才是最考察基本功的地方。<!-- raw HTML omitted -->然而现实情况往往是这样的：<!-- raw HTML omitted --></p>
+<ol>
+<li>第一家公司A：面试官问同样一个项目问题，没有回答出来，直接拜拜。</li>
+<li>公司A没有复盘明白，换下一家公司B面试，还是面试同样问题，还是回答不出来，直接拜拜。</li>
+<li>第三个公司C继续去面试，同样问题回答不出来，直接拜拜。</li>
+<li>过几年再去面试，还是面试同样问题。</li>
+</ol>
+<p>为什么会这样？</p>
+<ol>
+<li>
+<p>对同一个行业来说，面临都是相同业务场景，采用相同技术方案，差别就在于深入理解。有的企业通过添加机器解决，有的企业引用开源软件解决，有的企业需要定制开发。差距一个天上，一个地下。因为这些问题面试官根据业务挑选出来的题目，同一个题目卡住上千人、上万人，面试官不需要换题目。因为这就是行业最难挑战。仅仅看书，仅仅背诵八股文无法解决。</p>
+</li>
+<li>
+<p>你10+年工作经验的程序员，面试官至少P6、P7标准考察。企业需要什么人才？面试官只出一个项目题目，一个算法题目，就彻底考察一个候选人。必须超预期回答，不能像刚毕业那样回答，只沉浸在当时项目中。当时项目一钱不值，面试目的不是一个人写一个功能，而是一个人挑战整个行业。你要说自己可以，我行，在基础知识方面你做到最强。</p>
+</li>
+<li>
+<p>工作10年，面试官招聘的是一个人独立负责一个特性，给公司解决问题的，而不是什么设计好，按部就班。那个实习生、应届生，我已经没有这样待遇了。考察的是过去积累，而不是仅仅岗位。</p>
+</li>
+</ol>
+<h2 id="答疑1通过提供数据结构来数据ext4文件系统">答疑1：通过提供数据结构来数据EXT4文件系统</h2>
+<p><strong>ext4文件系统为了支持单个文件最大16TB存储，采用哪些数据结构？可视化的逻辑结构和代码实现怎么对应的？</strong></p>
+<p><strong>这里假设你熟悉了</strong></p>
+<ol>
+<li>了解严老师写的&lt;数据结构&gt;（C语言版）逻辑结构（不用紧张，非代码实现），参考一下 通过动画可视化数据结构和算法。</li>
+<li>**了解文件系统基本组成部分- 目录项，索引节点，逻辑块，，超级块
+<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/%E7%9B%AE%E5%BD%95%E9%A1%B9%E5%92%8C%E7%B4%A2%E5%BC%95%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="逻辑结构简单理解">
+小提示：为什么非要打破砂锅问到底（这个提示有点长）</li>
+<li>在日常生活中，通过网络搜集搜集到资料， 感觉有问题但是描述不出来，这就是 实践最好时机，现在要做事情把模糊感觉变成一个具体问题，如果无法变成具体问题，根本无法作者交流，只会点赞收藏，这个毫无意义，后面忙碌工作就淡忘。这给自己抱怨，不是我不想学，被安排太多事情，哪怕后面有时间也不会看，<strong>这个最可怕的事情</strong>，别人全能人，自然全能角度衡量，不仅要完成工作，还要搞懂原理，具体你怎么搞，抽时间我不管，谁记得 因为忙碌工作，，现在5分钟内，把模糊感觉变成具体需求？无论大小，无论难易都接受。<strong>5分钟，提出一个好问题 就相当于完成20%</strong> ，因为不去做后果太可怕了，承受不了，</li>
+<li>把模糊感觉变成一个具体问题 最低成本，最有效方式，公司架构师，项目经理，SRE是最直接了解事情根本根本的，他们项目支持，各种环境支持，各种问题支持，你根本不具备这样资源，更具备这样能力，让你设计项目可以吗不可以，让独立解决一个问题可以吗 不可以？，自放弃专门项目，专门问题自己练手，你会说，可以问他们呀，他们无数项目，无数个问题等着解决，根本没时间，关键自己自己说不出来，都是无效沟通，因此<strong>第一直觉就是第一生产力，也是最直接最重要一个问题，在坚持5分钟 完成30%</strong></li>
+<li>怎么做?别人怎么做，就跟踪怎么做，搜集别人写文章，别人视频，自己不停练习，练习，从h这样最简例子开始，不停演进，在演进，<strong>在技术资料面前，大家看到都是一样的</strong>，</li>
+</ol>
+<ul>
+<li>
+<p>不要说我不是专家，我不是领导，没有项目支持，没有客户驱动，都是瞎研究，无组织，无纪录，毫无价值和意义 公司百万千万客户项目你根本没有这个能力， 既然他出现在面前 ，就是说明是你需要急需要解决事情，是看的到，听到事情，伸手够到事情，不要100%了解，不要 拿出100%研究，至少想别人解释清楚 这是什么，最后别人一问三不知，让别人鄙视不如自己鄙视自己，从疑惑地方开始。</p>
+</li>
+<li>
+<p>自己探索一番，不过消耗你时间和精力，不到导致部落战争牺牲xx人，不会导致重大决策失败损失xxx 亿，你根本影响别人，公司早就不同岗位划分隔离好了。不会别人挣多少钱，不给比人造成多大影响，放下担心，专注目前15分钟 就是要做事情。</p>
+</li>
+</ul>
+<h3 id="11-目录项-采用什么数据结构存储">1.1 目录项 采用什么数据结构存储</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508230710.png" alt="大目录查找"></p>
+<p>主要内容</p>
+<ul>
+<li>Linear (Classic) Directories</li>
+<li>Hash Tree Directories</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>线性目录（如Ext2）</th>
+<th>Htree目录（如Ext4）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查找效率</td>
+<td>O(n)（需遍历所有项）</td>
+<td>O(log n)（哈希过滤）</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>小规模目录（&lt;1000项）</td>
+<td>大规模目录（百万级项）</td>
+</tr>
+<tr>
+<td>存储开销</td>
+<td>低</td>
+<td>较高（需额外索引块）</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>差  Directory scalability</td>
+<td>支持动态分裂与多级索引</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508171818.png" alt="来源：趣谈 Linux 操作系统"></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>举例说明：</p>
+<p>一个目录下多个文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@watchpoints icfs<span class="o">]</span><span class="c1"># ls -ltra |sort</span>
+
+drwxr-xr-x <span class="m">3</span> root root   <span class="m">4096</span> 3月  <span class="m">24</span> 11:31 ..（上个目录）
+drwxr-xr-x <span class="m">4</span> root root   <span class="m">4096</span> 5月  <span class="m">8</span> 16:02 . （当前目录）
+-rw-r--r-- <span class="m">1</span> root root <span class="m">4194304</span> 5月  <span class="m">2</span> 17:40 file1
+-rw-r--r-- <span class="m">1</span> root root <span class="m">4194304</span> 5月  <span class="m">2</span> 17:40 file2
+-rw-r--r-- <span class="m">1</span> root root <span class="m">4194304</span> 5月  <span class="m">2</span> 17:40 file3
+</code></pre></td></tr></table>
+</div>
+</div><p>目录本质也是一种文件，但是这种目录文件的内容，</p>
+<p>是其下文件或目录的inode与文件名信息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">inode1  file1
+inode2  file2
+inode3  file3
+
+</code></pre></td></tr></table>
+</div>
+</div><p>当然了，这只是示意，目录中记录的条目并非这么简单了，但也并不复杂，结构体如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="mi">1914</span> <span class="k">struct</span> <span class="n">ext4_dir_entry_2</span> <span class="p">{</span>                                                                                                                               
+<span class="mi">1915</span>     <span class="n">__le32</span>  <span class="n">inode</span><span class="p">;</span>          <span class="cm">/* Inode number */</span>
+<span class="mi">1916</span>     <span class="n">__le16</span>  <span class="n">rec_len</span><span class="p">;</span>        <span class="cm">/* Directory entry length */</span>
+<span class="mi">1917</span>     <span class="n">__u8</span>    <span class="n">name_len</span><span class="p">;</span>       <span class="cm">/* Name length */</span>
+<span class="mi">1918</span>     <span class="n">__u8</span>    <span class="n">file_type</span><span class="p">;</span>
+<span class="mi">1919</span>     <span class="kt">char</span>    <span class="n">name</span><span class="p">[</span><span class="n">EXT4_NAME_LEN</span><span class="p">];</span>    <span class="cm">/* File name */</span>
+<span class="mi">1920</span> <span class="p">};</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//www.kernel.org/doc/html/latest/filesystems/ext4/dynamic.html#directory-entries
+</span></code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Size</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x0</td>
+<td>__le32</td>
+<td>inode</td>
+<td>Number of the inode that this directory entry points to.</td>
+</tr>
+<tr>
+<td>0x4</td>
+<td>__le16</td>
+<td>rec_len</td>
+<td>Length of this directory entry. Must be a multiple of 4.</td>
+</tr>
+<tr>
+<td>0x6</td>
+<td>__le16</td>
+<td>name_len</td>
+<td>Length of the file name.</td>
+</tr>
+<tr>
+<td>0x8</td>
+<td>char</td>
+<td>name[EXT4_NAME_LEN]</td>
+<td>File name.</td>
+</tr>
+<tr>
+<td>就是一个数组呀，</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>适合目录下文件数目比较少的情况下，一个块存储。<strong>那么为了获取子文件的inode，一次io操作完成</strong></p>
+</li>
+<li>
+<p>如果一个目录下有几十万个条目，一旦需要几十几百个block？需要多次IO怎么处理？</p>
+</li>
+</ul>
+<p><strong>dir_index 特性：</strong></p>
+<ul>
+<li>
+<p>线性目录项不利于系统性能提升。因而从ext3开始加入了快速平衡树哈希目录项名称</p>
+</li>
+<li>
+<p>Ext4基于HTree的增强方案，在已有数据块的结构基础之上，新增了一层或多层的hash索引</p>
+</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508161706.png" alt="整体视角"></p>
+<h4 id="场景假设">场景假设：</h4>
+<p>假设目录<code>/docs</code>下有多个文件：<code>file1.txt</code>、<code>image.jpg</code>、<code>report.pdf</code>等，
+Htree的存储结构如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">（根索引块DX-block）
+├── 哈希范围 [0-1000] → 指向数据块1 (DE-block)
+│   ├── file1.txt (哈希值: 250)
+│   └── image.jpg (哈希值: 800)
+├── 哈希范围 [1001-2000] → 指向数据块2 (DE-block)
+│   └── report.pdf (哈希值: 1500)
+└── 哈希范围 [2001-3000] → 指向下一级索引块 (DX-block)
+    ├── 哈希范围 [2001-2500] → 指向数据块3 (DE-block)
+    │   └── data.csv (哈希值: 2200)
+    └── 哈希范围 [2501-3000] → 指向数据块4 (DE-block)
+        └── backup.zip (哈希值: 2800)
+</code></pre></td></tr></table>
+</div>
+</div><p>关键组件：</p>
+<ol>
+<li><strong>DX-block（索引块）</strong>：存储哈希范围与子块地址的映射（如<code>[0-1000] → 块1</code>）</li>
+<li><strong>DE-block（数据块）</strong>：存储实际目录项（文件名、inode ID等），内部不排序，但通过哈希范围过滤&mdash;这个和原来存储方式一样</li>
+<li><strong>哈希值</strong>：由文件名计算得出，决定目录项所属的块。</li>
+</ol>
+<h5 id="对应代码">对应代码</h5>
+<p>**Htree的根 ：struct dx_root</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="n">Hash</span> <span class="n">Tree</span> <span class="n">Directories</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//www.kernel.org/doc/html/latest/filesystems/ext4/dynamic.html#directory-entries
+</span><span class="c1">// Htree 根索引块结构（兼容传统目录格式）
+</span><span class="c1"></span><span class="k">struct</span> <span class="nc">dx_root</span> <span class="p">{</span>
+    <span class="c1">// 伪造目录项：模拟传统目录的 &#34;.&#34; 条目（当前目录）
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">fake_dirent</span> <span class="n">dot</span><span class="p">;</span>       <span class="c1">// 伪目录项头部（inode、rec_len等）
+</span><span class="c1"></span>    <span class="kt">char</span> <span class="n">dot_name</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>             <span class="c1">// 固定存储 &#34;.&#34;
+</span><span class="c1"></span>    
+    <span class="c1">// 伪造目录项：模拟传统目录的 &#34;..&#34; 条目（上级目录）
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">fake_dirent</span> <span class="n">dotdot</span><span class="p">;</span>    <span class="c1">// 伪目录项头部
+</span><span class="c1"></span>    <span class="kt">char</span> <span class="n">dotdot_name</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>          <span class="c1">// 固定存储 &#34;..&#34;,
+</span><span class="c1"></span>    
+    <span class="c1">// Htree 根索引元数据（关键控制信息）
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">dx_root_info</span> <span class="p">{</span>
+        <span class="n">__le32</span> <span class="n">reserved_zero</span><span class="p">;</span>     <span class="c1">// 保留字段
+</span><span class="c1"></span>        <span class="n">u8</span> <span class="n">hash_version</span><span class="p">;</span>          <span class="c1">// 哈希算法版本
+</span><span class="c1"></span>        <span class="n">u8</span> <span class="n">info_length</span><span class="p">;</span>           <span class="c1">// 固定为 8（
+</span><span class="c1"></span>        <span class="n">u8</span> <span class="n">indirect_levels</span><span class="p">;</span>       <span class="c1">// 索引层级：0=仅根节点，表示间接索引的层数
+</span><span class="c1"></span>        <span class="n">u8</span> <span class="n">unused_flags</span><span class="p">;</span>          <span class="c1">// 未使用标志位（兼容性保留）
+</span><span class="c1"></span>    <span class="p">}</span> <span class="n">info</span><span class="p">;</span>
+    
+    <span class="c1">// 哈希映射入口数组（动态长度，通过 entries[0] 定义柔性数组）
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">dx_entry</span> <span class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>   <span class="c1">// 每个条目包含哈希范围及子块指针
+</span><span class="c1"></span><span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://bean-li.github.io/assets/EXT4/htree_directory.jpg" alt="上图来自EXT4方面专家阿里的DongHao，他是以EXT3为例，我太懒了，就不亲自绘EXT4的图了，都是一样的">
+索引项由结构体 dx_entry表示，本质上是文件名的哈希值和数据块的一个映射关系。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">struct</span> <span class="nc">dx_entry</span>
+<span class="p">{</span>
+    <span class="n">__le32</span> <span class="n">hash</span><span class="p">;</span>
+    <span class="n">__le32</span> <span class="n">block</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果我们要查找一个目录下面的文件名，可以通过名称取哈希。</p>
+<p>通过索引树，我们可以将一个目录下面的 N 多的文件分散到很多的块里面，可以很快地进行查找</p>
+<p>Ext4文件系统的目录索引采用<strong>两层哈希B树（Hash B-tree）<strong>结构
+其本质是</strong>哈希表与B树的结合体</strong></p>
+<p>可以通过debugfs工具查看目录的哈希树信息</p>
+<h5 id="小王疑问为什么ext4目录项索引采用选用-htree而不是b">小王疑问：为什么ext4目录项索引采用选用 HTree，而不是B+</h5>
+<p>HTree 是一种专门用于目录索引的树形数据结构 ，类似于 B 树 。</p>
+<p>它们的深度恒定为一级或两级，扇出因子较高，使用文件名的哈希值 ，并且不需要平衡 。</p>
+<p>而是为了大目录场景专门设计的，HTree 索引用于 ext3 和 ext4 Linux 文件系统 ，并于 2.5.40 左右被合并到 Linux 内核中。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Htree（Ext4目录）</th>
+<th>B/B+树（如MySQL索引）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>索引键</td>
+<td>文件名哈希值（非有序）</td>
+<td>主键或索引字段值（有序）</td>
+</tr>
+<tr>
+<td>存储粒度</td>
+<td>目录项块（如4KB）</td>
+<td>数据页或磁盘块（如16KB）</td>
+</tr>
+<tr>
+<td>查询类型</td>
+<td>精确匹配（等值查询）</td>
+<td>范围查询、排序、最左前缀匹配</td>
+</tr>
+<tr>
+<td>结构扩展</td>
+<td>哈希冲突时分裂数据块</td>
+<td>节点填充度不足时分裂或合并</td>
+</tr>
+</tbody>
+</table>
+<p>HTree 与 B-tree/B⁺-tree 的比较</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>HTree</th>
+<th>B-tree / B⁺-tree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>树高</td>
+<td>常数（1 ～ 2 层）</td>
+<td>随数据量增加而增加</td>
+</tr>
+<tr>
+<td>扇出</td>
+<td>高（数千）</td>
+<td>较低（几十到数百，取决于节点大小）</td>
+</tr>
+<tr>
+<td>平衡</td>
+<td>无需平衡</td>
+<td>需分裂/合并以保持平衡</td>
+</tr>
+<tr>
+<td>键排序</td>
+<td>按哈希范围分布，不保证时序</td>
+<td>保证键的有序存储</td>
+</tr>
+<tr>
+<td>冲突处理</td>
+<td>溢出块或二级索引</td>
+<td>不存在哈希冲突（键唯一排序）</td>
+</tr>
+<tr>
+<td>查找复杂度</td>
+<td>O(1)～O(深度) ≈ O(1)</td>
+<td>O(logₙ N)</td>
+</tr>
+<tr>
+<td>元数据开销</td>
+<td>较小（只存哈希与指针）</td>
+<td>较大（存键-值对或指针、维持平衡信息）</td>
+</tr>
+</tbody>
+</table>
+<p>演示如下：</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508182510.png" alt="二层结构"></p>
+<p>上图展现了一个简单的两级 HTree 结构示例：</p>
+<ul>
+<li>
+<p><strong>根节点（Root Node）</strong>：存储一组哈希范围和对应的指针，例如 <code>[0–1000] → Leaf Node 1</code>，<code>[1001–2000] → Leaf Node 2</code>。查找时，先对文件名计算哈希值，落在某个范围内就跟随指针进入相应叶子节点。</p>
+</li>
+<li>
+<p><strong>叶子节点（Leaf Nodes）</strong>：包含目录项实际记录（或指向溢出块的链表），这里示例中：</p>
+<ul>
+<li><strong>Leaf Node 1</strong> 负责存储哈希值在 0–1000 范围内的文件名条目；</li>
+<li><strong>Leaf Node 2</strong> 负责存储哈希值在 1001–2000 范围内的文件名条目。</li>
+</ul>
+</li>
+</ul>
+<p>HTree 关键点：</p>
+<ol>
+<li><strong>定深度</strong>：此例中总共两层，深度不会随着条目增长而变化，定位只需访问根＋叶，访问次数恒定。</li>
+<li><strong>高扇出</strong>：在真实场景中，一个节点可包含数百到上千个哈希范围/指针，进一步减少深度。</li>
+<li><strong>哈希索引</strong>：使用哈希值作为键，不需要维护有序性，<strong>不进行节点分裂或合并，简化元数据更新并加速查找。</strong></li>
+</ol>
+<p>By default in ext3, directory entries are still stored in a linked list, which is very inefficient for directories with large numbers of entries.</p>
+<p>The di-rectory indexing feature addresses this scalability issue by storing directory entries in a constant depth HTree data structure, which is a specialized BTree-like struc-ture using 32-bit hashes</p>
+<h4 id="htree操作">Htree操作</h4>
+<p>Htree是持久存储于目录的数据块中，用来维护目录项布局的一种持久化数据结构。针对Htree有以下操作：</p>
+<ul>
+<li>查找（lookup）：在htree中查找目录项或者查看某文件名是否存储于该目录；</li>
+<li>插入目录项：在htree定位路径的DE-block中插入一个目录项；</li>
+<li>删除目录项：在htree定位路径的DE-block删除一个目录项；</li>
+<li>分裂DE-block：如果目录项正在插入一个满的DE-block，那么将会分配一个新的块，原来的DE-block中一半的目录项将会迁移到新分配的块中；&mdash;不需要重新调整平衡</li>
+<li>分裂DX-block：在分配一个新的DE-block时，需要将它插入到父DX-block。当DX-block满了的时候，会造成DX-block的分裂；&mdash;不需要重新调整平衡</li>
+</ul>
+<h3 id="12--inode采用什么数据结构进行存储">1.2  inode采用什么数据结构进行存储？</h3>
+<p>别人咀嚼过的内容，可能过时内容不是ext4的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/fs/ext4/ext4.h#L771
+</span><span class="c1"></span><span class="k">struct</span> <span class="nc">ext4_inode</span>
+		<span class="n">__le32</span>  <span class="n">i_block</span><span class="p">[</span><span class="n">EXT4_N_BLOCKS</span><span class="p">];</span><span class="cm">/* Pointers to blocks */</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508203244.png" alt="这个是ext3结构，来源趣谈操作系统"></p>
+<p>ext3 文件系统使用间接块映射方案，提供从逻辑块到磁盘块的一对一映射。</p>
+<p>这种方案对<strong>于稀疏或小文件非常有效，但对于较大文件的开销很高</strong>
+现在你应该能够意识到，这里面有一个非常显著的问题，</p>
+<p>对于大文件来讲，<strong>我们要多次读取硬盘才能找到相应的块</strong>，这样访问速度就会比较慢。</p>
+<p>ext4_extent 就像是一张&quot;纸条&rdquo;，用来记录文件里一段连续数据在硬盘上的位置和长度，比 Ext3 记&quot;每一块&quot;的方式要高效得多.</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508232057.png" alt="The new ext4 filesystem: current status and future plans"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508220007.png" alt="来源：Ext4文件系统之文件数据组织"></p>
+<h4 id="疑问不对呀从数据结构定义-根本和an-extent-tree-没有关系呀">疑问：不对呀，从数据结构定义 根本和An extent tree 没有关系呀？</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/torvalds/linux/blob/master/fs/ext4/ext4.h
+</span><span class="c1"></span><span class="cm">/*
+</span><span class="cm"> * Structure of an inode on the disk
+</span><span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">ext4_inode</span> <span class="p">{</span>
+	<span class="n">__le32</span>	<span class="n">i_block</span><span class="p">[</span><span class="n">EXT4_N_BLOCKS</span><span class="p">];</span><span class="cm">/* Pointers to blocks */</span>
+<span class="p">}</span>
+
+<span class="n">An</span> <span class="n">extent</span> <span class="n">tree</span> <span class="n">is</span> <span class="n">a</span> <span class="n">data</span> <span class="n">structure</span> <span class="n">that</span> <span class="n">maintains</span> <span class="n">the</span> <span class="n">extents</span> <span class="n">associated</span> <span class="n">with</span> <span class="n">an</span> <span class="n">inode</span><span class="p">.</span>
+
+<span class="n">The</span> <span class="n">extent</span> <span class="n">tree</span> <span class="n">helps</span> <span class="n">in</span> <span class="n">faster</span> <span class="n">traversal</span> <span class="n">and</span> <span class="n">retrieval</span> <span class="n">of</span> <span class="n">data</span>
+
+
+<span class="n">The</span> <span class="err">`</span><span class="n">i_block</span><span class="err">`</span> <span class="n">field</span> <span class="n">stores</span> <span class="n">structures</span> <span class="n">such</span> <span class="n">as</span> <span class="err">`</span><span class="k">struct</span> <span class="nc">ext4_extent_header</span><span class="err">`</span><span class="p">,</span> 
+
+<span class="err">`</span><span class="k">struct</span> <span class="nc">ext4_extent_idx</span><span class="err">`</span><span class="p">,</span> <span class="n">and</span> 
+
+<span class="err">`</span><span class="k">struct</span> <span class="nc">ext4_extent</span><span class="err">`</span><span class="p">,</span> 
+<span class="n">which</span> <span class="n">are</span> <span class="n">integral</span> <span class="n">components</span> <span class="n">of</span> <span class="n">the</span> <span class="n">extent</span> <span class="n">tree</span><span class="p">.</span>
+
+<span class="n">Each</span> <span class="n">of</span> <span class="n">these</span> <span class="n">structures</span> <span class="n">have</span> <span class="n">a</span> <span class="n">size</span> <span class="n">of</span> <span class="mi">12</span> <span class="n">bytes</span>
+
+
+<span class="cp"># 查看 inode 的 extent 树
+</span><span class="cp"></span><span class="n">debugfs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span>
+<span class="nl">debugfs</span><span class="p">:</span> <span class="n">stat</span> <span class="o">&lt;</span><span class="n">inode号</span><span class="o">&gt;</span>
+<span class="cp"># 输出示例：
+</span><span class="cp"></span><span class="n">extent_header</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">eh_entries</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">extent_idx</span> <span class="mi">0</span><span class="o">:</span> <span class="n">logical</span> <span class="mf">0..1000</span> <span class="err">→</span> <span class="n">physical</span> <span class="mi">8192</span>
+<span class="n">extent_idx</span> <span class="mi">1</span><span class="o">:</span> <span class="n">logical</span> <span class="mf">1001..2000</span> <span class="err">→</span> <span class="n">physical</span> <span class="mi">12288</span>
+<span class="p">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508211558.png" alt="来源：https://blogs.oracle.com/linux/post/understanding-ext4-disk-layout-part-2"></p>
+<p>在 ext4 文件系统中，
+<code>__le32 i_block[EXT4_N_BLOCKS]</code> 数组通过 <strong>B+树结构</strong> 实现 extent（区段）关系</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/openwrt/make_ext4fs/blob/master/ext4_extents.h
+</span><span class="c1"></span>
+<span class="k">struct</span> <span class="nc">ext4_extent_header</span> <span class="p">{</span>
+    <span class="n">__le16</span> <span class="n">eh_magic</span><span class="p">;</span>    <span class="c1">// 魔数（标识有效性，固定为 0xF30A）
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">eh_entries</span><span class="p">;</span>  <span class="c1">// 当前节点包含的 extent 或索引项数量
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">eh_max</span><span class="p">;</span>      <span class="c1">// 节点最大容量（可存储的项数）
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">eh_depth</span><span class="p">;</span>    <span class="c1">// 树深度（0 表示叶子节点，&gt;0 表示索引节点）
+</span><span class="c1"></span>    <span class="n">__le32</span> <span class="n">eh_generation</span><span class="p">;</span> <span class="c1">// 树版本（用于校验）
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="n">eh_depth</span><span class="o">=</span><span class="mi">0</span><span class="err">：直接指向叶子节点（即文件数据块映射</span><span class="p">)</span>
+
+<span class="n">eh_depth</span><span class="o">&gt;</span><span class="mi">0</span><span class="err">：指向中间索引节点，需递归遍历</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><code>i_block[3]~i_block[15]</code> 共 12 个元素（每个 4 字节）动态存储两类数据：</p>
+<ul>
+<li><strong>叶子节点</strong>（<code>ext4_extent</code> 结构）：描述文件逻辑块到物理块的连续映射</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">ext4_extent</span> <span class="p">{</span>
+    <span class="n">__le32</span> <span class="n">ee_block</span><span class="p">;</span>     <span class="c1">// 起始逻辑块号
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">ee_len</span><span class="p">;</span>       <span class="c1">// 连续物理块数量（最大 32768）
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">ee_start_hi</span><span class="p">;</span>  <span class="c1">// 物理块号高 16 位
+</span><span class="c1"></span>    <span class="n">__le32</span> <span class="n">ee_start_lo</span><span class="p">;</span>  <span class="c1">// 物理块号低 32 位
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">ext4_extent_idx</span> <span class="p">{</span>
+    <span class="n">__le32</span> <span class="n">ei_block</span><span class="p">;</span>     <span class="c1">// 当前索引覆盖的最大逻辑块号
+</span><span class="c1"></span>    <span class="n">__le32</span> <span class="n">ei_leaf_lo</span><span class="p">;</span>   <span class="c1">// 下一层节点物理块号低 32 位
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">ei_leaf_hi</span><span class="p">;</span>   <span class="c1">// 下一层节点物理块号高 16 位
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>索引节点</strong>（<code>ext4_extent_idx</code> 结构）：指向下一层 B+树节点</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">    <span class="k">struct</span> <span class="n">ext4_extent_idx</span> <span class="p">{</span>
+    <span class="n">__le32</span> <span class="n">ei_block</span><span class="p">;</span>     <span class="c1">// 当前索引覆盖的最大逻辑块号
+</span><span class="c1"></span>    
+    <span class="n">__le32</span> <span class="n">ei_leaf_lo</span><span class="p">;</span>   <span class="c1">// 下一层节点物理块号低 32 位
+</span><span class="c1"></span>    <span class="n">__le16</span> <span class="n">ei_leaf_hi</span><span class="p">;</span>   <span class="c1">// 下一层节点物理块号高 16 位
+</span><span class="c1"></span><span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508214012.png" alt="来源：趣谈操作系统 "></p>
+<p>请问：这个图片隐藏什么内容，数组 怎么存储一个tree结果呢？</p>
+<p>如果文件不大，inode 里面的 i_block 中，可以放得下一个 ext4_extent_header 和 4 项 ext4_extent。所以这个时候，eh_depth 为 0，也即 inode 里面的就是叶子节点，树高度为 0。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">┌───────────────────────</span> <span class="n">inode</span> <span class="err">的</span> <span class="n">i_block</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="err">数组</span> <span class="err">───────────────────────┐</span>
+<span class="err">│</span>                                                                           <span class="err">│</span>
+<span class="err">│</span>  <span class="n">ext4_extent_header</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>                                           <span class="err">│</span>
+<span class="err">│</span>  <span class="err">├──</span> <span class="nl">eh_magic</span><span class="p">:</span> <span class="mh">0xF30A</span>                                                     <span class="err">│</span>
+<span class="err">│</span>  <span class="err">├──</span> <span class="nl">eh_entries</span><span class="p">:</span> <span class="mi">4</span> <span class="p">(</span><span class="err">有效</span> <span class="n">extent</span> <span class="err">数量</span><span class="p">)</span>                                      <span class="err">│</span>
+<span class="err">│</span>  <span class="err">└──</span> <span class="nl">eh_max</span><span class="p">:</span> <span class="mi">4</span> <span class="p">(</span><span class="err">最大容量</span><span class="p">)</span>                                                 <span class="err">│</span>
+<span class="err">│</span>                                                                           <span class="err">│</span>
+<span class="err">│</span>  <span class="n">ext4_extent</span> <span class="mi">1</span>                                                            <span class="err">│</span>
+<span class="err">│</span>  <span class="err">├──</span> <span class="nl">ee_block</span><span class="p">:</span> <span class="mi">0</span>        <span class="err">→</span> <span class="err">逻辑块起始号</span>                                     <span class="err">│</span>
+<span class="err">│</span>  <span class="err">└──</span> <span class="nl">ee_start_lo</span><span class="p">:</span> <span class="mi">4096</span> <span class="err">→</span> <span class="err">物理块起始号</span>                                      <span class="err">│</span>
+<span class="err">│</span>                                                                           <span class="err">│</span>
+<span class="err">│</span>  <span class="n">ext4_extent</span> <span class="mi">2</span>                                                            <span class="err">│</span>
+<span class="err">│</span>  <span class="n">ext4_extent</span> <span class="mi">3</span>                                                            <span class="err">│</span>
+<span class="err">│</span>  <span class="n">ext4_extent</span> <span class="mi">4</span>                                                            <span class="err">│</span>
+<span class="err">└───────────────────────────────────────────────────────────────────────────┘</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>如果文件比较大，4 个 extent 放不下，就要分裂成为一棵树，eh_depth&gt;0 的节点就是索引节点，其中根节点深度最大，在 inode 中。最底层 eh_depth=0 的是叶子节点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">                                      <span class="err">┌───────────────┐</span>
+                                      <span class="err">│</span> <span class="n">inode</span> <span class="err">的</span>      <span class="err">│</span>
+                                      <span class="err">│</span> <span class="n">i_block</span> <span class="err">数组</span>  <span class="err">│</span>
+                                      <span class="err">├───────────────┤</span>
+                                      <span class="err">│</span> <span class="err">根节点</span>         <span class="err">│</span>
+                                      <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="err">│</span>
+                                      <span class="err">└──────┬────────┘</span>
+                                             <span class="err">│</span>
+                          <span class="err">┌──────────────────┼───────────────────┐</span>
+                          <span class="err">▼</span>                  <span class="err">▼</span>                   <span class="err">▼</span>
+                    <span class="err">┌─────────────┐</span>    <span class="err">┌─────────────┐</span>    <span class="err">┌─────────────┐</span>
+                    <span class="err">│</span> <span class="err">索引节点块</span>    <span class="err">│</span>    <span class="err">│</span> <span class="err">索引节点块</span>    <span class="err">│</span>    <span class="err">│</span> <span class="err">索引节点块</span>    <span class="err">│</span>
+                    <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="err">│</span>    <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="err">│</span>    <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="err">│</span>
+                    <span class="err">└──────┬──────┘</span>    <span class="err">└──────┬──────┘</span>    <span class="err">└──────┬──────┘</span>
+                           <span class="err">│</span>                  <span class="err">│</span>                   <span class="err">│</span>
+               <span class="err">┌───────────┘</span>                  <span class="err">└───────────────┐</span>   <span class="err">└───────────┐</span>
+               <span class="err">▼</span>                                              <span class="err">▼</span>                <span class="err">▼</span>
+        <span class="err">┌─────────────┐</span>                                <span class="err">┌─────────────┐</span>    <span class="err">┌─────────────┐</span>
+        <span class="err">│</span> <span class="err">叶子节点块</span>    <span class="err">│</span>                                <span class="err">│</span> <span class="err">叶子节点块</span>    <span class="err">│</span>    <span class="err">│</span> <span class="err">叶子节点块</span>    <span class="err">│</span>
+        <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="err">│</span>                                <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="err">│</span>    <span class="err">│</span> <span class="p">(</span><span class="n">eh_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="err">│</span>
+        <span class="err">└──────┬───────┘</span>                                <span class="err">└──────┬───────┘</span>    <span class="err">└──────┬───────┘</span>
+               <span class="err">▼</span>                                              <span class="err">▼</span>                   <span class="err">▼</span>
+        <span class="err">┌─────────────┐</span>                                <span class="err">┌─────────────┐</span>    <span class="err">┌─────────────┐</span>
+        <span class="err">│</span> <span class="err">数据块</span>       <span class="err">│</span>                                <span class="err">│</span> <span class="err">数据块</span>       <span class="err">│</span>    <span class="err">│</span> <span class="err">数据块</span>       <span class="err">│</span>
+        <span class="err">│</span> <span class="p">(</span><span class="err">物理块</span><span class="p">)</span>     <span class="err">│</span>                                <span class="err">│</span> <span class="p">(</span><span class="err">物理块</span><span class="p">)</span>     <span class="err">│</span>    <span class="err">│</span> <span class="p">(</span><span class="err">物理块</span><span class="p">)</span>     <span class="err">│</span>
+        <span class="err">└─────────────┘</span>                                <span class="err">└─────────────┘</span>    <span class="err">└─────────────┘</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="i_block数组的两种模式"><code>i_block</code>数组的两种模式</h4>
+<p>请一定看 <a href="https://docs.kernel.org/6.0/filesystems/ext4/dynamic.html#the-contents-of-inode-i-block">https://docs.kernel.org/6.0/filesystems/ext4/dynamic.html#the-contents-of-inode-i-block</a>
+<code>inode.i_block</code> can be used in different ways.</p>
+<p>在 ext4 中，<code>i_block</code>数组（定义于 <code>struct ext4_inode</code>）有两种使用模式，由 <code>i_flags</code> 中的 <code>EXT4_EXTENTS_FL</code> 标志位决定：</p>
+<ol>
+<li><strong>传统间接块模式</strong>（兼容 ext2/ext3）
+<ul>
+<li><code>i_block[0-11]</code> 直接存储数据块号，<code>i_block[12-14]</code> 指向间接块（一级、二级、三级）</li>
+<li>适用于未启用 extent 的文件或旧版本兼容场景。</li>
+</ul>
+</li>
+<li><strong>extent B+树模式</strong>
+<ul>
+<li><code>i_block</code> 存储 B+树的根节点，包含 <code>ext4_extent_header</code> 和多个 <code>ext4_extent</code> 或 <code>ext4_extent_idx</code> 项</li>
+<li>启用条件：文件创建时设置 <code>EXT4_EXTENTS_FL</code> 标志（通过 <code>ext4_set_inode_flag()</code> 函数</li>
+</ul>
+</li>
+</ol>
+<h4 id="演示ext4-extent-b树的形成过程">演示ext4 extent B+树的形成过程</h4>
+<h3 id="31-根节点4个extent插入过程">3.1 根节点4个extent插入过程</h3>
+<p>最开始，ext4 extent B+树是空的</p>
+<p><img src="https://picx.zhimg.com/v2-8eb0d680e096ba77a5f989ca0c864bc5_1440w.jpg" alt="">
+好的，现在我们把这个ext4_extent插入到ext4 extent B+树，如下所示：</p>
+<p><img src="https://picx.zhimg.com/v2-13ec8b4e74f27fb63299bc9cfea93d73_1440w.jpg" alt="">
+好的，现在当然需要3个ext4_extent保存这3段逻辑块地址与物理块地址的映射关系，并插入到ext4 extent B+树，全插入后如下所示：</p>
+<p><img src="https://pica.zhimg.com/v2-feb8d10f999e2611cbe51628560fdc54_1440w.jpg" alt=""></p>
+<h3 id="32-根节点下的叶子节点extent插入过程">3.2 根节点下的叶子节点extent插入过程</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508221301.png" alt="image.png">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508221309.png" alt="image.png">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508221335.png" alt="image.png">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508221340.png" alt="image.png">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250508221348.png" alt="3.3 根节点下索引节点的创建"></p>
+<h2 id="疑问2io读写过程">疑问2：IO读写过程</h2>
+<p>上来 先别直接分析io过程过程 ，假如io高楼大厦的话，那么 第一次地基是什么</p>
+<h4 id="文件拆分">文件拆分</h4>
+<ol>
+<li>如何创建一个文件 mkdir a b c 过程是什么（readdir）</li>
+<li>如何从目录下查找一个文件 cat /mnt/icfs/test/a</li>
+<li>cat /mnt/icfs/test/a</li>
+<li>和上面数据结构有什么关系？</li>
+</ol>
+<h2 id="流程分析">流程分析</h2>
+<p>dd if=/dev/zero of=/root/c++/test bs=1M count=16</p>
+<p>blktrace -d /dev/loop0 -o - |blkparse -i -</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250503101609.png" alt="image.png"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250503101650.png" alt="image.png"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250503101501.png" alt="image.png">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250503101725.png" alt="image.png"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250503102242.png" alt="image.png">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250503102558.png" alt="image.png"></p>
+<h4 id="请问疑问文件io读过程文件目录怎么读取内容怎么读取">请问疑问：文件io读过程，文件目录怎么读取，内容怎么读取</h4>
+<ul>
+<li>
+<h1 id="directory-entry-lookup-in-ext4">Directory Entry Lookup in ext4</h1>
+</li>
+<li>When we request the kernel to look up a file, the kernel goes through the following process:<br>
+当我们请求内核查找一个文件时，内核会经历以下过程：</li>
+</ul>
+<ol>
+<li>It obtains the inode and dentry of the parent directory.<br>
+它获取父目录的 inode 和 dentry。</li>
+<li>From the inode, it reads the extent tree information and retrieves the location of the dx_root of the hash tree (htree).<br>
+它从 inode 中读取范围树信息并检索哈希树 (htree) 的 dx_root 的位置。</li>
+<li>Using the hash value of the requested file, it traverses through the htree to locate the leaf block that contains the directory entry (dirent) of the requested file.<br>
+使用所请求文件的哈希值，它遍历 htree 来定位包含所请求文件的目录条目（dirent）的叶块</li>
+</ol>
+<p>对比：</p>
+<ul>
+<li>CephFS 则通过碎片化将单一目录拆分，<strong>客户端可并行</strong>地查询不同碎片，并利用 RADOS 的高并发访问特性避免单节点 I/O 瓶颈。</li>
+<li>CephFS 的目录查找仍然依赖 MDS 授权（capabilities）及碎片映射算法，但文件数据和多数元数据读取可 <strong>绕过 MDS</strong>，直接与 OSD/RADOS 交互，提升可扩展性</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>ext4 (HTree)</th>
+<th>CephFS (MDS + dirfrags)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>父目录 inode 获取</td>
+<td>dcache → page cache → 磁盘读取</td>
+<td>本地 capability 缓存，必要时向 MDS 发起 lookup</td>
+</tr>
+<tr>
+<td>文件布局定位</td>
+<td>extent tree → dx_root → 磁盘物理块</td>
+<td>MDS journaling → RADOS metadata pool → 客户端缓存 inode 布局</td>
+</tr>
+<tr>
+<td>目录项查找</td>
+<td>HTree hash 遍历 → dirent</td>
+<td>目录碎片化 → RADOS 对象直接读取 → 在片段中查找 dentry</td>
+</tr>
+</tbody>
+</table>
+<p>从上述对比可见，ext4 完全在单机层面依赖页缓存和 HTree，</p>
+<p>而 CephFS 则在集群环境下通过 MDS 分发元数据与目录碎片化设计，
+实现了面向大规模并发和海量条目的可扩展目录查找【大规模 通过添加机器实现，在单个数据结构设计不合理，还是常规map set实现】</p>
+<p>. 客户端如何&quot;知道&quot;数据在哪
+3.1 客户端侧计算</p>
+<ol>
+<li>客户端通过 librados 拉取最新 CRUSH Map。</li>
+<li>写入时，库根据对象名/PG 走 CRUSH 算法，计算出 Primary 和 Secondary OSD 列表。</li>
+<li>读取时，同样用 CRUSH 算法计算并直接联系相应 OSD，无需 MDS 或 MON 中</li>
+</ol>
+<h3 id="青铜疑问在写文件过程中">青铜疑问：在写文件过程中</h3>
+<h4 id="第一手资料">第一手资料</h4>
+<h5 id="1-an-introduction-to-the-linux-kernel-block-io-stack">[1] An Introduction to the Linux Kernel Block I/O Stack</h5>
+<ul>
+<li>来源：https://chemnitzer.linux-tage.de/2021/media/programm/folien/165.pdf</li>
+<li>Linux文件读写（BIO）波澜壮阔的一生</li>
+<li>Linux通用块设备层</li>
+<li>IO路径流向初探</li>
+<li>了解IO协议栈 <a href="https://www.slideshare.net/slideshow/io-12278640/12278640">https://www.slideshare.net/slideshow/io-12278640/12278640</a></li>
+</ul>
+<h4 id="2-论文-rearchitecting-linux-storage-stack-for-µs-latency-and-high-throughput">[2] 论文： <strong>Rearchitecting Linux Storage Stack for µs Latency and High Throughput</strong></h4>
+<ul>
+<li>原文：https://www.usenix.org/conference/osdi21/presentation/hwang</li>
+<li>翻译：重新构建 Linux 存储堆栈以实现 μs（微妙） 延迟和高吞吐量</li>
+<li>社区中普遍认为，使用 Linux 内核堆栈时不可能实现 μ 级的尾部延迟&ndash;如何解</li>
+<li>blk-switch 为 Linux 存储堆栈引入了一个按内核、<strong>多出口队列块层架构</strong></li>
+<li>主要介绍了两种存储栈结构：</li>
+</ul>
+<ol>
+<li>现有存储堆栈：低延迟或高吞吐量，但不能同时满足两者。
+在 Linux 存储堆栈的早期版本中，所有核提交的请求都在一个队列中处理
+完全公平调度程序 (CFS)：在共享内核的应用程序之间平均分配 CPU 资源，毫秒时间尺度，分配时间</li>
+<li>SPDK(广泛部署的用户空间堆栈)</li>
+<li>USENIX ATC &lsquo;19 - Asynchronous I/O Stack: A Low-latency Kernel I/O Stack for Ultra-Low Latency SSDs</li>
+<li><a href="https://www.youtube.com/watch?v=ri1MrvJnbSU">https://www.youtube.com/watch?v=ri1MrvJnbSU</a></li>
+<li><a href="https://www.youtube.com/watch?v=BBONTH-BZvU&amp;t=352s">https://www.youtube.com/watch?v=BBONTH-BZvU&amp;t=352s</a></li>
+</ol>
+<h5 id="3-ext4the-fourth-extended-file-system">【3】 Ext4（The fourth extended file system）</h5>
+<ol>
+<li>论文：The new ext4 filesystem: current status and future plans</li>
+<li><a href="https://github.com/MoonShadowzzc/Data-Structure">https://github.com/MoonShadowzzc/Data-Structure</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/520273303">刨根问底：Ext4文件系统目录下可以存放多少子文件</a></li>
+<li>Lustre并行目录操作的设计与实现 ✅ note 结构可视化</li>
+<li>EXT4 的 dir_index 特性✅阅读完成</li>
+<li>[fs] 与ext4_dir_entry_2相关的ext文件系统知识 ✅ 阅读摘要 目录也是文件</li>
+<li><a href="https://ty-chen.github.io/linux-kernel-fs/">https://ty-chen.github.io/linux-kernel-fs/</a> # Linux操作系统学习笔记（十一）文件系统</li>
+<li>一篇文章理解Ext4文件系统的目录</li>
+<li>
+<h1 id="ext4-data-structures-and-algorithms">ext4 Data Structures and Algorithms</h1>
+</li>
+<li>How ext4 File system is changing directory entry structure form linear to Htree?</li>
+<li>
+<h1 id="理解-ext4-磁盘布局第-2-部分-httpsblogsoraclecomlinuxpostunderstanding-ext4-disk-layout-part-2">理解 Ext4 磁盘布局，第 2 部分 <a href="https://blogs.oracle.com/linux/post/understanding-ext4-disk-layout-part-2">https://blogs.oracle.com/linux/post/understanding-ext4-disk-layout-part-2</a></h1>
+</li>
+</ol>
+<h3 id="3-linux内核源码ext4-extent详解">3. Linux内核源码：ext4 extent详解</h3>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/GjwnocmX-akq5b9W2Zwl4g">https://mp.weixin.qq.com/s/GjwnocmX-akq5b9W2Zwl4g</a></li>
+<li>[文件系统(六)：一文看懂linux ext4文件系统工作原理]</li>
+<li><a href="https://docs.kernel.org/6.0/filesystems/ext4/dynamic.html#the-contents-of-inode-i-block">https://docs.kernel.org/6.0/filesystems/ext4/dynamic.html#the-contents-of-inode-i-block</a></li>
+</ul>
+<h4 id="4-文件系统技术内幕">4. 文件系统技术内幕</h4>
+<ul>
+<li><a href="https://github.com/lvsoso/fs-tech-inside-story">https://github.com/lvsoso/fs-tech-inside-story</a></li>
+<li>文件系统源码分析之inode.c</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-27 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/CEPH/">CEPH</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/storage/2025/2025-05-02-what-is-io/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">IO的一生</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/storage/2025/2025-04-27-what-is-BlueStore/">
+            <span class="next-text nav-default">深入理解 新一代存储引擎BlueStore,需四步</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

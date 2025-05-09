@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ContextOS 模块开发与架构解析笔记 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/ContextOS/2025-05-03-contestos-window/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="ContextOS 模块开发与架构解析笔记" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/ContextOS/2025-05-03-contestos-window/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-05-03T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-05-03T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="ContextOS 模块开发与架构解析笔记">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-05-03T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-05-03T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1013">
+<meta itemprop="keywords" content="小而美,ContextOS," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ContextOS 模块开发与架构解析笔记"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">ContextOS 模块开发与架构解析笔记</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-05-03 00:00 </span>
+        
+          <span class="more-meta"> 约 1013 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境说明">环境说明</a>
+      <ul>
+        <li><a href="#window-本地-负责代码阅读">window 本地 负责代码阅读</a></li>
+        <li><a href="#云主机centos-2c2g环境代码运行">云主机centos 2c2g环境代码运行</a></li>
+      </ul>
+    </li>
+    <li><a href="#代码阅读">代码阅读</a>
+      <ul>
+        <li><a href="#第一天">第一天</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>本文目标</p>
+<p>✅ 熟悉：ContextOS 应用平台 使用方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://web.shylinux.com/
+</code></pre></td></tr></table>
+</div>
+</div><p>✅ 熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法</p>
+<p>✅ 探索如何模块化方式 从0到1快速开发一个小程序</p>
+<h2 id="环境说明">环境说明</h2>
+<h3 id="window-本地-负责代码阅读">window 本地 负责代码阅读</h3>
+<ul>
+<li>trea工具 ssh不支持，因此改为window阅读代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">云研发小程序 代码地址  https://git.shylinux.com/web/operation
+
+云研发小程序 演示地址 ：https://web.shylinux.com/s/20240903-operation/c/web.team.production.portal
+
+https://web.shylinux.com/
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="云主机centos-2c2g环境代码运行">云主机centos 2c2g环境代码运行</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">// 远程登陆的，需要授权
+<span class="nb">cd</span> /root/ContextOS
+./bin/ice.bin admin space login ce352f62e2473ca1bbb561accc878ce3
+登录地址：
+http://101.43.226.54:9020/
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="代码阅读">代码阅读</h2>
+<h3 id="第一天">第一天</h3>
+<h4 id="-1-了解云研发项目文档-mainsy">✅ 1 了解云研发项目文档 main.sy</h4>
+<h5 id="11-类比方式解释-什么是-mainsy文档">1.1 类比方式解释 什么是 main.sy文档</h5>
+<ul>
+<li>
+<p>类比:
+Jupyter Notebook是指一种基于网页的交互式计算环境
+它允许用户在浏览器中编写和运行代码，同时支持多种编程语言，如Python、R和Julia等。
+它不仅能够执行代码，还能展示代码的运行结果，包括文本、图表和可视化内容，非常适合数据科学、机器学习和数据分析等领域的开发工作</p>
+</li>
+<li>
+<p>类比: 画布 提供很多功能</p>
+</li>
+<li>
+<p>个人理解：
+在sy文档不仅可以写文字，图片，视频 还可以运行代码，但是加载程序中，一般不要很大</p>
+</li>
+</ul>
+<h5 id="12-使用方法">1.2 使用方法</h5>
+<ol>
+<li>
+<p>这个不是Markdown语法 ，但是基本概念类似https://markdown.com.cn/intro.html</p>
+</li>
+<li>
+<p>shy 文件的解析不是来自 Go 标准库，而是由 ice 框架实现的自定义解析器，web.wiki.word 是 Contexts 用来管理笔记与文档的工具，Contexts 的文档以 .shy 作为文件格式的后缀</p>
+</li>
+<li>
+<p>官方文档说明：https://shylinux.com/c/portal/started/#studio/note.shy</p>
+<p>用法：command &ldquo;参数&rdquo; [args] <code>多行内容</code></p>
+</li>
+</ol>
+<ul>
+<li>标题:  文本类   title &ldquo;云研发</li>
+<li>列表: 数据类， refer &ldquo;a b&rdquo;</li>
+<li>field web.code.mysql.client   【引入mysql 配置模块 遗留任务：没有找到对应的代码】</li>
+<li>field web.code.mysql.query args <code>mysql operation</code> 【参数指定了要连接的数据库名为 &ldquo;operation&rdquo;】</li>
+</ul>
+<h4 id="遗留任务--field-对应那个代码">遗留任务  field 对应那个代码？？</h4>
+<h4 id="-了解云研发项目文档-maingo">✅ 了解云研发项目文档 main.go</h4>
+<p>扩展阅读 方便解释一些概念</p>
+<ul>
+<li>Beego 是一个开源的 Golang Web 框架，以卓越的性能和遵循 MVC（模型-视图-控制器）设计模式为特点。它支持开发 Web 应用程序、API 和后端服务，并内置了路由、ORM、日志记录和 HTTP 处理工具。</li>
+<li>Gin 是一个用 Go (Golang) 编写的 HTTP Web 框架。它具有类似 Martini 的 API，具有更好的性能——快 40 倍。如果您需要出色的性能。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-05-03 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          <a href="/tags/ContextOS/">ContextOS</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/habit/2025/20250501-%E5%B0%8F%E7%8E%8B%E5%90%8C%E5%AD%A6-%E5%A6%82%E4%BD%95%E8%AE%A9%E8%87%AA%E6%88%91%E6%BF%80%E5%8A%B1%E6%8F%90%E5%8D%8740/">
+            <span class="next-text nav-default">2025-小王同学---写在白板上的2分钟：让自我激励提升40%</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
