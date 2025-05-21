@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="高性能C&#43;&#43;对象池的设计与实现" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/c/5-2025-05-14-3fs-ObjectPool/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争" />
+<meta property="og:description" content="高性能C&#43;&#43;对象池的设计与实现" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/c/5-2025-05-14-3fs-ObjectPool/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争">
+<meta itemprop="description" content="高性能C&#43;&#43;对象池的设计与实现"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6582">
+<meta itemprop="keywords" content="阅读之美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争"/>
+<meta name="twitter:description" content="高性能C&#43;&#43;对象池的设计与实现"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 6582 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#自问采用什么数据结构">自问：采用什么数据结构</a>
+      <ul>
+        <li><a href="#11-分层缓存架构类似cpu缓存">1.1 分层缓存架构（类似CPU缓存）</a></li>
+        <li><a href="#为什么无需同步">为什么无需同步？</a></li>
+      </ul>
+    </li>
+    <li><a href="#自问基本操作是什么">自问：基本操作是什么</a>
+      <ul>
+        <li><a href="#21-创建get和释放put操作流程图">2.1 创建get和释放put操作流程图</a></li>
+        <li><a href="#22-get和put接口实现">2.2 get和put接口实现</a></li>
+      </ul>
+    </li>
+    <li><a href="#别人知道而我不知道的技术细节">别人知道而我不知道的技术细节</a>
+      <ul>
+        <li><a href="#31-c智能指针的自定义销毁器">3.1 C++智能指针的自定义销毁器</a></li>
+        <li><a href="#应用1关闭文件网络套接字数据库连接">应用1：关闭文件/网络套接字/数据库连接</a></li>
+        <li><a href="#场景2内存释放时打印日志">场景2：内存释放时打印日志</a></li>
+        <li><a href="#场景3自定义分配器allocator-只执行析构函数不释放内存">场景3：自定义分配器（Allocator）—— 只执行析构函数，不释放内存</a></li>
+        <li><a href="#32-为什么使用reinterpret_cast">3.2 为什么使用reinterpret_cast？</a></li>
+      </ul>
+    </li>
+    <li><a href="#小结">小结</a>
+      <ul>
+        <li><a href="#我是谁">我是谁</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><!-- raw HTML omitted -->分享干货，主打一个真实<!-- raw HTML omitted --></p>
+<p>各位老师好，我是小义。</p>
+<p>本文主要描述 DeepSeek-ai/3FS对象池（ObjectPool）双层缓存架构的实现</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514230017.png" alt="图1-了解需求"></p>
+<p>阅读本文我将获得以下收益，希望对你也有帮助：</p>
+<p>✅ 利用C++标准库提供的vector、unique_ptr等工具，可以快速开发一个高效优雅的组件，一行代码搞定最难部分，足够简单。
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250515160251.png" alt="图2：抽象就是简单"></p>
+<p>✅ 利用C++提供的thread_local标记，能否模拟CPU三级缓存设计（L1、L2单核独有，L3多核共享）？</p>
+<p>能实现：</p>
+<ol>
+<li>C++保证不同线程创建静态局部对象时，全局只有一个实例（俗称单例模式）。一行代码解决问题：<code>static T l3</code>，不需要锁。</li>
+<li>C++保证不同线程创建局部线程私有对象时，有多少个线程就有多少个实例：<code>thread_local tls l2(l3)</code>，同样一行代码搞定，不需要锁。
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514201055.png" alt="图3：分级存储">
+✅ 单元测试的重要性不容忽视。</li>
+</ol>
+<p>让我们开始吧。</p>
+<p>风和日丽的中午，老王来到小义办公桌前说：</p>
+<p>&ldquo;最近上线的Ceph集群SWAP使用率偏高，导致读写业务延迟增加。原来128G内存（见下图）已经增加到256G作为临时解决方案。根据公司会议安排，请你预研一下内存池分配方案。&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">free -h
+              total        used        free      shared  buff/cache   available
+Mem:           128G        115G        3.2G        512M         9.8G         12G
+Swap:           16G        8.0G        8.0G
+</code></pre></td></tr></table>
+</div>
+</div><p>小义迅速记录了要点。</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514230017.png" alt="图1-了解需求"></p>
+<p>如何实现这个需求？根据已有资料，小义整理了几种思路：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>方向</th>
+<th>预计耗时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>思路1</td>
+<td>学习gcc-mirror/gcc</td>
+<td>1年，结果未知</td>
+</tr>
+<tr>
+<td>思路2</td>
+<td>学习google/tcmalloc</td>
+<td>半年，结果未知</td>
+</tr>
+<tr>
+<td>思路3</td>
+<td>学习STL源码剖析</td>
+<td>3个月，结果未知</td>
+</tr>
+<tr>
+<td>思路4</td>
+<td>学习经典数据库内存设计</td>
+<td>1个月，结果未知</td>
+</tr>
+</tbody>
+</table>
+<p>老王看到后直接否决：&ldquo;这太复杂了，投入这么多精力但结果未知，我怎么评估？回去继续调查，我不会批准的。越简单越好！&rdquo;</p>
+<p>小义开始自我鼓励：</p>
+<ol>
+<li><!-- raw HTML omitted -->我做不到的事情，别人一定想到了解决办法<!-- raw HTML omitted --></li>
+<li><a href="https://mp.weixin.qq.com/s/HyepTWcogQRpdLXkLfrKHA">深入理解ThreadLocal变量</a>文章提到C++11新特性：thread_local，这与多线程相关</li>
+<li>deepseek-ai/3FS（一个为AI训练和推理工作负载设计的高性能分布式文件系统）肯定遇到过类似情况，看看他们怎么解决的</li>
+<li>代码位置：https://github.com/deepseek-ai/3FS/blob/main/src/common/utils/ObjectPool.h</li>
+</ol>
+<p><strong>划重点：在阅读代码之前，应该问自己三个问题</strong></p>
+<ol>
+<li>采用了什么数据结构？整体架构是什么？</li>
+<li>使用了什么算法？get、set流程是怎样的？</li>
+<li>有哪些常用但自己不熟悉的技术细节？</li>
+</ol>
+<h2 id="自问采用什么数据结构">自问：采用什么数据结构</h2>
+<h3 id="11-分层缓存架构类似cpu缓存">1.1 分层缓存架构（类似CPU缓存）</h3>
+<p>在高并发系统中，采用线程局部缓存的对象池相比直接使用全局池通常能提供：</p>
+<ul>
+<li>10-100倍的吞吐量提升</li>
+<li>显著降低的延迟（特别是尾部延迟）</li>
+<li>更好的扩展性（随线程数增加而线性提升）</li>
+</ul>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514201055.png" alt="分级存储"></p>
+<p>类图：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="o">+--------------------------------------+</span>
+<span class="o">|</span>           <span class="nx">ObjectPool</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span>              <span class="o">|</span>
+<span class="o">+--------------------------------------+</span>
+<span class="o">|</span> <span class="nx">线程本地存储</span> <span class="p">(</span><span class="nx">TLS</span><span class="p">)</span>      <span class="o">|</span> <span class="nx">全局存储</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="o">+----------------------+</span> <span class="o">+----------+</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">|</span> <span class="nx">first_batch</span>          <span class="o">|</span> <span class="o">|</span> <span class="nx">global_</span>  <span class="o">|</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">|</span> <span class="p">(</span><span class="nx">主缓存队列</span><span class="p">)</span>          <span class="o">|</span> <span class="o">|</span> <span class="p">(</span><span class="nx">批次队列</span><span class="p">)</span><span class="o">|</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">+----------------------+</span> <span class="o">+----------+</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">|</span> <span class="nx">second_batch</span>         <span class="o">|</span> <span class="o">|</span> <span class="nx">mutex_</span>   <span class="o">|</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">|</span> <span class="p">(</span><span class="nx">溢出队列</span><span class="p">)</span>            <span class="o">|</span> <span class="o">|</span>          <span class="o">|</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">+----------------------+</span> <span class="o">+----------+</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+</span>
+        <span class="err">↑</span>                     <span class="err">↑</span>
+        <span class="o">|</span>                     <span class="o">|</span>
+<span class="o">+---------------+</span>   <span class="o">+------------------+</span>
+<span class="o">|</span> <span class="nx">Ptr</span> <span class="p">(</span><span class="nx">智能指针</span><span class="p">)</span> <span class="o">|</span>   <span class="o">|</span> <span class="nx">Storage</span> <span class="p">(</span><span class="nx">存储块</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">|</span> <span class="kd">with</span> <span class="nx">Deleter</span>  <span class="o">|</span>   <span class="o">+------------------+</span>
+<span class="o">+---------------+</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可视化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">进程内存空间</span>
+<span class="err">├──</span> <span class="nx">共享区域</span>
+<span class="err">│</span>   <span class="err">└──</span> <span class="kr">static</span> <span class="nx">ObjectPool</span> <span class="nx">instance</span>  <span class="p">(</span><span class="nx">单个实例</span><span class="err">，</span><span class="nx">共享</span><span class="p">)</span>
+<span class="err">│</span>       <span class="err">├──</span> <span class="nx">mutex_</span>
+<span class="err">│</span>       <span class="err">└──</span> <span class="nx">global_</span>
+<span class="err">│</span>
+<span class="err">├──</span> <span class="nx">线程1私有区域</span>
+<span class="err">│</span>   <span class="err">└──</span> <span class="nx">thread_local</span> <span class="nx">TLS</span> <span class="nx">tls</span>  <span class="p">(</span><span class="nx">线程1专属</span><span class="p">)</span>
+<span class="err">│</span>       <span class="err">├──</span> <span class="nx">first_</span>  <span class="p">(</span><span class="nx">线程1专属批次</span><span class="p">)</span>
+<span class="err">│</span>       <span class="err">└──</span> <span class="nx">second_</span> <span class="p">(</span><span class="nx">线程1专属批次</span><span class="p">)</span>
+<span class="err">│</span>
+<span class="err">├──</span> <span class="nx">线程2私有区域</span>
+<span class="err">│</span>   <span class="err">└──</span> <span class="nx">thread_local</span> <span class="nx">TLS</span> <span class="nx">tls</span>  <span class="p">(</span><span class="nx">线程2专属</span><span class="p">)</span>
+<span class="err">│</span>       <span class="err">├──</span> <span class="nx">first_</span>  <span class="p">(</span><span class="nx">线程2专属批次</span><span class="p">)</span>
+<span class="err">│</span>       <span class="err">└──</span> <span class="nx">second_</span> <span class="p">(</span><span class="nx">线程2专属批次</span><span class="p">)</span>
+<span class="err">└──</span> <span class="p">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="为什么无需同步">为什么无需同步？</h3>
+<p>原因在于：</p>
+<ol>
+<li>每个线程操作的first_和second_批次是线程私有的</li>
+<li>线程私有数据不会被其他线程访问</li>
+<li>没有共享访问，就不需要同步机制</li>
+</ol>
+<p>只有在两种情况下才需要同步：</p>
+<ol>
+<li>线程的本地缓存耗尽，需要从全局池获取新批次</li>
+<li>线程的本地缓存溢出，需要归还批次到全局池</li>
+</ol>
+<h2 id="自问基本操作是什么">自问：基本操作是什么</h2>
+<h3 id="21-创建get和释放put操作流程图">2.1 创建get和释放put操作流程图</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250515123233.png" alt="申请读取操作"></p>
+<p>文本绘制流程图：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js">	<span class="err">┌─────────────────┐</span>
+	<span class="err">│</span> <span class="nx">调用</span> <span class="nx">ObjectPool</span><span class="o">::</span><span class="nx">get</span><span class="p">()</span> <span class="err">│</span>
+	<span class="err">└──────────┬──────┘</span>
+	           <span class="err">↓</span>
+	<span class="err">┌─────────────────┐</span>
+	<span class="err">│</span> <span class="nx">获取线程本地存储</span> <span class="nx">TLS</span> <span class="err">│</span>
+	<span class="err">└──────────┬──────┘</span>
+	           <span class="err">↓</span>
+	<span class="err">┌─────────────────┐</span>
+	<span class="err">│</span><span class="nx">检查</span> <span class="nx">second_</span> <span class="nx">批次</span> <span class="err">│</span>
+	<span class="err">└──────────┬──────┘</span>
+	           <span class="err">↓</span>
+	<span class="err">┌───────────────────────┐</span>
+	<span class="err">│</span>    <span class="nx">second_</span> <span class="nx">有对象</span><span class="o">?</span>    <span class="err">│</span>
+	<span class="err">└───────────┬───────────┘</span>
+	      <span class="nx">Yes</span>   <span class="err">│</span>     <span class="nx">No</span>
+	      <span class="err">┌─────┘</span>     <span class="err">└────┐</span>
+	      <span class="err">↓</span>                <span class="err">↓</span>
+	<span class="err">┌──────────────┐</span>  <span class="err">┌──────────────┐</span>
+	<span class="err">│</span><span class="nx">从second_取对象</span><span class="err">│</span>  <span class="err">│</span><span class="nx">检查first_批次</span><span class="err">│</span>
+	<span class="err">└───────┬──────┘</span>  <span class="err">└───────┬──────┘</span>
+	        <span class="err">│</span>                 <span class="err">│</span>
+	        <span class="err">↓</span>                 <span class="err">↓</span>
+	<span class="err">┌───────────────┐</span>  <span class="err">┌───────────────────┐</span>
+	<span class="err">│</span> <span class="nx">返回构造的对象</span> <span class="err">│</span>  <span class="err">│</span>   <span class="nx">first_</span> <span class="nx">有对象</span><span class="o">?</span>  <span class="err">│</span>
+	<span class="err">└───────────────┘</span>  <span class="err">└────────┬──────────┘</span>
+	                      <span class="nx">Yes</span>   <span class="err">│</span>    <span class="nx">No</span>
+	                      <span class="err">┌─────┘</span>    <span class="err">└────┐</span>
+	                      <span class="err">↓</span>               <span class="err">↓</span>
+	               <span class="err">┌──────────────┐</span> <span class="err">┌───────────────┐</span>
+	               <span class="err">│</span><span class="nx">从first_取对象</span><span class="err">│</span> <span class="err">│</span><span class="nx">尝试从全局获取批次</span><span class="err">│</span>
+	               <span class="err">└───────┬──────┘</span> <span class="err">└───────┬───────┘</span>
+	                       <span class="err">│</span>                <span class="err">│</span>
+	                       <span class="err">↓</span>                <span class="err">↓</span>
+	               <span class="err">┌───────────────┐</span> <span class="err">┌───────────────┐</span>
+	               <span class="err">│</span> <span class="nx">返回构造的对象</span> <span class="err">│</span> <span class="err">│</span>  <span class="nx">获取成功</span><span class="o">?</span>    <span class="err">│</span>
+	               <span class="err">└───────────────┘</span> <span class="err">└───────┬───────┘</span>
+	                                    <span class="nx">Yes</span>  <span class="err">│</span>   <span class="nx">No</span>
+	                                    <span class="err">┌────┘</span>   <span class="err">└────┐</span>
+	                                    <span class="err">↓</span>           <span class="err">↓</span>
+	                           <span class="err">┌────────────────┐</span> <span class="err">┌────────────────┐</span>
+	                           <span class="err">│</span><span class="nx">从批次获取并返回</span><span class="err">│</span> <span class="err">│</span><span class="nx">创建kThreadLocalMaxNum个对象</span><span class="err">│</span>
+	                           <span class="err">└────────────────┘</span> <span class="err">└─────────┬──────┘</span>
+	                                                        <span class="err">↓</span>
+	                                              <span class="err">┌────────────────┐</span>
+	                                              <span class="err">│</span><span class="nx">从批次获取并返回</span><span class="err">│</span>
+	                                              <span class="err">└────────────────┘</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250515123545.png" alt="普通操作"></p>
+<p>文本绘制流程图：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="err">┌─────────────────┐</span>
+<span class="err">│</span>  <span class="nx">对象销毁触发</span>   <span class="err">│</span>
+<span class="err">│</span> <span class="nx">Deleter</span><span class="o">::</span><span class="nx">operator</span><span class="p">()</span> <span class="err">│</span>
+<span class="err">└──────────┬──────┘</span>
+           <span class="err">↓</span>
+<span class="err">┌─────────────────┐</span>
+<span class="err">│</span>   <span class="nx">调用对象析构</span>   <span class="err">│</span>
+<span class="err">└──────────┬──────┘</span>
+           <span class="err">↓</span>
+<span class="err">┌─────────────────┐</span>
+<span class="err">│</span> <span class="nx">获取线程本地存储</span> <span class="nx">TLS</span> <span class="err">│</span>
+<span class="err">└──────────┬──────┘</span>
+           <span class="err">↓</span>
+<span class="err">┌─────────────────┐</span>
+<span class="err">│</span>  <span class="nx">first_</span> <span class="nx">满了</span><span class="o">?</span>   <span class="err">│</span>
+<span class="err">└───────────┬─────┘</span>
+      <span class="nx">No</span>    <span class="err">│</span>    <span class="nx">Yes</span>
+      <span class="err">┌─────┘</span>    <span class="err">└────┐</span>
+      <span class="err">↓</span>               <span class="err">↓</span>
+<span class="err">┌──────────────┐</span> <span class="err">┌──────────────┐</span>
+<span class="err">│</span><span class="nx">放入first_批次</span><span class="err">│</span> <span class="err">│</span><span class="nx">放入second_批次</span><span class="err">│</span>
+<span class="err">└──────────────┘</span> <span class="err">└───────┬──────┘</span>
+                         <span class="err">↓</span>
+                 <span class="err">┌───────────────────┐</span>
+                 <span class="err">│</span><span class="nx">second_</span> <span class="nx">达到阈值</span><span class="o">?</span>  <span class="err">│</span>
+                 <span class="err">└────────┬──────────┘</span>
+                    <span class="nx">No</span>    <span class="err">│</span>    <span class="nx">Yes</span>
+                    <span class="err">┌─────┘</span>    <span class="err">└────┐</span>
+                    <span class="err">↓</span>               <span class="err">↓</span>
+                    <span class="err">│</span>      <span class="err">┌──────────────────┐</span>
+                    <span class="err">│</span>      <span class="err">│</span><span class="nx">整批移入全局缓存</span>  <span class="err">│</span>
+                    <span class="err">│</span>      <span class="err">└─────────┬────────┘</span>
+                    <span class="err">│</span>                <span class="err">↓</span>
+                    <span class="err">│</span>      <span class="err">┌──────────────────┐</span>
+                    <span class="err">│</span>      <span class="err">│</span><span class="nx">清空并预留second_</span> <span class="err">│</span>
+                    <span class="err">│</span>      <span class="err">└──────────────────┘</span>
+                    <span class="err">↓</span>
+            <span class="err">┌───────────────┐</span>
+            <span class="err">│</span>     <span class="nx">结束</span>      <span class="err">│</span>
+            <span class="err">└───────────────┘</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>加锁全局操作：</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250515123928.png" alt="全局操作"></p>
+<h3 id="22-get和put接口实现">2.2 get和put接口实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="n">Ptr</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">Deleter</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// 唯一指针
+</span><span class="c1"></span>
+<span class="k">static</span> <span class="n">Ptr</span> <span class="nf">get</span><span class="p">()</span> <span class="p">{</span> 
+    <span class="c1">// 无需加锁
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">Ptr</span><span class="p">(</span><span class="k">new</span> <span class="p">(</span><span class="n">tls</span><span class="p">().</span><span class="n">get</span><span class="p">().</span><span class="n">release</span><span class="p">())</span> <span class="n">T</span><span class="p">);</span> 
+<span class="p">}</span>
+
+<span class="c1">// 伪代码表示
+</span><span class="c1"></span><span class="kt">void</span><span class="o">*</span> <span class="n">memory</span> <span class="o">=</span> <span class="n">get</span><span class="p">();</span>
+<span class="n">ptr</span> <span class="o">=</span> <span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="n">memory</span><span class="p">)</span> <span class="n">T</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>获取线程本地存储 TLS：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">static</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">tls</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">ObjectPool</span> <span class="n">instance</span><span class="p">;</span>  <span class="c1">// 单例模式，C++11中推荐的线程安全的单例实现方式
+</span><span class="c1"></span>    <span class="c1">// 疑问1：线程安全吗？多个线程同时调用tls()在第一次初始化时？不需要if判断吗？
+</span><span class="c1"></span>    <span class="c1">// 安全的。C++11中静态局部变量初始化是线程安全的
+</span><span class="c1"></span>    <span class="c1">// C++11静态局部变量的线程安全性依赖于编译器生成的隐式同步代码，
+</span><span class="c1"></span>    <span class="c1">// 通过守护变量和原子操作实现高效的线程安全初始化
+</span><span class="c1"></span>    <span class="c1">// 这是单例对象，整个程序中只有一个实例
+</span><span class="c1"></span>    
+    <span class="k">thread_local</span> <span class="n">TLS</span> <span class="n">tls</span><span class="p">{</span><span class="n">instance</span><span class="p">};</span>
+    <span class="c1">// 疑问2：
+</span><span class="c1"></span>    <span class="c1">// 在C语言中，定义三类线程，不同线程使用不同互斥锁、不同条件变量、不同线程局部变量，
+</span><span class="c1"></span>    <span class="c1">// 这是最简单、最不容易出错的方式，但都是写死的，扩展性不高。
+</span><span class="c1"></span>    <span class="c1">// TLS tls真的为不同线程创建不同副本吗？
+</span><span class="c1"></span>    
+    <span class="c1">// C++11 thread_local修饰TLS变量
+</span><span class="c1"></span>    <span class="c1">// 保证了parent是共享的，而其他成员在不同线程中是私有的
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">tls</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">TLS</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">TLS</span><span class="p">(</span><span class="n">ObjectPool</span> <span class="o">&amp;</span><span class="n">parent</span><span class="p">)</span><span class="o">:</span> <span class="n">parent_</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="p">{}</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">ObjectPool</span> <span class="o">&amp;</span><span class="n">parent_</span><span class="p">;</span> <span class="c1">// 指针类型，占用空间大小8字节
+</span><span class="c1"></span>    <span class="n">Batch</span> <span class="n">first_</span><span class="p">;</span>  <span class="c1">// 向量，线程独有
+</span><span class="c1"></span>    <span class="n">Batch</span> <span class="n">second_</span><span class="p">;</span> <span class="c1">// 向量，线程独有
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>划重点：</p>
+<ol>
+<li><code>static ObjectPool instance</code>：不要为初始化编写自己的<strong>双重检查锁定</strong></li>
+<li><code>thread_local TLS</code>：不同线程使用不同资源</li>
+</ol>
+<p>线程A调用 get()：</p>
+<ul>
+<li>调用 tls() → 获取线程A专属的TLS实例</li>
+<li>调用 tls().get() → 从线程A的本地缓存获取对象</li>
+<li>使用placement new构造对象</li>
+<li>返回智能指针Ptr</li>
+</ul>
+<p>线程B同时调用 get()：</p>
+<ul>
+<li>调用 tls() → 获取线程B专属的TLS实例（不同于线程A的实例）</li>
+<li>调用 tls().get() → 从线程B的本地缓存获取对象</li>
+<li>使用placement new构造对象</li>
+<li>返回智能指针Ptr</li>
+</ul>
+<p>疑问：</p>
+<ol>
+<li>如何确保一个get()函数能为不同线程创建不同的私有数据？</li>
+<li>答案在于tls()函数使用了thread_local关键字保证了这一点，用户无需考虑这个细节。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">// 线程A
+</span><span class="c1"></span><span class="n">Ptr</span> <span class="nf">get</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// 1. 获取线程A的TLS
+</span><span class="c1"></span>  <span class="n">TLS</span><span class="o">&amp;</span> <span class="n">threadLocalStorage</span> <span class="o">=</span> <span class="n">tls</span><span class="p">();</span>  <span class="c1">// 返回线程A专属的TLS
+</span><span class="c1"></span>  
+  <span class="c1">// 2. 从线程A的本地缓存获取对象
+</span><span class="c1"></span>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Storage</span><span class="o">&gt;</span> <span class="n">storage</span> <span class="o">=</span> <span class="n">threadLocalStorage</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+  <span class="c1">// 内部流程：
+</span><span class="c1"></span>  <span class="c1">//   - 先检查second_批次（线程A专属）
+</span><span class="c1"></span>  <span class="c1">//   - 再检查first_批次（线程A专属）
+</span><span class="c1"></span>  <span class="c1">//   - 如缓存为空，才从全局instance获取新批次
+</span><span class="c1"></span>  
+  <span class="c1">// 3. 构造并返回对象
+</span><span class="c1"></span>  <span class="k">return</span> <span class="n">Ptr</span><span class="p">(</span><span class="k">new</span> <span class="p">(</span><span class="n">storage</span><span class="p">.</span><span class="n">release</span><span class="p">())</span> <span class="n">T</span><span class="p">(...));</span>
+<span class="p">}</span>
+
+<span class="c1">// 线程B
+</span><span class="c1"></span><span class="n">Ptr</span> <span class="nf">get</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// 1. 获取线程B的TLS
+</span><span class="c1"></span>  <span class="n">TLS</span><span class="o">&amp;</span> <span class="n">threadLocalStorage</span> <span class="o">=</span> <span class="n">tls</span><span class="p">();</span>  <span class="c1">// 返回线程B专属的TLS
+</span><span class="c1"></span>  
+  <span class="c1">// 2. 从线程B的本地缓存获取对象
+</span><span class="c1"></span>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Storage</span><span class="o">&gt;</span> <span class="n">storage</span> <span class="o">=</span> <span class="n">threadLocalStorage</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+  <span class="c1">// 内部流程：
+</span><span class="c1"></span>  <span class="c1">//   - 先检查线程B的second_批次
+</span><span class="c1"></span>  <span class="c1">//   - 再检查线程B的first_批次
+</span><span class="c1"></span>  <span class="c1">//   - 如线程B的缓存为空，才访问全局instance
+</span><span class="c1"></span>  
+  <span class="c1">// 3. 构造并返回对象
+</span><span class="c1"></span>  <span class="k">return</span> <span class="n">Ptr</span><span class="p">(</span><span class="k">new</span> <span class="p">(</span><span class="n">storage</span><span class="p">.</span><span class="n">release</span><span class="p">())</span> <span class="n">T</span><span class="p">(...));</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>get操作的具体实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">// 从线程本地缓存或全局缓存获取对象
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Storage</span><span class="o">&gt;</span> <span class="n">get</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 从second批次中弹出
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">second_</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">item</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">second_</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+        <span class="c1">// 疑问：为什么要std::move？因为vector存放的是unique_ptr
+</span><span class="c1"></span>        <span class="n">second_</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span> 
+        <span class="k">return</span> <span class="n">item</span><span class="p">;</span> <span class="c1">// 类似CPU的L1缓存
+</span><span class="c1"></span>    <span class="p">}</span> <span class="c1">// using Batch = std::vector&lt;std::unique_ptr&lt;Storage&gt;&gt;;
+</span><span class="c1"></span>    
+    <span class="c1">// 当本地和全局缓存都为空时分配一个批次
+</span><span class="c1"></span>    <span class="c1">// L3需要加锁
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">first_</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">parent_</span><span class="p">.</span><span class="n">getBatch</span><span class="p">(</span><span class="n">first_</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// 处理空缓存情况
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="c1">// 从first批次中弹出
+</span><span class="c1"></span>    <span class="c1">// 类似CPU的L2缓存
+</span><span class="c1"></span>    <span class="k">auto</span> <span class="n">item</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">first_</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+    <span class="n">first_</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">item</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 从全局获取
+</span><span class="c1"></span><span class="kt">bool</span> <span class="nf">getBatch</span><span class="p">(</span><span class="n">Batch</span> <span class="o">&amp;</span><span class="n">batch</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="p">(</span><span class="n">mutex_</span><span class="p">);</span>
+    <span class="c1">// 从全局缓存中弹出一个批次
+</span><span class="c1"></span>    <span class="n">batch</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">global_</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+    <span class="n">global_</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="释放put接口执行析构但不释放内存">释放put接口（执行析构，但不释放内存）</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">创建                                    销毁
+  │                                      │
+  ▼                                      ▼
+┌────────┐    ┌─────────┐    ┌────────┐    ┌────────┐    ┌─────────┐
+│ get()  │───►│ 使用对象 │───►│ ~Ptr() │───►│Deleter │───►│ put()   │
+└────────┘    └─────────┘    └────────┘    └────────┘    └─────────┘
+     │                                                        │
+     ▼                                                        ▼
+┌────────┐                                              ┌─────────┐
+│tls.get()│                                             │tls.put()│
+└────────┘                                              └─────────┘
+</code></pre></td></tr></table>
+</div>
+</div><p>当智能指针释放时调用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">struct</span> <span class="nc">Deleter</span> <span class="p">{</span>
+    <span class="k">constexpr</span> <span class="nf">Deleter</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    
+    <span class="kt">void</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">T</span> <span class="o">*</span><span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">item</span><span class="o">-&gt;~</span><span class="n">T</span><span class="p">();</span>  <span class="c1">// 调用析构函数
+</span><span class="c1"></span>        <span class="c1">// 将内存重新解释为Storage并归还池中
+</span><span class="c1"></span>        <span class="n">tls</span><span class="p">().</span><span class="n">put</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Storage</span><span class="o">&gt;</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">Storage</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">item</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// 疑问1：为什么要用reinterpret_cast？
+</span><span class="c1">// 答：using Storage = std::aligned_storage_t&lt;sizeof(T), alignof(T)&gt; 解决了对齐问题
+</span><span class="c1"></span>
+<span class="c1">// 疑问2：item-&gt;~T() 可以单独抽出来，不执行free会内存泄漏吗？
+</span><span class="c1">// 答：不会，因为内存被重用而不是释放
+</span></code></pre></td></tr></table>
+</div>
+</div><p>划重点：</p>
+<ol>
+<li>不同线程释放各自的存储数据：tls().put()</li>
+<li>reinterpret_cast本身不支持对齐，std::aligned_storage_t解决了这个问题</li>
+<li>这种设计实现了完美的内存复用，避免了重复的堆分配/释放操作，同时确保了内存对齐和类型安全。虽然使用了底层技术，但通过良好的封装使风险可控，是性能与安全的平衡之选。</li>
+</ol>
+<h4 id="23-单元测试">2.3 单元测试</h4>
+<p>单元测试确保了代码的正确性和稳定性。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">TEST</span><span class="p">(</span><span class="n">TestObjectPool</span><span class="p">,</span> <span class="n">AllocateAndRelease</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="k">constexpr</span> <span class="k">auto</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+	
+	<span class="k">static</span> <span class="n">size_t</span> <span class="n">constructTimes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="k">static</span> <span class="n">size_t</span> <span class="n">destructTimes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="k">struct</span> <span class="nc">A</span> <span class="p">{</span>
+	
+		<span class="n">A</span><span class="p">()</span> <span class="p">{</span> <span class="o">++</span><span class="n">constructTimes</span><span class="p">;</span> <span class="p">}</span>
+		
+		<span class="c1">//call?
+</span><span class="c1"></span>		
+		<span class="o">~</span><span class="n">A</span><span class="p">()</span> <span class="p">{</span> <span class="o">++</span><span class="n">destructTimes</span><span class="p">;</span> <span class="p">}</span>
+		
+		<span class="c1">//call?
+</span><span class="c1"></span>	<span class="p">};</span>
+	
+	<span class="c1">//百万级别的分配/释放操作验证了系统在高压下的稳定性
+</span><span class="c1"></span>	
+	<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+	
+		<span class="n">ObjectPool</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;::</span><span class="n">get</span><span class="p">();</span>
+		
+		<span class="c1">//get 调用构造函数，返回一个智能指针,
+</span><span class="c1"></span>		
+		<span class="c1">//智能指针在析构时会调用析构函数
+</span><span class="c1"></span>		
+		<span class="c1">//单线程环境 thread_local TLS tls{instance}
+</span><span class="c1"></span>		
+		<span class="c1">//tls 在每个线程中是唯一的，因此可以保证在单线程环境下的线程安全
+</span><span class="c1"></span>	
+	<span class="p">}</span>
+	
+	<span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">constructTimes</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+	
+	<span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">destructTimes</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+	<span class="c1">//如果存在内存泄漏，析构次数将小于构造次数
+</span><span class="c1"></span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="别人知道而我不知道的技术细节">别人知道而我不知道的技术细节</h2>
+<h3 id="31-c智能指针的自定义销毁器">3.1 C++智能指针的自定义销毁器</h3>
+<p><strong>为什么要自定义：std::unique_ptr默认的销毁策略是std::default_delete</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">// https://en.cppreference.com/w/cpp/memory/unique_ptr
+</span><span class="c1">// https://en.cppreference.com/w/cpp/memory/default_delete
+</span><span class="c1"></span><span class="k">template</span><span class="o">&lt;</span>
+    <span class="k">class</span> <span class="nc">T</span><span class="p">,</span>
+    <span class="k">class</span> <span class="nc">Deleter</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">default_delete</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="c1">// 默认参数
+</span><span class="c1"></span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">unique_ptr</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>默认的delete操作：调用析构函数并释放内存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">// https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/unique_ptr.h
+</span><span class="c1"></span>
+<span class="cm">/** 
+</span><span class="cm"> * default_delete的主模板，
+</span><span class="cm"> * 被unique_ptr用于单个对象
+</span><span class="cm"> *
+</span><span class="cm"> * @headerfile memory
+</span><span class="cm"> * @since C++11
+</span><span class="cm"> */</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">default_delete</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">_Tp</span><span class="o">*</span> <span class="n">__ptr</span><span class="p">)</span> <span class="k">const</span>
+    <span class="p">{</span>
+        <span class="k">delete</span> <span class="n">__ptr</span><span class="p">;</span>
+        <span class="c1">// 为避免资源泄漏，
+</span><span class="c1"></span>        <span class="c1">// 每次动态分配必须有相应的释放操作
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>划重点：delete操作执行了什么？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">string</span> <span class="o">*</span><span class="n">ps</span> <span class="o">=</span> <span class="k">new</span> <span class="n">string</span><span class="p">(</span><span class="s">&#34;Memory Management&#34;</span><span class="p">);</span>
+<span class="c1">// 等价于：
+</span><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="n">memory</span> <span class="o">=</span> <span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">string</span><span class="p">));</span>
+<span class="n">string</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&#34;Memory Management&#34;</span><span class="p">);</span>  <span class="c1">// 调用构造函数
+</span><span class="c1"></span>
+<span class="k">delete</span> <span class="n">ps</span><span class="p">;</span>
+<span class="c1">// 等价于：
+</span><span class="c1"></span><span class="n">ps</span><span class="o">-&gt;~</span><span class="n">string</span><span class="p">();</span>       <span class="c1">// 调用对象的析构函数
+</span><span class="c1"></span><span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="n">ps</span><span class="p">);</span> <span class="c1">// 释放内存
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="应用1关闭文件网络套接字数据库连接">应用1：关闭文件/网络套接字/数据库连接</h3>
+<p>仅释放相关句柄占用的空间是不够的，还需要执行close操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Ty</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Deleter</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">Ty</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Call a custom method !!!!! &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="n">fclose</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>  <span class="c1">// 关闭文件
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// 如何使用unique_ptr的自定义销毁器成员？
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// lambda也可以作为销毁器
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">FILE</span><span class="p">,</span> <span class="n">Deleter</span><span class="o">&lt;</span><span class="n">FILE</span><span class="o">&gt;&gt;</span> <span class="n">ptr</span><span class="p">(</span><span class="n">fopen</span><span class="p">(</span><span class="s">&#34;data.txt&#34;</span><span class="p">,</span> <span class="s">&#34;w&#34;</span><span class="p">));</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="场景2内存释放时打印日志">场景2：内存释放时打印日志</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">FreeMemory</span> <span class="p">{</span>  
+<span class="k">public</span><span class="o">:</span>  
+    <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="kt">int</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>  
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;delete memory&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>  
+        <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>  
+    <span class="p">}</span>  
+<span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">FreeMemory</span><span class="o">&gt;</span> <span class="n">up1</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="场景3自定义分配器allocator-只执行析构函数不释放内存">场景3：自定义分配器（Allocator）—— 只执行析构函数，不释放内存</h3>
+<p>最佳实践：</p>
+<ul>
+<li>Effective C++（第三版）Item 08：定制new和delete</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">struct</span> <span class="nc">Deleter</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">T</span> <span class="o">*</span><span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">item</span><span class="o">-&gt;~</span><span class="n">T</span><span class="p">();</span>  <span class="c1">// 只执行析构函数，不释放内存
+</span><span class="c1"></span>        <span class="n">tls</span><span class="p">().</span><span class="n">put</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Storage</span><span class="o">&gt;</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">Storage</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">item</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="32-为什么使用reinterpret_cast">3.2 为什么使用reinterpret_cast？</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>reinterpret_cast</th>
+<th>static_cast</th>
+<th>const_cast</th>
+<th>dynamic_cast</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指针↔整数转换</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>不相关类型指针互转</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>函数指针↔数据指针互转</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>多重继承无偏移转换</td>
+<td>✅</td>
+<td>❌（自动偏移）</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>硬件地址直接操作</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>原文：Converts between types by reinterpreting the underlying bit pattern.</p>
+</li>
+<li>
+<p>简单理解：</p>
+<ol>
+<li>在C++的四种显式转换运算符中，<code>reinterpret_cast</code>提供了对底层位模式进行&quot;生硬&quot;重解释的能力。它能在不做任何安全检查或运行时/编译时调整的情况下，将整型、枚举、各种指针、指向成员的指针和引用等类型任意互相转换，这些恰好是其他转换运算符所不支持的场景。</li>
+</ol>
+</li>
+<li>
+<p>优点：不调用构造函数。<code>reinterpret_cast</code>只是&quot;重新解释&quot;已有对象或地址的比特位，不会在内存中开辟新空间，也不会触发任何构造或析构操作。</p>
+</li>
+<li>
+<p>风险：<strong>不做对齐修正</strong>。它不负责调整指针对齐，转换后指针如果不满足目标类型的对齐要求，后续解引用可能导致<strong>未定义行为</strong>。</p>
+</li>
+</ul>
+<h2 id="小结">小结</h2>
+<p>ObjectPool设计做到了足够简单且高效，通过巧妙利用C++11特性实现了无锁化的高性能对象池。</p>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;END&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h3 id="我是谁">我是谁</h3>
+<p><strong>刚刚好，是最难得的美好</strong></p>
+<p>我就在这里，我刚刚好。</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="如需帮助，请联系我：wang_cyi"></p>
+<p>我正在做的事情：</p>
+<h4 id="1-目标拿百万年薪"><strong>1. 目标：拿百万年薪</strong></h4>
+<ul>
+<li>想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+</ul>
+<h4 id="2-现状缺乏实战渴望提升动手能力"><strong>2. 现状：缺乏实战，渴望提升动手能力</strong></h4>
+<ul>
+<li>公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</li>
+<li>想通过阅读优秀源码，提高代码能力，从&quot;不会写&quot;到&quot;敢写&quot;，提升C++编程自信。</li>
+<li>需要掌握高效学习和实践方法，弥补缺乏实战经验的短板。</li>
+</ul>
+<h4 id="3-价值成为优秀完成任务的人成为团队公司都认可的核心骨干"><strong>3. 价值：成为优秀完成任务的人，成为团队、公司都认可的核心骨干</strong></h4>
+<p><strong>优秀地完成任务 = 高效能 + 高质量 + 可持续 + 可度量</strong></p>
+<p><strong>错误示范</strong>：</p>
+<ul>
+<li>不少同学工作很忙，天天加班，做了很多公司的事情，但不是本团队事情，不是本部门事情，领导不认可，绩效不高。</li>
+<li>做低优先级的任务，绩效不高，随时可能被优化。</li>
+</ul>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下&quot;<strong>点赞，转发</strong>&ldquo;按钮，
+您的&rdquo;<strong>点赞，转发</strong>&ldquo;将是我最大的写作动力！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%98%85%E8%AF%BB%E4%B9%8B%E7%BE%8E/">阅读之美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/c/2025-4-26_ceph/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Ceph分布式锁的设计哲学与工程实践</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/c/6-2025-14-spin_lock/">
+            <span class="next-text nav-default">面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

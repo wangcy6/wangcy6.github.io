@@ -26,6 +26,15 @@
     </item>
     
     <item>
+      <title>省钱攻略:不花1分钱也能把微信读书变成你的私人图书馆</title>
+      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Kindle/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Kindle/</guid>
+      <description>微信读书与Kindle的完美配合 微信读书适合碎片化阅读：随时打开手机就能阅读 Kindle适合长时间阅读：护眼、省电、专注 两者结合使用，让您的</description>
+    </item>
+    
+    <item>
       <title>谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！</title>
       <link>https://wangcy6.github.io/post/ai/2025/02_how_to_use_notebooklkm/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
@@ -81,11 +90,65 @@
     
     <item>
       <title>Ceph分布式锁的设计哲学与工程实践</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-26_lock/</link>
+      <link>https://wangcy6.github.io/post/c/2025-4-26_ceph/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-26_lock/</guid>
+      <guid>https://wangcy6.github.io/post/c/2025-4-26_ceph/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第2篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 项目 这个才是最考察基本功的地方</description>
+    </item>
+    
+    <item>
+      <title>从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</title>
+      <link>https://wangcy6.github.io/post/c/5-2025-05-14-3fs-ObjectPool/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/5-2025-05-14-3fs-ObjectPool/</guid>
+      <description>分享干货，主打一个真实各位老师好，我是小义。 本文主要描述 DeepSeek-ai/3FS对象池（ObjectPool）双层缓存架构的实现 阅读本</description>
+    </item>
+    
+    <item>
+      <title>面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通</title>
+      <link>https://wangcy6.github.io/post/c/6-2025-14-spin_lock/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/6-2025-14-spin_lock/</guid>
+      <description>面试官：你知道什么是自旋锁？ 我能说不知道吗，我只能说知道面试官：伸手一摆，说说你理解 大部分项目都使用互斥锁，遇到阻塞时不会占用CPU，所以很</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/c/7_spin_lock/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/7_spin_lock/</guid>
+      <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/c/template/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/template/</guid>
+      <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local【面经复盘】</title>
+      <link>https://wangcy6.github.io/post/c/2025-4-26_thread-local/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/2025-4-26_thread-local/</guid>
+      <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解自旋锁【草稿版本】</title>
+      <link>https://wangcy6.github.io/post/c/2025-4-26_spin_lock_temp/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/2025-4-26_spin_lock_temp/</guid>
+      <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
     </item>
     
     <item>

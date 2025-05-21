@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/c/6-2025-14-spin_lock/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/c/6-2025-14-spin_lock/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4781">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 4781 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一整体面试回顾">一、整体面试回顾</a></li>
+    <li><a href="#二青铜工作1-3年怎么回答的谈谈你对自旋锁的理解">二、青铜（工作1-3年）怎么回答的：谈谈你对自旋锁的理解</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#二王者工作5-10年怎么回答的谈谈你对自旋锁的理解">二、王者（工作5-10年）怎么回答的：谈谈你对自旋锁的理解</a>
+      <ul>
+        <li><a href="#从cpu角度解释自旋锁怎么实现的非系统调用-指令层面实现">从cpu角度解释：自旋锁怎么实现的（非系统调用 指令层面实现）</a></li>
+        <li><a href="#用c11-实现一个ticket-spinlocks">用c++11 实现一个Ticket spinlocks</a></li>
+        <li><a href="#多cpu竞争下的可扩展的自旋锁">多cpu竞争下的可扩展的自旋锁</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#课后作业-无锁队列的实现">课后作业 无锁队列的实现</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>面试官：你知道什么是自旋锁？</p>
+<p><!-- raw HTML omitted -->我能说不知道吗，我只能说知道<!-- raw HTML omitted --></p>
+<p>面试官：伸手一摆，说说你理解</p>
+<p><!-- raw HTML omitted -->大部分项目都使用互斥锁，遇到阻塞时不会占用CPU，所以很少使用自旋锁&hellip;<!-- raw HTML omitted --></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250516220535.png" alt=""></p>
+<p>各位老师好，我是小义，喜欢研究一些底层技术知识。</p>
+<p>本文是大厂面试拆解第6篇文章，主要详细描述：</p>
+<ol>
+<li>三种不同类型自旋锁的实现和使用场景</li>
+<li>自旋锁的主要技术要点：原子操作和公平性，并结合C++11用户态的实现进行分析</li>
+</ol>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250519123945.png" alt="自旋锁发展">
+希望在无锁编程方面对你有帮助。</p>
+<h2 id="一整体面试回顾">一、整体面试回顾</h2>
+<p>时间：2025年4月28日
+岗位：数据库开发工程师
+形式：线下</p>
+<p>一面</p>
+<p>基础面试：</p>
+<ol>
+<li>谈谈你对自旋锁的理解</li>
+<li>进程通信的方式</li>
+<li>线程局部存储</li>
+<li>read/write IO过程</li>
+</ol>
+<p>项目面试：</p>
+<ol>
+<li>干了这么多年，你的角色是什么，是开发吗？</li>
+<li>假如让你独立开发C++特性，能不能做？</li>
+<li>熟悉英语吗？开源社区参与中文的还是英文的，英文资料阅读能力如何？</li>
+<li>你学校主任是谁？</li>
+<li>在之前公司主要负责什么项目？</li>
+</ol>
+<h2 id="二青铜工作1-3年怎么回答的谈谈你对自旋锁的理解">二、青铜（工作1-3年）怎么回答的：谈谈你对自旋锁的理解</h2>
+<p>这个题目之前我准备过，参考了以下书籍：</p>
+<ul>
+<li>UNIX环境高级编程</li>
+<li>UNIX网络编程</li>
+<li>深入理解Linux内核</li>
+<li>深入理解计算机操作系统</li>
+<li>陈硕老师Linux高性能服务器编程</li>
+<li>Linux多线程服务端编程：使用muduo C++网络库</li>
+</ul>
+<p>当初学习时，快速翻页，囫囵吞枣，现在很多细节都记不清楚了。
+不过现在不是后悔的时候，需要快速调整心态。</p>
+<p>回答如下：</p>
+<p>自旋锁常用于高并发场景下，相比互斥锁：</p>
+<ol>
+<li>通过循环占用CPU，为了防止中断，需要禁用中断</li>
+<li>没有锁队列，仅用一个整数表示当前是否加锁状态</li>
+<li>在多线程竞争情况下，保证原子性</li>
+<li>了解C++11提到的新特性Compare-and-Swap (CAS)，但理解不够深入，没有展开说明</li>
+</ol>
+<blockquote>
+<p>点评：这个题目有陷阱，&ldquo;谈谈xxx&quot;不是发散题目，
+而是需要聚焦使用场景和采用的技术。看到资料都是10年前的，
+而且学习过程中没有完全理解，对10年后的发展了解不够。</p>
+</blockquote>
+<p>多个人竞争一个自旋锁时存在以下问题：</p>
+<ul>
+<li>CPU性能差异导致的不公平：就像跑步比赛，腿长腿短会影响结果（CPU性能差异）</li>
+<li>缓存命中率影响：就像排队时玩手机，注意力不集中就会错过叫号（缓存未命中）
+这些问题如果处理不好就会影响系统性能，需要合理解决。</li>
+</ul>
+<h6 id="linux自身发展">Linux自身发展</h6>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250512220646.png" alt="自旋锁发展历史"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250519123945.png" alt="这个技术适用的场景"></p>
+<ol>
+<li>
+<p>传统的自旋锁（Spinlock）满足比较并交换(Compare and Swap，CAS)/TAS（Test and Set）特性。Linux 2.0.0（1996年6月9日）从单CPU发展到对称多处理（SMP），用于解决并发竞争问题。缺点是无法保证公平性，可能导致饥饿现象。</p>
+</li>
+<li>
+<p>票证自旋锁（Ticket Spinlock）于2008年12月17日发布，在2.6.26版本中正式将票据自旋锁作为默认可选的公平锁机制。其业务原理采用取号、叫号机制，通过C++11提供的内存模型和原子操作实现。缺点是当CPU数据量巨大且竞争激烈时，自旋锁状态数据对应的cacheline会在不同CPU间频繁跳动，从而影响性能。就像银行叫号系统，当2号客户业务办理完成后，需要叫3号客户，而所有排队的客户（4号、5号&hellip;甚至20号）都需要监听叫号。</p>
+</li>
+<li>
+<p>可扩展锁MCS（Mellor‑Crummey and Scott）是一种基于链式队列的自旋锁算法，最早发表于1991年。它解决了传统自旋锁在多处理器系统中因所有处理器自旋在同一缓存行而导致的缓存抖动和可扩展性差等问题。Linux内核从3.12版本开始在x86_64平台采用<strong>qspinlock</strong>（queued spinlock），其慢路径即基于MCS算法。</p>
+</li>
+</ol>
+<p>现代高性能并发库和语言运行时（如Java并发包中的<code>AbstractQueuedSynchronizer</code>）也普遍采用MCS或类似的链式队列锁实现，以提升多核环境下的锁性能。</p>
+<h6 id="不同开源平台如何使用自旋锁用户态">不同开源平台如何使用自旋锁（用户态）</h6>
+<p>应用示例：</p>
+<ol>
+<li>在3FS代码库中，使用自旋锁(folly::SpinLock)用于统计和监控相关的场景</li>
+</ol>
+<h2 id="二王者工作5-10年怎么回答的谈谈你对自旋锁的理解">二、王者（工作5-10年）怎么回答的：谈谈你对自旋锁的理解</h2>
+<p>思考要点：</p>
+<ol>
+<li>即使了解底层实现，也不会主动从汇编和内核角度回答，除非面试官特别提问。避免给自己制造麻烦。</li>
+<li>从内核原理、业务框架和C++特性的统一性角度来回答。</li>
+</ol>
+<p>我的理解如下：</p>
+<p>自旋锁是一种低延时场景下的多线程同步机制，采用自旋等待（Busy‑Waiting）方式。</p>
+<p>技术要点：</p>
+<ol>
+<li>采用比较并交换等原子技术设置状态变化，由C++内存模型保证原子性</li>
+<li>在加锁失败情况下，通过退避算法/Ticket Lock/Queue Lock避免CPU空转</li>
+<li>优化方式：
+<ul>
+<li><strong>纯用户态实现</strong>：与<code>std::mutex</code>等基于futex的互斥量不同，自旋锁完全通过原子指令实现，无需进入内核态</li>
+<li><strong>无阻塞上下文切换</strong>：由于没有阻塞或唤醒操作，不存在内核调度开销，适用于对延迟敏感且持锁时间极短的场景</li>
+</ul>
+</li>
+</ol>
+<h3 id="从cpu角度解释自旋锁怎么实现的非系统调用-指令层面实现">从cpu角度解释：自旋锁怎么实现的（非系统调用 指令层面实现）</h3>
+<p><a href="https://compiler-explorer.com/z/8v9E5vjYv">https://compiler-explorer.com/z/8v9E5vjYv</a></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250516230555.png" alt="汇编解释"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="p">.</span><span class="nx">LBB0_1</span><span class="o">:</span>
+    <span class="nx">cmp</span>     <span class="nx">dword</span> <span class="nx">ptr</span> <span class="p">[</span><span class="nx">rbp</span> <span class="o">-</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">10000000</span>   <span class="p">;</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="nx">比较</span> <span class="nx">i</span> <span class="nx">与</span> <span class="mi">10</span> <span class="mi">000</span> <span class="mi">000</span>
+    <span class="nx">jge</span>     <span class="p">.</span><span class="nx">LBB0_4</span>                        <span class="p">;</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="nx">如果</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="mi">000</span> <span class="mi">000</span> <span class="nx">跳出</span>
+
+    <span class="nx">lea</span>     <span class="nx">rdi</span><span class="p">,</span> <span class="p">[</span><span class="nx">rip</span> <span class="o">+</span> <span class="nx">sum1</span><span class="p">]</span>             <span class="p">;</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="nx">取</span> <span class="nx">sum1</span> <span class="nx">地址</span><span class="err">，</span><span class="nx">放入</span> <span class="nx">rdi</span> <span class="nx">作为</span> <span class="k">this</span>
+    <span class="nx">call</span>    <span class="nx">std</span><span class="o">::</span><span class="mi">__</span><span class="nx">atomic_base</span><span class="o">&lt;</span><span class="kr">int</span><span class="o">&gt;::</span><span class="nx">operator</span><span class="o">++</span><span class="p">()</span>  <span class="p">;</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="nx">调用原子自增</span>
+
+    <span class="nx">mov</span>     <span class="nx">eax</span><span class="p">,</span> <span class="nx">dword</span> <span class="nx">ptr</span> <span class="p">[</span><span class="nx">rip</span> <span class="o">+</span> <span class="nx">sum2</span><span class="p">]</span>   <span class="p">;</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="nx">读</span> <span class="nx">sum2</span>
+    <span class="nx">add</span>     <span class="nx">eax</span><span class="p">,</span> <span class="mi">1</span>                        <span class="p">;</span> <span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="nx">eax</span> <span class="o">=</span> <span class="nx">eax</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="nx">mov</span>     <span class="nx">dword</span> <span class="nx">ptr</span> <span class="p">[</span><span class="nx">rip</span> <span class="o">+</span> <span class="nx">sum2</span><span class="p">],</span> <span class="nx">eax</span>   <span class="p">;</span> <span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="nx">写回</span> <span class="nx">sum2</span>
+
+    <span class="nx">mov</span>     <span class="nx">eax</span><span class="p">,</span> <span class="nx">dword</span> <span class="nx">ptr</span> <span class="p">[</span><span class="nx">rbp</span> <span class="o">-</span> <span class="mi">4</span><span class="p">]</span>      <span class="p">;</span> <span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="nx">读</span> <span class="nx">i</span>
+    <span class="nx">add</span>     <span class="nx">eax</span><span class="p">,</span> <span class="mi">1</span>                        <span class="p">;</span> <span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="nx">mov</span>     <span class="nx">dword</span> <span class="nx">ptr</span> <span class="p">[</span><span class="nx">rbp</span> <span class="o">-</span> <span class="mi">4</span><span class="p">],</span> <span class="nx">eax</span>      <span class="p">;</span> <span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="nx">写回</span> <span class="nx">i</span>
+
+    <span class="nx">jmp</span>     <span class="p">.</span><span class="nx">LBB0_1</span>                       <span class="p">;</span> <span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="nx">跳回循环开头</span>
+
+<span class="p">.</span><span class="nx">LBB0_4</span><span class="o">:</span>
+    <span class="p">;</span> <span class="nx">循环结束</span><span class="err">，</span><span class="nx">返回</span><span class="o">/</span><span class="nx">退出</span>
+
+<span class="nx">call</span> <span class="nx">std</span><span class="o">::</span><span class="mi">__</span><span class="nx">atomic_base</span><span class="o">&lt;</span><span class="kr">int</span><span class="o">&gt;::</span><span class="nx">operator</span><span class="o">++</span><span class="p">()</span>
+<span class="nx">会展开为带</span> <span class="sb">`LOCK`</span> <span class="nx">前缀的读</span><span class="o">-</span><span class="nx">改</span><span class="o">-</span><span class="nx">写指令</span><span class="err">，</span>
+<span class="nx">例如</span> <span class="sb">`lock inc dword ptr [rip + sum1]`</span><span class="err">，</span>
+<span class="nx">确保在多核环境下对该地址的操作是原子的</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">https://github.com/torvalds/linux/blob/master/arch/sh/include/asm/spinlock-cas.h
+
+static inline void arch_spin_lock<span class="o">(</span>arch_spinlock_t *lock<span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">while</span> <span class="o">(</span>!__sl_cas<span class="o">(</span><span class="p">&amp;</span>lock-&gt;lock, 1, 0<span class="o">))</span><span class="p">;</span>
+<span class="o">}</span>
+
+static inline unsigned __sl_cas<span class="o">(</span>volatile unsigned *p, unsigned old, unsigned new<span class="o">)</span>
+<span class="o">{</span>
+    __asm__ __volatile__<span class="o">(</span><span class="s2">&#34;cas.l %1,%0,@r0&#34;</span>
+        : <span class="s2">&#34;+r&#34;</span><span class="o">(</span>new<span class="o">)</span>
+        : <span class="s2">&#34;r&#34;</span><span class="o">(</span>old<span class="o">)</span>, <span class="s2">&#34;z&#34;</span><span class="o">(</span>p<span class="o">)</span>
+        : <span class="s2">&#34;t&#34;</span>, <span class="s2">&#34;memory&#34;</span> <span class="o">)</span><span class="p">;</span>
+    <span class="k">return</span> new<span class="p">;</span>
+<span class="o">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="源码解读用户态-follyspinlock实现">源码解读：用户态 folly::SpinLock实现</h4>
+<p>Folly <strong>是一个由Facebook 开源的C++ 库，旨在为大规模服务器开发提供高效的工具和组件</strong></p>
+<p>folly::MicroSpinLock`  是在 Folly 中为超细粒度锁场景设计的极小自旋锁，</p>
+<ol>
+<li>实现为一个 POD 结构，仅占用一个字节，它通过在用户态对一个字节标志位执行<strong>原子比较-交换</strong>（CAS）来尝试获取锁，</li>
+<li>失败后使用 <code>detail::Sleeper</code> 进行&quot;退避&quot;自旋，从而避免任何系统调用或内核阻塞，保证极低的延迟和良好的<strong>跨平台可移植性</strong>。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span><span class="lnt">99
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/facebook/folly/blob/main/folly/SpinLock.h
+</span><span class="c1"></span><span class="n">SpinLock</span><span class="o">---&gt;</span><span class="n">folly</span><span class="o">::</span><span class="n">MicroSpinLock</span> 
+
+<span class="cm">/*
+</span><span class="cm"> * folly::MicroSpinLock
+</span><span class="cm"> * ====================
+</span><span class="cm"> * A really, *really* small spinlock for fine-grained locking of lots
+</span><span class="cm"> * of teeny-tiny data. 
+</span><span class="cm"> * 
+</span><span class="cm"> * Designed to be POD (Plain Old Data) so it can be
+</span><span class="cm"> * packed into other structures without extra overhead.
+</span><span class="cm"> *
+</span><span class="cm"> * 特性：
+</span><span class="cm"> *  1. 极小自旋锁，适用于超细粒度场景
+</span><span class="cm"> *  2. POD 类型，可零初始化，相当于调用 init()
+</span><span class="cm"> *  3. 用户态实现，无系统调用开销
+</span><span class="cm"> *  4. 支持动态检测工具插桩（ThreadSanitizer 等）
+</span><span class="cm"> */</span>
+
+<span class="k">struct</span> <span class="nc">MicroSpinLock</span> <span class="p">{</span>
+  <span class="c1">// FREE 表示锁可用，LOCKED 表示锁已被持有
+</span><span class="c1"></span>  <span class="k">enum</span> <span class="p">{</span> <span class="n">FREE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">LOCKED</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">};</span>
+  <span class="c1">//
+</span><span class="c1"></span>  <span class="c1">// 用一个字节存储锁状态，避免使用 std::atomic&lt;&gt;，保持 POD 特性
+</span><span class="c1"></span>  <span class="c1">//为什么用uint8_t表示 std::atomic&lt;&gt;？ 
+</span><span class="c1"></span>  <span class="c1">//这个和序列化有什么关系？怎么实现的
+</span><span class="c1"></span>  <span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">char</span>           <span class="kt">uint8_t</span><span class="p">;</span>
+  <span class="kt">uint8_t</span> <span class="n">lock_</span><span class="p">;</span> <span class="c1">//locked? 
+</span><span class="c1"></span>  
+
+  <span class="cm">/**
+</span><span class="cm">   * 尝试获取锁，非阻塞
+</span><span class="cm">   * @return true: 获得锁；false: 未获得
+</span><span class="cm">   */</span>
+  <span class="kt">bool</span> <span class="nf">try_lock</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+    <span class="c1">// 调用 xchg 将新值置为 LOCKED，返回旧值
+</span><span class="c1"></span>    <span class="kt">bool</span> <span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">xchg</span><span class="p">(</span><span class="n">LOCKED</span><span class="p">)</span> <span class="o">==</span> <span class="n">FREE</span><span class="p">);</span>
+    <span class="c1">// 插桩：记录尝试获取锁的结果，便于动态分析
+</span><span class="c1"></span>    <span class="n">annotate_rwlock_try_acquired</span><span class="p">(</span>
+        <span class="k">this</span><span class="p">,</span> <span class="n">annotate_rwlock_level</span><span class="o">::</span><span class="n">wrlock</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">__FILE__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 获取锁，阻塞自旋
+</span><span class="cm">   * 在持锁竞争时，会进行退避等待以降低总线抖动
+</span><span class="cm">   */</span>
+  <span class="kt">void</span> <span class="nf">lock</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+    <span class="n">detail</span><span class="o">::</span><span class="n">Sleeper</span> <span class="n">sleeper</span><span class="p">;</span>
+    <span class="c1">// 自旋尝试交换，如果旧值不为 FREE，表示竞争失败
+</span><span class="c1"></span>    <span class="k">while</span> <span class="p">(</span><span class="n">xchg</span><span class="p">(</span><span class="n">LOCKED</span><span class="p">)</span> <span class="o">!=</span> <span class="n">FREE</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 进入退避等待循环
+</span><span class="c1"></span>      <span class="k">do</span> <span class="p">{</span>
+        <span class="n">sleeper</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>  <span class="c1">// 调用 pause/yield 或指数退避
+</span><span class="c1"></span>      <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">payload</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">memory_order_relaxed</span><span class="p">)</span> <span class="o">==</span> <span class="n">LOCKED</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 加锁成功，断言当前状态为 LOCKED
+</span><span class="c1"></span>    <span class="n">assert</span><span class="p">(</span><span class="n">payload</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">()</span> <span class="o">==</span> <span class="n">LOCKED</span><span class="p">);</span>
+    <span class="c1">// 插桩：记录获取锁的事件
+</span><span class="c1"></span>    <span class="n">annotate_rwlock_acquired</span><span class="p">(</span>
+        <span class="k">this</span><span class="p">,</span> <span class="n">annotate_rwlock_level</span><span class="o">::</span><span class="n">wrlock</span><span class="p">,</span> <span class="n">__FILE__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 释放锁
+</span><span class="cm">   * 将状态设为 FREE，并使用 release 语义保证可见性
+</span><span class="cm">   */</span>
+  <span class="kt">void</span> <span class="nf">unlock</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+    <span class="c1">// 断言当前持锁状态
+</span><span class="c1"></span>    <span class="n">assert</span><span class="p">(</span><span class="n">payload</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">()</span> <span class="o">==</span> <span class="n">LOCKED</span><span class="p">);</span>
+    <span class="c1">// 释放锁  write
+</span><span class="c1"></span>    <span class="n">payload</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">store</span><span class="p">(</span><span class="n">FREE</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">memory_order_release</span><span class="p">);</span>
+  <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="cm">/**
+</span><span class="cm">   * 内部：获取指向 lock_ 字段的原子指针
+</span><span class="cm">   */</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;*</span> <span class="n">payload</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+    <span class="c1">// reinterpret_cast 到 std::atomic&lt;uint8_t&gt;* 类型
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">lock_</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**
+</span><span class="cm">   * 原子交换操作，将 lock_ 原子地置为 newVal，返回旧值
+</span><span class="cm">   */</span>
+  <span class="kt">uint8_t</span> <span class="nf">xchg</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">newVal</span><span class="p">)</span> <span class="k">noexcept</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">atomic_exchange_explicit</span><span class="p">(</span>
+        <span class="n">payload</span><span class="p">(),</span> <span class="n">newVal</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">memory_order_acq_rel</span><span class="p">);</span>
+  <span class="p">}</span> <span class="c1">//A read-modify-write operation with this memory order is both an _acquire operation_ and a _release operation_
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="c1">// 编译时断言：类型必须满足标准布局且平凡类型，以保证 POD 特性
+</span><span class="c1"></span><span class="k">static_assert</span><span class="p">(</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">is_standard_layout</span><span class="o">&lt;</span><span class="n">MicroSpinLock</span><span class="o">&gt;::</span><span class="n">value</span> <span class="o">&amp;&amp;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">is_trivial</span><span class="o">&lt;</span><span class="n">MicroSpinLock</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span>
+    <span class="s">&#34;MicroSpinLock must be kept a POD type.&#34;</span><span class="p">);</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>MySQL InnoDB存储引擎 spin-lock 加锁失败遇到冲突后 也是采取sleep方式在尝试，避免空耗cpu</li>
+</ul>
+<h3 id="用c11-实现一个ticket-spinlocks">用c++11 实现一个Ticket spinlocks</h3>
+<p>原理：
+<img src="https://www-x-wowotech-x-net.img.addlink.cn/content/uploadfile/201806/511b1528532887.png" alt="取号，叫号机制"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="err">参考：</span><span class="nl">https</span><span class="p">:</span><span class="c1">//mfukar.github.io/2017/09/08/ticketspinlock.htm
+</span><span class="c1"></span>
+  <span class="n">now_serving</span>   <span class="n">next_ticket</span>
+        <span class="o">|</span>             <span class="o">|</span>
+        <span class="n">V</span>             <span class="n">V</span>
+<span class="p">...</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="p">...</span>
+         <span class="err">\</span><span class="n">___________</span><span class="o">/</span>
+           <span class="mi">8</span> <span class="n">threads</span>
+           <span class="n">holding</span> <span class="n">one</span> <span class="n">ticket</span> <span class="n">each</span>
+
+<span class="k">struct</span> <span class="nc">TicketSpinLock</span> <span class="p">{</span>
+    <span class="cm">/**
+</span><span class="cm">     * Attempt to grab the lock:
+</span><span class="cm">     * 1. Get a ticket number
+</span><span class="cm">     * 2. Wait for it
+</span><span class="cm">     */</span>
+    <span class="kt">void</span> <span class="nf">enter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="cm">/* We don&#39;t care about a specific ordering with other threads,
+</span><span class="cm">         * as long as the increment of the `next_ticket` counter happens atomically.
+</span><span class="cm">         * Therefore, std::memory_order_relaxed.
+</span><span class="cm">         */</span>
+        <span class="k">const</span> <span class="k">auto</span> <span class="n">ticket</span> <span class="o">=</span> <span class="n">next_ticket</span><span class="p">.</span><span class="n">fetch_add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">memory_order_relaxed</span><span class="p">);</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">now_serving</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">memory_order_acquire</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ticket</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">spin_wait</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Since we&#39;re in the critical section, no one can modify `now_serving`
+</span><span class="cm">     * but this thread. We just want the update to be atomic. Therefore we can use
+</span><span class="cm">     * a simple store instead of `now_serving.fetch_add()`:
+</span><span class="cm">     */</span>
+    <span class="kt">void</span> <span class="nf">leave</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">const</span> <span class="k">auto</span> <span class="n">successor</span> <span class="o">=</span> <span class="n">now_serving</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">memory_order_relaxed</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">now_serving</span><span class="p">.</span><span class="n">store</span><span class="p">(</span><span class="n">successor</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">memory_order_release</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+</code></pre></td></tr></table>
+</div>
+</div><p>c++ 内存模型</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>语义保证</th>
+<th>开销</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>memory_order_relaxed</code></td>
+<td>仅保证原子性，不保证与其他操作的顺序或可见性</td>
+<td>最低</td>
+</tr>
+<tr>
+<td><code>memory_order_acquire</code></td>
+<td>保证此操作后续的读写不会在指令序上移到此操作之前</td>
+<td>较低</td>
+</tr>
+<tr>
+<td><code>memory_order_release</code></td>
+<td>保证此操作前的读写不会在指令序上移到此操作之后</td>
+<td>较低</td>
+</tr>
+<tr>
+<td><code>memory_order_acq_rel</code></td>
+<td>同时具备 acquire 和 release 语义，对应读写双向屏障</td>
+<td>中等</td>
+</tr>
+<tr>
+<td><code>memory_order_seq_cst</code></td>
+<td>全局顺序一致性；在所有线程中可见操作顺序完全一致</td>
+<td>最高</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="多cpu竞争下的可扩展的自旋锁">多cpu竞争下的可扩展的自旋锁</h3>
+<p>参考</p>
+<ol>
+<li>英文：https://lwn.net/Articles/590243/</li>
+<li>Linux中的spinlock机制[二] - MCS Lock</li>
+<li>Linux中的spinlock机制[三] - qspinlock</li>
+<li><a href="https://systemsresearch.io/posts/f22352cfc/">https://systemsresearch.io/posts/f22352cfc/</a></li>
+</ol>
+<p>以解决在锁的争用比较激烈的场景下，cache line无谓刷新的问题，</p>
+<p>其主要思想是让每个微调器在其各自的 per-CPU 变量上旋转，从而避免不同 CPU 之间不断的缓存行跳动。</p>
+<p>当所有 CPU 都自旋等待同一个锁变量时，就会发生缓存行跳动，这会导致它们重复读取此变量。当一个 CPU 解锁时，此变量会被修改，从而使所有其他 CPU 的缓存行无效，然后这些 CPU 必须重新读取该变量。</p>
+<p>这会导致性能开销。MCS 锁通过让每个 CPU 在其各自的专用变量上旋转来缓解这个问题，从而避免了对单个锁变量的争用。</p>
+<p>先来看一下有3个以上的CPU持有或试图获取spinlock时，等待队列的全貌
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250519174704.png" alt="每个cpu自选本地缓存"></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250519173222.png" alt=""></p>
+<h3 id="总结">总结</h3>
+<table>
+<thead>
+<tr>
+<th>Linux 版本</th>
+<th>时间</th>
+<th>主要进展</th>
+<th>自旋锁相关说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>1996</td>
+<td>支持 SMP，BKL 引入</td>
+<td>全局大内核锁，串行化所有内核操作，无需细粒度锁</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>1999</td>
+<td>引入基础自旋锁机制</td>
+<td>初步在某些子系统中使用 <code>spinlock_t</code>，开始去BKL化</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td>2001</td>
+<td>更广泛使用自旋锁</td>
+<td>自旋锁与 <code>cli/sti</code>（关中断）结合使用，锁粒度更细</td>
+</tr>
+<tr>
+<td>2.6</td>
+<td>2003</td>
+<td>高度并发与抢占内核</td>
+<td>引入 <code>spin_lock_irqsave()</code> 等多种锁版本，应对复杂场景</td>
+</tr>
+<tr>
+<td>3.x</td>
+<td>2011</td>
+<td>BKL 基本移除</td>
+<td>通过细粒度自旋锁和 mutex 替代 BKL</td>
+</tr>
+<tr>
+<td>4.2</td>
+<td>2015</td>
+<td>引入 <strong>qspinlock</strong></td>
+<td>MCS 队列自旋锁替代原始的 ticket lock，提高扩展性</td>
+</tr>
+<tr>
+<td>5.x</td>
+<td>2018+</td>
+<td>NUMA、多核优化</td>
+<td>更复杂的锁策略：退避、统计锁竞争、结合 RCU 等</td>
+</tr>
+</tbody>
+</table>
+<p><strong>锁竞争激烈、CPU 浪费严重</strong></p>
+<ul>
+<li><strong>问题</strong>：多个 CPU 自旋等待同一个锁时，会浪费大量 CPU 周期，尤其在临界区较长或锁被频繁争用的场景下。</li>
+<li><strong>解决策略</strong>：
+<ul>
+<li><strong>自旋退避（backoff）策略</strong>：在等待失败后加入延时，避免一直争抢总线。</li>
+<li><strong>TTAS（Test-and-Test-and-Set）</strong>：减少 cache line 抖动。</li>
+<li><strong>MCS 自旋锁 → qspinlock（Linux 4.2）</strong>：将等待线程链入队列，避免活锁并提高公平性</li>
+</ul>
+</li>
+</ul>
+<p><strong>NUMA 架构下锁竞争代价高</strong></p>
+<ul>
+<li><strong>问题</strong>：在 NUMA 系统中，访问跨节点共享数据时，自旋锁导致 cache 频繁失效，性能下降。</li>
+<li><strong>解决策略</strong>：
+<ul>
+<li>MCS 队列锁：按顺序获取，减少 cache 抖动。</li>
+<li>qspinlock（从 4.2 起默认使用）：结合 MCS 与 ticket lock 的优点，兼顾低延迟与扩展性。</li>
+</ul>
+</li>
+</ul>
+<h2 id="课后作业-无锁队列的实现">课后作业 无锁队列的实现</h2>
+<p>参考：https://coolshell.cn/articles/8239.html</p>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;——END&mdash;&mdash;&mdash;&ndash;</p>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下&rdquo;<strong>点赞，转发</strong>&quot; 按钮，
+您的&quot;<strong>点赞，转发</strong>&quot; 将是我最大的写作动力！</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li>票证自旋锁https://mfukar.github.io/2017/09/08/ticketspinlock.html</li>
+<li>A simple correctness proof of the MCS contentionfree lock</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/c/5-2025-05-14-3fs-ObjectPool/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/c/7_spin_lock/">
+            <span class="next-text nav-default">面试必备之深入理解thread local</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
