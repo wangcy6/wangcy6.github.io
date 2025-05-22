@@ -121,7 +121,7 @@
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/c/7_spin_lock/</guid>
-      <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
+      <description>网友提问： 为什么OB不采用 内核提供的 spin_lock() 自旋锁， 而是用户态态自己定义，并且还定义好多类型 ​ ​​短期临界区​​：优先ObSpinLock（轻量互</description>
     </item>
     
     <item>
