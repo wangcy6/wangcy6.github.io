@@ -107,21 +107,21 @@
     </item>
     
     <item>
+      <title>如何设计一个高性能可扩展的自旋锁</title>
+      <link>https://wangcy6.github.io/post/c/7_2025-5-22-spin_lock/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/c/7_2025-5-22-spin_lock/</guid>
+      <description>网友提问： 为什么OB不采用 内核提供的 spin_lock() 自旋锁， 而是用户态态自己定义，并且还定义好多类型 ​ ​​短期临界区​​：优先ObSpinLock（轻量互</description>
+    </item>
+    
+    <item>
       <title>面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通</title>
       <link>https://wangcy6.github.io/post/c/6-2025-14-spin_lock/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/c/6-2025-14-spin_lock/</guid>
       <description>面试官：你知道什么是自旋锁？ 我能说不知道吗，我只能说知道面试官：伸手一摆，说说你理解 大部分项目都使用互斥锁，遇到阻塞时不会占用CPU，所以很</description>
-    </item>
-    
-    <item>
-      <title>面试必备之深入理解thread local</title>
-      <link>https://wangcy6.github.io/post/c/7_spin_lock/</link>
-      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/c/7_spin_lock/</guid>
-      <description>网友提问： 为什么OB不采用 内核提供的 spin_lock() 自旋锁， 而是用户态态自己定义，并且还定义好多类型 ​ ​​短期临界区​​：优先ObSpinLock（轻量互</description>
     </item>
     
     <item>
