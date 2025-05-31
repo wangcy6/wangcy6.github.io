@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试必备之深入理解thread local【面经复盘】 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/2025-4-26_thread-local/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试必备之深入理解thread local【面经复盘】" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/2025-4-26_thread-local/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试必备之深入理解thread local【面经复盘】">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="5926">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试必备之深入理解thread local【面经复盘】"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试必备之深入理解thread local【面经复盘】</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 5926 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一面试回顾">一、面试回顾</a></li>
+    <li><a href="#二谈谈你对threadlocal理解">二、谈谈你对ThreadLocal理解</a>
+      <ul>
+        <li><a href="#21-青铜被虐工作0-5年">2.1 青铜被虐（工作0-5年）：</a></li>
+        <li><a href="#实现手段">实现手段</a></li>
+        <li><a href="#22-王者归来5-10年">2.2 王者归来（5-10年）</a></li>
+        <li><a href="#四技术的底层原理和关键实现">四、技术的底层原理和关键实现</a></li>
+        <li><a href="#五对比java怎么实现的">五、对比java怎么实现的？</a></li>
+        <li><a href="#52-3fs实现自己的tls">5.2 3fs实现自己的TLS</a></li>
+        <li><a href="#我是谁">我是谁</a></li>
+        <li><a href="#参考第一手资料">参考：第一手资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>坚持思考，就会很酷。</p>
+<p>大家好，这是<!-- raw HTML omitted -->进入大厂面试准备&ndash;基础知识 第4篇文章<!-- raw HTML omitted -->，草稿版本</p>
+<ul>
+<li>草稿版本：意思是内容太多，包含思考，调查 和分析 全部过程，我还无法压缩到一个ppt内完整描述整个事情。</li>
+<li>演示版本：汇报给领导 ，清楚描述一个事情解决方案。</li>
+</ul>
+<h2 id="一面试回顾">一、面试回顾</h2>
+<p>时间：2025年 4月28
+岗位：数据库开发工程师
+公司：vmare/阿里云/kangao数据库
+形式：线下
+面试：自己感觉回答很好，但是估计过不了</p>
+<p>一面</p>
+<p>基础面试：</p>
+<ol>
+<li>谈谈你对自旋锁理解</li>
+<li>进程通信那个方式</li>
+<li>线程局部存储</li>
+<li>read,write io过程。</li>
+</ol>
+<p>项目面试：</p>
+<ol>
+<li>干了这么多年， 你角色是什么，一个开发吗？</li>
+<li>假如入你独立开发c特性，能不能做？</li>
+<li>熟悉英语吗？开源社区 参与中文的还是英文的，英文资料行不行</li>
+<li>你学校主任是谁，</li>
+<li>在之前公司干什么事情？说的项目，结果 判断不是核心人员。（太武断了）</li>
+</ol>
+<h2 id="二谈谈你对threadlocal理解">二、谈谈你对ThreadLocal理解</h2>
+<h3 id="21-青铜被虐工作0-5年">2.1 青铜被虐（工作0-5年）：</h3>
+<p>思考：</p>
+<ol>
+<li>听说过没接触过，不知道 怎么实现，然后陷入慌乱，之前线程，进程。</li>
+<li>根本想不起来基础知识   局部变量、全局变量、堆、堆栈、静态变量区别 和这个有关系</li>
+</ol>
+<blockquote>
+<p>划重点：</p>
+<ol>
+<li>c++ 不会凭空造一个新概念，都是基于原有基础上发展的</li>
+<li>c++ 特性都是依赖编译器，gcc，甚至操作系统。</li>
+</ol>
+</blockquote>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514011850.png" alt="">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514011937.png" alt=""></p>
+<p>面试官反问：c++中 thread_local 一定是安全的吗？</p>
+<p>第一个感觉：是呀绝对完全</p>
+<p>无锁情况，多线程安全读写共享同一个变量，</p>
+<p>例如
+t0时刻一个元素当前值10，该线程-1之后，期望是9
+t1时刻在读取可能不9了，不其他线程修改。
+可能导致资源重复释放core情况。</p>
+<h3 id="实现手段">实现手段</h3>
+<ol>
+<li><strong>锁（Mutex/锁）</strong>：串行化访问关键资源。</li>
+<li><strong>无锁（Lock‑free/Wait‑free）</strong>：基于原子指令实现，例如比较并交换（CAS）、Fetch‑and‑add 等</li>
+<li><strong>线程局部存储</strong>：将状态隔离到各线程自己的副本。</li>
+</ol>
+<h3 id="22-王者归来5-10年">2.2 王者归来（5-10年）</h3>
+<h4 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h4>
+<p>在Linux系统中使用C/C++进行多线程编程时</p>
+<ul>
+<li>
+<p>对于局部变量来说，其不存在线程安全问题</p>
+</li>
+<li>
+<p>全局变量来说 各个线程都可以访问的共享变量，因此它们存在多线程读写问题,采用原子或者锁来解决。</p>
+</li>
+<li>
+<p>如果不采用锁，依然满足在一个线程内部的各个函数调用都能访问、但其它线程不能访问的变量，这就需要新的机制来实现，需要线程局部存储（TLS: Thread-Local Storage）</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​维度​</strong>​</th>
+<th>​<strong>​栈变量​</strong>​</th>
+<th>​<strong>​堆变量​</strong>​</th>
+<th>​<strong>​<code>thread_local</code> 变量​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​生命周期​</strong>​</td>
+<td>函数作用域</td>
+<td>手动管理</td>
+<td>线程生命周期</td>
+</tr>
+<tr>
+<td>​<strong>​访问效率​</strong>​</td>
+<td>高（直接栈寻址）</td>
+<td>低（需指针间接访问）</td>
+<td>高（寄存器或 TLS 直接寻址）</td>
+</tr>
+<tr>
+<td>​<strong>​线程安全​</strong>​</td>
+<td>天然隔离</td>
+<td>需同步机制</td>
+<td>天然隔离</td>
+</tr>
+<tr>
+<td>​<strong>​适用场景​</strong>​</td>
+<td>短期局部数据</td>
+<td>动态分配的长周期数据</td>
+<td>线程私有状态（跨函数共享）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>在 C++11 之前，开发者需依赖平台特定的 API（如 Linux 的 <code>pthread_key_create</code>）实现线程局部存储</li>
+<li>在c++11中,thread_local用于声明变量具有线程局部存储期。这意味着每个线程都拥有此变量的一个独立实例，每个线程只能访问自己的实例，不同线程间的实例互不影响</li>
+</ul>
+<h4 id="二-这个技术适用的场景任何技术都有其适用的场景">二、 这个技术适用的场景。任何技术都有其适用的场景</h4>
+<p>3FS项目中的thread_local使用展示了几个关键模式：</p>
+<ul>
+<li>
+<p>用于高效的线程局部缓存以避免重复计算</p>
+</li>
+<li>
+<p>消除线程间的锁竞争，提高并发性能</p>
+</li>
+<li>
+<p>优化内存分配模式，特别是在对象池和工作队列中</p>
+</li>
+<li>
+<p>提供线程安全的随机数生成和状态跟踪</p>
+</li>
+</ul>
+<h4 id="三技术的组成部分和关键点">三、技术的组成部分和关键点</h4>
+<table>
+<thead>
+<tr>
+<th>​<strong>​特性​</strong>​</th>
+<th>​<strong>​C++ <code>thread_local</code>​</strong>​</th>
+<th>​<strong>​Java <code>ThreadLocal</code>​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​存储结构​</strong>​</td>
+<td>编译器通过<code>fs/gs</code>寄存器直接访问TLS，无哈希表开销</td>
+<td>基于线程内部的<code>ThreadLocalMap</code>哈希表存储</td>
+</tr>
+<tr>
+<td>​<strong>​内存管理​</strong>​</td>
+<td>线程结束时自动析构（RAII机制）</td>
+<td>需手动调用<code>remove()</code>，否则可能内存泄漏</td>
+</tr>
+<tr>
+<td>​<strong>​性能​</strong>​</td>
+<td>接近直接内存访问（1~3周期）</td>
+<td>哈希表查询（约10~100周期）</td>
+</tr>
+<tr>
+<td>​<strong>​类成员支持​</strong>​</td>
+<td>必须为<code>static</code>（如<code>static thread_local int x;</code>）</td>
+<td>非<code>static</code>，通过实例关联</td>
+</tr>
+</tbody>
+</table>
+<h3 id="四技术的底层原理和关键实现">四、技术的底层原理和关键实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/watchpoints/master-cpp/blob/main/cpp/chapt-3-thread-local/therad1.cpp
+</span><span class="c1"></span>
+<span class="cm">/*
+</span><span class="cm">
+</span><span class="cm">* @Date: 2025-05-13 21:09:48
+</span><span class="cm">
+</span><span class="cm">* @Author: 后端开发成长指南   watchpoints
+</span><span class="cm">
+</span><span class="cm">* @FilePath: 知识地图--高频面试题
+</span><span class="cm">
+</span><span class="cm">* @Git: https://github.com/watchpoints/master-cpp
+</span><span class="cm">  
+</span><span class="cm">
+</span><span class="cm">#include &lt;iostream&gt;
+</span><span class="cm">
+</span><span class="cm">#include &lt;thread&gt;
+</span><span class="cm">
+</span><span class="cm">#include &lt;memory&gt;
+</span><span class="cm">  
+</span><span class="cm">
+</span><span class="cm">//用CPU的视角，解读 thread local 的工作原理
+</span><span class="cm">
+</span><span class="cm">//g++ -S -O2 thread1.cpp -o thread.s
+</span><span class="cm">
+</span><span class="cm">//https://godbolt.org/z/o6njsaan9
+</span><span class="cm">
+</span><span class="cm">thread_local int x = 1; // 线程局部变量（全局作用域）
+</span><span class="cm">
+</span><span class="cm">  
+</span><span class="cm">
+</span><span class="cm">void thread_func() {
+</span><span class="cm">
+</span><span class="cm">std::cout &lt;&lt; &#34;Thread &#34; &lt;&lt; std::this_thread::get_id()
+</span><span class="cm">
+</span><span class="cm">&lt;&lt; &#34;: x address = &#34; &lt;&lt; &amp;x &lt;&lt; std::endl;
+</span><span class="cm">
+</span><span class="cm">}
+</span><span class="cm">int func()
+</span><span class="cm">
+</span><span class="cm">{
+</span><span class="cm">
+</span><span class="cm">thread_local int b = 2; // 线程局部变量（函数局部作用域）
+</span><span class="cm">
+</span><span class="cm">return b;
+</span><span class="cm">
+</span><span class="cm">// mov eax, DWORD PTR fs:func()::b@tpoff
+</span><span class="cm">
+</span><span class="cm">}
+</span><span class="cm">
+</span><span class="cm">
+</span><span class="cm">int main()
+</span><span class="cm">
+</span><span class="cm">{
+</span><span class="cm">
+</span><span class="cm">std::thread t1(thread_func); // 创建线程1
+</span><span class="cm">
+</span><span class="cm">std::thread t2(thread_func); // 创建线程2
+</span><span class="cm">
+</span><span class="cm">//同一个变量为什么不同线程，看到不同地址？
+</span><span class="cm">
+</span><span class="cm">//栈也实现，为什么不栈代替
+</span><span class="cm">
+</span><span class="cm">// Thread 140289368270400: x address = 0x7f97a9f6263c
+</span><span class="cm">
+</span><span class="cm">// Thread 140289359877696: x address = 0x7f97a976163c
+</span><span class="cm">
+</span><span class="cm">t1.join();
+</span><span class="cm">
+</span><span class="cm">t2.join();
+</span><span class="cm">
+</span><span class="cm">return 0;
+</span><span class="cm">
+</span><span class="cm">}
+</span><span class="cm">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://s2.loli.net/2025/05/14/OcdT2DCEFZlVf5j.png" alt="代码">
+在线程创建时，运行时（glibc + dynamic linker）会为每个线程分配两个独立区域：</p>
+<ol>
+<li><strong>TLS 块（Thread-Local Storage area）</strong>：包含所有静态和动态 TLS 对象的私有副本，以及线程控制块（TCB）。</li>
+<li><strong>线程栈（Thread Stack）</strong>：独立的堆栈区域，用于函数调用、局部变量等。</li>
+</ol>
+<p>这两个区域通常是分开 mmap／分配的，且在 x86-64 上通过段寄存器（FS 或 GS）来访问 TLS，而通过 RSP/RBP 访问栈</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>地址来源</th>
+<th>访问方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TLS 块</td>
+<td>FS（或 GS）段基址 + 偏移</td>
+<td><code>mov eax, DWORD PTR fs:offset</code></td>
+</tr>
+<tr>
+<td>线程栈</td>
+<td>RSP/RBP 寄存器</td>
+<td>通过常规栈寻址（<code>[rbp-8]</code>、<code>[rsp+16]</code></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514010349.png" alt=""></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514005618.png" alt="fs寄存器切换">
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514010504.png" alt=""></p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514005743.png" alt="image.png"></p>
+<h4 id="localexec-tls-访问模型">Local‑Exec TLS 访问模型</h4>
+<h5 id="编译链接阶段">编译/链接阶段</h5>
+<ul>
+<li>编译器将所有静态已初始化的 TLS 对象收集到 ELF 的 <code>.tdata</code> 节，并由链接器在最终的可执行文件或共享库的 PT_TLS 段内生成一个“TLS 模板”。</li>
+<li>每个 TLS 符号都会被赋予一个固定的节内偏移 <code>st_value</code>，对应重定位类型 <code>@tpoff</code>。</li>
+</ul>
+<h5 id="运行阶段">运行阶段</h5>
+<ol>
+<li><strong>线程创建</strong>
+<ul>
+<li>glibc／动态链接器在 <code>pthread_create</code> 时，为新线程 <code>mmap</code> 出一块内存，复制主 TLS 模板（<code>.tdata</code>＋<code>.tbss</code>）并在尾部附加 TCB 结构。</li>
+<li>通过 <code>arch_prctl(ARCH_SET_FS, tcb_address)</code> 将 <code>fs</code> 段基址设置到刚分配的 TCB 处。</li>
+</ul>
+</li>
+<li><strong>直接访问</strong>
+<ul>
+<li>之后的 <code>mov eax, DWORD PTR fs:offset</code> 便能在单条指令内读出该线程的私有变量，速度媲美普通全局变量读取。</li>
+</ul>
+</li>
+</ol>
+<h3 id="五对比java怎么实现的">五、对比java怎么实现的？</h3>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514012510.png" alt=""></p>
+<h3 id="52-3fs实现自己的tls">5.2 3fs实现自己的TLS</h3>
+<p>src/common/utils/ObjectPool.h</p>
+<p>从架构师角度分析：ObjectPool 存储结构 （数据结构） 和读写操作（算法），输出可视化（文本，图片，ppt）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">┌─────────────────────────────────────────────────────────────┐
+│                       对象池内存架构                          │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────┐
+│                           全局共享区                               │
+│                                                                   │
+│  ┌─────────────────────────────────────────────────────────────┐  │
+	│  │                全局ObjectPool单例 (instance)                 │  │
+│  │                                                             │  │
+│  │  ┌───────────┐ ┌───────────┐ ┌───────────┐    ┌───────────┐ │  │
+│  │  │  批次 #1   │ │  批次 #2   │ │  批次 #3   │... │  批次 #n   │ │  │
+│  │  │ (64个对象) │ │ (64个对象) │ │ (64个对象) │    │ (64个对象) │ │  │
+│  │  └───────────┘ └───────────┘ └───────────┘    └───────────┘ │  │
+│  │                                                             │  │
+│  │  访问需要获取mutex_锁                                        │  │
+│  └─────────────────────────────────────────────────────────────┘  │
+│                                                                   │
+└───────────────────────────────────────────────────────────────────┘
+
+                            ↑ 批量交换 ↓
+                           (低频、需加锁)
+
+┌───────────────────┐     ┌───────────────────┐     ┌───────────────────┐
+│    线程1本地存储    │     │    线程2本地存储    │     │    线程3本地存储    │
+│  thread_local TLS  │     │  thread_local TLS  │     │  thread_local TLS  │
+│                    │     │                    │     │                    │
+│  ┌──────────────┐  │     │  ┌──────────────┐  │     │  ┌──────────────┐  │
+│  │    first_    │  │     │  │    first_    │  │     │  │    first_    │  │
+│  │ (首选缓存批次) │  │     │  │ (首选缓存批次) │  │     │  │ (首选缓存批次) │  │
+│  └──────────────┘  │     │  └──────────────┘  │     │  └──────────────┘  │
+│                    │     │                    │     │                    │
+│  ┌──────────────┐  │     │  ┌──────────────┐  │     │  ┌──────────────┐  │
+│  │   second_    │  │     │  │   second_    │  │     │  │   second_    │  │
+│  │ (溢出缓存批次) │  │     │  │ (溢出缓存批次) │  │     │  │ (溢出缓存批次) │  │
+│  └──────────────┘  │     │  └──────────────┘  │     │  └──────────────┘  │
+│                    │     │                    │     │                    │
+│   无锁快速访问      │     │   无锁快速访问      │     │   无锁快速访问      │
+└───────────────────┘     └───────────────────┘     └───────────────────┘
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-css" data-lang="css"><span class="err">┌─────────────────────────────────────────────────────────────┐</span>
+<span class="err">│</span>                        <span class="nt">对象分配流程</span>                           <span class="err">│</span>
+<span class="err">└─────────────────────────────────────────────────────────────┘</span>
+
+<span class="err">┌──────────────┐</span>                                           <span class="nt">用户代码</span>
+<span class="err">│</span>  <span class="nt">用户请求对象</span>  <span class="err">│</span>  <span class="nt">ObjectPool</span><span class="o">&lt;</span><span class="nt">T</span><span class="o">&gt;</span><span class="p">::</span><span class="nd">get</span><span class="o">()</span>
+<span class="err">└───────┬──────┘</span>
+        <span class="err">│</span>
+        <span class="err">▼</span>
+<span class="err">┌──────────────┐</span>                                           <span class="nt">静态访问点</span>
+<span class="err">│</span> <span class="nt">访问tls</span><span class="o">()</span><span class="nt">函数</span> <span class="err">│</span>  <span class="nt">static</span> <span class="nt">auto</span> <span class="o">&amp;</span><span class="nt">tls</span><span class="o">()</span>
+<span class="err">└───────┬──────┘</span>
+        <span class="err">│</span>                             <span class="err">┌────────────────────┐</span>
+        <span class="err">▼</span>                             <span class="err">│</span>                    <span class="err">│</span>
+<span class="err">┌──────────────┐</span>  <span class="nt">第一次访问</span>          <span class="err">│</span>  <span class="nt">static</span> <span class="nt">ObjectPool</span>  <span class="err">│</span>
+<span class="err">│</span> <span class="nt">获取TLS实例</span>   <span class="err">│◄──────</span><span class="nt">创建</span><span class="err">──────────┤</span>     <span class="nt">instance</span>        <span class="err">│</span>
+<span class="err">└───────┬──────┘</span>                     <span class="err">│</span>                    <span class="err">│</span>
+        <span class="err">│</span>                             <span class="err">└────────────────────┘</span>
+        <span class="err">│</span>                                   <span class="nt">全局单例</span>
+        <span class="err">▼</span>
+<span class="err">┌────────────────────┐</span>
+<span class="err">│</span> <span class="nt">TLS</span><span class="p">.</span><span class="nc">get</span><span class="o">()</span> <span class="nt">获取内存</span>  <span class="err">│</span>
+<span class="err">└─────────┬──────────┘</span>
+          <span class="err">│</span>
+          <span class="err">▼</span>
+     <span class="err">┌─────────┐</span>     <span class="nt">有</span>                  <span class="nt">快速路径</span>
+     <span class="err">│</span><span class="nt">second_</span>  <span class="err">│────────┐</span>   <span class="o">~</span><span class="nt">5纳秒</span>
+     <span class="err">│</span> <span class="nt">有对象</span><span class="o">?</span> <span class="err">│</span>        <span class="err">│</span>
+     <span class="err">└─────────┘</span>        <span class="err">│</span>
+          <span class="err">│</span>             <span class="err">│</span>
+          <span class="err">│</span> <span class="nt">无</span>          <span class="err">│</span>
+          <span class="err">▼</span>             <span class="err">│</span>
+     <span class="err">┌─────────┐</span>        <span class="err">│</span>
+     <span class="err">│</span> <span class="nt">first_</span>  <span class="err">│</span>        <span class="err">│</span>
+     <span class="err">│</span> <span class="nt">有对象</span><span class="o">?</span> <span class="err">│</span>        <span class="err">│</span>
+     <span class="err">└─────────┘</span>        <span class="err">│</span>
+          <span class="err">│</span>             <span class="err">│</span>
+      <span class="nt">无</span>  <span class="err">│</span>             <span class="err">│</span>
+          <span class="err">▼</span>             <span class="err">│</span>
+<span class="err">┌─────────────────┐</span>     <span class="err">│</span>                  <span class="nt">中速路径</span>
+<span class="err">│</span> <span class="nt">尝试从全局池</span>     <span class="err">│</span>     <span class="err">│</span>   <span class="o">~</span><span class="nt">50纳秒</span>
+<span class="err">│</span> <span class="nt">获取一批对象</span>     <span class="err">│</span>     <span class="err">│</span>
+<span class="err">└────────┬────────┘</span>     <span class="err">│</span>
+         <span class="err">│</span>              <span class="err">│</span>
+     <span class="nt">失败</span> <span class="err">│</span>              <span class="err">│</span>
+         <span class="err">▼</span>              <span class="err">│</span>
+<span class="err">┌─────────────────┐</span>     <span class="err">│</span>                  <span class="nt">慢速路径</span>
+<span class="err">│</span> <span class="nt">创建新的一批对象</span>  <span class="err">│</span>     <span class="err">│</span>   <span class="o">~</span><span class="nt">200纳秒</span>
+<span class="err">└────────┬────────┘</span>     <span class="err">│</span>
+         <span class="err">│</span>              <span class="err">│</span>
+         <span class="err">│</span>              <span class="err">│</span>
+         <span class="err">▼</span>              <span class="err">│</span>
+<span class="err">┌─────────────────┐</span>     <span class="err">│</span>
+<span class="err">│</span> <span class="nt">从first_取出对象</span> <span class="err">│◄────┘</span>
+<span class="err">└────────┬────────┘</span>
+         <span class="err">│</span>
+         <span class="err">▼</span>
+<span class="err">┌──────────────────────┐</span>
+<span class="err">│</span> <span class="nt">在内存上构造T类型对象</span>  <span class="err">│</span>  <span class="nt">placement</span> <span class="nt">new</span>
+<span class="err">└──────────┬───────────┘</span>
+           <span class="err">│</span>
+           <span class="err">▼</span>
+<span class="err">┌──────────────────────┐</span>
+<span class="err">│</span> <span class="nt">返回对象智能指针给用户</span> <span class="err">│</span>  <span class="nt">std</span><span class="p">::</span><span class="nd">unique_ptr</span><span class="o">&lt;</span><span class="nt">T</span><span class="o">,</span> <span class="nt">Deleter</span><span class="o">&gt;</span>
+<span class="err">└───────────────────────┘</span>
+
+
+<span class="err">┌─────────────────────────────────────────────────────────────┐</span>
+<span class="err">│</span>                        <span class="nt">对象释放流程</span>                           <span class="err">│</span>
+<span class="err">└─────────────────────────────────────────────────────────────┘</span>
+
+<span class="err">┌──────────────┐</span>                                           <span class="nt">用户代码</span>
+<span class="err">│</span> <span class="nt">智能指针析构</span>  <span class="err">│</span>  <span class="o">~</span><span class="nt">Deleter</span><span class="o">()</span>
+<span class="err">└───────┬──────┘</span>
+        <span class="err">│</span>
+        <span class="err">▼</span>
+<span class="err">┌──────────────┐</span>                                           <span class="nt">调用自定义删除器</span>
+<span class="err">│</span> <span class="nt">调用对象析构</span>  <span class="err">│</span>  <span class="nt">item-</span><span class="o">&gt;~</span><span class="nt">T</span><span class="o">()</span>
+<span class="err">└───────┬──────┘</span>
+        <span class="err">│</span>
+        <span class="err">▼</span>
+<span class="err">┌──────────────┐</span>                                           <span class="nt">线程局部归还</span>
+<span class="err">│</span> <span class="nt">TLS</span><span class="p">.</span><span class="nc">put</span><span class="o">()</span>    <span class="err">│</span>  
+<span class="err">└───────┬──────┘</span>
+        <span class="err">│</span>
+        <span class="err">▼</span>
+     <span class="err">┌─────────┐</span>     <span class="nt">可以</span>                  <span class="nt">快速路径</span>
+     <span class="err">│</span> <span class="nt">first_</span>  <span class="err">│────────┐</span>   <span class="o">~</span><span class="nt">3纳秒</span>
+     <span class="err">│</span> <span class="nt">未满</span><span class="o">?</span>   <span class="err">│</span>        <span class="err">│</span>
+     <span class="err">└─────────┘</span>        <span class="err">│</span>
+          <span class="err">│</span>             <span class="err">│</span>
+          <span class="err">│</span> <span class="nt">已满</span>        <span class="err">│</span>
+          <span class="err">▼</span>             <span class="err">│</span>
+<span class="err">┌─────────────────┐</span>     <span class="err">│</span>                 
+<span class="err">│</span> <span class="nt">放入second_</span>     <span class="err">│</span>     <span class="err">│</span>   
+<span class="err">└────────┬────────┘</span>     <span class="err">│</span>
+         <span class="err">│</span>              <span class="err">│</span>
+         <span class="err">▼</span>              <span class="err">│</span>
+     <span class="err">┌─────────┐</span>  <span class="nt">否</span>    <span class="err">│</span>
+     <span class="err">│</span><span class="nt">second_</span>  <span class="err">│────────┘</span>
+     <span class="err">│</span> <span class="nt">已满</span><span class="o">?</span>   <span class="err">│</span>        
+     <span class="err">└─────────┘</span>        
+          <span class="err">│</span>             
+          <span class="err">│</span> <span class="nt">是</span>          
+          <span class="err">▼</span>             
+<span class="err">┌─────────────────┐</span>                        <span class="nt">慢速路径</span>
+<span class="err">│</span> <span class="nt">整批移至全局池</span>   <span class="err">│</span>      <span class="o">~</span><span class="nt">100纳秒</span><span class="o">(</span><span class="nt">需获取锁</span><span class="o">)</span>
+<span class="err">└────────┬────────┘</span>     
+         <span class="err">│</span>              
+         <span class="err">▼</span>              
+<span class="err">┌─────────────────┐</span>     
+<span class="err">│</span> <span class="nt">清空second_</span>     <span class="err">│</span>     
+<span class="err">└────────┬────────┘</span>     
+         <span class="err">│</span>              
+         <span class="err">▼</span>              
+<span class="err">┌─────────────────┐</span>     
+<span class="err">│</span> <span class="nt">放入second_</span>     <span class="err">│</span>    
+<span class="err">└─────────────────┘</span>     
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250514201055.png" alt="image.png"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp">
+<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Foo</span><span class="p">)]</span>
+<span class="n">Foo</span><span class="o">*</span> <span class="n">foo</span> <span class="o">=</span> <span class="k">new</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="n">Foo</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;——END&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h3 id="我是谁">我是谁</h3>
+<p><strong>刚刚好，是最难得的美好</strong></p>
+<p>我就在这里 ，我刚刚好。</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="如果需要帮忙 call we wang_cyi"></p>
+<p>我正在做的事情是</p>
+<h4 id="1-目标拿百万年薪"><strong>1. 目标：拿百万年薪</strong></h4>
+<ul>
+<li>想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+</ul>
+<h4 id="2-现状缺乏实战渴望提升动手能力"><strong>2. 现状：缺乏实战，渴望提升动手能力</strong></h4>
+<ul>
+<li>
+<p>公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</p>
+</li>
+<li>
+<p>想通过阅读优秀的源码，提高代码能力，从&quot;不会写&quot;到&quot;敢写&quot;，提升C++编程自信。</p>
+</li>
+<li>
+<p>需要掌握高效学习和实践的方法，弥补缺乏实战经验的短板。</p>
+</li>
+</ul>
+<h4 id="3-价值成为优秀完成任务成为团队公司都认可的核心骨干">3. 价值：成为优秀完成任务，成为团队、公司都认可的核心骨干。</h4>
+<p><strong>优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</strong>
+<strong>错误示范</strong>：</p>
+<ul>
+<li>不少同学工作很忙，天天加班，做了很多公司的事情。
+但是 不是本团队事情，不是本部门事情，领导不认可，绩效不高</li>
+<li>做低优先级的任务，绩效不高，随时被优化</li>
+</ul>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮，
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+<h3 id="参考第一手资料">参考：第一手资料</h3>
+<ul>
+<li>ThreadLocal是Java中实现线程本地存储（TLS）的核心类，通过为每个线程维护独立的变量副本，解决多线程环境下的数据竞争问题</li>
+<li><a href="https://www.bilibili.com/video/BV1Lo4y1g787/">https://www.bilibili.com/video/BV1Lo4y1g787/</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/language/storage_duration">https://en.cppreference.com/w/cpp/language/storage_duration</a></li>
+<li><a href="https://www.cnblogs.com/curiositywang/p/18231696">https://www.cnblogs.com/curiositywang/p/18231696</a></li>
+<li>Facebook的folly库中的ThreadLocal实现</li>
+<li><a href="https://github.com/lefticus/cpp_weekly">https://github.com/lefticus/cpp_weekly</a></li>
+<li><a href="https://www.youtube.com/watch?v=q9_vljSaBDg">https://www.youtube.com/watch?v=q9_vljSaBDg</a></li>
+<li><a href="https://www.youtube.com/watch?v=vlskUyjBSQA">https://www.youtube.com/watch?v=vlskUyjBSQA</a></li>
+<li><a href="https://github.com/nilaoda/BBDown">https://github.com/nilaoda/BBDown</a> 【done】</li>
+<li><a href="https://maskray.me/blog/2021-02-14-all-about-thread-local-storage">https://maskray.me/blog/2021-02-14-all-about-thread-local-storage</a></li>
+</ul>
+<ol>
+<li>C++ thread_local adds additional features to <code>__thread</code>: dynamic initialization before first-use and destruction on thread exit.</li>
+<li>Java Concurrency in Practice</li>
+<li><a href="https://klose911.github.io/html/jvm/thread_safe.html">https://klose911.github.io/html/jvm/thread_safe.html</a></li>
+<li>
+<h5 id="what-is-thread-safe-initialization-of-local-static-objectshttpswwweevblogcomforumprogrammingwhat-is-thread-safe-initialization-of-local-static-objectsmsg4996078msg4996078-done"><a href="https://www.eevblog.com/forum/programming/what-is-thread-safe-initialization-of-local-static-objects/msg4996078/#msg4996078">What is thread-safe initialization of local static objects</a> done</h5>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/template/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">面试必备之深入理解thread local</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/2025-4-26_spin_lock_temp/">
+            <span class="next-text nav-default">面试必备之深入理解自旋锁【草稿版本】</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

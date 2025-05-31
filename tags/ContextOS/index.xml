@@ -9,29 +9,38 @@
     <lastBuildDate>Sat, 03 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/ContextOS/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ContextOS 模块开发与架构解析笔记</title>
-      <link>https://wangcy6.github.io/post/ContextOS/2025-05-03-contestos-window/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/2025/2025-05-03-contestos-window/</link>
       <pubDate>Sat, 03 May 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ContextOS/2025-05-03-contestos-window/</guid>
-      <description>本文目标 ✅ 熟悉：ContextOS 应用平台 使用方法 1 https://web.shylinux.com/ ✅ 熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法 ✅ 探索如何模</description>
-    </item>
-    
-    <item>
-      <title>ContextOS 模块开发与架构解析笔记</title>
-      <link>https://wangcy6.github.io/post/ContextOS/01_what_is_contextos/</link>
-      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/ContextOS/01_what_is_contextos/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/2025/2025-05-03-contestos-window/</guid>
       <description>本文目标 ✅ 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法 ✅ 探索如何模块化方式 从0</description>
     </item>
     
     <item>
       <title>ContextOS 模块开发与架构解析笔记</title>
-      <link>https://wangcy6.github.io/post/leetcode/template/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/ContextOS/01_what_is_contextos/</link>
       <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/leetcode/template/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/ContextOS/01_what_is_contextos/</guid>
+      <description>本文目标 ✅ 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法 ✅ 探索如何模块化方式 从0</description>
+    </item>
+    
+    <item>
+      <title>ContextOS 模块开发与架构解析笔记</title>
+      <link>https://wangcy6.github.io/post/interview/leetcode/template/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/leetcode/template/</guid>
       <description>一、题目信息 今天来做这个题目，主要考察的xxx 链接：玻璃球 来源：Interview Question 难度：Hard 二、思路描述 能说出基本思想即可,实在不行动</description>
+    </item>
+    
+    <item>
+      <title>现在9个招呼8个外包，还有一个 OD</title>
+      <link>https://wangcy6.github.io/post/interview/leetcode/2025/day1-/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/leetcode/2025/day1-/</guid>
+      <description>哥，找你诉诉苦，目前老板直骗(boss)上打招呼的 9 个里面有 8 个外包，还有一个 OD 怎么？ 刷题： 让事情变的伟大 从别动刷题到 以教促学 LeetCode CSP,NOIP 一起搞 第一</description>
     </item>
     
   </channel>

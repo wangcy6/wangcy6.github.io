@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>微小到不可能失败的起床日记 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="问题： 最近半年我发现一个事情： 越是想写代码，看代码越是没时间，被各种事情干扰 公司总是月底绩效， 3个月完成项目， 公司项目出bug 各种各种事情，" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/habit/2025/3-zhish-shenjian/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="微小到不可能失败的起床日记" />
+<meta property="og:description" content="问题： 最近半年我发现一个事情： 越是想写代码，看代码越是没时间，被各种事情干扰 公司总是月底绩效， 3个月完成项目， 公司项目出bug 各种各种事情，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/habit/2025/3-zhish-shenjian/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-05-30T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-05-30T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="微小到不可能失败的起床日记">
+<meta itemprop="description" content="问题： 最近半年我发现一个事情： 越是想写代码，看代码越是没时间，被各种事情干扰 公司总是月底绩效， 3个月完成项目， 公司项目出bug 各种各种事情，"><meta itemprop="datePublished" content="2025-05-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-05-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1237">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="微小到不可能失败的起床日记"/>
+<meta name="twitter:description" content="问题： 最近半年我发现一个事情： 越是想写代码，看代码越是没时间，被各种事情干扰 公司总是月底绩效， 3个月完成项目， 公司项目出bug 各种各种事情，"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">微小到不可能失败的起床日记</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-05-30 00:00 </span>
+        
+          <span class="more-meta"> 约 1237 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#问题">问题：</a></li>
+        <li><a href="#线索">线索：</a></li>
+        <li><a href="#abcc方法">ABCC方法：</a></li>
+        <li><a href="#peace">PEACE</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s2.loli.net/2025/05/30/RlEjuhCfKzFkVXd.png" alt="image.png"></p>
+<h3 id="问题">问题：</h3>
+<p>最近半年我发现一个事情：</p>
+<p>越是想写代码，看代码越是没时间，被各种事情干扰</p>
+<ul>
+<li>公司总是月底绩效，</li>
+<li>3个月完成项目，</li>
+<li>公司项目出bug
+各种各种事情，出现了没时间写代码怎么办？
+没有时间，这是为什么？</li>
+</ul>
+<h3 id="线索">线索：</h3>
+<p>今天看到 阿德勒目的论 我的问题，就是我的解决方案。</p>
+<ul>
+<li>我的问题是想写代码，没时间写代码。</li>
+<li>我解决方案是 不写代码。</li>
+</ul>
+<p>自己给自己设置限制</p>
+<ul>
+<li>完成业务代码比看框架代码更重要，因此逃避写框架代码</li>
+<li>刷抖音看直播更容易，因此逃避写框架代码</li>
+<li>今天困了，明天再说吧</li>
+</ul>
+<h3 id="abcc方法">ABCC方法：</h3>
+<p>ABCC背后的逻辑是：要主动去选择，不要陷入受害者模式</p>
+<p>A:觉察：现在发生了什么事情让我不舒服；</p>
+<p>B：接呢break，深呼吸，跳出情绪一点；接纳情绪</p>
+<p>C：  好奇，好奇地问自己发生了什么事情？还原事实，立体地呈现现状；<strong>探究原因</strong>。5Why分析法</p>
+<p>C：新的选择。有没有新的选择，有没有更好地处理方式。
+改变想法：​**​<br>
+写代码，学架构，学公号，对我来说很重要，优先级很高。</p>
+<p>​<strong>​最小化行动：​</strong>​</p>
+<ul>
+<li>1周写500行工作之外的代码</li>
+<li>1周输出1篇公众号文章</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/05/30/Ghbq9dfQ2nVNHDc.jpg" alt="L1-7ABCC.JPG"></p>
+<h3 id="peace">PEACE</h3>
+<h4 id="1-接纳情绪a---accept"><strong>1. 接纳情绪（A - Accept）​</strong>​</h4>
+<p>→ ​<strong>​关键动作​</strong>​：停止自我批判，用中性语言描述情绪（例：<em>“我因项目延期感到焦虑，这很正常”</em>）。<br>
+→ ​<strong>​作用​</strong>​：避免情绪消耗认知资源，为理性分析铺路。</p>
+<h4 id="2-探究原因e---explore">​<strong>​2. 探究原因（E - Explore）​</strong>​</h4>
+<p>→ ​<strong>​执行方法​</strong>​：</p>
+<ul>
+<li>连续追问 ​<strong>​“为什么？”​</strong>​（5Why分析法）</li>
+<li>区分 ​<strong>​直接诱因​</strong>​（如需求变更）与 ​<strong>​深层矛盾​</strong>​（如沟通机制缺失）<br>
+→ ​<strong>​工具​</strong>​：鱼骨图、时间线复盘。</li>
+</ul>
+<h4 id="3-微调认知c---calibrate">​<strong>​3. 微调认知（C - Calibrate）​</strong>​</h4>
+<p>→ ​<strong>​核心原则​</strong>​：​<strong>​“长期未解的问题=系统存在盲点”​</strong>​<br>
+→ ​<strong>​破局点​</strong>​：</p>
+<ul>
+<li>检查 ​<strong>​隐含假设​</strong>​（例：<em>“必须用复杂方案？”</em> → 验证最小可行性）</li>
+<li>切换 ​<strong>​观察视角​</strong>​（例：技术问题转换为团队协作问题）</li>
+</ul>
+<h4 id="4-聚焦行动f---focus--核心步骤">​<strong>​4. 聚焦行动（F - Focus）​</strong>​ ★ 核心步骤</h4>
+<p><strong>元认知之后，定义清楚问题之后，PEACE解决起来就容易了：​</strong>​<br>
+觉察 + 接纳 + 分析（以上）</p>
+<p>​<strong>​改变想法：​</strong>​<br>
+写代码，学架构，学公号，对我来说很重要，优先级很高。</p>
+<p>​<strong>​最小化行动：​</strong>​</p>
+<ul>
+<li>1周写500行工作之外的代码</li>
+<li>1周输出1篇公众号文章</li>
+</ul>
+<p>ABCC-PACE 思考框架 要主动去选择，不要陷入受害者模式</p>
+<p>觉察：现在发生了什么事情让我不舒服</p>
+<ul>
+<li>面试后深深痛恨，面试不过，根本不过，不合适。</li>
+<li>这么不会，那不会，准备需要3年时间</li>
+</ul>
+<p>接纳：深呼吸，跳出情绪一点</p>
+<ul>
+<li>这个就是我状态，真是反馈</li>
+</ul>
+<p>分析： 好奇，好奇地问自己发生了什么事情？还原事实 5Why分析</p>
+<ul>
+<li>为什么不会，忙碌 没时间</li>
+<li>为什么没时间，工作 工作</li>
+<li>为什么别人可以，我小兵，别人是架构师，经验丰富</li>
+<li>为什么比较，信任问题，别人不相信你？</li>
+<li>为什么？别人不允许 你学习，别人说放弃框架， 放弃技术，轻松可以，你详细了</li>
+<li>改变观念，我天生就是做技术的，我可以 我可以</li>
+</ul>
+<p>新的选择。有没有新的选择，有没有更好地处理方式，改变想法</p>
+<ul>
+<li>参与开源社区，开源文档技术，这个没有门槛限制</li>
+<li>要学习英语</li>
+<li>难但是正确</li>
+</ul>
+<p>聚焦行动（F - Focus）最小化行动
+1 写面试回顾
+2.解决面试中遇到问题开始</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-05-30 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/interview/08-thread-local/">
+            <span class="next-text nav-default">如何利用线程局部变量 实现一个分级存储的缓存结构</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

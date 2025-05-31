@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>高并发情况下如何优化你系统 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-29_v1.0_parll/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="高并发情况下如何优化你系统" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-29_v1.0_parll/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="高并发情况下如何优化你系统">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3665">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="高并发情况下如何优化你系统"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">高并发情况下如何优化你系统</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 3665 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-为什么-cpu-成为瓶颈">🔍 为什么 CPU 成为瓶颈？</a>
+      <ul>
+        <li><a href="#1-多线程处理导致的资源竞争">1. <strong>多线程处理导致的资源竞争</strong></a></li>
+        <li><a href="#2-rocksdb-的锁争用">2. <strong>RocksDB 的锁争用</strong></a></li>
+        <li><a href="#3-客户端线程模型的限制">3. <strong>客户端线程模型的限制</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-如何缓解-cpu-瓶颈">⚙️ 如何缓解 CPU 瓶颈？</a>
+      <ul>
+        <li><a href="#1-优化线程配置">1. <strong>优化线程配置</strong></a></li>
+        <li><a href="#2-采用-crimson-架构">2. <strong>采用 Crimson 架构</strong></a></li>
+        <li><a href="#3-调整-rocksdb-配置">3. <strong>调整 RocksDB 配置</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-总结">📌 总结</a></li>
+    <li><a href="#打造下一代ceph-osd解决方案_业界_">打造下一代Ceph OSD解决方案_业界_</a>
+      <ul>
+        <li><a href="#我是谁">我是谁</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。</p>
+<p>知识地图：深入理解计算机系统&mdash;文件子系统</p>
+<p>面试官提问：在高并发情况下，你做了哪些优化</p>
+<p>小义思考：</p>
+<p>我是一名后端 ceph 开发人员，在实际工作我遇到无法解决问题是什么？我是怎么解决的？</p>
+<ol>
+<li>我进入公司之前， 公司产品运营 10 年我根本不知道产品怎么设计，看代码根本看不明白，无论之前 boss 系统还是 ceph 系统 ，里面代码研究不是框架，一堆业务代码 根本看不懂，虽然知道公司谁是大佬，分工原因，不敢让他们给解释，他们忙碌没时间，我怎么解决的，<strong>我准备看公司文档，资料，但是每天不停安排任务，结果根本没有看，转眼好几年过去了</strong>？我<!-- raw HTML omitted -->说过去是我设计的，就是骗子，此路不通，别人一看就假的<!-- raw HTML omitted --></li>
+<li>我进入公司，公司不停版本升级，但是分工问题，每天都在不停完成任务，根本无法接触，其现场问题，公司上百人每天不停设计讨论价值内容，根本接触不到，<strong>自己去研究一会，领导说不务正业，根本无法学习</strong>。怎么办？自己开发不少工能，解决不少问题 ，没有提炼学习，我<!-- raw HTML omitted -->说过去是现在如何解决的，此路不通，重启，扩容不是解决方案<!-- raw HTML omitted --></li>
+<li>怎么办？ceph 是开源的，这些特性公开的 ​<strong>​Luminous (v12.2.x)​</strong>​：首次引入 BlueStore 作为可选存储引擎，但默认仍为 FileStore，Ceph v17.2.0 Quincy 是 Ceph 的第 17 个稳定版，Quincy 中明确弃用了 FileStore，全面转向 BlueStore</li>
+</ol>
+<blockquote>
+<p>我还一名 基于Ceph v17.2.0 Quincy开发人员</p>
+<ol>
+<li>最重要特点是 <strong>BlueStore</strong> 成为 Ceph 的默认存储引擎，支持<strong>多租户</strong></li>
+<li>开发工作遇到问题</li>
+<li>其他公司舍弃 ceph 自己开发一套系统 3fs，曙光等他们怎么做大的。</li>
+</ol>
+</blockquote>
+<p>小义思考：</p>
+<p>听到这个题目，我遇到问题是根本不知道怎么回答 ？</p>
+<p>日常工作</p>
+<ol>
+<li>加班 努力，奋斗 ，遇到挑战问题 ，根本没人考虑，保证原来日常工作运行消耗全部精力，帮助安装机器，部署环境，帮助别人 测，<strong>这样回答根本不行</strong></li>
+<li>整个公司没几个人 理解 高并发情况下，怎么解决？</li>
+</ol>
+<ul>
+<li>不解决，限流 限流扩容</li>
+<li>都根本不知道问题是什么，<strong>这样回答根本不行</strong></li>
+</ul>
+<ol start="3">
+<li><!-- raw HTML omitted -->全部说出来，别人看不懂，听不懂 马上失去看兴趣，然后说没思路<!-- raw HTML omitted -->。</li>
+</ol>
+<p>假如 100 个客户端节点，3 个服务节点 cep集群，面试提问 在高并发，高请求情况下，遇到那些挑战，结合 ceph 版本变化说一下，从客户端，从 mon mds osd 等每个模块 遇到那些问题?请反复核对正确性，在回答，确保逻辑清楚，真实遇到的挑战。</p>
+<p>在上面回答基础上 增加缓存一致性 副本一致性： 热点不均衡： 线程竞争 单个响应 和数据一致性做取舍？ 在 io 栈角度回答最大问题是什么？带宽还是 cpu</p>
+<p><strong>不同模块客户端，mon ，mds ods 在下面问题遇到挑战是什么</strong></p>
+<p>*<em>缓存一致性</em>
+<strong>副本一致性：</strong>
+<strong>热点</strong>不均衡：
+<strong>数据恢复与业务IO竞争</strong> 
+网络抖动时，MON节点</p>
+<p><strong>在 io 栈角度回答最大问题是什么？带宽还是 cpu</strong></p>
+<p><strong>高并发场景下</strong> <strong>对数据一致性</strong> <strong>和单个响应做取舍是什么</strong></p>
+<p>&mdash;-靠支撑。</p>
+<p>单个响应延迟 ：网页 404  df 磁盘不可用，最大延迟多
+一致性：</p>
+<p>假如 100 个客户端节点，3 个服务节点 cep集群，面试提问 在高并发，高请求情况下，遇到那些挑战，结合 ceph 版本变化说一下，从客户端，从 mon mds osd 等每个模块 遇到那些问题?请反复核对正确性，在回答，确保逻辑清楚，真实遇到的挑战。</p>
+<p>在上面回答基础上 增加缓存一致性 副本一致性： 热点不均衡： 线程竞争 单个响应 和数据一致性做取舍？ 在 io 栈角度回答最大问题是什么？带宽还是 cpu</p>
+<p><strong>不同模块客户端，mon ，mds ods 在下面问题遇到挑战是什么</strong></p>
+<p>*<em>缓存一致性</em>
+<strong>副本一致性：</strong>
+<strong>热点</strong>不均衡：
+<strong>数据恢复与业务IO竞争</strong> 
+网络抖动时，MON节点</p>
+<p><strong>在 io 栈角度回答最大问题是什么？带宽还是 cpu</strong></p>
+<p><strong>高并发场景下</strong> <strong>对数据一致性</strong> <strong>和单个响应做取舍是什么</strong></p>
+<p>&mdash;-靠支撑。</p>
+<p>单个响应延迟 ：网页 404  df 磁盘不可用，最大延迟多
+一致性：</p>
+<p>在高并发、小块 IO（如 4KB–64KB）场景下，Ceph 集群的主要瓶颈在于 <strong>CPU 资源的竞争与锁争用</strong>，这直接影响系统的延迟和吞吐能力。以下详细解释这一问题的具体表现及其成因：</p>
+<hr>
+<h2 id="-为什么-cpu-成为瓶颈">🔍 为什么 CPU 成为瓶颈？</h2>
+<h3 id="1-多线程处理导致的资源竞争">1. <strong>多线程处理导致的资源竞争</strong></h3>
+<p>Ceph 的架构中，尤其是 OSD（对象存储守护进程）和客户端，采用多线程模型来处理 IO 请求。这些线程包括：</p>
+<ul>
+<li>
+<p><strong><code>tp_osd_tp</code></strong>：处理前端 IO 请求。</p>
+</li>
+<li>
+<p><strong><code>aio</code></strong>：异步 IO 操作线程。</p>
+</li>
+<li>
+<p><strong><code>kv_sync_thread</code></strong>：负责将数据同步到 RocksDB。</p>
+</li>
+<li>
+<p><strong><code>kv_finalize_thread</code></strong>：完成 RocksDB 操作。</p>
+</li>
+<li>
+<p><strong><code>finisher</code></strong>：处理完成后的回调。</p>
+</li>
+</ul>
+<p>每个写请求可能需要经过上述多个线程的处理，线程之间的切换和同步增加了 CPU 的负担，尤其是在高并发情况下 。</p>
+<h3 id="2-rocksdb-的锁争用">2. <strong>RocksDB 的锁争用</strong></h3>
+<p>Ceph 使用 RocksDB 作为其元数据存储引擎。RocksDB 内部存在一个全局互斥锁（<code>DBImpl.mutex_</code>），用于保护元数据操作，如 memtable 和 SST 文件的引用计数、压缩、刷新等。在高并发读写操作时，大量线程争夺这一锁，导致性能下降 。</p>
+<h3 id="3-客户端线程模型的限制">3. <strong>客户端线程模型的限制</strong></h3>
+<p>在客户端，尤其是使用 RBD（RADOS 块设备）时，默认配置下，每个 IO 操作会创建多个线程（如 <code>io_context_pool</code> 和 <code>msgr-worker</code>）。当同时处理多个映像（image）时，线程数量激增，导致 CPU 资源被大量占用，线程切换频繁，降低了整体性能 。</p>
+<hr>
+<h2 id="-如何缓解-cpu-瓶颈">⚙️ 如何缓解 CPU 瓶颈？</h2>
+<h3 id="1-优化线程配置">1. <strong>优化线程配置</strong></h3>
+<ul>
+<li>
+<p><strong>减少线程数量</strong>：通过调整 <code>librados_thread_count</code> 和 <code>ms_async_op_threads</code> 参数，控制客户端线程数量，避免线程过多导致的上下文切换开销。</p>
+</li>
+<li>
+<p><strong>线程绑定</strong>：将关键线程绑定到特定的 CPU 核心，减少线程迁移带来的缓存失效和上下文切换。</p>
+</li>
+</ul>
+<h3 id="2-采用-crimson-架构">2. <strong>采用 Crimson 架构</strong></h3>
+<p>Ceph 的 Crimson 项目旨在通过采用 Seastar 框架，重构 OSD 的处理模型，采用无共享（shared-nothing）和运行至完成（run-to-completion）的设计，减少线程之间的同步和锁争用，从而提升多核 CPU 的利用率 。</p>
+<h3 id="3-调整-rocksdb-配置">3. <strong>调整 RocksDB 配置</strong></h3>
+<ul>
+<li>
+<p><strong>增加写缓冲区大小</strong>：通过调整 <code>write_buffer_size</code>，减少写放大效应。</p>
+</li>
+<li>
+<p><strong>优化压缩策略</strong>：根据实际需求，选择合适的压缩算法，平衡 CPU 开销和存储效率。</p>
+</li>
+<li>
+<p><strong>控制后台线程数量</strong>：设置 <code>max_background_compactions</code> 和 <code>max_background_flushes</code>，避免后台操作占用过多 CPU 资源 。</p>
+</li>
+</ul>
+<hr>
+<h2 id="-总结">📌 总结</h2>
+<p>在 Ceph 的高并发、小块 IO 场景下，CPU 的竞争和锁争用是导致性能瓶颈的主要原因。通过优化线程模型、采用新的架构（如 Crimson）、调整 RocksDB 的配置，可以有效缓解这一问题，提升系统的整体性能和稳定性。</p>
+<h2 id="打造下一代ceph-osd解决方案_业界_">打造下一代Ceph OSD解决方案_业界_</h2>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;——END&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h3 id="我是谁">我是谁</h3>
+<p>最动人的作品，为自己而写，刚刚好打动别人
+刚刚好，是最难得的美好</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="如果需要帮忙 call we wang_cyi"></p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
+<ul>
+<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，别人投入时间完成任务，别人采取措施解决问题了，不要不贪别人功劳，</li>
+<li>但是不要给自己这样假设：别人完成就等着自己完成了，大家一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现，</li>
+<li>别人不这么假设，至少kpi上不会写成自己的，至少晋升不是你，裁员淘汰是，你的整个公司ceo，整个部门总裁，整个领导不帮助一下的，他们不这么想 ，你什么没做，战略是别人10年一点带你研究的多难，项目拆分别人10年完成多少问题，项目实现10年安排组织一点点完成多少bug，多少代码，是不要给自己这样假设：你等了看了观察10年什么做 ，0 贡献，</li>
+<li>但是不要给自己这样假设，别人全部市场，别人全部市场，别人占据全部客户，一切重要无比，你太差，太才，思考不行，沟通不行，认知不行，去tmd，给别人丢脸。这个方面我无法控制，在这方面经历任何问题应该的。</li>
+<li>我控制 的事情是 我必须亲自了解行业遇到难题，了解有什么需求，行业解决方案，我可以从三万英尺看问题，像周围人学习，像免费公开英文资料学习，从模仿开始。然后免费公开。我要通过技术拿到百万年薪P7职务，我必须糊涂混沌中走出来</li>
+<li>目标：拿百万年 想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+<li>现状：缺乏实战，渴望提升动手能力公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</li>
+<li>成为优秀完成任务，成为团队、公司都认可的核心骨干。优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</li>
+</ul>
+<h5 id="低头走路">低头走路：</h5>
+<ul>
+<li>一次只讲清楚一个问题。</li>
+<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+<li>我控制 的事情是 我通过写自己代码拿到百万收益。代码就是杠杆，我必须创造可以运行在2c2g云主机小而美产品出来（服务普通人），而不是运行构建至少10台<em>64cpu</em> 300g内存物理机大而全项目（领航者，超越其他产品，出货全球N1，这个还是有停留有限斗争游戏，为top 10人企业服务）我必须糊涂混沌中走出来</li>
+</ul>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮，
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>#滴滴Ceph分布式存储系统优化之锁优化</li>
+<li></li>
+</ul>
+<p><a href="https://www.wuzao.com/ceph/en/latest/cephfs/client-config-ref/index.html">https://www.wuzao.com/ceph/en/latest/cephfs/client-config-ref/index.html</a></p>
+<p>fuse_disable_pagecache</p>
+<p><a href="https://www.cnblogs.com/IServise/articles/18452098">https://www.cnblogs.com/IServise/articles/18452098</a></p>
+<p><a href="https://indico.cern.ch/event/531810/contributions/2309925/attachments/1357386/2053998/GoncaloBorges-HEPIX16-v3.pdf">https://indico.cern.ch/event/531810/contributions/2309925/attachments/1357386/2053998/GoncaloBorges-HEPIX16-v3.pdf</a>
+-getfattr ­n ceph.dir.layout /cephfs/objectsize4M_stripeunit512K_stripecount2 ceph.dir.layout=&ldquo;stripe_unit=524288 stripe_count=2 object_size=4194304 pool=cephfs_dt</p>
+<ul>
+<li><a href="https://wiki.ceph.com/en/news/blog/2022/ceph-osd-cpu-scaling/?utm_source=chatgpt.com">https://wiki.ceph.com/en/news/blog/2022/ceph-osd-cpu-scaling/?utm_source=chatgpt.com</a></li>
+<li><a href="https://wiki.ceph.com/en/news/blog/2023/reef-freeze-rbd-performance/?utm_source=chatgpt.com">https://wiki.ceph.com/en/news/blog/2023/reef-freeze-rbd-performance/?utm_source=chatgpt.com</a></li>
+<li>-https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com
+在 Ceph 的高并发、小块 IO 场景下，CPU 的竞争和锁争用是导致性能瓶颈的主要原因。通过优化线程模型、采用新的架构（如 Crimson）、调整 RocksDB 的配置，可以有效缓解这一问题，提升系统的整体性能和稳定性</li>
+</ul>
+<p>回答内容太多，不具体，只是说一个问题</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/2025-4-25_tcp_close/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">面试题：TCP 四次挥手能变成三次挥手吗?</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/storage/tidb/2024/rust_for_tikv_days1_gdb/">
+            <span class="next-text nav-default">TiKV Contributors day1</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

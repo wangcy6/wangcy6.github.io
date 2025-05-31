@@ -9,164 +9,236 @@
     <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Trae从青铜到王者</title>
-      <link>https://wangcy6.github.io/post/ai/02_how_to_use_tea/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_tea/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_tea/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_tea/</guid>
       <description>免费公开资料 ### 官方文档 https://github.com/Trae-AI/Trae/issues 小程序开发 校园二手仓库 https://lcnziv86vkx6.feishu.cn/wiki/DoBtwiinliUM60keIRcc35C3nbe?from=from_copylink 青铜：学会使用工具 Q1 如何 Remote-SSH 远程开发和部署 知识地图：AIP-开发环境搭建 原理： 配置： 基本资料：</description>
     </item>
     
     <item>
-      <title>用Obsidian打造自己的写作系统</title>
-      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Obsidian/</link>
+      <title>Trae从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/04-net-web-/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Obsidian/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/04-net-web-/</guid>
+      <description>运行程序 用Cursor 进行C#编程</description>
+    </item>
+    
+    <item>
+      <title>Trae从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/template/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/template/</guid>
+      <description>免费公开资料 ### 官方文档 https://github.com/Trae-AI/Trae/issues 小程序开发 校园二手仓库 https://lcnziv86vkx6.feishu.cn/wiki/DoBtwiinliUM60keIRcc35C3nbe?from=from_copylink 青铜：学会使用工具 Q1 如何 Remote-SSH 远程开发和部署 知识地图：AIP-开发环境搭建 原理： 配置： 基本资料：</description>
+    </item>
+    
+    <item>
+      <title>为写作配图</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/draw/01-draw/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/draw/01-draw/</guid>
+      <description>案例1 模仿小灰对话 卡通风格，两只仓鼠站在纯白背景前，柔和粉彩配色。 左侧：灰白色仓鼠双臂交叉，表情专注； 右侧：棕黄色仓鼠面带微笑伸出爪子，爪部</description>
+    </item>
+    
+    <item>
+      <title>提示词</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/propmit/write/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/propmit/write/</guid>
+      <description>润色 你是出版者作家，请对文字进行排版与润色： 要求： 增加了清晰的分级大纲和目录，便于手机端快速定位内容。 拆分了过长段落，提升移动端阅读体验 纠正</description>
+    </item>
+    
+    <item>
+      <title>用Obsidian打造自己的写作系统</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_Obsidian/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_Obsidian/</guid>
       <description>写作步骤哪些 选题&amp;ndash;素材&amp;mdash;整理 检查 Q1：经常有错别字，句子不通顺 怎么办？ Obsidian LanguageTool 插件是一个为 Obsidian 文本编辑器提供的高级语法和拼</description>
     </item>
     
     <item>
       <title>省钱攻略:不花1分钱也能把微信读书变成你的私人图书馆</title>
-      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Kindle/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_Kindle/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Kindle/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_Kindle/</guid>
       <description>微信读书与Kindle的完美配合 微信读书适合碎片化阅读：随时打开手机就能阅读 Kindle适合长时间阅读：护眼、省电、专注 两者结合使用，让您的</description>
     </item>
     
     <item>
       <title>谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！</title>
-      <link>https://wangcy6.github.io/post/ai/2025/02_how_to_use_notebooklkm/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/2025/02_how_to_use_notebooklkm/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/2025/02_how_to_use_notebooklkm/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/2025/02_how_to_use_notebooklkm/</guid>
       <description>各位老师好， 我是007， 目标： 截止2028年通过Ai争取人生100万 然后毫无保留分享自己经验。 方法： 不要说每天加班没时，不要说我太菜， 说出来</description>
     </item>
     
     <item>
       <title>如何批量投递简历</title>
-      <link>https://wangcy6.github.io/post/ai/01_how_to_quickly_submit_resumes/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/01_how_to_quickly_submit_resumes/</link>
       <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/01_how_to_quickly_submit_resumes/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/01_how_to_quickly_submit_resumes/</guid>
       <description>1. 基础 回顾：程序员的一天 开发 流程 聚焦在高价值需求上 需要什么团队 时间盒子 2. 用户故事是什么 用户故事：应届生快速投递与简历优化工具 金三银四 快过去了</description>
     </item>
     
     <item>
       <title>如何批量投递简历</title>
-      <link>https://wangcy6.github.io/post/ai/02_how_to_use_Copilot/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_Copilot/</link>
       <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/ai/02_how_to_use_Copilot/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_Copilot/</guid>
       <description>利用DeepSeek-V3和 Obsidian 构建个人知识库 通过阅读本篇文章你获得如何收益 按下 Ctrl+Shift+I (Windows/Linux) 或 Cmd+Option+I (Mac) 组合 步骤1 Why integrate Obsidian and DeepSeek? DeepSeek 的网页界面免费访问它，但不断的</description>
     </item>
     
     <item>
       <title>c&#43;&#43;代码编程规范</title>
-      <link>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_class/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_class/</link>
       <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_class/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_class/</guid>
       <description>C++ string 成员函数 length() size() 和 C strlen() 的区别 当 string 中含有空字符’\0’，使用 strlen() 获取 string 的长度时会被截断，使用成员函数 length() 和 size() 可以返回 string 的真实长度。 // 构造时使用 string strTest(buf,</description>
     </item>
     
     <item>
       <title>c&#43;&#43;代码编程规范</title>
-      <link>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</link>
       <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</guid>
       <description>成为面试官 第一练 未了节省读者时间一句话解释 shared_ptr 的引用计数本身是安全且无锁的，但对象的读写则不是， 因为 shared_ptr 有两个数据成员，读写操作不能原子 一个 shared_ptr 对</description>
     </item>
     
     <item>
       <title>c&#43;&#43;入门指南</title>
-      <link>https://wangcy6.github.io/post/c&#43;&#43;/01_c&#43;&#43;_new/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/01_c&#43;&#43;_new/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c&#43;&#43;/01_c&#43;&#43;_new/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/01_c&#43;&#43;_new/</guid>
       <description>内存管理 C++中通过new和delete两个关键字进行动态内存管理。 c语言通过 malloc 和free 两个关键字进行动态内存管理 函数支持重载，运算符同样</description>
     </item>
     
     <item>
       <title>Ceph分布式锁的设计哲学与工程实践</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-26_ceph/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-26_ceph/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-26_ceph/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-26_ceph/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第2篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 项目 这个才是最考察基本功的地方</description>
     </item>
     
     <item>
       <title>从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</title>
-      <link>https://wangcy6.github.io/post/c/5-2025-05-14-3fs-ObjectPool/</link>
+      <link>https://wangcy6.github.io/post/interview/5-2025-05-14-3fs-ObjectPool/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/5-2025-05-14-3fs-ObjectPool/</guid>
+      <guid>https://wangcy6.github.io/post/interview/5-2025-05-14-3fs-ObjectPool/</guid>
       <description>分享干货，主打一个真实各位老师好，我是小义。 本文主要描述 DeepSeek-ai/3FS对象池（ObjectPool）双层缓存架构的实现 阅读本</description>
     </item>
     
     <item>
-      <title>如何设计一个高性能可扩展的自旋锁</title>
-      <link>https://wangcy6.github.io/post/c/7_2025-5-22-spin_lock/</link>
+      <title>后端开发工程师面经</title>
+      <link>https://wangcy6.github.io/post/interview/job/1-2025-5-job/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/7_2025-5-22-spin_lock/</guid>
+      <guid>https://wangcy6.github.io/post/interview/job/1-2025-5-job/</guid>
+      <description>拼多多-二面-服务端研发实习生 面试问题： 自我介绍。 介绍一下项目？ 讲一下项目中某一部分，从前端请求开始到数据库大致过程，数据库表结构大致什么样</description>
+    </item>
+    
+    <item>
+      <title>如何设计一个高性能可扩展的自旋锁</title>
+      <link>https://wangcy6.github.io/post/interview/7_2025-5-22-spin_lock/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/7_2025-5-22-spin_lock/</guid>
       <description>网友提问： 为什么OB不采用 内核提供的 spin_lock() 自旋锁， 而是用户态态自己定义，并且还定义好多类型 ​ ​​短期临界区​​：优先ObSpinLock（轻量互</description>
     </item>
     
     <item>
       <title>面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通</title>
-      <link>https://wangcy6.github.io/post/c/6-2025-14-spin_lock/</link>
+      <link>https://wangcy6.github.io/post/interview/6-2025-14-spin_lock/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/6-2025-14-spin_lock/</guid>
+      <guid>https://wangcy6.github.io/post/interview/6-2025-14-spin_lock/</guid>
       <description>面试官：你知道什么是自旋锁？ 我能说不知道吗，我只能说知道面试官：伸手一摆，说说你理解 大部分项目都使用互斥锁，遇到阻塞时不会占用CPU，所以很</description>
     </item>
     
     <item>
       <title>面试必备之深入理解thread local</title>
-      <link>https://wangcy6.github.io/post/c/template/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/10-20250526-io-1.0/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/template/</guid>
-      <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/10-20250526-io-1.0/</guid>
+      <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 阅读本文你将获得以下收益： 一、</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/template-1/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/template-1/</guid>
+      <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 阅读本文你将获得以下收益： 一、</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/interview/template/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/template/</guid>
+      <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 阅读本文你将获得以下收益： 一、</description>
     </item>
     
     <item>
       <title>面试必备之深入理解thread local【面经复盘】</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-26_thread-local/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-26_thread-local/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-26_thread-local/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-26_thread-local/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
     </item>
     
     <item>
       <title>面试必备之深入理解自旋锁【草稿版本】</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-26_spin_lock_temp/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-26_spin_lock_temp/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-26_spin_lock_temp/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-26_spin_lock_temp/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
     </item>
     
     <item>
       <title>面试题：read 返回0是否代表一定对方连接已经关闭？</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-25-read/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-25-read/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-25-read/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-25-read/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第1篇文章知识地图：LINUX系统调用 问：read 返回0是否一定表示对端关闭？ 答： ​​普通文</description>
     </item>
     
     <item>
       <title>面试题：TCP 四次挥手能变成三次挥手吗?</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-25_tcp_close/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-25_tcp_close/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-25_tcp_close/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-25_tcp_close/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第2篇文章知识地图：LINUX系统调用 上篇文章 ：面试题：read 返回0是否代表一定对方连接已</description>
+    </item>
+    
+    <item>
+      <title>高并发情况下如何优化你系统</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-29_v1.0_parll/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-29_v1.0_parll/</guid>
+      <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 面试官提问：在高并发情况下，你</description>
     </item>
     
   </channel>

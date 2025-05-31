@@ -18,10 +18,10 @@
     
     <item>
       <title>GDB调试指南（1）</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-11-09-how-to-user-gdb/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-11-09-how-to-user-gdb/</link>
       <pubDate>Sat, 09 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-11-09-how-to-user-gdb/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-11-09-how-to-user-gdb/</guid>
       <description>目前仅有管软节点的backend参与元数据同步，元数据同步可仿gpair独立创建落盘的对象，并且实现多节点backend同时承接不同的任务，</description>
     </item>
     
@@ -36,10 +36,10 @@
     
     <item>
       <title>git常用命令手册</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/06-tools-base-user-git/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/06-tools-base-user-git/</link>
       <pubDate>Fri, 20 Sep 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/06-tools-base-user-git/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/06-tools-base-user-git/</guid>
       <description>并发迁移代码实现，联调90% 支持存力测试演示 git撤销已经push到远端的commit git reset 是把HEAD向后移动了一下，而git revert是</description>
     </item>
     
@@ -54,10 +54,10 @@
     
     <item>
       <title>在一台电脑上同时使用多个github账号(亲测有效)</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-02-09-git-two-account/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-02-09-git-two-account/</link>
       <pubDate>Fri, 09 Feb 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-02-09-git-two-account/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-02-09-git-two-account/</guid>
       <description>what：从现象提出问题 在一台电脑上有两个 github 账号 git 提交代码时候 fatal: 无法读取远程仓库。 尝试 密码登陆 今天是2021年8月13日（情人节），苦涩。 在</description>
     </item>
     

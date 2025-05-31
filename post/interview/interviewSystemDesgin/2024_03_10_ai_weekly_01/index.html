@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AI周刊 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="方法 帮助1000个人打造个人ip 每天不停学知识，最后什么都没去学怎办? 你不应先学习，再开始，而应先开始，再学习。 极简主义创业者关注如何“尽一" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024_03_10_ai_weekly_01/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="AI周刊" />
+<meta property="og:description" content="方法 帮助1000个人打造个人ip 每天不停学知识，最后什么都没去学怎办? 你不应先学习，再开始，而应先开始，再学习。 极简主义创业者关注如何“尽一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024_03_10_ai_weekly_01/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-13T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-05-13T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="AI周刊">
+<meta itemprop="description" content="方法 帮助1000个人打造个人ip 每天不停学知识，最后什么都没去学怎办? 你不应先学习，再开始，而应先开始，再学习。 极简主义创业者关注如何“尽一"><meta itemprop="datePublished" content="2023-05-13T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2023-05-13T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="606">
+<meta itemprop="keywords" content="tools," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AI周刊"/>
+<meta name="twitter:description" content="方法 帮助1000个人打造个人ip 每天不停学知识，最后什么都没去学怎办? 你不应先学习，再开始，而应先开始，再学习。 极简主义创业者关注如何“尽一"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">AI周刊</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-05-13 00:00 </span>
+        
+          <span class="more-meta"> 约 606 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#方法">方法</a>
+      <ul>
+        <li><a href="#3-时间管理不是投入更多时间选择做最重要一个事情">3. 时间管理不是投入更多时间，选择做最重要一个事情？</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#01-期-ai破局-编程训练营-学习手册">01 期 AI破局 编程训练营 学习手册</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2023-05-13T00:00:00" title="May 13, 2023">May 13, 2023</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h2 id="方法">方法</h2>
+<blockquote>
+<p>帮助1000个人打造个人ip</p>
+</blockquote>
+<ol>
+<li><strong>每天不停学知识，最后什么都没去学怎办?</strong></li>
+</ol>
+<ul>
+<li>
+<p>你不应先学习，再开始，而应先开始，再学习。</p>
+</li>
+<li>
+<p>极简主义创业者关注如何“尽一切力量盈利”，而不是“不计一切成本扩张”。</p>
+</li>
+<li>
+<p>生意，是你为所关心的人群解决问题的方式，你也会因此赚钱。</p>
+</li>
+<li>
+<p>先成为一个创作者，再成为一个创业者</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>运维4年没有粉丝 这说明缺什么,不要说自己做写算法一样的难度大，效果不行，别人算法很好？</strong></li>
+</ol>
+<ul>
+<li>
+<p>做副业也需要战略思维。 绝不能用战术上的勤奋掩盖战略上的懒惰。</p>
+</li>
+<li>
+<p>始终思考三年后的目标，副业的增长飞轮，从全局看待增长。（最终如何通过什么方式挣钱）</p>
+</li>
+<li>
+<p>很多人很拼命，喊着日更10年，最终粉丝不过百，可悲可叹。</p>
+</li>
+</ul>
+<h3 id="3-时间管理不是投入更多时间选择做最重要一个事情">3. 时间管理不是投入更多时间，选择做最重要一个事情？</h3>
+<p>对1% 我有一个遇到问题，例如白天忙碌一天，晚上回家时候，现在各种热门直播 无论是娱乐和学习，都是晚上8点开始，</p>
+<p>你看2-3个导致 3个小时到了23点了，前面3个小时学习，后面3个小时就刷手机纯粹娱乐。</p>
+<p>有时候为了1%，导致后面整个安排节奏打乱。1%应该不是投入更多时间把？</p>
+<h1 id="实战sop">实战SOP</h1>
+<blockquote>
+<p>一起学习交流，添加我联系方式 获取资料</p>
+</blockquote>
+<p>《独家AI写真变现项目，超级训练营SOP手册分享！》  作者吴东子</p>
+<p>手册主要分为三大部分</p>
+<p>1.项目介绍</p>
+<p>2.技术教程</p>
+<p>3.变现方式 从项目需求，讲到实现技术，再讲到变现方式，内容制作，引流方法，保姆级地把全流程讲透，希望你会喜欢</p>
+<p><a href="https://wnso49yyot.feishu.cn/docx/Dh8mdm9VcopHfTxCcmJcubQOnYb">https://wnso49yyot.feishu.cn/docx/Dh8mdm9VcopHfTxCcmJcubQOnYb</a></p>
+<h2 id="01-期-ai破局-编程训练营-学习手册">01 期 AI破局 编程训练营 学习手册</h2>
+<p><img src="https://s2.loli.net/2024/03/10/GhYiz9KVoEgWUXn.png" alt="image.png"></p>
+<h1 id="ai-新闻">AI 新闻</h1>
+<ul>
+<li>资料来源：</li>
+</ul>
+<p><img src="https://s2.loli.net/2024/03/02/REBIeC8wQg57fny.jpg" alt="如果感觉贵 可以找我要资料一起学习"></p>
+<ul>
+<li>如果对其中感兴趣 可以联系我一起学习</li>
+</ul>
+<p><img src="https://s2.loli.net/2024/02/09/yLDuCszWrIQbfj2.jpg" alt="更多咨询"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-05-13 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/tools/">tools</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2024/2024_03_10_ai_weekly_01/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">AI周刊</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2023/1.git/">
+            <span class="next-text nav-default">学会使用工具：ai</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

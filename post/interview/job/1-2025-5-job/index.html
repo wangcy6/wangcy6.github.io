@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>后端开发工程师面经 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/job/1-2025-5-job/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="后端开发工程师面经" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/job/1-2025-5-job/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="后端开发工程师面经">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2468">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="后端开发工程师面经"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">后端开发工程师面经</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2468 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#面试问题">面试问题：</a></li>
+    <li><a href="#腾讯---后端开发">腾讯&ndash; 后端开发</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#一面1h10min">一面（1h10min）</a></li>
+    <li><a href="#二面1h10min">二面（1h10min）</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#一面50min">一面50min</a></li>
+    <li><a href="#二面50min">二面50min</a></li>
+    <li><a href="#hr面30min">hr面30min</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#关注我">关注我</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="拼多多-二面-服务端研发实习生">拼多多-二面-服务端研发实习生</h1>
+<h2 id="面试问题">面试问题：</h2>
+<ol>
+<li>自我介绍。</li>
+<li>介绍一下项目？</li>
+<li>讲一下项目中某一部分，从前端请求开始到数据库大致过程，数据库表结构大致什么样，响应什么样？</li>
+<li>写一下建表的 SQL 语句。</li>
+<li>用户登录后可以进行哪些操作？</li>
+<li>这些操作可以放到一个接口实现吗？</li>
+<li>Java 的 8 种基本数据类型？</li>
+<li>Java 的集合的继承树大概是什么样的？</li>
+<li>Java 的异常的继承体系大概是什么样的？</li>
+<li>说一下 Java 的线程池？</li>
+<li>算法题：一个 9×9 的二维数组，判断是否满足 9 个 3 × 3 的子数组都满足每行、列都不重复，且含1-9所有数字。</li>
+<li>反问。</li>
+</ol>
+<h2 id="腾讯---后端开发">腾讯&ndash; 后端开发</h2>
+<ol>
+<li>kafka的有序性保证，深入到底层</li>
+<li>redis持久化的整个流程</li>
+<li>redis分布式锁的实现，底层</li>
+<li>sycronized如何保证三个特性，底层</li>
+<li>慢查询优化</li>
+<li>oom定位及解决，cpu过高定位及解决</li>
+<li>raft实现细节，cap，和paxos对比</li>
+<li>实习项目并发度的考量</li>
+<li>缓存选型</li>
+<li>一道medium算法，和面试官讨论了一下输入输出限制和trade off</li>
+</ol>
+<p>总计2个多小时</p>
+<h1 id="-快手timeline面经c"># 快手timeline+面经（C++）</h1>
+<h2 id="一面1h10min">一面（1h10min）</h2>
+<p>【八股】：</p>
+<ol>
+<li>tcp三次握手和四次挥手</li>
+<li>三次握手第三次可以没有吗为什么</li>
+<li>浏览器输入网址到显示的全过程</li>
+</ol>
+<p>【反问】：无，面试官说超时了会议室外有人催他就赶紧下了。</p>
+<h2 id="二面1h10min">二面（1h10min）</h2>
+<ol>
+<li>自我介绍</li>
+<li>STL中关联式容器有哪几个</li>
+<li>map和unordered_map区别（说了底层、时间复杂度、用法）</li>
+<li>unordered_map的时间复杂度一直是o(1)吗</li>
+<li>为什么最坏O(n)，什么情况是O(n)？</li>
+<li>unordered_map底层是怎么实现的（哈希函数、桶+链表）</li>
+<li>除了链表有没有别的方法（开放地址法，不了解具体）</li>
+<li>有一亿个string数据应该用map还是unorered_map存为什么</li>
+<li>说到map底层是红黑树，了解平衡二叉树吗？</li>
+<li> 5个节点的平衡树，最少有多少个节点</li>
+<li>了解线程和进程吗？为什么Muduo网络库用多线程而不是多进程？</li>
+<li>存一个数据从内存到到磁盘，经过哪些步骤？</li>
+<li>手撕：求逆波兰表达式，如string=(101+20)*30-45/5变成101 20 + 30 * 45 5 - /<br>
+    1. 鼠鼠想了大概五分钟说了思路，用stack做，面试官说思路没问题<br>
+    2. 然后写了十五分钟，最后输出有点小问题面试官说没关系整体是ok的<br>
+19. 反问：业务 2.进来做什么 3.要提高那些方面（多理解怎么应用）</li>
+</ol>
+<h1 id="滴滴-后端">滴滴-后端</h1>
+<h2 id="一面50min">一面50min</h2>
+<ol>
+<li>算法题：反转区间链表</li>
+<li>介绍项目以及工作内容</li>
+<li>深入redis，sds结构，跳表原理以及数据结构，缓存穿透如何解决，持久化机制，aof重写策略。</li>
+<li>java锁，Synchronized和ReentrantLock区别以及各自的实现原理，java的内存模型，Volatile关键字的作用以及实现原</li>
+<li>线程切换上下文是的工作流程。</li>
+<li>mysql的引擎分类，事务实现，锁的分类，索引结构以及如何建立索引</li>
+<li>反问：部门业务以及业务特点</li>
+</ol>
+<h2 id="二面50min">二面50min</h2>
+<ol>
+<li>算法题：和大于等于目标值的最短连续子数组</li>
+<li>项目介绍，
+深挖项目场景，</li>
+</ol>
+<ul>
+<li>事务如何保证</li>
+<li>状态机的作用</li>
+<li>如果重构的话如何考虑。</li>
+</ul>
+<ol start="3">
+<li>系统设计需要考虑哪些方便，如果需要跟外部合作需要考虑那几点。</li>
+<li>未来的职业规划</li>
+<li>反问：部门技术氛围以及工作节奏</li>
+</ol>
+<h2 id="hr面30min">hr面30min</h2>
+<ol>
+<li>职业规划，</li>
+<li>部门介绍，优缺点，</li>
+<li>项目的难点如何解决，生活和工作冲突了如何合理安排</li>
+<li>反问：工作节奏以及新人培训</li>
+</ol>
+<h1 id="腾讯云智后台开发一面">腾讯云智后台开发一面</h1>
+<ol>
+<li>自我介绍</li>
+<li>有没有想留在现在的公司转正？<br>
+3. 介绍一下你简历上这个项目<br>
+4. 你说到你使用到短信注册登录，你讲讲你实现发送短信登录的流程<br>
+5. 你说你把用户信息存在ThreadLocal中，你讲讲你主要存储了哪些用户信息<br>
+6. 那如果你将用户信息存在ThreadLocal中，我现在有多个线程使用你这个产品，你怎么知道哪个线程对应哪个用户呢？（这里有点没太理解，没答上）<br>
+7. 你说用到了拦截器，你讲一下你用到的拦截器（后续询问是否用到了AOP）<br>
+8. 讲一下SpringBoot启动器 （这里我回答的SprintgBootApplication，不知道是否正确，或者应该回答starter相关？）<br>
+9. 讲一下依赖注入<br>
+10. Bean对象存储在哪里？<br>
+11. 你项目中用到了哪些表（后续问了很多表结构相关的问题，不一一列举了）<br>
+12. 如果当前有很多用户在抢购你的秒杀优惠券，你会怎么进行设计能够让用户有个比较好的体验？<br>
+13. 讲讲你了解的索引<br>
+14. 你讲到B+树，那么为什么要使用B+树作为数据结构呢？它好在哪里？为什么效率高？<br>
+15. B树和B+树的区别？既然B+树每次都需要查询到叶子节点，但是B树某些情况下不需要查询到叶子节点，那效率不应该更高吗？（应该是上个问题没答好，进行的追问）<br>
+16. 你讲到B+树使用叶子节点存储数据页，这个数据页的含义是什么？是分页的那个数据页吗？<br>
+17. 哪些情况下会进行回表<br>
+18. 讲一下事务的隔离级别，分别解决了什么问题<br>
+19. 可重复读可以解决幻读吗，如果不能，要怎么操作来解决幻读<br>
+20. 读提交和可重复读的区别？<br>
+21. 你使用到Redis的哪些数据类型？<br>
+22. 讲一下Redis集群<br>
+23. 详细讲一下哨兵模式，哨兵的作用是什么？<br>
+24. 你了解集群分片吗（答：不了解）<br>
+25. Redis持久化<br>
+26. 讲一下动态代理<br>
+27. 具体讲讲JDK动态代理和CGLIB动态代理的实现方式<br>
+28. 讲讲类加载过程<br>
+29. 讲一下Java 程序编译和解释的过程<br>
+30. 讲一下垃圾回收期，有哪些算法？<br>
+31. 线程池参数<br>
+32. 你讲一下Java中所用到的锁(这里答了乐观锁，悲观锁，读写锁)<br>
+33. 讲一下CAS，Java是怎么实现CAS的<br>
+34. CAS和乐观锁有什么关系？<br>
+35. 讲一下volatile的作用，实现原理是什么？它的使用场景是什么？你举个例子。<br>
+36. TCP比UDP的优势<br>
+37. 讲一下四次挥手<br>
+38. 可不可以不需要第四次挥手？为什么第四次挥手之后要等2MSL？<br>
+39. HTTP是基于哪个协议？(答 TCP)<br>
+40. HTTP的方法有哪些？(答 GET PUT DELETE)<br>
+41. HTTP是明文传输吗？HTTPS用什么方式保证了数据加密？<br>
+42. 讲一下怎么进行CA证书校验<br>
+43. 你能讲一下红黑树吗（不了解）<br>
+44. 讲一下你所知道的排序<br>
+45. 具体讲一下插入排序的实现（到这里已经被拷打昏了，应该答得不太好，实现方式应该答错了）<br>
+46. 你说插入排序时间复杂度是O(n²)，那么这个时间复杂度是怎么算出来的？你具体想想真的会到O(n²)吗</li>
+</ol>
+<h3 id="关注我">关注我</h3>
+<p><img src="https://s2.loli.net/2025/05/28/CganPB3o4E652XK.png" alt="链接我，一起进步"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/5-2025-05-14-3fs-ObjectPool/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/7_2025-5-22-spin_lock/">
+            <span class="next-text nav-default">如何设计一个高性能可扩展的自旋锁</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

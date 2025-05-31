@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>c&#43;&#43;入门指南 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/01_c&#43;&#43;_new/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="c&#43;&#43;入门指南" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/01_c&#43;&#43;_new/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="c&#43;&#43;入门指南">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2135">
+<meta itemprop="keywords" content="man," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="c&#43;&#43;入门指南"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">c&#43;&#43;入门指南</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2135 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#内存管理">内存管理</a>
+      <ul>
+        <li><a href="#重载new运算符-使用场景-">**重载new运算符 使用场景 **</a></li>
+        <li><a href="#如果分配能节省内存">如果分配能节省内存</a></li>
+        <li><a href="#stl源码剖析-by-侯捷-提到一个同样技巧">STL源码剖析 by 侯捷 提到一个同样技巧</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="内存管理">内存管理</h2>
+<blockquote>
+<p>C++中通过new和delete两个关键字进行动态内存管理。</p>
+<p>c语言通过 malloc 和free 两个关键字进行动态内存管理</p>
+</blockquote>
+<p><strong>函数支持重载，运算符同样也支持重载</strong></p>
+<p>​     C++的提供了 重载运算符这一特性，  本质也是operators（）函数重载，当遇到该运算符时就调用函数一样。</p>
+<p>运算符重载的限制</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/27306e4e14171e7ee0307589877451e0.png" alt=""></p>
+<p>小提示：Markdown左对，在原来基础上，后面一个空格就解决了 右对齐HTML css语法</p>
+<p><strong>重载运算符new</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="n">throwing</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>	<span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">size</span><span class="p">);</span> 
+<span class="c1">// throwing allocation ，On failure, it throws a bad_alloc exception
+</span><span class="c1"></span>
+<span class="n">nothrow</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>	    <span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">nothrow_t</span><span class="o">&amp;</span> <span class="n">nothrow_value</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<span class="c1">//nothrow allocation   on failure it returns a null pointer  instead of throwing an exception
+</span><span class="c1"></span>
+<span class="n">placement</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span>	<span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">ptr</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<span class="c1">//placement Simply returns ptr (no storage is allocated).
+</span><span class="c1">// A pointer to an already-allocated memory block 
+</span><span class="c1"></span>    
+</code></pre></td></tr></table>
+</div>
+</div><p>代码示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">MyClass</span> <span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="p">();</span>
+<span class="c1">// allocates memory by calling: operator new (sizeof(MyClass))
+</span><span class="c1">// and then constructs an object at the newly allocated space
+</span><span class="c1"></span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;2: &#34;</span><span class="p">;</span>
+  <span class="n">MyClass</span> <span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">nothrow</span><span class="p">)</span> <span class="n">MyClass</span><span class="p">();</span>
+<span class="c1">// allocates memory by calling: operator new (sizeof(MyClass),std::nothrow)
+</span><span class="c1">// and then constructs an object at the newly allocated space
+</span><span class="c1"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;3: &#34;</span><span class="p">;</span>	
+<span class="k">new</span> <span class="p">(</span><span class="n">p2</span><span class="p">)</span> <span class="n">MyClass</span><span class="p">();</span>
+<span class="k">delete</span> <span class="n">p1</span><span class="p">;</span>
+<span class="k">delete</span> <span class="n">p2</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>malloc</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="nl">https</span><span class="p">:</span><span class="c1">//en.cppreference.com/w/c/memory/malloc
+</span><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="n">malloc</span><span class="p">(</span> <span class="n">size_t</span> <span class="n">size</span> <span class="p">);</span>
+<span class="n">Allocates</span> <span class="n">size</span> <span class="n">bytes</span> <span class="n">of</span> <span class="n">uninitialized</span> <span class="n">storage</span><span class="err">，</span>
+<span class="n">alloc</span> <span class="n">is</span> <span class="kr">thread</span><span class="o">-</span><span class="n">safe</span>
+    
+<span class="n">Parameters</span>
+<span class="n">size</span>	<span class="o">-</span>	<span class="n">number</span> <span class="n">of</span> <span class="n">bytes</span> <span class="n">to</span> <span class="n">allocate</span> 
+<span class="k">sizeof</span>  <span class="n">Queries</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">object</span> <span class="n">or</span> <span class="n">type</span><span class="p">.</span>
+
+<span class="n">On</span> <span class="n">failure</span><span class="p">,</span> <span class="n">returns</span> <span class="n">a</span> <span class="n">null</span> <span class="n">pointer</span><span class="p">.</span>
+
+ <span class="n">malloc</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>ob代码：ob_alter_table_resolver.cpp</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"> <span class="c1">//申请批量内存时候使用，
+</span><span class="c1"></span>  <span class="n">__MemoryContext__</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">nothrow</span><span class="p">)</span> <span class="n">__MemoryContext__</span><span class="p">();</span>
+  <span class="n">abort_unless</span><span class="p">(</span><span class="n">tmp</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">);</span> <span class="c1">//
+</span><span class="c1"></span>
+<span class="kt">void</span> <span class="o">*</span><span class="n">tmp_ptr</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+ <span class="n">common</span><span class="o">::</span><span class="n">ObIAllocator</span> <span class="o">*</span><span class="n">allocator_</span><span class="p">;</span><span class="c1">//分配器
+</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nb">NULL</span> <span class="o">==</span> <span class="p">(</span><span class="n">tmp_ptr</span> <span class="o">=</span> <span class="p">(</span><span class="n">ObAlterPrimaryArg</span> <span class="o">*</span><span class="p">)</span><span class="n">allocator_</span><span class="o">-&gt;</span><span class="n">alloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">obrpc</span><span class="o">::</span><span class="n">ObAlterPrimaryArg</span><span class="p">))))</span> <span class="p">{</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">alter_pk_arg</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">tmp_ptr</span><span class="p">)</span> <span class="n">ObAlterPrimaryArg</span><span class="p">();</span> <span class="c1">//这里没有使用delete
+</span><span class="c1"></span>  <span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="重载new运算符-使用场景-">**重载new运算符 使用场景 **</h3>
+<ul>
+<li>批量申请内容时候，使用std::nothrow 不抛出异常，通过返回值判断nullptr 来处理</li>
+<li>C++ placement new与内存池有关系，能帮助更节省内存吗?不清楚继续看</li>
+</ul>
+<p>有些时候我们需要能够长时间运行的程序（例如监听程序，服务器程序）对于这些7*24运行的程序，我们不应该使用标准库提供的new 和 delete (malloc和free也算)。这是因为随着程序的运行，内存不断的被申请和被释放，频繁的申请和释放将会引发内存碎片、内存不足等问题，影响程序的正常运行。</p>
+<p>更多的时候核心程序不允许内存申请失败，更不允许异常的出现，因此必须保证每次内存申请都是成功的（一般都是内核程序，当然不希望被中断的后台程序也是如此）。在这种极端要求下，内存池的好处就大大的凸现出来了。</p>
+<p>在C++中，可以通过placement new 来实现内存池</p>
+<h3 id="如果分配能节省内存">如果分配能节省内存</h3>
+<blockquote>
+<p>内存池是很大概念，我平时用不到，上来不会说明原理，这是自己给自己挖坑，自己不会还要去自己讲清楚</p>
+<p>先看一段代码，你发现什么错误吗？</p>
+</blockquote>
+<p>一般定义链表，都有T 成员表示，但是ceph 中 定义 elist为什么没有，它怎么存储数据呢？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Node</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span> <span class="c1">//存储数据
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="o">*</span> <span class="n">last</span><span class="p">;</span>
+    <span class="n">Node</span> <span class="o">*</span> <span class="n">next</span><span class="p">;</span>
+
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">DoubleNode</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Node</span> <span class="o">*</span> <span class="n">head</span><span class="p">;</span>   <span class="c1">//头结点
+</span><span class="c1"></span>    <span class="n">Node</span> <span class="o">*</span> <span class="n">tail</span><span class="p">;</span>   <span class="c1">//尾节点
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>一般定义链表，都有T 成员表示，但是elist为什么没有，它怎么存储数据呢？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="cm">/*
+</span><span class="cm"> * elist: embedded list. 这是一个双向链表，必须和类耦合起来。
+</span><span class="cm"> * elist（embedded list）是一种特殊类型的链表，它允许将链表节点直接嵌入到用户定义的数据结构中。这种设计使得每个数据项可以作为链表的一部分
+</span><span class="cm"> * requirements:
+</span><span class="cm"> *   - elist&lt;T&gt;::item be embedded in the parent class  定义类时候，必须使用 elist&lt;T&gt;::item 当作一个成员
+</span><span class="cm"> 
+</span><span class="cm"> *   - items  are _always_ added to the list via the same elist&lt;T&gt;::item at the same
+</span><span class="cm"> *     fixed offset in the class. //items 在类中偏移量
+</span><span class="cm"> 
+</span><span class="cm"> *   - begin(), front(), back() methods take the member offset as an argument for traversal.
+</span><span class="cm"> *
+</span><span class="cm"> */</span>
+
+<span class="c1">//计算成员变量在类中的偏移量
+</span><span class="c1"></span><span class="cp">#define member_offset(cls, member) ((size_t)(&amp;((cls*)1)-&gt;member) - 1)
+</span><span class="cp"></span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">elist</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="k">struct</span> <span class="nc">item</span> <span class="p">{</span>
+    <span class="n">item</span> <span class="o">*</span><span class="n">_prev</span><span class="p">,</span> <span class="o">*</span><span class="n">_next</span><span class="p">;</span>
+    
+    <span class="c1">//通过偏移量
+</span><span class="c1"></span>    <span class="n">T</span> <span class="nf">get_item</span><span class="p">(</span><span class="n">size_t</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">ceph_assert</span><span class="p">(</span><span class="n">offset</span><span class="p">);</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">T</span><span class="p">)(((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="k">this</span><span class="p">)</span> <span class="o">-</span> <span class="n">offset</span><span class="p">);</span> 
+    <span class="p">}</span>
+  <span class="p">};</span> <span class="c1">//elist&lt;T&gt;::item  是作为用户定义结构体的成员变量存在的。
+</span><span class="c1"></span>   <span class="c1">//意味着 item 的内存是从用户结构体的内存中分配的，而不是独立分配。
+</span><span class="c1"></span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="n">item</span> <span class="n">_head</span><span class="p">;</span>
+  <span class="n">size_t</span> <span class="n">item_offset</span><span class="p">;</span>
+<span class="p">}</span>
+
+ <span class="k">class</span> <span class="nc">iterator</span> <span class="p">{</span>
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">item</span> <span class="o">*</span><span class="n">head</span><span class="p">;</span>
+    <span class="n">item</span> <span class="o">*</span><span class="n">cur</span><span class="p">,</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">item_offset</span><span class="p">;</span>
+  <span class="k">public</span><span class="o">:</span>
+ 
+    <span class="n">T</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">cur</span><span class="o">-&gt;</span><span class="n">get_item</span><span class="p">(</span><span class="n">item_offset</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>c++ 内存模型 (了解)</li>
+</ul>
+<p>GCC 或 Clang，你可以使用 <code>__builtin_offsetof</code> 函数来获取成员的偏移量：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#define member_offset(cls, member) ((size_t)(&amp;((cls*)1)-&gt;member) - 1)
+</span><span class="cp"></span><span class="k">class</span> <span class="nc">Example</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 1 byte
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>       <span class="c1">// 4 bytes, aligned to 4 bytes
+</span><span class="c1"></span>    <span class="kt">double</span> <span class="n">c</span><span class="p">;</span>    <span class="c1">// 8 bytes, aligned to 8 bytes
+</span><span class="c1"></span>    <span class="kt">bool</span> <span class="n">d</span><span class="p">;</span>      <span class="c1">// 1 byte, but often padded to align with &#39;b&#39;
+</span><span class="c1"></span><span class="p">};</span>
+ <span class="n">size_t</span> <span class="n">offset_a</span> <span class="o">=</span> <span class="n">__builtin_offsetof</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span><span class="n">__</span>
+
+ <span class="n">size_t</span> <span class="n">offset_b</span> <span class="o">=</span> <span class="n">__builtin_offsetof</span><span class="p">(</span><span class="n">Example</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+     
+     
+ 
+<span class="err">能否提供一个完整的示例，展示如何在一个复杂的类中嵌入</span> <span class="err">`</span><span class="n">elist</span><span class="err">`</span> <span class="err">并使用它？</span>
+<span class="err">完整代码：</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//lab.forgefriends.org/ceph/ceph/-/blob/wip-rgw-placement-rule-empty/src/include/elist.h
+</span><span class="c1"></span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//kimi.moonshot.cn/share/cqqc6ga1n4gqsenn4ur0
+</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="c1">//kimi.moonshot.cn/share/cqqcdsdskq8g1pv5ces0
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="stl源码剖析-by-侯捷-提到一个同样技巧">STL源码剖析 by 侯捷 提到一个同样技巧</h3>
+<ul>
+<li>what：关于STL中空间配置器中free_list的理解，理解不了_Obj 这个单链表怎么存储对象的数据的</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">union</span> <span class="nc">_Obj</span> <span class="p">{</span>
+        <span class="k">union</span> <span class="nc">_Obj</span><span class="o">*</span> <span class="n">_M_free_list_link</span><span class="p">;</span> <span class="c1">// 单链表
+</span><span class="c1"></span>        <span class="kt">char</span> <span class="n">_M_client_data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>    <span class="cm">/* The client sees this.        */</span>
+  <span class="p">};</span> <span class="err">关于</span><span class="n">STL中空间配置器中free_list的理解</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://images0.cnblogs.com/blog/621006/201411/172019016605172.png" alt="img"></p>
+<ul>
+<li>how：参考资料</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+自己动手实现STL 01：内存配置器的实现(stl_alloc.h)
+https://github.com/wangcy6/sgi-stl/blob/master/stl_alloc.h
+https://www.cnblogs.com/wangjzh/p/4097355.html
+
+https://github.com/wangcy6/STLSourceCodeNote
+
+</code></pre></td></tr></table>
+</div>
+</div><p>第一级配置器malloc_alloc 就是，直接调用系统的malloc分配内存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c#" data-lang="c#"><span class="c1">//第一级配置器malloc_alloc 就是，直接调用系统的malloc分配内存
+</span><span class="c1"></span><span class="n">typedef</span> <span class="m">__</span><span class="n">malloc_alloc_template</span><span class="p">&lt;</span><span class="m">0</span><span class="p">&gt;</span> <span class="n">malloc_alloc</span><span class="p">;</span>
+
+<span class="n">template</span> <span class="p">&lt;</span><span class="kt">int</span> <span class="m">__</span><span class="n">inst</span><span class="p">&gt;</span> <span class="c1">//这个模板没啥意义，区分一级二级区别
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">__malloc_alloc_template</span> <span class="p">{</span>
+<span class="k">private</span><span class="p">:</span>
+  <span class="k">static</span> <span class="k">void</span><span class="p">*</span> <span class="m">_</span><span class="n">S_oom_malloc</span><span class="p">(</span><span class="n">size_t</span><span class="p">);</span>
+  <span class="k">static</span> <span class="k">void</span><span class="p">*</span> <span class="m">_</span><span class="n">S_oom_realloc</span><span class="p">(</span><span class="k">void</span><span class="p">*,</span> <span class="n">size_t</span><span class="p">);</span>
+<span class="k">public</span><span class="p">:</span>
+  <span class="k">static</span> <span class="k">void</span><span class="p">*</span> <span class="n">allocate</span><span class="p">(</span><span class="n">size_t</span> <span class="m">__</span><span class="n">n</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">void</span><span class="p">*</span> <span class="m">__</span><span class="n">result</span> <span class="p">=</span> <span class="n">malloc</span><span class="p">(</span><span class="m">__</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="m">0</span> <span class="p">==</span> <span class="m">__</span><span class="n">result</span><span class="p">)</span>  <span class="c1">//malloc是否返回0
+</span><span class="c1"></span>		 <span class="m">__</span><span class="n">result</span> <span class="p">=</span> <span class="m">_</span><span class="n">S_oom_malloc</span><span class="p">(</span><span class="m">__</span><span class="n">n</span><span class="p">);</span> <span class="c1">//分配失败继续分配
+</span><span class="c1"></span>    <span class="k">return</span> <span class="m">__</span><span class="n">result</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">static</span> <span class="k">void</span> <span class="n">deallocate</span><span class="p">(</span><span class="k">void</span><span class="p">*</span> <span class="m">__</span><span class="n">p</span><span class="p">,</span> <span class="n">size_t</span> <span class="cm">/* __n */</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">free</span><span class="p">(</span><span class="m">__</span><span class="n">p</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>第二级配置器（Second-level allocator）：。</p>
+<p>default_alloc 尝试通过分配大块内存（称为 &ldquo;chunks&rdquo;）来减少内存碎片，并使用这些大块内存来满足较小的内存请求。
+它使用一个自由列表（free list）机制来管理这些大块内存中的小块内存。</p>
+<p>default_alloc 可以是线程安全的，并且提供了更好的内存局部性和缓存性能。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">//第二级配置器
+
+typedef __default_alloc_template&lt;__NODE_ALLOCATOR_THREADS, 0&gt; alloc;
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://images0.cnblogs.com/blog/621006/201411/172054058797622.png" alt="img"></p>
+<p><img src="https://images0.cnblogs.com/blog/621006/201411/171953509416538.png" alt="img"></p>
+<p><a href="https://cplusplus.com/reference/new/operator%20new/">https://cplusplus.com/reference/new/operator%20new/</a></p>
+<ul>
+<li><a href="https://juejin.cn/post/7353112518146605108">https://juejin.cn/post/7353112518146605108</a></li>
+<li><a href="https://cplusplus.com/doc/tutorial/dynamic/">https://cplusplus.com/doc/tutorial/dynamic/</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/man/">man</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/habit/2024/2024-8-14-how-to-use-wechat/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">微信使用指南</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/2025-4-26_ceph/">
+            <span class="next-text nav-default">Ceph分布式锁的设计哲学与工程实践</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

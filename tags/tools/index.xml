@@ -6,25 +6,7 @@
     <description>Recent content in tools on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 23 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>大模型上下文协议——MCP详解</title>
-      <link>https://wangcy6.github.io/post/money/P1_what_is_MCP/</link>
-      <pubDate>Sun, 23 Mar 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/money/P1_what_is_MCP/</guid>
-      <description>一、这个技术出现的背景 是什么 24年11月初的时候Anthropic发了一篇技术博客，推出了他们的模型上下文协议MCP，同时也开源了基于该协议</description>
-    </item>
-    
-    <item>
-      <title>源码阅读：OpenManus</title>
-      <link>https://wangcy6.github.io/post/money/2025-03-23-code_OpenManus/</link>
-      <pubDate>Sat, 22 Mar 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/money/2025-03-23-code_OpenManus/</guid>
-      <description>大家好，我是小王同学，希望本文在了解OpenManus对你有帮助 昵称：做一个为自己写代码的程序员 愿景：成为AIGCC落地解决方案积极参与者 相</description>
-    </item>
-    
+    <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>c&#43;&#43;面试题</title>
       <link>https://wangcy6.github.io/post/2024/2024-11-10-cppd-day1/</link>
@@ -36,10 +18,10 @@
     
     <item>
       <title>c&#43;&#43;面试题</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-11-10-cppd-day1/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-11-10-cppd-day1/</link>
       <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-11-10-cppd-day1/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-11-10-cppd-day1/</guid>
       <description>没有行动拆分出来，无法目标转换行动，意志力这个时候失效了 今天一天安排（写不清楚就就无法行动） 起床仪式整理：10分钟完成 不用闹钟 6点自动起来，</description>
     </item>
     
@@ -54,10 +36,10 @@
     
     <item>
       <title>vivo蓝河操作系统创新赛准备材料</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-03-11-rust-ai/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-03-11-rust-ai/</link>
       <pubDate>Tue, 12 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-03-11-rust-ai/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-03-11-rust-ai/</guid>
       <description>赛题1 - 蓝河代码转译工具 背景阐述 1.C/C++代码编写的系统大约70%的严重安全漏洞和内存使用不当相关，Rust语言一系列安全特性，可以在编</description>
     </item>
     
@@ -81,19 +63,10 @@
     
     <item>
       <title>整理：强哥答疑</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-03-04_rust_vivo/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-03-ask/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-03-04_rust_vivo/</guid>
-      <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、这</description>
-    </item>
-    
-    <item>
-      <title>整理：强哥答疑</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-03-ask/</link>
-      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-03-ask/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-03-ask/</guid>
       <description>学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二、这个技术的优势和劣势分别是什么 三、</description>
     </item>
     
@@ -108,10 +81,10 @@
     
     <item>
       <title>源码阅读：请你设计一个线程池</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-06_readcode_ceph_threadpool/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-06_readcode_ceph_threadpool/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024-03-06_readcode_ceph_threadpool/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-06_readcode_ceph_threadpool/</guid>
       <description>/Users/wangchuanyi/doc/daily-interview/blog 在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜</description>
     </item>
     
@@ -126,20 +99,11 @@
     
     <item>
       <title>AI周刊</title>
-      <link>https://wangcy6.github.io/post/interviewSystemDesgin/2024_03_10_ai_weekly_01/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024_03_10_ai_weekly_01/</link>
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interviewSystemDesgin/2024_03_10_ai_weekly_01/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024_03_10_ai_weekly_01/</guid>
       <description>方法 帮助1000个人打造个人ip 每天不停学知识，最后什么都没去学怎办? 你不应先学习，再开始，而应先开始，再学习。 极简主义创业者关注如何“尽一</description>
-    </item>
-    
-    <item>
-      <title>ChatGPT从入门到精通</title>
-      <link>https://wangcy6.github.io/post/money/002_/</link>
-      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/money/002_/</guid>
-      <description>魔改小爱音箱 打造你的专属语音助手（保姆级教程建议收藏） 大家好，我是小王同学，希望本文在AIGC赋能小米音响上对你有帮助 昵称：一个只会写代码程</description>
     </item>
     
     <item>
@@ -158,15 +122,6 @@
       
       <guid>https://wangcy6.github.io/post/2023/13_ai_tool/</guid>
       <description>一次只使用一个工具，其他装作看不见。 学习方法 1 2 3 4 5 6 7 8 9 10 11 12 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 二</description>
-    </item>
-    
-    <item>
-      <title>魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏）</title>
-      <link>https://wangcy6.github.io/post/money/002_xiao_ai/</link>
-      <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/money/002_xiao_ai/</guid>
-      <description>魔改小爱音箱接入 ChatGPT 和豆包，打造你的专属语音助手（保姆级教程建议收藏） 耗时一天 放弃，被pyton版本搞怕了。 大家好，我是小王同学，希望帮助掌握</description>
     </item>
     
   </channel>

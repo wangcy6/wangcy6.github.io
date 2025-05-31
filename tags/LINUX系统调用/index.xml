@@ -9,37 +9,37 @@
     <lastBuildDate>Wed, 07 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/LINUX%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ceph分布式锁的设计哲学与工程实践</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-26_ceph/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-26_ceph/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-26_ceph/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-26_ceph/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第2篇文章， ”走暗路、耕瘦田、进窄门、见微光” 告诉我 面试关键就 项目 这个才是最考察基本功的地方</description>
     </item>
     
     <item>
       <title>面试必备之深入理解自旋锁【草稿版本】</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-26_spin_lock_temp/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-26_spin_lock_temp/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-26_spin_lock_temp/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-26_spin_lock_temp/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备&amp;ndash;基础知识 第4篇文章，草稿版本 草稿版本：意思是内容太多，包含思考，调查 和分析 全部</description>
     </item>
     
     <item>
       <title>面试题：read 返回0是否代表一定对方连接已经关闭？</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-25-read/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-25-read/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-25-read/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-25-read/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第1篇文章知识地图：LINUX系统调用 问：read 返回0是否一定表示对端关闭？ 答： ​​普通文</description>
     </item>
     
     <item>
       <title>面试题：TCP 四次挥手能变成三次挥手吗?</title>
-      <link>https://wangcy6.github.io/post/c/2025-4-25_tcp_close/</link>
+      <link>https://wangcy6.github.io/post/interview/2025-4-25_tcp_close/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/c/2025-4-25_tcp_close/</guid>
+      <guid>https://wangcy6.github.io/post/interview/2025-4-25_tcp_close/</guid>
       <description>坚持思考，就会很酷。 大家好，这是进入大厂面试准备 第2篇文章知识地图：LINUX系统调用 上篇文章 ：面试题：read 返回0是否代表一定对方连接已</description>
     </item>
     

@@ -26,6 +26,15 @@
     </item>
     
     <item>
+      <title>【翻译】Crimson：用于多核可扩展性的下一代 Ceph OSD</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-30-Crimson/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-30-Crimson/</guid>
+      <description>Crimson：用于多核可扩展性的下一代 Ceph OSD 目录 前言与思考 背景与技术演进 Crimson vs Classic OSD 架构 Seastar 框架简介 运行到完成性能 多分片实现 OSD 组件详解 ObjectStore 后端 AlienStore CyanStore SeaStore</description>
+    </item>
+    
+    <item>
       <title>从青铜到王者系列：跟着文件系统学数据结构</title>
       <link>https://wangcy6.github.io/post/storage/2025/2025-05-03-ext4/</link>
       <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>

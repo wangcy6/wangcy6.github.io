@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>源码阅读：请你设计一个线程池 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="/Users/wangchuanyi/doc/daily-interview/blog 在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-06_readcode_ceph_threadpool/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="源码阅读：请你设计一个线程池" />
+<meta property="og:description" content="/Users/wangchuanyi/doc/daily-interview/blog 在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2024-03-06_readcode_ceph_threadpool/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-03T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-03-03T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="源码阅读：请你设计一个线程池">
+<meta itemprop="description" content="/Users/wangchuanyi/doc/daily-interview/blog 在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜"><meta itemprop="datePublished" content="2024-03-03T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-03-03T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2584">
+<meta itemprop="keywords" content="tools," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="源码阅读：请你设计一个线程池"/>
+<meta name="twitter:description" content="/Users/wangchuanyi/doc/daily-interview/blog 在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">源码阅读：请你设计一个线程池</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-03-03 00:00 </span>
+        
+          <span class="more-meta"> 约 2584 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#虚基类-workqueue_">虚基类 WorkQueue_</a></li>
+        <li><a href="#四类-work_queue">四类 work_queue</a></li>
+        <li><a href="#可直接使用的两种实现">可直接使用的两种实现</a></li>
+        <li><a href="#学习方法">学习方法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-03-03T00:00:00" title="March 3, 2024">March 3, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>/Users/wangchuanyi/doc/daily-interview/blog</p>
+<p><img src="https://s2.loli.net/2024/03/06/1d4fyhMsCV2w3He.png" alt="image.png"></p>
+<p>在温和的春夜里，路灯投下淡淡的黄光，小王沿着柳树成荫的街道散步，思绪随着微风轻轻飘散。不远处，他的邻居老王也正慢慢踱步，一如既往地享受着夜的安宁。</p>
+<p>“晚上好，老王！”小王热情地打招呼。</p>
+<p>老王抬头，嘴角上扬，开心地回应：“晚上好，小王。夜晚散步，别有一番风味啊。”</p>
+<p>两人自然地并肩走着，闲聊起邻里间的琐事和生活的点点滴滴。随着对话的深入，</p>
+<p>小王提问： 来我熟记了各种线程池把八股文 为什么，还是不行</p>
+<p>老王回答： 从基本的一个调用开始，亲自用一下，观察你发现什么问题</p>
+<p>我来演示一下基本用法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+BlueStore.cc (src\os\bluestore) line 8472 : class ShallowFSCKThreadPool : public ThreadPool
+
+ const size_t thread_count = cct-&gt;_conf-&gt;bluestore_fsck_quick_fix_threads;
+		//定义工作队列
+    typedef ShallowFSCKThreadPool::FSCKWorkQueue&lt;256&gt; WQ;
+    std::unique_ptr&lt;WQ&gt; wq(
+      new WQ(
+        &#34;FSCKWorkQueue&#34;,
+        (thread_count ? : 1) * 32,
+        this,
+        sb_info_lock,
+        sb_info,
+	sb_ref_counts,
+        repairer));
+    //定义一个线程池，指定线程个数thread_count
+    ShallowFSCKThreadPool thread_pool(cct, &#34;ShallowFSCKThreadPool&#34;, &#34;ShallowFSCK&#34;, thread_count);
+    //定义线程池的工作队列,这个例子工作队列放在外面
+    thread_pool.add_work_queue(wq.get());
+    if (depth == FSCK_SHALLOW &amp;&amp; thread_count &gt; 0) {
+      //not the best place but let&#39;s check anyway
+      ceph_assert(sb_info_lock);
+      thread_pool.start();
+    }
+    
+    
+class ShallowFSCKThreadPool : public ThreadPool
+{
+public:
+  ShallowFSCKThreadPool(CephContext* cct_, std::string nm, std::string tn, int n) :
+    ThreadPool(cct_, nm, tn, n) {
+  }
+
+template &lt;size_t BatchLen&gt;
+struct FSCKWorkQueue : public ThreadPool::WorkQueue_
+</code></pre></td></tr></table>
+</div>
+</div><p>我在来演示一个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// ThreadPoolSingleton是一个继承自ThreadPool的单例类
+class ThreadPoolSingleton : public ThreadPool {
+public:
+  // 显式的构造函数，构造时会初始化父类ThreadPool并启动线程池
+  explicit ThreadPoolSingleton(CephContext *cct)
+    : ThreadPool(cct, &#34;librbd::ImageUpdateWatchers::thread_pool&#34;, &#34;tp_librbd&#34;,
+                 1) {
+    start(); // 调用ThreadPool的start方法启动线程池
+  }
+  // 重写的析构函数，销毁对象时停止线程池
+  ~ThreadPoolSingleton() override {
+    stop(); // 调用ThreadPool的stop方法停止线程池
+  }
+};
+
+// 声明一个指向ContextWQ类型（工作队列）的指针，默认初始化为nullptr
+ContextWQ *m_work_queue = nullptr;
+
+// 创建一个工作队列的方法
+void create_work_queue() {
+  if (m_work_queue != nullptr) {
+    return; // 如果工作队列已经存在，则不做任何操作
+  }
+  // 查找或者创建一个ThreadPoolSingleton类型的单例对象作为线程池
+  auto&amp; thread_pool = m_cct-&gt;lookup_or_create_singleton_object&lt;
+    ThreadPoolSingleton&gt;(&#34;librbd::ImageUpdateWatchers::thread_pool&#34;,
+                         false, m_cct);
+  // 创建一个新的ContextWQ对象作为工作队列，并使用配置中定义的操作线程超时设置
+  m_work_queue = new ContextWQ(&#34;librbd::ImageUpdateWatchers::work_queue&#34;,
+                               ceph::make_timespan(
+                                 m_cct-&gt;_conf.get_val&lt;uint64_t&gt;(&#34;rbd_op_thread_timeout&#34;)),
+                               &amp;thread_pool);
+}
+
+// 销毁工作队列的方法
+void destroy_work_queue() {
+  if (m_work_queue == nullptr) {
+    return; // 如果工作队列不存在，则不做任何操作
+  }
+  m_work_queue-&gt;drain(); // 清空工作队列
+  delete m_work_queue; // 删除工作队列对象
+}
+
+
+// 定义一个函数send_notify，用于发送通知
+// handle是要通知的句柄，watcher是更新监视器的上下文
+void send_notify(uint64_t handle, UpdateWatchCtx *watcher) {
+    // 创建一个新的LambdaContext对象，该对象封装了一个lambda表达式
+    // 当调度给定的Context时，lambda表达式将被调用
+    Context *ctx = new LambdaContext(
+      [this, handle, watcher](int r) { // lambda捕获this指针、handle和watcher
+        handle_notify(handle, watcher); // 在lambda内部调用handle_notify函数处理通知
+      });
+
+    m_work_queue-&gt;queue(ctx, 0); // 将新创建的LambdaContext对象添加到工作队列中，准备执行
+  }
+  
+创建了一个 LambdaContext 对象，这个对象接收一个 lambda 表达式，用于异步执行完成通知的操作。
+最终，通过 queue 方法将这个上下文添加到工作队列中以便执行。
+这里 lambda 表达式捕获了 this 指针、handle和watcher的值，并在后台线程中调用 handle_notify 函数。
+</code></pre></td></tr></table>
+</div>
+</div><p>小王提问：我看到都是继承，里面有工作队列和放入任务，怎么被线程调用呢</p>
+<p>老王回答：线程池 统一提供接口</p>
+<p>1.3   线程池的执行函数
+函数worker为线程池的执行函数：</p>
+<pre><code> voidThreadPool::worker(WorkThread *wt)
+
+    其处理过程如下：
+
+    1）首先检查_stop标志，确保线程池没有关闭。
+
+    2）调用函数join_old_threads把旧的工作线程释放掉。检查如果线程数量大于配置的数量_num_threads，就把当前线程从线程集合中删除，并加入_old_threads队列中，并退出循环。
+
+    3）如果线程池没有暂时中止，并且work_queues不为空，就从last_work_queue开始，遍历每一个工作队列，如果工作队列不为空，就取出一个item，调用工作队列的处理函数做处理。      
+</code></pre>
+<p>小王提问：工作队列 为什么还是继承，难道任务 处理，存储 可以采用不同形式？</p>
+<p>老王回答：虚基类 WorkQueue 提供了结构 根据不同需求，采取不同结构</p>
+<h3 id="虚基类-workqueue_">虚基类 WorkQueue_</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">WorkQueue_</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+    <span class="n">time_t</span> <span class="n">timeout_interval</span><span class="p">,</span> <span class="n">suicide_interval</span><span class="p">;</span>
+    <span class="n">WorkQueue_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">n</span><span class="p">,</span> <span class="n">time_t</span> <span class="n">ti</span><span class="p">,</span> <span class="n">time_t</span> <span class="n">sti</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">name</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="n">timeout_interval</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">suicide_interval</span><span class="p">(</span><span class="n">sti</span><span class="p">)</span>
+    <span class="p">{</span> <span class="p">}</span>
+    <span class="n">virtual</span> <span class="o">~</span><span class="n">WorkQueue_</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="c1">/// Remove all work items from the queue.
+</span><span class="c1"></span>    <span class="n">virtual</span> <span class="kt">void</span> <span class="n">_clear</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">/// Check whether there is anything to do.
+</span><span class="c1"></span>    <span class="n">virtual</span> <span class="kt">bool</span> <span class="nf">_empty</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">/// Get the next work item to process.
+</span><span class="c1"></span>    <span class="n">virtual</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">_void_dequeue</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">//取出待处理的items
+</span><span class="c1"></span>    <span class="cm">/** @brief Process the work item.
+</span><span class="cm">     * This function will be called several times in parallel
+</span><span class="cm">     * and must therefore be thread-safe. */</span>
+    <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">_void_process</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">item</span><span class="p">,</span> <span class="n">TPHandle</span> <span class="o">&amp;</span><span class="n">handle</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="cm">/** @brief Synchronously finish processing a work item.
+</span><span class="cm">     * This function is called after _void_process with the global thread pool lock held,
+</span><span class="cm">     * so at most one copy will execute simultaneously for a given thread pool.
+</span><span class="cm">     * It can be used for non-thread-safe finalization. */</span>
+    <span class="n">virtual</span> <span class="kt">void</span> <span class="nf">_void_process_finish</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="四类-work_queue">四类 work_queue</h3>
+<ul>
+<li>BatchWorkQueue
+<ul>
+<li>每次可以取出多个待处理item</li>
+<li>该WorkQueued的item存放容器需要自行定义</li>
+<li>需要自行实现如下接口（主要函数）：
+<ul>
+<li><code>virtual void _dequeue(std::list&lt;T*&gt; *) = 0</code>: 如何从队列中work_queue中拿出items</li>
+<li><code>virtual bool _enqueue(T *) = 0</code>: 入队列接口</li>
+<li><code>virtual void _process(const std::list&lt;T*&gt; &amp;items, TPHandle &amp;handle) = 0</code>: 批处理接口</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>WorkQueueVal
+<ul>
+<li>适用于处理原始值类型或者小对象</li>
+<li>将T类型item的值存储队列</li>
+<li>存储T类型值的容器需要自行实现</li>
+<li>处理缓存容器已经实现，用于存在中间值：
+<ul>
+<li>std::list<!-- raw HTML omitted --> to_process; //待处理list， 从放入_void_dequeue()拿出的元素U，每次存入一个</li>
+<li>std::list<!-- raw HTML omitted --> to_finish; //_void_process_finish会处理该list中的元素，每次处理一个</li>
+</ul>
+</li>
+<li>需要自行实现如下接口：
+<ul>
+<li><code>bool _empty() override = 0</code>: 判断容器非空</li>
+<li><code>virtual void _enqueue(T) = 0;</code>: 入队列接口</li>
+<li><code>virtual void _process(U u, TPHandle &amp;) = 0;</code>: 处理元素U的函数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>WorkQueue
+<ul>
+<li>适用于处理大对象或者动态申请内存的对象</li>
+<li>存储容器需要自行实现</li>
+<li>需要自行实现如下接口：
+<ul>
+<li><code>virtual bool _enqueue(T *) = 0;</code>: 入workqueue接口</li>
+<li><code>virtual T *_dequeue() = 0;</code>： 取work_queue item接口</li>
+<li><code>virtual void _process(T *t, TPHandle &amp;) = 0;</code> : item处理接口</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PointerWQ
+<ul>
+<li>适用于处理大对象或者动态申请内存的对象，比WorkQueue更加方便，但是没有WorkQueue抽象</li>
+<li>存储容器已经实现：<code>std::list&lt;T *&gt; m_items</code></li>
+<li>只需要实现<code>virtual void process(T *item) = 0;</code>, 用于item处理</li>
+</ul>
+</li>
+</ul>
+<h3 id="可直接使用的两种实现">可直接使用的两种实现</h3>
+<ul>
+<li>
+<p>**class GenContextWQ **: public ThreadPool::WorkQueueVal&lt;GenContext<a href="ThreadPool::TPHandle&amp;">ThreadPool::TPHandle&amp;</a>*&gt;</p>
+</li>
+<li>
+<p><strong>class ContextWQ</strong> : public ThreadPool::PointerWQ<!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>创建队列结构</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">class</span> <span class="nl">New_WQ</span> <span class="p">:</span> <span class="n">public</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">PointerWQ</span><span class="o">&lt;</span><span class="n">Context</span><span class="o">&gt;</span>
+<span class="p">{</span>
+    <span class="nl">public</span><span class="p">:</span>
+        <span class="n">New_WQ</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="n">time_t</span> <span class="n">ti</span><span class="p">,</span> <span class="n">ThreadPool</span> <span class="o">*</span><span class="n">tp</span><span class="p">)</span>
+            <span class="o">:</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">PointerWQ</span><span class="o">&lt;</span><span class="n">Context</span><span class="o">&gt;</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ti</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">this</span><span class="o">-&gt;</span><span class="n">register_work_queue</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">process</span><span class="p">(</span><span class="n">Context</span> <span class="o">*</span><span class="n">fin</span><span class="p">)</span> <span class="n">override</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="n">New_WQ</span><span class="o">::</span><span class="n">process</span><span class="p">(</span><span class="n">Context</span> <span class="o">*</span><span class="n">fin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">fin</span><span class="o">-&gt;</span><span class="n">complete</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>启动线程池</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="mf">1.</span> <span class="err">创建</span><span class="n">ThreadPool</span>
+<span class="n">thread_pool</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="n">cct</span><span class="p">,</span> <span class="s">&#34;thread_pool&#34;</span><span class="p">,</span> <span class="s">&#34;daemon_tp&#34;</span><span class="p">,</span> <span class="n">g_conf</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">rep_thread_pool_nr</span><span class="p">);</span>
+<span class="n">thread_pool</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">();</span>
+
+<span class="mf">2.</span> <span class="err">创建队列</span>
+<span class="n">work_queue</span> <span class="o">=</span> <span class="n">new</span> <span class="n">New_WQ</span><span class="p">(</span><span class="s">&#34;daemon&#34;</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">thread_pool</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>投递任务</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">Context</span> <span class="o">*</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Test_TheadPool</span><span class="p">();</span>
+<span class="n">work_queue</span><span class="o">-&gt;</span><span class="n">queue</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="学习方法">学习方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+
+ 二、这个技术的优势和劣势分别是什么 
+
+
+ 三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+ 四、技术的组成部分和关键点。
+
+ 五、技术的底层原理和关键实现
+
+ 六、已有的实现和它之间的对比
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-03-03 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/tools/">tools</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2024/2024-03-06_readcode_ceph_threadpool/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">源码阅读：请你设计一个线程池</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2024/2024-02-09-git-two-account/">
+            <span class="next-text nav-default">在一台电脑上同时使用多个github账号(亲测有效)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
