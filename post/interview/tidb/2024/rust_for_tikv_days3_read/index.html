@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>T成为tikv贡献者第三天： - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="Tidb" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/tidb/2024/rust_for_tikv_days3_read/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="T成为tikv贡献者第三天：" />
+<meta property="og:description" content="Tidb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/tidb/2024/rust_for_tikv_days3_read/" /><meta property="article:section" content="post" />
+
+
+
+<meta itemprop="name" content="T成为tikv贡献者第三天：">
+<meta itemprop="description" content="Tidb">
+
+<meta itemprop="wordCount" content="2169">
+<meta itemprop="keywords" content="Tidb," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="T成为tikv贡献者第三天："/>
+<meta name="twitter:description" content="Tidb"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">T成为tikv贡献者第三天：</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 0001-01-01 00:00 </span>
+        
+          <span class="more-meta"> 约 2169 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#回顾"><strong>回顾：</strong></a></li>
+    <li><a href="#rust语法知识1---">**rust语法知识1   **</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="0001-01-01T00:00:00" title="January 1, 0001">January 1, 0001</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>成为tikv贡献者第三天：存储</p>
+<p>本文是TiKV 源码阅读第三篇，</p>
+<p>目标：snapshot进行进一步理解，一边理解rust语法，一边抽象模块之间关系。</p>
+<p><strong>阅读完你将收益融如下</strong></p>
+<ol>
+<li>容易题不丢分，先吃小甜点+1分，增加学习动力 掌握一个语法知识
+std::move()实现原理</li>
+</ol>
+<ul>
+<li>为什么支持传入的是左值还是右值这2个参数是&amp;&amp;原因吗</li>
+<li>为什么返回的都是右值引用，是static_cast功劳吗？</li>
+<li>forward怎么做到区分类型的，他做不到 还是依赖remove_reference吗？</li>
+<li>了解rust 用引用 生命周期用法
+不管什么raft，什么rockdb，本来不明白，完全当作黑盒，  完全是程序员思维。</li>
+</ul>
+<h2 id="回顾"><strong>回顾：</strong></h2>
+<p><a href="https://asktug.com/t/topic/1029864?_gl=1*1hzzwb7*_ga*MTA4NDM3MTU5MC4xNzAzMDM2OTcz*_ga_5FQSB5GH7F*MTcyMjMzNjMzMC4zMi4xLjE3MjIzMzYzMzguMC4wLjA.">成为tikv贡献者第二天：读请求 全链路跟踪</a></p>
+<p>介绍了PC,KvService，Storage  分层关系 就是就是函数调用关系</p>
+<p>Storage  提供了 Snapshot 来提供查询功能</p>
+<p>代码位置</p>
+<ul>
+<li>tikv-master\src\storage\mod.rs</li>
+<li>接口</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="sd">/// Get a snapshot of `engine`.
+</span><span class="sd"></span><span class="k">fn</span> <span class="nf">snapshot</span><span class="p">(</span><span class="w">
+</span><span class="w">    </span><span class="n">engine</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">E</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">ctx</span>: <span class="nc">SnapContext</span><span class="o">&lt;</span><span class="na">&#39;_</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="n">std</span>::<span class="n">future</span>::<span class="n">Future</span><span class="o">&lt;</span><span class="n">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">E</span>::<span class="n">Snap</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">kv</span>::<span class="n">snapshot</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span><span class="w"> </span><span class="n">ctx</span><span class="p">)</span><span class="w">
+</span><span class="w">        </span><span class="p">.</span><span class="n">map_err</span><span class="p">(</span><span class="n">txn</span>::<span class="n">Error</span>::<span class="n">from</span><span class="p">)</span><span class="w">
+</span><span class="w">        </span><span class="p">.</span><span class="n">map_err</span><span class="p">(</span><span class="n">Error</span>::<span class="n">from</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="rust语法知识1---">**rust语法知识1   **</h2>
+<p>**SnapContext&lt;'_&gt;  ，必须看懂这个语法, 看到它其他完全没心情看了，我是偏离主轨道，研究这个语法了 **</p>
+<ol>
+<li><strong>回顾看看c++怎么处理的：</strong></li>
+</ol>
+<p>​    C++ 没有 Rust 那样的生命周期系统，因此程序员需要更加小心地管引用的生命周期</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">get_local_reference</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">local_string</span> <span class="o">=</span> <span class="s">&#34;Hello, World!&#34;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">local_string</span><span class="p">;</span> <span class="c1">// 错误：返回局部变量的引用（static除外）
+</span><span class="c1"></span><span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">get_local_reference</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ref</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">// 未定义行为：可能打印出 &#34;Hello, World!&#34;，也可能打印出垃圾数据
+</span><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//返回局部变量的引 运行时候出错
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li><strong>rust怎么处理这个情况</strong></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">   
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;Hello, world!&#34;</span><span class="p">);</span><span class="w"> </span><span class="c1">// 创建一个字符串并赋予所有权
+</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_string_reference</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span><span class="w"> </span><span class="c1">// 传入字符串的引用
+</span><span class="c1"></span><span class="w">    </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w">
+</span><span class="w">        </span><span class="c1">// println!(&#34;{}&#34;, s) 语法报错 
+</span><span class="c1"></span><span class="w">       </span><span class="c1">// 在rust中，所有权规则主要有以下三条:
+</span><span class="c1"></span><span class="w">       </span><span class="c1">//每个值都有一个所有者
+</span><span class="c1"></span><span class="w">       </span><span class="c1">//每个值只能有一个所有者 等于c++ move 来的变量不再有效
+</span><span class="c1"></span><span class="w">       </span><span class="c1">// 当所有者不在程序运行范围时，该值将被删除
+</span><span class="c1"></span><span class="w">   
+</span><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="c1">//s 被销毁 
+</span><span class="c1"></span><span class="w">    
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span><span class="w"> </span><span class="c1">// borrow result 依然指向 s
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">create_string_reference</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">s</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="c1">//无分号 return s;
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>明白了，</p>
+<ul>
+<li>在c++中  ref 和 local_string 之间范围关系 在编译时候没有约束</li>
+<li>在rust 中 result 作用范围 和 s作用范围不一致，编译报错</li>
+<li>引用的生命周期至少应该与其所指向的值的生命周期相同。</li>
+</ul>
+<ol start="3">
+<li><strong>通过std::move 理解， T,T&amp;&amp;  template&lt;T&amp;&amp;&gt;</strong></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="err">代码位置</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//en.cppreference.com/w/cpp/types/remove_reference
+</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="c1">//en.cppreference.com/w/cpp/utility/move
+</span><span class="c1"></span><span class="nl">https</span><span class="p">:</span><span class="c1">//en.cppreference.com/w/cpp/utility/forward
+</span><span class="c1"></span>
+<span class="cm">/**
+</span><span class="cm"> *  @brief  Convert a value（left or right） to an rvalue.
+</span><span class="cm"> *  @param  __t  A thing of arbitrary type.
+</span><span class="cm"> *  @return The parameter cast to an rvalue-reference to allow moving it.
+</span><span class="cm">*/</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+  <span class="k">constexpr</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;</span>
+  <span class="n">move</span><span class="p">(</span><span class="n">_Tp</span><span class="o">&amp;&amp;</span> <span class="n">__t</span><span class="p">)</span> <span class="k">noexcept</span>  <span class="o">---</span><span class="err">（</span><span class="mi">1</span><span class="err">）</span>  <span class="err">模板中的</span><span class="o">&amp;&amp;</span><span class="err">不代表右值引用，而是万能引用，其既能接收左值又能接收右值</span>
+  <span class="p">{</span>
+      <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;&amp;&gt;</span><span class="p">(</span><span class="n">__t</span><span class="p">);</span>  <span class="o">-----</span><span class="err">（</span><span class="mi">2</span><span class="err">）</span>
+  <span class="p">}</span> 
+  
+ <span class="n">C</span><span class="o">++</span><span class="mi">11</span> <span class="k">typename</span> <span class="n">remove_reference</span><span class="err">＜</span><span class="n">T</span><span class="err">＞</span><span class="o">::</span><span class="n">type</span><span class="err">（去除传入类型引用符号）</span><span class="o">-</span><span class="err">说人话</span>
+  <span class="o">-</span><span class="err">啥意思</span> <span class="err">就是获取类</span><span class="n">T</span><span class="err">，</span>
+  <span class="n">remove_reference</span> <span class="err">定义三次</span> <span class="n">c</span><span class="o">++</span><span class="err">语法应该报错了，注意是模板</span> <span class="err">在编译时候选择其中一个匹配</span>
+      
+ <span class="err">对于模板参数</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;&amp;</span><span class="p">.</span> <span class="err">其</span><span class="n">type类型都为T</span><span class="p">,</span>     
+<span class="c1">/// remove_reference
+</span><span class="c1"></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+  <span class="k">struct</span> <span class="nc">remove_reference</span>
+  <span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span>   <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+  <span class="k">struct</span> <span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&amp;&gt;</span>
+  <span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span>   <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="o">&gt;</span>
+  <span class="k">struct</span> <span class="nc">remove_reference</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="o">&amp;&amp;&gt;</span>
+  <span class="p">{</span> <span class="k">typedef</span> <span class="n">_Tp</span>   <span class="n">type</span><span class="p">;</span> <span class="p">};</span>
+
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>1）  模板中的&amp;&amp;不代表右值引用，而是万能引用，其既能接收左值又能接收右值</p>
+<p>2STL——萃取机制（Traits）</p>
+<ul>
+<li>
+<p>.定义：traits中文意思是特性，它通过提取不同类的共性，使得可以统一处理。</p>
+</li>
+<li>
+<p>技术实现：traits运用显式模板特殊化(模板偏特化，全特化)将代码中因为类型不同而发生变化的片段提取出来，</p>
+</li>
+<li>
+<p>用统一的接口来包装，并通过traits模板类公开的接口间接访问相应的类。</p>
+</li>
+</ul>
+<p>明白了，</p>
+<ul>
+<li>
+<p>stl中   value_type  不是变量，<em>类型</em>别名typedef/using</p>
+</li>
+<li>
+<p>std::remove_reference&lt;_Tp&gt;::type 通过作用域 萃取 type</p>
+</li>
+<li>
+<p>模板实例化简单举例 ，</p>
+<p>int &amp;&amp;move(int)</p>
+<p>int &amp;&amp;move(int &amp;a)</p>
+<p>int &amp;&amp;move(int &amp;&amp; a)</p>
+<p>C++11 typename remove_reference＜T＞::type（去除传入类型引用符号）-说人话</p>
+<p>啥意思 就是获取类T，int</p>
+</li>
+<li>
+<p>别被static_cast误导了，不是static_cast保证了返回的是右值。</p>
+</li>
+</ul>
+<ol start="4">
+<li><strong>std::forward</strong></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="err">这些函数模板</span> <span class="n">forward</span> <span class="err">是</span> <span class="n">C</span><span class="o">++</span> <span class="err">中的完美转发函数，</span>
+<span class="err">通常与模板类模板参数一起使用，以实现转发机制。完美转发允许将函数的参数以原始的值类别（</span><span class="n">lvalue</span> <span class="err">或</span> <span class="n">rvalue</span><span class="err">）传递给另一个函数</span>
+<span class="err">不是人话</span>
+ 
+<span class="err">简化理解：为什么直接用不行</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// arg is always lvalue
+</span><span class="c1"></span>    <span class="c1">// 直接使用：arg 无论传递什么在使用过程中当作右值使用，丢失类型信息，
+</span><span class="c1"></span>    <span class="n">foo</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">));</span> 
+    <span class="c1">//std::forward&lt;T&gt;(arg  Forward as lvalue or as rvalue, depending on T
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="err">简化理解：</span><span class="n">forward怎么做到区分类型的</span><span class="err">，他做不到</span> <span class="err">还是依赖</span><span class="n">remove_reference</span>
+   
+<span class="k">template</span><span class="o">&lt;</span> <span class="k">class</span> <span class="nc">T</span> <span class="o">&gt;</span>
+<span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">forward</span><span class="p">(</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&amp;</span> <span class="n">t</span> <span class="p">)</span> <span class="p">;</span>
+<span class="err">如果</span> <span class="n">T</span> <span class="err">是一个引用类型（例如</span> <span class="kt">int</span><span class="o">&amp;</span><span class="err">），</span><span class="n">std</span><span class="o">::</span><span class="n">remove_reference</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span> <span class="err">将变为</span> <span class="kt">int</span><span class="err">。</span><span class="o">----</span><span class="err">这个地方就是</span><span class="n">lvalue</span>
+    
+<span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">forward</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">t</span> <span class="p">)</span> 
+ <span class="err">这个函数模板同样接受一个左值引用</span> <span class="n">t</span><span class="err">，并且通过别名模板移除引用，然后以</span> <span class="n">T</span><span class="o">&amp;&amp;</span><span class="err">（右值引用）的形式转发</span>
+ 
+<span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">forward</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;&amp;</span> <span class="n">t</span> <span class="p">)</span> 
+<span class="err">通用引用（</span><span class="n">universal</span> <span class="n">reference</span><span class="err">）</span>
+<span class="err">如果</span> <span class="n">T</span> <span class="err">是一个左值引用类型（如</span> <span class="kt">int</span><span class="o">&amp;</span><span class="err">），</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="err">将折叠为</span> <span class="n">T</span><span class="o">&amp;</span><span class="err">；</span>
+  
+<span class="err">如果</span> <span class="n">T</span> <span class="err">是一个右值引用类型（如</span> <span class="kt">int</span><span class="o">&amp;&amp;</span><span class="err">），</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="err">将折叠为</span> <span class="n">T</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>明白了，</p>
+<p>类型折叠 简单理解成 语文没有逗号中的断句，商家最终解释权</p>
+<p>从样板到最后实例化中间还有过程
+这个编译器发挥作用了</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p>TiKV 源码解析系列文章（十九）read index 和 local read 情景分析</p>
+</li>
+<li>
+<p>TiKV 源码解析系列文章（十）Snapshot 的发送和接收</p>
+</li>
+<li>
+<p>PointGet的一生</p>
+<p>Rust语言圣经(Rust Course)</p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        0001-01-01 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Tidb/">Tidb</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/tidb/2024/rust_for_tikv_days2_query/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">TiKV 源码阅读三部曲（二）读流程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/storage/3_ceph_help/">
+            <span class="next-text nav-default">《大话 Ceph》 之Ceph 运维手册&#34;</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

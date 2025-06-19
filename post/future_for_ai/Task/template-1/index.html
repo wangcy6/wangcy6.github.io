@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>三天从 0 到 1 实现一个编译器，你也可以 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/Task/template-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="三天从 0 到 1 实现一个编译器，你也可以" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/Task/template-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-12T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="三天从 0 到 1 实现一个编译器，你也可以">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4135">
+<meta itemprop="keywords" content="小而美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="三天从 0 到 1 实现一个编译器，你也可以"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">三天从 0 到 1 实现一个编译器，你也可以</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-12 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 4135 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-云主机">1. 云主机</a></li>
+        <li><a href="#2--依赖安装">2.  依赖安装</a></li>
+        <li><a href="#3-知识补充">3. 知识补充</a></li>
+      </ul>
+    </li>
+    <li><a href="#clangllvm-介绍">clang/llvm 介绍</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#目录结构">目录结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#我是谁">我是谁</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="一-开发环境搭建">一、 开发环境搭建</h1>
+<h3 id="1-云主机">1. 云主机</h3>
+<ol>
+<li>Gitpod：<strong>一个基于云原生技术的在线集成开发环境（IDE）</strong> ，也是阅读和调试github源代码利器</li>
+<li>ccls:vscode 插件  C/C++/ObjC language server supporting cross references, hierarchies, completion and semantic highlight</li>
+<li>CMake：vscode 插件</li>
+</ol>
+<h3 id="2--依赖安装">2.  依赖安装</h3>
+<p>这个脚本主要用于交叉编译和测试针对 ARM Linux 架构的 C 语言程序</p>
+<h4 id="安装qemu-user-static"><strong>安装qemu-user-static</strong></h4>
+<p>sudo apt-get update
+sudo apt-get install -y qemu-user-static</p>
+<p>which qemu-aarch64-static
+/usr/bin/qemu-aarch64-static</p>
+<h4 id="clang-18">clang-18</h4>
+<ul>
+<li>Ubuntu默认仓库中没有clang-18</li>
+<li>需要添加LLVM官方仓库来获取较新版本的clang</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 添加LLVM官方仓库密钥 </span>
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key <span class="p">|</span> sudo apt-key add - 
+<span class="c1"># 添加仓库(根据您的Ubuntu版本选择对应的代号，如focal/jammy等) </span>
+sudo add-apt-repository <span class="s2">&#34;deb http://apt.llvm.org/</span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2">/ llvm-toolchain-</span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2">-18 main&#34;</span> 
+sudo apt-get update
+
+
+sudo apt install -y clang-18 lld-18 lldb-18 clangd-18
+
+clang-18 --version
+Ubuntu clang version 18.1.8 <span class="o">(</span>++20240731024944+3b5b5c1ec4a3-1~exp1~20240731145000.144<span class="o">)</span>
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+
+
+lld-18 --version
+lld is a generic driver.
+Invoke ld.lld <span class="o">(</span>Unix<span class="o">)</span>, ld64.lld <span class="o">(</span>macOS<span class="o">)</span>, lld-link <span class="o">(</span>Windows<span class="o">)</span>, wasm-ld <span class="o">(</span>WebAssembly<span class="o">)</span> instead
+
+<span class="c1"># 1. 添加LLVM 19仓库 </span>
+sudo add-apt-repository <span class="s2">&#34;deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main&#34;</span> 
+sudo apt update 
+<span class="c1"># 2. 安装lld-19 </span>
+sudo apt install -y lld-19
+
+sudo apt install -y clang-18 lld-19
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="c17">c++17</h4>
+<p>g++ &ndash;version
+g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+g++ -dM -E -x c++ /dev/null | grep -F __cplusplus
+#define __cplusplus 201703L</p>
+<h4 id="bison-编译器依赖安装必不可少">bison 编译器依赖安装（必不可少）</h4>
+<p>sudo apt install flex bison
+sudo apt install -y build-essential cmake flex bison graphviz libgraphviz-dev</p>
+<p>sudo apt install graphviz libgraphviz-dev</p>
+<p>sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu cmake -
+DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ ..</p>
+<h3 id="3-知识补充">3. 知识补充</h3>
+<p><strong>arm架构和x86架构</strong></p>
+<ul>
+<li>ARM架构是一种基于RISC（精简指令集计算机）的处理器架构，最初是为移动设备和嵌入式系统设计的。ARM处理器具有低功耗、高性能和低成本等优点，因此在移动设备、智能家居、工业控制等领域得到广泛应用。</li>
+<li>x86架构是一种基于CISC（复杂指令集计算机）的处理器架构，最初是为个人电脑设计的。x86处理器具有高性能和广泛的软件支持等优点，因此在个人电脑、服务器等领域得到广泛应用。</li>
+</ul>
+<p><strong>如何在x86cpu 上编译支持 arm 架构程序：</strong> - uname -m x86_64</p>
+<ul>
+<li>因为国产化的普及，尤其一些证券和银行行业，已经开始走信创的路线,自己买 <code>arm</code> 平台的 <code>CPU</code>，这个成本着实吃不消，于是尝试 <code>x86</code> 平台运行 <code>arm</code> 平台的容器来降本增效</li>
+<li>用户模式模拟器： qemu-user-static 允许您在一种 CPU 架构的 Linux 系统上运行为另一种 CPU 架构编译的 Linux 程序。它不是一个完整的虚拟机，它只模拟 CPU 指令集和一些基本的系统调用，将其他系统调用直接传递给宿主机的 Linux 内核。</li>
+<li>用途： 它的主要用途是交叉开发和测试。例如，您可以在一台 x86/x64 架构的开发机器上编译和测试为 ARM 架构嵌入式设备编写的程序，而无需拥有实际的 ARM 硬件</li>
+</ul>
+<p><strong>export QEMU_LD_PREFIX=/usr/aarch64-linux-gnu</strong></p>
+<p>QEMU_LD_PREFIX 指向的目录是交叉编译工具链的安装路径，它里面包含了目标架构（在这里是 ARM64 Linux）运行程序所需的所有核心共享库和动态链接器。
+这些文件是在您安装交叉编译环境时由系统自动放置的，您通常不需要手动管理它们。</p>
+<p>**GCC 替代品:Clang 的主要目标之一是提供GCC 的替代方案，
+尤其是在编译大型项目时，Clang 能够比GCC 更快地完成编译工作</p>
+<p>Clang-18 是==一个C、C++、Objective-C 和Objective-C++ 编程语言的编译器前端的特定版本==，它是基于LLVM 编译器的。</p>
+<ul>
+<li>
+<p>更具体地说，它指的是Clang 项目的第18 个主要版本。Clang 作为GCC（GNU 编译器套件）的替代品而开发，它支持多种C++ 标准（包括C++11、C++14、C++17 和部分C++20）</p>
+</li>
+<li>
+<p>英特尔为C/C++ 编译器全面采用 LLVM</p>
+</li>
+</ul>
+<p>英特尔的长期编译器专家 James Reinders透露，将在下一代英特尔 C/C++ 编译器中使用 LLVM 开源基础架构；并分享了一些相关信息。</p>
+<p>“LLVM 有助于实现为<a href="https://zhida.zhihu.com/search?content_id=179428535&amp;content_type=Article&amp;match_order=1&amp;q=%E8%8B%B1%E7%89%B9%E5%B0%94%E6%9E%B6%E6%9E%84&amp;zhida_source=entity">英特尔架构</a>，提供最佳 C/C++ 编译器的目标。最新的英特尔 C/C++ 编译器，使用 LLVM，可提供更快的编译时间、更好的优化、增强的标准支持</p>
+<ul>
+<li>特尔工程师报告，新的基于 LLVM 的 oneAPI DPC++/C++ Compiler 2021.3 的构建时间，相较经典 C++ 编译器要减少了 14%</li>
+</ul>
+<p><a href="https://zh.wikipedia.org/zh-cn/Clan">https://zh.wikipedia.org/zh-cn/Clan</a></p>
+<h2 id="clangllvm-介绍">clang/llvm 介绍</h2>
+<p>LLVM 项目是模块化和可重用编译器以及工具链的集合，clang 是其编译器前端。
+相比较于 GNU 编译工具链，其优势在于编译速度更快，静态检查工具更加完善，可拓展性更强等等。
+GNU 工具链与 LLVM 工具链主要区别如下表：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>GNU工具链</th>
+<th>LLVM工具链</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C编译器</td>
+<td>gcc</td>
+<td>clang</td>
+</tr>
+<tr>
+<td>C++编译器</td>
+<td>g++</td>
+<td>clang++</td>
+</tr>
+<tr>
+<td>binutils</td>
+<td>GNU binutils</td>
+<td>LLVM binutils</td>
+</tr>
+<tr>
+<td>汇编器</td>
+<td>GNU as</td>
+<td>集成汇编器</td>
+</tr>
+<tr>
+<td>链接器</td>
+<td>ld.bfd,ld.gold</td>
+<td>LLVM linker ld.lld</td>
+</tr>
+<tr>
+<td>运行时</td>
+<td>libgcc</td>
+<td>compiler-rt</td>
+</tr>
+<tr>
+<td>原子操作</td>
+<td>libatomic</td>
+<td>compiler-rt</td>
+</tr>
+<tr>
+<td>C语言库</td>
+<td>GNU libc glibc</td>
+<td>LLVM libc</td>
+</tr>
+<tr>
+<td>C++标准库</td>
+<td>libstdc++</td>
+<td>libc++</td>
+</tr>
+<tr>
+<td>C++ABI</td>
+<td>libsupcxx</td>
+<td>libc++abi</td>
+</tr>
+<tr>
+<td><a href="https://pages.openeuler.openatom.cn/embedded/docs/build/html/master/features/clang_llvm.html">https://pages.openeuler.openatom.cn/embedded/docs/build/html/master/features/clang_llvm.html</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>++17</td>
+<td>完全支持</td>
+<td>从GCC 5版本开始支持，到GCC 7版本已完全支持，是GCC 11到13版本的默认模式</td>
+<td>-std=c++17 o</td>
+</tr>
+</tbody>
+</table>
+<p><strong>安装aarch64交叉编译工具链</strong></p>
+<p>sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+sudo apt-get install -y libstdc++-12-dev-arm64-cross</p>
+<p>arch64-linux-gnu-gcc &ndash;version
+aarch64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0</p>
+<h1 id="二-阅读-程序入口">二、 阅读 程序入口</h1>
+<p>test.sh 脚本是一个自动化测试框架，用于编译、运行和验证针对特定目标架构（在本例中是 aarch64 ARM Linux）的 C 语言程序。</p>
+<ol>
+<li>集成测试： 它不仅仅测试自定义编译器，还测试整个编译和执行链条：</li>
+</ol>
+<ul>
+<li>
+<p>自定义编译器 (ax) 的输出。</p>
+</li>
+<li>
+<p>clang-18 的汇编和链接能力（特别是交叉编译能力）。</p>
+</li>
+<li>
+<p>qemu-aarch64-static 在宿主机上模拟 ARM64 环境并运行程序的能力。</p>
+</li>
+<li>
+<p>动态链接器和自定义库 (libstd.so) 是否能被正确加载和使用。</p>
+</li>
+</ul>
+<ol>
+<li>输出验证： 脚本将程序运行的实际输出与预定义的 .out 文件进行比较。这是一种回归测试的形式，确保程序在每次修改或编译后仍然产生相同且正确的输出。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ax $NAME.c | clang-18 -xassembler-with-cpp /dev/stdin -target aarch64-linux-gnueabihf -march=armv8a -fuse-ld=lld-19 -lstd -L./ -o $TMPD/$NAME
+</code></pre></td></tr></table>
+</div>
+</div><p>这一整行命令的作用是：</p>
+<ol>
+<li>首先，使用自定义的编译器 (../build/compiler) 将当前的 C 源代码文件 ($NAME.c) 编译成汇编代码。</li>
+<li>然后，将这些汇编代码通过管道传递给 clang-18。】</li>
+<li>clang-18 接收到汇编代码后，会将其汇编并链接，生成一个针对 ARM64 Linux 平台的动态链接可执行文件。</li>
+<li>这个生成的可执行文件会被保存到 /tmp/tst/ 目录下，并以原始 C 文件的名称命名 (例如 hello)。</li>
+</ol>
+<p>其中的 -target aarch64-linux-gnueabihf 明确告诉 clang-18，
+它要编译生成的目标代码是针对 ARM64 (aarch64) 架构的 Linux 系统的。
+这就需要系统中存在 aarch64 的交叉编译能力。</p>
+<p>sudo apt install -y gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu</p>
+<p>sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+sudo apt-get install -y libstdc++-12-dev-arm64-cross</p>
+<p>arch64-linux-gnu-gcc &ndash;version
+aarch64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0</p>
+<p>自动化编译： 脚本会遍历当前目录下所有的 .c 文件，并对它们进行编译。
+这个编译过程是交叉编译，
+即将源代码从宿主机（例如 x86 Linux）编译成目标机（aarch64 Linux）的可执行文件</p>
+<ol>
+<li>
+<p>自定义编译器测试： 脚本使用 ../build/compiler（即 ax）作为第一阶段的编译器，这表明它很可能是一个自定义的或正在开发的编译器前端。test.sh 的一个主要作用就是测试这个自定义编译器是否能正确地将 C 代码转换为汇编代码。</p>
+</li>
+<li>
+<p>集成测试： 它不仅仅测试自定义编译器，还测试整个编译和执行链条：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>自定义编译器 (ax) 的输出。</p>
+</li>
+<li>
+<p>clang-18 的汇编和链接能力（特别是交叉编译能力）。</p>
+</li>
+<li>
+<p>qemu-aarch64-static 在宿主机上模拟 ARM64 环境并运行程序的能力。</p>
+</li>
+<li>
+<p>动态链接器和自定义库 (libstd.so) 是否能被正确加载和使用。</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>输出验证： 脚本将程序运行的实际输出与预定义的 .out 文件进行比较。这是一种回归测试的形式，确保程序在每次修改或编译后仍然产生相同且正确的输出。</p>
+</li>
+<li>
+<p>错误报告： 如果编译失败（CE）或输出不匹配，脚本会给出明确的错误提示，这对于开发和调试非常有用</p>
+</li>
+<li></li>
+</ol>
+<h1 id="三-试点班编译器">三. 试点班编译器</h1>
+<p><a href="https://gitlab.eduxiji.net/T202510699205664/Compiler">https://gitlab.eduxiji.net/T202510699205664/Compiler</a></p>
+<p>C0语法编译器-西北工业大学编译原理试点班
+<a href="https://github.com/zhangyongmao/compiler_C0">https://github.com/zhangyongmao/compiler_C0</a></p>
+<p><a href="https://github.com/happy-lx/C0-compiler">https://github.com/happy-lx/C0-compiler</a></p>
+<ol>
+<li>从CMakeLists.txt分析项目依赖：</li>
+</ol>
+<ul>
+<li>必需依赖：Graphviz、Flex、Bison</li>
+<li>可选依赖：ANTLR4(已注释掉)</li>
+<li>编译器要求：g++/gcc或MSVC，C++17标准</li>
+</ul>
+<ol start="2">
+<li>编译流程：</li>
+</ol>
+<ul>
+<li>首先需要生成词法分析器(Flex)和语法分析器(Bison)代码</li>
+<li>然后编译整个项目</li>
+<li>可选择生成语法分析图(Graphviz)</li>
+</ul>
+<ol start="3">
+<li>需要检查系统是否安装：</li>
+</ol>
+<ul>
+<li>Graphviz开发包</li>
+<li>Flex和Bison工具</li>
+<li>C++编译器(g++/clang++)</li>
+</ul>
+<ol start="4">
+<li>项目特点：</li>
+</ol>
+<ul>
+<li>支持ARM32/ARM64代码生成</li>
+<li>使用现代C++17特性</li>
+</ul>
+<p><strong>C++17核心特性</strong></p>
+<ul>
+<li><strong>结构化绑定(Structured Bindings)</strong>：</li>
+</ul>
+<p>允许从元组/结构体直接解包变量</p>
+<p>示例：<code>auto [x,y] = getPoint();</code></p>
+<ul>
+<li><strong>if/switch初始化语句</strong>：</li>
+</ul>
+<p>在条件语句中直接初始化变量</p>
+<p>示例：<code>if (auto it = m.find(key); it != m.end()) {...}</code></p>
+<ul>
+<li><strong>内联变量(Inline Variables)</strong>：</li>
+</ul>
+<p>简化头文件中的变量定义，避免多重定义错误</p>
+<ul>
+<li><strong>constexpr lambda</strong>：</li>
+</ul>
+<p>允许lambda表达式在编译期执行</p>
+<p><strong>2. 项目中可能使用的特性</strong></p>
+<p>从代码结构看可能使用了：</p>
+<ul>
+<li><strong>std::optional</strong>：安全处理可能缺失的值</li>
+<li><strong>std::variant</strong>：类型安全的联合体</li>
+<li><strong>文件系统库(std::filesystem)</strong>：处理文件路径和目录</li>
+<li><strong>并行算法</strong>：提升性能(但项目未明显使用)</li>
+<li></li>
+</ul>
+<p><strong>. 标准编译流程（非交叉编译）</strong></p>
+<p><code># 进入项目目录 cd build/Compiler  # 创建构建目录并配置 mkdir -p build &amp;&amp; cd build cmake ..  # 编译项目 make -j$(nproc)</code></p>
+<h4 id="资料">资料</h4>
+<ul>
+<li><a href="https://bcmi.sjtu.edu.cn/home/limu/tiger/Lec/score.pdf">https://bcmi.sjtu.edu.cn/home/limu/tiger/Lec/score.pdf</a></li>
+<li><a href="https://bcmi.sjtu.edu.cn/~limu/tiger/Res/Tiger_Compiler_Doc.pdf">https://bcmi.sjtu.edu.cn/~limu/tiger/Res/Tiger_Compiler_Doc.pdf</a>  上海交通大学计算机系 编译原理课程设计</li>
+</ul>
+<h3 id="目录结构">目录结构</h3>
+<p>目录结构分析及功能说明：</p>
+<ul>
+<li>
+<p>.git/: Git 版本控制系统目录，用于跟踪代码变更。</p>
+</li>
+<li>
+<p>utils/: 存放各种实用工具函数或辅助类，可能包含通用数据结构、算法或 I/O 助手。</p>
+</li>
+<li>
+<p>test/: 包含编译器的测试用例，用于验证编译器各个阶段的正确性。</p>
+</li>
+<li>
+<p>symboltable/: 实现符号表，编译器中的一个基本数据结构，用于存储标识符（变量、函数、类等）的信息，如类型、作用域和内存位置。</p>
+</li>
+<li>
+<p>main.cpp: 程序的入口点，负责协调编译器各个阶段的运行。</p>
+</li>
+<li>
+<p>ir/: 专注于中间表示 (Intermediate Representation, IR)。前端处理源代码后，通常会将其转换为 IR，这是一种更抽象和独立于机器的表示，便于优化和代码生成。</p>
+</li>
+<li>
+<p>frontend/: 包含编译器的前端组件，包括：</p>
+</li>
+<li>
+<p>词法分析 (Lexical Analysis)：将源代码分解成标记 (tokens)。</p>
+</li>
+<li>
+<p>语法分析 (Syntax Analysis)：根据标记构建解析树或抽象语法树 (AST)。</p>
+</li>
+<li>
+<p>语义分析 (Semantic Analysis)：检查语义错误（例如，类型不匹配、未声明的变量）并收集代码生成所需的信息</p>
+</li>
+<li>
+<ul>
+<li>doc/: 项目文档，可能包括设计文档、用户手册或 API 参考。</li>
+</ul>
+</li>
+<li>
+<p>changelog.txt: 记录项目随时间推移的更改、新功能和错误修复。</p>
+</li>
+<li>
+<p>cpp/: 可能包含共享的 C++ 源文件或一个在编译器不同部分使用的特定 C++ 相关模块。</p>
+</li>
+<li>
+<p>backend/: 负责编译的最后阶段，包括：</p>
+</li>
+<li>
+<p>优化 (Optimization)：提高生成代码的性能或减小其大小。</p>
+</li>
+<li>
+<p>代码生成 (Code Generation)：将中间表示转换为目标机器代码（例如，汇编代码或可执行二进制文件）
+<a href="https://github.com/happy-lx">https://github.com/happy-lx</a></p>
+</li>
+</ul>
+<h4 id="2023_func_04_arr_defn3">2023_func_04_arr_defn3</h4>
+<p>简而言之，AST.cpp 是编译器前端的核心部分，负责将源代码的结构抽象地表示出来，为后续的编译阶段提供了一个方便操作的数据结构</p>
+<p>../build/compiler -S -T  2023_func_04_arr_defn3.c</p>
+<p>../build/compiler -S -T  2023_func_04_arr_defn3.c</p>
+<h2 id="我是谁">我是谁</h2>
+<p>大家好，我是小义同学，</p>
+<p><strong>刚刚好，是最难得的美好</strong></p>
+<p>我就在这里 ，我刚刚好。</p>
+<p>欢迎链接我。 个人微信：wang_cyi</p>
+<p><img src="https://s2.loli.net/2025/04/03/1Qbo8463tKEqkeT.png" alt="image.png"></p>
+<p>我是一个15年c++开发经验工程师，
+我果断舍去大而全项目，
+我选择了“小而美”的产品，让我的服务运行在2核2G一年100元的云主机。
+我必须舍去过去电信，电商，存储经验开发经验
+重新用户需求，重新设计项目。</p>
+<p>我设定了一个切实可行的目标：
+让别人愿意毫无负担地拿出100元，而你也能全力以赴将这100元完成
+刚刚好。</p>
+<p>【《最好的济南》济南城市形象宣传片 济南市中英双语外宣片】
+<a href="https://www.bilibili.com/video/BV1TW4y1372y/">https://www.bilibili.com/video/BV1TW4y1372y/</a></p>
+<p>刚刚好，是最难得的美好，</p>
+<p>是一种胸怀，</p>
+<p>是一种境界，有智慧、有诗意、有余地，</p>
+<p>更有“百尺竿头更进一步”的广阔空间、
+“百舸争流千帆竞”的奔涌姿态</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/github/2025-06-03-v1.0-chatlog/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">一个基于 MCP 实现聊天记录总结和查询的开源工具Chatlog</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/draw/01-draw/">
+            <span class="next-text nav-default">为写作配图</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>冲刺2025年CSP-J/S和刷Leetcdoe找工作（1）：拓扑排序-课程表 v1.0 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/leetcode/2025/day2-%E6%88%90%E4%B8%BA%E5%AD%A9%E5%AD%90%E6%A6%9C%E6%A0%B7%E4%B8%BA%E5%9B%BD%E4%BA%89%E5%85%89/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="冲刺2025年CSP-J/S和刷Leetcdoe找工作（1）：拓扑排序-课程表 v1.0" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/leetcode/2025/day2-%E6%88%90%E4%B8%BA%E5%AD%A9%E5%AD%90%E6%A6%9C%E6%A0%B7%E4%B8%BA%E5%9B%BD%E4%BA%89%E5%85%89/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="冲刺2025年CSP-J/S和刷Leetcdoe找工作（1）：拓扑排序-课程表 v1.0">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3433">
+<meta itemprop="keywords" content="成为孩子榜样，为国争光," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="冲刺2025年CSP-J/S和刷Leetcdoe找工作（1）：拓扑排序-课程表 v1.0"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">冲刺2025年CSP-J/S和刷Leetcdoe找工作（1）：拓扑排序-课程表 v1.0</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-07 00:00 </span>
+        
+          <span class="more-meta"> 约 3433 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-刷题leetcode找工作进大厂去外企">2.1 刷题Leetcode找工作，进大厂，去外企</a></li>
+    <li><a href="#22--辅导自己小孩邻居小孩社区小孩-参加csp-j比赛">2.2  辅导自己小孩，邻居小孩，社区小孩 参加CSP-J比赛</a></li>
+    <li><a href="#23-等级划分">2.3 等级划分</a>
+      <ul>
+        <li><a href="#csp-入门级"><strong>CSP 入门级</strong></a></li>
+        <li><a href="#csp-提高级"><strong>CSP 提高级</strong></a></li>
+        <li><a href="#noip"><strong>NOIP</strong></a></li>
+        <li><a href="#leetcode刷题找工作">Leetcode刷题找工作</a></li>
+        <li><a href="#资源">资源：</a></li>
+      </ul>
+    </li>
+    <li><a href="#第二步构建知识地图-怎么做约定耗时-2分钟">第二步：构建知识地图( 怎么做，约定耗时 2分钟)</a>
+      <ul>
+        <li><a href="#csp-js">CSP-J/S</a></li>
+        <li><a href="#数据结构与算法-leetcode">数据结构与算法 leetcode</a></li>
+      </ul>
+    </li>
+    <li><a href="#第三步刷题日记专心做一题">第三步：刷题日记：专心做一题</a>
+      <ul>
+        <li></li>
+        <li><a href="#图遍历">图遍历</a></li>
+        <li><a href="#链接我">链接我</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>知识地图：从信奥赛 CSP-J/S到Leetcode  拓扑排序-课程表
+题目难度：这个是高中省级比赛 ，题目有点难，小学组不要对号入座，</p>
+</blockquote>
+<p>各位老师好 ，我是小义, 今天是6月4</p>
+<ol>
+<li>距离2025年9月16日第38次CCF计算机软件能力考试<strong>CSP-J/S</strong> 还有104天</li>
+<li>考试报名：2025年5月12日&ndash;2025年6月1日 错过的，今年继续准备。</li>
+<li>孩子们，无论报名成功的还是没有报名成功的，从现在准备的充分
+去CSP-J/S战场上检验自己的学习成果。</li>
+<li>距离<strong>2025年毕业季还有24天</strong> （不同学校不同都在6月或者7月中旬左右）</li>
+<li>实习找工作师弟师妹 抓紧了， Leetcode刷题必不可少。</li>
+</ol>
+<blockquote>
+<ol>
+<li>小学初中：参加信奥比赛想要CSP-J/S 想要历年真题</li>
+<li>校招：找工作实习想要内推码</li>
+<li>社招：大厂内推
+联系我 ，围绕数据结构与算法 这个事情一起努力</li>
+</ol>
+</blockquote>
+<p>本期涉及关键词：</p>
+<ul>
+<li>回溯</li>
+<li>递归</li>
+</ul>
+<p>✅ 不理解不关系，慢慢往下看，看看是怎么通过1个题目讲上面知识串联起来</p>
+<p><img src="https://s2.loli.net/2025/06/04/Ca5PuXSsIwdl62R.png" alt=""></p>
+<p>本文大纲：
+第一步：建立大局观  刷题有什么用
+第二步：构建知识地图: 针对知识点有效训练
+第三步：专心刷1题 拓扑排序-课程表</p>
+<h1 id="第一步把枯燥刷题变成伟大事情有啥用-阅读耗时2分钟">第一步：把枯燥刷题变成伟大事情（有啥用 阅读耗时2分钟）</h1>
+<p>成为孩子榜样，为国争光</p>
+<p><img src="https://s2.loli.net/2025/06/04/Nnv6wQHIlDkAVoW.png" alt="">
+信息学奥赛，简称为“信奥”，说来话长；
+1984年邓小平同志提出：“<strong>计算机的普及要从娃娃做起。”</strong>
+于是，中国计算机学会在当年就创办了全国青少年计算机程序设计竞赛，
+本质上就是，<strong>面向中学生的计算机编程大赛</strong></p>
+<p>竞赛旨
+<strong>在向那些在中学阶段学习的青少年普及计算机科学知识</strong>
+<strong>给那些有才华的学生提供相互交流和学习的机会</strong>；</p>
+<p>​<strong>​使用场景与目标人群​</strong>​</p>
+<ul>
+<li>​<strong>​NOI​</strong>​：主要服务于中学生竞赛升学</li>
+<li>​<strong>​LeetCode​</strong>​：面向求职者（尤其是软件工程师）及编程爱好者，用于提升面试通过率或日常技能训练。</li>
+</ul>
+<h2 id="21-刷题leetcode找工作进大厂去外企">2.1 刷题Leetcode找工作，进大厂，去外企</h2>
+<ul>
+<li>面试大厂必要条件，太卷了</li>
+<li>去亚马逊，微软等外企必要条件</li>
+<li>一定要刷题吗？不一定，创业公司 更看重项目经验</li>
+<li>无论什么公司，数据结构与算法都是基本功</li>
+</ul>
+<h2 id="22--辅导自己小孩邻居小孩社区小孩-参加csp-j比赛">2.2  辅导自己小孩，邻居小孩，社区小孩 参加CSP-J比赛</h2>
+<p>CSP、NOIP、NOI这三个比赛都是由中国计算机学会（CCF）举办的，
+   代表同学们在编程竞赛上的不同阶段：
+    1. CSP-J（入门级，Junior) ：主要针对小学和初中生
+    2. CSP-S（提高级，Senior）：CSP-S面向高中生
+    3. NOIP：省选，NOIP名额有限,NOIP是参加NOI的必要条件
+    4. NOI：国赛,为国争光</p>
+<p><img src="https://s2.loli.net/2025/05/28/Wd8VDlEsw731nmp.png" alt=""></p>
+<p>从CSP-J/S到NOI，信竞之路一路走来实属不易。
+希望走信息学路线的孩子都能抓住每一次比赛机会，夺得奖项。
+纵使有成绩不如意的时候，也要戒骄戒躁，不要轻言放弃。</p>
+<h2 id="23-等级划分">2.3 等级划分</h2>
+<h3 id="csp-入门级"><strong>CSP 入门级</strong></h3>
+<p>CSP 入门级（CSP-J），前身是 NOIP 普及组，是 NOI 系列赛事中难度最低，面向年龄最低的赛事，它是很多学生参与的第一个信息学的大型比赛。</p>
+<ul>
+<li>适宜年龄：11-14 岁。</li>
+<li>比赛时间：第一轮为 9 月，第二轮为 10 月。</li>
+<li>比赛形式：第一轮为 2 小时的笔试，第二轮为 3.5 小时的上机测试。全国统一命题，省级评奖。</li>
+<li>竞赛优惠：对小升初、初升高皆有帮助（取决于地方性政策）。部分知名初高中会对在 CSP-J 比赛中取得优秀成绩的选手（一般来说是一等）提供录取或者分班优惠政策。</li>
+<li>参考训练量：于“洛谷”上完成 80 个“普及”难度的试题。历届试题可在“洛谷”上搜索。</li>
+</ul>
+<h3 id="csp-提高级"><strong>CSP 提高级</strong></h3>
+<p>CSP 提高级（CSP-S）主要面向广大的初高中生，难度较入门级有着显著提升，其含金量也显著更高。CSP-S 的成绩是学生参与后续的 NOI 系列赛事的重要凭证。</p>
+<ul>
+<li>适宜年龄：12-17 岁。</li>
+<li>比赛时间：与 CSP 入门级相同，第一轮为 9 月，第二轮为 10 月。</li>
+<li>比赛形式：第一轮为 2 小时的笔试，第二轮为 4 小时的上机测试。全国统一命题，省级评奖。</li>
+<li>竞赛优惠：对初升高有很大帮助。在 CSP-S 中取得优秀成绩（一般也是一等）的学生多会被顶级高中（如北京人大附中、上海华师大二附中、浙江杭州二中）等特招。</li>
+<li>参考训练量：于“洛谷”上完成 150 个“提高”难度的试题，50 个“提高+”难度的试题。历届试题可在“洛谷”上搜索。</li>
+</ul>
+<h3 id="noip"><strong>NOIP</strong></h3>
+<p>全国青少年信息学奥林匹克联赛（NOIP）面向高中生群体，难度较 CSP-S 有一定提升，是绝大多数参与信息学竞赛的选手能够接触到的含金量最高的赛事。</p>
+<ul>
+<li>
+<p>适宜年龄：15-17 岁。</p>
+</li>
+<li>
+<p>比赛时间：11 月中下旬。</p>
+</li>
+<li>
+<p>比赛形式：4.5 小时的上机测试。全国统一命题，省级评奖。</p>
+</li>
+<li>
+<p>竞赛优惠：NOIP 中获得一等奖将会在知名大学的少创班、综合评价测试、专项初审环节中取得显著优势。</p>
+</li>
+<li>
+<p>参考训练量：于“洛谷”上完成 <strong>200</strong> 个“提高”难度的试题，100 个“提高+”难度的试题。历届试题可在“洛谷”上搜索。</p>
+</li>
+<li></li>
+</ul>
+<p>完整地址：https://docs.qq.com/sheet/DY1NwcGZjUXpYb01j?tab=oqi27u</p>
+<h3 id="leetcode刷题找工作">Leetcode刷题找工作</h3>
+<ul>
+<li>必须完成300题目</li>
+</ul>
+<h3 id="资源">资源：</h3>
+<ul>
+<li><a href="http://ybt.ssoier.cn:8088/">http://ybt.ssoier.cn:8088/</a></li>
+<li><a href="https://leetcode.cn/">https://leetcode.cn/</a></li>
+<li><a href="https://www.luogu.com.cn/">https://www.luogu.com.cn/</a></li>
+<li><a href="https://www.nowcoder.com/">https://www.nowcoder.com/</a></li>
+<li><a href="https://www.cnblogs.com/kkman2000/p/18806934">https://www.cnblogs.com/kkman2000/p/18806934</a></li>
+<li><a href="https://github.com/liweiwei1419/LeetCode-Solution-PPT">https://github.com/liweiwei1419/LeetCode-Solution-PPT</a></li>
+<li>大话数据结构：https://github.com/anliux/Play-With-Data-Structure</li>
+<li><a href="https://github.com/youngyangyang04/leetcode-master">https://github.com/youngyangyang04/leetcode-master</a></li>
+<li><a href="https://github.com/watchpoints/LeetCode-CSP-NOI">https://github.com/watchpoints/LeetCode-CSP-NOI</a></li>
+<li><a href="https://github.com/watchpoints/noi_and_leetcode/tree/main">https://github.com/watchpoints/noi_and_leetcode/tree/main</a></li>
+<li>数据 结构与算法（c 语言版本）https://github.com/kangjianwei/Data-Structure
+<a href="https://github.com/TheAlgorithms/Python">https://github.com/TheAlgorithms/Python</a></li>
+<li><a href="https://github.com/MoonShadowzzc/Data-Structure">https://github.com/MoonShadowzzc/Data-Structure</a></li>
+</ul>
+<h2 id="第二步构建知识地图-怎么做约定耗时-2分钟">第二步：构建知识地图( 怎么做，约定耗时 2分钟)</h2>
+<h3 id="csp-js">CSP-J/S</h3>
+<p><img src="https://s2.loli.net/2025/06/04/cgandCrzOXmtDiR.png" alt=""></p>
+<p><strong>注意区分</strong>
+<strong>是小学，初中 还是高中 不同阶段，有些资料没有标准学习阶段，导致让人产生误解</strong>
+<img src="https://s2.loli.net/2025/06/04/FAv1R598VinfYmk.jpg" alt="">
+<img src="https://s2.loli.net/2025/06/04/GTmdNnUDfxAws1v.jpg" alt=""></p>
+<p>完整内容：https://docs.qq.com/sheet/DY1NwcGZjUXpYb01j</p>
+<p><img src="https://s2.loli.net/2025/06/04/DR9hv2mKjUCxGeT.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2025/06/04/TkIg5BDArEsNQ6t.png" alt=""></p>
+<h3 id="数据结构与算法-leetcode">数据结构与算法 leetcode</h3>
+<p><img src="https://s2.loli.net/2025/05/29/NSihvB9Pesb4CaY.png" alt=""></p>
+<h2 id="第三步刷题日记专心做一题">第三步：刷题日记：专心做一题</h2>
+<p><a href="https://leetcode.cn/problems/course-schedule/">207. 课程表</a>
+<img src="https://s2.loli.net/2025/05/29/VyJIvQL415koA83.png" alt="image.png"></p>
+<p>There are a total of <code>numCourses</code> courses you have to take,
+labeled from <code>0</code> to <code>numCourses - 1</code>.
+You are given an array <code>prerequisites</code> where <code>prerequisites[i] = [ai, bi]</code> 
+indicates that you <strong>must</strong> take course <code>bi</code> first if you want to take course <code>ai</code>.</p>
+<p>For example, the pair <code>[0, 1]</code>, indicates that to take course <code>0</code> you have to first take course <code>1</code>.
+Return <code>true</code> if you can finish all courses.
+Otherwise, return <code>false</code>.</p>
+<p><img src="https://s2.loli.net/2025/05/29/CzVBRsYiFTyPHpm.png" alt=""></p>
+<p>这种叫 <strong>有向无环图</strong>，把一个 有向无环图 转成 线性的排序 就叫 <strong>拓扑排序</strong></p>
+<h4 id="图的存储">图的存储</h4>
+<p><img src="https://s2.loli.net/2025/05/29/gtlFDMwvP51sG8K.png" alt="来源 小灰的数据结构与算法30讲"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">名字：图（Graph）
+
+数据对象集：G( V, E )由一个非空的有限顶点集合V和一个有限边集合E组成。
+
+操作集合：对于任意图G∈Graph，以及v∈V，e∈E 。
+
+Graph Create()：建立并返回空图；
+
+Graph InsertVertex(Graph G , Vertex v)：将v插入G;
+
+Graph InsertEdge（Graph G , Edge e）：将e挿入G;
+
+void DES( Graph G  , Vertex v )：从顶点v出发深度优先遍历图G;
+
+void BES( Graph G  , Vertex v )：从顶点v出发宽度优先遍历图G;
+
+void ShortestPath( Graph G, Vertex v ,int Dist [ ] ): 
+计算图G中顶点v到任意其他顶点的最短距离；
+
+void MST( GraphG )：
+计算图G的最小生成树
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="图遍历">图遍历</h3>
+<p><img src="https://s2.loli.net/2025/05/29/ZgEzvXKpNd2ToMU.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/05/29/CT7NZwEAs6cvp5z.png" alt="图的遍历"></p>
+<p><img src="https://s2.loli.net/2025/05/29/U7rhsQjdM3WywYb.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2025/05/29/I1KwSoEeaixsVPc.png" alt="遇到卡点了"></p>
+<p><strong>漫画：深度优先遍历 和 广度优先遍历</strong></p>
+<p><a href="https://cloud.tencent.com/developer/article/1618700?policyId=1003">https://cloud.tencent.com/developer/article/1618700?policyId=1003</a></p>
+<p>名字：图（Graph）</p>
+<p>数据对象集：G( V, E )由一个非空的有限顶点集合V和一个有限边集合E组成。</p>
+<p>操作集合：对于任意图G∈Graph，以及v∈V，e∈E 。</p>
+<p>Graph Create()：建立并返回空图；</p>
+<p>Graph InsertVertex(Graph G , Vertex v)：将v插入G;</p>
+<p>Graph InsertEdge（Graph G , Edge e）：将e挿入G;</p>
+<p>void DES( Graph G  , Vertex v )：从顶点v出发深度优先遍历图G;</p>
+<p>void BES( Graph G  , Vertex v )：从顶点v出发宽度优先遍历图G;</p>
+<p>void ShortestPath( Graph G, Vertex v ,int Dist [ ] ):
+计算图G中顶点v到任意其他顶点的最短距离；</p>
+<p>void MST( GraphG )：
+计算图G的最小生成树</p>
+<p>回溯顾名思义，就是自后向前，追溯曾经走过的路径。</p>
+<p>口语表示：从节点8出发到节点 7，节点7无路可走，退回到节点8
+代码表示：入栈push，出栈pop</p>
+<p>如何定义 节点访问完毕： 增加访问过 或者 叶子节点</p>
+<p>完整代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+
+<span class="k">private</span><span class="o">:</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">graph</span><span class="p">;</span> <span class="c1">// 图的存储结构
+</span><span class="c1"></span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">visited</span><span class="p">;</span> <span class="c1">// 0 no visit  1 visted may by cicre  2  visited
+</span><span class="c1"></span>
+                              <span class="c1">// ok
+</span><span class="c1"></span>
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="kt">bool</span> <span class="n">canFinish</span><span class="p">(</span><span class="kt">int</span> <span class="n">numCourses</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">prerequisites</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// 1. 课程 和课程之间关系  用什么数据结构表示
+</span><span class="c1"></span>
+        <span class="c1">// 2. 是否学完课程 用什么算法实现
+</span><span class="c1"></span>
+        <span class="c1">// 3. 回溯时候 区分有环还是正常，项目经验 数据结构与算法这本书
+</span><span class="c1"></span>
+        <span class="c1">// 根本提到这样概念
+</span><span class="c1"></span>
+        <span class="c1">// 为了了解图的基本概念和存储结构，
+</span><span class="c1"></span>
+        <span class="c1">// 我重新回顾了数据结构与算法这本书 ，
+</span><span class="c1"></span>
+        <span class="c1">// 我很清楚知道熟悉基本操作，著名最短路径不考虑，
+</span><span class="c1"></span>
+        <span class="c1">// 可以了，开软件研究到这里
+</span><span class="c1"></span>
+        <span class="c1">// 能手工创建一个图，并且完成查询，插入工作可以了，但是一定动手实践。把基本操作多执行10次，直接研究最短路径
+</span><span class="c1"></span>
+        <span class="c1">// 更合适，
+</span><span class="c1"></span>
+        <span class="c1">// 直观感受，直观感受，不抽象负载理论
+</span><span class="c1"></span>
+  
+
+        <span class="c1">// create graph
+</span><span class="c1"></span>
+  
+
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">item</span> <span class="p">:</span> <span class="n">prerequisites</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+            <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+            <span class="n">graph</span><span class="p">[</span><span class="n">key</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+
+        <span class="p">}</span>
+
+  
+
+        <span class="n">visited</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">numCourses</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numCourses</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nb">false</span> <span class="o">==</span> <span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">{</span>
+
+                    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+                <span class="p">}</span>
+
+            <span class="p">}</span>
+
+        <span class="p">}</span>
+
+  
+
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+  
+
+    <span class="kt">bool</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="mi">2</span> <span class="o">==</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+            <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="p">}</span>
+
+  
+
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">neight</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+  
+
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">index</span> <span class="p">:</span> <span class="n">neight</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">false</span> <span class="o">==</span> <span class="n">dfs</span><span class="p">(</span><span class="n">index</span><span class="p">))</span> <span class="p">{</span>
+
+                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+            <span class="p">}</span>
+
+  
+
+        <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// 项目经验： ==与 =区别
+</span><span class="c1"></span>
+  
+
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="单元测试">单元测试</h4>
+<ul>
+<li>赋值运算 = 与 比较运算符== 区别？</li>
+</ul>
+<h3 id="链接我">链接我</h3>
+<p>最动人的作品，为自己而写，刚刚好打动别人
+刚刚好，是最难得的美好</p>
+<p><img src="https://s2.loli.net/2025/05/29/zicSGNqxageP2os.png" alt="免费答疑"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%88%90%E4%B8%BA%E5%AD%A9%E5%AD%90%E6%A6%9C%E6%A0%B7%E4%B8%BA%E5%9B%BD%E4%BA%89%E5%85%89/">成为孩子榜样，为国争光</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/leetcode/template/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">ContextOS 模块开发与架构解析笔记</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/leetcode/array/01_what_is_contextos-1/">
+            <span class="next-text nav-default">字节二面：原题215  查找数组中第K大元素，时间复杂度多少</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

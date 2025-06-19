@@ -48,7 +48,7 @@
 <meta itemprop="name" content="【翻译】Crimson：用于多核可扩展性的下一代 Ceph OSD">
 <meta itemprop="description" content="Crimson：用于多核可扩展性的下一代 Ceph OSD 目录 前言与思考 背景与技术演进 Crimson vs Classic OSD 架构 Seastar 框架简介 运行到完成性能 多分片实现 OSD 组件详解 ObjectStore 后端 AlienStore CyanStore SeaStore"><meta itemprop="datePublished" content="2025-04-27T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2025-04-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="12293">
+<meta itemprop="wordCount" content="15412">
 <meta itemprop="keywords" content="CEPH," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="【翻译】Crimson：用于多核可扩展性的下一代 Ceph OSD"/>
 <meta name="twitter:description" content="Crimson：用于多核可扩展性的下一代 Ceph OSD 目录 前言与思考 背景与技术演进 Crimson vs Classic OSD 架构 Seastar 框架简介 运行到完成性能 多分片实现 OSD 组件详解 ObjectStore 后端 AlienStore CyanStore SeaStore"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/CEPH/"> CEPH </a>
             </div>
-          <span class="more-meta"> 约 12293 字 </span>
-          <span class="more-meta"> 预计阅读 25 分钟 </span>
+          <span class="more-meta"> 约 15412 字 </span>
+          <span class="more-meta"> 预计阅读 31 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -173,12 +173,26 @@
         <li><a href="#用一个比喻说明">用一个比喻说明</a></li>
       </ul>
     </li>
-    <li><a href="#osdhttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomosdosdhttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomosd英语-">OSD <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#osd">¶</a>  OSD <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#osd">（</a> 英语） ¶</a></li>
+    <li><a href="#osd">OSD </a></li>
     <li><a href="#objectstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomobjectstoreobjectstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomobjectstore对象存储-">ObjectStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#objectstore">¶</a>  ObjectStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#objectstore">（</a> 对象存储） ¶</a>
       <ul>
-        <li><a href="#alienstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomalienstorealienstore插件-httpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomalienstore">AlienStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#alienstore">¶</a>  AlienStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#alienstore">插件 ¶</a></a></li>
-        <li><a href="#cyanstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomcyanstorecyanstore的-httpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomcyanstore">CyanStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#cyanstore">¶</a>  CyanStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#cyanstore">的 ¶</a></a></li>
-        <li><a href="#seastorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomseastoreseastorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomseastore英语-">SeaStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#seastore">¶</a>  SeaStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#seastore">（</a> 英语） ¶</a></li>
+        <li><a href="#alienstore">AlienStore </a></li>
+        <li><a href="#cyanstore">CyanStore </a></li>
+        <li><a href="#seastore">SeaStore </a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#-学习路径概览">🧭 学习路径概览</a></li>
+    <li><a href="#-阶段-1基础知识">🧩 阶段 1：基础知识</a></li>
+    <li><a href="#-阶段-2理解内核旁路原理">⚙️ 阶段 2：理解内核旁路原理</a></li>
+    <li><a href="#-阶段-3动手实践">🛠️ 阶段 3：动手实践</a></li>
+    <li><a href="#-阶段-4项目实战">🚀 阶段 4：项目实战</a></li>
+    <li><a href="#-阶段-5进阶与拓展">🌐 阶段 5：进阶与拓展</a></li>
+    <li><a href="#-推荐学习资源">📚 推荐学习资源</a>
+      <ul>
+        <li><a href="#到底什么是tcpip协议栈看完这篇你就明白">到底什么是TCP/IP协议栈，看完这篇你就明白！</a></li>
       </ul>
     </li>
   </ul>
@@ -206,6 +220,22 @@
 <li>总结与测试配置</li>
 </ol>
 <hr>
+<p>在危机时代坚持修炼内功，锻炼身体，
+等待恒纪元的到来，一旦新机会出现，
+我们就已经做好了准备，抓住新的机会，实现自己的目标</p>
+<p>系统重构，项目优化，重新开发系统 最重要一点是什么?
+Finer-grained Resource Management（细粒度资源管理）​</p>
+<ul>
+<li>​目标​​：将资源（CPU、内存、I/O）的分配单位从&quot;粗粒度&quot;（如进程、线程）细化到&quot;微粒度&quot;（如协程、内存块、NUMA节点）。</li>
+<li>Fast Path Implementations（快速路径实现）​**​
+<ul>
+<li>​​网络协议栈​：DPDK/XDP绕过内核协议栈（节省μs级延迟） TCP/IP协议栈</li>
+<li>​​存储栈​​：NVMe over Fabrics的<code>Zero-Copy RDMA</code>。</li>
+<li>​​数据库​：LSM-Tree的MemTable直接写入（跳过WAL队列）。</li>
+</ul>
+</li>
+</ul>
+<p>内核旁路（Kernel Bypass）是一种高性能计算和网络通信领域的重要技术，其核心思想是绕过操作系统内核</p>
 <h2 id="1-前言与思考">1. 前言与思考</h2>
 <p><!-- raw HTML omitted -->在危机时代坚持修炼内功，锻炼身体，<!-- raw HTML omitted -->
 <!-- raw HTML omitted -->等待恒纪元的到来，一旦新机会出现，<!-- raw HTML omitted -->
@@ -481,7 +511,6 @@ Ceph OSD 模块化（如 Messenger、OSD 服务和 ObjectStore）的职责保持
 <li>
 <p>自定义调度器（例如在 BlueStore/Crimson 中实现）。</p>
 </li>
-<li></li>
 </ul>
 </li>
 </ul>
@@ -748,8 +777,8 @@ as the book keeping effort delegates tasks between the worker threads.</p>
 </blockquote>
 <p><strong>Crimson OSD 示例代码</strong>，展示如何基于 Seastar 构建一个简单的异步服务</p>
 <h1 id="seastar-frameworkseastar-框架">Seastar Framework  Seastar 框架</h1>
-<p>Seastar <strong>is ideal for</strong> the Crimson project because it not only implements the <strong>one-thread-per-core</strong> shared-nothing infrastructure in C++,
-Seastar 是 Crimson 项目的理想选择，因为它不仅在 C++ 中实现了每核一线程的无共享基础设施，</p>
+<p>Seastar <strong>is ideal for</strong> the Crimson project because it not only implements the <strong>one-thread-per-core</strong> shared-nothing infrastructure in C++,</p>
+<p>Seastar 是 Crimson 项目的理想选择，因为它不仅在 C++ 中实现了每核一线程的无共享基础设施，</p>
 <p>but also provides a comprehensive set of features and models that have been proven to be effective for performance and scaling in other applications.
 而且还提供了一套全面的功能和模型，这些功能和模型已被证明对其他应用程序中的性能和扩展有效。</p>
 <p>Resources are by-default not shared between shards, and Seastar implements its own <strong>memory allocato</strong>r for lockless allocations.
@@ -847,33 +876,50 @@ under the same random 4KB RBD workload, and without replication.
 </ul>
 </li>
 </ul>
-<h2 id="osdhttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomosdosdhttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomosd英语-">OSD <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#osd">¶</a>  OSD <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#osd">（</a> 英语） ¶</h2>
+<h2 id="osd">OSD </h2>
 <p>OSD is responsible for maintaining global status and activities shared between PG shards, including heartbeat, authentication, client management, osdmap, PG maintenance, access to the Messenger and ObjectStore, and so on.<br>
 OSD 负责维护 PG 分片之间共享的全局状态和活动，包括检测信号、身份验证、客户端管理、osdmap、PG 维护、对 Messenger 和 ObjectStore 的访问等。</p>
 <p>A simple principle towards a multi-core Crimson OSD is to keep all processing relating to shared state on a dedicated core. If an IO operation wants to access the shared resource, it either needs to access the dedicated core in order, or to access an exclusive copy of the shared information that is kept synchronized.<br>
 多核 Crimson OSD 的一个简单原则是将与共享状态相关的所有处理都保存在专用内核上。如果 IO 作想要访问共享资源，它要么需要按顺序访问专用核心，要么访问保持同步的共享信息的独占副本。</p>
-<p>There are two major steps to achieve this goal. The first step is to allow IO operations to run in multiple OSD shards according to the PG sharding policy, with all the global information including PG status maintained in the first shard. This step enables sharding in the OSD but requires all the decisions about IO dispatching to be made in the first shard. Even if the Messenger can run in multiple cores at this step, messages will still need to be delivered to the first shard for preparation (PG peering, as an example) and determining the correct PG shard before being submitted to that shard. This can result in extra overhead and unbalanced CPU utilization (the first OSD shard is busy and other shards are starved, etc). So, the next step is to extend the PG-core mapping to all the OSD shards, so that the received message can be dispatched to the correct shard directly.<br>
-实现此目标有两个主要步骤。第一步是允许 IO 作根据 PG 分片策略在多个 OSD 分片中运行，包括 PG 状态在内的所有全局信息都保留在第一个分片中。此步骤在 OSD 中启用分片，但要求在第一个分片中做出有关 IO 调度的所有决策。即使 Messenger 可以在此步骤中在多个内核中运行，消息仍需要传送到第一个分片进行准备（例如 PG 对等连接）并确定正确的 PG 分片，然后再提交到该分片。这可能会导致额外的开销和 CPU 利用率不平衡（第一个 OSD 分片繁忙，其他分片不足等）。因此，下一步是将 PG-core 映射扩展到所有 OSD 分片，以便可以将收到的消息直接分派到正确的分片。</p>
+<p>There are two major steps to achieve this goal. The first step is to allow IO operations to run in multiple OSD shards according to the PG sharding policy, with all the global information including PG status maintained in the first shard. This step enables sharding in the OSD but requires all the decisions about IO dispatching to be made in the first shard. Even if the Messenger can run in multiple cores at this step, messages will still need to be delivered to the first shard for preparation (PG peering, as an example) and determining the correct PG shard before being submitted to that shard. This can result in extra overhead and unbalanced CPU utilization (the first OSD shard is busy and other shards are starved, etc). So, the next step is to extend the PG-core mapping to all the OSD shards, so that the received message can be dispatched to the correct shard directly.</p>
+<p>实现此目标有两个主要步骤。第一步是允许 IO 作根据 PG 分片策略在多个 OSD 分片中运行，包括 PG 状态在内的所有全局信息都保留在第一个分片中。此步骤在 OSD 中启用分片，但要求在第一个分片中做出有关 IO 调度的所有决策。即使 Messenger 可以在此步骤中在多个内核中运行，消息仍需要传送到第一个分片进行准备（例如 PG 对等连接）并确定正确的 PG 分片，然后再提交到该分片。这可能会导致额外的开销和 CPU 利用率不平衡（第一个 OSD 分片繁忙，其他分片不足等）。因此，下一步是将 PG-core 映射扩展到所有 OSD 分片，以便可以将收到的消息直接分派到正确的分片。</p>
 <h2 id="objectstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomobjectstoreobjectstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomobjectstore对象存储-">ObjectStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#objectstore">¶</a>  ObjectStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#objectstore">（</a> 对象存储） ¶</h2>
-<p>There are three ObjectStore backends supported for Crimson: AlienStore, CyanStore and SeaStore. AlienStore provides backward compatibility with BlueStore. CyanStore is a dummy backend for tests, implemented by volatile memory. SeaStore is a new object store designed specifically for Crimson OSD with shared-nothing design. The paths towards multiple shard support are different depending on the specific goal of the backend.<br>
-Crimson 支持三个 ObjectStore 后端：AlienStore、CyanStore 和 SeaStore。AlienStore 提供与 BlueStore 的向后兼容性。CyanStore 是一个用于测试的虚拟后端，由 volatile 内存实现。SeaStore 是专为 Crimson OSD 设计的新对象存储，采用无共享设计。根据后端的具体目标，实现多个分片支持的路径会有所不同。</p>
-<h3 id="alienstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomalienstorealienstore插件-httpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomalienstore">AlienStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#alienstore">¶</a>  AlienStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#alienstore">插件 ¶</a></h3>
+<p>There are three ObjectStore backends supported for Crimson:
+AlienStore,
+CyanStore and
+SeaStore</p>
+<p>AlienStore provides backward compatibility with BlueStore
+. CyanStore is a dummy backend for tests, implemented by volatile memory. SeaStore is a new object store designed specifically for Crimson OSD with shared-nothing design. The paths towards multiple shard support are different depending on the specific goal of the backend.</p>
+<p>Crimson 支持三个 ObjectStore 后端：AlienStore、CyanStore 和 SeaStore。AlienStore 提供与 BlueStore 的向后兼容性。CyanStore 是一个用于测试的虚拟后端，
+由 volatile 内存实现。SeaStore 是专为 Crimson OSD 设计的新对象存储，采用无共享设计。根据后端的具体目标，实现多个分片支持的路径会有所不同。</p>
+<h3 id="alienstore">AlienStore </h3>
 <p>AlienStore is a thin proxy in the Seastar thread to communicate with BlueStore that uses POSIX threads, (alien world from a Seastar perspective). There is no special work to do towards multiple OSD shards because the IO tasks are already synchronized for alien world communications. There are no Crimson specific customizations in the BlueStore because it is impossible to truly extend the BlueStore into shared-nothing design as it depends on the 3rd party RocksDB project which is still threaded. However, it is acceptable to pay reasonable overhead in exchange for a sophisticated storage backend solution, before Crimson can come up with a native storage backend solution (SeaStore) which is optimized and stable enough.<br>
 AlienStore 是 Seastar 线程中的一个瘦代理，用于与使用 POSIX 线程的 BlueStore 通信（从 Seastar 的角度来看是外星世界）。对于多个 OSD 分片，无需执行特殊工作，因为 IO 任务已与外星世界通信同步。BlueStore 中没有特定于 Crimson 的自定义，因为不可能真正将 BlueStore 扩展到无共享设计中，因为它依赖于仍然线程化的第三方 RocksDB 项目。但是，在 Crimson 提出足够优化和稳定的本机存储后端解决方案 （SeaStore） 之前，支付合理的开销以换取复杂的存储后端解决方案是可以接受的。</p>
-<h3 id="cyanstorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomcyanstorecyanstore的-httpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomcyanstore">CyanStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#cyanstore">¶</a>  CyanStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#cyanstore">的 ¶</a></h3>
-<p>CyanStore in Crimson OSD is the counterpart of MemStore in the Classic OSD. The only change towards multiple-shard support is to create independent CyanStore instances per shard. One goal is to make sure the dummy IO operation can complete in the same core to help identify OSD-level scalability issues if there are any. The other goal is to do direct performance comparisons with the Classic at the OSD level without complex impacts from the ObjectStore.<br>
-Crimson OSD 中的 CyanStore 是经典 OSD 中 MemStore 的对应物。多分片支持的唯一变化是为每个分片创建独立的 CyanStore 实例。一个目标是确保虚拟 IO 作可以在同一内核中完成，以帮助识别 OSD 级别的可扩展性问题（如果存在）。另一个目标是在 OSD 级别与 Classic 进行直接性能比较，而不会受到 ObjectStore 的复杂影响。</p>
-<h3 id="seastorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomseastoreseastorehttpswikicephcomennewsblog2023crimson-multi-core-scalabilityutm_sourcechatgptcomseastore英语-">SeaStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#seastore">¶</a>  SeaStore <a href="https://wiki.ceph.com/en/news/blog/2023/crimson-multi-core-scalability/?utm_source=chatgpt.com#seastore">（</a> 英语） ¶</h3>
+<h3 id="cyanstore">CyanStore </h3>
+<p>CyanStore in Crimson OSD is the counterpart of MemStore in the Classic OSD.</p>
+<p>The only change towards multiple-shard support is to create independent CyanStore instances per shard. One goal is to make sure the dummy IO operation can complete in the same core to help identify OSD-level scalability issues if there are any. The other goal is to do direct performance comparisons with the Classic at the OSD level without complex impacts from the ObjectStore.<br>
+Crimson OSD 中的 CyanStore 是经典 OSD 中 MemStore 的对应物]。</p>
+<p>多分片支持的唯一变化是为每个分片创建独立的 CyanStore 实例。一个目标是确保虚拟 IO 作可以在同一内核中完成，以帮助识别 OSD 级别的可扩展性问题（如果存在）。另一个目标是在 OSD 级别与 Classic 进行直接性能比较，而不会受到 ObjectStore 的复杂影响。</p>
+<h3 id="seastore">SeaStore </h3>
 <p>SeaStore is the native ObjectStore solution for Crimson OSD, which is developed with the Seastar framework and adopts the same design principles.<br>
 SeaStore 是 Crimson OSD 的原生 ObjectStore 解决方案，它是使用 Seastar 框架开发的，并采用相同的设计原则。</p>
 <p>Although challenging, there are multiple reasons why Crimson must build a new local storage engine. Storage backend is the major CPU resource consumer, and the Crimson OSD cannot truly scale with cores if its storage backend cannot. Our experiment also proves that the Crimson OSD is not the bottleneck in the random write scenario.<br>
 尽管具有挑战性，但 Crimson 必须构建新的本地存储引擎的原因有很多。存储后端是主要的 CPU 资源消耗者，如果 Crimson OSD 的存储后端不能，则 Crimson OSD 无法真正使用内核进行扩展。我们的实验还证明，Crimson OSD 并不是随机写入场景中的瓶颈。</p>
-<p>Second, the CPU-intensive metadata managements with transaction support in the BlueStore are essentially provided by RocksDB, which cannot run in the native Seastar threads without reimplementation. Rather than re-implementing the common purpose key-value transactional storage for BlueStore, it is more reasonable to rethink and customize the according designs at a higher level - the ObjectStore. Issues can be solved more easily in the native solution than in the 3rd-party project which must be general to all the use cases that may be even unrelated.<br>
-其次，BlueStore 中具有事务支持的 CPU 密集型元数据管理基本上是由 RocksDB 提供的，如果不重新实现，它就无法在本地 Seastar 线程中运行。与其为 BlueStore 重新实现通用的键值事务存储，不如在更高级别 - ObjectStore 重新考虑和自定义相应的设计。与第三方项目相比，在本地解决方案中可以更轻松地解决问题，因为第三方项目必须适用于所有甚至可能不相关的用例。</p>
+<p>Second, the CPU-intensive metadata managements with transaction support in the BlueStore are essentially provided by RocksDB, which cannot run in the native Seastar threads without reimplementation.</p>
+<p>Rather than re-implementing the common purpose key-value transactional storage for BlueStore, it is more reasonable to rethink and customize the according designs at a higher level - the ObjectStore. Issues can be solved more easily in the native solution than in the 3rd-party project which must be general to all the use cases that may be even unrelated.</p>
+<p>其次，BlueStore 中具有事务支持的 CPU 密集型元数据管理基本上是由 RocksDB 提供的，如果不重新实现，它就无法在本地 Seastar 线程中运行。
+与其为 BlueStore 重新实现通用的键值事务存储，不如在更高级别 - ObjectStore 重新考虑和自定义相应的设计。与第三方项目相比，
+在本地解决方案中可以更轻松地解决问题，因为第三方项目必须适用于所有甚至可能不相关的用例。</p>
 <p>The third consideration is to bring up native support to heterogeneous storage devices as well as hardware accelerators that will allow users to balance costs and performance according to their requirements. It will be more flexible for Crimson to simplify the solution to deploy the combination of hardware if it has better controls over the entire storage stack.<br>
 第三个考虑因素是提供对异构存储设备以及硬件加速器的原生支持，这将允许用户根据自己的需求平衡成本和性能。如果 Crimson 对整个存储堆栈有更好的控制，那么简化解决方案以部署硬件组合将更加灵活。</p>
-<p>SeaStore is already functional in terms of single shard reads and writes, although there are still efforts left for stability and performance improvement. The current efforts are still focused on the architecture rather than corner-case optimizations. Its design for the multiple-shard OSD is clear. Like the CyanStore, the first step is to create independent SeaStore instances per OSD shard, each running on a static partition of the storage device. The second step is to implement a shared disk space balancer to adjust the partitions dynamically, which should be fine to run in the background asynchronously because the PGs have already distributed the user IO in a pseudo random way. The SeaStore instances may not need to be equal to the number of OSD shards, adjusting this ratio is expected as the third step according to the performance analysis.<br>
-SeaStore 在单分片读取和写入方面已经正常运行，尽管仍有努力提高稳定性和性能。目前的工作仍然集中在架构上，而不是极端情况下的优化。它对多分片 OSD 的设计很明确。与 CyanStore 一样，第一步是为每个 OSD 分片创建独立的 SeaStore 实例，每个实例都在存储设备的静态分区上运行。第二步是实现共享磁盘空间平衡器来动态调整分区，这在后台异步运行应该没问题，因为 PG 已经以伪随机方式分发了用户 IO。SeaStore 实例可能不需要等于 OSD 分片的数量，根据性能分析，调整此比率预计是第三步。</p>
+<p>SeaStore is already functional in terms of single shard reads and writes, although there are still efforts left for stability and performance improvement. The current efforts are still focused on the architecture rather than corner-case optimizations. Its design for the multiple-shard OSD is clear. Like the CyanStore, the first step is to create independent SeaStore instances per OSD shard, each running on a static partition of the storage device. The second step is to implement a shared disk space balancer to adjust the partitions dynamically, which should be fine to run in the background asynchronously because the PGs have already distributed the user IO in a pseudo random way. The SeaStore instances may not need to be equal to the number of OSD shards, adjusting this ratio is expected as the third step according to the performance analysis.</p>
+<p>SeaStore 在单分片读取和写入方面已经正常运行，尽管仍有努力提高稳定性和性能。
+目前的工作仍然集中在架构上，而不是极端情况下的优化。它对多分片 OSD 的设计很明确。
+与 CyanStore 一样，第一步是为每个 OSD 分片创建独立的 SeaStore 实例，
+每个实例都在存储设备的静态分区上运行。
+第二步是实现共享磁盘空间平衡器来动态调整分区，
+这在后台异步运行应该没问题，因为 PG 已经以伪随机方式分发了用户 IO。
+SeaStore 实例可能不需要等于 OSD 分片的数量，根据性能分析，调整此比率预计是第三步。</p>
 <h1 id="summary-and-test-configurations--摘要和测试配置">Summary and Test configurations  摘要和测试配置</h1>
 <p>In this article,</p>
 <p>we have introduced why and how the Ceph OSD is being refactored to <strong>keep up</strong> with the</p>
@@ -902,6 +948,309 @@ SeaStore 在单分片读取和写入方面已经正常运行，尽管仍有努�
 <li>1TB NVMe SSD as the BlueStore block device</li>
 <li>50GB memory for MemStore and CyanStore</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>RDMA</th>
+<th>DPDK</th>
+<th>XDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工作层级</td>
+<td>用户态</td>
+<td>用户态</td>
+<td>内核态</td>
+</tr>
+<tr>
+<td>核心机制</td>
+<td>直接内存访问，支持单边操作</td>
+<td>用户态轮询，直接访问网卡</td>
+<td>eBPF 程序在驱动层处理数据包</td>
+</tr>
+<tr>
+<td>零拷贝支持</td>
+<td>✅ 是（硬件支持）</td>
+<td>✅ 是（用户态内存池）</td>
+<td>✅ 是（AF_XDP 模式）</td>
+</tr>
+<tr>
+<td>延迟表现</td>
+<td>极低（μs 级，适用于 HPC 和存储）</td>
+<td>低（适用于高吞吐场景）</td>
+<td>低（适用于 L2/L3 层快速处理）</td>
+</tr>
+<tr>
+<td>典型应用场景</td>
+<td>分布式存储、AI 训练、HPC</td>
+<td>NFV、SDN、网络负载均衡</td>
+<td>DDoS 防护、边缘过滤、内核态负载均衡</td>
+</tr>
+<tr>
+<td>硬件依赖</td>
+<td>高（需支持 RDMA 的 NIC，如 RoCE、InfiniBand）</td>
+<td>中（需支持 DPDK 的 NIC）</td>
+<td>低（大多数网卡支持，部分功能需驱动支持）</td>
+</tr>
+<tr>
+<td>控制面处理</td>
+<td>用户态 API，需注册内存和队列对</td>
+<td>用户态线程控制，需管理内存池和队列</td>
+<td>内核态 eBPF 管理，用户态可通过 AF_XDP 交互</td>
+</tr>
+<tr>
+<td>3FS 集群由 180 个存储节点组成，每个存储节点配备 2×200 Gbps InfiniBand 网卡和 16 个 14TiB NVMe SSD。180 节点聚合读取吞吐量达到约 6.6 TiB/s。</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>3FS 主要有 4 大核心：Cluster Manager，Metadata Service，Storage Service 和 Client，各个模块之间都使用 RDMA 网络连接</p>
+<p><a href="https://deepseek.csdn.net/67c6d414d649b06b61c7d28a.html?utm_source=chatgpt.com">https://deepseek.csdn.net/67c6d414d649b06b61c7d28a.html?utm_source=chatgpt.com</a>
+内核旁路（Kernel Bypass）是一种高性能计算和网络通信领域的重要技术，其核心思想是绕过操作系统内核</p>
+<p>以下是针对初学者从零基础到掌握内核旁路（Kernel Bypass）技术的系统学习计划，涵盖理论知识、实战技能和项目实践，适用于网络开发、系统性能优化或高性能计算领域的工程师。</p>
+<hr>
+<h2 id="-学习路径概览">🧭 学习路径概览</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>目标</th>
+<th>关键内容</th>
+<th>推荐时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>阶段 1</strong></td>
+<td>打下基础</td>
+<td>操作系统、网络协议、Linux基础</td>
+<td>1–2 周</td>
+</tr>
+<tr>
+<td><strong>阶段 2</strong></td>
+<td>理解内核旁路原理</td>
+<td>DPDK、XDP、UIO、NUMA、零拷贝</td>
+<td>2–3 周</td>
+</tr>
+<tr>
+<td><strong>阶段 3</strong></td>
+<td>动手实践</td>
+<td>搭建环境、运行示例、性能测试</td>
+<td>2–4 周</td>
+</tr>
+<tr>
+<td><strong>阶段 4</strong></td>
+<td>项目实战</td>
+<td>构建高性能网络应用、调优</td>
+<td>4–6 周</td>
+</tr>
+<tr>
+<td><strong>阶段 5</strong></td>
+<td>进阶与拓展</td>
+<td>eBPF、RDMA、云原生网络</td>
+<td>持续学习</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-阶段-1基础知识">🧩 阶段 1：基础知识</h2>
+<p><strong>目标</strong>：掌握操作系统和网络通信的基本概念，为深入学习内核旁路技术打下坚实基础。</p>
+<p><strong>学习内容</strong>：</p>
+<ul>
+<li>
+<p>操作系统原理：进程与线程、内存管理、系统调用、上下文切换等。</p>
+</li>
+<li>
+<p>计算机网络基础：TCP/IP协议栈、Socket编程、网络I/O模型。</p>
+</li>
+<li>
+<p>Linux基础：Shell命令、文件系统、进程管理、网络配置。(<a href="https://thebyte.com.cn/content/chapter1/dpdk.html?utm_source=chatgpt.com" title="内核旁路技术介绍 | 深入架构原理与实践">The Byte</a>)</p>
+</li>
+</ul>
+<p><strong>推荐资源</strong>：</p>
+<ul>
+<li>
+<p>《操作系统概念》 by Abraham Silberschatz</p>
+</li>
+<li>
+<p>《计算机网络：自顶向下方法》 by James F. Kurose</p>
+</li>
+<li>
+<p>Linux官方文档和在线教程</p>
+</li>
+</ul>
+<hr>
+<h2 id="-阶段-2理解内核旁路原理">⚙️ 阶段 2：理解内核旁路原理</h2>
+<p><strong>目标</strong>：深入理解内核旁路技术的原理、优势以及常见实现方式。</p>
+<p><strong>学习内容</strong>：</p>
+<ul>
+<li>
+<p>内核与用户空间的通信机制。</p>
+</li>
+<li>
+<p>内核旁路的动机：减少上下文切换、降低延迟、提高吞吐量。</p>
+</li>
+<li>
+<p>主要技术：</p>
+<ul>
+<li>
+<p>DPDK（Data Plane Development Kit）：用户态高速数据包处理库。</p>
+</li>
+<li>
+<p>XDP（eXpress Data Path）：基于eBPF的内核数据路径优化技术。</p>
+</li>
+<li>
+<p>UIO（User-space I/O）：用户空间驱动程序接口。</p>
+</li>
+<li>
+<p>NUMA（非统一内存访问）：优化多核处理器的内存访问。</p>
+</li>
+<li>
+<p>零拷贝技术：减少数据复制，提高I/O效率。(<a href="https://thebyte.com.cn/content/chapter1/dpdk.html?utm_source=chatgpt.com" title="内核旁路技术介绍 | 深入架构原理与实践">The Byte</a>, <a href="https://huaweicloud.csdn.net/63566835d3efff3090b5de1f.html?utm_source=chatgpt.com" title="Linux性能优化（九）——Kernel Bypass_linux_天山老妖-华为开发者空间">华为开发者空间</a>)</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>推荐资源</strong>：</p>
+<ul>
+<li>
+<p>DPDK官方文档：</p>
+</li>
+<li>
+<p>XDP教程和示例代码：</p>
+</li>
+<li>
+<p>UIO驱动开发指南：(<a href="https://huaweicloud.csdn.net/63566835d3efff3090b5de1f.html?utm_source=chatgpt.com" title="Linux性能优化（九）——Kernel Bypass_linux_天山老妖-华为开发者空间">华为开发者空间</a>)</p>
+</li>
+</ul>
+<hr>
+<h2 id="-阶段-3动手实践">🛠️ 阶段 3：动手实践</h2>
+<p><strong>目标</strong>：搭建实验环境，运行内核旁路技术的示例程序，进行性能测试。</p>
+<p><strong>实践内容</strong>：</p>
+<ul>
+<li>
+<p>搭建DPDK开发环境：配置HugePages、绑定网卡驱动。</p>
+</li>
+<li>
+<p>运行DPDK示例程序：如l2fwd（Layer 2 Forwarding）。</p>
+</li>
+<li>
+<p>使用XDP加载eBPF程序，实现简单的数据包过滤。</p>
+</li>
+<li>
+<p>性能测试：使用工具如iperf、pktgen进行网络性能评估。(<a href="https://www.cnblogs.com/xueqiuqiu/articles/12242844.html?utm_source=chatgpt.com" title="DPDK 完全内核旁路技术实现 - 雪球球 - 博客园">博客园</a>)</p>
+</li>
+</ul>
+<p><strong>推荐资源</strong>：</p>
+<ul>
+<li>
+<p>DPDK官方示例代码：</p>
+</li>
+<li>
+<p>XDP教程和示例代码：</p>
+</li>
+<li>
+<p>Linux网络性能测试工具指南：</p>
+</li>
+</ul>
+<hr>
+<h2 id="-阶段-4项目实战">🚀 阶段 4：项目实战</h2>
+<p><strong>目标</strong>：应用所学知识，开发高性能网络应用，进行性能优化和调试。</p>
+<p><strong>项目建议</strong>：</p>
+<ul>
+<li>
+<p>开发基于DPDK的网络负载均衡器。</p>
+</li>
+<li>
+<p>实现基于XDP的防火墙或数据包过滤器。</p>
+</li>
+<li>
+<p>构建高性能网络监控系统，实时分析网络流量。(<a href="https://huaweicloud.csdn.net/63566835d3efff3090b5de1f.html?utm_source=chatgpt.com" title="Linux性能优化（九）——Kernel Bypass_linux_天山老妖-华为开发者空间">华为开发者空间</a>)</p>
+</li>
+</ul>
+<p><strong>优化技巧</strong>：</p>
+<ul>
+<li>
+<p>使用大页内存（HugePages）减少TLB miss。</p>
+</li>
+<li>
+<p>绑定线程到特定CPU核心，减少上下文切换。</p>
+</li>
+<li>
+<p>利用NUMA架构优化内存访问。</p>
+</li>
+<li>
+<p>采用零拷贝技术，减少数据复制。(<a href="https://thebyte.com.cn/content/chapter1/dpdk.html?utm_source=chatgpt.com" title="内核旁路技术介绍 | 深入架构原理与实践">The Byte</a>, <a href="https://www.cnblogs.com/xueqiuqiu/articles/12242844.html?utm_source=chatgpt.com" title="DPDK 完全内核旁路技术实现 - 雪球球 - 博客园">博客园</a>, <a href="https://zh.wikipedia.org/wiki/%E9%9B%B6%E5%A4%8D%E5%88%B6?utm_source=chatgpt.com" title="零复制">维基百科</a>)</p>
+</li>
+</ul>
+<hr>
+<h2 id="-阶段-5进阶与拓展">🌐 阶段 5：进阶与拓展</h2>
+<p><strong>目标</strong>：探索内核旁路技术的高级应用和未来发展方向。</p>
+<p><strong>学习内容</strong>：</p>
+<ul>
+<li>
+<p>eBPF（Extended Berkeley Packet Filter）：内核可编程性增强。</p>
+</li>
+<li>
+<p>RDMA（Remote Direct Memory Access）：远程直接内存访问技术。</p>
+</li>
+<li>
+<p>云原生网络：如Cilium、Kube-Proxy的替代方案。</p>
+</li>
+<li>
+<p>安全性与隔离性：内核旁路技术在安全领域的挑战与对策。(<a href="https://zh.wikipedia.org/wiki/%E9%9B%B6%E5%A4%8D%E5%88%B6?utm_source=chatgpt.com" title="零复制">维基百科</a>)</p>
+</li>
+</ul>
+<p><strong>推荐资源</strong>：</p>
+<ul>
+<li>
+<p>eBPF官方文档和教程：</p>
+</li>
+<li>
+<p>RDMA技术白皮书和开发指南：</p>
+</li>
+<li>
+<p>云原生网络项目文档：(<a href="https://huaweicloud.csdn.net/63566835d3efff3090b5de1f.html?utm_source=chatgpt.com" title="Linux性能优化（九）——Kernel Bypass_linux_天山老妖-华为开发者空间">华为开发者空间</a>, <a href="https://www.cnblogs.com/xueqiuqiu/articles/12242844.html?utm_source=chatgpt.com" title="DPDK 完全内核旁路技术实现 - 雪球球 - 博客园">博客园</a>)</p>
+</li>
+</ul>
+<hr>
+<h2 id="-推荐学习资源">📚 推荐学习资源</h2>
+<ul>
+<li>
+<p>DPDK官方文档：</p>
+</li>
+<li>
+<p>XDP教程和示例代码：</p>
+</li>
+<li>
+<p>《Linux高性能服务器编程》 by 游双</p>
+</li>
+<li>
+<p>《深入理解Linux网络内幕》 by Christian Benvenuti</p>
+</li>
+</ul>
+<hr>
+<p>通过以上系统的学习计划，您将能够从零基础逐步掌握内核旁路技术，具备开发高性能网络应用的能力。在实践过程中，建议多参与开源社区，阅读相关项目的源代码，提升实战经验。</p>
+<p>如果您有兴趣，我可以为您推荐一些具体的开源项目和实践案例，帮助您更好地应用所学知识。</p>
+<h3 id="到底什么是tcpip协议栈看完这篇你就明白">到底什么是TCP/IP协议栈，看完这篇你就明白！</h3>
+<p><a href="https://www.caimore.com/NEWS-show-1401.html">https://www.caimore.com/NEWS-show-1401.html</a></p>
+<h1 id="rocksdb-源码分析--io">RocksDB 源码分析 – I/O</h1>
+<p><a href="https://youjiali1995.github.io/rocksdb/io/">https://youjiali1995.github.io/rocksdb/io/</a></p>
+<p>page cache 是什么数据结构组成的？如何存储，如何查找，</p>
+<p>从架构师角度回答，并且考虑细节</p>
+<ol>
+<li>避免背诵 八股文，只是概念，没考虑实际项目情况和知识情况</li>
+<li>背景 大学课程和实际10 年项目开发经验</li>
+</ol>
+<p><a href="https://youjiali1995.github.io/essay/2023-summary/">https://youjiali1995.github.io/essay/2023-summary/</a>我在 PingCAP 一共待了3年8个月，是我目前职业生涯（6年7个月）的 55.7%。离开 PingCAP 倒不是不看好它的发展，也不是自己发展的不好，而是数据库对我来说太难了。</p>
+<p>我认为它仍是中国 infra 领域技术水平最高、最尊重人的公司之一。PingCAP 有着不错的企业文化且 WLB；有着完善的新人培养体系也对新人非常耐心，新人参与到复杂且成熟的项目中来，会在代码、测试、可观测性、排查和解决问题、合作等各个方面得到培养和提升；</p>
+<p>这个领域也过于内卷，比如卷 TPC-C 等 benchmark，很可能过度满足了市场的需要，出现了性能的过度供给，既创造不了行业价值也不能为用户创造价值。最有效的竞争方式并不是卷，而是提供全新的功能和体验在另一个维度竞争，实现降维打击。产品如此，人也如此。</p>
+<p>苦难本身没有任何意义，苦难就是苦难。难的事情不代表它本身需要那么难，更可能是基础、方向错了，基础要打牢，要在正确的方向、框架上做，而不是在不正确的框架上补，什么都想做很可能什么都做不好，壮士断腕的魄力和决心不是每个人都有的。</p>
+<p>异步编程核心是 event loop，基本模型都是单个/多个线程/进程阻塞在 <code>epoll</code> 这种 I/O 多路复用的系统调用，有事件就绪一般就在当前线程直接处理了，长时间的工作会扔到单独的线程池里执行，防止阻塞 event loop。Rust 把这一整套模型拆成了多个部分</p>
 
     </div>
 

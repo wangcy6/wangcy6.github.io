@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>TiKV Contributors day1 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="Tidb" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/tidb/2024/rust_for_tikv_days1_gdb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="TiKV Contributors day1" />
+<meta property="og:description" content="Tidb" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/tidb/2024/rust_for_tikv_days1_gdb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-07-08T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-07-08T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="TiKV Contributors day1">
+<meta itemprop="description" content="Tidb"><meta itemprop="datePublished" content="2024-07-08T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-07-08T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1552">
+<meta itemprop="keywords" content="Tidb," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TiKV Contributors day1"/>
+<meta name="twitter:description" content="Tidb"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">TiKV Contributors day1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-07-08 00:00 </span>
+        
+          <span class="more-meta"> 约 1552 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#调试">调试</a></li>
+        <li><a href="#单节点集群部署">单节点集群部署</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#task01搭建tikv环境容器版本和源码版本">task01：搭建tikv环境（容器版本，和源码版本）</a></li>
+      </ul>
+    </li>
+    <li><a href="#tod02学习资料">tod02:学习资料</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>成为tikv贡献者第一天：搭建环节</p>
+<p><a href="https://github.com/tikv/tikv">TiKV</a> 是一个支持事务的分布式 Key-Value 数据库，目前已经是 <a href="https://www.cncf.io/projects/">CNCF 基金会</a> 的顶级项目。</p>
+<p>需要一定的前期准备才能够有能力参与 TiKV 社区的代码开发，</p>
+<ul>
+<li>
+<p>不限于学习 Rust 语言，</p>
+</li>
+<li>
+<p>理解 TiKV 的原理</p>
+</li>
+<li>
+<p>在前两者的基础上了解熟悉 TiKV 的源码。</p>
+</li>
+</ul>
+<p>本文是TiKV （版本7.0 ）源码阅读，成为 TiKV Contributors 第一篇文章</p>
+<p>目标：</p>
+<ul>
+<li>
+<p>小白如何学习一个开源项目，先让它跑起来。</p>
+</li>
+<li>
+<p>主要介绍 gdb如何调试tikv，运行单元测试。</p>
+</li>
+<li>
+<p>搭建一个单机TiKV 服务。</p>
+</li>
+</ul>
+<p><strong>开发环境：gitpod</strong></p>
+<p>主要电脑配置太低了，开始使用Gitpod</p>
+<p>Gitpod 是一个开源 Kubernetes 应用程序（GitHub 仓库地址 <a href="https://github.com/gitpod-io/gitpod">https://github.com/gitpod-io/gitpod</a>)，</p>
+<p>适用于可直接编写代码的开发环境，可为云中的每个任务提供全新的自动化开发环境。</p>
+<p><strong>通过Rustlings学习Rust语法</strong></p>
+<p><a href="https://github.com/rust-lang/rustlings">Rustlings</a> 是一个由 Rust 团队维护的开源项目，旨在帮助你通过调试代码来学习 Rust。它也会一路为你提供提示。</p>
+<p>这个是我的练习</p>
+<p><a href="https://github.com/cicvedu/rustlings-semester-4-watchpoints">https://github.com/cicvedu/rustlings-semester-4-watchpoints</a></p>
+<p><strong>成为贡献者需要掌握那些知识</strong></p>
+<ul>
+<li>
+<p><a href="https://github.com/watchpoints/tikv/blob/master/CONTRIBUTING.md">Contributing to TiKV</a></p>
+</li>
+<li>
+<p><a href="https://github.com/pingcap/tidb-map/blob/master/maps/contribution-map.md#tikv-distributed-transactional-key-value-database">A map that guides what and how contributors can contribute</a></p>
+</li>
+<li>
+<p><a href="https://github.com/pingcap/talent-plan">https://github.com/pingcap/talent-plan</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">这个我没有看呢，有一起的吗
+TP 101: Introduction to open <span class="nb">source</span> software
+TP 102: How to use Git and GitHub
+TP 103: Build a welcoming community
+TP 201: Practical Networked Applications in Rust
+TP 202: Distributed Systems in Rust
+TP 301: TinySQL, a distributed relational database in Go
+TP 302: TinyKV, a distributed key value database in Go
+TP 401: Deep Dive into TiDB<span class="o">(</span>WIP<span class="o">)</span>
+TP 402: Deep Dive into TiKV<span class="o">(</span>WIP<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p><strong>TiKV 调试环境搭建：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="c1">//01-rust
+</span><span class="c1"></span><span class="n">curl</span><span class="w"> </span><span class="n">https</span>:<span class="c1">//sh.rustup.rs -sSf | sh
+</span><span class="c1"></span><span class="n">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s">&#34;/workspace/.cargo/bin:$PATH&#34;</span><span class="w">
+</span><span class="w"></span><span class="n">source</span><span class="w">  </span><span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span><span class="w">
+</span><span class="w"></span><span class="n">rustc</span><span class="w"> </span><span class="o">-</span><span class="n">V</span><span class="w">
+</span><span class="w"></span><span class="n">rustc</span><span class="w"> </span><span class="mf">1.77.0</span><span class="o">-</span><span class="n">nightly</span><span class="w"> </span><span class="p">(</span><span class="mf">89e2160</span><span class="n">c4</span><span class="w"> </span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span><span class="p">)</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c1">//02--Rust toolchain
+</span><span class="c1"></span><span class="n">rustup</span><span class="w"> </span><span class="n">toolchain</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">nightly</span><span class="w">
+</span><span class="w"></span><span class="c1">//  nightly version 
+</span><span class="c1"></span><span class="w">
+</span><span class="w"></span><span class="n">rustup</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">rustfmt</span><span class="w">
+</span><span class="w"></span><span class="c1">// rustfmt 是 Rust 的官方代码格式化工具，它可以根据 Rust 社区的代码风格指南自动格式化你的 Rust 代码。
+</span><span class="c1"></span><span class="w">
+</span><span class="w"></span><span class="n">rustup</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">clippy</span><span class="w">
+</span><span class="w"></span><span class="c1">//clippy 是 Rust 的一个静态代码分析工具  cargo clippy 
+</span><span class="c1">// Run Rustfmt
+</span><span class="c1"></span><span class="n">make</span><span class="w"> </span><span class="n">format</span><span class="w">
+</span><span class="w"></span><span class="c1">//Run Clippy (note that some lints are ignored, so `cargo clippy` will give many false positives)
+</span><span class="c1"></span><span class="n">make</span><span class="w"> </span><span class="n">clippy</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c1">// 03-编译 https://github.com/watchpoints/tikv
+</span><span class="c1"></span><span class="n">make</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="c1">//
+</span><span class="c1"></span><span class="w">
+</span><span class="w"></span><span class="n">cargo</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">cargo</span><span class="o">-</span><span class="n">watch</span><span class="w">
+</span><span class="w"></span><span class="n">cargo</span><span class="w"> </span><span class="n">watch</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="s">&#34;cargo check&#34;</span><span class="w">  
+</span><span class="w"></span><span class="c1">//使用 cargo watch 的好处是，
+</span><span class="c1">//它可以帮助你在开发过程中快速发现编译错误，而不必每次手动运行 cargo check 或 cargo build
+</span><span class="c1"></span><span class="w">
+</span><span class="w"></span><span class="c1">// 当你准备测试修改的代码，可以使用 dev 指令，它将格式化你的代码库，在启用 clippy 的情况下构建，并运行测试
+</span><span class="c1"></span><span class="n">make</span><span class="w"> </span><span class="n">dev</span><span class="w">  </span><span class="c1">//执行全部单元测试，有点慢
+</span><span class="c1"></span><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="err">运行特定单元测试</span><span class="w">
+</span><span class="w"></span><span class="n">cd</span><span class="w"> </span><span class="o">/</span><span class="n">workspace</span><span class="o">/</span><span class="n">tikv</span><span class="o">/</span><span class="n">tests</span><span class="o">/</span><span class="n">integrations</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">kv_service</span><span class="p">.</span><span class="n">rs</span><span class="w">
+</span><span class="w"></span><span class="cp">#[test_case(test_raftstore::must_new_cluster_and_kv_client)]</span><span class="w">
+</span><span class="w"></span><span class="cp">#[test_case(test_raftstore_v2::must_new_cluster_and_kv_client)]</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="err">执行特定单元测试</span><span class="w">
+</span><span class="w"></span><span class="n">cargo</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">test_rawkv</span><span class="w">  </span><span class="c1">//LLVM ERROR: IO failure on output stream: No space left on device 30空间没有了。
+</span><span class="c1">//是否包含debug信息
+</span><span class="c1"></span><span class="n">RUSTFLAGS</span><span class="o">=-</span><span class="n">Cdebuginfo</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">dev</span><span class="w">
+</span><span class="w"></span><span class="n">RUSTFLAGS</span><span class="o">=-</span><span class="n">Cdebuginfo</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="n">cargo</span><span class="w"> </span><span class="n">build</span><span class="w">
+</span><span class="w"></span><span class="c1">//RUSTFLAGS=-Cdebuginfo=2 (for full debuginfo)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>TiKV 使用 test_raftstore 等组件作为测试和 mock 框架</p>
+<h3 id="调试">调试</h3>
+<ul>
+<li>rust-analyzer  运行单元测试</li>
+</ul>
+<p><img src="D:%5Cdb%5Cdaily-interview%5Cblog%5Ccontent%5Cpost%5Ctidb%5C2024%5Cassets%5Cfc085c98eab6512353e065778e3b4a8.png" alt="fc085c98eab6512353e065778e3b4a8"></p>
+<h3 id="单节点集群部署">单节点集群部署</h3>
+<p>主要gipod 磁盘空间满了。这个网上例子很多 不在赘述。</p>
+<h1 id="help">help</h1>
+<p>【1】 <a href="https://maiyang.me/post/2018-08-02-rust-guide-by-tikv/">https://maiyang.me/post/2018-08-02-rust-guide-by-tikv/</a></p>
+<p>【2】 <a href="https://www.iocoder.cn/TiKV/build-debugging-environment-first/">https://www.iocoder.cn/TiKV/build-debugging-environment-first/</a></p>
+<p>【3】三十分钟成为 Contributor | 为 TiKV 添加 built-in 函数</p>
+<p>【4】 <a href="https://xuanwo.io/2021/03-how-to-contribute-to-tikv-copr/">https://xuanwo.io/2021/03-how-to-contribute-to-tikv-copr/</a></p>
+<p>【5】https://github.com/YunaiV/Blog/tree/master/TiKV</p>
+<p>[6] <a href="https://www.cnblogs.com/jiangshifu/p/16365201.html">https://www.cnblogs.com/jiangshifu/p/16365201.html</a> tikv调试环境</p>
+<p>[7]https://kaige.org/2019/06/04/Learning-TiDB-4/</p>
+<p>[8] <a href="https://github.com/fucking-translation/blog/blob/main/src/lang/rust/14-%E4%BD%BF%E7%94%A8GDB%E8%B0%83%E8%AF%95Rust%E5%BA%94%E7%94%A8.md"><code>rust-gdb</code>是什么？</a></p>
+<p>【9】https://tikv.org/docs/7.1/deploy/install/test/#install-binary-manually</p>
+<p>​      <a href="https://tikv.org/docs/7.1/deploy/install/test/#install-binary-manually">https://tikv.org/docs/7.1/deploy/install/test/#install-binary-manually</a></p>
+<p><a href="https://docs.pingcap.com/tidb/stable/tiup-playground">https://docs.pingcap.com/tidb/stable/tiup-playground</a></p>
+<ul>
+<li>
+<p>【10】 TiDB 社区技术月刊</p>
+<p><a href="https://tidb.net/book/tidb-monthly/2022/2022-10/feature-indepth/tikv-code-one">https://tidb.net/book/tidb-monthly/2022/2022-10/feature-indepth/tikv-code-one</a></p>
+</li>
+</ul>
+<h1 id="todo01搭建tikv环境">todo01：搭建tikv环境</h1>
+<hr>
+<h3 id="task01搭建tikv环境容器版本和源码版本">task01：搭建tikv环境（容器版本，和源码版本）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">在CentOS上进行TiDB/PD/TIKV编译分享
+
+路径：
+umount /dev/nvme1n1
+mkdir -p /data/kv
+mkfs.ext4 /dev/nvme1n1
+mount /dev/nvme1n1  /data/kv
+
+
+cd /data/kv
+
+cd tikv &amp;&amp; make &amp;&amp; mkdir -p ./bin &amp;&amp; cp ./target/release/tikv-server bin
+
+brew install rust
+https://senzhangai.github.io/programming/build-tidb-by-source
+https://tidb.net/blog/7e4c77a0
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="tod02学习资料">tod02:学习资料</h2>
+<ul>
+<li>
+<p>阅读文章：https://asktug.com/t/topic/693645</p>
+</li>
+<li>
+<p>【源码合集】TiKV 源码阅读三部曲</p>
+<p><a href="https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg">https://mp.weixin.qq.com/s/HgflwnZZMHXaIsFV3PdGAg</a></p>
+</li>
+<li>
+<p>阅读  Rust 参考手册 中文版
+<a href="https://rustwiki.org/zh-CN/reference/expressions/if-expr.html">https://rustwiki.org/zh-CN/reference/expressions/if-expr.html</a></p>
+</li>
+<li>
+<p>TiKV 源码阅读三部曲（一）重要模块</p>
+</li>
+</ul>
+<p>本小节将简单介绍 KVService 及其启动流程，并顺带介绍 TiKV 若干重要结构的初始化流程</p>
+<ul>
+<li>TiKV 源码阅读三部曲（二）读流程</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-07-08 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Tidb/">Tidb</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025-05-29_v1.0_parll/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">高并发情况下如何优化你系统</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ARTS/2024/do_book_weekly11-1/">
+            <span class="next-text nav-default">只管去做践N0.12</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
