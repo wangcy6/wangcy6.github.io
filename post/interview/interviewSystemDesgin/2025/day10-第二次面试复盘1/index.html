@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？ - Troy的网络博客</title>
+  <title>面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？ - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -38,19 +38,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？" />
+<meta property="og:title" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？" />
 <meta property="og:description" content="do book" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%981/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？">
+<meta itemprop="name" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？">
 <meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="4818">
+<meta itemprop="wordCount" content="7512">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？"/>
+<meta name="twitter:title" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？"/>
 <meta name="twitter:description" content="do book"/>
 
 <!--[if lte IE 9]>
@@ -123,15 +123,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？</h1>
+      <h1 class="post-title">面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2024-08-07 00:00 </span>
         <div class="post-category">
             <a href="/categories/do-book/"> do book </a>
             </div>
-          <span class="more-meta"> 约 4818 字 </span>
-          <span class="more-meta"> 预计阅读 10 分钟 </span>
+          <span class="more-meta"> 约 7512 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -148,6 +148,14 @@
   <ul>
     <li><a href="#21-拆分任务">2.1 拆分任务</a>
       <ul>
+        <li><a href="#21--看一段代码">2.1  看一段代码</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
         <li></li>
         <li><a href="#五对比其他怎么实现的">五、对比其他怎么实现的？</a></li>
       </ul>
@@ -155,10 +163,12 @@
     <li><a href="#22-执行任务">2.2 执行任务</a>
       <ul>
         <li><a href="#翻译-how-io_uring-and-ebpf-will-revolutionize-programming-in-linux">翻译 How io_uring and eBPF Will Revolutionize Programming in Linux</a></li>
+        <li><a href="#五对比其他怎么实现的-1">五、对比其他怎么实现的？</a></li>
         <li><a href="#参考">参考</a></li>
         <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
       </ul>
     </li>
+    <li><a href="#heading"></a></li>
   </ul>
 </nav>
   </div>
@@ -342,7 +352,30 @@
 </tr>
 </tbody>
 </table>
-<h4 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h4>
+<h3 id="21--看一段代码">2.1  看一段代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/axboe/liburing/tree/master/examples
+
+io_uring-test 这个程序使用 4 个 SQE，从输入文件中读取最多 16KB 数据。
+
+https://blog.csdn.net/baidu_15952103/article/details/109888362
+struct iovec定义了一个向量元素
+https://blog.csdn.net/winux/article/details/117590294
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="一这个技术出现的背景初衷和要达到什么样的目标或是要解决什么样的问题">一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题</h4>
 <p>如何提升存储系统的性能是一个对存储工程师们来说是永恒的大命题，解决这个问题并没有一击即中的银弹，IO性能的优化都在细节里。</p>
 <ul>
 <li>今天我们来讲一讲性能和IO模型之间的关系。</li>
@@ -370,8 +403,11 @@ epoll回调通知的是数据可以读取或者写入了，
 首先只能在DIO下使用，用不了pagecache；
 其次用户的数据地址空间起始地址和大小必须页大小对齐</li>
 </ul>
+<p>&ndash;</p>
+<p>io_uring是Linux内核提供的一种新型异步I/O框架，旨在大幅提升系统处理I/O请求的效率和性能。liburing简化了这个复杂过程，让开发者可以更方便地利用这一先进技术。</p>
 <h4 id="二-这个技术适用的场景任何技术都有其适用的场景">二、 这个技术适用的场景。任何技术都有其适用的场景</h4>
 <p>文章：https://www.cnblogs.com/haoee/p/16209797.html</p>
+<h1 id="-headblogcontentpostinterviewinterviewsystemdesgin2025day10-md">&laquo;&laquo;&laquo;&lt; HEAD:blog/content/post/interview/interviewSystemDesgin/2025/day10-.md</h1>
 <p>1 与 Linux AIO 的不同</p>
 <p><code>io_uring</code> 与 <code>linux-aio</code> 有着本质的不同：</p>
 <ol>
@@ -389,6 +425,21 @@ epoll回调通知的是数据可以读取或者写入了，
 <h4 id="三技术的组成部分和关键点">三、技术的组成部分和关键点</h4>
 <h3 id="五对比其他怎么实现的">五、对比其他怎么实现的？</h3>
 <h2 id="22-执行任务">2.2 执行任务</h2>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>f561aa5a7ebcae647b9e1c508de985629e7f9a6f:blog/content/post/interview/interviewSystemDesgin/2025/day10-第二次面试复盘（1).md</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <h3 id="翻译-how-io_uring-and-ebpf-will-revolutionize-programming-in-linux">翻译 How io_uring and eBPF Will Revolutionize Programming in Linux</h3>
 <p><a href="https://thenewstack.io/how-io_uring-and-ebpf-will-revolutionize-programming-in-linux/">https://thenewstack.io/how-io_uring-and-ebpf-will-revolutionize-programming-in-linux/</a></p>
 <p>很多人可能还没意识到，Linux 内核在过去几年已经发生了一场革命。这场革命源于 <strong>==两个激动人心的新接口的引入：eBPF 和 io_uring
@@ -405,6 +456,78 @@ epoll回调通知的是数据可以读取或者写入了，
 <ul>
 <li>1.3 线程池方式</li>
 </ul>
+<p>异步 IO（AIO）</p>
+<p>前面提到，随着存储设备越来越快，主线程和 worker 线性之间的上下文切换开销占比越来越高。 现在市场上的一些设备，例如 <a href="https://pcper.com/2018/12/intels-optane-dc-persistent-memory-dimms-push-latency-closer-to-dram">Intel Optane</a> ，<strong>==延迟已经低到和上下文切换一个量级==</strong>（微秒 <code>us</code>）。换个方式描述， 更能让我们感受到这种开销： <strong>==上下文每切换一次，我们就少一次 dispatch I/O 的机会==</strong>。</p>
+<p>因此，Linux <strong>==2.6==</strong> 内核引入了异步 I/O（asynchronous I/O）接口， 方便起见，本文简写为 <code>linux-aio</code>。AIO **==原理==**是很简单的：</p>
+<ul>
+<li>用户通过 <code>io_submit()</code> 提交 I/O 请求，</li>
+<li>过一会再调用 <code>io_getevents()</code> 来检查哪些 events 已经 ready 了。</li>
+<li>使程序员**==能编写完全异步的代码==**。</li>
+</ul>
+<p>近期，<a href="https://lwn.net/Articles/742978/">Linux AIO 甚至支持了</a> <code>epoll()</code>：也就是说 不仅能提交 storage I/O 请求，还能提交网络 I/O 请求。照这样发展下去，linux-aio <strong>==似乎能成为一个王者==</strong>。但由于它糟糕的演进之路，这个愿望几乎不可能实现了。 我们从 <strong>==Linus 标志性的激烈言辞中就能略窥一斑==</strong>：</p>
+<p><em>So I think this is ridiculously ugly.<br>
+所以我认为这太丑陋了。</em></p>
+<p>Linux AIO 确实存在问题和限制：</p>
+<ul>
+<li>Linux-aio only works for O_DIRECT files, rendering it virtually useless for normal, non-database applications.<br>
+Linux-aio 仅适用于 O_DIRECT 文件，因此它对普通的非数据库应用程序几乎毫无用处。</li>
+<li>The interface is not designed to be extensible. Although it is possible — we did extend it — every new addition is complex.<br>
+该接口不是为可扩展的而设计的。尽管有可能 — 我们确实扩展了它 — 但每个新添加的内容都很复杂。</li>
+<li>Although the interface is technically non-blocking, <a href="https://lwn.net/Articles/724198/">there are many reasons that can lead it to blocking</a>, often in ways that are impossible to predict.<br>
+尽管该接口在技术上是非阻塞的，但有许多<a href="https://lwn.net/Articles/724198/">原因可能导致它阻塞</a> ，而且通常是以无法预测的方式</li>
+</ul>
+<h4 id="what-is-io_uring"><strong>What Is io_uring?</strong></h4>
+<p>io_uring 来自资深内核开发者 Jens Axboe 的想法，
+他在 Linux I/O stack 领域颇有研究。</p>
+<p>随着设备越来越快，
+<strong>中断驱动（interrupt-driven）模式效率已经低于轮询模式 （polling for completions</strong>）
+这也是高性能领域最常见的主题之一。</p>
+<p>io_uring 的基本逻辑与 linux-aio 是类似的：
+提供两个接口，
+一个将 I/O 请求提交到内核，
+一个从内核接收完成事件。</p>
+<p>但随着开发深入，它逐渐变成了一个完全不同的接口：
+<strong>设计者开始从源头思考 如何支持完全异步的操作</strong></p>
+<p>What Is io_uring?
+io_uring is the brainchild of Jens Axboe,</p>
+<p>a seasoned kernel developer who has been involved in the Linux I/O stack for a while.</p>
+<p>Mailing list archaeology tells us that this work started with a simple motivation: as devices get extremely fast,</p>
+<p>interrupt-driven work is no longer as efficient as polling for completions</p>
+<p>— a common theme that underlies the architecture of performance-oriented I/O systems.</p>
+<p>But as the work evolved, it grew into a radically different interface, conceived from the ground up to allow fully asynchronous operation.</p>
+<p>It’s a basic theory of operation is close to linux-aio: there is an interface to push work into the kernel, and another interface to retrieve completed work.</p>
+<p>But there are some crucial differences:<br>
+但是也有一些关键的区别</p>
+<ul>
+<li>By design, the interfaces are designed to be truly asynchronous. With the right set of flags, it will never initiate any work in the system call context itself and will just queue work. This guarantees that the application will never block.<br>
+根据设计，接口设计为真正的异步。使用正确的标志集，它永远不会在系统调用上下文本身中启动任何工作，而只会对工作进行排队。这保证了应用程序永远不会阻塞。</li>
+<li>It works with any kind of I/O: it doesn’t matter if they are cached files, direct-access files, or even blocking sockets. That is right: because of its async-by-design nature, there is no need for poll+read/write to deal with sockets. One submits a blocking read, and once it is ready it will show up in the completion ring.<br>
+它适用于任何类型的 I/O：无论它们是缓存文件、直接访问文件，甚至是阻塞套接字，都无关紧要。没错：由于其 async-by-design 性质，因此不需要 poll+read/write 来处理套接字。一个提交一个阻塞读取，一旦准备好，它就会显示在完成环中。</li>
+<li>It is flexible and extensible: new opcodes are being added at a rate that leads us to believe that indeed soon it will grow to re-implement every single Linux system call.<br>
+它是灵活且可扩展的：新作码的添加速度使我们相信，它确实很快就会发展到重新实现每一个 Linux 系统调用。</li>
+</ul>
+<ol>
+<li>
+<p>由于设计上就是异步的（async-by-design nature），因无需 poll+read/write 来处理 sockets==**。 只需提交一个阻塞式读（blocking read），请求完成之后，就会出现在 completion ring。</p>
+</li>
+<li>
+<p><strong>==灵活、可扩展==</strong>：基于 <code>io_uring</code> 甚至能重写（re-implement）Linux 的每个系统调用。</p>
+</li>
+</ol>
+<p>d. io_uring 代码由 Jens Axboe 和 nvme 驱动维护者 Christoph Helwig 合作完成， 可以说是从立案阶段就有意识的与nvme驱动层紧密联动；与nvme高度匹配。</p>
+<p>The application, whenever it wants to check whether work is ready or not, just looks at the cqe ring buffer and consumes entries if they are ready. There is no need to go to the kernel to consume those entries.</p>
+<p>面向未来的Linux异步IO引擎：io-uring
+Jens Axboe发布了一篇名为《Efficient IO with io_uring》文档，对io_uring进行了介绍。首先，他简述了Linux的IO发展历程，总结了当前Linux的原生异步IO接口（AIO）的局限，描述了io_uring易用、效率高等优势，并对io_uring的实现进行了概述。</p>
+<p>io_uring 实例可工作在三种模式：</p>
+<ol>
+<li><strong>==中断驱动模式==</strong>（interrupt driven）</li>
+<li><strong>==轮询模式==</strong>（polled）</li>
+<li><strong>==内核轮询模式==</strong>（kernel polled）</li>
+</ol>
+<h4 id="三技术的组成部分和关键点-1">三、技术的组成部分和关键点</h4>
+<p>它从根本上改变了 Linux 应用程序的设计方式：它们不是在需要时发出系统调用的代码流，必须考虑文件是否准备就绪，而是自然而然地成为一个事件循环，不断向共享缓冲区添加内容，处理完成、冲洗、重复的先前条目。</p>
+<p>It fundamentally changes the way Linux applications are to be designed: Instead of a flow of code that issues syscalls when needed, that have to think about whether or not a file is ready, they naturally become an event-loop that constantly add things to a shared buffer, deals with the previous entries that completed, rinse, repeat.</p>
+<h3 id="五对比其他怎么实现的-1">五、对比其他怎么实现的？</h3>
 <h3 id="参考">参考</h3>
 <ul>
 <li>现代异步存储访问API探索：libaio、io_uring和SPDK</li>
@@ -442,6 +565,37 @@ epoll回调通知的是数据可以读取或者写入了，
 <li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
 <li>我控制 的事情是 我通过写自己代码拿到百万收益。代码就是杠杆，我必须创造可以运行在2c2g云主机小而美产品出来（服务普通人），而不是运行构建至少10台<em>64cpu</em> 300g内存物理机大而全项目（领航者，超越其他产品，出货全球N1，这个还是有停留有限斗争游戏，为top 10人企业服务）我必须糊涂混沌中走出来</li>
 </ul>
+<p>&laquo;&laquo;&laquo;&lt; HEAD:blog/content/post/interview/interviewSystemDesgin/2025/day10-.md</p>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮，
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+<h2 id="heading"></h2>
+<p>龙蜥白皮书精选：利用 io_uring 提升数据库系统性能
+<a href="https://developer.aliyun.com/article/1225797">https://developer.aliyun.com/article/1225797</a></p>
+<p>相比用户态框架SPDK，io_uring 可复用 Linux 内核的标准驱动，无需额外的用户态驱动开发，应用场景更通用，编程接口更友好</p>
+<p>传统的 IO 软件栈已经无法完全释放出高性能存储设备的性能，高性能 IO 栈是当前存储领域重点研究的课题之一，代表性的如用户态方案 SPDK，以及标准的内核态方案 io_uring。</p>
+<p>Linux 社区从零开始设计一种全新的异步 IO 框架 io_uring。io_uring 为了避免在提交和完成事件中的内存拷贝，设计了一对共享的 ring buffer 用于应用程序和内核之间的通信。该设计带来的好处有：</p>
+<ul>
+<li>提交、完成请求时无需应用和内核之间的内存拷贝。</li>
+<li>使用 SQPOLL 高级特性时，应用程序无需系统调用。</li>
+<li>无锁操作，用 Memory Ordering 实现同步等。
+=======</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>f561aa5a7ebcae647b9e1c508de985629e7f9a6f:blog/content/post/interview/interviewSystemDesgin/2025/day10-第二次面试复盘（1).md</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 
     </div>
 

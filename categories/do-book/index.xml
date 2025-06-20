@@ -6,7 +6,25 @@
     <description>Recent content in do book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>读懂谷歌云7小时全球宕机报告，技术人不止懂技术</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day3-google-cloud-crash/</link>
+      <pubDate>Fri, 20 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day3-google-cloud-crash/</guid>
+      <description>点击蓝色关注。 文末有福利，先到先得 知识地图：质量回溯&amp;mdash;事故分析报告 本文主要内容 翻译：第一手资料 Google Cloud incident report 10分钟完成定位，为何需要</description>
+    </item>
+    
+    <item>
+      <title>AI圣经学习之旅 Day1</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/book/datawhale_learn_ai_class/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/book/datawhale_learn_ai_class/</guid>
+      <description>学习目标是什么 一、课程安排速览 👇 清晰学习阶段 + 内容，跟着节奏走准没错！ 《深度学习基础与概念》 想要电子书联系我 《深度学习》 由全球知名的三位专家</description>
+    </item>
+    
     <item>
       <title>Trae从青铜到王者</title>
       <link>https://wangcy6.github.io/post/future_for_ai/02_how_to_use_tea/</link>
@@ -27,11 +45,38 @@
     
     <item>
       <title>Trae从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/ContextOS/02-ContextOS-%E8%BF%90%E8%90%A5%E9%94%80%E5%94%AE%E7%BE%A4-%E8%90%A5%E9%94%80%E6%8E%A8%E5%B9%BF%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/ContextOS/02-ContextOS-%E8%BF%90%E8%90%A5%E9%94%80%E5%94%AE%E7%BE%A4-%E8%90%A5%E9%94%80%E6%8E%A8%E5%B9%BF%E5%B0%8F%E7%A8%8B%E5%BA%8F/</guid>
+      <description>本文目标 ✅ 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法 ✅ 探索如何模块化方式 从0</description>
+    </item>
+    
+    <item>
+      <title>Trae从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/github/template-1/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/github/template-1/</guid>
+      <description>各位老师好， 我是007 今天是 2025年6月3日，每天定投15分钟 实现百万梦想的第四天 今天主要任务 ：了解chatlog 设计并部署成功 这个图的背</description>
+    </item>
+    
+    <item>
+      <title>Trae从青铜到王者</title>
       <link>https://wangcy6.github.io/post/future_for_ai/template/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/future_for_ai/template/</guid>
-      <description>免费公开资料 ### 官方文档 https://github.com/Trae-AI/Trae/issues 小程序开发 校园二手仓库 https://lcnziv86vkx6.feishu.cn/wiki/DoBtwiinliUM60keIRcc35C3nbe?from=from_copylink 青铜：学会使用工具 Q1 如何 Remote-SSH 远程开发和部署 知识地图：AIP-开发环境搭建 原理： 配置： 基本资料：</description>
+      <description>我是谁 大家好，我是小义同学， 刚刚好，是最难得的美好 我就在这里 ，我刚刚好。 欢迎链接我。 个人微信：wang_cyi 我是一个15年c++开发经验工</description>
+    </item>
+    
+    <item>
+      <title>三天从 0 到 1 实现一个编译器，你也可以</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/Task/template-1/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/Task/template-1/</guid>
+      <description>一、 开发环境搭建 1. 云主机 Gitpod：一个基于云原生技术的在线集成开发环境（IDE） ，也是阅读和调试github源代码利器 ccls:vscode 插件 C/C++/ObjC language server supporting cross references,</description>
     </item>
     
     <item>
@@ -44,12 +89,21 @@
     </item>
     
     <item>
+      <title>如何制作个简历</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/01-action-2025/AI%E4%BB%A3%E5%86%99SOP-%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/01-action-2025/AI%E4%BB%A3%E5%86%99SOP-%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C/</guid>
+      <description>一、纠正一下制作简历常见误区 误区1：我公司不行，我环境不行，我能力不行，我需要努力 看书 读书运动&amp;ndash;没有任何关系，&amp;mdash;直接</description>
+    </item>
+    
+    <item>
       <title>提示词</title>
       <link>https://wangcy6.github.io/post/future_for_ai/propmit/write/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/future_for_ai/propmit/write/</guid>
-      <description>润色 你是出版者作家，请对文字进行排版与润色： 要求： 增加了清晰的分级大纲和目录，便于手机端快速定位内容。 拆分了过长段落，提升移动端阅读体验 纠正</description>
+      <description>疑问 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 ### 角色： 你是一名面试候选人，有擅长分布式存储，分布式数据 和 liun 源码， 根据面试官提</description>
     </item>
     
     <item>
@@ -134,6 +188,15 @@
     </item>
     
     <item>
+      <title>不是不努力，而是不健康</title>
+      <link>https://wangcy6.github.io/post/habit/2025/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/habit/2025/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/</guid>
+      <description>1. 只管去做目标九宫格 身体健康 6月 不是不努力，而是不健康， 6 月份我的目标是：20 点 30 彻底放下手机和电脑，执行 R90 睡眠准备。我控制不是 睡眠 ，我控制</description>
+    </item>
+    
+    <item>
       <title>从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</title>
       <link>https://wangcy6.github.io/post/interview/5-2025-05-14-3fs-ObjectPool/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
@@ -148,7 +211,7 @@
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/interview/job/1-2025-5-job/</guid>
-      <description>拼多多-二面-服务端研发实习生 面试问题： 自我介绍。 介绍一下项目？ 讲一下项目中某一部分，从前端请求开始到数据库大致过程，数据库表结构大致什么样</description>
+      <description>第二次面试回顾 岗位信息 面试时间：2025-6-6 面试岗位 问题1： 什么是块存储? 我思考 不清楚不理解，面试官非要回答，面试不说卡，我就回答 我回答</description>
     </item>
     
     <item>
@@ -158,6 +221,51 @@
       
       <guid>https://wangcy6.github.io/post/interview/7_2025-5-22-spin_lock/</guid>
       <description>网友提问： 为什么OB不采用 内核提供的 spin_lock() 自旋锁， 而是用户态态自己定义，并且还定义好多类型 ​ ​​短期临界区​​：优先ObSpinLock（轻量互</description>
+    </item>
+    
+    <item>
+      <title>源码解析：</title>
+      <link>https://wangcy6.github.io/post/interview/RockDB/day1-3fs-DeepSeek-3FS-io_uring/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/RockDB/day1-3fs-DeepSeek-3FS-io_uring/</guid>
+      <description>DeepSeek 3FS 源码解读——磁盘 IO（纳秒） 与网络IO（微妙）设计哲学 先提出一个问题： 为什么 网络IO 有epoll 处理，文件IO没有， 在具体点就是 文件IO</description>
+    </item>
+    
+    <item>
+      <title>神仙公司名单（济南）</title>
+      <link>https://wangcy6.github.io/post/interview/job/day2-company/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/job/day2-company/</guid>
+      <description>神仙公司（济南） 神仙公司系列 济南，速速安排 ，排名不分先后 先看 2024济南城市人才宣传片《我在济南刚刚好》 寻找一座刚刚好的城市 刚刚好的微风 刚刚</description>
+    </item>
+    
+    <item>
+      <title>经典面试题：从大目录中如何查询一个文件</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E4%BB%8E%E5%A4%A7%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E4%BB%8E%E5%A4%A7%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/</guid>
+      <description>对标：https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA 点击蓝色关注。 文末有福利，先到先得</description>
+    </item>
+    
+    <item>
+      <title>面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%981/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%981/</guid>
+      <description>点击蓝色关注。 文末有福利，先到先得 在危机时代坚持 修炼内功，锻炼身体， 等待恒纪元的到来，一旦新机会出现， 我们就已经做好了准备，抓住新的机会， 实</description>
+    </item>
+    
+    <item>
+      <title>面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%982/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%982/</guid>
+      <description>点击蓝色关注。 文末有福利，先到先得 在危机时代坚持 修炼内功，锻炼身体， 等待恒纪元的到来，一旦新机会出现， 我们就已经做好了准备，抓住新的机会， 实</description>
     </item>
     
     <item>
@@ -171,6 +279,15 @@
     
     <item>
       <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day2-Interview_pointer-1/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day2-Interview_pointer-1/</guid>
+      <description>对标：https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA 点击蓝色关注。 文末有福利，先到先得</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
       <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/10-20250526-io-1.0/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
@@ -180,10 +297,19 @@
     
     <item>
       <title>面试必备之深入理解thread local</title>
-      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/template-1/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/template/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/template-1/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/template/</guid>
+      <description>对标：https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA 点击蓝色关注。 文末有福利，先到先得</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/interview/RockDB/template-1/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/RockDB/template-1/</guid>
       <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 阅读本文你将获得以下收益： 一、</description>
     </item>
     
@@ -193,7 +319,7 @@
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/interview/template/</guid>
-      <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 阅读本文你将获得以下收益： 一、</description>
+      <description>对标：https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA https://mp.weixin.qq.com/s/qIYXDoIqILMJlRewHDkeaA 点击蓝色关注。 文末有福利，先到先得</description>
     </item>
     
     <item>

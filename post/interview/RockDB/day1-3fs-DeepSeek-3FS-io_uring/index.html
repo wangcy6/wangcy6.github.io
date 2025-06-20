@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>源码解析： - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/RockDB/day1-3fs-DeepSeek-3FS-io_uring/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="源码解析：" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/RockDB/day1-3fs-DeepSeek-3FS-io_uring/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="源码解析：">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2989">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="源码解析："/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">源码解析：</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2989 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一青铜学会基本使用">一、青铜：学会基本使用</a>
+      <ul>
+        <li></li>
+        <li><a href="#12-客户端发起读请求">1.2 客户端发起读请求</a></li>
+        <li><a href="#13-工作线程循环处理">1.3 工作线程循环处理</a></li>
+        <li><a href="#14--io出来过程-三步走">1.4  IO出来过程 三步走</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#21-问题">2.1 问题：</a></li>
+        <li><a href="#22-解决办法">2.2 解决办法：</a></li>
+        <li><a href="#33-原因分析">3.3 原因分析</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="deepseek-3fs-源码解读磁盘-io纳秒-与网络io微妙设计哲学">DeepSeek 3FS 源码解读——磁盘 IO（纳秒） 与网络IO（微妙）设计哲学</h1>
+<p>先提出一个问题：</p>
+<p>为什么 网络IO 有epoll 处理，文件IO没有，</p>
+<p>在具体点就是</p>
+<ul>
+<li>文件IO处理模式  顺序处理: 发起读取请求，等待处理完成。批量处理</li>
+<li>网络IO模式 异步处理。一次处理多个请求。</li>
+</ul>
+<h2 id="一青铜学会基本使用">一、青铜：学会基本使用</h2>
+<h4 id="11-参数配置storage_maintoml">1.1 参数配置：storage_main.toml</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>server.aio_read_worker<span class="o">]</span>
+	<span class="nv">enable_io_uring</span> <span class="o">=</span> <span class="nb">true</span>
+	<span class="nv">ioengine</span> <span class="o">=</span> <span class="s1">&#39;libaio&#39;</span>
+	<span class="nv">num_threads</span> <span class="o">=</span> <span class="m">32</span>
+	<span class="nv">queue_size</span> <span class="o">=</span> <span class="m">4096</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>敲重点：项目经验 + 10 <strong>多走一步，配置完毕后 想想</strong> ，异步I/O引擎libaio 与io_uring 区别是什么？</p>
+</blockquote>
+<ul>
+<li>零拷贝，零系统调用</li>
+<li>Linux-native asynchronous I/O：  Libaio提供了一套不同于POSIX接口的异步I/O接口，其目的是更加高效的利用I/O设备</li>
+<li>与io_uring 主要是为了替代libaio，目前主要应用在存储的场景中</li>
+<li>在某些场景下使用io_uring + Kernel NVMe的驱动，效果甚至要比使用SPDK 用户态NVMe 驱动更好</li>
+<li>SPDK是由Intel发起、用于加速使用NVMe SSD作为后端存储的应用软件加速库。该软件库的核心是用户态、异步、轮询方式的NVMe驱动</li>
+</ul>
+<h3 id="12-客户端发起读请求">1.2 客户端发起读请求</h3>
+<p>[Client Request] → [RPC Handler] → [生成BatchReadJob] → [AioReadWorker队列]</p>
+<p><code>AioReadWorker.h</code> 是DeepSeek 3FS存储服务中异步I/O处理的核心组件，
+主要实现以下功能：</p>
+<p>异步批量读取管理</p>
+<ul>
+<li>通过线程池管理多个I/O工作线程</li>
+<li>使用BoundedQueue实现任务队列（队列大小由 config_.queue_size 控制）</li>
+<li>峰值吞吐量：≈5GB/s（基于4KB块大小）</li>
+<li>延迟：平均&lt;2ms（99分位&lt;10ms）</li>
+</ul>
+<blockquote>
+<p>敲重点：项目经验 + 10 <strong>线程池 +队列方式 IO怎么工作的</strong>？</p>
+</blockquote>
+<ul>
+<li>创建n个线程，每个线程 使用各自的io_uring</li>
+<li></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="c1">// folly::CPUThreadPoolExecutor executors_;
+</span><span class="c1"></span>
+<span class="n">Result</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="n">AioReadWorker</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">fds</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">struct</span> <span class="nc">iovec</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">iovecs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">uint32_t</span> <span class="n">numThreads</span> <span class="o">=</span> <span class="n">config_</span><span class="p">.</span><span class="n">num_threads</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numThreads</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">executors_</span><span class="p">.</span><span class="n">add</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span>
+    <span class="p">{</span>
+      <span class="n">AioStatus</span> <span class="n">aioStatus</span><span class="p">;</span>
+      <span class="n">IoUringStatus</span> <span class="n">ioUringStatus</span><span class="p">;</span>
+      <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">aioInitResult</span> <span class="o">=</span> <span class="n">aioStatus</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">config_</span><span class="p">.</span><span class="n">max_events</span><span class="p">());</span>
+     <span class="k">auto</span> <span class="n">ioUringResult</span> <span class="o">=</span> <span class="n">ioUringStatus</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">config_</span><span class="p">.</span><span class="n">max_events</span><span class="p">(),</span> <span class="n">fds</span><span class="p">,</span> <span class="n">iovecs</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="n">run</span><span class="p">(</span><span class="n">aioStatus</span><span class="p">,</span> <span class="n">ioUringStatus</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>阅读笔记</p>
+<ol>
+<li>executors_ 是 folly::CPUThreadPoolExecutor executors_;  没有3fs没有自己写线程池，而是直接用第三方库，提高写代码效率</li>
+<li>《Folly库代码赏析》7）：Executor</li>
+</ol>
+<h3 id="13-工作线程循环处理">1.3 工作线程循环处理</h3>
+<p>批量处理
+<img src="https://cor3ntin.github.io/posts/iouring/uring.svg" alt=""></p>
+<ul>
+<li>单个读取：最简单例子来说 读取文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cm">/**
+</span><span class="cm">* 读取文件
+</span><span class="cm">**/</span>
+<span class="cp">#include</span> <span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;liburing.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1024</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&#34;1.txt&#34;</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  
+  <span class="n">io_uring</span> <span class="n">ring</span><span class="p">;</span>
+  <span class="n">io_uring_queue_init</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ring</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// 初始化
+</span><span class="c1"></span>  <span class="k">auto</span> <span class="n">sqe</span> <span class="o">=</span> <span class="n">io_uring_get_sqe</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ring</span><span class="p">);</span> <span class="c1">// 从环中得到一块空位
+</span><span class="c1"></span>  <span class="n">io_uring_prep_read</span><span class="p">(</span><span class="n">sqe</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// 为这块空位准备好操作
+</span><span class="c1"></span>  <span class="n">io_uring_submit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ring</span><span class="p">);</span> <span class="c1">// 提交任务
+</span><span class="c1"></span>  
+  <span class="n">io_uring_cqe</span><span class="o">*</span> <span class="n">res</span><span class="p">;</span> <span class="c1">// 完成队列指针
+</span><span class="c1"></span>  
+  <span class="n">io_uring_wait_cqe</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ring</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">);</span> <span class="c1">// 阻塞等待一项完成的任务
+</span><span class="c1"></span>  <span class="n">assert</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;read bytes: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">res</span><span class="o">-&gt;</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">buf</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="n">io_uring_cqe_seen</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ring</span><span class="p">,</span> <span class="n">res</span><span class="p">);</span> <span class="c1">// 将任务移出完成队列
+</span><span class="c1"></span>  <span class="n">io_uring_queue_exit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ring</span><span class="p">);</span> <span class="c1">// 退出
+</span><span class="c1"></span>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>划重点 项目经验，多想一步 <strong>从 io_uring 的demo 例子和 AioReadWorker有什么区别</strong>？status 采用数据结构和算法怎么设计的 完成发起读请求，等待完成 在线程完成 没有异步，这么简单？提示：io_uring类</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">Result</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="n">AioReadWorker</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">AioStatus</span> <span class="o">&amp;</span><span class="n">aioStatus</span><span class="p">,</span> <span class="n">IoUringStatus</span> <span class="o">&amp;</span><span class="n">ioUringStatus</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 1. 尝试获取批量读取作业
+</span><span class="c1"></span>    <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">queue_</span><span class="p">.</span><span class="n">dequeue</span><span class="p">();</span>  <span class="c1">// 等待
+</span><span class="c1"></span>    <span class="k">do</span> <span class="p">{</span>
+      <span class="c1">// 2. 收集一批读取作业 ，
+</span><span class="c1"></span>      <span class="n">status</span><span class="p">.</span><span class="n">collect</span><span class="p">();</span>
+      <span class="c1">//io_uring_prep_read
+</span><span class="c1"></span>      <span class="c1">// struct io_uring_sqe *sqe = ::io_uring_get_sqe(&amp;ring_);
+</span><span class="c1"></span>      <span class="c1">// ::io_uring_sqe_set_data(sqe, &amp;job);
+</span><span class="c1"></span>      <span class="c1">//submittingJobs_.push_back(&amp;job)
+</span><span class="c1"></span>      <span class="c1">// 3. 提交一批读取作业
+</span><span class="c1"></span>      <span class="n">status</span><span class="p">.</span><span class="n">submit</span><span class="p">();</span>
+      <span class="c1">//io_uring_submit(&amp;ring_);
+</span><span class="c1"></span>      
+      <span class="c1">// 4. 等待一批事件完成,发起多少个请求
+</span><span class="c1"></span>      <span class="k">while</span> <span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">inflight</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">status</span><span class="p">.</span><span class="n">reap</span><span class="p">(</span><span class="n">config_</span><span class="p">.</span><span class="n">min_complete</span><span class="p">());</span>
+        <span class="c1">//io_uring_wait_cqes 等待完成
+</span><span class="c1"></span>      <span class="p">};</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">hasUnfinishedBatchReadJob</span><span class="p">());</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>是不是代码很清楚  读取，返回一起处理，没有回调处理，</p>
+</li>
+<li>
+<p><code>collect()</code>：聚合待处理 I/O 请求</p>
+</li>
+<li>
+<p><code>submit()</code>：提交请求到内核</p>
+</li>
+<li>
+<p><code>inflight()</code>：检查进行中的 I/O 数量</p>
+</li>
+<li>
+<p><code>reap()</code>：收割已完成事件（支持最小完成数阈值）</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">//接口类  java 用interface表示
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">IoStatus</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">collect</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//纯需函数，准备数据 非系统调用
+</span><span class="c1"></span>  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">submit</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//纯需函数 已经非系统调用
+</span><span class="c1"></span>
+<span class="k">protected</span><span class="o">:</span>
+  <span class="n">AioReadJobIterator</span> <span class="n">iterator_</span><span class="p">;</span> <span class="c1">//指向当前正在调度的批量读取任务
+</span><span class="c1"></span>  <span class="kt">uint32_t</span> <span class="n">maxEvents_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//当前允许的最大并发提交数
+</span><span class="c1"></span>  
+  <span class="kt">uint32_t</span> <span class="n">inflight_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//当前正在执行的异步任务数量
+</span><span class="c1"></span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">IoUringStatus</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IoStatus</span> <span class="p">{</span>
+
+<span class="k">private</span><span class="o">:</span>
+ <span class="c1">//数据结构
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="nc">io_uring</span> <span class="n">ring_</span> <span class="p">{};</span> <span class="c1">// 实例，用于内核和用户空间之间的提交/完成队列
+</span><span class="c1"></span>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">AioReadJob</span> <span class="o">*&gt;</span> <span class="n">submittingJobs_</span><span class="p">;</span> 
+  <span class="c1">//读取任务,struct io_uring_sqe *sqe
+</span><span class="c1"></span><span class="p">};</span>
+
+<span class="nl">https</span><span class="p">:</span><span class="c1">//man7.org/linux/man-pages/man7/io_uring.7.html
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>io_uring</strong> is a Linux-specific API for asynchronous I/O.  It allows
+the user to submit one or more I/O requests, which are processed
+asynchronously without blocking the calling proces</li>
+<li>顺序处理请求</li>
+</ul>
+<h3 id="14--io出来过程-三步走">1.4  IO出来过程 三步走</h3>
+<p>收集读取请求：</p>
+<ul>
+<li>IoUringStatus::collect 方法负责收集读取请求并准备提交队列条目：
+算法：循环读取读请求 iterator++
+数据结构：存放放到  submittingJobs_.push_back(&amp;job)</li>
+</ul>
+<p>提交请求：</p>
+<ul>
+<li>
+<p>IoUringStatus::submit 方法负责将收集的请求提交到内核：</p>
+</li>
+<li>
+<p>算法：io_uring_submit(&amp;ring_);</p>
+</li>
+<li>
+<p>IoUringStatus::reap 方法负责等待并处理完成队列事件：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">    <span class="mf">1.</span> <span class="err">等待一批事件完成</span><span class="p">,</span><span class="err">发起多少个请求</span>
+      <span class="k">while</span> <span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">inflight</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">status</span><span class="p">.</span><span class="n">reap</span><span class="p">(</span><span class="n">config_</span><span class="p">.</span><span class="n">min_complete</span><span class="p">());</span>
+        <span class="c1">//io_uring_wait_cqes 等待完成
+</span><span class="c1"></span>        <span class="c1">//一个一个等待？
+</span><span class="c1"></span>      <span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="二-王者-发现问题解决问题">二、 王者： 发现问题，解决问题</h1>
+<h3 id="21-问题">2.1 问题：</h3>
+<p>发起请求&ndash;等待完成（poll机制） 在一个循环处理，
+这个容易理解，这个是性能慢呢？等待等待处理完成才能继续下个。</p>
+<h3 id="22-解决办法">2.2 解决办法：</h3>
+<p><strong>设计权衡结论</strong></p>
+<p>该顺序处理设计是<strong>性能与复杂度的最佳平衡</strong>：</p>
+<ol>
+<li>充分利用硬件特性（FIFO队列+缓存局部性）</li>
+<li>避免回调乱序导致的系统复杂性 【最简单代码，实现复杂功能。最难部分不处理】</li>
+</ol>
+<h3 id="33-原因分析">3.3 原因分析</h3>
+<p>第一性原理是什么：看到新概念，不是陷入别人说多厉害还，第一个最大疑惑和以前 网络io相比，不是一切都是文件吗？<strong>为什么文件AIO不能像epoll一样？</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>文件AIO</strong></th>
+<th><strong>epoll</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>设计目标</strong></td>
+<td>最大化磁盘吞吐量</td>
+<td>最小化网络延迟</td>
+</tr>
+<tr>
+<td><strong>性能瓶颈</strong></td>
+<td>磁盘寻道时间</td>
+<td>网络数据到达时间</td>
+</tr>
+<tr>
+<td><strong>最佳批大小</strong></td>
+<td>大批量（MB级）</td>
+<td>小批量（KB级）</td>
+</tr>
+<tr>
+<td><strong>错误处理</strong></td>
+<td>必须显式处理资源不足</td>
+<td>错误通常来自socket本身</td>
+</tr>
+<tr>
+<td> <strong>文件AIO必须循环提交</strong>，因为：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>磁盘操作没有&quot;就绪状态&quot;概念</li>
+<li>内核资源限制可能导致部分提交（<code>-EAGAIN</code>）</li>
+<li>需要显式管理请求生命周期</li>
+</ul>
+<p>2. <strong>epoll的&quot;一次性处理&quot;不适用</strong>，因为：</p>
+<ul>
+<li>网络I/O是事件驱动的（数据到达即就绪）</li>
+<li>不需要预先分配操作资源</li>
+</ul>
+<p>3. <strong>现代方案（如io_uring）</strong></p>
+<h4 id="获取文件io结果">获取文件io结果</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">//一次只处理一个请求
+</span><span class="c1"></span><span class="kt">void</span> <span class="n">AioStatus</span><span class="o">::</span><span class="n">reap</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">minCompleteIn</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//函数获取异步 IO 操作结果
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="o">::</span><span class="n">io_getevents</span><span class="p">();</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ret</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> 
+	<span class="p">{</span>
+	  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">event</span> <span class="o">=</span> <span class="n">events_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	  <span class="n">availables_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">obj</span><span class="p">);</span>
+	  <span class="n">setReadJobResult</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">event</span><span class="p">.</span><span class="n">res</span><span class="p">);</span>
+	<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>存储系统（特别是使用异步I/O的场景）
+与网络编程（使用epoll）的核心差异：
+前者关注操作提交的资源管理，后者关注事件通知的效率。</p>
+<p><strong>与epoll的性能对比</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>指标</strong></th>
+<th><strong>epoll</strong></th>
+<th><strong>io_uring</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统调用次数</td>
+<td>每次<code>epoll_wait</code></td>
+<td>零（SQPOLL模式）</td>
+</tr>
+<tr>
+<td>事件延迟</td>
+<td>微秒级</td>
+<td>纳秒级（轮询）</td>
+</tr>
+<tr>
+<td>内存拷贝</td>
+<td>需要</td>
+<td>可避免</td>
+</tr>
+<tr>
+<td>最大吞吐量</td>
+<td>约1M QPS</td>
+<td>可达5M QPS</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>为什么比epoll更高效？</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>1. <strong>零系统调用</strong></p>
+<p>SQPOLL模式下内核线程自动处理提交队列。</p>
+<p>2. <strong>无状态切换</strong></p>
+<p>用户态直接访问共享环形队列，避免内核-用户态切换。</p>
+<p>3. <strong>请求融合</strong></p>
+<p>单个SQE可组合多个操作（如<code>POLL+READ</code>）。</p>
+<p>4. <strong>精准批处理</strong></p>
+<p>通过<code>io_uring_peek_batch_cqe</code>一次获取多个事件，减少遍历开销。</p>
+<hr>
+<p>通过这种设计，<code>io_uring</code>既能实现<code>epoll</code>的事件驱动特性，又能发挥存储IO的批处理优势，适用于需要同时处理高并发网络和磁盘IO的场景（如数据库、存储引擎）。</p>
+<h2 id="总结">总结</h2>
+<p>带你全面了解Linux原生异步 IO 原理与使用和 AIO 实现（Native AIO）（超级详细</p>
+<blockquote>
+<p>Linux-2.6.0 版本内核源码</p>
+</blockquote>
+<ul>
+<li>一般来说，使用 Linux 原生 AIO 需要 3 个步骤：</li>
+</ul>
+<ol>
+<li>调用 <code>io_setup</code> 函数创建一个一般 IO 上下文。</li>
+<li>调用 <code>io_submit</code> 函数向内核提交一个异步 IO 操作。</li>
+<li>调用 <code>io_getevents</code> 函数获取异步 IO 操作结果。</li>
+</ol>
+<blockquote>
+<p>Linux 原生 AIO 实现在源码文件 <code>/fs/aio.c</code> 中。</p>
+</blockquote>
+<p>在 <code>io_uring</code> 异步 I/O 框架中，一个完整的读操作通常包含以下三个核心步骤：
+<strong>1. 收集 (Collect)</strong></p>
+<ul>
+<li><strong>目的</strong>：准备 I/O</li>
+<li><strong>关键点</strong>：</li>
+<li>从提交队列（SQ）获取空闲的 <code>sqe</code> 结构</li>
+<li>填充文件描述符、缓冲区、偏移量等参数</li>
+</ul>
+<p><strong>2. 提交 (Commit/Submit)</strong></p>
+<ul>
+<li><strong>目的</strong>：将请求提交到内核</li>
+<li>int ret = io_uring_submit(ring); // 提交请求到内核</li>
+<li>
+<ul>
+<li>调用 <code>io_uring_submit()</code> 将 SQ 中的请求批量提交</li>
+</ul>
+</li>
+<li>内核开始异步执行 I/O 操作</li>
+<li>返回实际提交的请求数量（非阻塞</li>
+</ul>
+<p><strong>3. 收割 (Reap)</strong></p>
+<ul>
+<li><strong>目的</strong>：获取完成结果</li>
+<li>使用 <code>io_uring_wait_cqe()</code> 或 <code>io_uring_peek_cqe()</code> 获取完成事件</li>
+<li>从 <code>cqe-&gt;res</code> 获取操作结果（负值为错误码）</li>
+<li>必须调用 <code>io_uring_cqe_seen()</code> 释放完成队列项</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/7_2025-5-22-spin_lock/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">如何设计一个高性能可扩展的自旋锁</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/job/day2-company/">
+            <span class="next-text nav-default">神仙公司名单（济南）</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
