@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>c&#43;&#43;周刊（c&#43;&#43; weekly):Ep01 - std::string_view - Troy的网络博客</title>
+  <title>一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view - Troy的网络博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -38,19 +38,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="c&#43;&#43;周刊（c&#43;&#43; weekly):Ep01 - std::string_view" />
+<meta property="og:title" content="一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view" />
 <meta property="og:description" content="do book" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP01_string_view/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2025-06-20T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2025-06-20T00:00:00&#43;00:00" />
 
-<meta itemprop="name" content="c&#43;&#43;周刊（c&#43;&#43; weekly):Ep01 - std::string_view">
+<meta itemprop="name" content="一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view">
 <meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-06-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2025-06-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2873">
+<meta itemprop="wordCount" content="2395">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="c&#43;&#43;周刊（c&#43;&#43; weekly):Ep01 - std::string_view"/>
+<meta name="twitter:title" content="一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view"/>
 <meta name="twitter:description" content="do book"/>
 
 <!--[if lte IE 9]>
@@ -123,15 +123,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">c&#43;&#43;周刊（c&#43;&#43; weekly):Ep01 - std::string_view</h1>
+      <h1 class="post-title">一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2025-06-20 00:00 </span>
         <div class="post-category">
             <a href="/categories/do-book/"> do book </a>
             </div>
-          <span class="more-meta"> 约 2873 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+          <span class="more-meta"> 约 2395 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -143,53 +143,102 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#1--什么是string_view">1.  什么是string_view？</a></li>
+        <li><a href="#1--什么是string_view-与-string-有什么区别">1.  什么是string_view 与 string 有什么区别？</a></li>
         <li><a href="#2-使string_view-有啥好处">2. 使string_view 有啥好处</a></li>
         <li><a href="#3--举例行业案例">3.  举例行业案例</a></li>
-        <li><a href="#cephfs"><strong>CephFS</strong></a></li>
-        <li><a href="#4-为了证明你写代码-能力使用string_view-为系统工程师设计一个题目">4. 为了证明你写代码 能力，使用string_view 为系统工程师设计一个题目</a></li>
-        <li><a href="#41-cephfs路径解析">4.1 CephFS路径解析</a></li>
+        <li><a href="#4-动手挑战卡">4. 动手挑战卡</a></li>
+        <li><a href="#41-系统设计">4.1 系统设计</a></li>
         <li><a href="#42--传统实现c11">4.2  传统实现（C++11）</a></li>
-        <li><a href="#43-c17优化实现">4.3 C++17优化实现</a></li>
-        <li><a href="#参考">参考</a></li>
+        <li><a href="#43-c17实现">4.3 C++17实现</a></li>
+        <li><a href="#课后作业可选">课后作业（可选）</a></li>
       </ul>
     </li>
-    <li><a href="#rdma-架构与实践技术详解一rdma概述httpswwwcnblogscombandaoyup16752034html-发布于-2022-10-04-0121"><a href="https://www.cnblogs.com/bandaoyu/p/16752034.html" title="发布于 2022-10-04 01:21">RDMA 架构与实践(技术详解（一）：RDMA概述</a></a></li>
     <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
       <ul>
         <li></li>
       </ul>
     </li>
+    <li><a href="#ceph产品路线图">ceph产品路线图</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <p>点击<!-- raw HTML omitted -->蓝色<!-- raw HTML omitted -->关注。</p>
-<blockquote>
-<p><!-- raw HTML omitted -->文末有福利，先到先得<!-- raw HTML omitted --></p>
-</blockquote>
+      <p><img src="https://s2.loli.net/2025/06/24/tU9gyJSP3GkDTiW.png" alt="c++ weekly"></p>
 <p>#知识地图 #最佳实践 #CPP17</p>
-<h3 id="1--什么是string_view">1.  什么是string_view？</h3>
+<p>👋 各位老师好（老师是山东对人的一个尊称，就像称呼帅哥美女一样）</p>
+<p>C++周刊 （c++ weekly）第一期 EP01 开始了</p>
+<p><strong>主题：</strong></p>
+<p>今天用一分钟讲清楚—面试官为什么爱问std::string_view。</p>
+<p>若有你遇到同样问题：</p>
+<p>✅ <strong>已有稳定业务实现</strong>，认为“目前方案已经够好”，不清楚引入新特性是否真的带来价值；</p>
+<p>✅ <strong>苦恼于 C++ 学习路径</strong>，不清楚如何学习 c++新特性；</p>
+<p>✅ <strong>只停留在了解新特性的表层概念</strong>，却难以将其与真实项目结合，常常觉这是<strong>没用的知识</strong></p>
+<p>这一期，我们将从零开始，
+一步步带你理解 <code>string_view</code> 背后的设计初衷、使用边界，</p>
+<p>以及它如何在项目中为我们节省内存、提升性能。</p>
+<p>我们不讲枯燥的标准文档，不抛出脱离工程的例子。</p>
+<p>相反，我们将聚焦在<strong>真实项目案例分析</strong></p>
+<hr>
+<h3 id="1--什么是string_view-与-string-有什么区别">1.  什么是string_view 与 string 有什么区别？</h3>
 <blockquote>
-<p>std::string_view` is a C++17 library type that provides a lightweight, non-owning reference to a sequence of characters</p>
+<p>std::string_view` is a C++17 library type that provides a lightweight,
+non-owning reference to a sequence of characters</p>
 </blockquote>
-<p>C++17中我们可以使用std::string_view来获取一个字符串的视图，
-字符串视图并不真正的创建或者拷贝字符串，
-而只是拥有一个字符串的查看功能。std::string_view比std::string的性能要高很多</p>
-<p>访问：https://www.cppreference.com/w/cpp/string/basic_string_view.html</p>
+<p><strong>数据结构</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>成员结构</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Member</td>
+<td>Description</td>
+</tr>
+<tr>
+<td><code>const_pointer</code> <code>_data__</code></td>
+<td>a pointer to the underlying sequence  <!-- raw HTML omitted -->(exposition-only member object*)</td>
+</tr>
+<tr>
+<td><code>size_type</code> <code>_size__</code></td>
+<td>the number of characters  <!-- raw HTML omitted -->(exposition-only member object*)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>从定义看：和原来的 string 没有任何区别，都是一个指针 指向一个字符串？</p>
+</li>
+<li>
+<p>C++17中我们可以使用std::string_view来获取一个字符串的视图
+字符串视图并不真正的创建或者拷贝字符串</p>
+</li>
+<li>
+<p><!-- raw HTML omitted -->只有使用权力，没有所有权，不负责资源申请，释放<!-- raw HTML omitted -->。</p>
+</li>
+</ul>
+<p><strong>算法操作</strong>：substr 零拷贝 零内存分配</p>
+<p><img src="https://s2.loli.net/2025/06/24/AhbMLYnv1ERi872.png" alt=""></p>
+<ul>
+<li><strong>字符串切片（substr）</strong>：不创建新对象，仅生成视图 ➜ 零拷贝</li>
+<li><strong>函数参数传递</strong>：无需构造临时字符串对象 ➜ 降低内存分配</li>
+<li>std::string_view比std::string的性能要高很多</li>
+</ul>
 <h3 id="2-使string_view-有啥好处">2. 使string_view 有啥好处</h3>
 <ul>
-<li>✅ 高频操作字符串,零拷贝 ,性能提高10%</li>
+<li>✅ 高频操作字符串,零拷贝 零内存分配 ,性能提高10%</li>
 <li>✅开发者来说：修改一行代码,代码工作量不复杂，双手赞同</li>
 <li>✅对领导来说：方案简单，收益大, 绝对同意</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th><strong>指标</strong></th>
-<th>传统实现 (C++11)</th>
-<th><code>string_view</code>优化</th>
+<th>对比</th>
+<th>string</th>
+<th>string_view</th>
 <th>收益</th>
 </tr>
 </thead>
@@ -221,43 +270,7 @@
 </tbody>
 </table>
 <h3 id="3--举例行业案例">3.  举例行业案例</h3>
-<p><img src="https://s2.loli.net/2025/06/21/yiE6YKJQM98Tbs2.png" alt=""></p>
-<table>
-<thead>
-<tr>
-<th><strong>项目</strong></th>
-<th>C++标准</th>
-<th>字符串优化方案</th>
-<th>是否用 <code>string_view</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>RocksDB</strong></td>
-<td>C++17 可选</td>
-<td>自有 <code>Slice</code> 类</td>
-<td>有限（非核心）</td>
-</tr>
-<tr>
-<td><strong>CephFS</strong></td>
-<td>C++17 强制</td>
-<td><code>const char* + size_t</code></td>
-<td>基本未用</td>
-</tr>
-<tr>
-<td><strong>OceanBase</strong></td>
-<td>C++11</td>
-<td>自有 <code>ObString</code></td>
-<td>未使用</td>
-</tr>
-<tr>
-<td><strong>TiKV</strong></td>
-<td>C++17 强制</td>
-<td>广泛使用</td>
-<td>✅ (Rust FFI 桥接)</td>
-</tr>
-</tbody>
-</table>
+<p><img src="https://s2.loli.net/2025/06/21/yiE6YKJQM98Tbs2.png" alt="使用场景"></p>
 <p><strong>OceanBase (OB)</strong></p>
 <ul>
 <li>自定义:<code>ObString</code> 类 ，没有使用标准 std 库</li>
@@ -302,29 +315,216 @@
 </div>
 </div><ul>
 <li>使用场景 WriteBatch 时候Slice类和std::string_view 转换</li>
-</ul>
-<h3 id="cephfs"><strong>CephFS</strong></h3>
-<ul>
+<li><strong>CephFS</strong></li>
 <li>使用 c++17 提供 string_view 代替string</li>
 <li>场景 元数据 MDS 查找一个文件时候目录遍历</li>
 </ul>
-<h3 id="4-为了证明你写代码-能力使用string_view-为系统工程师设计一个题目">4. 为了证明你写代码 能力，使用string_view 为系统工程师设计一个题目</h3>
-<blockquote>
-<p>小提示：</p>
-<ol>
+<p><strong>Tikv:</strong></p>
+<ul>
+<li>在 TiKV 这种对性能要求极高的 KV 存储中，大量的 key/value 是临时读取、比较、传递，而非修改；</li>
+<li>TiKV 在访问 RocksDB 时，通过 Rust 封装的 FFI 接口（通过 <code>rocksdb::DB</code>），对底层数据读取时不会创建新的字符串，而是传递指针和长度：</li>
+<li>使用切片可以极大减少内存分配、数据复制、GC 压力；</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>切片比较</th>
+<th>Rust</th>
+<th>C++17</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型所有权</td>
+<td>不拥有</td>
+<td>不拥有</td>
+</tr>
+<tr>
+<td>内存分配</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>拷贝行为</td>
+<td>零拷贝</td>
+<td>零拷贝</td>
+</tr>
+<tr>
+<td>用法</td>
+<td>slice 操作</td>
+<td>substr操作</td>
+</tr>
+<tr>
+<td>生命周期风险</td>
+<td>编译期保障安全</td>
+<td>存在悬垂引用风险</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-动手挑战卡">4. 动手挑战卡</h3>
+<h3 id="41-系统设计">4.1 系统设计</h3>
+<p><strong>Ceph MDS 路径解析场景：</strong>
+输入：/mnt/data/project1/report.docx<br>
+输出：逐级路径 [&ldquo;mnt&rdquo;, &ldquo;data&rdquo;, &ldquo;project1&rdquo;, &ldquo;report.docx&rdquo;]
+🎯 考点内容：</p>
+<ul>
+<li>
+<p>STL 提供基本 API 是是否熟悉 find ，substr ，vector，string？</p>
+</li>
+<li>
+<p>在日常工作用 有没有结果基础库代码？</p>
+</li>
+<li>
+<p>优化 <code>string_view</code> 的路径分割组件 保证零内存分配、无拷贝？</p>
+</li>
+<li>
+<p>最后一个report.docx 单词怎么出来的。</p>
+</li>
+</ul>
+<p>📎 面试小陷阱：</p>
+<ul>
+<li>面试时候，面试官会问，你最近 5 年 是不是一直写代码，你回答自然是</li>
+<li>面试官说好，他怎么知道你水平？经常会结合项目出一个系统设计题目</li>
 <li>刷题 不光有算法题目 还有系统设计题目,</li>
-<li>掌握数据结构，掌握算法，最后应用到实际项目才算通过，请动手写一个组件或者基础库 API。</li>
-<li>别蒙，都是经常遇到小问题，一点都不难</li>
+<li>掌握数据结构，掌握算法，最后应用到实际项目才算通过</li>
+<li>都是经常遇到小问题，一点都不难</li>
+</ul>
+<h3 id="42--传统实现c11">4.2  传统实现（C++11）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="c1">// 存在多次内存拷贝
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_path</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">components</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="k">while</span> <span class="p">((</span><span class="n">end</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span> <span class="o">!=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">end</span> <span class="o">!=</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">components</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">));</span> 
+        <span class="p">}</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 最后一个单词
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;</span> <span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 再次拷贝
+</span><span class="c1"></span>        <span class="n">components</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">start</span><span class="p">));</span> 
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">components</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 调用示例
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">split_path</span><span class="p">(</span><span class="s">&#34;/volumes/project_data/user/docs/report.docx&#34;</span><span class="p">);</span>
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>问题</strong>：</p>
+<ol>
+<li>每个<code>substr()</code>调用触发堆分配（小字符串优化失效于&gt;15字符）</li>
+<li>解析长路径<code>/a/b/c/d/e/f</code>产生6次内存分配+拷贝</li>
+<li>内存碎片加剧（尤其高频操作）</li>
 </ol>
-</blockquote>
-<h3 id="41-cephfs路径解析">4.1 CephFS路径解析</h3>
-<p>模块： src/mds/
-功能：访问一个文件之前必须路径解析
-输入：/mnt/icfs/dir/report.docx`<br>
-输出:逐级解析路径分量（mnt, icfs, dir, report）]
-代码位置：MDCache::path_traverse
-版本：Reef</p>
-<p>Ceph 版本演进表格，包含发布时间、生命周期和关键特性：</p>
+<h3 id="43-c17实现">4.3 C++17实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">&gt;</span> <span class="n">split_path_sv</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">&gt;</span> <span class="n">components</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="k">while</span> <span class="p">((</span><span class="n">end</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span> <span class="o">!=</span> <span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">end</span> <span class="o">!=</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 零拷贝：仅记录指针和长度
+</span><span class="c1"></span>            <span class="n">components</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">data</span><span class="p">()</span> <span class="o">+</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span> 
+        <span class="p">}</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//最后一个单词
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;</span> <span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// 零拷贝
+</span><span class="c1"></span>        <span class="n">components</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">data</span><span class="p">()</span> <span class="o">+</span> <span class="n">start</span><span class="p">,</span> <span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span> 
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">components</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nl">https</span><span class="p">:</span><span class="c1">//www.cppreference.com/w/cpp/string/basic_string_view/find.html
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>小思考：C++ std::string::npos 表示什么无符号类型？ 为什么不用-1 表示
+<img src="https://s2.loli.net/2025/06/24/9giykQ8jLNzJbaD.png" alt=""></li>
+</ul>
+<h3 id="课后作业可选">课后作业（可选）</h3>
+<p><img src="https://s2.loli.net/2025/06/24/sHMmuiSptXPckUB.png" alt="https://leetcode.cn/problem-list/string/"></p>
+<hr>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p>我在寻找一位积极上进的小伙伴，</p>
+<p>一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事业，不妨 试试</p>
+<p> 1️⃣关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略</p>
+<p><img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<p>2️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p> 加入我的技术交流群Offer 来碗里 (回复&quot;面经&quot;获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt=""></p>
+<p>本群目标是：</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个<strong>逃避问题</strong>表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+<h4 id="低头走路一次专注做好一个小事">低头走路：一次专注做好一个小事</h4>
+<ul>
+<li>不扫一屋 何以扫天下。</li>
+<li>让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+</ul>
+<h2 id="ceph产品路线图">ceph产品路线图</h2>
 <table>
 <thead>
 <tr>
@@ -376,7 +576,7 @@
 <td>17.x</td>
 <td>2022-04-19</td>
 <td>2024-06-01</td>
-<td>• <strong>全链路 RDMA 支持<!-- raw HTML omitted -->• SPDK 加速 BlueStore</strong></td>
+<td>• 全链路 RDMA 支持<!-- raw HTML omitted -->• <!-- raw HTML omitted -->SPDK 加速 BlueStore<!-- raw HTML omitted --></td>
 </tr>
 <tr>
 <td><strong>Reef</strong></td>
@@ -394,179 +594,6 @@
 </tr>
 </tbody>
 </table>
-<p>核心演进趋势总结：</p>
-<ol>
-<li>
-<p><strong>存储后端革新</strong>：</p>
-<ul>
-<li>Luminous (v12)：BlueStore 成为默认后端，性能提升 2-3 倍</li>
-<li>Quincy (v17)：SPDK 集成，NVMe 延迟降低 60%</li>
-<li>Squid (v19)：硬件加速压缩（QAT）</li>
-</ul>
-</li>
-<li>
-<p><strong>管理复杂度降低</strong>：</p>
-<ul>
-<li>Nautilus (v14)：确立年度发布周期</li>
-<li>Octopus (v15)：cephadm 容器化部署工具</li>
-</ul>
-</li>
-<li>
-<p><strong>扩展性与性能</strong>：</p>
-<ul>
-<li>Mimic (v13)：CephFS 多活 MDS，元数据吞吐提升 5 倍</li>
-<li>Pacific (v16)：跨集群同步，支持多区域部署</li>
-<li>Reef (v18)：NVMe 感知调度，SSD 寿命延长 30%</li>
-</ul>
-</li>
-<li>
-<p><strong>生命周期规律</strong>：</p>
-<ul>
-<li>平均维护周期：25-27 个月</li>
-<li>当前推荐生产版本：Quincy (v17) LTS</li>
-<li>最新稳定版：Reef (v18)</li>
-</ul>
-</li>
-</ol>
-<h3 id="42--传统实现c11">4.2  传统实现（C++11）</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="c1">// 存在多次内存拷贝
-</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_path</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">components</span><span class="p">;</span>
-    <span class="n">size_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    
-    <span class="k">while</span> <span class="p">((</span><span class="n">end</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span> <span class="o">!=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">end</span> <span class="o">!=</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// 触发拷贝：构造临时string对象
-</span><span class="c1"></span>            <span class="n">components</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">));</span> 
-        <span class="p">}</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;</span> <span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
-        <span class="c1">// 再次拷贝
-</span><span class="c1"></span>        <span class="n">components</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">start</span><span class="p">));</span> 
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">components</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// 调用示例
-</span><span class="c1"></span><span class="k">auto</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">split_path</span><span class="p">(</span><span class="s">&#34;/volumes/project_data/user/docs/report.docx&#34;</span><span class="p">);</span>
-
-
-</code></pre></td></tr></table>
-</div>
-</div><p><strong>问题</strong>：</p>
-<ol>
-<li>每个<code>substr()</code>调用触发堆分配（小字符串优化失效于&gt;15字符）</li>
-<li>解析长路径<code>/a/b/c/d/e/f</code>产生6次内存分配+拷贝</li>
-<li>内存碎片加剧（尤其高频操作）</li>
-</ol>
-<h3 id="43-c17优化实现">4.3 C++17优化实现</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">&gt;</span> <span class="n">split_path_sv</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">&gt;</span> <span class="n">components</span><span class="p">;</span>
-    <span class="n">size_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    
-    <span class="k">while</span> <span class="p">((</span><span class="n">end</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span> <span class="o">!=</span> <span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">end</span> <span class="o">!=</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// 零拷贝：仅记录指针和长度
-</span><span class="c1"></span>            <span class="n">components</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">data</span><span class="p">()</span> <span class="o">+</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span> 
-        <span class="p">}</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;</span> <span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
-        <span class="c1">// 零拷贝
-</span><span class="c1"></span>        <span class="n">components</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">data</span><span class="p">()</span> <span class="o">+</span> <span class="n">start</span><span class="p">,</span> <span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span> 
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">components</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nl">https</span><span class="p">:</span><span class="c1">//www.cppreference.com/w/cpp/string/basic_string_view/find.html
-</span></code></pre></td></tr></table>
-</div>
-</div><h3 id="参考">参考</h3>
-<ul>
-<li>
-<h2 id="rdma-架构与实践技术详解一rdma概述httpswwwcnblogscombandaoyup16752034html-发布于-2022-10-04-0121"><a href="https://www.cnblogs.com/bandaoyu/p/16752034.html" title="发布于 2022-10-04 01:21">RDMA 架构与实践(技术详解（一）：RDMA概述</a></h2>
-</li>
-<li><a href="https://www.cnblogs.com/bandaoyu/p/16752034.html">https://www.cnblogs.com/bandaoyu/p/16752034.html</a></li>
-</ul>
-<p>&mdash;&mdash;&mdash;&mdash;&mdash;-我是黄金分割线&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
-<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
-<p>我在寻找一位积极上进的小伙伴，</p>
-<p>一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事业，不妨 试试</p>
-<p> 1️⃣关注公众号:后端开发成长指南(回复面经获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略</p>
-<p><img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
-<p>2️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
-<p> 加入我的技术交流群Offer 来碗里 (回复&quot;面经&quot;获取），一起抱团取暖</p>
-<p><img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt=""></p>
-<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
-<ul>
-<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，别人投入时间完成任务，别人采取措施解决问题了，不要不贪别人功劳，</li>
-<li>但是不要给自己这样假设：别人完成就等着自己完成了，大家一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现，</li>
-<li>别人不这么假设，至少kpi上不会写成自己的，至少晋升不是你，裁员淘汰是，你的整个公司ceo，整个部门总裁，整个领导不帮助一下的，他们不这么想 ，你什么没做，战略是别人10年一点带你研究的多难，项目拆分别人10年完成多少问题，项目实现10年安排组织一点点完成多少bug，多少代码，是不要给自己这样假设：你等了看了观察10年什么做 ，0 贡献，</li>
-<li>但是不要给自己这样假设，别人全部市场，别人全部市场，别人占据全部客户，一切重要无比，你太差，太才，思考不行，沟通不行，认知不行，去tmd，给别人丢脸。这个方面我无法控制，在这方面经历任何问题应该的。</li>
-<li>我控制 的事情是 我必须亲自了解行业遇到难题，了解有什么需求，行业解决方案，我可以从三万英尺看问题，像周围人学习，像免费公开英文资料学习，从模仿开始。然后免费公开。我要通过技术拿到百万年薪P7职务，我必须糊涂混沌中走出来</li>
-<li>目标：拿百万年 想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
-<li>现状：缺乏实战，渴望提升动手能力公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</li>
-<li>成为优秀完成任务，成为团队、公司都认可的核心骨干。优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</li>
-</ul>
-<h5 id="低头走路">低头走路：</h5>
-<ul>
-<li>一次专注做好一个小事。</li>
-<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
-<li>我控制 的事情是 我通过写自己代码拿到百万收益。代码就是杠杆，我必须创造可以运行在2c2g云主机小而美产品出来（服务普通人），而不是运行构建至少10台<em>64cpu</em> 300g内存物理机大而全项目（领航者，超越其他产品，出货全球N1，这个还是有停留有限斗争游戏，为top 10人企业服务）我必须糊涂混沌中走出来</li>
-</ul>
 
     </div>
 
