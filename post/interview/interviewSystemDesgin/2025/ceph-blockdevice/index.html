@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>块设备 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/ceph-blockdevice/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="块设备" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/ceph-blockdevice/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="块设备">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3722">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="块设备"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">块设备</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 3722 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#q1ceph-rbdrados-block-device与-osd-关系是什么">Q1:Ceph RBD（RADOS Block Device）与 osd 关系是什么？</a></li>
+    <li><a href="#q2-为什么-librbd-使用的-rbd-块设备无法被-linux-的-page-cache-管理">Q2 为什么 <strong>librbd</strong> 使用的 RBD 块设备无法被 Linux 的 <strong>page cache</strong> 管理？</a>
+      <ul>
+        <li><a href="#-核心结论">✅ 核心结论：</a></li>
+        <li><a href="#-情况二使用-librbd-映射块设备到用户态如-qemu-使用-rbd-后端">🧊 情况二：使用 <code>librbd</code> 映射块设备到用户态（如 QEMU 使用 RBD 后端）</a></li>
+      </ul>
+    </li>
+    <li><a href="#q3librbd-写数据时还有文件系统吗">Q3：<code>librbd</code> 写数据时还有文件系统吗？</a></li>
+    <li><a href="#q4librbd-写数据-数据写哪里去了">Q4：<code>librbd</code> 写数据 数据写哪里去了？</a></li>
+    <li><a href="#q5--问为什么分布式块存储绕过文件系统">Q5:  问：为什么分布式块存储绕过文件系统？</a></li>
+    <li><a href="#q6-dma直接内存访问能直接访问用户态缓存吗在用户态缓冲区和磁盘设备">Q6 DMA（直接内存访问）能直接访问用户态缓存吗？在用户态缓冲区和磁盘设备</a>
+      <ul>
+        <li><a href="#1-传统-io-的数据拷贝对比理解">​<strong>​1. 传统 I/O 的数据拷贝（对比理解）​</strong>​</a></li>
+        <li><a href="#2-实现条件dma-零拷贝的核心要求">​<strong>​2. 实现条件（DMA 零拷贝的核心要求）​</strong>​</a></li>
+        <li><a href="#3-性能优势">​<strong>​3. 性能优势​</strong>​</a></li>
+        <li><a href="#4-底层原理linux-内核实现">​<strong>​4. 底层原理（Linux 内核实现）​</strong>​</a></li>
+        <li><a href="#direct-io-和-io_submit-与-dma-的关系">Direct I/O 和 <code>io_submit()</code> 与 DMA 的关系</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+        <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="q1ceph-rbdrados-block-device与-osd-关系是什么">Q1:Ceph RBD（RADOS Block Device）与 osd 关系是什么？</h2>
+<p>ceph是一个统一存储，
+ceph同时支持对象、块和文件三种形态
+其中块设备形态，就是Rados Block Device，简称RBD</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RBD（RADOS Block Device）</strong></td>
+<td>一个将块设备抽象映射到 Ceph 集群上的接口。它对用户（如 QEMU、KVM、librbd 应用）暴露的是一个“虚拟磁盘”。</td>
+</tr>
+<tr>
+<td><strong>OSD（Object Storage Daemon）</strong></td>
+<td>Ceph 集群中负责<strong>存储对象数据、处理读写请求、维护数据副本</strong>的守护进程。是实际的数据承载者。</td>
+</tr>
+</tbody>
+</table>
+<pre><code>     用户进程（QEMU, Docker, 或自定义应用）
+              │
+          使用 librbd
+              │
+     ========== RBD 层 ==========
+              │
+     把块地址映射为对象（object）
+              │
+        RADOS 协议读写对象
+              │
+    多个 OSD Daemon 组成的对象存储池
+     ┌────────────┬────────────┐
+     │   OSD.1    │   OSD.2    │  ... N 个
+     └────────────┴────────────┘
+</code></pre>
+<h2 id="q2-为什么-librbd-使用的-rbd-块设备无法被-linux-的-page-cache-管理">Q2 为什么 <strong>librbd</strong> 使用的 RBD 块设备无法被 Linux 的 <strong>page cache</strong> 管理？</h2>
+<h3 id="-核心结论">✅ 核心结论：</h3>
+<blockquote>
+<p>因为 <code>librbd</code> 是运行在 <strong>用户态</strong> 的库，它直接绕过了 <strong>内核文件系统层</strong> 和 <strong>块设备驱动层</strong>，
+所以 Linux 内核的 page cache 根本“看不到”这些数据，自然就不能缓存和管理它们。</p>
+</blockquote>
+<hr>
+<p>🧱 情况一：常规 <code>mount</code> 文件系统</p>
+<p>举例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">mount /dev/sda1 /mnt
+cat /mnt/file
+</code></pre></td></tr></table>
+</div>
+</div><p>I/O 路径：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">用户进程
+  ↓ sys_read()
+内核 VFS 层
+  ↓
+ext4/xfs 文件系统
+  ↓
+页缓存（Page Cache）【！】
+  ↓
+块设备驱动
+  ↓
+硬盘（或虚拟磁盘）
+</code></pre></td></tr></table>
+</div>
+</div><p>🔍 <strong>关键点：</strong></p>
+<ul>
+<li>内核在文件系统层使用页缓存（page cache）来缓存文件数据；</li>
+<li>所有 I/O 操作都在内核中完成，内核可以精准控制哪些页是脏的、什么时候刷回。</li>
+</ul>
+<h3 id="-情况二使用-librbd-映射块设备到用户态如-qemu-使用-rbd-后端">🧊 情况二：使用 <code>librbd</code> 映射块设备到用户态（如 QEMU 使用 RBD 后端）</h3>
+<h4 id="举例">举例</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">rbd map my-image
+qemu-img create -f raw rbd:pool/image
+</code></pre></td></tr></table>
+</div>
+</div><p>或者直接从 <code>librbd</code> 调用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">librbd</span><span class="o">::</span><span class="n">Image</span> <span class="n">image</span><span class="p">;</span>
+<span class="n">image</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="io-路径">I/O 路径：</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">用户进程（QEMU 或应用）
+  ↓
+librbd（用户态库）
+  ↓
+Ceph Messenger
+  ↓
+OSD
+</code></pre></td></tr></table>
+</div>
+</div><p>🔍 <strong>关键点：</strong></p>
+<ul>
+<li>数据从用户进程直接由 librbd 通过网络发往远程 OSD；</li>
+<li><strong>完全绕过内核文件系统层和块设备驱动</strong>；</li>
+<li>内核根本不知道你访问了哪个“文件”或“页”，所以没法缓存。</li>
+</ul>
+<hr>
+<p>🚫 为什么 page cache 管理不了？</p>
+<p>因为：</p>
+<ol>
+<li>
+<p><strong>页缓存是内核的组件</strong>，它在文件系统或块设备驱动中运作；</p>
+</li>
+<li>
+<p><code>librbd</code> 是用户空间库，它直接操作网络对象存储（Ceph OSD）；</p>
+</li>
+<li>
+<p>它访问的数据并不经过 Linux 内核 I/O 栈的 <strong>page cache 探测点</strong>；</p>
+</li>
+<li>
+<p>因此，Linux 根本没机会把它缓存进 page cache。</p>
+</li>
+</ol>
+<h2 id="q3librbd-写数据时还有文件系统吗">Q3：<code>librbd</code> 写数据时还有文件系统吗？</h2>
+<p><strong>在 RBD 层面：没有文件系统</strong></p>
+<ul>
+<li><code>librbd</code> 将块设备地址转换为一组对象（object name）；</li>
+<li>这些对象通过 RADOS 协议发送到 Ceph 的 OSD；</li>
+<li>它不涉及 POSIX 文件系统，不调用 <code>open()</code>、<code>write()</code>、<code>fsync()</code> 等文件 API；</li>
+<li>所以，<strong>RBD 是构建在对象存储之上的块设备抽象，而非构建在文件系统之上</strong></li>
+</ul>
+<h2 id="q4librbd-写数据-数据写哪里去了">Q4：<code>librbd</code> 写数据 数据写哪里去了？</h2>
+<p>回答：librbd → RADOS 对象 → OSD → BlueStore → 直接写入块设备</p>
+<p>解释：</p>
+<blockquote>
+<p><strong>BlueStore 是 Ceph 自研的、绕过文件系统的对象存储引擎。</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>它直接管理裸设备（块设备）；</p>
+</li>
+<li>
+<p>使用自己实现的空间分配、校验、事务日志；</p>
+</li>
+<li>
+<p>不再通过文件系统，而是直接用裸磁盘+KeyValue结构（rocksdb/btree）组织对象。</p>
+</li>
+</ul>
+<p>✅ 总结一句话</p>
+<ul>
+<li>librbd 自身不依赖文件系统，它通过 RADOS 协议将数据对象发往 OSD。</li>
+<li>是否使用文件系统取决于 OSD 后端，现代 Ceph 默认的 BlueStore 完全绕过了文件系统，直接管理裸设备以提升性能。</li>
+</ul>
+<h2 id="q5--问为什么分布式块存储绕过文件系统">Q5:  问：为什么分布式块存储绕过文件系统？</h2>
+<p>答：</p>
+<ul>
+<li>POSIX 文件系统设计用于单机，不擅长高并发跨节点访问</li>
+<li>Ceph RADOS 就是这样：用户看到的是一个块设备，底层却是分布式对象</li>
+</ul>
+<p>解释：</p>
+<ul>
+<li>
+<p><strong>常规文件系统路径</strong>：<br>
+应用 → VFS → ext4/xfs/btrfs → Page Cache → 块层 → 设备驱动 → 磁盘</p>
+</li>
+<li>
+<p><strong>RBD 块设备路径</strong>：<br>
+应用（如 QEMU/librbd）→ librbd（用户态跳过内核）→ RBD 驱动 → Ceph OSD → 存储后端（无文件系统 or XFS）</p>
+</li>
+</ul>
+<h2 id="q6-dma直接内存访问能直接访问用户态缓存吗在用户态缓冲区和磁盘设备">Q6 DMA（直接内存访问）能直接访问用户态缓存吗？在用户态缓冲区和磁盘设备</h2>
+<p>在 <code>libaio</code> 启用 ​<strong>​<code>O_DIRECT</code> 模式​</strong>​时，​<strong>​
+0 次 CPU 拷贝&quot;​</strong>​ 指的是数据在传输过程中 ​<strong>​无需经过 CPU 参与的内存复制​</strong>​，而是通过 ​<strong>​DMA（直接内存访问）​</strong>​ 直接在用户态缓冲区和磁盘设备之间传输数据。以下是具体原理和实现细节：</p>
+<hr>
+<h3 id="1-传统-io-的数据拷贝对比理解">​<strong>​1. 传统 I/O 的数据拷贝（对比理解）​</strong>​</h3>
+<h4 id="默认模式带页面缓存">​<strong>​默认模式（带页面缓存）​</strong>​</h4>
+<p>text</p>
+<p>复制</p>
+<p><code>用户态缓冲区 →（CPU 拷贝）→ 内核页面缓存 →（CPU 拷贝）→ 磁盘控制器</code></p>
+<ul>
+<li>​<strong>​拷贝次数​</strong>​：2 次（用户态→内核态→磁盘）</li>
+<li>​<strong>​问题​</strong>​：CPU 需要全程参与数据搬运，占用计算资源。</li>
+</ul>
+<h4 id="o_direct模式0-cpu-拷贝">​<strong>​<code>O_DIRECT</code> 模式（0 CPU 拷贝）​</strong>​</h4>
+<p>text</p>
+<p>复制</p>
+<p><code>用户态缓冲区 ← DMA → 磁盘控制器</code></p>
+<ul>
+<li>​<strong>​拷贝次数​</strong>​：0 次（CPU 仅发起指令，不触碰数据）</li>
+<li>​<strong>​关键机制​</strong>​：通过 DMA 控制器直接完成数据传输。</li>
+</ul>
+<hr>
+<h3 id="2-实现条件dma-零拷贝的核心要求">​<strong>​2. 实现条件（DMA 零拷贝的核心要求）​</strong>​</h3>
+<h4 id="1-内存对齐">​<strong>​(1) 内存对齐​</strong>​</h4>
+<ul>
+<li>
+<p>​<strong>​缓冲区地址​</strong>​：必须按块设备扇区大小对齐（通常 4KB）。</p>
+<p>c</p>
+<p>复制</p>
+<p><code>// 示例：posix_memalign 分配对齐内存 void *buf; posix_memalign(&amp;buf, 4096, 4096); // 4KB 对齐</code></p>
+</li>
+<li>
+<p>​<strong>​文件偏移​</strong>​：必须是磁盘扇区大小的整数倍。</p>
+</li>
+</ul>
+<h4 id="2-绕过页面缓存">​<strong>​(2) 绕过页面缓存​</strong>​</h4>
+<ul>
+<li>
+<p>使用 <code>O_DIRECT</code> 标志打开文件：</p>
+<p><code>int fd = open(&quot;file.data&quot;, O_RDWR | O_DIRECT);</code></p>
+</li>
+</ul>
+<h4 id="3-dma-控制器介入">​<strong>​(3) DMA 控制器介入​</strong>​</h4>
+<ul>
+<li>磁盘控制器通过 ​<strong>​DMA 引擎​</strong>​ 直接读写用户态内存，无需 CPU 逐字节搬运。</li>
+</ul>
+<hr>
+<h3 id="3-性能优势">​<strong>​3. 性能优势​</strong>​</h3>
+<table>
+<thead>
+<tr>
+<th>​<strong>​场景​</strong>​</th>
+<th>CPU 利用率</th>
+<th>延迟</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传统 I/O</td>
+<td>高</td>
+<td>较高</td>
+<td>通用文件操作</td>
+</tr>
+<tr>
+<td><code>O_DIRECT</code></td>
+<td>低</td>
+<td>极低</td>
+<td>数据库/高性能存储</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>​<strong>​实测数据​</strong>​：在 NVMe SSD 上，<code>O_DIRECT</code> 可降低 ​<strong>​30%~50%​</strong>​ 的 I/O 延迟（因省去拷贝和上下文切换）。</li>
+</ul>
+<hr>
+<h3 id="4-底层原理linux-内核实现">​<strong>​4. 底层原理（Linux 内核实现）​</strong>​</h3>
+<p>当应用调用 <code>libaio</code> 的 <code>io_submit()</code> 时：</p>
+<ol>
+<li>内核检查用户缓冲区的物理内存是否连续且对齐（通过 <code>get_user_pages()</code>）。</li>
+<li>若对齐，则构造 ​<strong>​DMA 描述符​</strong>​，交由磁盘控制器直接访问用户内存。</li>
+<li>数据传输完成后，通过中断或轮询通知 CPU（无数据拷贝）</li>
+</ol>
+<h3 id="direct-io-和-io_submit-与-dma-的关系">Direct I/O 和 <code>io_submit()</code> 与 DMA 的关系</h3>
+<h4 id="1-io_submit-提交直接-io-请求">1. <code>io_submit()</code> 提交直接 I/O 请求</h4>
+<p>当应用使用 <code>io_submit()</code> 提交一个带有 <code>O_DIRECT</code> 的 I/O 请求时，该请求绕过 page cache，由内核直接处理传输到用户缓冲区(<a href="https://www.scylladb.com/2017/10/05/io-access-methods-scylla/?utm_source=chatgpt.com" title="Different I/O Access Methods for Linux, What We Chose for ScyllaDB ...">scylladb.com</a>)。</p>
+<h4 id="2-内核为-dma-做准备">2. 内核为 DMA 做准备</h4>
+<p>内核通过 <code>get_user_pages()</code> 锁定用户缓冲区，并使用 <code>dma_map_*()</code> 将这些页面映射到设备可访问的总线地址空间，为 DMA 传输做好地址准备(<a href="https://docs.kernel.org/core-api/dma-api-howto.html?utm_source=chatgpt.com" title="Dynamic DMA mapping Guide - The Linux Kernel documentation">docs.kernel.org</a>)。</p>
+<h4 id="3-dma-传输后清理映射">3. DMA 传输后清理映射</h4>
+<p>设备完成数据传输产生中断后，内核调用 <code>dma_unmap_*()</code> 解除映射，并解锁页面，<code>io_getevents()</code> 通知应用 I/O 操作已完成(<a href="https://github.com/littledan/linux-aio?utm_source=chatgpt.com" title="How to use the Linux AIO feature - GitHub">github.com</a>)。</p>
+<p>这三步概述了从提交请求到数据通过 DMA 写入用户空间并通知完成的完整流程。</p>
+<h1 id="q7--sendfile-with-io_uring-almost">Q7  Sendfile with io_uring (almost)</h1>
+<h3 id="参考">参考</h3>
+<ul>
+<li>
+<p><a href="https://rootw.github.io/2018/01/RBD-all/">https://rootw.github.io/2018/01/RBD-all/</a>  # 【Rados Block Device】一、概述</p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=XrBIOuGIcvA&amp;ab_channel=DanielPersson">https://www.youtube.com/watch?v=XrBIOuGIcvA&amp;ab_channel=DanielPersson</a> # How to setup a Ceph RADOS Block Device</p>
+</li>
+<li>
+<p>【Rados Block Device】四、Client内核RBD驱动分析－设备IO流程</p>
+</li>
+<li>
+<p><a href="https://rootw.github.io/2018/01/RBD-client-3/">https://rootw.github.io/2018/01/RBD-client-3/</a></p>
+</li>
+<li>
+<p>dio <a href="https://www.scylladb.com/2017/10/05/io-access-methods-scylla/?utm_source=chatgpt.com">https://www.scylladb.com/2017/10/05/io-access-methods-scylla/?utm_source=chatgpt.com</a></p>
+</li>
+</ul>
+<h3 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h3>
+<p>我在寻找一位积极上进的小伙伴，
+一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事情，不妨 试试
+1️⃣ 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt="">
+2️⃣ 关注公众号:后端开发成长指南(回复“面经”获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt="">
+3️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;-我是黄金分割线&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
+<ul>
+<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，别人投入时间完成任务，别人采取措施解决问题了，不要不贪别人功劳，</li>
+<li>但是不要给自己这样假设：别人完成就等着自己完成了，大家一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现，</li>
+<li>别人不这么假设，至少kpi上不会写成自己的，至少晋升不是你，裁员淘汰是，你的整个公司ceo，整个部门总裁，整个领导不帮助一下的，他们不这么想 ，你什么没做，战略是别人10年一点带你研究的多难，项目拆分别人10年完成多少问题，项目实现10年安排组织一点点完成多少bug，多少代码，是不要给自己这样假设：你等了看了观察10年什么做 ，0 贡献，</li>
+<li>但是不要给自己这样假设，别人全部市场，别人全部市场，别人占据全部客户，一切重要无比，你太差，太才，思考不行，沟通不行，认知不行，去tmd，给别人丢脸。这个方面我无法控制，在这方面经历任何问题应该的。</li>
+<li>我控制 的事情是 我必须亲自了解行业遇到难题，了解有什么需求，行业解决方案，我可以从三万英尺看问题，像周围人学习，像免费公开英文资料学习，从模仿开始。然后免费公开。我要通过技术拿到百万年薪P7职务，我必须糊涂混沌中走出来</li>
+<li>目标：拿百万年 想进入一线大厂，但在C++学习和应用上存在瓶颈，渴望跨越最后一道坎。</li>
+<li>现状：缺乏实战，渴望提升动手能力公司的项目不会重构，没有重新设计的机会，导致难以深入理解需求。</li>
+<li>成为优秀完成任务，成为团队、公司都认可的核心骨干。优秀地完成任务= 高效能 + 高质量 + 可持续 + 可度量</li>
+</ul>
+<h5 id="低头走路">低头走路：</h5>
+<ul>
+<li>一次专注做好一个小事。</li>
+<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+<li>我控制 的事情是 我通过写自己代码拿到百万收益。代码就是杠杆，我必须创造可以运行在2c2g云主机小而美产品出来（服务普通人），而不是运行构建至少10台<em>64cpu</em> 300g内存物理机大而全项目（领航者，超越其他产品，出货全球N1，这个还是有停留有限斗争游戏，为top 10人企业服务）我必须糊涂混沌中走出来</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/job/1-2025-5-job/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">后端开发工程师面经</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/7_2025-5-22-spin_lock/">
+            <span class="next-text nav-default">如何设计一个高性能可扩展的自旋锁</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
