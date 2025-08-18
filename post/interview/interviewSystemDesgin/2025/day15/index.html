@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>最佳实践：XSKY借助英特尔SPDK提升Ceph性能 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day15/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="最佳实践：XSKY借助英特尔SPDK提升Ceph性能" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day15/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="最佳实践：XSKY借助英特尔SPDK提升Ceph性能">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2755">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="最佳实践：XSKY借助英特尔SPDK提升Ceph性能"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">最佳实践：XSKY借助英特尔SPDK提升Ceph性能</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2755 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#小思考ceph-你了解xsky不了解-他么之间发生什么事情">小思考：ceph 你了解，XSKY不了解 他么之间发生什么事情？</a></li>
+    <li><a href="#查缺补漏1-dpdk-与spdkrdma区别">查缺补漏1： DPDK 与SPDK，RDMA区别？</a>
+      <ul>
+        <li><a href="#11-使用场景不同">1.1 使用场景不同</a></li>
+        <li><a href="#12-spdk">1.2 SPDK</a></li>
+        <li><a href="#13-dpdk">1.3 DPDK</a></li>
+        <li><a href="#14-rdma-软件架构">1.4 RDMA 软件架构</a></li>
+      </ul>
+    </li>
+    <li><a href="#二实践案例-xsky-借助英特尔spdk-提升-ceph-性能">二、实践案例 XSKY 借助英特尔SPDK 提升 Ceph 性能</a>
+      <ul>
+        <li></li>
+        <li><a href="#参考">参考</a></li>
+        <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <blockquote>
+<p>知识地图: 分布式存储&ndash;Bluestore引擎</p>
+</blockquote>
+<p>问：What SPDK can do to improve Ceph?</p>
+<p>回答：</p>
+<ol>
+<li>请看 Bluestore案例分享-扬子夜-王豪迈.pdf分享</li>
+<li>ceph-day-beijing-spdk-for-ceph</li>
+</ol>
+<ul>
+<li>
+<p>​<strong>​2016年Ceph中国社区年终盛典​</strong>​<br>
+王豪迈作为演讲嘉宾，主题为《What’s new in Kraken》，重点探讨了Bluestore的设计（如BlueStore = Block + NewStore）、AsyncMessenger插件优化网络性能、Ceph-MGR模块扩展性提升等进展</p>
+</li>
+<li>
+<p>XSKY CTO王豪迈获评Intel® Software Innovator</p>
+</li>
+<li>
+<p>王豪迈目前是Ceph技术委员会成员，全球Ceph基金会]董事会成员。他还是全球Ceph社区主要贡献者之一，Ceph性能优化和网络模块项目的主要推进人。为了表彰他在Ceph社区K版本中所做出的努力，他被Ceph社区官方提名为杰出贡献者,</p>
+</li>
+<li>
+<p>XSKY也是英特尔官方认可的<strong>Intel® Data Center Builders Program</strong>计划成员，共同推进SDI（Software Defined Infrastructure）方案在全球客户的落地。
+<img src="https://picx.zhimg.com/v2-a28d49616f72e0d4516c46686d9a03a3_1440w.jpg" alt=""></p>
+</li>
+<li>
+<p>周雁波，Intel存储软件工程师，主要从事SPDK软件开发工作。</p>
+</li>
+</ul>
+<h2 id="小思考ceph-你了解xsky不了解-他么之间发生什么事情">小思考：ceph 你了解，XSKY不了解 他么之间发生什么事情？</h2>
+<p><img src="https://s2.loli.net/2025/07/21/EW4V298jofi1wKF.png" alt="ceph遇到什么问题，如何解决"></p>
+<p><img src="https://s2.loli.net/2025/07/21/3WpbtSmyiP5ZKxq.png" alt="">
+<img src="https://s2.loli.net/2025/07/21/XSKCGM1f8Zdeb9V.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2025/07/21/UFoVzdprtf7w1hA.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2025/07/21/VD6XJgHQ2nPuIUw.png" alt="image.png"></p>
+<h2 id="查缺补漏1-dpdk-与spdkrdma区别">查缺补漏1： DPDK 与SPDK，RDMA区别？</h2>
+<h3 id="11-使用场景不同">1.1 使用场景不同</h3>
+<ul>
+<li><strong>DPDK</strong>是网络高性能领域的基石，适合需要处理海量网络流量的场景。</li>
+<li><strong>SPDK</strong>是存储性能革命的推动者，适合对延迟敏感的存储系统。</li>
+<li>两者结合可构建全栈高性能基础设施（如基于NVMe-oF的远程存储网络）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>DPDK</strong></th>
+<th><strong>SPDK</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>核心领域</strong></td>
+<td>网络数据包处理</td>
+<td>存储I/O加速</td>
+</tr>
+<tr>
+<td><strong>主要技术</strong></td>
+<td>用户态网卡驱动、零拷贝</td>
+<td>用户态NVMe驱动、异步I/O</td>
+</tr>
+<tr>
+<td><strong>优化目标</strong></td>
+<td>高吞吐、低延迟的网络转发</td>
+<td>低延迟、高并发的存储访问</td>
+</tr>
+<tr>
+<td><strong>典型硬件</strong></td>
+<td>高速网卡（如Intel NICs、SmartNIC）</td>
+<td>NVMe SSD、持久内存（PMem）</td>
+</tr>
+<tr>
+<td><strong>协同使用</strong></td>
+<td>可用于SPDK的网络传输层（如NVMe-oF over TCP）</td>
+<td>依赖DPDK实现网络加速时（如远程存储访问）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>RDMA（Remote Direct Memory Access）是一种网络传输技术，用于在远程主机之间直接访问内存。</p>
+<h3 id="12-spdk">1.2 SPDK</h3>
+<p>SPDK是一个框架而不是分布式系统，它的基石是用户态（user space）、轮询（polled-mode）、异步（asynchronous）和无锁的NVMe驱动</p>
+<p>SPDK (Storage performance development kit) 是由Intel发起、
+用于加速使用<strong>NVMe SSD作为后端存储</strong>的应用软件加速库。</p>
+<ul>
+<li>官方网址：https://spdk.io/。SPDK重用了很多DPDK中的一些公共组件，比如内存管理，轮询方式的实现等，SPDK的核心是通过无锁，轮询的方式实现高效的用户态驱动集合</li>
+<li>SPDK一个重要的设计理念是<strong>无锁化</strong>，这样避免了多线程由于对锁的争抢而引入的性能开销。</li>
+</ul>
+<h3 id="13-dpdk">1.3 DPDK</h3>
+<h4 id="产生背景">产生背景</h4>
+<p>网络设备（路由器、交换机、媒体网关、SBC、PS网关等）需要在瞬间进行大量的报文收发，</p>
+<p>因此在传统的网络设备上，往往能够看到专门的NP（Network Process）处理器，有的用[FPGA]，这些专用器件通过内置的硬件电路高效转发报文，</p>
+<p>只有需要对报文进行深度处理的时候才需要CPU干涉。</p>
+<blockquote>
+<p>但在公有云、NFV等应用场景下，基础设施以CPU为运算核心，往往不具备专用的NP处理器，操作系统也以通用Linux为主，</p>
+</blockquote>
+<p>由于包处理任务存在内核态与用户态的切换，以及多次的内存拷贝，系统消耗变大，以CPU为核心的系统存在很大的处理瓶颈。为了提升在通用服务器（COTS）的数据包处理效能，Intel推出了服务于IA（Intel Architecture）系统的DPDK技术。</p>
+<ul>
+<li>DPDK是Data Plane Development Kit的缩写。简单说，DPDK应用程序运行在操作系统的User Space，利用自身提供的数据面库进行收发包处理，绕过了Linux内核态协议栈，以提升报文处理效率</li>
+</ul>
+<p>Linux 内核为支持用户空间驱动程序的开发提供了一个框架，名为 UIO（userspace I/O）。 这是一个通用的内核驱动程序，可以帮助开发人员编写能够访问设备寄存器和处理中断的用 户空间驱动程序。DPDK 也是 UIO 的使用者。</p>
+<ul>
+<li>DPDK的UIO驱动屏蔽了硬件发出中断，然后在用户态采用主动轮询的方式，这种模式被称为PMD（Poll Mode Driver）</li>
+</ul>
+<h3 id="14-rdma-软件架构">1.4 RDMA 软件架构</h3>
+<p>RDMA 的软件架构按层次可分成两部分，即 rdma-core 和内核 RDMA 子系统，分别运行
+在 Linux 系统中的用户态和内核态。整个软件架构适用于所有类型的 RDMA 网卡，不管网卡
+执行了哪种 RDMA 协议（InfiniBand/RoCE/ iWARP）。</p>
+<ul>
+<li>RDMA 数据传输</li>
+<li>发起数据传输——RDMA Write</li>
+<li>rdma-core 中的示例程序 rping，用来发起一次 RDMA Write 数据
+传输 <a href="https://github.com/linux-rdma/rdma-core/blob/master/librdmacm/examples/rping.c">https://github.com/linux-rdma/rdma-core/blob/master/librdmacm/examples/rping.c</a></li>
+<li>应用程序在调用 ibv_post_send 发起 RDMA Write 操作后，接下来系统中会如何处理呢<img src="https://s2.loli.net/2025/07/21/b39w1ikDtn8jVl5.png" alt=""></li>
+</ul>
+<h2 id="二实践案例-xsky-借助英特尔spdk-提升-ceph-性能">二、实践案例 XSKY 借助英特尔SPDK 提升 Ceph 性能</h2>
+<p>XSKY（星辰天合）。作为英特尔在中国的首批SPDK合作伙伴之一，
+XSKY率先将SPDK与Ceph用户态文件系统BlueFS整合，</p>
+<p>Ceph作为开源软件定义存储的首选系统
+在闪存环境下仍难觅突破性进展。
+顺应业界趋势，将SPDK的支持在Ceph中实现势在必行。【不是从0开始的呀，解决比别人没有问题】</p>
+<p><strong>BlueStore优化​</strong>​：将SPDK集成至Ceph的存储引擎BlueStore，直接管理NVMe设备
+<img src="http://mmbiz.qpic.cn/mmbiz/tJ5NYyM9MHANfLGBNygLCYgYFcSUwRE1pS6cagN5jZD2uEZcbanSClPlfpfpibSicjabhj00bPRS0UiaJCDiaWR0Zw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<p>SPDK对Ceph的BlueStore做了哪些具体优化？</p>
+<p><img src="https://s2.loli.net/2025/07/21/6tEpQhDbrSiZwma.png" alt=""></p>
+<p>SPDK RBD bdev结合Ceph RBD，可以将image定义为SPDK的块设备类型。通过SPDK框架对块设备的管理，我们实现了用户态驱动，并利用轮询机制，替换了中断模型，降低了延迟，提升了对块设备操作的性能</p>
+<h4 id="rbd块存储加速"> ​<strong>​RBD（块存储）加速​</strong>​</h4>
+<ul>
+<li>SPDK 提供 <code>bdev_rbd</code> 模块，将 Ceph RBD 镜像映射为 SPDK 块设备，供 iSCSI/NVMe-oF 等协议调用</li>
+</ul>
+<h3 id="参考">参考</h3>
+<ul>
+<li>2022 SPDK线上论坛（二）| Ceph RBD浅析及性能调优</li>
+<li>SPDK对接Ceph性能优化</li>
+<li>干货 | Ceph中国社区年终盛典之Ceph最新进展</li>
+<li>Ceph IO路径和性能分析.pdf</li>
+</ul>
+<h3 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h3>
+<p>我在寻找一位积极上进的小伙伴，
+一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事情，不妨 试试
+1️⃣ 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt="">
+2️⃣ 关注公众号:后端开发成长指南(回复“面经”获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt="">
+3️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;-我是黄金分割线&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
+<ul>
+<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，打通任督二脉。</li>
+<li>但是不要给自己这样假设：别人完成就等着自己完成了，这个逃避问题表现,裁员时候别人不会这么想。</li>
+</ul>
+<h5 id="低头走路">低头走路：</h5>
+<ul>
+<li>一次专注做好一个小事。</li>
+<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 ,把基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day16-gfs/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">最佳实践：Google文件系统为何不关心小文件，不关心一致性</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/RockDB/day1-3fs-DeepSeek-3FS-io_uring/">
+            <span class="next-text nav-default">源码解析：</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

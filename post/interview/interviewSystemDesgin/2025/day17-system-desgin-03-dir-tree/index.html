@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>吊打面试官03:Mysql如何存储目录树 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day17-system-desgin-03-dir-tree/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="吊打面试官03:Mysql如何存储目录树" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day17-system-desgin-03-dir-tree/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="吊打面试官03:Mysql如何存储目录树">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3788">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="吊打面试官03:Mysql如何存储目录树"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">吊打面试官03:Mysql如何存储目录树</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 3788 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-题目描述">1.1 题目描述</a></li>
+    <li><a href="#12-采用什么数据结构表示数据库设计">1.2 采用什么数据结构表示？（数据库设计）</a>
+      <ul>
+        <li><a href="#什么是邻接列表">什么是邻接列表</a></li>
+        <li><a href="#邻接列表优点">邻接列表优点</a></li>
+        <li><a href="#数据库设计三大范式">数据库设计三大范式</a></li>
+        <li><a href="#邻接列表缺点">邻接列表缺点</a></li>
+        <li><a href="#13-还有其他存储方式吗">1.3 还有其他存储方式吗？</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#21-方式1-直接用指针表示">2.1 方式1 直接用指针表示</a></li>
+        <li><a href="#22-从demo到产品化cephfs">2.2 从demo到产品化(CephFS)</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#参考数据">参考数据</a>
+      <ul>
+        <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="一青铜前端开发展示一个多级菜单目录">一、青铜：前端开发展示一个多级菜单(目录)</h1>
+<h2 id="11-题目描述">1.1 题目描述</h2>
+<p>树状结构或层次结构的数据在企业应用里非常常见，
+例如公司的组织架构、文档库的目录结构、
+仓库的库位组织以及物件的分类等等</p>
+<p>如图：
+<img src="https://pic4.zhimg.com/v2-84fb2a74ea2cbb16d9bb243810221ce7_1440w.jpg" alt=""></p>
+<p>请设计一个表结构，存储多级菜单（目录）</p>
+<h2 id="12-采用什么数据结构表示数据库设计">1.2 采用什么数据结构表示？（数据库设计）</h2>
+<h3 id="什么是邻接列表">什么是邻接列表</h3>
+<p>邻接列表模型的特点是简单。
+表中的每条记录都包含对其父级的引用，形成父子关系。
+这通常是通过使用存储父节点标识符的列来实现的。
+没有父节点的根节点通常由父列中的 <code>NULL</code> 值表示。</p>
+<p>优点：</p>
+<ul>
+<li>
+<p>简单直观，容易设计</p>
+</li>
+<li>
+<p>插入、更新、删除单节点方便</p>
+</li>
+</ul>
+<p>问题（在 SQL 查询中暴露）：</p>
+<ul>
+<li>
+<p><strong>难以一次性查询出整棵树</strong></p>
+</li>
+<li>
+<p>查询所有祖先或所有子孙时需要递归，而标准 SQL 不支持递归（旧版本）</p>
+</li>
+<li>
+<p>需要数据库支持 <code>WITH RECURSIVE</code> 或者通过程序端构造</p>
+</li>
+</ul>
+<p>例如：</p>
+<table>
+<thead>
+<tr>
+<th>category_id</th>
+<th>parent_id</th>
+<th>category_name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>NULL</td>
+<td>Electronics</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>Computers</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Laptops</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>Desktops</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>Televisions</td>
+</tr>
+<tr>
+<td>6</td>
+<td>3</td>
+<td>Gaming Laptops</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+<td>Business Laptop</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">//</span><span class="err">表结构</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">categories</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w">  </span><span class="n">category_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">parent_id</span><span class="w">   </span><span class="nb">INT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="n">category_name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">parent_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">categories</span><span class="p">(</span><span class="n">category_id</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_categories_parent</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">categories</span><span class="p">(</span><span class="n">parent_id</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="o">//</span><span class="err">插入记录</span><span class="w">
+</span><span class="w"></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">categories</span><span class="w"> </span><span class="p">(</span><span class="n">category_id</span><span class="p">,</span><span class="w"> </span><span class="n">category_name</span><span class="p">,</span><span class="w"> </span><span class="n">parent_id</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Electronics&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Computers&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Laptops&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Desktops&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w">
+</span><span class="w"></span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Smartphones&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="邻接列表优点">邻接列表优点</h3>
+<h4 id="-为什么使用邻接表模型存储多级目录">📌 为什么使用邻接表模型存储多级目录？</h4>
+<ol>
+<li>简单直观，开发与维护友好</li>
+<li>插入、更新、删除操作高效</li>
+<li>查询常见访问路径高效</li>
+</ol>
+<blockquote>
+<p>个人感受：✔️ 为什么一般用 <code>parent_id</code> 而非 <code>child_id</code>？</p>
+</blockquote>
+<ul>
+<li>多级目录或分类结构中，每个节点通常<strong>只有一个父节点</strong>，但可以有多个子节点</li>
+<li>用 <code>parent_id</code> 的邻接表模型符合关系型数据库范式。若用 <code>child_id</code>，需定义多个子字段，<strong>容易违反第一范式（1NF</strong>），难以扩展，字段冗余严重</li>
+</ul>
+<h3 id="数据库设计三大范式">数据库设计三大范式</h3>
+<p>（1）简单归纳：
+　　第一范式（1NF）：字段不可分；<br>
+　　第二范式（2NF）：有主键，非主键字段依赖主键；<br>
+　　第三范式（3NF）：非主键字段不能相互依赖。
+（2）解释：
+　　1NF：原子性。 字段不可再分,否则就不是关系数据库;；<br>
+　　2NF：唯一性 。一个表只说明一个事物；<br>
+　　3NF：每列都与主键有直接关系，不存在传递依赖。</p>
+<p>银行的面试官问了个简单的问题，满足第二范式，但是不满足第三范式的例子</p>
+<p>第三范式定义：所有的非主属性（非主键）都直接由其它表的主属性（主键）推导生成，而不需要<strong>传递依赖</strong>。  </p>
+<p><strong>重点：</strong>
+<strong>1）满足第二范式。</strong>
+<strong>2）不能传递依赖，非主属性不能部分或者传递依赖于码。</strong></p>
+<blockquote>
+<p>表: 学号, 姓名, 年龄, 学院名称, 学院电话</p>
+</blockquote>
+<p>因为存在依赖传递: (学号) → (学生)→(所在学院) → (学院电话) 。</p>
+<p>正确做法：</p>
+<p>学生：(学号, 姓名, 年龄, 所在学院)；</p>
+<p>学院：(学院, 电话)。</p>
+<h3 id="邻接列表缺点">邻接列表缺点</h3>
+<h4 id="1-深度遍历效率较差">1. <strong>深度遍历效率较差</strong></h4>
+<p>要查询某个节点的所有后代（deep descendants）或完整路径，通常需要使用递归查询（如 CTE）或多次自连接。对于树深度较大时，查询非常复杂且性能低下。</p>
+<blockquote>
+<p>“Finding all descendants of a node requires recursive queries or multiple joins”</p>
+</blockquote>
+<h4 id="2-路径查询不便">2. <strong>路径查询不便</strong></h4>
+<p>想要查询某个节点从根节点到它的完整路径，需要多层连接并提前知道树深度，否则无法构造固定数量的自关联 JOIN。</p>
+<blockquote>
+<p>“Before being able to see the full path … we have to know the level at which it resides.”</p>
+</blockquote>
+<h3 id="13-还有其他存储方式吗">1.3 还有其他存储方式吗？</h3>
+<p>请参考：</p>
+<ul>
+<li>SQL反模式 第三章节  单 纯 的 树</li>
+<li>SQL Antipatterns.  Naive Trees
+<img src="https://s2.loli.net/2025/07/28/UjGVKqOPd2AZ5hX.png" alt="SQL反模式"></li>
+</ul>
+<h1 id="二白银后端开发-请设计表示多级目录的类和相关接口">二、白银：后端开发 请设计表示多级目录的类和相关接口</h1>
+<blockquote>
+<p>[!NOTE] 数据库的表要读取内存中去吧
+如何在内存中表示</p>
+</blockquote>
+<h3 id="21-方式1-直接用指针表示">2.1 方式1 直接用指针表示</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="k">class</span> <span class="nc">CategoryNode</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">category_id</span><span class="p">;</span>            <span class="c1">// 节点ID（主键）
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">category_name</span><span class="p">;</span> <span class="c1">// 分类名称
+</span><span class="c1"></span>    <span class="n">CategoryNode</span><span class="o">*</span> <span class="n">parent</span><span class="p">;</span>      <span class="c1">// 指向父节点的指针（弱引用，避免循环强引用）
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">&gt;&gt;</span> <span class="n">children</span><span class="p">;</span> <span class="c1">// 子节点列表
+</span><span class="c1"></span>
+    <span class="c1">// 构造函数
+</span><span class="c1"></span>    <span class="n">CategoryNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">CategoryNode</span><span class="o">*</span> <span class="n">parent_ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">category_id</span><span class="p">(</span><span class="n">id</span><span class="p">),</span> <span class="n">category_name</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">parent</span><span class="p">(</span><span class="n">parent_ptr</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">CategoryTree</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">&gt;</span> <span class="n">root</span><span class="p">;</span> <span class="c1">// 根节点
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">CategoryNode</span><span class="o">*&gt;</span> <span class="n">node_map</span><span class="p">;</span> <span class="c1">// ID到节点的映射（加速查找）
+</span><span class="c1"></span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// 添加节点（自动关联父子关系）
+</span><span class="c1"></span>    <span class="kt">void</span> <span class="n">add_node</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">parent_id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CategoryNode</span><span class="o">*</span> <span class="n">parent_ptr</span> <span class="o">=</span> <span class="p">(</span><span class="n">parent_id</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="k">nullptr</span> <span class="o">:</span> <span class="n">node_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">parent_id</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">new_node</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent_ptr</span><span class="p">);</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">parent_ptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">parent_ptr</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">new_node</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// 根节点
+</span><span class="c1"></span>            <span class="n">root</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">new_node</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">node_map</span><span class="p">[</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_map</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">?</span> <span class="n">root</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">:</span> <span class="n">parent_ptr</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">get</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// 获取从根节点到当前节点的路径
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">*&gt;</span> <span class="n">get_path</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">*&gt;</span> <span class="n">path</span><span class="p">;</span>
+    <span class="n">CategoryNode</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">current</span><span class="p">);</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">reverse</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">path</span><span class="p">.</span><span class="n">end</span><span class="p">());</span> <span class="c1">// 从根到当前
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">path</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 查找所有后代节点（广度优先）
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">*&gt;</span> <span class="n">get_descendants</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">*&gt;</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">CategoryNode</span><span class="o">*&gt;</span> <span class="n">queue</span><span class="p">;</span>
+    <span class="n">queue</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">get_node</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">current</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+        <span class="n">queue</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">child</span> <span class="p">:</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+            <span class="n">queue</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="22-从demo到产品化cephfs">2.2 从demo到产品化(CephFS)</h3>
+<p>🧩 CephFS 的目录树结构
+🔹 Metadata Server（MDS）</p>
+<ul>
+<li>
+<p>MDS 负责管理文件和目录元数据</p>
+</li>
+<li>
+<p>每个目录/文件是一个 inode，使用类似文件系统的树形组织</p>
+</li>
+<li>
+<p>目录之间通过 <code>parent</code> 和 <code>child</code> 关系形成层级</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/ceph/ceph/blob/main/src/mds/CInode.h
+</span><span class="c1">//MDS内部数据结构
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">CInode</span> <span class="p">{</span>
+  <span class="n">inodeno_t</span> <span class="n">ino</span><span class="p">;</span>
+  <span class="n">snapid_t</span> <span class="n">snapid</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">CDentry</span><span class="o">*&gt;</span> <span class="n">dentries</span><span class="p">;</span> <span class="c1">// children
+</span><span class="c1"></span>  <span class="n">CInode</span><span class="o">*</span> <span class="n">parent</span><span class="p">;</span>         <span class="c1">// pointer to parent directory
+</span><span class="c1"></span><span class="p">};</span>
+<span class="c1">//OpenFileTable​ 结构加速恢复：记录打开文件的路径信息，避免全量加载
+</span><span class="c1"></span><span class="n">CInode</span> <span class="p">(</span><span class="err">根目录</span><span class="p">)</span> 
+<span class="err">│</span>
+<span class="err">└──</span> <span class="n">CDir</span> <span class="p">(</span><span class="err">根目录内容</span><span class="p">)</span>
+    <span class="err">├──</span> <span class="n">CDentry</span> <span class="p">(</span><span class="s">&#34;a&#34;</span><span class="p">)</span> <span class="err">──</span> <span class="n">CInode</span> <span class="p">(</span><span class="err">目录</span><span class="s">&#34;a&#34;</span><span class="p">)</span>
+    <span class="err">│</span>               <span class="err">│</span>
+    <span class="err">│</span>               <span class="err">└──</span> <span class="n">CDir</span> <span class="p">(</span><span class="err">目录</span><span class="s">&#34;a&#34;</span><span class="err">内容</span><span class="p">)</span>
+    <span class="err">│</span>                   <span class="err">└──</span> <span class="n">CDentry</span> <span class="p">(</span><span class="s">&#34;b.txt&#34;</span><span class="p">)</span> <span class="err">──</span> <span class="n">CInode</span> <span class="p">(</span><span class="err">文件</span><span class="s">&#34;b.txt&#34;</span><span class="p">)</span>
+    <span class="err">│</span>
+    <span class="err">└──</span> <span class="n">CDentry</span> <span class="p">(</span><span class="s">&#34;c&#34;</span><span class="p">)</span> <span class="err">──</span> <span class="n">CInode</span> <span class="p">(</span><span class="err">文件</span><span class="s">&#34;c&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Ceph 文件系统由 MDS（Metadata Server）管理目录树结构，其内存模型核心由三种结构组成：</p>
+<ul>
+<li><strong>CInode</strong>：表示每个文件或目录的</li>
+<li><strong>CDentry</strong>：关联 inode 与其名称（目录项），支持同一个 inode 多个路径（硬链接）；</li>
+<li><strong>CDir</strong>：仅用于目录 inode，将该目录下所有 CDentry 组织起来。当目录被碎片化时，一个 CInode 可对应多个 CDir
+<img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/e13svNCGUiaoVfibWwXkaXLwNYvyMt6xkmdrBDkbZamibyfzEGF0qWOHaibPJzRPm9u4gvaCZWibWDXWqwW333y876Q/640?wx_fmt=jpeg&amp;randomid=herxbyvf&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></li>
+</ul>
+<h4 id="-结构特点">📌 结构特点</h4>
+<ul>
+<li>使用 C++ 类结构：父指针 + 子集合</li>
+<li>更新目录、插入文件、递归遍历都在树结构上进行</li>
+<li>
+<ul>
+<li><strong>动态扩展​</strong>​：目录过大时，<code>CDir</code> 自动分片（如 10,000 文件/目录），新分片生成独立 <code>CDir</code></li>
+</ul>
+</li>
+<li>​<strong>​持久化与恢复​</strong>​：
+<ul>
+<li>元数据通过 Journal 写入 RADOS 持久化。</li>
+<li>MDS 重启时，从 RADOS 加载元数据重建内存树。</li>
+<li>​<strong>​OpenFileTable​</strong>​ 结构加速恢复：记录打开文件的路径信息，避免全量加载</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​数据结构​</strong>​</th>
+<th>​<strong>​角色​</strong>​</th>
+<th>​<strong>​关键作用​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CInode</code></td>
+<td>元数据实体</td>
+<td>存储文件/目录属性，指向数据块位置。</td>
+</tr>
+<tr>
+<td><code>CDentry</code></td>
+<td>名称到实体的映射</td>
+<td>链接文件名与 <code>CInode</code>，构建路径层级。</td>
+</tr>
+<tr>
+<td><code>CDir</code></td>
+<td>目录内容容器</td>
+<td>管理子项，支持分片以优化大规模目录性能。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三如何体现左右子树不体现">三、如何体现左右子树（不体现）</h1>
+<p>没有左右子树的字段，因为目录结构是多叉树</p>
+<h1 id="四leetcode--588题">四、Leetcode  588题</h1>
+<p>设计一个内存文件系统，模拟以下功能：</p>
+<p>实现文件系统类:</p>
+<ul>
+<li><code>FileSystem()</code> 初始化系统对象</li>
+<li><code>List&lt;String&gt; ls(String path)</code></li>
+<li><code>void mkdir(String path)</code> 根据给定的路径创建一个新目录。给定的目录路径不存在。如果路径中的中间目录不存在，您也应该创建它们。</li>
+<li><code>void addContentToFile(String filePath, String content)</code></li>
+<li><code>String readContentFromFile(String filePath)</code> 返回 <code>filePath</code>下的文件内容。
+<img src="https://camo.githubusercontent.com/ca580a65e5ba44458a4aa78aa8598a580a3236ce0a228a13a3bd00683316abb3/68747470733a2f2f666173746c792e6a7364656c6976722e6e65742f67682f646f6f63732f6c656574636f6465406d61696e2f736f6c7574696f6e2f303530302d303539392f303538382e44657369676e253230496e2d4d656d6f727925323046696c6525323053797374656d2f696d616765732f66696c6573797374656d2e706e67" alt=""></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">FileSystem fileSystem = new FileSystem();
+fileSystem.ls(&#34;/&#34;);                         // 返回 []
+fileSystem.mkdir(&#34;/a/b/c&#34;);
+fileSystem.addContentToFile(&#34;/a/b/c/d&#34;, &#34;hello&#34;);
+fileSystem.ls(&#34;/&#34;);                         // 返回 [&#34;a&#34;]
+fileSystem.readContentFromFile(&#34;/a/b/c/d&#34;); // 返回 &#34;hello&#34;
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;sstream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">FileSystem</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="c1">// 文件系统节点结构
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">FileNode</span> <span class="p">{</span>
+        <span class="kt">bool</span> <span class="n">isFile</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>          <span class="c1">// 是否为文件
+</span><span class="c1"></span>        <span class="n">string</span> <span class="n">content</span><span class="p">;</span>                <span class="c1">// 文件内容
+</span><span class="c1"></span>        <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">FileNode</span><span class="o">*&gt;</span> <span class="n">children</span><span class="p">;</span> <span class="c1">// 子节点映射
+</span><span class="c1"></span>    <span class="p">};</span>
+
+    <span class="n">FileNode</span><span class="o">*</span> <span class="n">root</span><span class="p">;</span> <span class="c1">// 根节点指针
+</span><span class="c1"></span>
+    <span class="c1">// 分割路径为组成部分
+</span><span class="c1"></span>    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">splitPath</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">parts</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">||</span> <span class="n">path</span> <span class="o">==</span> <span class="s">&#34;/&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="n">parts</span><span class="p">;</span>
+        
+        <span class="n">istringstream</span> <span class="nf">iss</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">part</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="n">iss</span><span class="p">,</span> <span class="n">part</span><span class="p">,</span> <span class="sc">&#39;/&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">part</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="n">parts</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">part</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">//
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">parts</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 根据路径查找节点
+</span><span class="c1"></span>    <span class="n">FileNode</span><span class="o">*</span> <span class="nf">traverse</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">path</span> <span class="o">==</span> <span class="s">&#34;/&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="n">root</span><span class="p">;</span>
+        
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">splitPath</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+        <span class="n">FileNode</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="nl">part</span> <span class="p">:</span> <span class="n">parts</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">part</span><span class="p">))</span> <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">part</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">FileSystem</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileNode</span><span class="p">();</span> <span class="c1">// 初始化根节点
+</span><span class="c1"></span>    <span class="p">}</span>
+
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">ls</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">FileNode</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">traverse</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">node</span><span class="p">)</span> <span class="k">return</span> <span class="p">{};</span>
+        
+        <span class="c1">// 文件路径：返回文件名
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">isFile</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">find_last_of</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">path</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)};</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 目录路径：返回排序后的子项名称
+</span><span class="c1"></span>        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">child</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="n">first</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">sort</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">result</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">mkdir</span><span class="p">(</span><span class="n">string</span> <span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">splitPath</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+        <span class="n">FileNode</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="nl">part</span> <span class="p">:</span> <span class="n">parts</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">part</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileNode</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">part</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">addContentToFile</span><span class="p">(</span><span class="n">string</span> <span class="n">filePath</span><span class="p">,</span> <span class="n">string</span> <span class="n">content</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">parts</span> <span class="o">=</span> <span class="n">splitPath</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
+        <span class="n">FileNode</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+        
+        <span class="c1">// 确保目录路径存在
+</span><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">parts</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+                <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileNode</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 处理文件名
+</span><span class="c1"></span>        <span class="n">string</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">parts</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">fileName</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">fileName</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileNode</span><span class="p">();</span>
+            <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">fileName</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">isFile</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">current</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">fileName</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">content</span> <span class="o">+=</span> <span class="n">content</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">string</span> <span class="nf">readContentFromFile</span><span class="p">(</span><span class="n">string</span> <span class="n">filePath</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">FileNode</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">traverse</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="o">&amp;&amp;</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">isFile</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">content</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>标准库中的 <a href="https://zhida.zhihu.com/search?content_id=230676846&amp;content_type=Article&amp;match_order=1&amp;q=std%3A%3Agetline%28%29&amp;zhida_source=entity">std::getline()</a> 是一个用于从输入流中读取一行数据的函数。它的函数签名如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">getline</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">is</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">,</span> <span class="kt">char</span> <span class="n">delim</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中，is 是输入流对象，str 是存储读取数据的字符串，delim 是指定的行分隔符（默认为换行符 \n）。</p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li>如何在关系型数据库中存储树形结构</li>
+<li>What is Third Normal Form (3NF)?</li>
+</ul>
+<h2 id="参考数据">参考数据</h2>
+<ul>
+<li>SQL反模式 第三章  单 纯 的 树P29</li>
+<li>SQL Antipatterns.  Naive Trees P34</li>
+</ul>
+<h3 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h3>
+<p>我在寻找一位积极上进的小伙伴，
+一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事情，不妨 试试
+1️⃣ 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt="">
+2️⃣关注公众号:后端开发成长指南(回复“面经”获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt="">
+3️⃣ 回复 面经 获取全部电子书
+参考：<a href="https://mp.weixin.qq.com/s/y94rXLoJCllCXkhfL7d7Hg"># 分布式必读经典书籍</a></p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
+<ul>
+<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，打通任督二脉。</li>
+<li>但是不要给自己这样假设：别人完成就等着自己完成了，这个逃避问题表现,裁员时候别人不会这么想。</li>
+</ul>
+<h5 id="低头走路">低头走路：</h5>
+<ul>
+<li>一次专注做好一个小事。</li>
+<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 ,把基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day19-system-desgin-1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">企业案例04:AI时代分布式存储产品架构长什么样</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/job/1-2025-5-job/">
+            <span class="next-text nav-default">后端开发工程师面经</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Linux高性能网络详解从 DPDK、RDMA 到 XDP（上） - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/RockDB/day2-rdma/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/RockDB/day2-rdma/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7028">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 7028 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-看招聘岗位">1. 看招聘岗位</a></li>
+        <li><a href="#2-只看一本书-我选择这本">2. 只看一本书 我选择这本</a></li>
+        <li><a href="#3-了解作者搜索作者公开视频加速理解">3. 了解作者，搜索作者公开视频，加速理解</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#socket过程">socket过程</a>
+      <ul>
+        <li></li>
+        <li><a href="#小义提问3用户栈内核栈网络协议栈区别">小义提问3：用户栈，内核栈，网络协议栈区别？</a></li>
+      </ul>
+    </li>
+    <li><a href="#以太网卡的数据流">以太网卡的数据流</a>
+      <ul>
+        <li><a href="#小义提问-4rdma-完全不需要内核吗数控分离是什么意思">小义提问 4：rdma 完全不需要内核吗？数控分离是什么意思</a></li>
+        <li><a href="#小义提问5还是看不懂新发明概念dma-可以操作用户态态内存吗">小义提问5：还是看不懂？新发明概念DMA 可以操作用户态态内存吗？</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#序言-了解作者经历">序言 了解作者经历</a>
+      <ul>
+        <li><a href="#第一章节计算机网络概述">第一章节：计算机网络概述</a></li>
+        <li><a href="#小义提问1分片和粘包什么关系">小义提问1：分片和粘包什么关系？</a></li>
+        <li><a href="#-核心区别表">📊 ​<strong>​核心区别表​</strong>​</a></li>
+        <li><a href="#-常见误区澄清">⚠️ ​<strong>​常见误区澄清​</strong>​</a></li>
+        <li><a href="#小义提问什么南北桥与零拷贝什么关系">小义提问：什么南北桥，与零拷贝什么关系？</a></li>
+      </ul>
+    </li>
+    <li><a href="#第三章linux-操作系统">第三章：Linux 操作系统</a></li>
+    <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>点击<!-- raw HTML omitted -->蓝色<!-- raw HTML omitted -->关注。</p>
+<blockquote>
+<p><!-- raw HTML omitted -->文末有福利，先到先得<!-- raw HTML omitted --></p>
+</blockquote>
+<p><img src="https://s2.loli.net/2025/07/15/MD9Gor3FjqEJlOS.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/15/3fCeqQWbwvcUNlj.png" alt=""></p>
+<h1 id="一明确学习目的和方式">一、明确学习目的和方式</h1>
+<h3 id="1-看招聘岗位">1. 看招聘岗位</h3>
+<p><img src="https://s2.loli.net/2025/07/15/mM9SagZDBt3ksV4.png" alt="image.png"></p>
+<p>6.对Ceph、GPFS、3FS、JuiceFS有经验者优先</p>
+<p>技术体验：<br>
+1.有机会接触到大模型场景下的超高性能、超大吞吐量的RDMA存储系统</p>
+<p>2.世界一流的存储网络，200G Infiniband</p>
+<h3 id="2-只看一本书-我选择这本">2. 只看一本书 我选择这本</h3>
+<p><img src="https://s2.loli.net/2025/07/15/ER8O5HcSAVPMtXI.png" alt="上来不要什么都看，精力有限我值选择 看一本"></p>
+<ul>
+<li>来源 <a href="https://www.zhihu.com/question/657890643">https://www.zhihu.com/question/657890643</a></li>
+<li>为了节省成本 我我选择电子书</li>
+<li>电子书上传到微信读书，上下班等公交车看一 看</li>
+</ul>
+<h3 id="3-了解作者搜索作者公开视频加速理解">3. 了解作者，搜索作者公开视频，加速理解</h3>
+<p><img src="https://s2.loli.net/2025/07/15/mxY1jvdafoquVze.png" alt="刘伟老师"></p>
+<ul>
+<li>
+<p>刘伟，拥有 14 年网络设备开发领域的从业经验，当前就职于浪潮电子信息产业股份有限 公司体系结构研究部，负责高性能网卡的架构设计和驱动程序开发工作。在此之前，曾以驱 动团队和网络接入设备产品开发负责人的身份在上海诺基亚贝尔固网事业部工作了 7 年；还 曾经就职于中兴通讯和上海爱吉信息技术有限公司，负责多款通信产品的研发工作</p>
+</li>
+<li>
+<p>作者刘伟老师还在B站放了自己的课程录播，方便学习::浪潮信息驱动工程师： RDMA 高性能架构基本原理、设计方案优点等介绍 | 龙蜥大讲堂 83 期</p>
+</li>
+<li>
+<p>ppt 地址 ：https://www.yuque.com/anolis-docs/courses/peczxk<img src="https://s2.loli.net/2025/07/15/fHzr8ObsKReD1QC.png" alt="">
+<img src="https://s2.loli.net/2025/07/15/zlrBsUKkIYXHO6b.png" alt="大纲"></p>
+</li>
+<li>
+<p>文章：# 高性能网络通信架构 RDMA 的设计与实现https://www.infoq.cn/article/d9w4NK2l1Pi8FIMi24K4</p>
+</li>
+</ul>
+<p>序言:</p>
+<h1 id="二看视频笔记rdma-高性能架构设计--龙蜥大讲堂83期">二、看视频笔记：RDMA 高性能架构设计 | 龙蜥大讲堂83期</h1>
+<h2 id="socket过程">socket过程</h2>
+<p><img src="https://s2.loli.net/2025/07/15/P1QKR4lStFf3ILa.png" alt="socket 通信过程"></p>
+<h5 id="小义提问1-王者可以直接说系统调用耗时大我是青铜我思考是什么是系统调用和函数调用有什么区别">小义提问1 ：王者:可以直接说系统调用耗时大，我是青铜，我思考是什么是系统调用？和函数调用有什么区别？</h5>
+<p><strong>调试用户态程序</strong></p>
+<p><code>int main() {     read(fd, buf, 100); }</code></p>
+<p>用 <code>gdb ./your_binary</code> 调试时：</p>
+<ul>
+<li>你 <strong>看不到内核栈</strong></li>
+<li>因为系统调用发生后，<strong>CPU进入内核态执行的是 OS 的代码，不属于你的进程空间</strong></li>
+</ul>
+<p>📌 所以你在 <code>gdb</code> 里最多能看到调用 <code>read()</code> 这一层，然后就跳出去了</p>
+<table>
+<thead>
+<tr>
+<th>用户态函数</th>
+<th>内核态系统调用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>socket()</code></td>
+<td><code>sys_socket</code></td>
+</tr>
+<tr>
+<td><code>bind()</code></td>
+<td><code>sys_bind</code></td>
+</tr>
+<tr>
+<td><code>listen()</code></td>
+<td><code>sys_listen</code></td>
+</tr>
+<tr>
+<td><code>accept()</code></td>
+<td><code>sys_accept4</code></td>
+</tr>
+<tr>
+<td><code>connect()</code></td>
+<td><code>sys_connect</code></td>
+</tr>
+<tr>
+<td><code>read()</code>/<code>recv()</code></td>
+<td><code>sys_read</code> / <code>sys_recvfrom</code></td>
+</tr>
+<tr>
+<td><code>write()</code>/<code>send()</code></td>
+<td><code>sys_write</code> / <code>sys_sendto</code></td>
+</tr>
+<tr>
+<td><code>close()</code></td>
+<td><code>sys_close</code></td>
+</tr>
+<tr>
+<td>阅读：</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.cnblogs.com/gtarcoder/articles/5278074.html">https://www.cnblogs.com/gtarcoder/articles/5278074.html</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>假设用户运行 <code>bash</code>执行命令：</p>
+<ol>
+<li><code>bash</code>调用 <code>fork()</code>→ ​<strong>​内核为新子进程分配 task_struct 和内核栈​</strong>​</li>
+<li>子进程执行 <code>execve(&quot;/bin/ls&quot;)</code>→ 加载新程序，​<strong>​重置用户栈​</strong>​（原有用户栈被释放）</li>
+<li><code>ls</code>程序调用 <code>write()</code>→ ​<strong>​触发栈切换​</strong>​：
+<ul>
+<li>CPU 自动切到该进程的内核栈</li>
+<li>内核用此栈保存寄存器、参数</li>
+</ul>
+</li>
+<li><code>ls</code>退出 → ​<strong>​内核释放该进程的内核栈和 task_struct</strong></li>
+</ol>
+<ul>
+<li>​<strong>​内核栈是进程描述符（<code>task_struct</code>）的核心成员​</strong>​，其生命周期与进程绑定。</li>
+<li>​<strong>​用户态无法感知内核栈存在​</strong>​，硬件在中断/系统调用时自动切</li>
+</ul>
+<p>切换过程如下：
+<img src="https://s2.loli.net/2025/07/15/p1viI5f9LCTWSZN.png" alt="image.png"></p>
+<p>另外一个例子：
+05 | 栈的魔法：从栈切换的角度理解进程和协程</p>
+<p>为什么一次 fork 后，会有两种不同的返回值？这是
+因为 fork 方法本质上在系统里创建了两个栈，这两个栈一个是父进程的，一个是子进程的。
+创建的时候，子进程完全“继承”了父进程的所有数据，包括栈上的数据</p>
+<p><img src="https://s2.loli.net/2025/07/15/FxrkIqGP41ptDBR.png" alt="参考资料"></p>
+<h5 id="小义提问2-内核栈多大长什么样子">小义提问2 ：内核栈多大，长什么样子</h5>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>Linux 早期（&lt;4.x）</th>
+<th>Linux 5.x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task_struct</code> 和内核栈</td>
+<td>一起分配（紧凑）</td>
+<td>分开分配</td>
+</tr>
+<tr>
+<td><code>thread_info</code></td>
+<td>独立结构</td>
+<td>内嵌在内核栈底部</td>
+</tr>
+<tr>
+<td><code>task_struct</code> 如何找栈</td>
+<td>指针 <code>task-&gt;stack</code></td>
+<td>同样</td>
+</tr>
+<tr>
+<td>内核如何找回当前任务</td>
+<td>栈 → thread_info → task</td>
+<td>每 CPU 存 <code>current_task</code> 指针，优化性能</td>
+</tr>
+</tbody>
+</table>
+<p>参考：</p>
+<ul>
+<li>kernel 3.10内核源码分析&ndash;内核栈及堆栈切换https://100why.cn/content/1894681.html</li>
+<li>Linux进程内核栈与thread_info结构详解&ndash;Linux进程的管理与调度（九）
+<a href="https://blog.csdn.net/gatieme/article/details/51577479">https://blog.csdn.net/gatieme/article/details/51577479</a></li>
+<li>进程在内核态运行时需要自己的堆栈信息, 因此linux内核为每个进程都提供了一个内核栈kernel stack</li>
+<li>在 Linux 5.x 中，<code>task_struct</code> 是单独分配的结构，而内核栈是通过 <code>alloc_thread_stack_node()</code> 分配的固定大小内存（8KB/16KB），<br>
+<code>task_struct</code> 里包含了一个 <code>stack</code> 指针，用来指向它自己的内核栈</li>
+</ul>
+<h3 id="小义提问3用户栈内核栈网络协议栈区别">小义提问3：用户栈，内核栈，网络协议栈区别？</h3>
+<table>
+<thead>
+<tr>
+<th><strong>维度​</strong>​</th>
+<th>​<strong>​用户栈 (User Stack)​</strong>​</th>
+<th>​<strong>​内核栈 (Kernel Stack)​</strong>​</th>
+<th>​<strong>​网络协议栈 (Network Stack)​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​所属空间​</strong>​</td>
+<td>用户空间</td>
+<td>内核空间</td>
+<td>内核空间（部分逻辑在用户空间）</td>
+</tr>
+<tr>
+<td>​<strong>​所有者​</strong>​</td>
+<td>​<strong>​每个用户进程独有​</strong>​</td>
+<td>​<strong>​每个进程/线程独有​</strong>​</td>
+<td>​<strong>​全局共享​</strong>​（所有进程共用）</td>
+</tr>
+<tr>
+<td>​<strong>​核心作用​</strong>​</td>
+<td>存储用户程序运行时的临时数据</td>
+<td>存储内核态代码执行时的上下文</td>
+<td>分层处理网络数据包（收发、路由等）</td>
+</tr>
+<tr>
+<td>​<strong>​操作对象​</strong>​</td>
+<td>函数参数、返回地址、局部变量等</td>
+<td>系统调用参数、中断上下文、寄存器值</td>
+<td>网络数据包（<code>sk_buff</code>结构）</td>
+</tr>
+<tr>
+<td>​<strong>​生命周期​</strong>​</td>
+<td>进程创建时分配，退出时销毁</td>
+<td>进程创建时分配，退出时销毁</td>
+<td>系统启动时初始化，关机时销毁</td>
+</tr>
+<tr>
+<td>​<strong>​触发场景​</strong>​</td>
+<td>用户函数调用</td>
+<td>系统调用、中断、异常</td>
+<td>数据包到达网卡/用户发送网络请求</td>
+</tr>
+<tr>
+<td>​<strong>​访问权限​</strong>​</td>
+<td>用户程序可读写</td>
+<td>仅内核态代码可访问</td>
+<td>仅内核态代码可访问</td>
+</tr>
+<tr>
+<td>​<strong>​典型大小​</strong>​</td>
+<td>MB 级（可动态扩展）</td>
+<td>固定 8KB~16KB</td>
+<td>无固定大小，动态管理缓冲池</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>sk_buff</code> 是 Linux 内核网络子系统中用于<strong>描述网络数据包的结构体</strong>，它是放在内核堆（heap）里的<strong>内核数据结构</strong>，<strong>不是内核栈，也不会存在于栈空间</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th><code>sk_buff</code></th>
+<th>内核栈（kernel stack）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是什么</td>
+<td>struct sk_buff，用于描述网络包及其元数据</td>
+<td>每个线程进入内核时分配的执行栈</td>
+</tr>
+<tr>
+<td>属于哪块内存</td>
+<td>内核堆（kmalloc、slab 分配器）</td>
+<td>内核栈空间（固定 8KB / 16KB）</td>
+</tr>
+<tr>
+<td>生命周期</td>
+<td>由网络子系统控制，通常存在较长时间</td>
+<td>临时的：只在系统调用、中断期间生效</td>
+</tr>
+<tr>
+<td>数据用途</td>
+<td>包含 IP/TCP 头、payload、控制信息等</td>
+<td>保存内核函数的调用栈、局部变量、返回地址等</td>
+</tr>
+<tr>
+<td>是否可以被中断使用</td>
+<td>✅ 可以被软中断等使用</td>
+<td>❌ 内核栈不可重入、不可并发使用</td>
+</tr>
+<tr>
+<td>每线程是否唯一</td>
+<td>❌ 否，多个线程共享使用</td>
+<td>✅ 是，每个线程一个内核栈</td>
+</tr>
+<tr>
+<td><img src="https://s2.loli.net/2025/07/15/mMNZgiP5LARW8pI.png" alt=""></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Linux内核：sk_buff解析
+<a href="https://www.cnblogs.com/tzh36/p/5424564.html">https://www.cnblogs.com/tzh36/p/5424564.html</a></p>
+<p><a href="https://linuxkernel.org.cn/doc/html/latest/networking/skbuff.html">https://linuxkernel.org.cn/doc/html/latest/networking/skbuff.html</a></p>
+<h2 id="以太网卡的数据流">以太网卡的数据流</h2>
+<p><img src="https://s2.loli.net/2025/07/15/roB3vUbHfDwhLd9.png" alt=""></p>
+<ul>
+<li>需要CPU全程参与数据包的封装和解析， 在数据量大时将对CPU将造成很重的负担。
+<img src="https://s2.loli.net/2025/07/15/xZgvFBhL389D64f.png" alt="RDMA的控制通路和数据通路"></li>
+</ul>
+<h3 id="小义提问-4rdma-完全不需要内核吗数控分离是什么意思">小义提问 4：rdma 完全不需要内核吗？数控分离是什么意思</h3>
+<table>
+<thead>
+<tr>
+<th>比较维度</th>
+<th>控制通路（Control Path）</th>
+<th>数据通路（Data Path）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主要职责</td>
+<td>初始化资源，准备通信</td>
+<td>发送、接收数据</td>
+</tr>
+<tr>
+<td>是否需内核？</td>
+<td>✅ 是</td>
+<td>否（用户态完成）</td>
+</tr>
+<tr>
+<td>是否频繁调用？</td>
+<td>初始化阶段调用一次</td>
+<td>✅ 高频调用</td>
+</tr>
+<tr>
+<td>是否绕过内核？</td>
+<td>否</td>
+<td>✅ 是，zero-copy</td>
+</tr>
+<tr>
+<td>是否性能敏感？</td>
+<td>否</td>
+<td>✅ 是（对吞吐和延迟非常敏感）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RDMA（Remote Direct Memory Access）架构中的​<strong>​控制通路​</strong>​和​<strong>​数据通路​</strong>​分离是高性能网络的核心设计，这种分层模型彻底解耦了资源管理和数据传输，以下是深度解析：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>🔌 ​<strong>​控制通路 (Control Path)​</strong>​</p>
+<p>​<strong>​作用​</strong>​</p>
+<p>在内核态​<strong>​创建、配置和管理通信资源​</strong>​，确保数据通路的可靠性和安全性。
+​<strong>​核心操作​</strong>​</p>
+<ol>
+<li>
+<p>​<strong>​QP（Queue Pair）创建​</strong>​</p>
+<ul>
+<li>发送队列（SQ）和接收队列（RQ）组成，需内核分配内存并初始化权限。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​MR（Memory Region）注册​</strong>​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// 用户态：申请内存并注册为 MR
+void *buf = malloc(SIZE);
+ibv_reg_mr(pd, buf, SIZE, IBV_ACCESS_REMOTE_WRITE);
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>内核将​<strong>​用户内存的物理地址映射​</strong>​给网卡，供远程直接访问。</li>
+<li>​<strong>​内存钉住（Pinning）​</strong>​：锁定物理页禁止换出（确保 DMA 地址有效）。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​CQ（Completion Queue）关联​</strong>​</p>
+<ul>
+<li>内核建立事件通知机制，当数据传输完成时通知用户态。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>⚠️ ​<strong>​为何需进入内核态？​</strong>​<br>
+资源涉及硬件访问、内存隔离、进程权限等敏感操作，必须由内核强制保护！</p>
+</blockquote>
+<hr>
+<p>🚀 ​<strong>​数据通路 (Data Path)​</strong>​
+​<strong>​作用​</strong>​
+在用户态​<strong>​直接发起和接收数据​</strong>​，完全绕过内核和 CPU 拷贝。</p>
+<h4 id="核心操作">​<strong>​核心操作​</strong>​</h4>
+<ol>
+<li>
+<p>​<strong>​RDMA Write​</strong>​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// 用户态：直接向对端内存写入数据（无需对方参与）
+ibv_post_send(qp, &amp;wr); // wr 指定远程 MR 地址和数据
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>左侧网卡通过 DMA 读取本地内存 → 封装报文 → 右侧网卡 DMA 写入目标内存。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​RDMA Read​</strong>​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// 用户态：直接从对端内存读取数据
+ibv_post_send(qp, &amp;rdma_read_wr);
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>左侧网卡向右侧发起读取请求 → 右侧网卡 DMA 读取内存 → 返回数据到左侧内存。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​完成通知​</strong>​</p>
+<ul>
+<li>传输完成后，网卡向 CQ 写入事件 → 用户态轮询 CQ 或通过事件驱动获知结果。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>✅ ​<strong>​核心优势​</strong>​：</p>
+<ul>
+<li>​<strong>​零内核切换​</strong>​：数据传输无需陷入内核（ns 级延迟）</li>
+<li>​<strong>​零 CPU 拷贝​</strong>​：网卡 DMA 直达用户内存</li>
+<li>​<strong>​零协议栈开销​</strong>​：卸载 TCP/IP 协议处理到网卡（RoCE/InfiniBand）</li>
+</ul>
+</blockquote>
+<h3 id="小义提问5还是看不懂新发明概念dma-可以操作用户态态内存吗">小义提问5：还是看不懂？新发明概念DMA 可以操作用户态态内存吗？</h3>
+<p><img src="https://s2.loli.net/2025/07/15/HsXSNlRVKLPBU1t.png" alt="RDMA网卡的数据流"></p>
+<ul>
+<li>
+<p>​DMA的核心目标是<strong>解放CPU</strong>，</p>
+</li>
+<li>
+<p>直接内存访问（Direct Memory Access, DMA）技术的核心是<strong>允许外部设备绕过 CPU 直接与内存进行数据读写</strong>，从而<strong>显著减轻 CPU 负担并提升数据传输效率</strong>。</p>
+</li>
+</ul>
+<p><img src="https://picx.zhimg.com/v2-a4583e06e54be9ccd7cf07941dbf0b51_1440w.jpg" alt="dma 访问内核态"></p>
+<ul>
+<li>内存 当然可以是用户态的
+在嵌入式驱动开发中，我们经常需要将大量数据从内存传输到设备，或者反过来。 如果你还在用 memcpy() + write() 来搬数据，那你的驱动性能可能只发挥了 30%。 要想高效，就得引入DMA（Direct Memory Access）机制 —— 让设备绕过CPU、直连内存，高速搬运。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"># DMA驱动机制详解——高效数据搬运与 zero-copy 的实现路径
+
+内核态 dma_alloc_coherent()
+↓ 映射 buffer 到用户空间
+
+用户态 mmap buffer
+
+↓ DMA copy
+
+设备访问
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://s2.loli.net/2025/07/15/yUKTwWSNMVaqRIb.png" alt="RDMA软件架构总览"></p>
+<p><img src="https://s2.loli.net/2025/07/15/pSJHABTWiKsDFuv.png" alt="image.png">
+<img src="https://s2.loli.net/2025/07/15/GqRXtvOckNxHU8f.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/15/I4rGuB1FlZbQh7R.png" alt=""></p>
+<h1 id="三看---linux高性能网络详解从-dpdkrdma-到-xdp上">三、看   Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）</h1>
+<h2 id="序言-了解作者经历">序言 了解作者经历</h2>
+<p>今年是我毕业后进入通信行业的第 14 个年头。这些年来通信行业迅猛发展，新技术层出</p>
+<p>不穷。从无线网络的 3G、4G、5G，到固定宽带的 DSL、GPON、EPON、NG-PON2，各种凝</p>
+<p>聚了通信领域研发人员智慧和汗水的新技术不仅改善了人们的生活，也让我们国家在高科技</p>
+<p>领域不断缩小和发达国家的差距，甚至在某些领域实现反超。身处时代发展的浪潮之中，每</p>
+<p>每想起我自己的工作也为社会进步贡献了绵薄之力，世界各地都在运行着自己参与研发的设</p>
+<p>备，就会心潮澎湃。</p>
+<p>从毕业后进入一家小公司——上海爱吉开始，到后来工作过的中兴通讯和上海诺基亚贝</p>
+<p>尔，我一直都在参与各种通信设备的研发工作，并且始终在嵌入式软件领域深耕细作。嵌入</p>
+<p>式软件工程师，是一个对工作者拥有的计算机知识的广度和深度要求都比较高的岗位，所涉</p>
+<p>及的领域从应用程序的需求，到操作系统的架构；从各种总线的配置，到对硬件行为的理解。</p>
+<p>嵌入式软件从业人员需要与各种软件和硬件模块的负责人沟通协作。工作繁忙的同时，也得</p>
+<p>到了大量锻炼个人技能的机会。</p>
+<p>由于工作需要，我阅读了大量 Linux 操作系统以及网络相关的书籍和资料，在从大师们</p>
+<p>的作品中汲取知识的同时，也惊叹于他们对系统细致入微的理解和深入浅出的讲解。因此一</p>
+<p>直以来都非常希望能像他们一样，写出自己的作品。不过在写作本书之前，虽然平时颇有些</p>
+<p>技术积累，也时常进行知识分享，但始终无法成体系，所以一直未能如愿。</p>
+<p>2020 年 4 月以来，由于个人兴趣，加上朋友的建议，我开通了公众号“布鲁斯的读书圈”，</p>
+<p>并时常在上面发表一些读书笔记和技术见解，慢慢地积累了一些彼此联系比较紧密的系列文</p>
+<p>章。在进入浪潮公司后，由于部门领导的信任，我有幸负责了浪潮基于 FPGA 的 RDMA 网卡</p>
+<p>的技术调研、方案设计以及驱动程序和测试工具的开发工作，由此进入高性能网卡研究领域。</p>
+<p>其间也调查了其他一些高性能网络方案的原理和实现，比如 DPDK、XDP 等，并为一个开源</p>
+<p>的基于 FPGA 的 100G 网卡方案 Corundum 编写了 DPDK 驱动程序。</p>
+<p>本书以作者亲身的工作研究和总结为基础，从软硬件结合的视角详细论述了几种基于</p>
+<p>Linux 系统的新兴高性能网络技术方案，主要涉及 DPDK、RDMA、XDP 等。本书图文并茂、</p>
+<p>深入浅出，既有高屋建瓴的原理阐述与分析，也有抽丝剥茧的核心代码讲解，还有细致入微</p>
+<p>的实战操作技巧和数据结果，体现了作者对驱动技术娴熟的驾驭能力，是一本十分精彩的、</p>
+<p>贴合 Linux 驱动开发工程师学习路线的参考指导书。</p>
+<h3 id="第一章节计算机网络概述">第一章节：计算机网络概述</h3>
+<ul>
+<li>以太网是目前应用最普遍的局域网技术。（机房）</li>
+<li>协议栈 计算机网络体系结构的具体的软件实现</li>
+<li>封装和解析</li>
+<li>最大传输单元</li>
+</ul>
+<p>最大传输单元（maximum transmission unit，MTU）是指数据链接层上能通过的最大负载</p>
+<p>的大小（以字节为单位）。标准以太网的 MTU 是 1500 字节。</p>
+<ul>
+<li>分片</li>
+</ul>
+<p>如果 IP 层有数据包要发送，而数据包的长度超过了 MTU，IP 层就要对数据包进行分片</p>
+<p>（fragmentation）操作，使每一片的长度都小于或等于 MTU。我们假设要传输一个 UDP 数据</p>
+<p>包，以太网的 MTU 为 1500 字节，一般 IP 报头为 20 字节，UDP 报头为 8 字节，数据的净荷</p>
+<p>（payload）部分预留是 1500−20−8=1472 字节。如果数据部分大于 1472 字节，就会出现分片</p>
+<p>现象。</p>
+<ul>
+<li>交换机 与路由器区别？</li>
+<li>交换机是一种多端口的网络桥接器（network bridge），工作在数据链路层，即 OSI 体系结构的第二层</li>
+<li>路由器</li>
+</ul>
+<p>路由器是一种网络设备，提供路由与转发两种重要机制。路由器可以决定数据包由源端</p>
+<p>到目的端所经过的路径（即主机到主机的传输路径），这个过程称为路由；在路由器内部，</p>
+<p>路由器还可以将输入端的数据包转发至适当的输出端，这个过程称为转发。 路由器工作在 OSI</p>
+<p>体系结构的第三层，即网络层。</p>
+<h3 id="小义提问1分片和粘包什么关系">小义提问1：分片和粘包什么关系？</h3>
+<table>
+<thead>
+<tr>
+<th><strong>度​</strong>​</th>
+<th>​<strong>​分片 (Fragmentation)​</strong>​</th>
+<th>​<strong>​粘包 (Packet Merging)​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​发生层级​</strong>​</td>
+<td>网络层（IP协议）</td>
+<td>传输层（TCP协议）</td>
+</tr>
+<tr>
+<td>​<strong>​触发原因​</strong>​</td>
+<td>数据包长度 &gt; 路径 MTU（最大传输单元）</td>
+<td>TCP 的流式传输特性 + Nagle 算法优化</td>
+</tr>
+<tr>
+<td>​<strong>​责任方​</strong>​</td>
+<td>路由器或发送端主机</td>
+<td>TCP 协议栈（发送/接收缓冲区管理）</td>
+</tr>
+<tr>
+<td>​<strong>​数据单位​</strong>​</td>
+<td>IP 数据包 (Packet)</td>
+<td>应用层消息 (Message)</td>
+</tr>
+<tr>
+<td>​<strong>​重组位置​</strong>​</td>
+<td>接收端网络层重组</td>
+<td>接收端应用层解析</td>
+</tr>
+<tr>
+<td>​<strong>​是否必要特性​</strong>​</td>
+<td>是（IP协议核心功能）</td>
+<td>是（TCP协议设计结果，非缺陷）</td>
+</tr>
+<tr>
+<td>​<strong>​解决协议​</strong>​</td>
+<td>IP 分片字段 (DF/MF/Offset)</td>
+<td>应用层协议定义边界（如 Length-Header）</td>
+</tr>
+<tr>
+<td>​<strong>​典型场景​</strong>​</td>
+<td>跨广域网传输（MTU 不一致）</td>
+<td>短时间高频小包发送（如RPC请求）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://s2.loli.net/2025/07/15/tK2RAe46Clcahjm.png" alt="分片（Fragmentation）和粘包（Packet Merging"></p>
+<ul>
+<li>分片丢失导致整个包作废（不支持部分送达）
+<img src="https://s2.loli.net/2025/07/15/dKaI6P1hxukHrFs.png" alt="合并小包提升传输效率"></li>
+</ul>
+<p>分片（Fragmentation）和粘包（Packet Merging）是​<strong>​网络数据传输中两个不同层级、不同原因的现象​</strong>​，但它们共同指向​<strong>​数据重组问题​</strong>​。以下是深度对比解析：</p>
+<hr>
+<ul>
+<li>网卡作为需要高速处理数据的设备，一般是通过 PCIe 总线和 CPU 相连，大多数网卡安装在普通家用计算机、小型工作站以及消费级电子产品上，这些应用场景</li>
+</ul>
+<p>对速率的要求不高，一般情况下使用 1 个 1Gbit/s 及以下速率的网卡即可满足需求</p>
+<ul>
+<li>Mellanox MCX4121A-XCAT
+统接口为 PCIe 3.0(8.0GT/s)×8。支持普</li>
+</ul>
+<p>通以太网和 RoCE（RDMA over Converged Ethernet）功能。</p>
+<h3 id="-核心区别表">📊 ​<strong>​核心区别表​</strong>​</h3>
+<table>
+<thead>
+<tr>
+<th>​<strong>​维度​</strong>​</th>
+<th>​<strong>​分片 (Fragmentation)​</strong>​</th>
+<th>​<strong>​粘包 (Packet Merging)​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​发生层级​</strong>​</td>
+<td>网络层（IP协议）</td>
+<td>传输层（TCP协议）</td>
+</tr>
+<tr>
+<td>​<strong>​触发原因​</strong>​</td>
+<td>数据包长度 &gt; 路径 MTU（最大传输单元）</td>
+<td>TCP 的流式传输特性 + Nagle 算法优化</td>
+</tr>
+<tr>
+<td>​<strong>​责任方​</strong>​</td>
+<td>路由器或发送端主机</td>
+<td>TCP 协议栈（发送/接收缓冲区管理）</td>
+</tr>
+<tr>
+<td>​<strong>​数据单位​</strong>​</td>
+<td>IP 数据包 (Packet)</td>
+<td>应用层消息 (Message)</td>
+</tr>
+<tr>
+<td>​<strong>​重组位置​</strong>​</td>
+<td>接收端网络层重组</td>
+<td>接收端应用层解析</td>
+</tr>
+<tr>
+<td>​<strong>​是否必要特性​</strong>​</td>
+<td>是（IP协议核心功能）</td>
+<td>是（TCP协议设计结果，非缺陷）</td>
+</tr>
+<tr>
+<td>​<strong>​解决协议​</strong>​</td>
+<td>IP 分片字段 (DF/MF/Offset)</td>
+<td>应用层协议定义边界（如 Length-Header）</td>
+</tr>
+<tr>
+<td>​<strong>​典型场景​</strong>​</td>
+<td>跨广域网传输（MTU 不一致）</td>
+<td>短时间高频小包发送（如RPC请求）</td>
+</tr>
+<tr>
+<td>问内存的情况。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>非统一内存访问（non-uniform memory access，NUMA）技术的出现就是为了克服 SMP</p>
+<p>的上述缺点。NUMA 提供分离的存储器（内存）给处理器，大幅降低当多个处理器核访问同</p>
+<p>一个存储器时因等待产生的性能损失</p>
+<hr>
+<h3 id="-常见误区澄清">⚠️ ​<strong>​常见误区澄清​</strong>​</h3>
+<h4 id="误区1tcp粘包是协议缺陷">误区1：&ldquo;TCP粘包是协议缺陷&rdquo;</h4>
+<p>✅ 真相：粘包是 ​<strong>​TCP流式传输特性​</strong>​ 的自然结果，不是错误，而是通过应用层协议设计解决的问题。</p>
+<h4 id="误区2分片和粘包会同时发生">误区2：&ldquo;分片和粘包会同时发生&rdquo;</h4>
+<p>✅ 真相：</p>
+<ul>
+<li>​<strong>​分片在TCP之下发生​</strong>​，对应用透明</li>
+<li>​<strong>​粘包在TCP之上发生​</strong>​，需应用处理
+→ 二者层次隔离，无直接关联</li>
+</ul>
+<h4 id="误区3udp既不分片也不粘包">误区3：&ldquo;UDP既不分片也不粘包&rdquo;</h4>
+<p>✅ 修正：</p>
+<ul>
+<li>
+<p>UDP ​<strong>​支持IP分片​</strong>​（DF标志为0时）</p>
+</li>
+<li>
+<p>UDP ​<strong>​没有粘包​</strong>​（但应用需处理丢包和乱序）</p>
+<pre><code>  ## 第二章 硬件
+</code></pre>
+</li>
+</ul>
+<h3 id="小义提问什么南北桥与零拷贝什么关系">小义提问：什么南北桥，与零拷贝什么关系？</h3>
+<p><img src="https://s2.loli.net/2025/07/15/XeqbzZRYWr3xTh8.png" alt="# 每个程序员都应该了解的内存知识(一): 南桥&北桥&内存"></p>
+<ul>
+<li>
+<p>​<strong>​南北桥​</strong>​：代表​<strong>​中心化控制的I/O架构​</strong>​（南桥集权、北桥协管），适合低带宽时代；</p>
+</li>
+<li>
+<p>​<strong>​RDMA​</strong>​：代表​<strong>​去中心化的硬件直连架构​</strong>​（网卡与内存直接对话），契合高性能计算需求</p>
+</li>
+<li></li>
+</ul>
+<h2 id="第三章linux-操作系统">第三章：Linux 操作系统</h2>
+<ul>
+<li>如果说硬件是计算机系统的骨骼，那么软件就是计算机系统的灵魂</li>
+<li><img src="https://s2.loli.net/2025/07/15/Qjaemzgq3NkuT8R.png" alt="组成部分"></li>
+<li>中断</li>
+<li>DMA
+直接存储器访问（direct memory access， DMA）意为外设对内存的读写过程可以不用 CPU</li>
+</ul>
+<p>参与而直接进行。</p>
+<p>CPU 的最主要的工作是计算和控制，而不是进行数据复制，数据复制的工作白白浪费了</p>
+<p>CPU 的计算能力，也减弱了它对全局的控制力。为了让 CPU 投入更有意义的工作中，人们设</p>
+<p>计了 DMA 机制，比如总线上挂一个 DMA 控制器（现在一般网卡内部就自带这个功能），专</p>
+<p>门用来读写内存。有了 DMA 控制器以后，当网卡想要从内存中复制数据时，除了一些必要</p>
+<p>的控制命令，整个数据复制过程都是由 DMA 控制器完成的</p>
+<p>CPU 除了关注一下这个过程的开始和结束，其他时间可以</p>
+<p>做别的事情</p>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p>我在寻找一位积极上进的小伙伴，</p>
+<p>一起参与<strong>神奇早起 30 天改变人生计划</strong>，做一个伟大产品取悦自己，不妨试试</p>
+<p> 1️⃣关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）获取过去我<strong>全部面试录音</strong>和面试复盘</p>
+<p><img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<p>2️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p> 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖</p>
+<p><img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt=""></p>
+<p>本群目标是：</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+<h4 id="低头走路一次专注做好一个小事">低头走路：一次专注做好一个小事</h4>
+<ul>
+<li>不扫一屋 何以扫天下。</li>
+<li>让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/2025-4-26_ceph/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Ceph分布式锁的设计哲学与工程实践</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/job/day3-job-inter/">
+            <span class="next-text nav-default">【换工作】别想太多--只管去面</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

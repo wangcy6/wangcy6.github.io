@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ai简历从0到1构建个人副业闭环 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/NO1-SOP-job/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Ai简历从0到1构建个人副业闭环" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/NO1-SOP-job/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-12T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Ai简历从0到1构建个人副业闭环">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3401">
+<meta itemprop="keywords" content="sop," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ai简历从0到1构建个人副业闭环"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Ai简历从0到1构建个人副业闭环</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-12 00:00 </span>
+        
+          <span class="more-meta"> 约 3401 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-渠道平台">2.1 渠道平台</a>
+      <ul>
+        <li><a href="#咸鱼">咸鱼</a></li>
+        <li><a href="#淘宝">淘宝</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#基本流程">基本流程</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#套模板">套模板：</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#-开源自荐简历在线制作网站"># 【开源自荐】简历在线制作网站</a></li>
+        <li><a href="#-卡码简历"># 卡码简历</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#我是谁">我是谁</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="一-为什么从修改简历入手">一、 为什么从修改简历入手</h1>
+<blockquote>
+<p>源于个人需求，感觉自己公司不行，自己项目经历不行，
+推迟好几年不敢写简历，没有认真准备，错过面试黄金时刻。</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2025/07/10/eF6Zgsphz793KBR.png" alt="">
+<img src="https://s2.loli.net/2025/07/10/b9ek75cULjNuTG4.png" alt="">
+<img src="https://s2.loli.net/2025/07/10/umYxsLPcNkBbAnE.png" alt="">
+<img src="https://s2.loli.net/2025/07/10/16l52kKrqMVZiuc.png" alt="">
+需要的技能
+<img src="https://s2.loli.net/2025/07/10/kHbihnJj1GULqzE.png" alt=""></p>
+<h1 id="二引流接单">二、引流接单</h1>
+<h2 id="21-渠道平台">2.1 渠道平台</h2>
+<h3 id="咸鱼">咸鱼</h3>
+<p>day1：</p>
+<ul>
+<li>账号注册</li>
+<li>找对标账号</li>
+<li>维护号人设信息</li>
+<li>发布商品</li>
+<li><a href="https://tool56.com/check-word/">https://tool56.com/check-word/</a>
+day2：</li>
+<li>商品运营</li>
+</ul>
+<h3 id="淘宝">淘宝</h3>
+<h5 id="向阳苗教育旗舰店">向阳苗教育旗舰店</h5>
+<p>应聘流程
+1.介绍下自己的学历专业毕业院校擅长领域，
+2.淘宝下一元订单 确认收货后凭单号+好评截图返现（微信收款码返现）
+以上两步完成联系我拉您进企业接单群</p>
+<p>好评截图和微信收款码发下给您返现</p>
+<h4 id="泊伊芬教育旗舰店">泊伊芬教育旗舰店</h4>
+<p>淘宝流程：
+亲，欢迎前来应聘，进群即可接单，留存一下手机号或V，应聘流程：拍1元订金，带订单号对接人事后给您秒退的 ，平台担保，您放心拍哈</p>
+<p>应聘流程：拍1元订金，带订单号对接人事后给您秒退的 ，平台担保，您放心拍哈</p>
+<p>这边应聘需要订单号录入系统，做个登记，加上面试官之后立刻退还，平台担保</p>
+<p><img src="https://s2.loli.net/2025/07/11/eyxLUP7hZs2I6g9.png" alt="不要添加">
+添加微信之后的流程
+1.辛苦您确认收货 ，发一下好评截图
+（评价老师写作很好之类的语句 即可）
+2.再发下您的微信收款码， 这边安排财务立反
+3.然后发您邀请链接
+应聘流程：需要店铺下1单，1元，然后订单号，收款码发我,1元立返的；</p>
+<p>付款之后</p>
+<p>李媛媛:
+点击链接加入我的企业“武汉知渝文化有限公司”，一起开启全新办公体验吧。
+<a href="https://work.weixin.qq.com/join/lnsnXJM4jdJp9bZ9G7Xw1g/hb_share_mng_index">https://work.weixin.qq.com/join/lnsnXJM4jdJp9bZ9G7Xw1g/hb_share_mng_index</a></p>
+<p>李媛媛:
+48小时内邀请进群，勿催，勿催，勿催！！！进群后，请仔细阅读群公告有结算流程和接单流程！咨询量大，重复的问题一律不回复！</p>
+<p>李媛媛:
+手机号必须真实，不然无法接单！接单后必须能联系上！！！</p>
+<h4 id="冠鹰博学精英专卖店">冠鹰博学精英专卖店</h4>
+<p>淘宝：
+入职流程:<br>
+拍下1分订单，客服会发您人事二维码<br>
+人事会告知您入职具体要求<br>
+店铺只做引流，有任何问题可以直接联系人事</p>
+<p>付款之后</p>
+<p>V扫码添加 申请过之后等待审核通过，备注订单号，审核通过后会收到通过提示（72小时内 请耐心等待不要重复添加）</p>
+<p>2824451508484722278</p>
+<h4 id="peridona服务旗舰店">peridona服务旗舰店</h4>
+<ol>
+<li>淘宝客服沟通：</li>
+</ol>
+<p>亲这边应聘拍两个1元的订单，这边人事有便于区分您是来应聘的， 这边拍单完毕后您这边不需要后续申请退款 人事加您后会给您返款</p>
+<p>记得应聘结束前不要退款哦亲，人事还需要根据订单号确认您，加上人事后他会给您秒退的，提前退款视为放弃应聘的</p>
+<p>拍下跟我说哦！</p>
+<p>2、 付款1元后</p>
+<p>扫码以后申请备注淘宝写手+拍下的任意一个订单号，耐心等待就行
+24小时内单号审核后统一通过，您这边耐心等待即可！</p>
+<h4 id="多份多旗舰店">多份多旗舰店</h4>
+<ol>
+<li>淘宝沟通
+亲走个流程</li>
+</ol>
+<p>拍下一单即可 我对接师傅 合适不合适都会退您的  我拿个单号 走个流程~ 和师傅交接
+2 购买之后</p>
+<p>点击确认退款后联系师傅</p>
+<p>订单编号：2824499570124722278<br>
+订单状态：待收货<br>
+订单总付款：1.00<br>
+买家旺旺：wang_cyi<br>
+下单时间：2025-07-11 19:23:46<br>
+付款时间：2025-07-11 19:24:02</p>
+<p><img src="https://img.alicdn.com/imgextra/i1/2218452087330/O1CN01uMMDFl241CEbwlFd9_!!2218452087330-0-ampmedia.jpg" alt="">
+3. 添加微信之后</p>
+<p>感谢您的选择，追梦路上与您同行，工作与学习路上也请您注意身体！</p>
+<p>发送要求马上给您处理～
+发送要求马上给您处理～</p>
+<p>投诉部门：15237920151
+【无论情况不在淘包下单交易的全部属于诈骗被骗与企业无关必须走平台交易，被骗前举报客服有巨奖！】
+举报奖励10-1000元以上！
+举报客服私下收款有巨奖！必须走淘宝保障您权益！</p>
+<p>（⚠️公司不接受任何违法、违规、造假内容的订单，包括但不限于篡改银行流水、伪造合同、涉及黄赌毒、颠覆政府等行为。在服务期间不接此类订单，违法不做。同时不制作印章及涉及党和国家、政府相关内容的服务）</p>
+<p>回复慢可以淘宝留言哦马上跟进亲亲～</p>
+<h4 id="迪尔文旗舰店">迪尔文旗舰店</h4>
+<ol>
+<li>淘宝客服</li>
+</ol>
+<p>亲  您这边方便拍个1元的意向金 我这给您安排个老师一对一 对接一下</p>
+<p>2、 1元支付之后</p>
+<p><img src="https://img.alicdn.com/imgextra/i2/1065664361/O1CN019ZoU1V1i5OJdIH4Lj_!!1065664361-0-ampmedia.jpg" alt="">
+1麻烦备注：迪尔文-wang_cyi-兼职内容
+您按照这个格式联系下这个老师和您沟通的哈</p>
+<p>没看评论：</p>
+<ul>
+<li>假的，骗钱的，说的秒退也不退钱，加上微信也是答非所问的以各种理由让投资，真真的骗子，大家都别上当了</li>
+</ul>
+<h1 id="三与客户沟通流程">三、与客户沟通流程</h1>
+<h2 id="基本流程">基本流程</h2>
+<p><strong>1）第一步，先了解客户基本信息+想要应聘的岗位</strong></p>
+<p>我们接触到客户的时候，我们就可以直接向客户要一份他之前的简历。
+如果没有之前的简历，需要让客户提供他的一个<strong>基本信息+需求</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Plain" data-lang="Plain">1. 个人信息
+姓名
+联系方式（手机号码、电子邮件）
+居住地（可选）
+
+2. 求职意向
+清晰表明你希望应聘的职位，或你对哪个行业/岗位感兴趣。
+
+3. 教育背景
+学校名称、专业、学位
+起止时间
+
+4. 实习经验（如有）
+公司名称、职位
+实习起止时间
+主要职责：描述你在实习期间的任务
+取得的成果或贡献：尽量量化，如“帮助提高效率10%”
+
+5. 项目经验（如有）
+项目名称、角色
+起止时间
+项目描述：简要说明项目内容
+你的职责：你在团队中的角色及具体工作
+项目成果：项目取得的成就、收获的技能等
+
+6. 校园活动/社会实践（可选）
+参与的社团、组织、志愿活动等
+你的职责及贡献：展示组织能力、领导力或团队合作精神
+
+7. 技能
+技术能力：编程语言、软件工具、专业技能等
+语言能力：外语能力（如英语六级、雅思成绩）
+
+8. 证书及奖励（可选）
+列出获得的相关资格证书、荣誉或奖项（如国家奖学金、优秀学生干部等）
+
+9. 个人评价（可选）
+简要描述自己的性格特点、学习能力、沟通协作能力等。
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>了解岗位的要求</strong></p>
+<p>大部分客户都明确自己想要应聘什么岗位的，我们根据客户的岗位去 BOSS、拉勾、智联等网站去了解岗位需求 。</p>
+<h1 id="四干活出单">四、干活出单</h1>
+<p>对于「连简历的初稿都没有」的客户<br>
+需要让客户提供信息：</p>
+<ul>
+<li>基本信息</li>
+<li>专业技能</li>
+<li>教育经历</li>
+<li>实习/工作经历</li>
+<li>荣誉奖项其他</li>
+</ul>
+<p>润色简历</p>
+<ul>
+<li>交个大模型</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 简历撰写助手
+
+  
+
+## **定位**
+
+- 专业简历优化顾问，提供精准的职位匹配分析与个性化内容生成
+    
+- 覆盖校招/社招/转行等场景，适配国内外主流招聘平台格式
+    
+- 遵循HR阅读习惯与ATS系统解析规则
+    
+
+  
+
+## **核心能力**
+
+1. **职位匹配分析**
+    
+    1. 自动解析JD关键词与核心能力要求
+        
+    2. 生成岗位匹配度雷达图（0-100%量化）
+        
+    3. 识别隐性能力需求（行业特定软技能）
+        
+
+  
+
+2. **内容优化**
+    
+    1. 成就量化：将工作经历转化为可验证的KPI/ROI
+        
+    2. STAR法则自动化重构项目描述
+        
+    3. 自动生成3种差异化表述方案
+        
+
+  
+
+3. **格式定制**
+    
+    1. 智能排版引擎（自动适应单页/多页布局）
+        
+    2. 行业专属模板库（IT/金融/教育等12类）
+        
+    3. ATS友好格式自动检测
+        
+
+  
+
+## **知识储备**
+
+- **招聘规范库**：
+    
+    - 500+企业HR筛选标准
+        
+    - 主流ATS系统解析规则
+        
+    - 20国简历文化禁忌
+        
+- **行业术语集**：
+    
+    - 40个细分领域专业表述
+        
+    - 认证资格数据库（含3000+证书）
+        
+    - 技术栈关联映射表
+        
+- **设计标准**：
+    
+    - 现代简历视觉层级规范
+        
+    - 色彩心理学应用方案
+        
+    - 可读性优化指标（Flesch评分）
+        
+
+  
+
+## **工作流程**
+
+1. 信息采集 → 2. 岗位解构 → 3. 亮点挖掘 → 4. 方案生成 → 5. 格式审查
+    
+
+- 每阶段提供「优化检查点」与「典型案例参考」
+    
+- 自动生成版本对比报告（含修改追踪记录）
+    
+
+  
+
+## **输出规范**
+
+1. 必含模块：
+    
+    1. 核心优势摘要（3点式）
+        
+    2. 可量化的成就陈述
+        
+    3. 技能热力图（与JD匹配度可视化）
+        
+    
+      
+    
+2. 格式要求：
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="套模板">套模板：</h2>
+<h4 id="星火">星火</h4>
+<ul>
+<li><a href="https://xinghuo.xfyun.cn/desk">https://xinghuo.xfyun.cn/desk</a></li>
+<li><a href="https://agent.xfyun.cn/chat?botId=2216831">https://agent.xfyun.cn/chat?botId=2216831</a></li>
+</ul>
+<h4 id="httpseasy2resumecomzh-cnmyresume"><a href="https://easy2resume.com/zh-CN/myResume">https://easy2resume.com/zh-CN/myResume</a></h4>
+<ul>
+<li><a href="https://github.com/ruanyf/weekly/issues/5898">https://github.com/ruanyf/weekly/issues/5898</a></li>
+<li>
+<h1 id="工具推荐简历生成工具">【工具推荐】简历生成工具</h1>
+</li>
+<li>
+<ul>
+<li><a href="https://github.com/Arman19941113/dnd-resume">https://github.com/Arman19941113/dnd-resume</a></li>
+</ul>
+</li>
+<li>【完全免费】0幻觉的简历修改神器：根据JD生成定制简历，最重要的是不会瞎编乱造 #6795</li>
+<li><a href="https://magicjobs.ai/">https://magicjobs.ai/</a></li>
+</ul>
+<h5 id="-网站自荐boli-你的职业发展助手6590"># 【网站自荐】Boli-你的职业发展助手 #6590</h5>
+<p><a href="https://github.com/ruanyf/weekly/issues/6590">https://github.com/ruanyf/weekly/issues/6590</a></p>
+<h3 id="-开源自荐简历在线制作网站"># 【开源自荐】简历在线制作网站</h3>
+<ul>
+<li><a href="https://github.com/ltlylfun/ResumeToJob">https://github.com/ltlylfun/ResumeToJob</a></li>
+</ul>
+<h4 id="boss直聘">boss直聘</h4>
+<ul>
+<li><a href="https://cv.zhipin.com/my-resumes">https://cv.zhipin.com/my-resumes</a></li>
+</ul>
+<h3 id="-卡码简历"># 卡码简历</h3>
+<p><a href="https://jianli.kamacoder.com/">https://jianli.kamacoder.com/</a></p>
+<h4 id="猫步简历">猫步简历</h4>
+<p>猫步简历 – 一款开源免费的简历制作神器，支持导出超高清PDF、图片、源码级JSON数据等，AI简历生成、AI润色、AI语种翻译等。提供海量在线制作模版、主题任意切换、高度定制化的简历模块。使用猫步简历，您可以制作出一份独特、优美、专业的求职简历。</p>
+<ul>
+<li><a href="https://github.com/Hacker233/resume-design">https://github.com/Hacker233/resume-design</a></li>
+<li><a href="https://maobucv.com/webcode">https://maobucv.com/webcode</a></li>
+</ul>
+<h1 id="五复盘">五、复盘</h1>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://app8aplieli4282.xet.citv.cn/v3/course/alive/l_684406fde4b0694ca0c280b7">https://app8aplieli4282.xet.citv.cn/v3/course/alive/l_684406fde4b0694ca0c280b7</a></li>
+</ul>
+<h2 id="我是谁">我是谁</h2>
+<p>大家好，我是小义同学，</p>
+<p><strong>刚刚好，是最难得的美好</strong></p>
+<p>我就在这里 ，我刚刚好。</p>
+<p>欢迎链接我。 个人微信：wang_cyi</p>
+<p><img src="https://s2.loli.net/2025/04/03/1Qbo8463tKEqkeT.png" alt="image.png"></p>
+<p>我是一个15年c++开发经验工程师，
+我果断舍去大而全项目，
+我选择了“小而美”的产品，让我的服务运行在2核2G一年100元的云主机。
+我必须舍去过去电信，电商，存储经验开发经验
+重新用户需求，重新设计项目。</p>
+<p>我设定了一个切实可行的目标：
+让别人愿意毫无负担地拿出100元，而你也能全力以赴将这100元完成
+刚刚好。</p>
+<p>【《最好的济南》济南城市形象宣传片 济南市中英双语外宣片】
+<a href="https://www.bilibili.com/video/BV1TW4y1372y/">https://www.bilibili.com/video/BV1TW4y1372y/</a></p>
+<p>刚刚好，是最难得的美好，</p>
+<p>是一种胸怀，</p>
+<p>是一种境界，有智慧、有诗意、有余地，</p>
+<p>更有“百尺竿头更进一步”的广阔空间、
+“百舸争流千帆竞”的奔涌姿态</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sop/">sop</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/liunx/2025/06_how_to_learn_red_tree/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">面试官：为啥 Redis 使用跳表 而不是使用 红黑树？</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/06-ContextOS/temp/">
+            <span class="next-text nav-default">ContextOS安装部署</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

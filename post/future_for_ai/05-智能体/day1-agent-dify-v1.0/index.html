@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>企业级智能体dify：不需要编程 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day1-agent-dify-v1.0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="企业级智能体dify：不需要编程" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day1-agent-dify-v1.0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-12T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="企业级智能体dify：不需要编程">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="8283">
+<meta itemprop="keywords" content="小而美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="企业级智能体dify：不需要编程"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">企业级智能体dify：不需要编程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-12 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 8283 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-从零开始学-dify一dify架构是什么">2.1 从零开始学 Dify（一）：Dify架构是什么</a>
+      <ul>
+        <li><a href="#1--为什么要了解dify架构直接使用不好吗">1.  为什么要了解Dify架构，直接使用不好吗？</a></li>
+        <li><a href="#2-dify全局视图">2. Dify全局视图</a></li>
+        <li><a href="#3--组件使用说明">3.  组件使用说明</a></li>
+        <li><a href="#4-向量数据库配置">4. 向量数据库配置</a></li>
+      </ul>
+    </li>
+    <li><a href="#21-从零开始学-dify一基于向量数据库混合检索--dify-构建知识库">2.1 从零开始学 Dify（一）：基于向量数据库混合检索 + Dify 构建知识库</a>
+      <ul>
+        <li><a href="#学习目标">学习目标</a></li>
+        <li><a href="#1-什么是向量数据库">1. 什么是向量数据库</a></li>
+        <li><a href="#2-为什么个人window笔记本不选择-oceanbase数据库资源限制">2. 为什么个人window笔记本不选择 OceanBase数据库（资源限制）</a></li>
+        <li><a href="#21-目前的oceanbase云默认是42版本不支持向量数据库">2.1 目前的OceanBase云默认是4.2版本，不支持向量数据库</a></li>
+        <li><a href="#22-window笔记本16g内存打开电脑利用10g内存不够">2.2 window笔记本16G内存，打开电脑利用10G，内存不够</a></li>
+        <li><a href="#23-ob数据库启动失败-本地无法连接">2.3 ob数据库启动失败 本地无法连接</a></li>
+        <li><a href="#24-删除其非必须容器还是不行">2.4 删除其非必须容器还是不行</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-谁占用内存小就使用那个">3. 谁占用内存小，就使用那个</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#34-大模型">3.4 大模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#我的疑问">我的疑问：</a>
+      <ul>
+        <li><a href="#疑问1">疑问1：</a></li>
+        <li><a href="#疑问2ob云支持吗官方公布43才支持">疑问2：ob云支持吗？官方公布4.3才支持</a></li>
+        <li><a href="#疑问3odocker-compose-up--d-命令报错-done">疑问3：odocker compose up -d 命令报错 done</a></li>
+        <li><a href="#疑问4什么执行-docker-compose-up--d-会启动-oceanbase-容器而不是-oracle-容器done">疑问4：什么执行 <code>docker compose up -d</code> 会启动 OceanBase 容器而不是 Oracle 容器。done</a></li>
+        <li><a href="#疑问5-配置修改重启">疑问5: 配置修改重启</a></li>
+        <li><a href="#首选推荐chromadb"> ​<strong>​首选推荐：ChromaDB​</strong>​</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>开始时间：2025-7-28</p>
+<p>结束时间：</p>
+<h1 id="一用户需求">一、<strong>用户需求</strong></h1>
+<h1 id="二系统设计">二、系统设计</h1>
+<p><img src="https://s2.loli.net/2025/07/24/BRSQoKbjgAFJZx1.png" alt="dify流程"></p>
+<h2 id="21-从零开始学-dify一dify架构是什么">2.1 从零开始学 Dify（一）：Dify架构是什么</h2>
+<h3 id="1--为什么要了解dify架构直接使用不好吗">1.  为什么要了解Dify架构，直接使用不好吗？</h3>
+<ul>
+<li>定位：实现Dify上下游生态系统闭环，围绕工作流和知识库，高效进行AIGC内容创作。</li>
+<li>服务：Dify源码剖析及答疑</li>
+<li>输出：系统性输出《Dify应用操作和源码剖析》教程；通过Dify扩展系统平台构建AIGC内容生态</li>
+<li>具体问题：部署Dify启动至少启动12个容器，不容易维护，那些必须的启动，那些不需要启动的了解清楚。</li>
+<li>具体问题: Dify提供多个向量数据库，如何选择</li>
+</ul>
+<h3 id="2-dify全局视图">2. Dify全局视图</h3>
+<p>Dify 是一款开源的大语言模型（LLM）应用开发平台。它融合了后端即服务（Backend as Service）和 LLMOps 的理念，使开发者可以快速搭建生产级的生成式 AI 应用。即使你是非技术人员，也能参与到 AI 应用的定义和数据运营过程中</p>
+<p><img src="https://s2.loli.net/2025/07/31/AthEqWFXonHlZgC.png" alt=""></p>
+<p>启动服务后：docker-compose -f docker/docker-compose.yaml up -d</p>
+<blockquote>
+<p>一看就傻眼了，这么多，一看就是不好的设计。 如下下面，服务依赖太严重了。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">PS D:<span class="se">\c</span>ode<span class="se">\p</span>ython<span class="se">\d</span>ify&gt; docker ps
+CONTAINER ID   IMAGE                                       COMMAND                   CREATED             STATUS
+          PORTS                                      NAMES
+d29d1942021d   nginx:latest                                <span class="s2">&#34;sh -c &#39;cp /docker-e…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   docker-nginx-1
+5c7a0d286643   langgenius/dify-api:1.7.1                   <span class="s2">&#34;/bin/bash /entrypoi…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             5001/tcp                                   docker-worker_beat-1
+7821b5ad58ed   langgenius/dify-api:1.7.1                   <span class="s2">&#34;/bin/bash /entrypoi…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             5001/tcp                                   docker-worker-1
+0cff35ca8f19   langgenius/dify-api:1.7.1                   <span class="s2">&#34;/bin/bash /entrypoi…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             5001/tcp                                   docker-api-1
+a7a976a450a4   langgenius/dify-plugin-daemon:0.2.0-local   <span class="s2">&#34;/bin/bash -c /app/e…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             0.0.0.0:5003-&gt;5003/tcp                     docker-plugin_daemon-1
+ce80c374d103   postgres:15-alpine                          <span class="s2">&#34;docker-entrypoint.s…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes <span class="o">(</span>healthy<span class="o">)</span>   5432/tcp                                   docker-db-1
+127720bac742   ubuntu/squid:latest                         <span class="s2">&#34;sh -c &#39;cp /docker-e…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             3128/tcp                                   docker-ssrf_proxy-1
+af6af9b1d5d1   langgenius/dify-sandbox:0.2.12              <span class="s2">&#34;/main&#34;</span>                   About an hour ago   Up <span class="m">4</span> minutes <span class="o">(</span>healthy<span class="o">)</span>                                              docker-sandbox-1
+8608eefde902   langgenius/dify-web:1.7.1                   <span class="s2">&#34;/bin/sh ./entrypoin…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes             3000/tcp                                   docker-web-1
+72e78ae3761b   redis:6-alpine                              <span class="s2">&#34;docker-entrypoint.s…&#34;</span>   About an hour ago   Up <span class="m">4</span> minutes <span class="o">(</span>healthy<span class="o">)</span>   6379/tcp                                   docker-redis-1
+00febcb8efbe   semitechnologies/weaviate:1.19.0            <span class="s2">&#34;/bin/weaviate --hos…&#34;</span>   <span class="m">6</span> days ago          Up <span class="m">4</span> minutes                                                        docker-weaviate-1
+</code></pre></td></tr></table>
+</div>
+</div><p>整理如下：</p>
+<ol>
+<li>
+<p><strong>API服务</strong> (<code>docker-api-1</code>): Dify的核心API服务</p>
+</li>
+<li>
+<p><strong>Worker服务</strong> (<code>docker-worker-1</code>): 处理后台任务</p>
+</li>
+<li>
+<p><strong>Redis</strong> (<code>docker-redis-1</code>): 用于缓存和消息队列</p>
+</li>
+<li>
+<p><strong>Web前端</strong> (<code>docker-web-1</code>): Dify的Web界面</p>
+</li>
+<li>
+<p><strong>Nginx</strong> (<code>docker-nginx-1</code>): 作为反向代理服务器</p>
+</li>
+<li>
+<p><strong>OceanBase</strong> (<code>oceanbase</code>): 你确认使用的主要数据库和向量数据库</p>
+</li>
+<li>
+<p><strong>Sandbox</strong> (<code>sandbox</code>): 代码执行环境</p>
+</li>
+<li>
+<p><strong>SSRF代理</strong> (<code>ssrf_proxy</code>): 安全代理，防止服务器端请求伪造攻击
+​<strong>​核心作用​</strong>​：为 SSRF（服务器端请求伪造）代理提供专用网络通道，确保所有外部请求（如插件调用、API 访问）必须经过安全代理审查，防止恶意攻</p>
+</li>
+<li>
+<p><strong>Plugin Daemon</strong> (<code>plugin_daemon</code>): 插件系统</p>
+</li>
+</ol>
+<p><strong>停止非核心容器​</strong>​：</p>
+<p>docker stop docker-ssrf_proxy-1 docker-sandbox-1  docker-worker_beat-1</p>
+<p>docker stop docker-ssrf_proxy-1 docker-sandbox-1  docker-worker_beat-1</p>
+<p>docker stop docker-ssrf_proxy-1 docker-sandbox-1  docker-worker_beat-1</p>
+<ul>
+<li><strong>🚫 不可行​</strong>​：
+<ul>
+<li>删除 PostgreSQL → ​<strong>​系统崩溃​</strong>​（核心配置和用户数据丢失）</li>
+<li>删除 Weaviate → ​<strong>​AI 功能失效​</strong>​（知识库检索、语义搜索不可用）</li>
+</ul>
+</li>
+<li>​<strong>​⚠️ 替代方案​</strong>​：
+<ul>
+<li>PostgreSQL 可替换为其他 SQL 数据库（如 MySQL），但需修改 Dify 数据层代码</li>
+<li><strong>Weaviate 可替换为 Milvus/Qdrant 等向量数据库，但需重新配置向量服务连接</strong></li>
+</ul>
+</li>
+</ul>
+<p>测试访问： http://localhost/install
+输入 用户名：wang_cyi   密码：qwer1234</p>
+<p>访问：http://localhost/apps</p>
+<h3 id="3--组件使用说明">3.  组件使用说明</h3>
+<h5 id="1-web服务前端应用">1 <strong>web服务：前端应用</strong></h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="nl">services</span><span class="p">:</span>
+  <span class="cp"># API service
+</span><span class="cp"></span>  <span class="nl">api</span><span class="p">:</span>
+    <span class="nl">image</span><span class="p">:</span> <span class="n">langgenius</span><span class="o">/</span><span class="n">dify</span><span class="o">-</span><span class="nl">api</span><span class="p">:</span><span class="mf">1.7.1</span>
+    <span class="nl">restart</span><span class="p">:</span> <span class="n">always</span> <span class="c1">//确保容器在任何情况下（例如崩溃、系统重启等）都自动重启。
+</span><span class="c1"></span>   <span class="nl">depends_on</span><span class="p">:</span>
+      <span class="nl">db</span><span class="p">:</span>
+        <span class="nl">condition</span><span class="p">:</span> <span class="n">service_healthy</span>
+      <span class="nl">redis</span><span class="p">:</span>
+        <span class="nl">condition</span><span class="p">:</span> <span class="n">service_started</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>redis` 服务依赖</p>
+<ul>
+<li><code>condition: service_started</code> 表示当前服务只需要等待 <code>redis</code> 服务启动完成，不需要等待它通过健康检查。</li>
+<li>这意味着一旦 Redis 容器启动，当前服务就可以开始启动，不管 Redis 是否真正准备好接受连接。
+db` 服务依赖</li>
+<li><code>condition: service_healthy</code> 表示当前服务会等待 <code>db</code> 服务不仅启动完成，而且必须通过健康检查（health check）才会开始启动。</li>
+<li>这确保了当前服务只有在数据库完全准备好并且可以接受连接时才会启动。</li>
+</ul>
+<h5 id="2db服务postgres数据库">2.db服务：Postgres数据库</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"> <span class="nl">db</span><span class="p">:</span>
+    <span class="nl">image</span><span class="p">:</span> <span class="nl">postgres</span><span class="p">:</span><span class="mi">15</span><span class="o">-</span><span class="n">alpine</span> 
+    <span class="nl">restart</span><span class="p">:</span> <span class="n">always</span> <span class="c1">//启动 PostgreSQL 数据库
+</span><span class="c1"></span>    <span class="nl">environment</span><span class="p">:</span>
+      <span class="nl">POSTGRES_USER</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="nl">POSTGRES_USER</span><span class="p">:</span><span class="o">-</span><span class="n">postgres</span><span class="p">}</span>
+
+      <span class="nl">POSTGRES_PASSWORD</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="nl">POSTGRES_PASSWORD</span><span class="p">:</span><span class="o">-</span><span class="n">difyai123456</span><span class="p">}</span>
+
+      <span class="nl">POSTGRES_DB</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="nl">POSTGRES_DB</span><span class="p">:</span><span class="o">-</span><span class="n">dify</span><span class="p">}</span>
+
+      <span class="nl">PGDATA</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="nl">PGDATA</span><span class="p">:</span><span class="o">-/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">postgresql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">pgdata</span><span class="p">}</span>
+
+    <span class="nl">healthcheck</span><span class="p">:</span>
+      <span class="nl">test</span><span class="p">:</span> <span class="p">[</span> <span class="err">&#39;</span><span class="n">CMD</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">pg_isready</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="o">-</span><span class="n">h</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">db</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="o">-</span><span class="n">U</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;$</span><span class="p">{</span><span class="nl">PGUSER</span><span class="p">:</span><span class="o">-</span><span class="n">postgres</span><span class="p">}</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="o">-</span><span class="n">d</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;$</span><span class="p">{</span><span class="nl">POSTGRES_DB</span><span class="p">:</span><span class="o">-</span><span class="n">dify</span><span class="p">}</span><span class="err">&#39;</span> <span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="3redis服务redis缓存">3.redis服务：Redis缓存</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"> <span class="c1"># The redis cache.</span>
+  <span class="n">redis</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">redis</span><span class="p">:</span><span class="mi">6</span><span class="o">-</span><span class="n">alpine</span>
+     <span class="o">//</span><span class="err">使用名为</span> <span class="sb">`redis`</span> <span class="err">的</span> <span class="n">Docker</span> <span class="err">镜像，</span>
+     <span class="o">//</span><span class="err">版本为</span> <span class="sb">`6-alpine`</span><span class="err">，启动</span> <span class="n">Redis</span> <span class="err">缓存服务</span>
+    <span class="n">restart</span><span class="p">:</span> <span class="n">always</span>
+
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="n">REDISCLI_AUTH</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">REDIS_PASSWORD</span><span class="p">:</span><span class="o">-</span><span class="n">difyai123456</span><span class="p">}</span>
+
+    <span class="n">volumes</span><span class="p">:</span>
+      <span class="c1"># Mount the redis data directory to the container.</span>
+      <span class="o">-</span> <span class="o">./</span><span class="n">volumes</span><span class="o">/</span><span class="n">redis</span><span class="o">/</span><span class="n">data</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>
+       <span class="c1">#配置，将本地目录 `./volumes/redis/data` 挂载到容器中的 `/data` 目录，以持久化存储 Redis 数据。</span>
+    <span class="c1"># Set the redis password when startup redis server.</span>
+    <span class="n">command</span><span class="p">:</span> <span class="n">redis</span><span class="o">-</span><span class="n">server</span> <span class="o">--</span><span class="n">requirepass</span> <span class="err">$</span><span class="p">{</span><span class="n">REDIS_PASSWORD</span><span class="p">:</span><span class="o">-</span><span class="n">difyai123456</span><span class="p">}</span>
+    <span class="c1">#启动 Redis 服务器时设置密码 `difyai123456`</span>
+
+    <span class="n">healthcheck</span><span class="p">:</span>
+      <span class="n">test</span><span class="p">:</span> <span class="p">[</span> <span class="s1">&#39;CMD&#39;</span><span class="p">,</span> <span class="s1">&#39;redis-cli&#39;</span><span class="p">,</span> <span class="s1">&#39;ping&#39;</span> <span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="4weaviate服务向量数据库默认启动配置其他的也启动">4.weaviate服务：向量数据库（默认启动，配置其他的也启动）</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># The Weaviate vector store.</span>
+  <span class="n">weaviate</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">semitechnologies</span><span class="o">/</span><span class="n">weaviate</span><span class="p">:</span><span class="mf">1.19</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">profiles</span><span class="p">:</span>
+
+      <span class="o">-</span> <span class="s1">&#39;&#39;</span>
+      <span class="o">-</span> <span class="n">weaviate</span>
+    <span class="n">restart</span><span class="p">:</span> <span class="n">always</span>
+    <span class="n">volumes</span><span class="p">:</span>
+      <span class="c1"># Mount the Weaviate data directory to the con tainer.</span>
+      <span class="o">-</span> <span class="o">./</span><span class="n">volumes</span><span class="o">/</span><span class="n">weaviate</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">weaviate</span>
+
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="c1"># The Weaviate configurations</span>
+      <span class="c1"># You can refer to the [Weaviate](https://weaviate.io/developers/weaviate/config-refs/env-vars) documentation for more information.</span>
+
+      <span class="n">PERSISTENCE_DATA_PATH</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_PERSISTENCE_DATA_PATH</span><span class="p">:</span><span class="o">-/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">weaviate</span><span class="p">}</span>
+
+      <span class="n">QUERY_DEFAULTS_LIMIT</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_QUERY_DEFAULTS_LIMIT</span><span class="p">:</span><span class="o">-</span><span class="mi">25</span><span class="p">}</span>
+
+      <span class="n">AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED</span><span class="p">:</span><span class="o">-</span><span class="n">false</span><span class="p">}</span>
+
+      <span class="n">DEFAULT_VECTORIZER_MODULE</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_DEFAULT_VECTORIZER_MODULE</span><span class="p">:</span><span class="o">-</span><span class="n">none</span><span class="p">}</span>
+
+      <span class="n">CLUSTER_HOSTNAME</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_CLUSTER_HOSTNAME</span><span class="p">:</span><span class="o">-</span><span class="n">node1</span><span class="p">}</span>
+
+      <span class="n">AUTHENTICATION_APIKEY_ENABLED</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_AUTHENTICATION_APIKEY_ENABLED</span><span class="p">:</span><span class="o">-</span><span class="n">true</span><span class="p">}</span>
+
+      <span class="n">AUTHENTICATION_APIKEY_ALLOWED_KEYS</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_AUTHENTICATION_APIKEY_ALLOWED_KEYS</span><span class="p">:</span><span class="o">-</span><span class="n">WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih</span><span class="p">}</span>
+
+      <span class="n">AUTHENTICATION_APIKEY_USERS</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_AUTHENTICATION_APIKEY_USERS</span><span class="p">:</span><span class="o">-</span><span class="n">hello</span><span class="nd">@dify.ai</span><span class="p">}</span>
+
+      <span class="n">AUTHORIZATION_ADMINLIST_ENABLED</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_AUTHORIZATION_ADMINLIST_ENABLED</span><span class="p">:</span><span class="o">-</span><span class="n">true</span><span class="p">}</span>
+
+      <span class="n">AUTHORIZATION_ADMINLIST_USERS</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">WEAVIATE_AUTHORIZATION_ADMINLIST_USERS</span><span class="p">:</span><span class="o">-</span><span class="n">hello</span><span class="nd">@dify.ai</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当你使用 Docker Compose 命令时，可以通过 <code>--profile</code> 参数指定要启动的配置文件</p>
+<p>对于 Weaviate 服务，它被分配了两个 profiles：</p>
+<ul>
+<li>空字符串 <code>''</code>：表示这个服务在没有指定任何 profile 时也会启动（默认启动）</li>
+<li><code>weaviate</code>：表示这个服务属于 &ldquo;weaviate&rdquo; profile</li>
+</ul>
+<h5 id="5sandbox服务沙盒">5.sandbox服务：沙盒</h5>
+<ul>
+<li>​<strong>​功能​</strong>​：安全代码执行环境，支持 Python 工具链、数据预处理等</li>
+<li>​<strong>​删除建议​</strong>​：⚠️ 若未使用“代码解释器”或自定义工具可删，否则代码类功能失效</li>
+</ul>
+<h5 id="6ssrf_proxy服务ssrf代理服务">6.ssrf_proxy服务：SSRF代理服务</h5>
+<h5 id="7ssrf_proxy_networkssrf-安全隔离网络">7.ssrf_proxy_network：SSRF 安全隔离网络​**​</h5>
+<ul>
+<li>​<strong>​核心作用​</strong>​：为 SSRF（服务器端请求伪造）代理提供专用网络通道，确保所有外部请求（如插件调用、API 访问）必须经过安全代理审查，防止恶意攻击。</li>
+<li>​<strong>​功能细节​</strong>​：
+<ul>
+<li>​<strong>​流量过滤​</strong>​：所有从容器发起的出站请求（如访问外部 API、下载插件）会被强制路由到 <code>ssrf_proxy</code> 容器（即 Squid 代理），由代理验证目标地址合法性后再转发</li>
+<li>​<strong>​风险隔离​</strong>​：将高风险操作（如联网请求）与核心服务（API/DB）隔离，避免攻击者通过容器漏洞直接访问内网资源</li>
+<li>​<strong>​插件安全​</strong>​：若插件需调用外部服务（如 Google 搜索），必须通过此代理，否则请求会被拒绝</li>
+</ul>
+</li>
+</ul>
+<h5 id="8-dify环境搭建docker-worker_beat-1">8 Dify环境搭建​<strong>​<code>docker-worker_beat-1</code>​</strong>​</h5>
+<ul>
+<li>​<strong>​功能​</strong>​：定时任务调度器（Celery Beat），用于周期任务（如数据同步）</li>
+<li>​<strong>​删除建议​</strong>​：⚠️ 若无需定时任务（如每日数据备份）可删</li>
+</ul>
+<p>​##### 9 <strong>​<code>docker-plugin_daemon-1</code>​</strong>​</p>
+<ul>
+<li>
+<p>​<strong>​功能​</strong>​：插件守护进程，管理第三方工具的生命周期（如搜索引擎、绘图工具）</p>
+</li>
+<li>
+<p>​<strong>​删除建议​</strong>​：⚠️ 若未启用任何插件（如搜索、多模态）可删，否则插件无法运行</p>
+</li>
+</ul>
+<h5 id="9-plugin_daemon">9. plugin_daemon</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C" data-lang="C"> <span class="cp"># plugin daemon
+</span><span class="cp"></span>
+  <span class="nl">plugin_daemon</span><span class="p">:</span>
+
+    <span class="nl">image</span><span class="p">:</span> <span class="n">langgenius</span><span class="o">/</span><span class="n">dify</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="nl">daemon</span><span class="p">:</span><span class="mf">0.2.0</span><span class="o">-</span><span class="n">local</span>
+
+    <span class="nl">restart</span><span class="p">:</span> <span class="n">always</span>
+    
+   <span class="nl">depends_on</span><span class="p">:</span>
+      <span class="nl">db</span><span class="p">:</span>
+        <span class="nl">condition</span><span class="p">:</span> <span class="n">service_healthy</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-向量数据库配置">4. 向量数据库配置</h3>
+<p>默认启动weaviate</p>
+<p>Weaviate:面向AI时代的开源向量数据库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp"># ------------------------------
+</span><span class="cp"># Vector Database Configuration
+</span><span class="cp"># ------------------------------
+</span><span class="cp"># The type of vector store to use.
+</span><span class="cp"># Supported values are `weaviate`, `qdrant`, `milvus`, `myscale`, `relyt`, `pgvector`, `pgvecto-rs`, `chroma`, `opensearch`, `oracle`, `tencent`, `elasticsearch`, `elasticsearch-ja`, `analyticdb`, `couchbase`, `vikingdb`, `oceanbase`, `opengauss`, `tablestore`,`vastbase`,`tidb`,`tidb_on_qdrant`,`baidu`,`lindorm`,`huawei_cloud`,`upstash`, `matrixone`.
+</span><span class="cp"></span>
+<span class="n">VECTOR_STORE</span><span class="o">=</span><span class="n">weaviate</span>
+
+<span class="cp"># Prefix used to create collection name in vector database
+</span><span class="cp"></span>
+<span class="n">VECTOR_INDEX_NAME_PREFIX</span><span class="o">=</span><span class="n">Vector_index</span>
+
+
+<span class="cp"># ------------------------------
+</span><span class="cp"></span>
+<span class="cp"># docker env var for specifying vector db type at startup
+</span><span class="cp"></span>
+<span class="cp"># (based on the vector db type, the corresponding docker
+</span><span class="cp"></span>
+<span class="cp"># compose profile will be used)
+</span><span class="cp"></span>
+<span class="cp"># if you want to use unstructured, add &#39;,unstructured&#39; to the end
+</span><span class="cp"></span>
+<span class="cp"># ------------------------------
+</span><span class="cp"></span>
+<span class="n">COMPOSE_PROFILES</span><span class="o">=</span><span class="err">$</span><span class="p">{</span><span class="nl">VECTOR_STORE</span><span class="p">:</span><span class="o">-</span><span class="n">weaviate</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="21-从零开始学-dify一基于向量数据库混合检索--dify-构建知识库">2.1 从零开始学 Dify（一）：基于向量数据库混合检索 + Dify 构建知识库</h2>
+<h3 id="学习目标">学习目标</h3>
+<ul>
+<li><input disabled="" type="checkbox"> 什么是向量数据库</li>
+<li><input disabled="" type="checkbox"> 为什么个人window笔记本不选择 ob数据库</li>
+</ul>
+<h3 id="1-什么是向量数据库">1. 什么是向量数据库</h3>
+<p>传统数据库的局限性</p>
+<ul>
+<li>无法理解非结构化数据的意义</li>
+<li>无法有效搜索或分类复杂的文档、音频和图像数据。</li>
+</ul>
+<p>向量数据库也叫矢量数据库，是一种以数学向量的形式存储数据集合的数据库</p>
+<p>向量数据库的兴起主要源于大模型 embedding 的应用</p>
+<p><strong>Weaviate</strong> 和 <strong>ChromaDB</strong></p>
+<table>
+<thead>
+<tr>
+<th>向量数据库</th>
+<th>URL</th>
+<th>GitHub Star</th>
+<th>Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chroma</td>
+<td><a href="https://link.zhihu.com/?target=https%3A//github.com/chroma-core/chroma">https://github.com/chroma-core/chroma</a></td>
+<td>7.4K</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>weaviate</td>
+<td><a href="https://link.zhihu.com/?target=https%3A//github.com/weaviate/weaviate">https://github.com/weaviate/weaviate</a></td>
+<td>6.9K</td>
+<td>Go</td>
+</tr>
+</tbody>
+</table>
+<p>Weaviate 更适合：</p>
+<ol>
+<li>复杂语义搜索：需要结合关键词、向量、结构化过滤（如电商多条件商品搜索）。</li>
+<li>知识图谱应用：存储和查询实体关系（如人物-公司-地点的关联）。</li>
+<li>推荐系统：基于用户行为向量和物品属性的混合推荐。</li>
+<li>企业级应用：需要分布式扩展、高可用性和持久化保障。
+ChromaDB 更适合：</li>
+</ol>
+<ul>
+<li>快速原型开发：AI实验或小规模项目，需快速集成向量检索。</li>
+<li>嵌入缓存层：作为大模型（如LLM）的短期记忆存储（如对话历史）。</li>
+<li>轻量级应用：数据量小（百万级以下），无需复杂查询逻辑。</li>
+<li>本地开发环境：单机运行，无需复杂运维。</li>
+</ul>
+<h3 id="2-为什么个人window笔记本不选择-oceanbase数据库资源限制">2. 为什么个人window笔记本不选择 OceanBase数据库（资源限制）</h3>
+<h3 id="21-目前的oceanbase云默认是42版本不支持向量数据库">2.1 目前的OceanBase云默认是4.2版本，不支持向量数据库</h3>
+<p>OceanBase 数据库从 V4.3.3 开始支持向量类型存储、向量索引、embedding 向量检索的能力。可以将向量化后的数据存储在 OceanBase 数据库，供下一步的检索使用。
+注意：官方文档：https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000002691348</p>
+<p>OBCloud</p>
+<ul>
+<li>
+<p>打开 <a href="https://console-cn.oceanbase.com/">https://console-cn.oceanbase.com/</a></p>
+</li>
+<li>
+<p>获取数据库实例连接串
+<img src="https://cnlog-img-xybdiy.oss-cn-shanghai.aliyuncs.com/img/202412081033728.png" alt=""></p>
+</li>
+<li>
+<p>添加 IP 地址白名单组 运行客户端访问</p>
+</li>
+<li>
+<p>测试本地是否链接成功</p>
+</li>
+</ul>
+<p><strong>window 安装mysql客户端 判断本地链接是否成功</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+//下载压缩包
+D:\tool\mysql-8.0.31-winx64\bin
+
+./mysql -h obmt6605sioq4v28.huawei-cn-north-4.oceanbase.cloud -P 3306 -u admin@obmt6605sioq4v28 -D mytest -p
+
+SELECT version();
+
+5.7.25-OceanBase-v4.2.1.8
+
+表示 OceanBase 兼容 ​​MySQL 5.7.25 协议及语法​
+
+v4.2.1.8：OceanBase 核心版本号​ 
+
+//忘记密码可以重置 U_gMn22| C?3_t1iA
+</code></pre></td></tr></table>
+</div>
+</div><p>避坑：</p>
+<blockquote>
+<p>[!NOTE] obcloud 目前默认4.2版本 不是4.3
+&lt;ClusterVersionException: (code=ErrorCode.NOT_SUPPORTED, message=OceanBase Vector Store is not supported because cluster version is below 4.3.3.0.)</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2025/07/26/sPoS5fauCLNBi2k.png" alt="image.png"></p>
+<h3 id="22-window笔记本16g内存打开电脑利用10g内存不够">2.2 window笔记本16G内存，打开电脑利用10G，内存不够</h3>
+<h4 id="方式1window环境准备">方式1：window环境准备</h4>
+<p>安装 Dify 之前, 请确保你的机器已满足最低安装要求：</p>
+<ul>
+<li>CPU &gt;= 2 Core</li>
+<li>RAM &gt;= 4 GiB
+window11配置</li>
+<li>16G内存</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/215144/1753269020880-16d1d6de-3304-40a1-8c2a-64a4562187c5.png" alt=""></p>
+<h5 id="安装--docker-desktop">安装  Docker Desktop</h5>
+<h4 id="window下运行linux环境2个方式-wsl2-和docker">window下运行Linux环境2个方式 WSL2 和Docker</h4>
+<ul>
+<li>WSL2（Windows Subsystem for Linux 2）是微软推出的一个兼容层，它允许用户在 Windows 系统上运行 Linux 二进制可执行文件。</li>
+<li>与 WSL1 相比，WSL2 提供了完整的 Linux 内核支持，能够更好地模拟 Linux 环境，从而为 Docker 提供了理想的运行环境</li>
+<li>Docker Desktop 是 Docker 官方为 Windows 系统提供的桌面应用，它封装了 Docker 的运行环境，使得用户能够在 Windows 上轻松使用 Docker。</li>
+<li>Docker Desktop 提供了两种运行模式：基于 WSL2 的模式和基于 Hyper-V 的模式。虽然 Docker Desktop 可以在没有 WSL2 的情况下运行，但为了更好的性能和兼容性，推荐使用 WSL2。</li>
+<li>Docker Desktop for Windows 需依赖 WSL 2 运行 Linux 容器。若未启用 WSL 2，Docker 仅能运行 Windows 容器，无法支持主流 Linux 应用环境</li>
+<li>Docker 容器直接共享 WSL 2 的 Linux 内核，无需额外虚拟化层，减少资源占用并加速启动</li>
+</ul>
+<p><img src="https://pic1.zhimg.com/v2-39cffde11c544e2cf9d8ed17a05ce0ca_r.jpg?source=1def8aca" alt="我直接选择docker方式"></p>
+<h4 id="启用wsl所需windows功能">启用WSL所需Windows功能</h4>
+<ul>
+<li>
+<p>选择 控制面板&ndash;程序&ndash;启动window功能
+勾选<strong>Windows虚拟机监控程序平台</strong>和<strong>适用于Linux的Windows子系统</strong>
+<img src="https://s2.loli.net/2025/07/23/gQaei3KoIThVGsS.png" alt="开启功能，window11默认已开启"></p>
+</li>
+<li>
+<p>安装wsl</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">//安装命令
+</span><span class="c1"></span>  <span class="n">wsl</span> <span class="o">--</span><span class="n">instal</span>
+<span class="c1">//检查 WSL 版本
+</span><span class="c1"></span><span class="n">wsl</span> <span class="o">--</span><span class="n">list</span> <span class="o">--</span><span class="n">verbose</span>
+  <span class="n">NAME</span>              <span class="n">STATE</span>           <span class="n">VERSION</span>
+<span class="o">*</span> <span class="n">docker</span><span class="o">-</span><span class="n">desktop</span>    <span class="n">Running</span>         <span class="mi">2</span> <span class="o">--</span><span class="err">我已经按照过</span>
+  <span class="n">Ubuntu</span><span class="o">-</span><span class="mf">22.04</span>      <span class="n">Stopped</span>         <span class="mi">2</span> <span class="o">--</span><span class="err">我已经按照过</span>
+
+
+<span class="err">安装</span><span class="n">dify</span>
+
+
+
+<span class="err">推荐阅读官方文档：</span>
+<span class="o">-</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//docs.dify.ai/zh-hans/introduction
+</span><span class="c1"></span>
+<span class="n">Docker</span> <span class="n">Compose</span> <span class="err">部署</span>
+<span class="err">```</span><span class="n">shell</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="nl">com</span><span class="p">:</span><span class="n">watchpoints</span><span class="o">/</span><span class="n">dify</span><span class="p">.</span><span class="n">git</span>
+<span class="c1">//主要开发语言 python +TypeScript
+</span><span class="c1"></span>
+
+<span class="n">docker</span> <span class="n">compose</span> <span class="n">version</span>
+<span class="n">Docker</span> <span class="n">Compose</span> <span class="n">version</span> <span class="n">v2</span><span class="mf">.32.4</span><span class="o">-</span><span class="n">desktop</span><span class="mf">.1</span>
+
+<span class="n">Compose</span> <span class="err">项目是</span> <span class="n">Docker</span> <span class="err">官方的开源项目，负责实现对</span> <span class="n">Docker</span> <span class="err">容器集群的快速编排。</span>
+<span class="err">快速编排：站在项目角度将一组相关联容器整合在一起，对这组容器按照指定顺序进行启动</span>
+
+<span class="c1">//确保 Docker Desktop 已启动
+</span><span class="c1"></span><span class="n">docker</span> <span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>最后检查是否所有容器都正常运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker compose ps
+</code></pre></td></tr></table>
+</div>
+</div><p>在这个输出中，
+你应该可以看到包括 3 个业务服务 <code>api / worker / web</code>，
+以及 6 个基础组件 <code>weaviate / db / redis / nginx / ssrf_proxy / sandbox</code></p>
+<h5 id="23--oceanbase-数据库-vector-与-dify-集成">2.3  OceanBase 数据库 Vector 与 Dify 集成</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="nl">D</span><span class="p">:</span><span class="err">\</span><span class="n">code</span><span class="err">\</span><span class="n">python</span><span class="err">\</span><span class="n">dify</span><span class="err">\</span><span class="n">docker</span>
+<span class="p">.</span><span class="n">env</span>
+
+<span class="cp"># OceanBase Vector configuration, only available when VECTOR_STORE is `oceanbase`
+</span><span class="cp"></span>
+<span class="n">OCEANBASE_VECTOR_HOST</span><span class="o">=</span><span class="n">oceanbase</span>
+
+<span class="n">OCEANBASE_VECTOR_PORT</span><span class="o">=</span><span class="mi">2881</span>
+
+<span class="n">OCEANBASE_VECTOR_USER</span><span class="o">=</span><span class="n">root</span><span class="err">@</span><span class="n">test</span>
+
+<span class="n">OCEANBASE_VECTOR_PASSWORD</span><span class="o">=</span><span class="n">difyai123456</span>
+
+<span class="n">OCEANBASE_VECTOR_DATABASE</span><span class="o">=</span><span class="n">test</span>
+
+<span class="n">OCEANBASE_CLUSTER_NAME</span><span class="o">=</span><span class="n">difyai</span>
+
+<span class="n">OCEANBASE_MEMORY_LIMIT</span><span class="o">=</span><span class="mi">6</span><span class="n">G</span>
+
+<span class="n">OCEANBASE_ENABLE_HYBRID_SEARCH</span><span class="o">=</span><span class="nb">false</span>
+
+<span class="err">重启</span> <span class="n">Docker</span> <span class="err">容器，通常方法是先执行：</span>  
+<span class="n">docker</span> <span class="n">compose</span> <span class="n">stop</span>  <span class="c1">//down 删除意思，不能执行这个
+</span><span class="c1"></span><span class="err">再执行：</span>   
+
+
+<span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span> <span class="err">#</span> <span class="err">创建并后台运行所有容器</span>
+
+
+<span class="nl">http</span><span class="p">:</span><span class="c1">//localhost/apps
+</span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>[!NOTE] obcloud 目前默认4.2版本 不是4.3
+&lt;ClusterVersionException: (code=ErrorCode.NOT_SUPPORTED, message=OceanBase Vector Store is not supported because cluster version is below 4.3.3.0.)</p>
+</blockquote>
+<h5 id="查缺补漏">查缺补漏</h5>
+<p>参考资料</p>
+<ol>
+<li>Docker-Compose 入门到精通 （图解+秒懂+史上最全）</li>
+<li>docker系列：docker-compose用法详解</li>
+</ol>
+<ul>
+<li>
+<p>一般一个系统的部署可能涉及到tomcat、mysql、redis、nginx、mongodb等应用，如果采用容器部署的话可能涉及十多个容器（中小项目），每个容器都单独维护的话，会非常繁琐，可能每个容器需要执行几十个命令，效率非常低。通过docker-compose可以提前编写好脚本，等上线部署的时候几分钟就可以搞定了。比起传统的项目部署方式效率大大提升了。还可以达到一次编写脚本，达到多次部署的效果。</p>
+</li>
+<li>
+<p>Compose允许用户通过一个docker-compose.yml模板文件（YAML 格式）来定义一组相关联的应用容器为一个项目（project）。</p>
+</li>
+<li>
+<p>Compose模板文件是一个定义服务、网络和卷的YAML文件。</p>
+</li>
+<li>
+<p>Docker-Compose标准模板文件应该包含version、services、networks 三大部分，
+最关键的是services和networks两个部分。</p>
+</li>
+</ul>
+<h3 id="23-ob数据库启动失败-本地无法连接">2.3 ob数据库启动失败 本地无法连接</h3>
+<ul>
+<li>内存不够：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+ <span class="nb">cd</span> D:<span class="se">\t</span>ool<span class="se">\m</span>ysql-8.0.31-winx64<span class="se">\b</span>in
+
+.<span class="se">\m</span>ysql -h 127.0.0.1 -P <span class="m">2881</span> -uroot@sys -p
+difyai123456
+ERROR <span class="m">2013</span> <span class="o">(</span>HY000<span class="o">)</span>: Lost connection to MySQL server at <span class="s1">&#39;reading initial communication packet&#39;</span>, system error: <span class="m">0</span> 
+结果还是连接失败
+
+
+docker inspect oceanbase <span class="p">|</span> findstr <span class="s2">&#34;Status Health&#34;</span>
+
+docker logs oceanbase --tail <span class="m">20</span>
+
+Open ssh connection ok
+<span class="o">[</span>WARN<span class="o">]</span> OBD-1011: <span class="o">(</span>127.0.0.1<span class="o">)</span> The recommended value of fs.aio-max-nr is <span class="m">1048576</span> <span class="o">(</span>Current value: 65536<span class="o">)</span>
+<span class="o">[</span>WARN<span class="o">]</span> OBD-1007: <span class="o">(</span>127.0.0.1<span class="o">)</span> The recommended number of core file size is unlimited <span class="o">(</span>Current value: 0<span class="o">)</span>
+<span class="o">[</span>WARN<span class="o">]</span> OBD-1007: <span class="o">(</span>127.0.0.1<span class="o">)</span> The recommended number of stack size is unlimited <span class="o">(</span>Current value: 8192<span class="o">)</span>
+<span class="o">[</span>WARN<span class="o">]</span> OBD-1017: <span class="o">(</span>127.0.0.1<span class="o">)</span> The value of the <span class="s2">&#34;vm.overcommit_memory&#34;</span> must be <span class="m">0</span> <span class="o">(</span>Current value: 1, Recommended value: 0<span class="o">)</span>
+
+<span class="o">[</span>ERROR<span class="o">]</span> OBD-2000: <span class="o">(</span>127.0.0.1<span class="o">)</span> not enough memory. <span class="o">(</span>Available: 3G, Need: 3G<span class="o">)</span>, Please execute <span class="sb">`</span><span class="nb">echo</span> <span class="m">1</span> &gt; /proc/sys/vm/drop_caches<span class="sb">`</span> as root in 127.0.0.1 to release cached.
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Windows环境下docker desktop修改最大内存</li>
+</ul>
+<ol>
+<li>增加 Docker 分配给容器的内存（总物理内存不够，不是容器限制也不行）</li>
+</ol>
+<p>WSL 2 Loss of resource control settings compared to old WSL , on Docker Desktop</p>
+<p>在 WSL 2 中，资源控制设置不再通过 Docker Desktop 的图形界面直接管理
+而是通过 Windows 系统的 ​<strong>​<code>.wslconfig</code> 配置文件​</strong>​实现</p>
+<h5 id="一配置wslconfig文件">一、配置 <code>.wslconfig</code> 文件</h5>
+<p><strong>作用​</strong>​：
+在 WSL 2 中，资源控制设置不再通过 Docker Desktop 的图形界面直接管理
+而是通过 Windows 系统的 ​<strong>​<code>.wslconfig</code> 配置文件​</strong>​实现</p>
+<p>​<strong>​文件位置​</strong>​：<code>C:\Users\&lt;用户名&gt;\.wslconfig</code>
+​
+修改步骤​**​：</p>
+<ol>
+<li>
+<p>window r+R 打开文件资源管理器，地址栏输入 <code>%UserProfile%</code> 进入用户目录。</p>
+</li>
+<li>
+<p>.wslconfig 备份一次</p>
+</li>
+<li>
+<p>用文本编辑器（如记事本或 VS Code）打开文件并添加以下配置</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>wsl2<span class="o">]</span>
+<span class="nv">memory</span><span class="o">=</span>8GB       <span class="c1"># 限制内存使用（建议为物理内存的 50%-70%）</span>
+<span class="nv">processors</span><span class="o">=</span><span class="m">2</span>     <span class="c1"># 限制 CPU 核心数</span>
+<span class="nv">swap</span><span class="o">=</span>1GB         <span class="c1"># 交换空间大小</span>
+<span class="nv">localhostForwarding</span><span class="o">=</span><span class="nb">true</span>  <span class="c1"># 允许本地端口转发</span>
+<span class="nv">autoMemoryReclaim</span><span class="o">=</span><span class="nb">true</span>    <span class="c1"># 关闭 WSL 后自动释放内存[6,9]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="二生效配置的步骤">二、生效配置的步骤</h5>
+<ol>
+<li>
+<p>​<strong>​关闭 WSL 及 Docker​</strong>​：</p>
+<ul>
+<li>以管理员身份打开 PowerShell，执行：wsl &ndash;shutdown</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​重启 Docker Desktop​</strong>​：</p>
+<ul>
+<li>重新启动 Docker Desktop，WSL 2 会自动加载新配置</li>
+</ul>
+</li>
+<li>
+<p>启动容器oceanbase</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker compose restart oceanbase
+
+
+
+//直连 OBServer
+obclient -h127.0.0.1 -P2881 -uroot@sys -p
+difyai123456
+./mysql -h127.0.0.1 -P2881 -uroot 
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>window 通过msyql客户端链接</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"> <span class="nb">cd</span> D:<span class="se">\t</span>ool<span class="se">\m</span>ysql-8.0.31-winx64<span class="se">\b</span>in
+
+.<span class="se">\m</span>ysql -h 127.0.0.1 -P <span class="m">2881</span> -uroot@sys -p
+difyai123456
+ERROR <span class="m">2013</span> <span class="o">(</span>HY000<span class="o">)</span>: Lost connection to MySQL server at <span class="s1">&#39;reading initial communication packet&#39;</span>, system error: <span class="m">0</span> 
+结果还是连接失败
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="24-删除其非必须容器还是不行">2.4 删除其非必须容器还是不行</h3>
+<ol>
+<li>
+<p><strong>API服务</strong> (<code>docker-api-1</code>): Dify的核心API服务</p>
+</li>
+<li>
+<p><strong>Worker服务</strong> (<code>docker-worker-1</code>): 处理后台任务</p>
+</li>
+<li>
+<p><strong>Redis</strong> (<code>docker-redis-1</code>): 用于缓存和消息队列</p>
+</li>
+<li>
+<p><strong>Web前端</strong> (<code>docker-web-1</code>): Dify的Web界面</p>
+</li>
+<li>
+<p><strong>Nginx</strong> (<code>docker-nginx-1</code>): 作为反向代理服务器</p>
+</li>
+<li>
+<p><strong>OceanBase</strong> (<code>oceanbase</code>): 你确认使用的主要数据库和向量数据库</p>
+</li>
+<li>
+<p><strong>Sandbox</strong> (<code>sandbox</code>): 代码执行环境</p>
+</li>
+<li>
+<p><strong>SSRF代理</strong> (<code>ssrf_proxy</code>): 安全代理，防止服务器端请求伪造攻击</p>
+</li>
+<li>
+<p><strong>Plugin Daemon</strong> (<code>plugin_daemon</code>): 插件系统</p>
+</li>
+</ol>
+<p>COMPOSE_PROFILES=oceanbase</p>
+<p>docker-compose -f docker/docker-compose.yaml down</p>
+<p>docker-compose -f docker/docker-compose.yaml up -d api worker worker_beat web redis nginx oceanbase sandbox ssrf_proxy plugin_daemon</p>
+<p>继续精简命令:
+cd D:\code\python\dify\docker
+docker-compose -f docker/docker-compose.yaml up -d api web nginx redis oceanbase</p>
+<p>docker-compose -f docker/docker-compose.yaml up restart oceanbase</p>
+<p>docker stop  docker-nginx-1  docker-api-1  docker-redis-1 docker-web-1 docker-db-1</p>
+<blockquote>
+<p>[!NOTE] window笔记本内存不够，改为其他方案
+这个路不通，换其他数据库</p>
+</blockquote>
+<h2 id="3-谁占用内存小就使用那个">3. 谁占用内存小，就使用那个</h2>
+<p>Chroma 核心优势：</p>
+<p>主要在 Python 环境下工作，尤其是使用 LangChain 或 LlamaIndex。</p>
+<p>对小规模数据集（百万级以下）性能表现良好，查询延迟适中，适合快速原型开发。</p>
+<p>社区：社区较小但活跃，轻量级，API 简单，适合新手和快速开发项目，文档简单明了</p>
+<p>提问：dify 向量数据库修改改成 chroma</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+.env 和docker-compose.yaml 需要怎么调整
+
+VECTOR_STORE=chroma
+COMPOSE_PROFILES=chroma
+
+注意：这个还是启动 weaviate
+
+ # The Weaviate vector store.
+
+  weaviate:
+    image: semitechnologies/weaviate:1.19.0
+    profiles:
+      - &#39;&#39; //什么不指定 默认启动。手工屏蔽
+      - weaviate
+## About
+
+the AI-native open-source embedding database
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="开发过程">开发过程</h1>
+<h3 id="34-大模型">3.4 大模型</h3>
+<p> 开通阿里云百炼模型调用服务并获取 API KEY</p>
+<p>注册链接🔗：<a href="https://bailian.console.aliyun.com/">https://bailian.console.aliyun.com/</a></p>
+<ul>
+<li>注册完阿里云百炼账号后，点击开通服务</li>
+</ul>
+<p><img src="https://cnlog-img-xybdiy.oss-cn-shanghai.aliyuncs.com/img/202412081035917.png" alt=""></p>
+<ul>
+<li>
+<blockquote>
+<p>接下来，我们获取API-KEY
+完整过程参考官方教程： <a href="https://bailian.console.aliyun.com/?switchAgent=10846379&amp;productCode=p_efm&amp;switchUserType=3&amp;tab=api#/api">https://bailian.console.aliyun.com/?switchAgent=10846379&amp;productCode=p_efm&amp;switchUserType=3&amp;tab=api#/api</a>
+<strong>获取API Key</strong></p>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>
+<p>前往<a href="https://bailian.console.aliyun.com/?tab=model#/api-key">API-Key</a>页面，在<strong>我的</strong>页签（下图位置①）下单击<strong>创建我的API-KEY</strong>（下图位置②）。</p>
+<p><img src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/6440412571/p982665.png" alt=""></p>
+</li>
+</ol>
+<h4 id="设置模型供应商和系统模型">设置模型供应商和系统模型</h4>
+<p>参考文档：https://docs.dify.ai/zh-hans/guides/model-configuration/readme
+Dify 在需要模型时，会根据使用场景来选择设置过的默认模型。
+在 <code>设置 &gt; 模型供应商</code> 中设置默认模型。</p>
+<ul>
+<li>安装插件 通义千问</li>
+</ul>
+<p>疑问5: 配置修改重启</p>
+<h5 id="验证启动本地oceanbase是否能正确登录">验证启动本地oceanbase是否能正确登录</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker ps | findstr oceanbase
+bda7329f789b   oceanbase/oceanbase-ce:4.3.5-lts 
+
+Docker容器进入的4种方式(推荐最后一种)
+docker exec -it bda7329f789b /bin/bash
+# 获取集群信息
+[root@bda7329f789b ~]# obd cluster list
++------------------------------------------------------------+
+|                        Cluster List                        |
++-----------+------------------------------+-----------------+
+| Name      | Configuration Path           | Status (Cached) |
++-----------+------------------------------+-----------------+
+| obcluster | /root/.obd/cluster/obcluster | deployed        |
++-----------+------------------------------+-----------------+
+//obd cluster start obcluster
+
+obd cluster display obcluster
+
+
+obd cluster list
+obd cluster display obcluster
+obd cluster start  obcluster
+//直连 OBServer
+obclient -h127.0.0.1 -P2881 -uroot@sys -p
+difyai123456
+
+[root@bda7329f789b ~]#
+docker logs oceanbase-ce | tail -1
+看官方文档：https://hub.docker.com/r/oceanbase/oceanbase-ce
+
+
+docker exec oceanbase obclient -h127.1 -uroot@test -P2881 -pdifyai123456 -e &#34;SELECT VERSION();&#34;
+
+
+docker compose stop oceanbase 
+docker compose rm -f oceanbase 
+docker compose up -d oceanbase
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>官方经验</li>
+</ul>
+<p><a href="https://github.com/oceanbase/docker-images/blob/main/oceanbase-ce/README_CN.md">https://github.com/oceanbase/docker-images/blob/main/oceanbase-ce/README_CN.md</a></p>
+<p>在此阅读官方文档：</p>
+<ul>
+<li>OceanBase 数据库 Vector 与 Dify 集成</li>
+<li><a href="https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000002015585%60ob_vector_memory_limit_percentage%60">https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000002015585`ob_vector_memory_limit_percentage`</a> 用于配置向量索引模块对内存资源占用的阈值（单位为百分比）。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+- 修改 `.env` 中的 `VECTOR_STORE` 变量值为 `oceanbase`。
+- 使用 `docker compose --profile oceanbase up -d` 启动服务。
+
+docker ps | findstr  oceanbase
+docker exec -it 4b3255e1560d /bin/bash
+
+//直连 OBServer
+obclient -h127.0.0.1 -P2881 -uroot@sys -p
+difyai123456
+./mysql -h127.0.0.1 -P2881 -uroot 
+
+.\mysql -h 127.0.0.1 -P 2881 -u &#34;root@sys&#34; -p --ssl-mode=DISABLED
+
+
+ 阅读：desst不支持window我不相信
+ https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000002866370
+
+ 
+</code></pre></td></tr></table>
+</div>
+</div><p>.\mysql -h127.0.0.1 -P2881 -uroot@test</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+
+
+功能：停止并删除ob容器
+
+ 原理：
+ - docker-compose down​默认会删除所有在 `docker-compose.yml` 中定义的服务容器、网络和卷（若使用 `-v` 参数）​**​，无法直接通过该命令删除单个容器
+步骤：
+
+```shell
+//判断是否启动
+docker ps | findstr oceanbase
+//stop 
+docker stop oceanbase
+docker rm oceanbase
+</code></pre></td></tr></table>
+</div>
+</div><p>重启启动：</p>
+<p>cd D:\code\python\dify\docker
+// docker-compose -f docker/docker-compose.yaml down  删除全部容器，不轻易执行，建议单独对自定容器删除重启。
+docker-compose -f docker/docker-compose.yaml up -d chroma
+docker-compose -f docker/docker-compose.yaml up</p>
+<p>dify默认的向量数据库是weaviate 为什么</p>
+<h2 id="我的疑问">我的疑问：</h2>
+<h3 id="疑问1">疑问1：</h3>
+<ul>
+<li>疑问：oceanbase 能直接在链接oceanbase吗？我看oceanbase自己单独搞一个自己分支，有什么区别呀？https://www.oceanbase.com/docs/common-oceanbase-database-cn-1000000002691348</li>
+<li>寻找：https://github.com/langgenius/dify/pull/10010</li>
+</ul>
+<h3 id="疑问2ob云支持吗官方公布43才支持">疑问2：ob云支持吗？官方公布4.3才支持</h3>
+<ul>
+<li>​<strong>​自建 OceanBase 集群​</strong>​（非 OBCloud）中运行 Dify，则必须升级至 ​<strong>​V4.3.3+​</strong>​ 才能原生支持向量索引。</li>
+</ul>
+<h3 id="疑问3odocker-compose-up--d-命令报错-done">疑问3：odocker compose up -d 命令报错 done</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">unable to get image &#39;nginx:latest&#39;: error during connect: Get &#34;http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.47/images/nginx:latest/json&#34;: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Starting the Docker Engine...
+
+启动：docker
+http://localhost/apps
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="疑问4什么执行-docker-compose-up--d-会启动-oceanbase-容器而不是-oracle-容器done">疑问4：什么执行 <code>docker compose up -d</code> 会启动 OceanBase 容器而不是 Oracle 容器。done</h3>
+<p>为什么启动了 OceanBase 容器</p>
+<ol>
+<li>
+<p><strong>环境变量配置</strong>： 在 <code>docker/.env</code> 文件中，<code>VECTOR_STORE</code> 变量被设置为 <code>oceanbase</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">VECTOR_STORE</span><span class="o">=</span><span class="nx">oceanbase</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这个环境变量决定了使用哪个向量数据库。</p>
+</li>
+<li>
+<p><strong>Docker Compose 配置文件中的 profiles 机制</strong>： 在 <code>docker/docker-compose.yaml</code> 文件中，OceanBase 服务的配置包含以下 profiles 设置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">oceanbase</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">oceanbase/oceanbase-ce:4.3.5-lts</span><span class="w">
+</span><span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">oceanbase</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>Docker Compose 启动机制</strong>： 在 Docker Compose 文件底部有一个重要的注释：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="err">#</span> <span class="o">------------------------------</span>
+<span class="err">#</span> <span class="nx">docker</span> <span class="nx">env</span> <span class="kd">var</span> <span class="k">for</span> <span class="nx">specifying</span> <span class="nx">vector</span> <span class="nx">db</span> <span class="nx">type</span> <span class="nx">at</span> <span class="nx">startup</span>
+<span class="err">#</span> <span class="p">(</span><span class="nx">based</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">vector</span> <span class="nx">db</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">the</span> <span class="nx">corresponding</span> <span class="nx">docker</span>
+<span class="err">#</span> <span class="nx">compose</span> <span class="nx">profile</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">used</span><span class="p">)</span>
+<span class="err">#</span> <span class="k">if</span> <span class="nx">you</span> <span class="nx">want</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">unstructured</span><span class="p">,</span> <span class="nx">add</span> <span class="s1">&#39;,unstructured&#39;</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">end</span>
+<span class="err">#</span> <span class="o">------------------------------</span>
+<span class="nx">COMPOSE_PROFILES</span><span class="o">=</span><span class="nx">$</span><span class="p">{</span><span class="nx">VECTOR_STORE</span><span class="o">:-</span><span class="nx">weaviate</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>这表明 Docker Compose 会根据 <code>VECTOR_STORE</code> 环境变量的值来选择启动哪些服务。</p>
+<ol start="4">
+<li><strong>自动激活的 profile</strong>： 当执行 <code>docker compose up -d</code> 时，系统会读取 <code>VECTOR_STORE=oceanbase</code> 这个环境变量，然后自动激活 <code>oceanbase</code> profile，从而启动 OceanBase 容器。</li>
+</ol>
+<h3 id="疑问5-配置修改重启">疑问5: 配置修改重启</h3>
+<p>我修改了云服务 但是发现OCEANBASE_VECTOR_HOST 版本不行不支持4.3 版本 因此退回到 OCEANBASE_VECTOR_HOST=oceanbase 该如何处理 ，还原配置后，如何重启呢?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker compose restart oceanbase
+docker compose restart api worker worker_beat
+
+
+&lt;ClusterVersionException: <span class="o">(</span><span class="nv">code</span><span class="o">=</span>ErrorCode.NOT_SUPPORTED, <span class="nv">message</span><span class="o">=</span>OceanBase Vector Store is not supported because cluster version is below 4.3.3.0.<span class="o">)</span>&gt; 
+还是报错
+
+
+docker <span class="nb">exec</span> oceanbase obclient -h127.1 -uroot@test -P2881 -pdifyai123456 -e <span class="s2">&#34;SELECT VERSION();&#34;</span>
+
+
+D:<span class="se">\t</span>ool<span class="se">\m</span>ysql-8.0.31-winx64<span class="se">\b</span>in
+
+./mysql -h 127.0.0.1 -P <span class="m">3306</span> -u admin@obmt6605sioq4v28 -D mytest -p
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="首选推荐chromadb"> ​<strong>​首选推荐：ChromaDB​</strong>​</h3>
+<ul>
+<li>​<strong>​核心优势​</strong>​：
+<ul>
+<li>
+<p>​<strong>​嵌入式设计​</strong>​：无需独立服务进程，直接嵌入应用运行，内存占用极低（实测在百万级向量下内存消耗约200-400MB）</p>
+<p>。</p>
+</li>
+<li>
+<p>​<strong>​简化部署​</strong>​：通过<code>pip install chromadb</code>即可集成，支持内存（<code>InMemory</code>）或本地持久化存储（如DuckDB），适合资源受限环境</p>
+<p>。</p>
+</li>
+<li>
+<p>​<strong>​开发友好​</strong>​：提供Python/JS API，与LangChain深度集成，适合快速构建Dify的RAG应用原型</p>
+<p>。</p>
+</li>
+</ul>
+</li>
+<li>​<strong>​适用场景​</strong>​：轻量级语义搜索、小型知识库（百万级向量内）、本地开发或边缘设备部署</li>
+</ul>
+<h4 id="为开始疑问6-dify架构是什么">【为开始】疑问6 dify架构是什么</h4>
+<ul>
+<li>Dify 架构全景：从模块设计到部署实践的完整指南  <a href="https://www.cnblogs.com/jishuba/p/18868659">https://www.cnblogs.com/jishuba/p/18868659</a></li>
+</ul>
+<h1 id="基于向量数据库混合检索--dify-构建知识库">基于向量数据库混合检索 + Dify 构建知识库</h1>
+<h1 id="参考">参考</h1>
+<ul>
+<li><a href="https://z0yrmerhgi8.feishu.cn/wiki/O4qFwwWfnipjcgkHwLocYIvHnAbDify">https://z0yrmerhgi8.feishu.cn/wiki/O4qFwwWfnipjcgkHwLocYIvHnAbDify</a>应用操作和源码剖析</li>
+</ul>
+<p>定位：实现Dify上下游生态系统闭环，围绕工作流和知识库，高效进行AIGC内容创作。
+服务：Dify源码剖析及答疑
+输出：
+系统性输出《Dify应用操作和源码剖析》教程；
+通过Dify扩展系统平台构建AIGC内容生态</p>
+<ul>
+<li>手把手教你部署 Dify 到本地环境(Windows系统) <a href="https://zhuanlan.zhihu.com/p/1918207520041837100">https://zhuanlan.zhihu.com/p/1918207520041837100</a></li>
+<li>
+<h1 id="dify-架构全景从模块设计到部署实践的完整指南httpswwwcnblogscomjishubap18868659-发布于-2025-05-09-1801"><a href="https://www.cnblogs.com/jishuba/p/18868659" title="发布于 2025-05-09 18:01">Dify 架构全景：从模块设计到部署实践的完整指南</a></h1>
+</li>
+<li>
+<h1 id="基于-oceanbase--低代码平台-dify-快速构建你的专属智能体">基于 OceanBase + 低代码平台 Dify 快速构建你的专属智能体</h1>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/03-rust/2025-6%E6%9C%88%E4%B8%80%E9%B1%BC%E5%A4%9A%E5%90%83-1-1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">企业级智能体dify</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/04-AI-%E8%AF%BB%E4%B9%A6/template/">
+            <span class="next-text nav-default">写出我心，写下去你就能活一次</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

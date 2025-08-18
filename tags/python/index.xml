@@ -8,11 +8,20 @@
     <language>zh-cn</language>
     <lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Cursor 实战技巧：如何快速配置 Python 环境</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/python/01_how_to_install_python/</link>
+      <title>CodeBuddy入门教程</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/07-code-study/python/02-/</link>
       <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/future_for_ai/python/01_how_to_install_python/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/07-code-study/python/02-/</guid>
+      <description>#python入门 #日拱一卒 #从青铜到王者 如何在 CodeBuddy 中配置 Python 环境. Python 作为一门功能强大的编程语言，在数据分析、人工智能、Web 开发等领域有着广泛</description>
+    </item>
+    
+    <item>
+      <title>Cursor 实战技巧：如何快速配置 Python 环境</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/07-code-study/python/01_how_to_install_python/</link>
+      <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/07-code-study/python/01_how_to_install_python/</guid>
       <description>#python入门 #日拱一卒 #从青铜到王者 Python 作为一门功能强大的编程语言，在数据分析、人工智能、Web 开发等领域有着广泛的应用。其简洁的语法和</description>
     </item>
     

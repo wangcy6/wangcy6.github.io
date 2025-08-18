@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>后端开发工程师面经 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/job/day8-job-rember/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="后端开发工程师面经" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/job/day8-job-rember/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="后端开发工程师面经">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2799">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="后端开发工程师面经"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">后端开发工程师面经</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2799 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-公司曙光信息产业股份有限公司">1.1 公司：曙光信息产业股份有限公司</a></li>
+    <li><a href="#12-岗位nvme全闪阵列高级研发工程师">1.2 岗位：NVME全闪阵列高级研发工程师</a>
+      <ul>
+        <li><a href="#岗位职责">岗位职责：</a></li>
+        <li><a href="#任职资格">任职资格：</a></li>
+      </ul>
+    </li>
+    <li><a href="#二面试细节回顾">二、面试细节回顾</a>
+      <ul>
+        <li><a href="#第1题你描述的产品架构我听不懂请手绘以下产品设计图">第1题：你描述的产品架构我听不懂，请手绘以下产品设计图</a></li>
+        <li><a href="#第2题如何将单线程改为多线程处理并保证各线程负责的任务均衡">第2题：如何将单线程改为多线程处理，并保证各线程负责的任务均衡？</a></li>
+        <li><a href="#第3题针对大文件如何写入的">第3题：针对大文件，如何写入的？</a></li>
+        <li><a href="#第4题缓存如何处理的客户端缓存元数据管理存储池">第4题：缓存如何处理的，客户端缓存、元数据管理、存储池？</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#heading"></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>第8次面试回顾：</p>
+<h1 id="一-基本信息">一、 基本信息</h1>
+<h2 id="11-公司曙光信息产业股份有限公司">1.1 公司：曙光信息产业股份有限公司</h2>
+<h2 id="12-岗位nvme全闪阵列高级研发工程师">1.2 岗位：NVME全闪阵列高级研发工程师</h2>
+<h3 id="岗位职责">岗位职责：</h3>
+<ol>
+<li>参与存储阵列的模块设计，配合架构师完成模块及特性的概要设计和详细设计</li>
+<li>负责模块和特性的核心代码的开发</li>
+<li>协助架构师完成模块内的设计评审，代码review，和疑难问题解决</li>
+</ol>
+<h3 id="任职资格">任职资格：</h3>
+<ol>
+<li>从事存储阵列或者分布式存储相关研发工作1年以上</li>
+<li>熟练掌握C语言编程，具有良好的编程习惯</li>
+<li>承担过存储阵列或分布式存储团队核心特性和流程的开发人员优先</li>
+<li>具备良好的沟通习惯、语言表达清楚、思路清晰，有团队合作精神</li>
+<li>有带领过研发技术团队经验的优先</li>
+</ol>
+<h2 id="二面试细节回顾">二、面试细节回顾</h2>
+<h3 id="第1题你描述的产品架构我听不懂请手绘以下产品设计图">第1题：你描述的产品架构我听不懂，请手绘以下产品设计图</h3>
+<p>**1. 我的视角：</p>
+<ul>
+<li>作为普通开发人员，我所说的内容领导根本听不懂。汇报的形式似乎比内容更重要，</li>
+<li>在领导眼里，我的报告全部被看成漏洞，觉得不够严谨、不够上进。我们与领导之间存在明显差距，</li>
+<li>但我根本不知道问题出在哪里。</li>
+</ul>
+<p><strong>2. 面试官视角</strong>：</p>
+<ul>
+<li>你需要汇报给上级领导，必须假设领导对项目一无所知。</li>
+<li>你的报告要整体绘制，包括系统设计、模型设计、概要设计等。</li>
+<li>给人的感觉是你平时从没做过类似汇报、系统设计或概要设计，完全不会写。</li>
+</ul>
+<p><strong>3. 技能要求</strong>：</p>
+<ul>
+<li>你必须具有全局视角，能够合理划分模块</li>
+<li>并说明模块之间的交互方式和流程，符合常理。</li>
+<li>系统设计面试详解 <a href="https://www.explainthis.io/zh-hans/swe/system-design">https://www.explainthis.io/zh-hans/swe/system-design</a></li>
+</ul>
+<h3 id="第2题如何将单线程改为多线程处理并保证各线程负责的任务均衡">第2题：如何将单线程改为多线程处理，并保证各线程负责的任务均衡？</h3>
+<p><strong>1. 从我的角度来看</strong>：</p>
+<ul>
+<li>这点我也很好奇。刚接触时也有同样的疑问。谷歌提供了基于数学公式的解决方案，而不是普通的 hash，一致性hash，但具体细节我不清楚。</li>
+<li>后来工作忙起来，也没再有时间深入研究。最重要事情不去做，做了其他人做垃圾事情。</li>
+</ul>
+<p><strong>2. 从面试官的角度来看</strong>：</p>
+<ul>
+<li>你自己都没考虑清楚这个问题，就算是用了别人的方案，也必须研究透彻</li>
+<li>算法的输入是什么？输出是什么？如何保证数据分配均衡？这是最基本的要求。</li>
+</ul>
+<p><strong>3. 技能要求</strong>：</p>
+<ul>
+<li>你必须考虑数据拆分是否均衡，并能对比不同算法的优缺点，</li>
+<li>最终说明采用了哪一个，以及原因，有数据支撑。</li>
+</ul>
+<p><strong>4. 技术解析（仅供参考）</strong>：</p>
+<ul>
+<li>Ceph 使用 CRUSH（Controlled Replication Under Scalable Hashing）算法来决定数据对象的存储位置。</li>
+<li>TiKV 将数据按键范围划分为多个 Region，每个 Region 存储一个连续的键值区间</li>
+<li>3FS 的数据分布与均衡策略：</li>
+<li>3FS链式复制（Chain Replication）**：3FS 使用链式复制协议来确保数据的一致性和高吞吐量。在该协议中，数据写入请求沿着复制链传递，直到所有副本都被更新为止。</li>
+<li>3FS<strong>分布式元数据管理</strong>：3FS 的元数据服务是无状态的，使用事务性键值存储（如 FoundationDB）来管理文件系统的元数据。客户端可以连接到任意元数据服务实例，实现负载均衡和高可用性。</li>
+</ul>
+<h3 id="第3题针对大文件如何写入的">第3题：针对大文件，如何写入的？</h3>
+<p><strong>1. 我的视角：</strong></p>
+<ul>
+<li>什么是“大文件”？就是一个非常大的文件，而不是大目录。</li>
+<li>从元数据管理角度看，大文件与小文件并无区别。能否用存储池管理大文件？但我对具体处理过程并不了解。</li>
+</ul>
+<p><strong>2. 面试官视角：</strong></p>
+<ul>
+<li>你需要清楚阐述在 CephFS 或类似系统中，如何并发读写大文件，</li>
+<li>包括任务的分割模型、线程如何协作、并发访问是怎么处理的。</li>
+<li>但你的回答目前还非常模糊。</li>
+</ul>
+<p><strong>3. 技能要求：</strong></p>
+<ul>
+<li>I/O 栈的与文件系统之间关系</li>
+</ul>
+<p><strong>4. 技术解析（仅供参考）：</strong></p>
+<ul>
+<li><strong>CephFS</strong>：大文件被拆分成多个默认 4 MB 的 stripe（对象），客户端多个线程并行读写不同 stripe，调用 <code>pwrite()</code> 或使用 mmap 定位偏移并发处理，尽量并行访问多个 OSD 提升吞吐。stripe 单元太小会增加调度和 metadata 开销</li>
+<li><strong>TiKV（Raftstore）</strong>：数据切分为多个 Region，每个 Region 由 Raftstore 独立处理。TiKV 已支持多线程 Raftstore（通过 <code>raftstore.store-pool-size</code> 配置）并发处理 Region，避免 Raftstore 单线程成为瓶颈</li>
+</ul>
+<h3 id="第4题缓存如何处理的客户端缓存元数据管理存储池">第4题：缓存如何处理的，客户端缓存、元数据管理、存储池？</h3>
+<p><strong>1. 我的视角：</strong><br>
+客户端好像会提供 cap 授权机制？我不确定这是否就是缓存机制的一部分，但我也没有完全理解它的作用。</p>
+<p><strong>2. 面试官视角：</strong><br>
+你完全偏离了题意，显然不理解缓存系统会面临的核心问题。我们就到这里。</p>
+<p><strong>3. 技能要求：</strong><br>
+你需要讲清楚缓存系统在并发场景下如何保持一致性，并说明分布式锁如何发挥作用。</p>
+<p><strong>4. 技术解析（仅供参考）：</strong></p>
+<ul>
+<li>
+<p><strong>CephFS 客户端缓存与 cap 授权机制</strong>：当块或 inode 操作发生时，客户端向 MDS 请求 capability（cap），包括读写权限和缓存授权。如果多个客户端访问同一 inode，MDS 会撤销 cap，客户端需返还缓存并同步最新元数据，保证一致</p>
+</li>
+<li>
+<p><strong>并发控制/分布式锁机制</strong>：当多个客户端请求同一 key 或 inode 时，MDS 保证只有一个持有 exclusive cap 写操作，其他客户端等待。这相当于一种分布式锁机制，可防止缓存击穿、写冲突，确保缓存一致</p>
+</li>
+<li>
+<p><strong>TiKV支持</strong>：TiKV 能作为 metadata engine 为分布式存储系统提供强一致性支持（如 JuiceFS + TiKV 架构）。TiKV 内部管理 block-cache，以及 Raftstore 机制控制写操作时并发一致性，通过事务机制和重复写缓存控制 client-side 缓存行为</p>
+</li>
+</ul>
+<h1 id="三动手写代码能力">三、动手写代码能力</h1>
+<h4 id="题目描述">题目描述：</h4>
+<p>请10分钟完成下面题目</p>
+<p><a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">无重复字符的最长子串</a></p>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长 子串</strong> 的长度。
+<strong>示例 1:</strong></p>
+<p><strong>输入:</strong> s = &ldquo;abcabcbb&rdquo;
+<strong>输出:</strong> 3
+<strong>解释:</strong> 因为无重复字符的最长子串是 <code>&quot;abc&quot;</code>，所以其长度为 3。</p>
+<p><strong>示例 2:</strong></p>
+<p><strong>输入:</strong> s = &ldquo;bbbbb&rdquo;
+<strong>输出:</strong> 1
+<strong>解释:</strong> 因为无重复字符的最长子串是 <code>&quot;b&quot;</code>，所以其长度为 1。</p>
+<p><strong>示例 3:</strong></p>
+<p><strong>输入:</strong> s = &ldquo;pwwkew&rdquo;
+<strong>输出:</strong> 3
+<strong>解释:</strong> 因为无重复字符的最长子串是 <code>&quot;wke&quot;</code>，所以其长度为 3。
+     请注意，你的答案必须是 <strong>子串</strong> 的长度，<code>&quot;pwke&quot;</code> 是一个_子序列，_不是子串。</p>
+<p><strong>1. 我的视角：</strong></p>
+<ul>
+<li>
+<p>这个题目我根本听不懂</p>
+</li>
+<li>
+<p>算法类的我没准备，之前刷了 300 题现在忘了</p>
+</li>
+<li>
+<p>用最笨的方法解决，但面试官不认可，面试很快就结束了</p>
+</li>
+</ul>
+<p><strong>2. 面试官视角：</strong></p>
+<ul>
+<li>你都写不出来，废话不多说，直接结束</li>
+</ul>
+<p><strong>3. 技能要求：</strong></p>
+<ul>
+<li>
+<p>在 BAT 公司通常要求 LeetCode 难度为第 150 至 250 题范围的题目</p>
+</li>
+<li>
+<p>其他公司可能考 0–50 题，通常涉及字符串、链表基础操作，部分也会考树结构</p>
+</li>
+<li>
+<p>建议按部就班刷题，不要想太多，每道题都认真完成。大多数公司只关注基础题（LeetCode 前 50 题以内）</p>
+</li>
+</ul>
+<p>技术解析（简短说明 LeetCode 练习策略）</p>
+<ul>
+<li>
+<p>LeetCode 官方的 “Top Interview 150” 列表覆盖常见面试题，适合深入准备（前三个月准备）</p>
+</li>
+<li>
+<p>Reddit 上也有大量经验用户分享，他们普遍认为稳定掌握 Leetcode 前 150 题、能总结出解题套路，对准备 BAT 及其他大厂面试更有效</p>
+</li>
+<li>
+<p>实际上，有用户表示仅刷了约 50-60 题仍能拿到大厂 offer，不过那通常代表对算法基础已非常熟悉，或通过更多场外经验补充</p>
+</li>
+<li>
+<p>但这是例外，大多数人应基于稳扎稳打的题目练习方案。</p>
+</li>
+</ul>
+<h3 id="heading"></h3>
+<h1 id="提示词">提示词</h1>
+<p>项目背景：
+你是项目架构师，擅长项目全局视角设计，分布式文件系统（gfs，CephFS，JuiceFS，3fs），分布式数据库（tidb，等开源源码设计，兼顾口语化，让小白听懂。</p>
+<p>任务描述：
+请对输入内容 进行润色，保证句子通顺，原文内容保持不变</p>
+<p>要求：
+1. 这个格式保持不变，1. 我的视角 和2. 面试官视角  3.技能要求  4 技术解析 超过 ceph tikv ，3fs 等分布式数据库，分布式存储怎么做的 如果搜索不到不回答</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/job/1-2025-5-job/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">后端开发工程师面经</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/ceph-blockdevice/">
+            <span class="next-text nav-default">块设备</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

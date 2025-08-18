@@ -48,7 +48,7 @@
 <meta itemprop="name" content="后端开发工程师面经">
 <meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3378">
+<meta itemprop="wordCount" content="4646">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="后端开发工程师面经"/>
 <meta name="twitter:description" content="do book"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/do-book/"> do book </a>
             </div>
-          <span class="more-meta"> 约 3378 字 </span>
-          <span class="more-meta"> 预计阅读 7 分钟 </span>
+          <span class="more-meta"> 约 4646 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -140,6 +140,16 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
+  <ul>
+    <li><a href="#第7次面试回顾">第7次面试回顾</a>
+      <ul>
+        <li><a href="#基本信息">基本信息</a></li>
+        <li><a href="#面试内容">面试内容</a></li>
+        <li><a href="#第一题你是怎么做优化的">第一题:你是怎么做优化的？</a></li>
+      </ul>
+    </li>
+  </ul>
+
   <ul>
     <li><a href="#岗位信息">岗位信息</a></li>
     <li><a href="#问题1-什么是块存储">问题1： 什么是块存储?</a>
@@ -176,8 +186,103 @@
 </nav>
   </div>
 </div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
     <div class="post-content">
-      <h1 id="第二次面试回顾"> 第二次面试回顾</h1>
+      <h2 id="第7次面试回顾">第7次面试回顾</h2>
+<h3 id="基本信息">基本信息</h3>
+<p>时间：2025年7月3日，周三
+地点：线上
+岗位：分布式存储研发工程师</p>
+<h3 id="面试内容">面试内容</h3>
+<h3 id="第一题你是怎么做优化的">第一题:你是怎么做优化的？</h3>
+<h4 id="11-我的回答">1.1 我的回答</h4>
+<ul>
+<li>元数据：平均 在并发不够，多线程，多线程基于各种缓存方式</li>
+<li>数据存储；io栈 基于bluestore 和数控分离方式</li>
+<li>面试 30秒&ndash;10秒怎么优化的?ctdb</li>
+</ul>
+<h4 id="12-面试官反问">1.2 面试官反问</h4>
+<ul>
+<li>面试官1：对数控分离感兴趣，我东西，南北桥 专业术语，我心里听说？</li>
+<li>我：用户态 零拷贝，发起操作，网络改造</li>
+</ul>
+<p>ctdb 在多节点出现不问题定位？
+我手是：通过定制自己脚本，例如 误判情况。</p>
+<h4 id="13-后记">1.3 后记</h4>
+<ul>
+<li>面试官 内部术语 东西，南北桥优化，我自己不专业术语说的。</li>
+<li>回答清晰，我混乱</li>
+<li>大海捞针-不知道如何回答</li>
+</ul>
+<h4 id="第二题你们环境如何性能如何相比其他200g-你们不行呀">第二题：你们环境如何，性能如何，相比其他200G 你们不行呀？</h4>
+<h4 id="12-我的回答">1.2 我的回答</h4>
+<ul>
+<li>我全闪环境，混闪环境&ndash;没清楚到底哪个</li>
+<li>60g 面试不高呀，别人200g带宽，你们打榜xxx</li>
+<li>我说就是60g，因为io栈，锁一致性缘故校验</li>
+</ul>
+<h4 id="13-面试反问">1.3 面试反问</h4>
+<ul>
+<li>你了解其他gfs，luster 3fs怎么设计的？</li>
+<li>你了解其他gfs，luster 3fs怎么设计的？</li>
+<li>你了解其他gfs，luster 3fs怎么设计的？</li>
+<li>我犹豫一会说不清楚</li>
+</ul>
+<h4 id="第三题-假如重新设计元数据怎么设计">第三题： 假如重新设计元数据，怎么设计？</h4>
+<ul>
+<li>提示1. 文件树怎么存储，或者缓存存储全部的目录</li>
+<li>提示2：怎么保证一致性，锁，</li>
+</ul>
+<h5 id="我思考">我思考:</h5>
+<ul>
+<li>感觉不好会单，有不能不回答，最后回到原来思路，打错特错</li>
+</ul>
+<h5 id="我回答">我回答：</h5>
+<ul>
+<li>提示1根本不理解啥意思，犹豫1分钟，被面试官pass，</li>
+<li>提示2：我针对大目录，虚拟目录 目录分配，然后分布式锁，解释不是互斥锁，</li>
+<li>一致性：存储怎么存储rockdb，一致性协议，一致性解析没有解决，线性一致性</li>
+<li>锁保证故障情况下一致性。</li>
+</ul>
+<h4 id="第四题-假如数据存储你怎么设计">第四题： 假如数据存储，你怎么设计？</h4>
+<h5 id="41-我思考">4.1 我思考:</h5>
+<ul>
+<li>感觉有点懵，不怎么回答，我必须快速给出结论，我抓住io栈</li>
+</ul>
+<h4 id="42-我的回答">4.2 我的回答</h4>
+<ul>
+<li>针对IO栈，最好磁盘，最好网卡，最好sdk基础上，如何这些组件，零拷贝，如何使用。</li>
+<li>文件传输：senfile，用户态不操作，用户态操作，mmap方式这些基于内核处理的</li>
+<li>spdk不用户态的，线程池不合适，协程</li>
+<li>感觉回答不好，io栈理解。</li>
+</ul>
+<h4 id="第五题反问环节">第五题、反问环节</h4>
+<h5 id="51--我">5.1  我</h5>
+<ul>
+<li>作为一个PM，在完成原有任务情况下（除去本模块，本系统，当成设计好了，或者很多缺点不敢打修改，不停打补丁方式），还有哪些方式 快速学习技术方式，还有其他平台设计？</li>
+</ul>
+<h5 id="52-面试官">5.2 面试官：</h5>
+<p>不能局限于一个软件，熟悉不同平台架构区别，他们怎么做到的，从看文章，看代码，怎么做到的xxx</p>
+<ul>
+<li>IBM GPFS并行文件系统软件在设计上不存在任何性能瓶颈，因此GPFS并行文件系统可以充分发挥硬件系统的性能。换句话说，GPFS并行文件系统的性能完全取决于硬件配置的好坏，而文件系统软件本身对性能的影响微乎其微。</li>
+<li>Ceph是一个可靠地、自动重均衡、自动恢复的分布式存储系统，根据场景划分可以将Ceph分为三大块，分别是对象存储、块设备存储和文件系统服</li>
+<li>Lustre支持数万个客户端系统，支持PB级存储容量，单个文件最大支持320TB容量。</li>
+<li>新一代OceanStor Dorado  融合全闪存存储</li>
+</ul>
+<h5 id="行动上难点">行动上难点：</h5>
+<ul>
+<li>关注数据规格，然后看源码怎么做到的，</li>
+<li>
+<ul>
+<li>但是做起来无从下手，感觉浪费大量时间，不入门。</li>
+</ul>
+</li>
+</ul>
+<h1 id="第二次面试回顾"> 第二次面试回顾</h1>
 <h2 id="岗位信息">岗位信息</h2>
 <ul>
 <li>
@@ -419,13 +524,13 @@
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/interview/5-2025-05-14-3fs-ObjectPool/">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day17-system-desgin-03-dir-tree/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</span>
+            <span class="prev-text nav-default">吊打面试官03:Mysql如何存储目录树</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/interview/interviewSystemDesgin/2025/ceph-blockdevice/">
-            <span class="next-text nav-default">块设备</span>
+        <a class="next" href="/post/interview/job/day8-job-rember/">
+            <span class="next-text nav-default">后端开发工程师面经</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

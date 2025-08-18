@@ -48,7 +48,7 @@
 <meta itemprop="name" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？">
 <meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="7512">
+<meta itemprop="wordCount" content="7510">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？"/>
 <meta name="twitter:description" content="do book"/>
@@ -130,7 +130,7 @@
         <div class="post-category">
             <a href="/categories/do-book/"> do book </a>
             </div>
-          <span class="more-meta"> 约 7512 字 </span>
+          <span class="more-meta"> 约 7510 字 </span>
           <span class="more-meta"> 预计阅读 15 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -149,14 +149,6 @@
     <li><a href="#21-拆分任务">2.1 拆分任务</a>
       <ul>
         <li><a href="#21--看一段代码">2.1  看一段代码</a></li>
-      </ul>
-    </li>
-  </ul>
-
-  <ul>
-    <li>
-      <ul>
-        <li></li>
         <li><a href="#五对比其他怎么实现的">五、对比其他怎么实现的？</a></li>
       </ul>
     </li>
@@ -173,6 +165,11 @@
 </nav>
   </div>
 </div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
     <div class="post-content">
       <p>点击<!-- raw HTML omitted -->蓝色<!-- raw HTML omitted -->关注。</p>
 <blockquote>
@@ -407,7 +404,6 @@ epoll回调通知的是数据可以读取或者写入了，
 <p>io_uring是Linux内核提供的一种新型异步I/O框架，旨在大幅提升系统处理I/O请求的效率和性能。liburing简化了这个复杂过程，让开发者可以更方便地利用这一先进技术。</p>
 <h4 id="二-这个技术适用的场景任何技术都有其适用的场景">二、 这个技术适用的场景。任何技术都有其适用的场景</h4>
 <p>文章：https://www.cnblogs.com/haoee/p/16209797.html</p>
-<h1 id="-headblogcontentpostinterviewinterviewsystemdesgin2025day10-md">&laquo;&laquo;&laquo;&lt; HEAD:blog/content/post/interview/interviewSystemDesgin/2025/day10-.md</h1>
 <p>1 与 Linux AIO 的不同</p>
 <p><code>io_uring</code> 与 <code>linux-aio</code> 有着本质的不同：</p>
 <ol>

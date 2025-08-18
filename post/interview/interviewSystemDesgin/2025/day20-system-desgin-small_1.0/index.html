@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗? - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3748">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 3748 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#11-准确说清楚-具体机型-具体公司具体产品具体指标">1.1 准确说清楚 ​具体机型 具体公司具体产品具体指标</a>
+      <ul>
+        <li><a href="#111-不同文件系统的文件系统性能指标">1.1.1 不同文件系统的文件系统性能指标</a></li>
+        <li><a href="#1-ddn公司的lustre文件系统">(1) DDN公司的Lustre文件系统</a></li>
+        <li><a href="#2--ddn-全闪存存储机型对比表">(2) 📊 ​<strong>​DDN 全闪存存储机型对比表​</strong>​</a></li>
+        <li><a href="#3-gpfs文件系统机型性能">(3) GPFS文件系统机型性能</a></li>
+      </ul>
+    </li>
+    <li><a href="#112--储设备性能对比表">1.1.2  <strong>储设备性能对比表​</strong>​</a>
+      <ul>
+        <li><a href="#-关键说明">🔍 ​<strong>​关键说明​</strong>​</a></li>
+      </ul>
+    </li>
+    <li><a href="#113查缺补漏">1.1.3查缺补漏</a>
+      <ul>
+        <li><a href="#了解datadirect-networksddn公司基本信息">了解DataDirect Networks（DDN）公司基本信息</a></li>
+        <li><a href="#ibm-spectrum-scalegpfs">IBM Spectrum Scale(GPFS)</a></li>
+      </ul>
+    </li>
+    <li><a href="#不同产品脚骨对标">不同产品脚骨对标</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#参考资料">参考资料</a>
+      <ul>
+        <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考资料-1">参考资料</a>
+      <ul>
+        <li><a href="#lustre">Lustre</a></li>
+        <li><a href="#juicefs">JuiceFS</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p><a href="https://wnso49yyot.feishu.cn/base/Wi37bwBTiaCpEZsFxavckkV5nbb?table=tblPUqR3ZoqKKLNW&amp;view=vew40mV0G2">https://wnso49yyot.feishu.cn/base/Wi37bwBTiaCpEZsFxavckkV5nbb?table=tblPUqR3ZoqKKLNW&amp;view=vew40mV0G2</a></p>
+<p>知识地图：操作系统&ndash;文件子系统&ndash;AI时时代分布式文件系统。</p>
+<p>书接上回</p>
+<p><a href="https://mp.weixin.qq.com/s/qdopUgZdZZKT_ufBDVuCWw">企业案例:分布式存储产品架构性能优化总结</a> 通过缝缝补补方式优化一个项目</p>
+<p><a href="https://mp.weixin.qq.com/s/zQsyzLLYNLwoV9CF1-xiZA">企业案例04:AI时代分布式存储产品架构长什么样</a> 在重新开发一个项目之前 创建一个敏捷团队</p>
+<blockquote>
+<p>本文主要描述的，在开发一个项目之前参考那些产品特征和性能。</p>
+</blockquote>
+<p>和自媒体写文章第一个要说事情是对标其他账号。</p>
+<p>绝非从0开发，从0开发出来黄瓜菜都凉了。</p>
+<p>开始</p>
+<h1 id="一背景">一、背景</h1>
+<h2 id="11-准确说清楚-具体机型-具体公司具体产品具体指标">1.1 准确说清楚 ​具体机型 具体公司具体产品具体指标</h2>
+<h3 id="111-不同文件系统的文件系统性能指标">1.1.1 不同文件系统的文件系统性能指标</h3>
+<h3 id="1-ddn公司的lustre文件系统">(1) DDN公司的Lustre文件系统</h3>
+<table>
+<thead>
+<tr>
+<th>​机型配置​</th>
+<th>​<strong>​厂商​</strong>​</th>
+<th>​<strong>​文件系统​</strong>​</th>
+<th>​<strong>​单节点聚合带宽​</strong>​</th>
+<th>​<strong>​元数据OPS​</strong>​</th>
+<th>​<strong>​参考来源​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全闪环境  <!-- raw HTML omitted -->    <!-- raw HTML omitted -->SFA200NVX2E机型<!-- raw HTML omitted -->    <!-- raw HTML omitted -->24×NVMe SSD（单PCIe 5.0SSD百万ops， 实际10–14 GB/s）<!-- raw HTML omitted -->    <!-- raw HTML omitted -->200Gb InfiniBand（单网卡最多25GB/s带宽）</td>
+<td>DDN</td>
+<td>Lustre</td>
+<td>读：48 GB/s  <!-- raw HTML omitted -->写：38 GB/s</td>
+<td>200万 OPS<!-- raw HTML omitted --></td>
+<td>陈道碧_DDN持续支持Lustre社区发展</td>
+</tr>
+<tr>
+<td>混闪<!-- raw HTML omitted -->SFA7990X<!-- raw HTML omitted -->2×SSD​​</td>
+<td>DDN</td>
+<td>Lustre</td>
+<td>读：20 GB/s  <!-- raw HTML omitted -->写：20 GB/s</td>
+<td>20万 OPS<!-- raw HTML omitted --></td>
+<td>陈道碧_DDN持续支持Lustre社区发展DN</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>型号/配置​</strong>​</th>
+<th>读取带宽</th>
+<th>写入带宽</th>
+<th>核心优势</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​SFA200NVX2E（全闪）​</strong>​</td>
+<td>≥48 GB/s</td>
+<td>~33–43 GB/s</td>
+<td>极致低延迟、高吞吐</td>
+<td>AI训练、超算、实时分析</td>
+</tr>
+<tr>
+<td>​<strong>​SFA7990X（混闪）​</strong>​</td>
+<td>20 GB/s</td>
+<td>16 GB/s</td>
+<td>高容量性价比、70万 IOPS</td>
+<td>AI推理、中型数据中</td>
+</tr>
+</tbody>
+</table>
+<p>并不是说40G顶峰了</p>
+<table>
+<thead>
+<tr>
+<th><strong>​型号​</strong>​</th>
+<th>厂商</th>
+<th>最大读带宽</th>
+<th>4K随机读IOPS</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​SFA400NVX2E​</strong>​</td>
+<td>DDN</td>
+<td>≥80 GB/s</td>
+<td>≥1.2M</td>
+<td>AI训练、超算</td>
+</tr>
+</tbody>
+</table>
+<p>汇总如下：</p>
+<table>
+<thead>
+<tr>
+<th>​<strong>​机型​</strong>​</th>
+<th>​<strong>​类型​</strong>​</th>
+<th>​<strong>​厂商​</strong>​</th>
+<th>​<strong>​文件系统​</strong>​</th>
+<th>​<strong>​单节点聚合带宽​</strong>​</th>
+<th>​<strong>​元数据OPS​</strong>​</th>
+<th>​<strong>​关键限制与适配场景​</strong>​</th>
+<th>​<strong>​参考来源​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​SFA7990X​</strong>​</td>
+<td>混闪</td>
+<td>DDN</td>
+<td>Lustre</td>
+<td>读：20 GB/s  <!-- raw HTML omitted -->写：20 GB/s</td>
+<td>20万 OPS</td>
+<td>​<strong>​必须配 SSD 元数据盘​</strong>​  <!-- raw HTML omitted -->适用：归档、冷数据处理</td>
+<td>陈道碧_DDN 持续支持 Lustre 社区发展</td>
+</tr>
+<tr>
+<td>​<strong>​SFA200NVX2E​</strong>​</td>
+<td>全闪</td>
+<td>DDN</td>
+<td>Lustre</td>
+<td>读：48 GB/s  <!-- raw HTML omitted -->写：38 GB/s</td>
+<td>200万 OPS</td>
+<td>​<strong>​单网卡带宽≤25GB/s​</strong>​  <!-- raw HTML omitted -->适用：AI推理、中型 HPC</td>
+<td>陈道碧_DDN 持续支持 Lustre 社区发展</td>
+</tr>
+<tr>
+<td>​<strong>​SFA400NVX2E​</strong>​</td>
+<td>旗舰全闪</td>
+<td>DDN</td>
+<td>EXAScaler</td>
+<td>读：≥80 GB/s  <!-- raw HTML omitted -->写：56–72 GB/s</td>
+<td>≥1.2M</td>
+<td>​<strong>​需 200Gb EDR 双网卡聚合​</strong>​  <!-- raw HTML omitted -->适用：AI训练、超算</td>
+<td>厂商白皮书 + 行业测试</td>
+</tr>
+</tbody>
+</table>
+<p>合理吗？</p>
+<p> ​<strong>​关键数据一致性验证​</strong>​</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>SFA200NVX2E（原始值）</th>
+<th>SFA400NVX2E（升级验证）</th>
+<th>逻辑关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单NVMe SSD带宽</td>
+<td>2 GB/s (读) ×24盘</td>
+<td>PCIe 5.0单盘≈14 GB/s</td>
+<td>✅ 合理</td>
+</tr>
+<tr>
+<td>总读带宽</td>
+<td>48 GB/s</td>
+<td>≥80 GB/s</td>
+<td>✅ 翻倍提升</td>
+</tr>
+<tr>
+<td>网卡限制 vs 需求带宽</td>
+<td>25 GB/s &laquo; 48 GB/s</td>
+<td>50 GB/s ≥ 80 GB/s*</td>
+<td>SFA400需多链路聚合</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>​<strong>​注​</strong>​：SFA400NVX2E 的80GB/s带宽需依赖​<strong>​多网卡负载均衡​</strong>​（如4×200Gb EDR = 100GB/s理论值）。</p>
+</blockquote>
+<blockquote>
+<p>再次整理 ，为什么反复说，就让自己去理解</p>
+</blockquote>
+<h3 id="2--ddn-全闪存存储机型对比表">(2) 📊 ​<strong>​DDN 全闪存存储机型对比表​</strong>​</h3>
+<table>
+<thead>
+<tr>
+<th>​<strong>​配置项​</strong>​</th>
+<th>​<strong>​ES200NVX2 机型​</strong>​</th>
+<th>​<strong>​ES400NVX2 机型​</strong>​</th>
+<th>​<strong>​性能差异​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​架构设计​</strong>​</td>
+<td>双控双路</td>
+<td>双控四路</td>
+<td>CPU 性能翻倍 ↑↑</td>
+</tr>
+<tr>
+<td>​<strong>​处理器​</strong>​</td>
+<td>2× 第三代英特尔®至强®可扩展处理器</td>
+<td>4× 第三代英特尔®至强®可扩展处理器</td>
+<td>计算密度 +100%</td>
+</tr>
+<tr>
+<td>​<strong>​主机端口​</strong>​</td>
+<td>4× HDR/HDR100 或 200/100GbE</td>
+<td>8× HDR/HDR100 或 200/100GbE</td>
+<td>网络带宽翻倍 ↑↑</td>
+</tr>
+<tr>
+<td>​<strong>​驱动器支持​</strong>​</td>
+<td>24× 2.5&quot; 双端口热插拔 NVMe SSD</td>
+<td>24× 2.5&quot; 双端口 NVMe SSD +  <!-- raw HTML omitted -->​<strong>​SAS-4扩展（支持900块HDD/SSD）​</strong>​</td>
+<td>容量扩展能力 ↑↑</td>
+</tr>
+<tr>
+<td>​<strong>​顺序读带宽​</strong>​ 🔥</td>
+<td>​<strong>​48 GB/s​</strong>​</td>
+<td>​<strong>​90 GB/s​</strong>​</td>
+<td>​<strong>​+87%​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​顺序写带宽​</strong>​ ⚡</td>
+<td>​<strong>​38 GB/s​</strong>​</td>
+<td>​<strong>​65 GB/s​</strong>​</td>
+<td>​<strong>​+71%​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​随机IOPS​</strong>​ 💥</td>
+<td>​<strong>​150万​</strong>​</td>
+<td>​<strong>​300万​</strong>​</td>
+<td>​<strong>​+100%​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​RAID特性​</strong>​</td>
+<td>解耦式RAID (DCR)：  <!-- raw HTML omitted -->支持 RAID 6/5/1 多种纠删码</td>
+<td>同左</td>
+<td>相同</td>
+</tr>
+<tr>
+<td>​<strong>​文件系统型号​</strong>​</td>
+<td>EXAScaler ES200NVX2</td>
+<td>EXAScaler ES400NVX2 / ​<strong>​AI400X2​</strong>​（AI专用优化）</td>
+<td>场景适配扩展 ↑</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li>​<strong>​追求极致性能​</strong>​ → ​<strong>​ES400NVX2​</strong>​：<br>
+四路CPU + 8×200Gb端口 + 300万IOPS，适配超90GB/s带宽场景。</li>
+<li>​<strong>​性价比之选​</strong>​ → ​<strong>​ES200NVX2​</strong>​：<br>
+双路CPU + 全闪配置，满足中等规模HPC需求（≤50GB/s）。</li>
+<li>​<strong>​AI专属优化​</strong>​ → ​<strong>​AI400X2型号​</strong>​：<br>
+深度集成NVIDIA GPUDirect，减少数据搬移延迟，提速训练效率。</li>
+</ul>
+<h3 id="3-gpfs文件系统机型性能">(3) GPFS文件系统机型性能</h3>
+<table>
+<thead>
+<tr>
+<th>​<strong>​机型​</strong>​</th>
+<th>​<strong>​类型​</strong>​</th>
+<th>​<strong>​厂商​</strong>​</th>
+<th>​<strong>​文件系统​</strong>​</th>
+<th>​<strong>​单节点聚合带宽​</strong>​</th>
+<th>​<strong>​元数据OPS（估算）​</strong>​</th>
+<th>​<strong>​关键配置​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​ESS 3500​</strong>​</td>
+<td>全闪</td>
+<td>IBM</td>
+<td>GPFS</td>
+<td>读：80 GB/s  <!-- raw HTML omitted -->写：52 GB/s</td>
+<td>≥1.5M</td>
+<td>双控双路，24×NVMe SSD</td>
+</tr>
+<tr>
+<td>​<strong>​ESS 3500​</strong>​</td>
+<td>混闪</td>
+<td>IBM</td>
+<td>GPFS</td>
+<td>读：43.2 GB/s  <!-- raw HTML omitted -->写：29.7 GB/s</td>
+<td>80K–120K</td>
+<td>1×ESS 3500 + 4×4U102磁盘柜</td>
+</tr>
+</tbody>
+</table>
+<h4 id="-ibm-ess-3500-混闪方案性能参数">📊 ​<strong>​IBM ESS 3500 混闪方案性能参数​</strong>​</h4>
+<table>
+<thead>
+<tr>
+<th>​<strong>​参数项​</strong>​</th>
+<th>​<strong>​混闪配置性能​</strong>​</th>
+<th>​<strong>​参考来源​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​文件系统​</strong>​</td>
+<td>GPFS（现称 IBM Spectrum Scale）</td>
+<td>IBM 官方文档 <em>&ldquo;ESS 3500 Hybrid Storage Technical Overview&rdquo;</em></td>
+</tr>
+<tr>
+<td>​<strong>​单节点聚合带宽​</strong>​</td>
+<td>读：​<strong>​43.2 GB/s​</strong>​  <!-- raw HTML omitted -->写：​<strong>​29.7 GB/s​</strong>​</td>
+<td>IBM 性能白皮书 <em>&ldquo;ESS 3500 with Hybrid Flash Performance Benchmarks&rdquo;</em> P.12</td>
+</tr>
+<tr>
+<td>​<strong>​元数据OPS​</strong>​</td>
+<td>​<strong>​80K–120K​</strong>​（4K随机读写）</td>
+<td>IBM Redbooks <em>&ldquo;IBM Elastic Storage System Implementation Guide&rdquo;</em> Section 5.3</td>
+</tr>
+<tr>
+<td>​<strong>​核心配置​</strong>​</td>
+<td>1×ESS 3500控制器 + 4×4U102磁盘柜  <!-- raw HTML omitted -->（HDD + SSD缓存分层）</td>
+<td>硬件规格表 <em>&ldquo;ESS 3500 Data Sheet&rdquo;</em></td>
+</tr>
+<tr>
+<td>​<strong>​存储协议​</strong>​</td>
+<td>支持 IB/RDMA、RoCE、NFSv4.1</td>
+<td>部署手册 <em>&ldquo;ESS Network Configuration Best Practices&rdquo;</em></td>
+</tr>
+<tr>
+<td>​<strong>​混闪优化特性​</strong>​</td>
+<td>GPFS自动分层（热数据→SSD，冷数据→HDD）</td>
+<td>IBM 技术文档 <em>&ldquo;Spectrum Scale Data Management Tiering&rdquo;</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>🔍 ​<strong>​关键数据解读与验证​</strong>​</p>
+<ol>
+<li>
+<p>​<strong>​带宽性能依据​</strong>​</p>
+<ul>
+<li>​<strong>​读 43.2 GB/s / 写 29.7 GB/s​</strong>​ 源于 IBM 实验室测试：
+<ul>
+<li>使用 100Gb InfiniBand 网络；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​元数据OPS说明​</strong>​</p>
+<ul>
+<li>​<strong>​80K–120K OPS​</strong>​ 为混闪优化后典型值（实测场景）：
+<ul>
+<li>纯 HDD 基础性能：仅 5–8万 OPS（机械盘寻址延迟限制）；</li>
+<li>启用 SSD 元数据专用池后 → ​<strong>​提升至 12万 OPS​</strong>​（+50%）。</li>
+</ul>
+</li>
+<li><em>注：若未配置 SSD 元数据加速，性能将衰减至 60K OPS 以下</em>。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​架构优势​</strong>​</p>
+<ul>
+<li>​<strong>​GPFS 纠删码支持（DCR）​</strong>​：<br>
+混闪模式下支持 ​<strong>​RAID 6/5/1 多种纠删方案​</strong>​，保障数据可靠性（对比图 SYSTEM FEATURES 栏）。</li>
+<li>​<strong>​智能分层技术​</strong>​：<br>
+自动迁移热点数据至 SSD 层，降低访问延迟（用户上传图中 STANDARD SOFTWARE FEATURES 描述）。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​网络瓶颈风险​</strong>​</p>
+<ul>
+<li>若使用 ​<strong>​MN24 网卡（4×100Gb）​</strong>​ → 理论带宽 40Gb/s（≈5GB/s）&laquo; 需求带宽（43.2GB/s）→ ​<strong>​必须升级为 200Gb EDR InfiniBand​</strong>​。​</li>
+</ul>
+</li>
+</ol>
+<h2 id="112--储设备性能对比表">1.1.2  <strong>储设备性能对比表​</strong>​</h2>
+<table>
+<thead>
+<tr>
+<th>​<strong>​类型​</strong>​</th>
+<th>​<strong>​厂商​</strong>​</th>
+<th>​<strong>​文件系统​</strong>​</th>
+<th>​<strong>​机型​</strong>​</th>
+<th>​<strong>​关键配置​</strong>​</th>
+<th>​<strong>​单节点聚合带宽​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>​<strong>​读​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​全闪​</strong>​</td>
+<td>DDN</td>
+<td>Lustre</td>
+<td>SFA200NVX2E</td>
+<td>双控双路，24×NVMe SSD</td>
+<td>48 GB/s</td>
+</tr>
+<tr>
+<td></td>
+<td>IBM</td>
+<td>GPFS (GNR模式)</td>
+<td>ESS 3500</td>
+<td>双控双路，24×NVMe SSD</td>
+<td>​<strong>​80 GB/s​</strong>​</td>
+</tr>
+<tr>
+<td></td>
+<td>浪潮</td>
+<td>GPFS (ECE模式)</td>
+<td>HN12</td>
+<td>8×NVMe SSD</td>
+<td>21.71 GB/s</td>
+</tr>
+<tr>
+<td>​<strong>​混闪​</strong>​</td>
+<td>DDN</td>
+<td>Lustre</td>
+<td>SFA7990X</td>
+<td>1×SFA7990X控制器 + 1×4U90磁盘柜</td>
+<td>20 GB/s</td>
+</tr>
+<tr>
+<td></td>
+<td>IBM</td>
+<td>GPFS (GNR模式)</td>
+<td>ESS 3500</td>
+<td>​<strong>​1×ESS 3500控制器 + 4×4U102扩展柜​</strong>​</td>
+<td>43.2 GB/s</td>
+</tr>
+<tr>
+<td></td>
+<td>浪潮</td>
+<td>GPFS (ECE模式)</td>
+<td>H60</td>
+<td>60×HDD（无SSD缓存）</td>
+<td>5.65 GB/s</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="-关键说明">🔍 ​<strong>​关键说明​</strong>​</h3>
+<ol>
+<li>​<strong>​性能亮点​</strong>​
+<ul>
+<li>​<strong>​带宽王者​</strong>​：IBM ESS 3500 全闪以 ​<strong>​80 GB/s 读带宽​</strong>​位居榜首（需 200Gb 网络支持）。</li>
+<li>​<strong>​混闪均衡​</strong>​：DDN SFA7990X 读写对称（20 GB/s），适合平衡型负载。</li>
+<li>​<strong>​低成本方案​</strong>​：浪潮 H60 纯 HDD 配置成本最低，但性能仅为混闪方案的 1/4。</li>
+</ul>
+</li>
+</ol>
+<h2 id="113查缺补漏">1.1.3查缺补漏</h2>
+<h3 id="了解datadirect-networksddn公司基本信息">了解DataDirect Networks（DDN）公司基本信息</h3>
+<h4 id="datadirect-networksddn">DataDirect Networks（DDN）</h4>
+<ul>
+<li>DataDirect Networks（DDN）公司 1998年在美国洛杉矶成立，是全球大型私人控股数据存储企业，</li>
+<li>其存储和数据管理解决方案在高性能计算（HPC），人工智能 (AI)，大数据，以及多云管理领域处于市场领导地位。</li>
+<li>2018和2019年，DDN相继收购了Intel的Lustre文件系统事业部，虚拟化服务器存储厂商Tintri，软件定义存储厂商Nexenta，以及西部数据公司的AI闪存阵列事业部</li>
+<li><a href="https://www.ddnstorage.com.cn/">https://www.ddnstorage.com.cn/</a></li>
+<li>全闪（SFA200NVX2E）和<strong>混闪（SFA7990X）</strong> 配置</li>
+<li><a href="https://define-technology.com/wp-content/uploads/2024/07/ddn-sfa400nvx2-sfa200nvx2-data-sheet-2023.pdf">https://define-technology.com/wp-content/uploads/2024/07/ddn-sfa400nvx2-sfa200nvx2-data-sheet-2023.pdf</a>
+<img src="https://s2.loli.net/2025/08/02/bIYPcCakZBh9jdK.png" alt="机型对比"></li>
+<li><a href="http://lustrefs.cn/wp-content/uploads/2023/11/CLUG2023_03_%E9%99%88%E9%81%93%E7%A2%A7_DDN%E6%8C%81%E7%BB%AD%E6%94%AF%E6%8C%81Lustre%E7%A4%BE%E5%8C%BA%E5%8F%91%E5%B1%95.pdf">陈道碧_DDN持续支持Lustre社区发展</a></li>
+</ul>
+<p><img src="https://s2.loli.net/2025/08/02/sgreaAvihUZz9Vq.png" alt="">
+<img src="https://s2.loli.net/2025/08/02/7wrQUDLZh3PNjEH.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>单位</th>
+<th>含义</th>
+<th>进制关系</th>
+<th>典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GB/s</td>
+<td>GigaBytes per second</td>
+<td>1 GB = 10^9 Bytes</td>
+<td>存储设备（硬盘、SSD）</td>
+</tr>
+<tr>
+<td>Gb/s</td>
+<td>Gigabits per second</td>
+<td>1 Gb = 10^9 bits</td>
+<td>网络带宽、接口速率</td>
+</tr>
+<tr>
+<td>Gbps</td>
+<td>Gigabits per second</td>
+<td>1 Gbps = 1 Gb/s</td>
+<td>同 Gb/s（简写形式）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ibm-spectrum-scalegpfs">IBM Spectrum Scale(GPFS)</h3>
+<ul>
+<li>GPFS (IBM Spectrum® Scale) 是一种高性能共享磁盘文件管理解决方案，可快速可靠地访问集群环境中多个节点的数据。 应用程序可以使用标准文件系统界面轻松地访问文件，并且可以从多个节点同时访问同一文件。</li>
+<li><a href="https://www.ibm.com/docs/en/storage-scale?topic=STXKQY/ibmspectrumscale_welcome.html">https://www.ibm.com/docs/en/storage-scale?topic=STXKQY/ibmspectrumscale_welcome.html</a>
+<img src="https://s2.loli.net/2025/08/02/IRboOePZtdBurUX.png" alt="image.png"></li>
+</ul>
+<h2 id="不同产品脚骨对标">不同产品脚骨对标</h2>
+<blockquote>
+<p>细微改变也能提高性能，不要总想着一个台机器不行，再加一台老思路。</p>
+</blockquote>
+<h1 id="三-一句话总结我该怎办">三。 一句话总结（我该怎办）</h1>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li>&laquo;从零实现 KV 存储 &raquo; 作者  roseduan，和 <strong>青藤木鸟</strong></li>
+<li>硬核课堂  corekv</li>
+</ol>
+<h3 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h3>
+<p>如果更多疑问，欢迎留言，转发 ，</p>
+<h2 id="参考资料-1">参考资料</h2>
+<h3 id="lustre">Lustre</h3>
+<p>Lustre 是一个由 DDN 开发和维护的、开源的、GPL协议下的分布式并行文件系统。Lustre 架构具有极强的扩展性，大量部署在超算，石油，天然气，制造业，富媒体，金融行业等领域。Lustre 客户端兼容 POSIX，并可以并行访问共享文件对象</p>
+<ul>
+<li>知乎专栏 <a href="https://zhuanlan.zhihu.com/c_1646977014585397248">https://zhuanlan.zhihu.com/c_1646977014585397248</a></li>
+</ul>
+<h3 id="juicefs">JuiceFS</h3>
+<ul>
+<li>直观解读 JuiceFS 的数据和元数据设计（二）：看山不是山</li>
+<li>JuiceFS 如何存储文件</li>
+<li><a href="https://juicefs.com/docs/zh/community/guide/cache#metadata-cache">https://juicefs.com/docs/zh/community/guide/cache#metadata-cache</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day21-system-desgin-small_1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/5-2025-05-14-3fs-ObjectPool/">
+            <span class="next-text nav-default">从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

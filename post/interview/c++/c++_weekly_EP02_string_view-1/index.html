@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_view-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_view-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-06-20T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-06-20T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-06-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-06-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1282">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-06-20 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 1282 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#stdoptional十万个为什么">std::optional十万个为什么</a></li>
+        <li><a href="#优缺点">优缺点</a></li>
+        <li><a href="#数据结构-能满足特性吗">数据结构 能满足特性吗</a></li>
+        <li><a href="#接口能满足特性吗">接口能满足特性吗？</a></li>
+        <li><a href="#完整代码">完整代码</a></li>
+        <li><a href="#案例1">案例1</a></li>
+      </ul>
+    </li>
+    <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#ceph产品路线图">ceph产品路线图</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s2.loli.net/2025/06/24/tU9gyJSP3GkDTiW.png" alt="c++ weekly"></p>
+<p>#知识地图 #最佳实践 #CPP17</p>
+<p>👋 各位老师好（老师是山东对人的一个尊称，就像称呼帅哥美女一样）</p>
+<p>C++周刊 （c++ weekly）第一期 EP01 开始了</p>
+<p><strong>主题：</strong></p>
+<p>今天用一分钟讲清楚—面试官为什么爱问std::string_view。</p>
+<h1 id="stdoptional-in-c-a-guide">STD::Optional in C++: A Guide</h1>
+<p>C++ 中的 STD：：Optional：指南</p>
+<h3 id="stdoptional十万个为什么">std::optional十万个为什么</h3>
+<ul>
+<li>为什么不用直接 构造函数创建一个实例？</li>
+<li>为什么 <code>std::optional</code> 使用 placement new？</li>
+<li>union sizeof怎么计算的</li>
+<li>std::option::emplace  是什么含义</li>
+<li>支持移动构操作吗？如何支持 栈上实例支持吗</li>
+</ul>
+<h3 id="优缺点">优缺点</h3>
+<p><strong>零堆分配</strong>：所有对象都在 inline 存储中构造，无需 <code>new/delete</code>。</p>
+<h3 id="数据结构-能满足特性吗">数据结构 能满足特性吗</h3>
+<ul>
+<li></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>  
+<span class="k">struct</span> <span class="nc">optional_storage</span> <span class="p">{</span>  
+	<span class="k">struct</span> <span class="nc">empty</span> <span class="p">{</span> <span class="p">};</span>  <span class="c1">//sizeof(empty)=1
+</span><span class="c1"></span>	<span class="k">union</span> <span class="p">{</span>  
+		<span class="n">empty</span> <span class="n">_</span><span class="p">;</span>  
+		<span class="n">T</span> <span class="n">value</span><span class="p">;</span>  
+	<span class="p">};</span> <span class="c1">//这个定义不对，因为成员变量是指针
+</span><span class="c1"></span>	<span class="kt">bool</span> <span class="n">has_value</span><span class="p">;</span>  
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="接口能满足特性吗">接口能满足特性吗？</h3>
+<h3 id="完整代码">完整代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">template&lt;typename T&gt;
+class optional {
+private:
+    // 用于占位，支持 constexpr 和无参数构造
+    struct _Empty { };
+    union {
+        _Empty _empty;      // dummy member
+        T       _value;     // 真正存储 T 的位置
+    };
+    bool _has = false;
+
+public:
+    constexpr optional() noexcept : _empty(), _has(false) { }
+
+    ~optional() {
+        reset();
+    }
+
+    template&lt;typename... Args&gt;
+    void emplace(Args&amp;&amp;... args) {
+        reset();
+        // placement new 在 _value 内联存储上构造 T
+        new (&amp;_value) T(std::forward&lt;Args&gt;(args)...);
+        _has = true;
+    }
+
+    void reset() noexcept {
+        if (_has) {
+            _value.~T();   // 手动析构
+            _has = false;
+        }
+    }
+
+    constexpr bool has_value() const noexcept { return _has; }
+
+    T&amp;       operator*()       &amp; { return _value; }
+    const T&amp; operator*() const &amp; { return _value; }
+    T*       operator-&gt;()      { return &amp;_value; }
+    const T* operator-&gt;() const { return &amp;_value; }
+};
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="案例1">案例1</h3>
+<ul>
+<li>
+<p><a href="https://en.cppreference.com/w/cpp/utility/optional/emplace.html">https://en.cppreference.com/w/cpp/utility/optional/emplace.html</a></p>
+</li>
+<li>
+<p>Ceph 在缓存管理层多采用传统的裸指针（如 <code>Ptr</code>, <code>shared_ptr</code>）或其他方式（如状态标签、缓存条目本身和值类型）；</p>
+</li>
+<li>
+<p><code>optional</code> 主要用于轻量可选值场景（如 RPC payload、临时配置），而缓存处理更偏向容器管理或引用语义，不使用 <code>optional&lt;T&gt;</code>。</p>
+</li>
+</ul>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p>我在寻找一位积极上进的小伙伴，</p>
+<p>一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事业，不妨 试试</p>
+<p> 1️⃣关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略</p>
+<p><img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<p>2️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p> 加入我的技术交流群Offer 来碗里 (回复&quot;面经&quot;获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt=""></p>
+<p>本群目标是：</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个<strong>逃避问题</strong>表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+<h4 id="低头走路一次专注做好一个小事">低头走路：一次专注做好一个小事</h4>
+<ul>
+<li>不扫一屋 何以扫天下。</li>
+<li>让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+</ul>
+<h2 id="ceph产品路线图">ceph产品路线图</h2>
+<table>
+<thead>
+<tr>
+<th>版本名称</th>
+<th>主版本号</th>
+<th>发布时间</th>
+<th>停止维护时间</th>
+<th>关键特性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Luminous</strong></td>
+<td>12.x</td>
+<td>2017-10-01</td>
+<td>2020-03-01</td>
+<td>• <strong>BlueStore 默认存储后端（取代 FileStore）</strong><!-- raw HTML omitted -->• ceph-mgr 管理模块<!-- raw HTML omitted -->• 支持 10k OSD 集群</td>
+</tr>
+<tr>
+<td><strong>Mimic</strong></td>
+<td>13.x</td>
+<td>2018-05-01</td>
+<td>2020-07-22</td>
+<td>• RGW 动态分片<!-- raw HTML omitted -->• CephFS 多活 MDS</td>
+</tr>
+<tr>
+<td><strong>Nautilus</strong></td>
+<td>14.x</td>
+<td>2019-03-19</td>
+<td>2021-06-30</td>
+<td>• 年度发布周期起点<!-- raw HTML omitted -->• BlueStore 压缩（LZ4/Snappy）</td>
+</tr>
+<tr>
+<td><strong>Octopus</strong></td>
+<td>15.x</td>
+<td>2020-03-23</td>
+<td>2022-06-01</td>
+<td>• cephadm 部署工具<!-- raw HTML omitted -->• RBD 镜像加密</td>
+</tr>
+<tr>
+<td><strong>Pacific</strong></td>
+<td>16.x</td>
+<td>2021-03-31</td>
+<td>2023-06-01</td>
+<td>• 跨集群同步<!-- raw HTML omitted -->• CephFS 子目录配额</td>
+</tr>
+<tr>
+<td><strong>Quincy</strong></td>
+<td>17.x</td>
+<td>2022-04-19</td>
+<td>2024-06-01</td>
+<td>• 全链路 RDMA 支持<!-- raw HTML omitted -->• <!-- raw HTML omitted -->SPDK 加速 BlueStore<!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td><strong>Reef</strong></td>
+<td>18.x</td>
+<td>2023-08-07</td>
+<td>2025-08-01（预计）</td>
+<td>• 服务网格（S3 代理）<!-- raw HTML omitted -->• NVMe 感知调度</td>
+</tr>
+<tr>
+<td><strong>Squid</strong></td>
+<td>19.x</td>
+<td>2024-03-31（预计）</td>
+<td>2026-06-01（预计）</td>
+<td>• 分布式元数据索引（CephFS）<!-- raw HTML omitted -->• QAT 硬件压缩加速</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-06-20 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP01_string_view/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_mallolc%E8%BF%87%E7%A8%8B/">
+            <span class="next-text nav-default">一道面试题关于malloc的面试题</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

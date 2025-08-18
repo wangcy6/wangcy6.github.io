@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！ - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day14-rdma/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day14-rdma/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-07-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-07-06T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-07-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-07-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4364">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-07-06 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 4364 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么这样设计">为什么这样设计？</a></li>
+    <li><a href="#cn117573043b的解法按数据大小走不同路径">《CN117573043B》的解法：按“数据大小”走不同路径！</a></li>
+    <li><a href="#一前置知识">一、前置知识</a></li>
+    <li><a href="#11-这是什么业务场景文件跨网络传输">1.1 这是什么业务场景？文件跨网络传输</a></li>
+    <li><a href="#12-如何理解虚拟内存黑科技-把ssd当内存用">1.2 如何理解虚拟内存？黑科技 把SSD当内存用</a></li>
+    <li><a href="#13-如何网卡控制器nic-controller和磁盘控制器disk-controller磁盘有缓存dram-或-cmb">1.3 如何网卡控制器（NIC Controller）和磁盘控制器（Disk Controller）？磁盘有缓存（DRAM 或 CMB）</a>
+      <ul>
+        <li></li>
+        <li><a href="#-网卡控制器nic-controller">✅ 网卡控制器（NIC Controller）</a></li>
+        <li><a href="#-磁盘控制器disk-controller">✅ 磁盘控制器（Disk Controller）</a></li>
+      </ul>
+    </li>
+    <li><a href="#二专利简化理解">二、专利简化理解</a></li>
+    <li><a href="#-第一阶段传统方式慢速路径">🚚 第一阶段：传统方式（慢速路径）</a></li>
+    <li><a href="#-第二阶段专利方法cmb直达快车道">⚡ 第二阶段：专利方法（CMB直达快车道）</a>
+      <ul>
+        <li><a href="#-关键升级仓库b内部改造">🔧 关键升级：仓库B内部改造</a></li>
+        <li><a href="#-高速直达流程">🚀 高速直达流程</a></li>
+      </ul>
+    </li>
+    <li><a href="#三-专利解决方案cmb直达架构">三、 <strong>专利解决方案：CMB直达架构​</strong>​</a>
+      <ul>
+        <li><a href="#31-cmb直达架">3.1 CMB直达架</a></li>
+        <li><a href="#32-小数据区">3.2 小数据区</a></li>
+        <li><a href="#33-大数据">3.3 大数据</a></li>
+        <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>声明：文章涉及的数据和方案 均来官方公布的数据，
+如有偏差，属于个人理解有误。</p>
+</blockquote>
+<p><!-- raw HTML omitted -->基于一次只解决一个事情的原则 <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->本文重点描述 专利：分布式存储数据的传输方法、装置、系统、设 备和介质 <!-- raw HTML omitted --></p>
+<p><img src="https://s2.loli.net/2025/07/19/cCLQx85VSwRWGem.png" alt=""></p>
+<p><strong>在思考一个小问题： 你会怎么选？</strong></p>
+<p>你下单了一件 9.9 元的小东西，只是个数据线。</p>
+<p>请问，你更愿意选择哪种送货方式？</p>
+<p><strong>A.</strong> 派一架专机、一个快递员全程护送，送货上门、签字确认，享受 1 对 1 至尊服务。</p>
+<p><strong>B.</strong> 凑满几件一起走菜鸟驿站，快递员批量处理，自己跑一趟拿，虽然累点，但不贵。</p>
+<blockquote>
+<p>选择A.反常识
+但对于系统设计者来说，这种思路就是在用<strong>极度昂贵的资源处理微小的数据请求</strong></p>
+</blockquote>
+<blockquote>
+<p>选 B 就是——批量处理、小数据聚合，统一落盘，延迟略高但系统资源利用更好。
+缺点：但是累人呀，每天爬楼梯，夏天取快递。一个还好说，要是100件呢</p>
+</blockquote>
+<h2 id="为什么这样设计">为什么这样设计？</h2>
+<p>随着全闪技术的发展，闪存的容量做的越来越大，价格越来越低，全闪存储逐步成为大众客户考虑的范畴。</p>
+<p>尤其是在人工智能（ArtificialIntelligence，AI）场景对于带宽和每秒操作数（OperationsPerSecond，OPS）要求比较高的高性能计算（HighPerformanceComputing，HPC）场景中，全闪更是成为首选。</p>
+<p>在全闪存储产品中，远程直接数据存取（RemoteDirectMemoryAccess，RDMA）技术是比较常用的技术，数据跨节点传输卸载到RDMA网卡中，极大减少中央处理器（CentralProcessingUnit，CPU）接入，但是接收或者发送仍然需要主机内存的介入，落盘时由主机内存通过直接存储器访问（DirectMemoryAccess，DMA）方式拷贝到盘的内存里然后落盘。</p>
+<p>主机内存拷贝过程，对带宽需求量高，产生的时延也较高，导致数据传输效率偏低。可见，如何提升数据传输效率，是本领域技术人员需要解决的问题。</p>
+<ul>
+<li>
+<p>减少了<strong>频繁的主机内存拷贝</strong>（对小数据来说特别浪费）；</p>
+</li>
+<li>
+<p>避免了<strong>CPU频繁介入</strong>处理琐碎小请求；</p>
+</li>
+<li>
+<p>提高了<strong>系统吞吐</strong>（OPS）和<strong>整体资源利用率</strong>；</p>
+</li>
+<li>
+<p>兼顾了**低延迟（NVRAM 缓存）与高带宽（NVMe）**的性能特征</p>
+</li>
+</ul>
+<h2 id="cn117573043b的解法按数据大小走不同路径">《CN117573043B》的解法：按“数据大小”走不同路径！</h2>
+<p><img src="https://s2.loli.net/2025/07/19/9uqJX3T8fcR1SHZ.png" alt=""></p>
+<p>这项专利提出了一个非常巧妙的<strong>数据分流机制</strong>：</p>
+<blockquote>
+<p><strong>根据写入数据量的大小，选择不同的缓存层存储路径：</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储策略</th>
+<th>缓存设备</th>
+<th>落盘时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小数据（如元数据、日志、数 KB 级）</td>
+<td>存入<strong>第一缓存设备（NVRAM）</strong></td>
+<td>类似“快递暂存点”</td>
+<td>批量聚合后落入主存储</td>
+</tr>
+<tr>
+<td>大数据（如模型文件、图像块）</td>
+<td>直接写入<strong>第二缓存设备（NVMe 介质）</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://s2.loli.net/2025/07/19/rL3hSdIXA6tQqgx.png" alt=""></p>
+<h2 id="一前置知识">一、前置知识</h2>
+<h2 id="11-这是什么业务场景文件跨网络传输">1.1 这是什么业务场景？文件跨网络传输</h2>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/Z6nR0t__NrhfEldZ_Vq4ug">从新手到架构师:Web服务器如何实现大文件跨节点传输</a> 给出描述</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/07/19/hmojlOIyxe6nCHQ.png" alt="机器A 从磁盘到网卡"></p>
+<p><img src="https://s2.loli.net/2025/07/19/hmojlOIyxe6nCHQ.png" alt="机器B 从网卡到磁盘，图片没绘制"></p>
+<h2 id="12-如何理解虚拟内存黑科技-把ssd当内存用">1.2 如何理解虚拟内存？黑科技 把SSD当内存用</h2>
+<ul>
+<li>根据csapp 定义  虚拟内存让每个程序都觉得自己拥有独立的大内存，其实背后是操作系统偷偷把磁盘当成内存的一部分用 ，内存是磁盘缓存，ssd是hdd判断缓存</li>
+<li>在Linux下，使用SSD为HDD加速，目前较为成熟的方案有：flashcache，enhanceIO，dm-cache，bcache等，多方面比较以后最终选择了bcache。 bcache 是一个 Linux 内核块层超速缓存。它允许使用一个或多个高速磁盘驱动器（例如 SSD）作为一个或多个速度低得多的硬盘的超速缓存</li>
+</ul>
+<h2 id="13-如何网卡控制器nic-controller和磁盘控制器disk-controller磁盘有缓存dram-或-cmb">1.3 如何网卡控制器（NIC Controller）和磁盘控制器（Disk Controller）？磁盘有缓存（DRAM 或 CMB）</h2>
+<table>
+<thead>
+<tr>
+<th>类比角色</th>
+<th>网卡</th>
+<th>磁盘</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>像什么？</td>
+<td>快递员</td>
+<td>仓库</td>
+</tr>
+<tr>
+<td>负责什么？</td>
+<td>把数据从 A 搬到 B</td>
+<td>把数据存起来、随时取用</td>
+</tr>
+<tr>
+<td>有缓存吗？</td>
+<td>有，供收发暂存用</td>
+<td>有，供 IO 聚合用</td>
+</tr>
+<tr>
+<td>掉电怎么办？</td>
+<td>数据会丢</td>
+<td>高端 SSD/CMB 有电容保电设计，避免丢数据</td>
+</tr>
+<tr>
+<td>项目</td>
+<td>网卡（NIC）</td>
+<td>磁盘（Disk）</td>
+</tr>
+<tr>
+<td>功能</td>
+<td><strong>网络通信</strong>（发送/接收数据包）</td>
+<td><strong>数据持久化存储</strong>（读写文件块）</td>
+</tr>
+<tr>
+<td>控制器</td>
+<td><strong>网卡控制器（MAC + PHY）</strong></td>
+<td><strong>磁盘控制器（SATA, NVMe 等）</strong></td>
+</tr>
+<tr>
+<td>总线协议</td>
+<td>PCIe，Ethernet，InfiniBand</td>
+<td>SATA，SAS，NVMe（PCIe）</td>
+</tr>
+<tr>
+<td>数据源</td>
+<td>来自 CPU/内存/其他主机的网络数据</td>
+<td>来自主机进程的文件/块读写请求</td>
+</tr>
+<tr>
+<td>访问方式</td>
+<td>DMA 或 RDMA（远程）</td>
+<td>DMA，NVMe queue，IO调度器</td>
+</tr>
+<tr>
+<td>典型软件接口</td>
+<td>socket / RDMA verbs</td>
+<td>文件系统 / 块设备 / IO stack</td>
+</tr>
+<tr>
+<td>常见延迟</td>
+<td>微秒级</td>
+<td>毫秒（HDD）～微秒（NVMe SSD）</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>快速传输</td>
+<td>安全落盘</td>
+</tr>
+</tbody>
+</table>
+<h4 id="控制器和缓冲区的差异">控制器和缓冲区的差异</h4>
+<h3 id="-网卡控制器nic-controller">✅ 网卡控制器（NIC Controller）</h3>
+<ul>
+<li>
+<p>控制数据包收发、校验、队列；</p>
+</li>
+<li>
+<p>支持 DMA 或 RDMA 方式将数据从/写入内存；</p>
+</li>
+<li>
+<p>高端网卡支持 <em>zero-copy</em>，可绕过 CPU 和主内存（CMB、DDIO）；</p>
+</li>
+<li>
+<p>没有持久化能力（掉电就丢）。</p>
+</li>
+</ul>
+<h3 id="-磁盘控制器disk-controller">✅ 磁盘控制器（Disk Controller）</h3>
+<ul>
+<li>
+<p>管理 <strong>数据在磁盘介质（HDD、SSD）上的读写</strong>；</p>
+</li>
+<li>
+<p>有内部<strong>调度队列、缓存（DRAM 或 CMB）</strong>；</p>
+</li>
+<li>
+<p>NVMe 控制器支持多队列、低延迟、高并发；</p>
+</li>
+<li>
+<p>数据最终会<strong>落盘（持久化）</strong>，有 FTL（闪存转换层）或机械磁头调度</p>
+</li>
+</ul>
+<h2 id="二专利简化理解">二、专利简化理解</h2>
+<p>​<strong>​场景：​</strong>​ 两个数据中心节点（仓库A和仓库B）之间需要高速传输数据（搬运货物）。</p>
+<hr>
+<h2 id="-第一阶段传统方式慢速路径">🚚 第一阶段：传统方式（慢速路径）</h2>
+<p><img src="https://s2.loli.net/2025/07/19/f8tB5zIlnR2eiqL.png" alt="image.png"></p>
+<ol>
+<li>
+<p>​<strong>​数据从仓库A出发：​</strong>​ 数据首先放在仓库A的内存中转区（黄色）。</p>
+</li>
+<li>
+<p>​<strong>​装车：​</strong>​ 仓库A的网卡把数据装车。</p>
+</li>
+<li>
+<p>​<strong>​运输：​</strong>​ 卡车通过高速路（InfiniBand）运到仓库B的网卡。</p>
+</li>
+<li>
+<p>​<strong>​卸货到中转区：​</strong>​ 仓库B的网卡把数据卸到仓库B的​<strong>​内存中转区（黄色）​</strong>​。</p>
+</li>
+<li>
+<p>​<strong>​管理员处理：​</strong>​ ​<strong>​CPU管理员（红色）​</strong>​ 发现中转区有货，发出指令。</p>
+</li>
+<li>
+<p>​<strong>​叉车搬运：​</strong>​ ​<strong>​搬运叉车（蓝色）​</strong>​ 根据指令，把数据从内存中转区搬到​<strong>​最终大仓库/SSD（绿色）​</strong>​。</p>
+<ul>
+<li>​<strong>​瓶颈：​</strong>​ 步骤4和5需要时间和CPU资源，尤其当小包裹很多时（高OPS），管理员（CPU）和叉车（内存拷贝）忙不过来，造成拥堵延迟。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​场景1：海量小包裹涌入 (高OPS场景)​</strong>​</p>
+<ul>
+<li>​<strong>​传统方式：​</strong>​ 卡车源源不断到达仓库B门口。每辆车都要排队进中转区卸货，CPU管理员和叉车忙得满头大汗，处理速度跟不上，门口排起长龙（高延迟）。<br>
+传统方式： 卡车源源不断到达仓库B门口。 每辆车都要排队进中转区卸货，CPU管理员和叉车忙得满头大汗，处理速度跟不上，门口排起长龙（高延迟）。</li>
+<li>​<strong>​专利方式：​</strong>​ 卡车到达后，网卡司机看一眼包裹大小（小件），立刻精准投递到旁边的​<strong>​小件快速处理区​</strong>​，然后马上掉头去拉新货。小件区快速接收、记录、备份。理货员在后台有条不紊地将攒够的小包裹批量送到大件区或大仓库。门口畅通无阻（高OPS，低延迟）。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​场景3：AI训练 GPU -&gt; 存储​</strong>​</p>
+<ul>
+<li>GPU（高性能图形处理器，产生海量数据）需要快速保存数据。</li>
+<li>​<strong>​专利方式：​</strong>​ GPU直接叫来网卡司机（调用驱动），告诉司机：“数据在我这里，地址是XXX”。网卡直接从GPU“装货”，然后通过高速路直达​<strong>​远程仓库的CMB临时存放区​</strong>​。完全​<strong>​不经过​</strong>​本地的CPU和内存中转区，GPU可以立刻继续计算。效率极高！<br>
+专利方式： GPU直接叫来网卡司机（调用驱动），告诉司机：“数据在我这里，地址是XXX”。 网卡直接从GPU“装货”，然后通过高速路直达远程仓库的CMB临时存放区。 完全不经过本地的CPU和内存中转区，GPU可以立刻继续计算。 效率极高！</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="-第二阶段专利方法cmb直达快车道">⚡ 第二阶段：专利方法（CMB直达快车道）</h2>
+<p><img src="https://s2.loli.net/2025/07/19/5LHIOcYCi9Q7zfg.png" alt="image.png"></p>
+<h3 id="-关键升级仓库b内部改造">🔧 关键升级：仓库B内部改造</h3>
+<ol>
+<li>
+<p>​<strong>​直达临时存放区 (CMB)：​</strong>​ 仓库B在网卡旁边开辟了​<strong>​自带备用电源的临时存放区 (橙色)​</strong>​。仓库B的管理员（CPU）​<strong>​提前​</strong>​把这里的地址告诉了网卡司机。</p>
+</li>
+<li>
+<p>​<strong>​智能理货员 (用户态驱动)：​</strong>​ 新增了一个高效的​<strong>​理货员（绿色）​</strong>​，专门负责从临时存放区把货整理进大仓库。</p>
+</li>
+</ol>
+<h3 id="-高速直达流程">🚀 高速直达流程</h3>
+<ol>
+<li>​<strong>​数据从仓库A出发：​</strong>​ 仓库A网卡装车（数据可以直接从仓库A的CMB或内存出发）。</li>
+<li>​<strong>​运输：​</strong>​ 卡车通过高速路直达仓库B。</li>
+<li>​<strong>​直达卸货！：​</strong>​ 仓库B的网卡司机​<strong>​不再去中转区​</strong>​！它根据货物大小：
+<ul>
+<li>​<strong>​小包裹：​</strong>​ 直接送到​<strong>​小件快速处理区（CMB的一部分/NVRAM，见下文）​</strong>​。网卡卸完货​<strong>​立刻返回​</strong>​拉新货！</li>
+<li>​<strong>​大件货：​</strong>​ 直接送到​<strong>​大件主存储暂存区（CMB的另一部分）​</strong>​。网卡卸完货​<strong>​立刻返回​</strong>​拉新货！</li>
+</ul>
+</li>
+<li>​<strong>​理货员处理：​</strong>​ ​<strong>​理货员（用户态驱动）​</strong>​ 在后台工作：
+<ul>
+<li>监控​<strong>​小件快速处理区​</strong>​，等小包裹攒够一车（达到条带大小），就打包送入​<strong>​大件主存储暂存区​</strong>​或直接搬进​<strong>​大仓库​</strong>​。</li>
+<li>将​<strong>​大件主存储暂存区​</strong>​的货物搬进​<strong>​最终大仓库/SSD（绿色）​</strong>​。</li>
+</ul>
+</li>
+<li>​<strong>​仓库管理员解放：​</strong>​ 仓库B的​<strong>​CPU管理员（红色）​</strong>​ 只负责协调通知（比如告诉仓库A货在哪儿），​<strong>​完全不参与具体的卸货和搬运​</strong>​！工作量大大减少。</li>
+<li>​<strong>​临时存放区复用：​</strong>​ 货物搬空后，临时存放区空间被释放，等待新货物。</li>
+</ol>
+<h2 id="三-专利解决方案cmb直达架构">三、 <strong>专利解决方案：CMB直达架构​</strong>​</h2>
+<p>​</p>
+<h3 id="31-cmb直达架">3.1 CMB直达架</h3>
+<ol>
+<li>​<strong>​硬件层​</strong>​：使用带电容保电的​<strong>​CMB内存​</strong>​（ssd盘上读写存储缓冲区），断电不丢数据。</li>
+<li>​<strong>​路径层​</strong>​：网卡直连CMB，​<strong>​绕过主机内存和CPU​</strong>​。</li>
+<li>​<strong>​逻辑层​</strong>​：
+<ul>
+<li>​<strong>​分层缓存​</strong>​：CMB分为小数据区（NVRAM）和大数据区</li>
+<li>​<strong>​用户态驱动​</strong>​：异步处理数据落盘，不阻塞传输</li>
+</ul>
+</li>
+</ol>
+<p><strong>关键步骤说明​</strong>​：<br>
+① 网卡直达CMB → ② 按数据尺寸分流 → ③ 后台落盘不阻塞
+<img src="https://s2.loli.net/2025/07/19/9jYeGNUxSa578ub.png" alt=""></p>
+<h3 id="32-小数据区">3.2 小数据区</h3>
+<p><img src="https://s2.loli.net/2025/07/19/baWodjuvgYS2yBG.png" alt="image.png">
+<strong>功能​</strong>​：<br>
+✅ 极速响应（微秒级）<br>
+✅ 三副本容错<br>
+✅ 专设​<strong>​元数据VIP通道​</strong>​（存储高频操作日志）</p>
+<h3 id="33-大数据">3.3 大数据</h3>
+<p><img src="https://s2.loli.net/2025/07/19/Ajtsh7CcyMmIBbJ.png" alt="">
+<strong>功能​</strong>​：<br>
+✅ 并行写入提升吞吐<br>
+✅ 纠删码减少存储开销</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>传统方式</th>
+<th>专利方案</th>
+<th>提升幅度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​小数据延迟​</strong>​</td>
+<td>100μs</td>
+<td>​<strong>​20μs​</strong>​</td>
+<td>​<strong>​5倍​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​CPU占用率​</strong>​</td>
+<td>70%</td>
+<td>​<strong>​&lt;15%​</strong>​</td>
+<td>​<strong>​80%↓​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​带宽利用率​</strong>​</td>
+<td>60%</td>
+<td>​<strong>​&gt;90%​</strong>​</td>
+<td>​<strong>​50%↑​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​OPS（每秒操作数）​</strong>​</td>
+<td>50万</td>
+<td>​<strong>​200万+​</strong>​</td>
+<td>​<strong>​4倍​</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h3>
+<p>我在寻找一位积极上进的小伙伴，
+一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事情，不妨 试试
+1️⃣ 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt="">
+2️⃣ 关注公众号:后端开发成长指南(回复“面经”获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt="">
+3️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;-我是黄金分割线&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
+<ul>
+<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，打通任督二脉。</li>
+<li>但是不要给自己这样假设：别人完成就等着自己完成了，这个逃避问题表现,裁员时候别人不会这么想。</li>
+</ul>
+<h5 id="低头走路">低头走路：</h5>
+<ul>
+<li>一次专注做好一个小事。</li>
+<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 ,把基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-07-06 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/book/2025/NO1-topic-sleep/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">我们为什么要睡觉</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v3.0/">
+            <span class="next-text nav-default">大厂面试题精选:分布式协议不保证线性一致性读如何解决？</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

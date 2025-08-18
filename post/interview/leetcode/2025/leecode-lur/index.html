@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！ - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/leetcode/2025/leecode-lur/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/leetcode/2025/leecode-lur/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6792">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 6792 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一剧情回顾">一、剧情回顾</a></li>
+      </ul>
+    </li>
+    <li><a href="#二-倔强青铜-会做leetcode原题">二、 倔强青铜: 会做Leetcode原题</a></li>
+    <li><a href="#三荣耀黄金使用stl-容器提供武器实现">三、荣耀黄金:使用STL 容器（提供武器）实现</a></li>
+    <li><a href="#四最强王者遇到并发怎么处理">四、最强王者：遇到并发怎么处理</a>
+      <ul>
+        <li><a href="#误区上来直接考虑并发问题不是最佳选择会让自己陷入思维上误区因为数据结构和算法没有开始设计">误区：上来直接考虑并发问题，不是最佳选择，会让自己陷入思维上误区，因为数据结构和算法没有开始设计</a></li>
+      </ul>
+    </li>
+    <li><a href="#五荣耀王者理论和实际的差距">五、荣耀王者：理论和实际的差距</a>
+      <ul>
+        <li></li>
+        <li><a href="#52-mysql">5.2 Mysql</a></li>
+        <li><a href="#53-leveldb">5.3 levelDB</a></li>
+        <li><a href="#54-ceph">5.4 Ceph</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>点击<!-- raw HTML omitted -->蓝色<!-- raw HTML omitted -->关注。</p>
+<blockquote>
+<p><!-- raw HTML omitted -->文末有福利，先到先得<!-- raw HTML omitted --></p>
+</blockquote>
+<p>大厂面试手撸算法题已经是标配 ，
+本文描述从青铜到王者不同阶段如何理解LRU缓
+如果有更多疑问请留言</p>
+<p>历史题目：
+<strong><a href="https://mp.weixin.qq.com/s/zBf1Dwp6e4wzXgRXJXrA5w">Ceph MDS 路径解析场景</a>：</strong><br>
+输入：/mnt/data/project1/report.docx<br>
+输出：逐级路径 [&ldquo;mnt&rdquo;, &ldquo;data&rdquo;, &ldquo;project1&rdquo;, &ldquo;report.docx&rdquo;]</p>
+<h3 id="一剧情回顾">一、剧情回顾</h3>
+<p><strong>面试官：</strong> 你能手写个LRU缓存吗？</p>
+<p><strong>小义：</strong> LRU是什么东西？（一脸懵逼状）</p>
+<p><strong>面试官：</strong> LRU全称Least Recently Used（最近最少使用），用来淘汰不常用数据，保留热点数据。</p>
+<p>写了10分钟，然而只写了个get和put方法体，里面逻辑实在不知道咋写。`<br>
+<strong>面试官：</strong> 今天的面试先到这吧，有其他面试我们会再联系你。</p>
+<p>我信你个鬼，你个糟老头子坏滴很，还联系啥，凉凉了。</p>
+<p><strong>别担心，再有人问你LRU，就把这篇文章丢给他，保证当场发offer。</strong></p>
+<p><img src="https://pic.kts.g.mi.com/9aea9fd945416776aa32785defe6f2f74972780972685478647.png" alt=""></p>
+<h2 id="二-倔强青铜-会做leetcode原题">二、 倔强青铜: 会做Leetcode原题</h2>
+<p>面试官可能就直接拿出 LeetCode 上原题让你来做的
+<a href="https://leetcode.cn/problems/lru-cache-lcci/description/">https://leetcode.cn/problems/lru-cache-lcci/description/</a></p>
+<p>运用你所掌握的数据结构，设计和实现一个 LRU（最近最少使用）缓存机制。它应该支持以下操作：</p>
+<ul>
+<li>获取数据 get(key)：如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。</li>
+<li>写入数据 put(key, value) ：如果密钥不存在，则写入其数据值。</li>
+<li>当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。</li>
+</ul>
+<p>进阶：</p>
+<p>你是否可以在 <strong>O(1)</strong> 时间复杂度内完成这两种操作？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+LRUCache cache = new LRUCache( 2 /* 缓存容量 */ );
+
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // 返回  1
+cache.put(3, 3);    // 该操作会使得密钥 2 作废
+cache.get(2);       // 返回 -1 (未找到)
+cache.put(4, 4);    // 该操作会使得密钥 1 作废
+cache.get(1);       // 返回 -1 (未找到)
+cache.get(3);       // 返回  3
+cache.get(4);       // 返回  4
+</code></pre></td></tr></table>
+</div>
+</div><p>分析上面的操作过程，要让 <code>put</code> 和 <code>get</code> 方法的时间复杂度为 O(1)，我们可以总结出 <code>cache</code> 这个数据结构必要的条件：</p>
+<p>1、显然 <code>cache</code> 中的元素必须有时序，以区分最近使用的和久未使用的数据，当容量满了之后要删除最久未使用的那个元素腾位置。</p>
+<p>2、我们要在 <code>cache</code> 中快速找某个 <code>key</code> 是否已存在并得到对应的 <code>val</code>；</p>
+<p>3、每次访问 <code>cache</code> 中的某个 <code>key</code>，需要将这个元素变为最近使用的，也就是说 <code>cache</code> 要支持在任意位置快速插入和删除元素。</p>
+<p>那么，什么数据结构同时符合上述条件呢？</p>
+<p><img src="https://pic.leetcode-cn.com/1649343094-daoDBP-image.png" alt=""></p>
+<p>常用的数据结构有数组、链表、栈、队列，考虑到要从两端操作元素，就不能使用栈和队列。<br>
+每次使用一个元素，都要把这个元素移到末尾，包含一次删除和一次添加操作，使用数组会有大量的拷贝操作，不适合。</p>
+<p>又考虑到删除一个元素，要把这个元素的前一个节点指向下一个节点，使用双链接最合适。</p>
+<p>链表不适合查询，因为每次都要遍历所有元素，可以和HashMap配合使用。</p>
+<p><strong>双链表 + HashMap</strong></p>
+<p>put 新节点时应先淘汰，再插入</p>
+<p><strong>正确顺序：</strong></p>
+<ol>
+<li>如果 key 存在，更新值并移到头部，直接返回。</li>
+<li>如果 key 不存在，且容量已满，先淘汰尾部节点（ptail-&gt;prev）。</li>
+<li>插入新节点到头部，size++。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">LRUCache</span>
+<span class="p">{</span>
+<span class="c1">//01-定义数据结构
+</span><span class="c1"></span><span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">MaxCapacity</span><span class="p">;</span> <span class="c1">// 缓冲区的最大容量
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>        <span class="c1">// 缓冲区使用的大小
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="nc">DoubleListNode</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">key</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+        <span class="n">DoubleListNode</span><span class="o">*</span> <span class="n">prev</span><span class="p">;</span>
+        <span class="n">DoubleListNode</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
+        <span class="n">DoubleListNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">,</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span> <span class="o">:</span> <span class="n">key</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>   <span class="n">prev</span><span class="p">(</span><span class="k">nullptr</span><span class="p">),</span> <span class="n">next</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="p">};</span>
+
+    <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">DoubleListNode</span><span class="o">*&gt;</span> <span class="n">cache</span><span class="p">;</span> <span class="c1">// 缓存，key为数据的key，value为双向链表节点
+</span><span class="c1"></span>    <span class="n">DoubleListNode</span><span class="o">*</span> <span class="n">phead</span><span class="p">;</span> <span class="c1">// 头结点
+</span><span class="c1"></span>    <span class="n">DoubleListNode</span><span class="o">*</span> <span class="n">ptail</span><span class="p">;</span> <span class="c1">// 尾结点
+</span><span class="c1"></span>
+<span class="c1">//02 定义算法
+</span><span class="c1"></span><span class="k">public</span><span class="o">:</span>
+    <span class="n">LRUCache</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">MaxCapacity</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">;</span>
+
+        <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="n">phead</span> <span class="o">=</span><span class="k">new</span> <span class="n">DoubleListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// 初始化头结点
+</span><span class="c1"></span>
+        <span class="n">ptail</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DoubleListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// 初始化尾结点
+</span><span class="c1"></span>
+        <span class="n">phead</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span><span class="n">ptail</span><span class="p">;</span> <span class="c1">// 头结点的下一个指向尾结点
+</span><span class="c1"></span>
+        <span class="n">ptail</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span><span class="n">phead</span><span class="p">;</span> <span class="c1">// 尾结点的前一个指向头结点
+</span><span class="c1"></span>
+        <span class="c1">//这样设计好处，不用判断是否空节点
+</span><span class="c1"></span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">cache</span><span class="p">.</span><span class="n">end</span><span class="p">())</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// 如果key不存在，返回-1
+</span><span class="c1"></span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">DoubleListNode</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">];</span> <span class="c1">// 获取节点
+</span><span class="c1"></span>
+        <span class="n">deleteNode</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+        <span class="n">insertToHead</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span> <span class="c1">// 返回节点的值
+</span><span class="c1"></span>      <span class="p">}</span> <span class="c1">//思考如何避免频繁的移动节点
+</span><span class="c1"></span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+
+     <span class="c1">//判断key存在
+</span><span class="c1"></span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">cache</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+
+            <span class="n">DoubleListNode</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">];</span> <span class="c1">// 获取节点
+</span><span class="c1"></span>
+            <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="c1">// 更新节点的值
+</span><span class="c1"></span>
+            <span class="n">deleteNode</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+            <span class="n">insertToHead</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="p">;</span>
+
+      <span class="p">}</span>
+      <span class="c1">//超过最大容量,删除不经常使用的节点
+</span><span class="c1"></span>
+      <span class="c1">//链表最后最后一个节点是不经常使用的节点
+</span><span class="c1"></span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">MaxCapacity</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">DoubleListNode</span> <span class="o">*</span><span class="n">pcur</span> <span class="o">=</span> <span class="n">ptail</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span> <span class="c1">// 获取尾结点的前一个节点
+</span><span class="c1"></span>
+        <span class="n">deleteNode</span><span class="p">(</span><span class="n">pcur</span><span class="p">);</span>
+
+        <span class="n">cache</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">pcur</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">);</span>
+
+        <span class="k">delete</span> <span class="n">pcur</span><span class="p">;</span> <span class="c1">// 删除节点
+</span><span class="c1"></span>
+        <span class="n">size</span><span class="o">--</span><span class="p">;</span> <span class="c1">// 缓冲区大小减1
+</span><span class="c1"></span>
+      <span class="p">}</span>
+
+      <span class="c1">//插入一个元素
+</span><span class="c1"></span>
+      <span class="n">DoubleListNode</span> <span class="o">*</span><span class="n">ptemp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DoubleListNode</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">);</span>
+
+      <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ptemp</span><span class="p">;</span> <span class="c1">// 将新节点加入缓存
+</span><span class="c1"></span>
+      <span class="c1">//将新节点插入到头结点后面
+</span><span class="c1"></span>
+      <span class="n">insertToHead</span><span class="p">(</span><span class="n">ptemp</span><span class="p">);</span>
+
+      <span class="n">size</span><span class="o">++</span><span class="p">;</span> <span class="c1">// 缓冲区大小加1
+</span><span class="c1"></span>
+    <span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+
+      <span class="kt">void</span> <span class="n">deleteNode</span><span class="p">(</span><span class="n">DoubleListNode</span><span class="o">*</span> <span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="k">nullptr</span> <span class="o">==</span> <span class="n">cur</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+        <span class="n">cur</span><span class="o">-&gt;</span><span class="n">prev</span><span class="o">-&gt;</span><span class="n">next</span>  <span class="o">=</span> <span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+
+        <span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
+
+        <span class="c1">// cache.erase(cur-&gt;key); // 从缓存中删除
+</span><span class="c1"></span>
+        <span class="c1">// delete cur; // 删除节点
+</span><span class="c1"></span>
+        <span class="c1">// size--; // 缓冲区大小减1
+</span><span class="c1"></span>
+      <span class="p">}</span>
+      <span class="kt">void</span> <span class="nf">insertToHead</span><span class="p">(</span><span class="n">DoubleListNode</span><span class="o">*</span> <span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">phead</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span> <span class="c1">// 新节点的下一个指向头结点的下一个
+</span><span class="c1"></span>
+        <span class="n">phead</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span><span class="p">;</span> <span class="c1">// 头结点的下一个的前一个指向新节点
+</span><span class="c1"></span>
+        <span class="n">phead</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">cur</span><span class="p">;</span> <span class="c1">// 头结点的下一个指向新
+</span><span class="c1"></span>
+        <span class="n">cur</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">phead</span><span class="p">;</span> <span class="c1">// 新节点的前一个指向头结点
+</span><span class="c1"></span>
+        <span class="c1">// size++; // 缓冲区大小加1
+</span><span class="c1"></span>
+      <span class="p">}</span>
+<span class="p">};</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三荣耀黄金使用stl-容器提供武器实现">三、荣耀黄金:使用STL 容器（提供武器）实现</h2>
+<p><img src="https://cdn.nextptr.com/images/uimages/hb3Tt56b94RGbMhqF7GBiZ8f.jpg" alt="">
+参考：# 用std::list的splice接口来实现LRU Cache</p>
+<ul>
+<li>力扣146：LRU缓存，c++用stl的哈希表和list实现</li>
+<li><a href="https://www.nextptr.com/tutorial/ta1576645374/stdlist-splice-for-implementing-lru-cache">https://www.nextptr.com/tutorial/ta1576645374/stdlist-splice-for-implementing-lru-cache</a></li>
+<li><a href="https://wanghenshui.github.io/2020/11/29/list-splice-lru.html">https://wanghenshui.github.io/2020/11/29/list-splice-lru.html</a></li>
+</ul>
+<p>推荐用 <code>std::list</code> 作为双向链表，<code>std::unordered_map</code> 作为哈希表。</p>
+<ul>
+<li><code>std::list&lt;pair&lt;int,int&gt;&gt;</code> 存储缓存内容，头部是最新，尾部是最久未用。</li>
+<li><code>std::unordered_map&lt;int, list&lt;pair&lt;int,int&gt;&gt;::iterator&gt;</code> 存储 key 到 list 节点的映射。</li>
+</ul>
+<p>提示：java中的LinkedList 底层是基于双向链表实现的
+这样可以避免手写链表节点和指针操作，代码更简洁安全</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;list&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">LRUCache</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
+    <span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">cache</span><span class="p">;</span> <span class="c1">// {key, value}
+</span><span class="c1"></span>    <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">list</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;::</span><span class="n">iterator</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">;</span> 
+    <span class="c1">// key -&gt; list迭代器
+</span><span class="c1"></span>    <span class="c1">//https://en.cppreference.com/w/cpp/container/list.html
+</span><span class="c1"></span>    <span class="c1">//std：：list 是一个容器，
+</span><span class="c1"></span>    <span class="c1">//它支持从容器中的任何位置插入和删除元素的恒定时间。
+</span><span class="c1"></span>    <span class="c1">//不支持快速随机访问。它通常实现为双向链表
+</span><span class="c1"></span><span class="k">public</span><span class="o">:</span>
+    <span class="n">LRUCache</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span> <span class="o">:</span> <span class="n">capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">map</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">==</span> <span class="n">map</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="c1">// 移动到头部
+</span><span class="c1"></span>        <span class="n">cache</span><span class="p">.</span><span class="n">splice</span><span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">cache</span><span class="p">,</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">map</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">map</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// 更新并移到头部
+</span><span class="c1"></span>            <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+            <span class="n">cache</span><span class="p">.</span><span class="n">splice</span><span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">cache</span><span class="p">,</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// 淘汰尾部
+</span><span class="c1"></span>                <span class="kt">int</span> <span class="n">oldKey</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">first</span><span class="p">;</span>
+                <span class="n">cache</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+                <span class="n">map</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">oldKey</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">cache</span><span class="p">.</span><span class="n">emplace_front</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+            <span class="n">map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//www.nextptr.com/tutorial/ta1576645374/stdlist-splice-for-implementing-lru-cache
+</span><span class="c1"></span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//leetcode.cn/problems/lru-cache-lcci/solutions/3617249/clrushi-xian-by-ooo-4h-5qff/
+</span></code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>splice 优点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>高效合并两个链表</td>
+<td>不需要拷贝元素</td>
+</tr>
+<tr>
+<td>实现排序算法（归并）</td>
+<td>直接移动元素</td>
+</tr>
+<tr>
+<td>自定义容器缓存（LRU）</td>
+<td>把元素移到前面/后面</td>
+</tr>
+<tr>
+<td>实现 list 中元素的重新排序</td>
+<td>常数时间插入</td>
+</tr>
+</tbody>
+</table>
+<h2 id="四最强王者遇到并发怎么处理">四、最强王者：遇到并发怎么处理</h2>
+<p>在面试者回答出黄金级的问题了以后，
+面试官可能会继续追问一个更高级的问题。
+“如何实现一个高并发且线程安全的 LRU 呢？</p>
+<h3 id="误区上来直接考虑并发问题不是最佳选择会让自己陷入思维上误区因为数据结构和算法没有开始设计">误区：上来直接考虑并发问题，不是最佳选择，会让自己陷入思维上误区，因为数据结构和算法没有开始设计</h3>
+<ul>
+<li>更主要的自己在白板上写不出来。
+<code>std::list</code> 和 <code>unordered_map</code> 都不是线程安全的</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">Node</span> <span class="p">{</span>
+    <span class="n">Key</span> <span class="n">key</span><span class="p">;</span>
+    <span class="n">Value</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">prev</span><span class="p">,</span> <span class="n">next</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">valid</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">Key</span><span class="p">,</span> <span class="n">Node</span><span class="o">*&gt;</span> <span class="n">index</span><span class="p">;</span> <span class="c1">// 需要替换成 lock-free map
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>直接使用  Facebook 的 CacheLib 或 Memcached slab allocator。</li>
+</ul>
+<h2 id="五荣耀王者理论和实际的差距">五、荣耀王者：理论和实际的差距</h2>
+<h4 id="51-redis">5.1 Redis</h4>
+<p>参考：Redis 源码剖析与实战 深入源码底层实现，轻松通关 Redis 面试</p>
+<p>为什么LRU算法原理和代码实现不一样</p>
+<p><img src="https://learn.lianglianglee.com/%E4%B8%93%E6%A0%8F/Redis%20%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/assets/4c248a9db073b56b11e05802eedd1ea4-20221013235611-5zuh0fh.jpg" alt=""></p>
+<p>而具体来说，LRU 算法会把链表的头部和尾部分别设置为 MRU 端和 LRU 端。</p>
+<ul>
+<li>其中，MRU 是 Most Recently Used 的缩写，</li>
+<li>MRU 端表示这里的数据是刚被访问的。而 LRU 端则表示，这里的数据是最近最少访问的数据。</li>
+</ul>
+<p>介绍过LRU 算法的执行过程，这里，我们来简要回顾下。LRU 算法的执行，可以分成三种情况来掌握。</p>
+<ul>
+<li><strong>情况一</strong>：当有新数据插入时，LRU 算法会把该数据插入到链表头部，同时把原来链表头部的数据及其之后的数据，都向尾部移动一位。</li>
+<li><strong>情况二</strong>：当有数据刚被访问了一次之后，LRU 算法就会把该数据从它在链表中的当前位置，移动到链表头部。同时，把从链表头部到它当前位置的其他数据，都向尾部移动一位。</li>
+<li><strong>情况三</strong>：当链表长度无法再容纳更多数据时，若再有新数据插入，LRU 算法就会去除链表尾部的数据，这也相当于将数据从缓存中淘汰掉。</li>
+</ul>
+<p>下图就展示了 LRU 算法执行过程的第二种情况，你可以看下
+其中，链表长度为 5，从链表头部到尾部保存的数据分别是 5，33，9，10，8。
+假设数据 9 被访问了一次，那么 9 就会被移动到链表头部，
+同时，数据 5 和 33 都要向链表尾部移动一位。</p>
+<h5 id="提问redis-采用什么数据结构存储数据">提问：Redis 采用什么数据结构存储数据？</h5>
+<p>Redis 的 LRU（Least Recently Used，最近最少使用）淘汰策略主要采用了以下数据结构：</p>
+<ol>
+<li><del><strong>双向链表（Linked List）</strong></del><br>
+<del>用于维护键的访问顺序。最近访问的元素会被移动到链表头部，最久未访问的元素在链表尾部，便于快速淘汰。</del>
+<ul>
+<li>==Redis LRU 淘汰<strong>没有用全局双向链表</strong>，而是用对象的 <code>lru</code> 字段 + 哈希表采样实现近似 LRU==。</li>
+</ul>
+</li>
+<li><strong>哈希表（Hash Table）</strong><br>
+用于存储实际的键值对，实现 O(1) 的查找和插入操作。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// ...existing code...
+</span><span class="c1"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">redisDb</span> <span class="p">{</span>
+    <span class="n">dict</span> <span class="o">*</span><span class="n">dict</span><span class="p">;</span>                 <span class="cm">/* The keyspace for this DB */</span>
+    <span class="c1">// ...existing code...
+</span><span class="c1"></span><span class="p">}</span> <span class="n">redisDb</span><span class="p">;</span>
+ <span class="n">C</span> <span class="err">语言没有这种数据结构，</span> <span class="err">需要自定义</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">dictEntry</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>               <span class="c1">// 指向 key 的指针（通常是 sds 类型）
+</span><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="n">val</span><span class="p">;</span>               <span class="c1">// 指向 value 的指针
+</span><span class="c1"></span>    <span class="k">struct</span> <span class="n">dictEntry</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>  <span class="c1">// 用于处理哈希冲突的链表指针
+</span><span class="c1"></span><span class="p">}</span> <span class="n">dictEntry</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>所有数据（无论什么类型）都是存储在一个全局 dict 中</strong>，这个 dict 就是 Redis 的主字典结构 <code>redisDb.dict</code>。</li>
+</ul>
+<ol start="3">
+<li><strong>抽样算法（Sampling）</strong><br>
+为了性能，Redis 并不是严格意义上的全局 LRU，而是采用了“近似 LRU”策略。它会从一定数量的键中随机抽样，选择其中最久未使用的进行淘汰</li>
+</ol>
+<p>每个键值对象（<code>robj</code>）都包含一个 <code>lru</code> 字段，用于记录上次访问时间戳（抽象为 LRU 时钟）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">redisObject</span> 
+<span class="p">{</span>
+
+    <span class="kt">unsigned</span> <span class="nl">type</span><span class="p">:</span><span class="mi">4</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="nl">encoding</span><span class="p">:</span><span class="mi">4</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="nl">lru</span><span class="p">:</span><span class="n">LRU_BITS</span><span class="p">;</span> <span class="cm">/* LRU time (relative to global lru_clock) or
+</span><span class="cm">
+</span><span class="cm">                            * LFU data (least significant 8 bits frequency
+</span><span class="cm">
+</span><span class="cm">                            * and most significant 16 bits access time). */</span>
+
+    <span class="kt">unsigned</span> <span class="nl">iskvobj</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>   <span class="cm">/* 1 if this struct serves as a kvobj base */</span>
+
+    <span class="kt">unsigned</span> <span class="nl">expirable</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* 1 if this key has expiration time attached.
+</span><span class="cm">
+</span><span class="cm">                             * If set, then this object is of type kvobj */</span>
+
+    <span class="kt">unsigned</span> <span class="nl">refcount</span> <span class="p">:</span> <span class="n">OBJ_REFCOUNT_BITS</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="提问-redis-没有采用双链链表存储key怎么选出最久未用的淘汰">提问： Redis 没有采用双链链表存储key，怎么选出最久未用的淘汰</h5>
+<p>？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// 伪代码，实际实现更复杂
+</span><span class="c1"></span><span class="n">dictEntry</span> <span class="o">*</span><span class="nf">dictGetFairRandomKey</span><span class="p">(</span><span class="n">dict</span> <span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dictEntry</span> <span class="o">*</span><span class="n">entry</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">tries</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="c1">// 最多尝试次数
+</span><span class="c1"></span>    <span class="k">while</span> <span class="p">(</span><span class="n">tries</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 随机选一个哈希桶
+</span><span class="c1"></span>        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">%</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">ht</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">ht</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">table</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 如果没采到，fallback 到 dictGetRandomKey
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">entry</span><span class="p">)</span> <span class="k">return</span> <span class="n">dictGetRandomKey</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+    <span class="c1">// 桶内有冲突链表，随机选一个
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">listlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">dictEntry</span> <span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">entry</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="n">listlen</span><span class="o">++</span><span class="p">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">skip</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">%</span> <span class="n">listlen</span><span class="p">;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">entry</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">skip</span><span class="o">--</span><span class="p">)</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>dictGetFairRandomKey
+通过多次采样和桶内随机，
+保证哈希表中每个 key 被选中的概率尽量均匀，
+适合 LRU/LFU 采样和 RANDOMKEY 等场景</p>
+<h5 id="提问为什么不需要加锁">提问：为什么不需要加锁？</h5>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>Redis 设计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多客户端并发访问</td>
+<td>串行处理，单线程安全</td>
+</tr>
+<tr>
+<td>rehash 是否加锁</td>
+<td>不加传统锁，靠事件驱动串行保证</td>
+</tr>
+<tr>
+<td>如何保证一致性</td>
+<td>查询/写时查两个表，rehashidx 控制进度</td>
+</tr>
+<tr>
+<td>数据会不会丢？</td>
+<td>不会，迁移桶时所有 entry 被完整转移</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-mysql">5.2 Mysql</h3>
+<p>对比传统 LRU vs InnoDB LRU</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统 LRU</th>
+<th>InnoDB 改进版 LRU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据结构</td>
+<td>双向链表 + 哈希表</td>
+<td>增加 Old/Young 区分 + 时间戳字段</td>
+</tr>
+<tr>
+<td>新页插入位置</td>
+<td>链表头</td>
+<td>插入 Old 区头</td>
+</tr>
+<tr>
+<td>热点访问处理</td>
+<td>移至链表头</td>
+<td>Young 区头或满足晋升条件后移动</td>
+</tr>
+<tr>
+<td>淘汰策略</td>
+<td>链表尾部淘汰</td>
+<td>仅淘汰 Old 区尾，大页扫描不影响 Young</td>
+</tr>
+<tr>
+<td>支持预读避免污染</td>
+<td>不支持（直接入链表头）</td>
+<td>支持（插入 Old 区，可延迟淘汰）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="提问你的业务有大表顺序扫描的操作吗-会不会出现命中率骤跌现象">提问：<strong>你的业务有大表顺序扫描的操作吗？</strong> → 会不会出现命中率骤跌现象？</h5>
+<hr>
+<p>以下用一个完整流程拆解一轮访问与淘汰：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">1. 系统启动
+ → Buffer Pool 初始化
+ → LRU 链表为空，old/young 未构建成功
+
+2. 访问数据页 P
+ → 不存在缓冲中，加载到内存
+ → 插入 Old 区头
+ → LRU 链表增长
+
+3. 重复大表扫描
+ → 访问各页，均插到 Old 区头
+ → <span class="m">1</span> 秒内访问同页多次也不晋升
+ → LRU 震荡在 Old 区
+
+4. 内存满了，触发淘汰
+ → 淘汰 Old 区尾部页
+ → Hot 页留在 Young，未被影响
+
+5. 热点访问重现
+ → 访问 Young 或晋升 Old 页
+ → Hot 页集中，系统恢复响应率
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看出，热点与扫描区被明显隔离，互不干扰。</p>
+<h3 id="53-leveldb">5.3 levelDB</h3>
+<p>LevelDB 使用了一种基于 LRUCache 的缓存机制，用于缓存：</p>
+<ul>
+<li>已打开的 sstable 文件对象和相关元数据；</li>
+<li>sstable 中的 dataBlock 的内容。</li>
+</ul>
+<p>这种缓存机制使得对热数据的读取尽量在 cache 中命中，避免 IO 调用。</p>
+<p>Leveldb 实现了key-value形式的缓存，淘汰算法是LRU。
+实现代码在 leveldb/util/cache.cc，一共400行，非常简洁</p>
+<h5 id="提问leveldb是如何应用这个数据结构的">提问：LevelDB是如何应用这个数据结构的。</h5>
+<p><img src="https://fileserver.developer.huaweicloud.com/FileServer/getFile/community/365/475/925/0001615901365475925.20250424150947.90219628911544963468929412199952:20250709053859:2415:1B0C29A45C8D1E88FF294A661634115138CE12129209667B2FAC53299BCD673C.jpeg" alt=""></p>
+<p>LevelDB的LRUCache设计有4个数据结构，是依次递进的关系，分别是：</p>
+<ul>
+<li>LRUHandle（LRU节点，也就是LRUNode）</li>
+<li>HandleTable（哈希表）</li>
+<li>LRUCache（关键，缓存接口标准和实现）</li>
+<li>ShardedLRUCache（用于提高并发效率）</li>
+</ul>
+<p><code>LRUHandle</code> 是一个双向循环链表，存储缓存中的 entry，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">struct</span> <span class="nx">LRUHandle</span> <span class="p">{</span>
+  <span class="c1">// 存储的 value 对象的指针，可以存储任意类型的值
+</span><span class="c1"></span>  <span class="k">void</span><span class="o">*</span> <span class="nx">value</span><span class="p">;</span>
+  
+  <span class="c1">// 当引用计数 `refs` 降为 0 时的清理函数
+</span><span class="c1"></span>  <span class="k">void</span> <span class="p">(</span><span class="o">*</span><span class="nx">deleter</span><span class="p">)(</span><span class="kr">const</span> <span class="nx">Slice</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">void</span><span class="o">*</span> <span class="nx">value</span><span class="p">);</span>
+  
+  <span class="c1">// 哈希表通过链地址法解决哈希冲突，发生哈希冲突时指向下一个 entry
+</span><span class="c1"></span>  <span class="nx">LRUHandle</span><span class="o">*</span> <span class="nx">next_hash</span><span class="p">;</span>
+  
+  <span class="c1">// LRU 链表双向指针
+</span><span class="c1"></span>  <span class="nx">LRUHandle</span><span class="o">*</span> <span class="nx">next</span><span class="p">;</span>
+  <span class="nx">LRUHandle</span><span class="o">*</span> <span class="nx">prev</span><span class="p">;</span>
+  
+  <span class="c1">// 分配的可以消耗的内存量
+</span><span class="c1"></span>  <span class="nx">size_t</span> <span class="nx">charge</span><span class="p">;</span>
+  
+  <span class="c1">// key 的字节数
+</span><span class="c1"></span>  <span class="nx">size_t</span> <span class="nx">key_length</span><span class="p">;</span>
+  
+  <span class="c1">// entry 是否存在缓存中
+</span><span class="c1"></span>  <span class="nx">bool</span> <span class="nx">in_cache</span><span class="p">;</span> 
+  
+  <span class="c1">// 引用计数，记录 entry 被不同缓存的引用，用于 entry 删除
+</span><span class="c1"></span>  <span class="nx">uint32_t</span> <span class="nx">refs</span><span class="p">;</span>
+  
+  <span class="c1">// `key()` 对应的哈希，用于快速分区和比较
+</span><span class="c1"></span>  <span class="nx">uint32_t</span> <span class="nx">hash</span><span class="p">;</span>
+  
+  <span class="c1">// 存储 key 的开始地址，结合 `key_length` 获取真正的 key 
+</span><span class="c1"></span>  <span class="c1">// GCC 支持 C99 标准，允许定义 char key_data[] 这样的柔性数组（Flexible Array)。
+</span><span class="c1"></span>  <span class="c1">// C++ 标准并不支持柔性数组的实现，这里定义为 key_data[1]，这也是 c++ 中的标准做法。
+</span><span class="c1"></span>  <span class="kr">char</span> <span class="nx">key_data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="nx">Slice</span> <span class="nx">key</span><span class="p">()</span> <span class="kr">const</span> <span class="p">{</span>
+    <span class="c1">// 只有当当前节点是空链表头时，`next` 才会等于 `this`
+</span><span class="c1"></span>    <span class="c1">// 链表是循环双向链表，空链表的头节点 next 和 prev 都指向自己构成环
+</span><span class="c1"></span>    <span class="c1">// 链表头是冗余的 handle，不存储数据，只利用它的 next 和 prev
+</span><span class="c1"></span>    <span class="nx">assert</span><span class="p">(</span><span class="nx">next</span> <span class="o">!=</span> <span class="k">this</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">Slice</span><span class="p">(</span><span class="nx">key_data</span><span class="p">,</span> <span class="nx">key_length</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">参考</span><span class="err">：</span><span class="nx">https</span><span class="o">:</span><span class="c1">//blog.mrcroxx.com/posts/code-reading/leveldb-made-simple/7-cache/
+</span><span class="c1"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="54-ceph">5.4 Ceph</h3>
+<p>Ceph 的 LRU（Least Recently Used，最近最少使用）缓存管理在 lru.h中</p>
+<h5 id="提问采用什么数据结构存储">提问：采用什么数据结构存储</h5>
+<ul>
+<li>
+<p><em><em>xlist&lt;LRUObject</em>&gt;</em>*<br>
+Ceph 使用自定义的 xlist双向链表来管理缓存对象。
+每个缓存对象LRUObjec）通过 lru_link 成员挂载到链表上。</p>
+</li>
+<li>
+<p><strong>分层链表</strong><br>
+LRU 维护了三个链表：</p>
+<ul>
+<li>top：最近访问的对象（热数据）</li>
+<li>bottom：较久未访问的对象（冷数据）</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">LRU算法的实现</span>
+<span class="n">class</span> <span class="n">LUR</span>
+<span class="p">{</span>
+	<span class="n">using</span> <span class="n">LRUList</span> <span class="o">=</span> <span class="n">xlist</span><span class="o">&lt;</span><span class="n">LRUObject</span><span class="o">*&gt;</span><span class="p">;</span>
+	<span class="n">LRUList</span> <span class="n">top</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">pintail</span><span class="p">;</span>  <span class="c1">//定义三个链表，而不是一个链表
+</span><span class="c1"></span><span class="p">}</span>
+ <span class="err">`</span><span class="n">top</span><span class="err">`链表代表最近访问的对象链表。当缓存对象被插入</span><span class="o">/</span><span class="err">访问时，这个对象会被放到`</span><span class="n">top</span><span class="err">`链表的头部。</span>
+<span class="err">`</span><span class="n">bottom</span><span class="err">`链表代表较早之前访问过的对象列表。当`</span><span class="n">top</span><span class="err">`链表满了或达到某这阈值，就会把`</span><span class="n">top</span><span class="err">`链表尾部的对象添加到`</span><span class="n">bottom</span><span class="err">`链表的头部。从缓存中淘汰对象时，从`</span><span class="n">bottom</span><span class="err">`尾部开始淘汰。</span>
+
+
+ <span class="c1">// insert at top of lru
+</span><span class="c1"></span>
+  <span class="kt">void</span> <span class="n">lru_insert_top</span><span class="p">(</span><span class="n">LRUObject</span> <span class="o">*</span><span class="n">o</span><span class="p">)</span> 
+  <span class="p">{</span>
+    <span class="n">o</span><span class="o">-&gt;</span><span class="n">lru</span> <span class="o">=</span> <span class="n">this</span><span class="p">;</span> <span class="c1">//class LUR
+</span><span class="c1"></span>    <span class="n">top</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="o">&amp;</span><span class="n">o</span><span class="o">-&gt;</span><span class="n">lru_link</span><span class="p">);</span>
+  <span class="p">}</span>
+ 
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="提问5xlistlruobjectitem作用是什么">提问5：xlist&lt;LRUObject*&gt;::item作用是什么</h5>
+<p>参考：第三章节设计
+1. 节点信息和对象解耦 链表节点（xlist&lt;LRUObject*&gt;::item）需要保存前驱、后继指针、所属链表等信息。
+2. 如果直接用对象地址（如 LRUObject*），就无法在对象本身里存储这些链表管理信息，链表操作就不方便。
+3. 支持多链表挂载 一个对象可以有多个 item 成员，挂载到不同的链表（比如 Ceph 的 top/bottom/pintail）。 如果只用对象地址，只能挂在一个链表上，无法支持多链表结构。
+4. 操作安全和高效 lru_link 作为成员变量，生命周期和对象一致，不需要额外分配内存，避免悬挂指针和内存泄漏。 链表操作（插入、删除、移动）只需操作 lru_link，效率高且安全。</p>
+<p><strong>LRUObject</strong><br>
+所有需要缓存的对象都需继承自 LRUObject，这样可以被 LRU 管理。
+class MyCacheEntry : public LRUObject</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">LRUObject</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="k">friend</span> <span class="k">class</span> <span class="nc">LRU</span><span class="p">;</span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="k">class</span> <span class="nc">LRU</span> <span class="o">*</span><span class="n">lru</span><span class="p">;</span> <span class="c1">// LRU算法的真正实现者
+</span><span class="c1"></span>  <span class="n">xlist</span><span class="o">&lt;</span><span class="n">LRUObject</span> <span class="o">*&gt;::</span><span class="n">item</span> <span class="n">lru_link</span><span class="p">;</span> <span class="c1">// 记录自己在双向链表里的位置，移动或删除对象时，操作会很快
+</span><span class="c1"></span>  <span class="kt">bool</span> <span class="n">lru_pinned</span><span class="p">;</span>
+  
+  <span class="kr">inline</span> <span class="n">LRUObject</span><span class="o">::~</span><span class="n">LRUObject</span><span class="p">()</span> 
+  <span class="p">{</span>
+	  <span class="k">if</span> <span class="p">(</span><span class="n">lru</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="n">lru</span><span class="o">-&gt;</span><span class="n">lru_remove</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+	  <span class="p">}</span>
+   <span class="p">}</span><span class="c1">//# c++ new(this)
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="提问-如何理解下面这句话">提问： 如何理解下面这句话</h5>
+<pre><code>只要你的对象继承了 LRUObject，
+就能被 LRU 缓存自动管理，
+无需自己手动维护链表节点和指针，
+使用起来非常方便和安全。
+</code></pre>
+<hr>
+<ul>
+<li><strong>高性能</strong>：<br>
+采用链表结构，插入、移动、删除操作复杂度为 O(1)，适合高并发场景。</li>
+<li><strong>灵活性</strong>：
+支持多种 touch 策略和分层淘汰，适应不同业务冷热数据分布。</li>
+<li><strong>可扩展性</strong>：<br>
+通过继承 LRUObject，任何类型对象都可被 LRU 管理，易于集成到 Ceph 各类缓存场景（如元数据、对象缓存等）。</li>
+<li><strong>线程安全</strong>：<br>
+LRU 本身不加锁，线程安全需由上层调用者保证，便于灵活集成到不同并发模型。</li>
+</ul>
+<hr>
+<h2 id="总结">总结</h2>
+<ol>
+<li><strong>Redis LRU</strong>：每个对象用 <code>lru</code> 字段记录访问时间，所有键值对存储在哈希表（dict）中，淘汰时通过采样若干 key 的 <code>lru</code> 字段近似实现 LRU，无全局链表。</li>
+<li><strong>LevelDB LRU</strong>：通常用 C++ STL 的 <code>std::list</code>（双向链表）+ <code>std::unordered_map</code>（哈希表）实现，链表维护访问顺序，哈希表 O(1) 查找，严格 LRU。</li>
+<li><strong>LeetCode 刷题 LRU</strong>：经典实现也是“哈希表+双向链表”，链表维护顺序，哈希表加速查找和插入，常见于 LRU Cache 题目。</li>
+</ol>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p>我在寻找一位积极上进的小伙伴，
+一起参与<strong>神奇早起 30 天改变人生计划</strong>，做一个伟大产品取悦自己，不妨试试</p>
+<p> 1️⃣关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）获取过去我<strong>全部面试录音</strong>和面试复盘</p>
+<p><img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<p>2️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+<p> 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖</p>
+<p><img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt=""></p>
+<p>本群目标是：</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+<h4 id="低头走路一次专注做好一个小事">低头走路：一次专注做好一个小事</h4>
+<ul>
+<li>不扫一屋 何以扫天下。</li>
+<li>让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/7_2025-5-22-spin_lock/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">如何设计一个高性能可扩展的自旋锁</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/day16-gfs/">
+            <span class="next-text nav-default">最佳实践：Google文件系统为何不关心小文件，不关心一致性</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

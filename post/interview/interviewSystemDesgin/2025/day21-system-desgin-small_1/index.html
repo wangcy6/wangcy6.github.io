@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day21-system-desgin-small_1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day21-system-desgin-small_1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="13490">
+<meta itemprop="keywords" content="分布式文件系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        
+          <span class="more-meta"> 约 13490 字 </span>
+          <span class="more-meta"> 预计阅读 27 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-1-本文遵循两个原则-一个线索">1. 1 本文遵循两个原则 一个线索：</a></li>
+    <li><a href="#12-一个线索数据库和文件系统有相同点吗">1.2 一个线索：数据库和文件系统有相同点吗？</a></li>
+    <li><a href="#13-最少知识线索就是-posix基于本地文件系统设计变成分布式呢">1.3 最少知识，线索就是 POSIX基于本地文件系统设计，变成分布式呢？</a></li>
+    <li><a href="#二大局观元数据服务如何设计">二、大局观：元数据服务如何设计</a></li>
+    <li><a href="#21-单节点存储元数据服务合适小文件吗">2.1 单节点存储元数据服务合适小文件吗？</a>
+      <ul>
+        <li><a href="#211-代表产品">2.1.1 <strong>代表产品</strong>：</a></li>
+        <li><a href="#222-元数据服务架构图">2.2.2 元数据服务架构图</a></li>
+        <li><a href="#223-使用场景或者优点">2.2.3 <strong>使用场景(或者优点)</strong>：</a></li>
+        <li><a href="#225--取舍">2.2.5  取舍</a></li>
+        <li><a href="#226-疑问1gfshdfs-为什么不适合存储小文件">2.2.6 <strong>疑问</strong>1：GFS/HDFS 为什么不适合存储小文件</a></li>
+        <li><a href="#227-疑问2gfshdfs为什么不满足posix强一致性的语义">2.2.7 <strong>疑问</strong>2：GFS/HDFS为什么不满足POSIX强一致性的语义</a></li>
+      </ul>
+    </li>
+    <li><a href="#22---耦合式多节点元数据架构适合小文件吗">2.2   （耦合式）多节点元数据架构适合小文件吗？</a>
+      <ul>
+        <li><a href="#121-代表产品">1.2.1 代表产品</a></li>
+        <li><a href="#122-元数据服务架构图">1.2.2 元数据服务架构图</a></li>
+        <li><a href="#123-优点使用场景">1.2.3 优点（使用场景）</a></li>
+        <li><a href="#123-缺点">1.2.3 缺点</a></li>
+        <li><a href="#124-疑问-cephfs采用什么机制兼容-posix-语义">1.2.4 疑问 CephFS采用什么机制兼容 POSIX 语义</a></li>
+        <li><a href="#125-疑问-ceph-对文件read-和write操作如何保证posix语义">1.2.5 疑问 ceph 对文件read 和write操作如何保证POSIX语义</a></li>
+        <li><a href="#31-客户端缓存控制capabilities-caps">3.1 客户端缓存控制：capabilities (caps)</a></li>
+        <li><a href="#32-数据写入路径client--osd">3.2 数据写入路径：Client → OSD</a></li>
+        <li><a href="#33-元数据协同mds-协调数据与元数据一致性">3.3 元数据协同：MDS 协调数据与元数据一致性</a></li>
+        <li><a href="#34-存储池rados-pool保证最终一致性">3.4 存储池（RADOS Pool）保证最终一致性</a></li>
+      </ul>
+    </li>
+    <li><a href="#23-分离式元数据架构">2.3 分离式元数据架构</a>
+      <ul>
+        <li><a href="#231-代表产品">2.3.1 代表产品</a></li>
+        <li><a href="#232-元数据结构特点">2.3.2 元数据结构特点</a></li>
+        <li><a href="#233-优点">2.3.3 优点</a></li>
+        <li><a href="#234-疑问1-文件系统元数据可以存储kv吗">2.3.4 疑问1 文件系统元数据可以存储kv吗？</a></li>
+        <li><a href="#3fs-元数据服务架构设计"><strong>3FS 元数据服务架构设计​</strong></a></li>
+        <li><a href="#235-疑问2-deepseek-3fs-选择-foundationdb而非-tikv">2.3.5 疑问2 DeepSeek 3FS 选择 ​<strong>​FoundationDB​</strong>​？而非 TiKV</a></li>
+        <li><a href="#235-疑问3-为什么-juicefs-能用-tikvceph-不行">2.3.5 疑问3 为什么 JuiceFS 能用 TiKV，Ceph 不行？</a></li>
+        <li><a href="#236-疑问3-ceph-在rocksdb层怎么key-value-映射">2.3.6 疑问3 Ceph 在RocksDB层怎么key value 映射</a></li>
+      </ul>
+    </li>
+    <li><a href="#三细节先正确在优化">三、细节：先正确，在优化</a></li>
+    <li><a href="#31-细节从多线程到分布式到文件系统推到出-posix-语义这个最少知识点满足线性一致性">3.1 细节：从多线程到分布式到文件系统推到出 POSIX 语义这个最少知识点，满足线性一致性。</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#32-为了保证-posix语义-线程一致性-不同系统是如何实现的">3.2 为了保证 POSIX语义 线程一致性 不同系统是如何实现的</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#32-ceph小文件优化">3.2 Ceph小文件优化</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#举例说明">举例说明</a></li>
+    <li><a href="#优点">优点</a></li>
+    <li><a href="#缺点">缺点</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#举例说明-1">举例说明</a></li>
+    <li><a href="#优点-1">优点</a></li>
+    <li><a href="#缺点-1">缺点</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#举例说明-2">举例说明</a></li>
+    <li><a href="#优点-2">优点</a></li>
+    <li><a href="#缺点-2">缺点</a></li>
+    <li><a href="#历史文章">历史文章</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <p>知识地图：分布式存储&mdash;元数据服务</p>
+<p>本文版本1.0: 大约2万字，可以先点赞，收藏 在慢慢阅读。</p>
+<p>本文版本2.0: 下篇文章更清晰 简化版对2万字进行压缩.</p>
+<h1 id="一缘起">一、缘起：</h1>
+<p><strong>从零实现分布式文件系统（一）</strong>：100G 读写带宽、百万 IO 请求的文件系统，如何实现的？（正在酝酿中）</p>
+<p>突然看了下评论区，有人直接问：<br>
+<strong>“在不升级硬件的前提下，怎么让小文件读写性能提升十倍？”</strong></p>
+<p>于是，我决定把第二文章提前发出来：<br>
+从零实现分布式文件系统（二）**——如何在不升级硬件的前提下,小文件并发读写性能提升十倍（元数据服务如何设计）</p>
+<p><!-- raw HTML omitted -->第一个感觉是什么：这怎么写我也不清楚，<!-- raw HTML omitted --></p>
+<p>既然是无法描述事情，那还担心什么，先写垃圾出来，
+<img src="https://img2024.cnblogs.com/blog/2052479/202412/2052479-20241230222959763-1391615277.jpg" alt=""></p>
+<blockquote>
+<p>有不对的地方欢迎评论区一起讨论</p>
+</blockquote>
+<h2 id="1-1-本文遵循两个原则-一个线索">1. 1 本文遵循两个原则 一个线索：</h2>
+<ul>
+<li>
+<p><strong>原则1 主线任务：大局观</strong><br>
+越是复杂庞大的系统，越要先交代<strong>背景和问题</strong>。<br>
+一上来就闷头写优化代码，往往被批评成傻子？结果吃力不讨好。<br>
+就像动画《灵笼》第二季，整集都在描绘“灯塔阵营”（冰冷秩序）和“龙骨村阵营”（情感）的格局与世界背景。</p>
+</li>
+<li>
+<p><strong>原则2 隐藏剧情：细节决定成败</strong><br>
+说出来大家可能都懂，但<strong>找到关键点</strong>往往要花很久。<br>
+比如：某工厂机器故障，技术人员无解，请来专家。<br>
+专家检查后，只在机器上划了一条线，工人按线拆开，果然找到并修复了问题。  专家收 1 万元——划线 1 元，知道划哪儿 9999 元。</p>
+</li>
+</ul>
+<h2 id="12-一个线索数据库和文件系统有相同点吗">1.2 一个线索：数据库和文件系统有相同点吗？</h2>
+<blockquote>
+<p>当然也不能想到哪里写哪里，
+这样根本没有人看，更没人听，努力白费，
+至少给一线索查询下去，让人感觉有理有据</p>
+</blockquote>
+<p>（1）看到标题 <!-- raw HTML omitted -->在不升级硬件的前提下,小文件读写性能提升十倍<!-- raw HTML omitted --></p>
+<p>（2）我想到另外一篇文章：<!-- raw HTML omitted --> 不加机器，如何抗住每天百亿级高并发流量<!-- raw HTML omitted -->？</p>
+<p>概念是总是混淆，这里重新澄清一下</p>
+<p><!-- raw HTML omitted --> 不加机器，如何抗住每天百亿级高并发流量<!-- raw HTML omitted -->？
+例如一个web服务，</p>
+<p>前端：对数据库并发增删改查</p>
+<ul>
+<li>http post get delete请求</li>
+</ul>
+<p>后端 ：</p>
+<ul>
+<li>MVCC（Multi-Version Concurrency Control，多版本并发控制）</li>
+<li>ACID特性，原子性  <strong>一致性</strong> **隔离性,持久性。</li>
+<li>存储引擎，sql引擎。虽<!-- raw HTML omitted -->然不懂至少搜索出来一点资料<!-- raw HTML omitted --> 例如
+<img src="https://docs-download.pingcap.com/media/images/docs/tidb-computing-tidb-sql-layer.png" alt=""></li>
+<li>客户端，协议层，SQL引擎，存储引擎</li>
+</ul>
+<p><strong>文件读写很模糊，操作系统封装很好，你想到</strong></p>
+<ul>
+<li>前端：read write rename,lseek,readdir,lookup,getattr</li>
+</ul>
+<ol>
+<li>
+<p>1970-1980年代，Unix衍生出System V、BSD、Solaris等多个互不兼容的版本，各厂商为竞争添加私有扩展</p>
+</li>
+<li>
+<p>POSIX：可移植操作系统接口（Portable Operating System Interface of UNIX，缩写为 POSIX ），POSIX基于本地文件系统设计</p>
+</li>
+</ol>
+<ul>
+<li>后端：I/O 栈路径（用户态 -&gt; VFS -&gt; 块设备 -&gt; 驱动 -&gt; 硬件），
+Linux Storage Stack Diagram
+<img src="https://www.thomas-krenn.com/de/wikiDE/images/e/e8/Linux-storage-stack-diagram_v6.9.png" alt="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram"></li>
+</ul>
+<p>Linux存储栈采用分层设计，自上而下分为四层：</p>
+<ol>
+<li>​<strong>​应用层​</strong>​：进程通过系统调用（如<code>read</code>/<code>write</code>）发起I/O请求。</li>
+<li>​<strong>​文件系统层​</strong>​：包括VFS（虚拟文件系统）和具体文件系统（ext4/XFS/Btrfs等），处理文件逻辑操作。</li>
+<li>​<strong>​块层​</strong>​：核心为I/O调度（如<code>blk_mq</code>）、设备映射（如LVM/RAID），将文件操作转为块级请求。</li>
+<li>​<strong>​设备层​</strong>​：物理设备（HDD/SSD/NVMe）及驱动，执行最终数据读</li>
+</ol>
+<blockquote>
+<p>Linux Storage Stack Diagram 这里不是我擅长领域， 如果按照这个思路写下，思路偏了。</p>
+</blockquote>
+<h2 id="13-最少知识线索就是-posix基于本地文件系统设计变成分布式呢">1.3 最少知识，线索就是 POSIX基于本地文件系统设计，变成分布式呢？</h2>
+<table>
+<thead>
+<tr>
+<th>POSIX接口</th>
+<th>说明</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软/硬链   接</td>
+<td>一个 inode 可以被多个目录项引用，修改引用计数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>原子重命名</td>
+<td>文件/目录改名需要保持一致性，且涉及多个目录项和 inode</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>目录遍历</td>
+<td>遍历时需保证一致性视图,避免遍历时出现“文件消失”或“幽灵文件，大型目录生成只读快照（基于COW技术），确保<code>readdir</code>遍历期间目录内容不变</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>权限继承和检查</td>
+<td>不只是存值，还涉及复杂规则</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>文件锁定</td>
+<td>通过 <code>flock</code>或 <code>fcntl</code>实现文件锁，协调多进程对同一文件的并发访问</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>间戳类型</td>
+<td>触发条件</td>
+<td>更新频率问题</td>
+<td></td>
+</tr>
+<tr>
+<td>​<strong>​atime​</strong>​</td>
+<td>文件被读取</td>
+<td>高频读操作导致大量写元数据</td>
+<td></td>
+</tr>
+<tr>
+<td>​<strong>​mtime​</strong>​</td>
+<td>文件内容修改</td>
+<td>与应用程序逻辑可能冲突</td>
+<td></td>
+</tr>
+<tr>
+<td>​<strong>​ctime​</strong>​</td>
+<td>元数据变更</td>
+<td>权限、所有权等变更频繁时</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>到这里最少知识准备完毕，正式开始</p>
+</blockquote>
+<h2 id="二大局观元数据服务如何设计">二、大局观：元数据服务如何设计</h2>
+<p><img src="https://s2.loli.net/2025/08/09/qTe416puv9xbaAU.png" alt="看别人如何解决"></p>
+<table>
+<thead>
+<tr>
+<th>文件系统</th>
+<th>典型使用场景</th>
+<th>特点/优势</th>
+<th>不适合场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HDFS</strong>（Hadoop Distributed File System）</td>
+<td>大数据离线分析（Hadoop、Spark、Hive）、日志归档、批处理数据仓库</td>
+<td>- 面向大文件（GB~TB级）优化- 高吞吐，顺序读写性能好- 与 Hadoop/Spark 深度集成</td>
+<td>- 小文件性能差- 不适合低延迟随机访问</td>
+</tr>
+<tr>
+<td><strong>CephFS</strong>（Ceph File System）</td>
+<td>云平台共享存储（OpenStack、Kubernetes PVC）、容器持久化存储、企业文件共享</td>
+<td>- POSIX 语义，支持块、对象、文件统一存储- 水平扩展能力强- 高可用、强一致</td>
+<td>- 元数据性能瓶颈影响小文件场景- 复杂部署与维护</td>
+</tr>
+<tr>
+<td><strong>JuiceFS / 百度 CFS / 3FS</strong>（面向云原生的分布式文件系统）</td>
+<td>大数据 + 云原生（Spark、Flink）、机器学习训练数据集、混合云共享文件</td>
+<td>- 云原生兼容 POSIX- 元数据可存储在云数据库（如 TiKV、Redis）- 按需弹性扩容- 高并发小文件访问优化</td>
+<td>- 对极低延迟的 OLTP 类应用不合适- 云服务依赖度高</td>
+</tr>
+<tr>
+<td><strong>Lustre</strong></td>
+<td>高性能计算（HPC）、科学模拟、气象建模、基因分析、石油勘探</td>
+<td>- 极高吞吐（100GB/s+）- 适配 HPC 超算集群- 并行 I/O 优化</td>
+<td>- 部署复杂- 更适合专用计算集群，云原生集成差</td>
+</tr>
+<tr>
+<td><strong>Alluxio</strong>（可选补充）</td>
+<td>计算与存储解耦的中间缓存层（Spark、Presto）</td>
+<td>- 内存级缓存、跨存储系统统一命名空间</td>
+<td>- 不是持久化文件系统，需要与底层存储结合</td>
+</tr>
+</tbody>
+</table>
+<p><strong>简单总结场景匹配：</strong></p>
+<ul>
+<li><strong>HDFS</strong> → 离线大数据分析（批处理，吞吐优先）</li>
+<li><strong>CephFS</strong> → 云平台 POSIX 共享存储（通用存储，弹性扩展）</li>
+<li><strong>JuiceFS / 百度CFS / 3FS</strong> → 云原生高并发场景（尤其是小文件和混合云）</li>
+<li><strong>Lustre</strong> → HPC 超高吞吐并行计算场景（科学计算、工程模拟）</li>
+</ul>
+<h2 id="21-单节点存储元数据服务合适小文件吗">2.1 单节点存储元数据服务合适小文件吗？</h2>
+<h3 id="211-代表产品">2.1.1 <strong>代表产品</strong>：</h3>
+<ul>
+<li>Google File System (GFS)​</li>
+<li>HDFS</li>
+</ul>
+<h3 id="222-元数据服务架构图">2.2.2 元数据服务架构图</h3>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia36miaqRo2FdT56c4wjSeAy3vJlUF262nnicR4bkdnMFmqruX9x17Max5t5I468JePN7SaXKKwNwmndg/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<h3 id="223-使用场景或者优点">2.2.3 <strong>使用场景(或者优点)</strong>：</h3>
+<ul>
+<li>HDFS 主要用于 <strong>大数据批处理</strong>（Hadoop MapReduce、Spark 等）</li>
+<li>元数据<strong>全部能存储到内</strong>存（访问效率高）</li>
+<li>元数据都由master节点统一管理（减少锁冲突）</li>
+<li>适合​**​顺序大文件读写</li>
+<li>HDFS 的 <strong>单写多读（Write Once, Read Many）</strong> 是它最核心的设计原则之</li>
+</ul>
+<h4 id="224-缺点">2.2.4 缺点</h4>
+<ul>
+<li>不适合存储小文件(高IOPS、海量小文)</li>
+<li>不完全满足POSIX强一致性与语义（如随机覆盖写、强一致目录视图、原子多文件操作等)</li>
+</ul>
+<h3 id="225--取舍">2.2.5  取舍</h3>
+<p>HDFS 的目录操作在​<strong>​元数据更新​</strong>​和​<strong>​客户端可见性​</strong>​之间存在权衡：</p>
+<ul>
+<li>​<strong>​强一致性场景​</strong>​：需通过 <code>hsync()</code>或安全模式实现，但牺牲吞吐量。</li>
+<li>​<strong>​最终一致性场景​</strong>​：默认模式，适合对延迟不敏感的批处理任务</li>
+<li>如果允许多客户端同时写，必须维护复杂的 <strong>分布式锁 + 随机写同步</strong>，这会极大降低性能和可扩展性。  因此 HDFS 直接放弃随机写</li>
+<li><!-- raw HTML omitted -->不适合小文件<!-- raw HTML omitted --></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>设计取舍</th>
+<th>带来的好处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>禁止并发写</strong></td>
+<td>避免复杂的分布式锁协调，系统简单稳定</td>
+</tr>
+<tr>
+<td><strong>顺序写入</strong></td>
+<td>磁盘吞吐率高（顺序 I/O），网络传输更高效</td>
+</tr>
+<tr>
+<td><strong>写后多读</strong></td>
+<td>文件一旦关闭，就可以被多客户端并发读取</td>
+</tr>
+<tr>
+<td><strong>易于副本一致性</strong></td>
+<td>只需保证写入过程中的副本一致，关闭文件后副本稳定</td>
+</tr>
+</tbody>
+</table>
+<h3 id="226-疑问1gfshdfs-为什么不适合存储小文件">2.2.6 <strong>疑问</strong>1：GFS/HDFS 为什么不适合存储小文件</h3>
+<ul>
+<li><strong>块存储效率低</strong>
+<ol>
+<li>固定块大小：HDFS默认的块大小通常是128MB或256M。如果一个文件只有几KB或几MB，仍然会占用一个完整的块，导致存储空间浪费。</li>
+<li>存储利用率低：大量小文件会导致块存储效率低下，磁盘空间利用率不高</li>
+</ol>
+</li>
+<li><strong>访问性能差</strong></li>
+</ul>
+<ol>
+<li>寻址开销: HDFS是为顺序读取大文件优化的，而小文件的随机读取会导致频繁的寻址操作</li>
+<li>网络开销:RPC与管道开销被放大</li>
+</ol>
+<ul>
+<li><strong>内存开销</strong></li>
+</ul>
+<ol>
+<li>元数据存储：占用大量N内存</li>
+</ol>
+<p> </p>
+<h3 id="227-疑问2gfshdfs为什么不满足posix强一致性的语义">2.2.7 <strong>疑问</strong>2：GFS/HDFS为什么不满足POSIX强一致性的语义</h3>
+<h4 id="posix语义-强一致目录视图strongly-consistent-directory-view"> ​<strong>​POSIX语义 强一致目录视图（Strongly Consistent Directory View）​</strong></h4>
+<h4 id="1-问题背景">1. 问题背景</h4>
+<ul>
+<li>POSIX要求目录操作（如创建/删除文件）是原子的，所有客户端应看到一致的目录结构。</li>
+<li>分布式元数据服务（如HDFS NameNode）通常采用​<strong>​最终一致性模型​</strong>​</li>
+</ul>
+<h4 id="2--场景描述">2.  场景描述</h4>
+<ol>
+<li>​<strong>​客户端 A​</strong>​ 向 NameNode 发起创建文件 <code>/data/file.txt</code>的请求。</li>
+<li>​<strong>​NameNode​</strong>​ 分配新 inode 并更新元数据（标记文件为待写入状态），但​<strong>​未立即同步到所有 DataNode​</strong>​。</li>
+<li>​<strong>​客户端 B​</strong>​ 立即查询目录 <code>/data</code>，可能无法看到新文件。</li>
+</ol>
+<h4 id="3-原因分析">3. 原因分析</h4>
+<ul>
+<li>​<strong>​元数据异步复制​</strong>​：NameNode 的元数据更新需通过 JournalNode 持久化，并异步传播到其他 NameNode（HA 模式）或 DataNode（数据块位置更新）。</li>
+<li>​<strong>​客户端缓存​</strong>​：客户端可能缓存目录列表，未及时感知新文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 客户端 A 创建文件
+</span><span class="c1"></span><span class="n">FileSystem</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">FileSystem</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">conf</span><span class="o">);</span>
+<span class="n">Path</span> <span class="n">path</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;/data/file.txt&#34;</span><span class="o">);</span>
+<span class="n">FSDataOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">path</span><span class="o">);</span>
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&#34;test&#34;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span> <span class="c1">// 元数据更新完成
+</span><span class="c1"></span>
+<span class="c1">// 客户端 B 立即查询目录
+</span><span class="c1"></span><span class="n">FileStatus</span><span class="o">[]</span> <span class="n">statuses</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="na">listStatus</span><span class="o">(</span><span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;/data&#34;</span><span class="o">));</span>
+<span class="c1">// 可能未包含 file.txt，直到元数据同步完成
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="-posix语义2-原子多文件操作或者重命名操作的原子性破坏">​<strong>​ POSIX语义2 原子多文件操作或者重命名操作的原子性破坏​</strong>​</h4>
+<h4 id="1-问题背景-1">1. 问题背景</h4>
+<p>POSIX要求多文件操作（如批量创建、删除）是原子的，但分布式系统中跨节点操作难以保证：</p>
+<ul>
+<li>​<strong>​部分成功问题​</strong>​：若操作涉及多个节点，网络分区或节点故障可能导致部分成功、部分失败。</li>
+<li>​<strong>​协调开销​</strong>​：需引入分布式事务协议（如2PC、Raft），增加复杂性和延迟。</li>
+<li>解决办法：实际系统中常牺牲强原子性，采用补偿机制（如重试）或最终一致性。</li>
+</ul>
+<h4 id="2--场景描述-1">2.  场景描述</h4>
+<ol>
+<li>​<strong>​客户端​</strong>​ 执行跨目录重命名 <code>/dir1/file.txt</code>→ <code>/dir2/file.txt</code>。</li>
+<li>​<strong>​NameNode​</strong>​ 需更新两个目录的元数据（删除 <code>/dir1/file.txt</code>，创建 <code>/dir2/file.txt</code>）。</li>
+<li>​<strong>​若元数据更新过程中断​</strong>​（如网络分区或 NameNode 故障），可能导致部分更新成功。</li>
+</ol>
+<h4 id="3--原因分析">3.  原因分析</h4>
+<ul>
+<li>​<strong>​元数据操作非原子性​</strong>​：跨目录重命名需多次元数据更新，<strong>HDFS 未提供事务机制。</strong></li>
+<li>​<strong>​最终一致性妥协​</strong>​：HDFS 默认采用最终一致性模型，允许短暂不一致，最终通过后台同步修复。</li>
+</ul>
+<h2 id="22---耦合式多节点元数据架构适合小文件吗">2.2   （耦合式）多节点元数据架构适合小文件吗？</h2>
+<h3 id="121-代表产品">1.2.1 代表产品</h3>
+<ul>
+<li>CephFS</li>
+<li>BeeGFS</li>
+<li>Lustre</li>
+</ul>
+<h3 id="122-元数据服务架构图">1.2.2 元数据服务架构图</h3>
+<p><img src="https://s2.loli.net/2025/08/09/L43YAjrluFiTNfE.png" alt="CephFS为例子多MDS"></p>
+<p><img src="https://s2.loli.net/2025/08/09/YLCNamRspPEb9Ae.png" alt="性能不超过5千qps"></p>
+<p><img src="https://s2.loli.net/2025/08/09/gsKlSRyiPr4ZBjC.png" alt="MDS增多，性能下降"></p>
+<blockquote>
+<p>Average MDS throughput drops from 2000 ops per MDS per second with a small cluster, to about 1000 ops per MDS per second (50% efficiency) with 128 MDSs (over 100,000 ops/sec total). 128个mds节点达到1万qps</p>
+</blockquote>
+<h3 id="123-优点使用场景">1.2.3 优点（使用场景）</h3>
+<ul>
+<li>【兼容】 Ceph 文件系统 (CephFS) 是兼容 POSIX 标准的文件系统</li>
+<li>【依赖】在 Ceph 的分布式对象存储基础上构建  RADOS（可靠的自主分布式对象存储）。</li>
+<li>【多个客户端并发】Ceph 文件系统是一种共享文件系统，因此多个客户端可以同时处理同一文件系统</li>
+<li>【可扩展】Ceph 文件系统具有高度可扩展性，因为元数据服务器水平扩展，并且直接客户端对各个 OSD 节点进行读写操作。</li>
+<li><strong>元数据与数据分离架构​</strong>​、​<strong>​分布式锁机制​</strong>​ 和 ​<strong>​强一致性存储模型​</strong>​（当对于本地文件系统）</li>
+<li></li>
+</ul>
+<h3 id="123-缺点">1.2.3 缺点</h3>
+<ul>
+<li>
+<p>代码实现复杂，运维复杂，看不懂代码</p>
+</li>
+<li>
+<p>为了保证一致性，引入<strong>分布式锁</strong>，MDS状态切换 ，代码直接看不懂.这不废了吗.</p>
+</li>
+<li>
+<p>可扩展 就<strong>是添加机器</strong>，例如上图128个MDS ops 1万/秒，per MDS 1000 ops 性能极差。</p>
+</li>
+<li>
+<p><strong>Lustre并不适合小文件I/O应</strong>用，性能表现非常差</p>
+</li>
+</ul>
+<h3 id="124-疑问-cephfs采用什么机制兼容-posix-语义">1.2.4 疑问 CephFS采用什么机制兼容 POSIX 语义</h3>
+<p>相关提问：</p>
+<ul>
+<li>CephFS的分布式锁机制具体是如何实现的？能否举例说明锁竞争的处理流程？</li>
+<li>CephFS与其他分布式文件系统(如Lustre)在POSIX语义实现上有哪些主要区别？</li>
+<li>CephFS在保证强一致性的同时如何优化性能？有哪些典型的性能优化策略？</li>
+</ul>
+<p>POSIX 文件系统语义要求包括：</p>
+<ul>
+<li><strong>原子性</strong>：<code>write()</code>、<code>rename()</code>、<code>link()</code> 等必须在多客户端下表现一致（一次写入不可被分割）。</li>
+<li><strong>同步可见性</strong>：一个进程写文件，另一个马上能读到（如果调用了 <code>fsync</code> 或关闭文件）。</li>
+<li><strong>文件锁定</strong>：<code>flock()</code>、<code>fcntl()</code> 等锁机制必须按规范生效。</li>
+<li><strong>目录一致性</strong>：创建、删除文件后，目录列表必须立刻反映变化</li>
+</ul>
+<p>CephFS 通过 ​<strong>​MDS 的分布式锁与状态机​</strong>​、​<strong>​RADOS 的强一致性存储​</strong>​ 和 ​<strong>​客户端协议优化​</strong></p>
+<h4 id="cephfs-分布式锁的核心实现机制-绑定在ceph内部其他项目无法使用高度绑定">CephFS 分布式锁的核心实现机制 【绑定在ceph内部，其他项目无法使用，高度绑定。】</h4>
+<p><img src="https://s2.loli.net/2025/08/10/gxOUD2sFMP6aiq5.png" alt="内部高度封装，隐藏复杂性"></p>
+<h4 id="1-锁类型与作用域">1. ​<strong>​锁类型与作用域​</strong>​</h4>
+<p>CephFS 通过 ​<strong>​锁类型分层设计​</strong>​ 实现高效的元数据管理：
+CephFS 定义了 ​<strong>​4 种锁类型​</strong>​，覆盖不同元数据操作场景：</p>
+<ul>
+<li>​<strong>​LocalLock​</strong>​：本地锁，用于单 MDS 内无需分布式协调的元数据（如 inode 版本号）。</li>
+<li>​<strong>​SimpleLock​</strong>​：共享读/排他写锁，适用于目录项（dentry）、权限（authlock）等需要互斥写入的场景。</li>
+<li>​<strong>​ScatterLock​</strong>​：共享读/共享写锁，允许权限委托（如目录统计信息 INEST）。</li>
+<li>​<strong>​FileLock​</strong>​：文件锁，管理文件数据访问权限（如读写锁）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>型​</strong>​</th>
+<th>​<strong>​锁模式​</strong>​</th>
+<th>​<strong>​适用场景​</strong>​</th>
+<th>​<strong>​性能影响​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​LocalLock​</strong>​</td>
+<td>本地版本锁</td>
+<td>inode/dentry 版本控制</td>
+<td>无跨节点开销，低延迟</td>
+</tr>
+<tr>
+<td>​<strong>​SimpleLock​</strong>​</td>
+<td>共享读/排他写</td>
+<td>目录项操作、权限变更</td>
+<td>写锁阻塞其他写操作</td>
+</tr>
+<tr>
+<td>​<strong>​ScatterLock​</strong>​</td>
+<td>共享读/共享写</td>
+<td>目录统计、分片管理</td>
+<td>允许并发读，写需协调</td>
+</tr>
+<tr>
+<td>​<strong>​FileLock​</strong>​</td>
+<td>读写锁</td>
+<td>文件数据读写</td>
+<td>写锁导致读阻塞</td>
+</tr>
+</tbody>
+</table>
+<p>​<strong>​示例​</strong>​：</p>
+<ul>
+<li>目录创建操作需获取 <code>SimpleLock</code>（排他写锁），确保同一目录下文件名唯一性。</li>
+<li>目录统计信息更新使用 <code>ScatterLock</code>，允许多个 MDS 并行更新不同子目录。</li>
+</ul>
+<h4 id="2-锁状态机与自动评估">2. ​<strong>​锁状态机与自动评估​</strong></h4>
+<p><img src="https://s2.loli.net/2025/08/10/qskbDiMVdX9AY1U.png" alt="自驱控制">
+​
+高度抽象，业务参与很少</p>
+<ul>
+<li>​<strong>​系统自动驱动​</strong>​：锁状态（如 <code>available</code>、<code>held</code>、<code>revoking</code>）由 MDS 根据请求和定期评估自动转换。</li>
+<li>​<strong>​触发条件​</strong>​：</li>
+<li>请求驱动：客户端请求如读、写、打开文件等操作会触发锁状态评估 Server::handle_client_readdir&ndash;&gt;mds-&gt;locker-&gt;eval</li>
+<li>定期评估：定期检查锁状态以优化性能和资源利用 Locker::tick()&mdash;-&gt;eval_scatter_gathers();</li>
+<li>客户端能力(Caps)变化 Locker::handle_client_caps &ndash;&gt;mark_updated_scatterlock</li>
+</ul>
+<h4 id="3-锁持久化与故障恢复">3. ​<strong>​锁持久化与故障恢复​</strong>​</h4>
+<ul>
+<li>
+<p>​<strong>​RADOS 存储锁状态​</strong>​：锁元数据持久化到 RADOS 对象（如 <code>ceph_lock</code>），确保 MDS 故障后锁状态可恢复。</p>
+</li>
+<li>
+<p>​<strong>​HA 切换​</strong>​：主 MDS 故障时，备用 MDS 通过日志恢复锁状态，保证操作连续性。</p>
+</li>
+</ul>
+<hr>
+<p>锁竞争处理流程（以目录重命名为例）</p>
+<h4 id="场景描述">场景描述</h4>
+<ul>
+<li>​<strong>​客户端 A​</strong>​ 尝试将 <code>/dir1/file.txt</code>重命名为 <code>/dir2/file.txt</code>。</li>
+<li>​<strong>​客户端 B​</strong>​ 同时尝试删除 <code>/dir2/file.txt</code>。</li>
+</ul>
+<h4 id="处理流程">处理流程</h4>
+<ol>
+<li>
+<p>​<strong>​锁请求阶段​</strong>​</p>
+<ul>
+<li>
+<p>客户端 A 向 MDS 发起 <code>rename()</code>请求，需获取以下锁：</p>
+<ul>
+<li>
+<p><code>/dir1</code>的 <code>SimpleLock</code>（排他写锁，确保目录项可修改）。</p>
+</li>
+<li>
+<p><code>/dir2</code>的 <code>SimpleLock</code>（排他写锁，确保目标目录可写入）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>客户端 B 发起 <code>unlink()</code>请求，需获取 <code>/dir2</code>的 <code>SimpleLock</code>（排他写锁）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​锁冲突检测​</strong>​</p>
+<ul>
+<li>MDS 检测到 <code>/dir2</code>的 <code>SimpleLock</code>已被客户端 B 请求，且与客户端 A 的请求冲突。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​锁状态转换与协调​</strong>​</p>
+<ul>
+<li>
+<p>​<strong>​阶段 1（准备）​</strong>​：MDS 标记 <code>/dir2</code>的 <code>SimpleLock</code>为 <code>revoking</code>，通知客户端 B 释放锁。</p>
+</li>
+<li>
+<p>​<strong>​阶段 2（等待）​</strong>​：客户端 B 收到通知后，若操作未完成则回滚 <code>unlink()</code>，释放锁。</p>
+</li>
+<li>
+<p>​<strong>​阶段 3（授予）​</strong>​：MDS 确认 <code>/dir2</code>锁可用后，授予客户端 A 排他写锁。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​操作执行与提交​</strong>​</p>
+<ul>
+<li>
+<p>客户端 A 完成重命名操作，更新目录项元数据。</p>
+</li>
+<li>
+<p>MDS 持久化锁状态变更到 RADOS，并通知其他 MDS 副本同步。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​异常处理​</strong>​</p>
+<ul>
+<li>若客户端 A 在操作中崩溃，MDS 检测到锁超时（默认 60 秒），自动释放锁，允许其他客户端重​</li>
+</ul>
+</li>
+</ol>
+<h4 id="问题客户端故障后锁自己释放问题">问题：客户端故障后锁自己释放问题？</h4>
+<ul>
+<li>当多个 client 需要共享一个文件时，linux 通常采用的方法是给文件上
+锁，避免共享的资源产生竞争状态。这里的文件锁（filelock）要与分布式锁中的 flock 区分开.</li>
+<li>Filelock 可分为 flock 及 fcntl 两类系统调用，前者只能锁定整个文件，后者可以操作文件的一部分</li>
+<li>handle_client_file_setlock 整个过程复杂，这里跳过，代码太丑了了。</li>
+</ul>
+<p>Ceph 中的 Two-Phase Commit（2PC）</p>
+<p>在分布式文件系统里，一个操作可能涉及多个对象、多个元数据位置。为了防止“只更新一半”的问题，Ceph MDS 会用<strong>两阶段提交</strong>：</p>
+<ul>
+<li><strong>阶段 1（Prepare）</strong>：锁定所有相关元数据节点，写预日志（journal）</li>
+<li><strong>阶段 2（Commit）</strong>：确认所有节点都准备好 → 真正写入并释放锁</li>
+</ul>
+<h4 id="2pc-是保证分布式元数据操作原子性的关键机制">2PC 是保证分布式元数据操作原子性的关键机制</h4>
+<p><strong>举个例子</strong>（POSIX rename 原子性）：
+假设 <code>/dirA/file1</code> 被 rename 到 <code>/dirB/file2</code></p>
+<ol>
+<li><strong>Prepare 阶段</strong>
+<ul>
+<li>MDS 找到 <code>dirA</code> 和 <code>dirB</code> 所在的元数据分区（可能不同 MDS 节点）</li>
+<li>对两个目录加锁</li>
+<li>写入“rename 事务”到 MDS 的 journal（预写日志）</li>
+</ul>
+</li>
+<li><strong>Commit 阶段</strong>
+<ul>
+<li>所有参与的 MDS 都返回 “ok”</li>
+<li>MDS 同步更新目录结构（<code>dirA</code> 删除 file1，<code>dirB</code> 添加 file2）</li>
+<li>释放锁并广播缓存失效</li>
+</ul>
+</li>
+</ol>
+<h3 id="125-疑问-ceph-对文件read-和write操作如何保证posix语义">1.2.5 疑问 ceph 对文件read 和write操作如何保证POSIX语义</h3>
+<h4 id="1-posix-的要求">1. POSIX 的要求</h4>
+<p><strong>read-after-write</strong> 在 POSIX 里意味着：</p>
+<ul>
+<li>当进程 A <code>write()</code> 某个文件的部分数据，并且该写调用返回后，其他进程（无论在同一台机器还是远程节点）再去 <code>read()</code> 这个文件，同一位置必须能读到刚刚写入的数据（不应该再读到旧版本）。</li>
+<li>这个语义对<strong>分布式文件系统</strong>尤其难，因为不同客户端各有自己的缓存，数据要通过网络分发，还要考虑崩溃恢复。</li>
+</ul>
+<h4 id="2-场景客户端-a-写文件客户端-b-读文件">2. <strong>场景</strong>：客户端 A 写文件，客户端 B 读文件。</h4>
+<ol>
+<li>
+<p><strong>A 打开文件</strong> → 从 MDS 获得写 cap（允许本地缓存和写入）。</p>
+</li>
+<li>
+<p><strong>A write()</strong> → 数据分片写到 OSD，OSD 完成多副本确认后返回成功。</p>
+</li>
+<li>
+<p><strong>B open()</strong> → 向 MDS 请求 inode caps。</p>
+</li>
+<li>
+<p>MDS 检查发现 A 仍持有写 cap → 向 A 发送 cap recall。</p>
+</li>
+<li>
+<p>A 将脏数据 flush 到 OSD 并确认 → MDS 更新 inode 状态并把写 cap 降级。</p>
+</li>
+<li>
+<p>MDS 给 B 分配读 cap → B 从 OSD 读取最新数据。</p>
+</li>
+<li>
+<p>B 读到的就是 A 最新写入的内容（read-after-write 保证成立
+<img src="https://s2.loli.net/2025/08/10/LoFIQWXhw5nsYld.png" alt="image.png">
+为了实现这一点，CephFS 的三个主要参与方协作：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>在 read-after-write 语义中的职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>客户端（CephFS Client）</strong></td>
+<td>本地缓存数据和元数据，通过 MDS/OSD 获取 capability（caps）来判断能否直接读写或需要同步；在必要时向其他客户端发 <strong>cap recall/invalidate</strong> 消息，确保它们的缓存失效。</td>
+</tr>
+<tr>
+<td><strong>MDS（Metadata Server）</strong></td>
+<td>掌握文件和目录的“所有权/租约”，用 caps 控制客户端的缓存权限，当一个客户端写数据后，MDS 会通知持有读缓存的其他客户端回收或刷新对应数据。</td>
+</tr>
+<tr>
+<td><strong>OSD（Object Storage Daemon）</strong></td>
+<td>存储实际数据对象，保证单对象写入的原子性与顺序性（RADOS 层）；当客户端写入 OSD 完成后，RADOS 保证后续读能看到最新版本。</td>
+</tr>
+<tr>
+<td><strong>存储池（RADOS Pool）</strong></td>
+<td>提供多副本或纠删码存储，并在对象级别实现一致性，保证 OSD 写成功后数据在整个存储池是可见的。</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="31-客户端缓存控制capabilities-caps">3.1 客户端缓存控制：capabilities (caps)</h3>
+<ul>
+<li>
+<p><strong>cap 是 MDS 发给客户端的一种“权利票”</strong>，表示某客户端在一段时间内可对某个 inode 执行哪些操作（读缓存、写缓存、元数据修改等）。</p>
+</li>
+<li>
+<p>如果客户端 A 打开文件并写入，MDS 会让它持有 <strong>写 cap（WR cap）</strong>。</p>
+</li>
+<li>
+<p>当另一个客户端 B 也来读这个文件时，MDS 会：</p>
+<ol>
+<li>
+<p>检查 B 是否有最新数据缓存，如果没有则允许读；</p>
+</li>
+<li>
+<p>如果 A 还持有写 cap，那么 MDS 会发送 <strong>cap recall</strong> 给 A，要求它刷回脏数据到 OSD，并把写 cap 降级为只读 cap；</p>
+</li>
+<li>
+<p>当数据刷回并确认后，B 再去 OSD 读到的就是最新数据。</p>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p><strong>重点</strong>：cap recall 是 Ceph 保证多客户端缓存一致性的核心机制，避免脏缓存被其他客户端读到。</p>
+</blockquote>
+<hr>
+<h3 id="32-数据写入路径client--osd">3.2 数据写入路径：Client → OSD</h3>
+<ul>
+<li>
+<p>客户端写数据后，数据会被分片映射到对应对象（RADOS object）中，通过 CRUSH 算法定位 OSD。</p>
+</li>
+<li>
+<p>OSD 内部的 RADOS 层保证：</p>
+<ul>
+<li>
+<p>单对象的写是 <strong>原子可见</strong> 的；</p>
+</li>
+<li>
+<p>写请求按到达顺序应用，后写入的内容对后续读可见；</p>
+</li>
+<li>
+<p>多副本模式下，必须大多数（或全部）副本确认写入后才返回成功给客户端。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>当客户端 write 调用返回时，意味着 OSD 集群已经确认这个数据在存储池中可用，因此下一次读就会拿到新数据（无论是本客户端还是其他客户端）。</p>
+</li>
+</ul>
+<hr>
+<h3 id="33-元数据协同mds-协调数据与元数据一致性">3.3 元数据协同：MDS 协调数据与元数据一致性</h3>
+<ul>
+<li>
+<p>写文件时不仅要更新数据，还可能要更新元数据（如 mtime、size、blocks）。</p>
+</li>
+<li>
+<p>MDS 负责把这些元数据更新与数据写回进行协调：</p>
+<ol>
+<li>
+<p>客户端写完数据 → 发送元数据更新 RPC 给 MDS；</p>
+</li>
+<li>
+<p>MDS 根据 inode 的 caps 状态决定是否立即同步元数据到所有客户端；</p>
+</li>
+<li>
+<p>当需要保证 read-after-write 时，MDS 会确保在允许其他客户端读之前，数据和元数据已经一致。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>对于纯数据更新（不涉及扩展文件长度），MDS 可以延迟元数据刷新以优化性能，但依然会保证数据可见性。</p>
+</li>
+</ul>
+<hr>
+<h3 id="34-存储池rados-pool保证最终一致性">3.4 存储池（RADOS Pool）保证最终一致性</h3>
+<ul>
+<li>
+<p>在 RADOS 层，每个对象有一个版本号（epoch/objver）。</p>
+</li>
+<li>
+<p>当 OSD 收到写请求时，会更新对象版本，并在返回响应时告诉客户端最新版本号。</p>
+</li>
+<li>
+<p>后续任何客户端请求读取该对象时，都会根据这个版本号拿到最新的数据（除非请求特意要求旧版本）。</p>
+</li>
+<li>
+<p>这样，跨客户端的数据一致性在对象级别就被 RADOS 层锁死</p>
+</li>
+</ul>
+<h4 id="35-代码实现">3.5 代码实现</h4>
+<p><img src="https://s2.loli.net/2025/08/10/B8Sz6JtYWxboXME.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>关键函数 / 文件路径</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Client::ll_open()</code> → <code>MDCache::issue_cap()</code></td>
+<td>打开文件并从 MDS 获取写 cap</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Client::write()</code> → <code>librados::aio_write()</code> → OSD 写入路径</td>
+<td>写数据到对象并多副本确认</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>MDCache::handle_open()</code></td>
+<td>MDS 接收 B 的 open 请求</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>Client::handle_cap_recall()</code></td>
+<td>MDS 向 A 发起 cap recall</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>Client::flush()</code> → <code>librados::aio_write_full()</code></td>
+<td>A flush 脏数据到 OSD</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>MDS::handle_cap_ack()</code> → <code>MDCache::downgrade_cap()</code></td>
+<td>MDS 确认 flush 并降级 A 的 cap</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>MDCache::issue_cap()</code>（read）→ <code>librados::read()</code></td>
+<td>给 B 分配读 cap 并从 OSD 读最新数据</td>
+</tr>
+<tr>
+<td>7</td>
+<td>OSD 返回已提交数据</td>
+<td>保证 read-after-write 一致性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="23-分离式元数据架构">2.3 分离式元数据架构</h2>
+<h3 id="231-代表产品">2.3.1 代表产品</h3>
+<ul>
+<li>JuiceFS</li>
+<li>3fs</li>
+<li>CFS</li>
+</ul>
+<h3 id="232-元数据结构特点">2.3.2 元数据结构特点</h3>
+<p>这个方法论具体的做法是将复杂系统进行分层，
+每一层次专注于解决一个领域的问题做到极致，
+最后叠加不同层次实现完整的功能。</p>
+<p>这在计算机领域是屡试不爽的套路。</p>
+<p>近年数据库领域流行的存储计算分离架构，都是最好的佐证</p>
+<ul>
+<li>
+<p>数据库层：实现数据的持久化的同时提供分布式事务能力；</p>
+</li>
+<li>
+<p>元数据代理层：这一层对外提供 POSIX 或 HDFS 接口，对内将层级命名空间的数据转换成 Table 系统中的记录，处理时利用事务保证操作的正确性。</p>
+</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia35VyDqfzZ3Vq9BxZTslrFbWxjibP3JUzHvDtBeoeppIFYicdzsl2OABK2Iw8u3z44EJrNwjqlA9uFCg/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="JuiceFS"></p>
+<ul>
+<li>JuiceFS 的元数据管理是完全独立于数据存储的，这意味着 JuiceFS 可以支持大规模数据存储和快速文件系统操作，</li>
+<li>例如 Redis、TiKV、MySQL等。这种架构的设计使得 JuiceFS 可以通过共享同一个数据库和对象存储实现强一致性保证的分布式文件系统。</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/08/10/1nio9FBer6b3IJ5.png" alt="具体案例"></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/DMCnyCrhia35VyDqfzZ3Vq9BxZTslrFbWr2EZUopEGTEDhy4vWLgKOJiamyibTfPiaqWZStua8jIibUNXsoYn8ciaJsA/640?wx_fmt=jpeg&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="DeepSeek 3FS "></p>
+<p>DeepSeek 3FS 选择 ​<strong>​FoundationDB​</strong>​ 作为元数据服务的核心存储引擎，其设计目标是通过分布式事务性键值存储实现 ​<strong>​强一致性元数据管理​</strong>​，同时结合 RDMA 网络和用户态零拷贝技术优化性能。</p>
+<h3 id="233-优点">2.3.3 优点</h3>
+<ul>
+<li>复杂功能让别人实现，代码和运维简单</li>
+<li>性能：延迟</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​系统​</strong>​</th>
+<th>元数据存储</th>
+<th>一致性模型</th>
+<th>典型场景</th>
+<th>延迟（μs）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​3FS​</strong>​</td>
+<td>FoundationDB</td>
+<td>Serializable</td>
+<td>AI 训练/推理</td>
+<td>4-15</td>
+</tr>
+<tr>
+<td>​<strong>​CephFS​</strong>​</td>
+<td>内置 MDS</td>
+<td>最终一致性</td>
+<td>通用存储</td>
+<td>20-100</td>
+</tr>
+<tr>
+<td>​<strong>​JuiceFS​</strong>​</td>
+<td>Redis/TiKV</td>
+<td>会话一致性</td>
+<td>对象存储</td>
+<td>10-50</td>
+</tr>
+<tr>
+<td>​<strong>​HDFS​</strong>​</td>
+<td>ZooKeeper</td>
+<td>最终一致性</td>
+<td>大数据批处理</td>
+<td>50-200</td>
+</tr>
+</tbody>
+</table>
+<h3 id="234-疑问1-文件系统元数据可以存储kv吗">2.3.4 疑问1 文件系统元数据可以存储kv吗？</h3>
+<h3 id="3fs-元数据服务架构设计"><strong>3FS 元数据服务架构设计​</strong></h3>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/DMCnyCrhia35VyDqfzZ3Vq9BxZTslrFbWnnbbCg23IM8lCRMctMbJn4v6ia9uzD5eibVCpR7s6yTNr0T8VYVN5ckw/640?wx_fmt=jpeg&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="">​</p>
+<h4 id="1-键值模型映射">​<strong>​(1) 键值模型映射​</strong>​</h4>
+<ul>
+<li>
+<p>​<strong>​目录树编码​</strong>​</p>
+<p>将 POSIX 目录结构转换为键值对，支持高效范围查询</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​键格式​</strong>​</th>
+<th>​<strong>​值内容​</strong>​</th>
+<th>​<strong>​用途​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DENT:{parent_inode}:{name}</code></td>
+<td><code>child_inode</code></td>
+<td>目录项查询</td>
+</tr>
+<tr>
+<td><code>INOD:{inode}</code></td>
+<td><code>{size, mode, blocks...}</code></td>
+<td>文件属性获取</td>
+</tr>
+<tr>
+<td><code>CHUNK:{inode}:{offset}</code></td>
+<td><code>chunk_id</code></td>
+<td>数据块定位</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>​</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="c1">// 创建文件时生成键值对（src/meta/meta_service.cc）
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">create_file</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">parent_inode</span><span class="p">,</span> <span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="n">split_path</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">dent_key</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&#34;DENT:{}:{}&#34;</span><span class="p">,</span> <span class="n">parent_inode</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">inode_key</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&#34;INOD:{}&#34;</span><span class="p">,</span> <span class="n">generate_inode_id</span><span class="p">());</span>
+
+    <span class="c1">// 事务写入
+</span><span class="c1"></span>    <span class="n">foundationdb</span><span class="o">::</span><span class="n">Transaction</span> <span class="n">txn</span><span class="p">;</span>
+    <span class="n">txn</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">dent_key</span><span class="p">,</span> <span class="n">inode_key</span><span class="p">);</span>
+    <span class="n">txn</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">inode_key</span><span class="p">,</span> <span class="n">inode_metadata</span><span class="p">);</span>
+    <span class="n">txn</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>JuiceFS 的文件系统映射结构</p>
+<p>JuiceFS 使用<strong>象存储 + 元数据引擎（如 Redis / RocksDB / TiKV）</strong> 的混合架构：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件系统内容</td>
+<td>映射到 KV 系统的方式（键Key → 值Value）</td>
+</tr>
+<tr>
+<td><code>/a/b/c.txt</code> 文件元数据</td>
+<td><code>inode:&lt;inode_id&gt;</code> → {mode, uid, gid, timestamps, size&hellip;}</td>
+</tr>
+<tr>
+<td>目录结构</td>
+<td><code>parent:&lt;inode_id&gt;</code> → [child_inode1, child_inode2, &hellip;]</td>
+</tr>
+<tr>
+<td>文件数据块</td>
+<td><code>data:&lt;inode_id&gt;:&lt;block_index&gt;</code> → 二进制数据块</td>
+</tr>
+<tr>
+<td>路径索引</td>
+<td><code>path:/a/b/c.txt</code> → inode_id</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://static001.geekbang.org/infoq/70/70f1b7fe560a4aa74fe086826af7e4e1.png" alt="">
+本文的主要目的是解读百度沧海·存储团队发表于 EuroSys 2023 的论文《CFS: Scaling Metadata Service for Distributed File System via Pruned Scope of Critical Sections》，论文全文可以在 <a href="https://dl.acm.org/doi/10.1145/3552326.3587443">https://dl.acm.org/doi/10.1145/3552326.3587443</a></p>
+<h3 id="235-疑问2-deepseek-3fs-选择-foundationdb而非-tikv">2.3.5 疑问2 DeepSeek 3FS 选择 ​<strong>​FoundationDB​</strong>​？而非 TiKV</h3>
+<p><strong>Meta Service</strong> 提供元数据服务，采用存算分离设计</p>
+<ul>
+<li>
+<p>元数据持久化存储到 FoundationDB 中，FoundationDB 同时提供事务机制支撑上层实现文件系统目录树语义；</p>
+</li>
+<li>
+<p>Meta Service 的节点本身是无状态、可横向扩展的，负责将 POSIX 定义的目录树操作翻译成 FoundationDB 的读写事务来执行。</p>
+</li>
+<li>
+<p>整个请求路径上端到端没有任何缓存而是采用及其简单的事务配合以coroutine调度来满足高吞吐</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>FoundationDB</th>
+<th>TiKV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>设计定位</strong></td>
+<td>分布式事务性键值存储，强一致性</td>
+<td>分布式事务性KV存储，主要服务于 TiDB</td>
+</tr>
+<tr>
+<td><strong>事务模型</strong></td>
+<td>强事务（ACID），多键跨范围事务</td>
+<td>分布式事务，基于 Percolator 模型</td>
+</tr>
+<tr>
+<td><strong>数据模型</strong></td>
+<td>纯 KV，支持多版本事务</td>
+<td>KV，支持 MVCC 和事务</td>
+</tr>
+<tr>
+<td><strong>开发语言</strong></td>
+<td>C++</td>
+<td>Rust</td>
+</tr>
+<tr>
+<td><strong>开源时间</strong></td>
+<td>2013年开源，设计较早</td>
+<td>2016年左右开源，后起之秀</td>
+</tr>
+<tr>
+<td><strong>社区和生态</strong></td>
+<td>小众，闭源多年后开源，生态相对小</td>
+<td>活跃，TiDB 生态核心组件</td>
+</tr>
+</tbody>
+</table>
+<h4 id="为什么选-foundationdb-而非-tikv">为什么选 FoundationDB 而非 TiKV？</h4>
+<h4 id="1-事务模型的差异与成熟度">1. 事务模型的差异与成熟度</h4>
+<ul>
+<li>FoundationDB 的事务模型设计非常严谨，事务隔离和一致性强，尤其擅长处理<strong>复杂跨多键事务</strong>。</li>
+<li>TiKV 虽然也支持分布式事务，但早期实现对复杂跨范围事务支持有限，且针对 TiDB 设计优化更多，针对通用事务灵活度略低。</li>
+<li>3FS 需要强事务保证，FoundationDB 能提供更加稳健的事务保障。</li>
+</ul>
+<h4 id="2-一致性和容错保证">2. 一致性和容错保证</h4>
+<ul>
+<li>FoundationDB 在分布式一致性算法（Paxos）和故障恢复方面经验丰富，设计成熟。</li>
+<li>TiKV 虽采用 Raft 算法，也保证一致性，但设计目标更聚焦数据库场景，某些极端一致性需求支持尚在演进。</li>
+</ul>
+<h4 id="3-架构设计和接口差异">3. 架构设计和接口差异</h4>
+<ul>
+<li>
+<p>FoundationDB 提供简单且强大的多版本键值事务接口，易于构建复杂系统如文件系统。</p>
+</li>
+<li>
+<p>TiKV 的接口更适合 SQL 层服务，作为 TiDB 的存储引擎，缺少一些通用分布式事务的特性。</p>
+</li>
+</ul>
+<h4 id="4-生态和使用历史">4. 生态和使用历史</h4>
+<ul>
+<li>FoundationDB 在构建复杂分布式系统方面已有成功案例，且项目稳定，适合长期依赖。</li>
+<li>TiKV 虽活跃，但更依赖 TiDB 生态，独立使用时部分功能仍在完善。</li>
+</ul>
+<h3 id="235-疑问3-为什么-juicefs-能用-tikvceph-不行">2.3.5 疑问3 为什么 JuiceFS 能用 TiKV，Ceph 不行？</h3>
+<ul>
+<li>
+<p><strong>TiKV</strong>：一个分布式、强一致性、支持多版本并发控制（MVCC）的事务性键值存储系统，底层基于 RocksDB 实现。</p>
+</li>
+<li>
+<p><strong>POSIX inode</strong>：文件系统中的一个重要抽象，用来描述文件的元数据和标识。支持复杂的文件系统语义，比如：</p>
+</li>
+<li>
+<p>多硬链接（同一个 inode 多个路径）</p>
+</li>
+<li>
+<p>目录层级结构（父子关系）</p>
+</li>
+<li>
+<p>权限继承、时间戳维护</p>
+</li>
+<li>
+<p>原子重命名、目录遍历等操作</p>
+</li>
+</ul>
+<p>JuiceFS 完成了 文件系统 → KV 映射</p>
+<p>Ceph基于omap方式，虽然kv但是没有直接一</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对比项</td>
+<td>Ceph</td>
+<td>JuiceFS</td>
+</tr>
+<tr>
+<td>元数据结构</td>
+<td>面向对象层级结构（如 inode、dentry）</td>
+<td>统一建模为 Key-Value</td>
+</tr>
+<tr>
+<td>依赖的特性</td>
+<td>POSIX 强一致性、事务、关系型语义</td>
+<td>松耦合，弱一致性可接受，围绕 KV 设计</td>
+</tr>
+<tr>
+<td>元数据存储引擎</td>
+<td>自研 MDStore / BlueStore（用 RocksDB）</td>
+<td>可配置，支持 Redis、TiKV、MySQL、RocksDB</td>
+</tr>
+<tr>
+<td>与 TiKV 匹配程度</td>
+<td>差，难以迁移元语义</td>
+<td>好，天然为分布式 KV 设计</td>
+</tr>
+</tbody>
+</table>
+<p>JuiceFS 元数据结构设计图</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">                 ┌──────────────────────────────┐
+                 │           KV Store           │  &lt;== Redis / TiKV / MySQL / RocksDB
+                 └──────────────────────────────┘
+                           ▲
+        ┌────────────┬─────┼──────────┬────────────────┐
+        │            │     │          │                │
+┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────────┐
+│ inode:&lt;id&gt; │ │ dentry:... │ │ chunk:...  │ │ xattr:&lt;inode&gt;  │
+└────────────┘ └────────────┘ └────────────┘ └────────────────┘
+    属性信息       目录结构       数据分片       扩展属性
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>Ceph 的元数据结构图（简化）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">                      ┌────────────┐
+                      │   Client   │
+                      └────▲───────┘
+                           │
+                   ┌───────┴────────┐
+                   │     MDS        │
+                   └──────▲────────┘
+                          │
+            ┌─────────────┴─────────────┐
+            │  RocksDB / MDStore local  │   (不适合分布式 KV 引擎)
+            └───────────────────────────┘
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="236-疑问3-ceph-在rocksdb层怎么key-value-映射">2.3.6 疑问3 Ceph 在RocksDB层怎么key value 映射</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>JuiceFS</th>
+<th>Ceph (Omap)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>底层存储</strong></td>
+<td>纯 KV 存储（Redis/RocksDB/S3）</td>
+<td>RADOS 对象 + Omap (对象内的 KV 集合)</td>
+</tr>
+<tr>
+<td><strong>元数据映射</strong></td>
+<td>文件系统元数据直接映射成 KV 键值对</td>
+<td>元数据存在对应对象的 Omap 中</td>
+</tr>
+<tr>
+<td><strong>数据与元数据</strong></td>
+<td>元数据与数据完全分离，数据放对象存储</td>
+<td>元数据和数据是两个不同对象</td>
+</tr>
+<tr>
+<td><strong>一致性保证</strong></td>
+<td>依赖底层 KV 事务支持</td>
+<td>依赖 RADOS 提供的原子批量操作</td>
+</tr>
+<tr>
+<td><strong>扩展性</strong></td>
+<td>利用 KV 存储扩展性</td>
+<td>利用 RADOS 集群扩展能力</td>
+</tr>
+<tr>
+<td><strong>访问路径</strong></td>
+<td>KV 存储访问路径清晰简单</td>
+<td>通过对象访问，Omap 为对象附加结构</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>云原生、轻量级文件系统</td>
+<td>大规模分布式存储系统，兼顾对象存储与文件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>JuiceFS元数据与数据完全分离，数据放对象存储</li>
+<li>Ceph  元数据和数据是两个不同对象，对象的 Omap 中</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>​<strong>​JuiceFS​</strong>​</th>
+<th>​<strong>​Ceph​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​完全解耦的元数据引擎​</strong>​  <!-- raw HTML omitted -->• 支持Redis、TiKV、MySQL等多种独立元数据引擎  <!-- raw HTML omitted -->• 元数据操作通过标准键值接口（GET/SET/DELETE）实现  <!-- raw HTML omitted -->• 元数据与存储层完全分离，可独立扩展</td>
+<td>​<strong>​集成式元数据管理​</strong>​  <!-- raw HTML omitted -->• 元数据存储在OSD的OMAP结构中  <!-- raw HTML omitted -->• 依赖MDS（元数据服务器）集中管理目录树和文件属性  <!-- raw HTML omitted -->• 元数据与存储层（RADOS）强耦合</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Ceph Omap 的缺点（特别是在云原生环境下）
+<strong>复杂度较高，维护成本大</strong></p>
+<ul>
+<li>
+<p>Omap 作为 RADOS 对象上的内嵌 KV 集合，实现和维护复杂度较高。【表的概念】</p>
+</li>
+<li>
+<p>需要管理对象的生命周期、版本、事务，系统设计和调试难度大。</p>
+</li>
+<li>
+<p>云环境更倾向于轻量、易用、易扩展的系统，Ceph的复杂性成为负担。</p>
+</li>
+</ul>
+<h2 id="三细节先正确在优化">三、细节：先正确，在优化</h2>
+<h2 id="31-细节从多线程到分布式到文件系统推到出-posix-语义这个最少知识点满足线性一致性">3.1 细节：从多线程到分布式到文件系统推到出 POSIX 语义这个最少知识点，满足线性一致性。</h2>
+<blockquote>
+<p>本文目标是：如何在不升级硬件的前提下,小文件并发读写性能提升十倍
+但是上来不是考虑优化，而是考虑正确性，为了保证正确性，我做如下分析,</p>
+</blockquote>
+<h4 id="单机-多线程保证一致性">单机 多线程保证一致性：</h4>
+<ul>
+<li>互斥锁，自旋锁，</li>
+<li>C++ 11 引入了标准的内存模型，C++ 标准不依赖于任何特定的编译器，操作系统，或 CPU。它依赖于抽象机（abstract machine）</li>
+<li>C++11标准中提供了6种memory order</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">enum</span> <span class="nc">memory_order</span> <span class="p">{</span>
+   <span class="n">memory_order_relaxed</span><span class="p">,</span> 
+   <span class="c1">//Relaxed ordering 仅仅保证load()和store()是原子操作，
+</span><span class="c1"></span>   <span class="c1">// 除此之外，不提供任何跨线程的同步
+</span><span class="c1"></span>   <span class="c1">//程序计数器是一种典型的应用场景
+</span><span class="c1"></span>   <span class="n">memory_order_consume</span><span class="p">,</span>
+   <span class="n">memory_order_acquire</span><span class="p">,</span>
+   <span class="n">memory_order_release</span><span class="p">,</span>
+   <span class="c1">//acquire和release也必须放到一起使用。 
+</span><span class="c1"></span>   <span class="c1">//release和acquire构成了synchronize-with关系
+</span><span class="c1"></span>   <span class="n">memory_order_acq_rel</span><span class="p">,</span>
+   <span class="n">memory_order_seq_cst</span> <span class="c1">//多线程看的顺序一致
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="分布式数据库">分布式数据库</h4>
+<ul>
+<li>假设从分布式系统只写一个值保证一致性</li>
+<li>采用2pc，3cp raft，paxos等协议</li>
+<li>成为OB贡献者（4）：从单点到多节点 i++并发方案</li>
+</ul>
+<p><img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1726543235884.png" alt=""></p>
+<p><img src="https://obcommunityprod.oss-cn-shanghai.aliyuncs.com/prod/blog/2024-09/1726543331323.png" alt=""></p>
+<h5 id="分布式文件系统">分布式文件系统</h5>
+<ul>
+<li>最后提到POSIX 语义如何保证正确性。这个最后因此线索</li>
+</ul>
+<h2 id="32-为了保证-posix语义-线程一致性-不同系统是如何实现的">3.2 为了保证 POSIX语义 线程一致性 不同系统是如何实现的</h2>
+<h4 id="疑问为什么原子计数不保证都读正确性">疑问：为什么原子计数不保证都读正确性？</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">cnt</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">threadA</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">1000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">cnt</span><span class="p">.</span><span class="n">fetch_add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">memory_order_relaxed</span><span class="p">);</span>
+    <span class="c1">// cnt对主内存的写可能延迟了，还没立即同步
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">threadB</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">cnt</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">memory_order_relaxed</span><span class="p">);</span>
+    <span class="c1">// 这里读的时候，可能还没看到threadA最新的写
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">val</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>threadA加了很多次，理论上<code>cnt</code> 应该是1000。</p>
+</li>
+<li>
+<p>但 threadB 的 <code>load</code> 可能读到小于1000的值，因为写没同步过去</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写</td>
+<td>原子性：写入不会丢失，累加正确</td>
+<td>多线程加计数不会出错</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读</td>
+<td>同步性：读到的是最新写入值？</td>
+<td>可能读到过期旧值（延迟）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="32-ceph小文件优化">3.2 Ceph小文件优化</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>优点</th>
+<th>缺点</th>
+<th>典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MDS Cap 管理</strong></td>
+<td>减少权限请求次数，合并写操作</td>
+<td>权限失效复杂，写缓存同步难</td>
+<td>多写操作，频繁修改小文件</td>
+</tr>
+<tr>
+<td><strong>ObjectCacher</strong></td>
+<td>缓存热点数据，降低访问延迟</td>
+<td>内存占用高，缓存一致性复杂</td>
+<td>小文件频繁读写</td>
+</tr>
+<tr>
+<td><strong>Writeback/Delayed Sync</strong></td>
+<td>减少IO次数，提高写响应速度</td>
+<td>数据持久性有延迟，崩溃恢复复杂</td>
+<td>写操作高峰期，合并批量写入</td>
+</tr>
+</tbody>
+</table>
+<h1 id="1-mds-cap-管理客户端写权限管理">1. MDS Cap 管理（客户端写权限管理）</h1>
+<h2 id="举例说明">举例说明</h2>
+<ul>
+<li>小明的客户端要写一个小文件 <code>file.txt</code>，先向 MDS 申请写权限（write cap）。</li>
+<li>MDS 授权给小明写权限后，小明客户端在本地先缓存写操作，不必每次写都立即同步到后端。</li>
+<li>小明可以多次写入同一个文件，这些写操作合并成一批，最后一次性发给后端存储（RADOS）。</li>
+<li>这样减少了客户端和 MDS 之间频繁通信，提升写性能。</li>
+</ul>
+<h2 id="优点">优点</h2>
+<ul>
+<li>减少了频繁向 MDS 请求权限的网络开销。</li>
+<li>写操作可以本地合并缓存，避免多次小数据同步。</li>
+<li>提升写性能和响应速度。</li>
+</ul>
+<h2 id="缺点">缺点</h2>
+<ul>
+<li>
+<p>需要保证写权限失效或回收时数据一致，增加系统复杂度。</p>
+</li>
+<li>
+<p>在写权限丢失或者网络异常时，需要处理写缓存的同步和回滚，设计较复杂。</p>
+</li>
+</ul>
+<hr>
+<h1 id="2-objectcacher对象缓存">2. ObjectCacher（对象缓存）</h1>
+<h2 id="举例说明-1">举例说明</h2>
+<ul>
+<li>
+<p>客户端频繁读取或写入小文件 <code>file.txt</code> 的数据和元数据。</p>
+</li>
+<li>
+<p>ObjectCacher 会在客户端或 MDS 内存中缓存该文件对应的对象数据和元数据。</p>
+</li>
+<li>
+<p>下一次访问时直接从缓存拿，避免访问底层磁盘或网络调用，提高响应速度。</p>
+</li>
+</ul>
+<h2 id="优点-1">优点</h2>
+<ul>
+<li>
+<p>显著降低对底层存储的访问频率，提升小文件读写性能。</p>
+</li>
+<li>
+<p>缓存热点数据，减少延迟。</p>
+</li>
+<li>
+<p>减轻后端存储系统压力。</p>
+</li>
+</ul>
+<h2 id="缺点-1">缺点</h2>
+<ul>
+<li>
+<p>占用较多内存资源。</p>
+</li>
+<li>
+<p>需要处理缓存一致性，复杂度提升。</p>
+</li>
+<li>
+<p>热点缓存失效时可能会出现短暂性能下降。</p>
+</li>
+</ul>
+<hr>
+<h1 id="3-writeback--delayed-sync写回与延迟同步">3. Writeback / Delayed Sync（写回与延迟同步）</h1>
+<h2 id="举例说明-2">举例说明</h2>
+<ul>
+<li>
+<p>用户写入小文件内容时，Ceph客户端不立即写到底层存储。</p>
+</li>
+<li>
+<p>而是先写入本地或MDS的写缓存，写操作“标记”后延迟一段时间批量同步到底层存储。</p>
+</li>
+<li>
+<p>多个小写操作合并成一个大批次提交，减少网络和磁盘IO。</p>
+</li>
+</ul>
+<h2 id="优点-2">优点</h2>
+<ul>
+<li>
+<p>减少了小文件写入时的网络和磁盘IO次数。</p>
+</li>
+<li>
+<p>写入操作更快，客户端响应时间短。</p>
+</li>
+<li>
+<p>更高效利用系统带宽和IO资源。</p>
+</li>
+</ul>
+<h2 id="缺点-2">缺点</h2>
+<ul>
+<li>
+<p>数据持久性会有延迟（写入未同步前，如果系统崩溃，可能丢失部分数据）。</p>
+</li>
+<li>
+<p>需要设计机制保证写回时数据一致性和崩溃恢复。</p>
+</li>
+</ul>
+<h2 id="历史文章">历史文章</h2>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/qdopUgZdZZKT_ufBDVuCWw">企业案例:分布式存储产品架构性能优化总结</a></li>
+<li><a href="https://mp.weixin.qq.com/s/SCs5tIqhxqFL7OFA3Si4wQ">知识地图&ndash;块存储</a></li>
+<li><a href="https://mp.weixin.qq.com/s/wynWnvKSc6SulOKp1CYPGQ">Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）</a></li>
+<li><a href="https://mp.weixin.qq.com/s/O4wWz9UBw1sXgvCtTk6GyQ">【项目实践】IO-uring助力TiKV提升1倍写性能</a></li>
+<li><a href="https://mp.weixin.qq.com/s/d0x2Lx_rKjn_m62b9MQ3Jg">浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能</a></li>
+<li><a href="https://mp.weixin.qq.com/s/sSJrLgdCouHBLuj2NUh_WQ">【翻译】Ext4 文件系统中大型目录结构的最佳实践</a></li>
+<li><a href="https://mp.weixin.qq.com/s/7e6rCizeY0NVeVaZn2Ygfg">面试官:从三万英尺角度谈一下Ceph架构设计(1)</a></li>
+<li><a href="https://mp.weixin.qq.com/s/fyISV_UjNBaF2ZMBZxJoDw">Ceph分布式锁的设计哲学与工程实践</a></li>
+<li><a href="https://mp.weixin.qq.com/s/5stFGdvv4dwWYI-jgtMEXw">慢盘问题：从青铜到王者的处理思路</a></li>
+<li><a href="https://mp.weixin.qq.com/s/kSHmCsNtpYogp-8E_r7CPw">深入理解文件系统:文件IO的一生</a></li>
+<li>分布式(存储)文件系统设计要点与实践之愚见</li>
+<li>一种数据readdir方法、系统、设备及计算机 <a href="https://patents.google.com/patent/CN110896415A/zh">https://patents.google.com/patent/CN110896415A/zh</a></li>
+<li>readdir性能优化技巧有哪些</li>
+<li>如何优化Linux readdir性能</li>
+<li>SOSP19' Ceph 的十年经验总结：文件系统是否适合做分布式文件系统的后端</li>
+<li>如何将千亿文件放进一个文件系统，EuroSys‘23 CFS 论文背后的故事</li>
+<li>论文 [https://dl.acm.org/doi/10.1145/3552326.3587443</li>
+<li>Curve 如何演进 (1)：从 EuroSys'23 CFS 论文看文件系统</li>
+<li><a href="https://mp.weixin.qq.com/s/cY597McVNwdRomQ-8Av_ww">实践案例03:HDFS如何解决超大规模流式数据读写</a></li>
+<li><a href="https://mp.weixin.qq.com/s/cTE9nHiiKOfuEhOOcUgQjg">Google文件系统为了极简设计，舍去哪些复杂实</a></li>
+<li><a href="https://mp.weixin.qq.com/s/RIFGdTjnvq-e45QJADBkKQ">Lustre 与 JuiceFS ：架构设计、文件分布与特性比较</a></li>
+<li><a href="https://mp.weixin.qq.com/s/CzHlXObmojUPA2cyh92-mw">【翻译】Crimson:用于多核可扩展性的下一代 Ceph OSD</a></li>
+<li>Ceph: A Scalable, High-Performance Distributed File System</li>
+<li>3FS Meta Service源码剖析</li>
+<li>FoundationDB 最佳实践</li>
+<li>从 CephFS 到 JuiceFS：同程旅行亿级文件存储平台构建之路</li>
+<li>C++ 并发编程（从C++11到C++17）</li>
+<li>现代C++并发编程教程</li>
+<li>C++并发编程实战 (第2版)</li>
+<li>深入理解C11/C++11内存模型(白嫖新知识~)</li>
+<li>成为OB贡献者（4）：从单点到多节点 i++并发方案</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">分布式文件系统</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos_1.0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">什么是顺序一致性，什么是分布式协议</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/">
+            <span class="next-text nav-default">从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

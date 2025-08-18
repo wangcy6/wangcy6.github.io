@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title> - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="一、背景 大家都知道，手写算法题是大厂面试的必考环节，俗称“压轴题”。 这就像游戏里打怪升级，遇到的第一个大BOSS—— 蓝色大头幽魂上线！不打过" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/leetcode/2025/template-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="一、背景 大家都知道，手写算法题是大厂面试的必考环节，俗称“压轴题”。 这就像游戏里打怪升级，遇到的第一个大BOSS—— 蓝色大头幽魂上线！不打过" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/leetcode/2025/template-1/" /><meta property="article:section" content="post" />
+
+
+
+<meta itemprop="name" content="">
+<meta itemprop="description" content="一、背景 大家都知道，手写算法题是大厂面试的必考环节，俗称“压轴题”。 这就像游戏里打怪升级，遇到的第一个大BOSS—— 蓝色大头幽魂上线！不打过">
+
+<meta itemprop="wordCount" content="1086">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="一、背景 大家都知道，手写算法题是大厂面试的必考环节，俗称“压轴题”。 这就像游戏里打怪升级，遇到的第一个大BOSS—— 蓝色大头幽魂上线！不打过"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title"></h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 0001-01-01 00:00 </span>
+        
+          <span class="more-meta"> 约 1086 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-题太多直接劝退">❶ 题太多，直接劝退</a></li>
+    <li><a href="#-题目类型太多刷题像走迷宫">❷ 题目类型太多，刷题像走迷宫</a></li>
+    <li><a href="#-刷题不是刷量而是刷熟">❸ 刷题不是刷“量”，而是刷“熟”</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="warn">
+      <p>【注意】最后更新于 <span class="timeago" datetime="0001-01-01T00:00:00" title="January 1, 0001">January 1, 0001</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="一背景">一、背景</h1>
+<p>大家都知道，<strong>手写算法题</strong>是大厂面试的必考环节，俗称“压轴题”。<br>
+这就像游戏里打怪升级，遇到的第一个大BOSS——</p>
+<p><strong>蓝色大头幽魂上线！不打过它，通关别想。</strong>。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/215144/1754441434080-c12d5b0f-40a7-43a5-a0a4-56b3bed63c03.png?x-oss-process=image%2Fformat%2Cwebp" alt="黑神话：悟空 大头怪"></p>
+<p>让我们来分析一下，<strong>为什么这个“幽魂BOSS(数据结构与算法)”如此难打？</strong></p>
+<p>明知道刷题很重要，<strong>却总是迟迟不动手</strong>；<br>
+哪怕一次次在面试里栽跟头，转身也没多少改变；
+是不是我太懒了？</p>
+<blockquote>
+<p>真相可能不是“懒”，而是想的太多：</p>
+</blockquote>
+<ul>
+<li>一看到题量上千，就觉得“这辈子也刷不完”</li>
+<li>做一道题一小时都没思路，挫败感直线上升</li>
+<li>刷题像在黑屋子里搬砖，短期看不到回报，脑子直接罢工</li>
+</ul>
+<p>于是我们的大脑自我保护，</p>
+<p>悄悄切换成“拖延模式”：“今天太累了，明天再战。”</p>
+<h2 id="-题太多直接劝退">❶ 题太多，直接劝退</h2>
+<p>一说“刷题”，很多人脑子里立马闪过 “LeetCode”</p>
+<p>一看题量就懵了：1千多道题，一个题做一周，刷完得 19 年……</p>
+<p>好家伙，还没开始面试，人已经先缴械投降了。</p>
+<p>干脆放弃，去摆个小摊，卖煎饼可能都比这快。</p>
+<h2 id="-题目类型太多刷题像走迷宫">❷ 题目类型太多，刷题像走迷宫</h2>
+<p>经验丰富的刷题党普遍认为：</p>
+<blockquote>
+<p>稳定掌握 LeetCode 前 150 题，能够总结出自己的解题思路和套路，才是高效准备 BAT 等大厂面试的关键。</p>
+</blockquote>
+<p>稍微有心从网络搜索以下，不少刷过1千题人总结 刷题路线，面试经典高频 150 题，让新手避免很多坑，甚至组建付费刷题小分队。解决大部分人问题</p>
+<ul>
+<li>代码随想录</li>
+<li>小林Coding</li>
+<li>宫水三叶</li>
+<li>花花酱</li>
+<li>Michelle
+现实很骨感。
+<strong>996程序员每天累成狗</strong>，就算开始刷题，也很难坚持三四个月。<br>
+更别说每天不同题目，不同的讨论 刷着刷着半途而废</li>
+</ul>
+<p>完整地址：https://docs.qq.com/sheet/DY1NwcGZjUXpYb01j?tab=oqi27u</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/215144/1754443382876-111493a1-e094-4221-b2f3-9abe2be58747.png?x-oss-process=image%2Fformat%2Cwebp" alt="这个是信奥赛的">
+<img src="https://pica.zhimg.com/v2-b9c3e4f8c0b1a740c55f7387f7d63774_r.jpg?source=1def8aca" alt="leetcode"></p>
+<h2 id="-刷题不是刷量而是刷熟">❸ 刷题不是刷“量”，而是刷“熟”</h2>
+<p>不少人分享过：<br>
+自己只刷了 50～60 题，就成功拿到了大厂 offer。</p>
+<p>秘诀其实就两个字：<strong>重复！</strong></p>
+<p>一个题刷三遍，也能刷出“150题”的水准。</p>
+<blockquote>
+<p>有没有可能，眼前那密密麻麻的 1000 道题，突然都消失了，只剩下一道？<br>
+你专心把这一道题反复练，练到极致：</p>
+</blockquote>
+<ul>
+<li>
+<p>第一次，做了一周</p>
+</li>
+<li>
+<p>第二次，花三天复刷</p>
+</li>
+<li>
+<p>第三次，三个小时搞定</p>
+</li>
+<li>
+<p>第四次，只用十分钟就能写出最优解</p>
+</li>
+</ul>
+<p>这才是真正的成长路线。<br>
+刷题，不是比谁刷得多，而是比谁刷得<strong>深、刷得熟</strong>。</p>
+<p>刷题选做什么准备吗？</p>
+<ul>
+<li>
+<p>准备一个白纸</p>
+</li>
+<li>
+<p>断网</p>
+</li>
+<li>
+<p>25 分钟倒计时</p>
+</li>
+</ul>
+<p><strong>画外音：25 分钟限制</strong></p>
+<ul>
+<li><strong>相信你足够知识</strong>：</li>
+</ul>
+<p>遇到不会，不需要急匆匆 打开浏览器搜索各种答案，</p>
+<p>你感觉难，别人感觉难，分析这个题目，最坏结果做不出来。不浪费大量时间使用浏览器搜索答案。</p>
+<ul>
+<li><strong>无条件支持</strong>：不要想着成为（对面是）大厂，名校，总监，领导 才可以做</li>
+</ul>
+<p>在这个赛道上，他们不是 你对手，他们根本不敢参与。他们没这个时间，只要你愿意就可以</p>
+<ul>
+<li><strong>先完成，在完美</strong>：千万不要想太复杂，用巧妙解法，复杂的思路就是不是好思路，直接放弃。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        0001-01-01 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/job/%E6%9C%AA%E5%91%BD%E5%90%8D/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default"></span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/leetcode/leetcod_easy/">
+            <span class="next-text nav-default"></span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

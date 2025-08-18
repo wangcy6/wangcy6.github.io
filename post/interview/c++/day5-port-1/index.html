@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>大厂面试题：如果判断一个服务是否可用 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/c&#43;&#43;/day5-port-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="大厂面试题：如果判断一个服务是否可用" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/c&#43;&#43;/day5-port-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-07-26T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-07-26T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="大厂面试题：如果判断一个服务是否可用">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-07-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-07-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2474">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="大厂面试题：如果判断一个服务是否可用"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">大厂面试题：如果判断一个服务是否可用</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-07-26 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 2474 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#面试官">面试官：</a></li>
+    <li><a href="#青铜0-3年经验">青铜（0-3年经验)</a>
+      <ul>
+        <li><a href="#提问1哪个服务core了">提问1：哪个服务core了</a></li>
+        <li><a href="#提问1-回答判断服务ceph-mds否debug版本">提问1 回答：判断服务ceph-mds否debug版本</a></li>
+        <li><a href="#提问2-请管理员安装ceph-mds-debug包不然我无法定位">提问2 ：请管理员安装ceph-mds debug包，不然我无法定位</a></li>
+      </ul>
+    </li>
+    <li><a href="#黄金3-5-年">黄金（3-5 年）</a>
+      <ul>
+        <li><a href="#提问3gdb调试代码-bt显示问号">提问3：GDB调试代码 bt显示问号？？</a></li>
+        <li><a href="#回答3">回答3</a></li>
+        <li><a href="#提问4-gdb-bt堆栈打印出来-还是找不要出原因怎么办">提问4： gdb bt堆栈打印出来 ，还是找不要出原因怎么办？</a></li>
+        <li><a href="#回答4">回答4：</a></li>
+      </ul>
+    </li>
+    <li><a href="#王者5-10">王者(5-10)：</a>
+      <ul>
+        <li><a href="#提问5">提问5：</a></li>
+        <li><a href="#回答5从被动解决到主动预防">回答5：从被动解决到主动预防</a></li>
+      </ul>
+    </li>
+    <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><a href="https://yuanbao.tencent.com/chat/naQivTmsDa/7cef0fae-3ef3-4507-93db-bf214bd32602">https://yuanbao.tencent.com/chat/naQivTmsDa/7cef0fae-3ef3-4507-93db-bf214bd32602</a></p>
+<h1 id="腾讯一面生产环境如何使用gdb调试release发行版本的程序">腾讯一面:生产环境如何使用gdb调试Release发行版本的程序？</h1>
+<p>大厂<!-- raw HTML omitted -->基础知识<!-- raw HTML omitted -->面试拆解第10篇文章</p>
+<p><strong>历史文章：</strong></p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>知识地图</th>
+<th>题目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>网络</td>
+<td><a href="https://mp.weixin.qq.com/s/XNoNfOkbesF8vXSqHj_XcA">判断一个端口是否可用</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>网络</td>
+<td><a href="https://mp.weixin.qq.com/s/f5IuDt89mP81ssnRKFN_Rg">腾讯一面：epoll不支持文件IO，kqueue怎么做到的</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>并发</td>
+<td><a href="https://mp.weixin.qq.com/s/VLyQjVdJLmPmRkZS0VZ90g">Redis 单线程为什这么快</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>数据结构</td>
+<td><a href="https://mp.weixin.qq.com/s/wXDT8BItZwMY0LVrHmphvQ">什么是跳表（Skip List）</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>分布式数据库</td>
+<td><a href="https://mp.weixin.qq.com/s/_S8eJ0KxtT5P0JhvSUJNlA">如何把一个文件系统目录树存储到数据库</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>并发</td>
+<td><a href="https://mp.weixin.qq.com/s/dsLFxyL-0IvxS0_oWy0upA">从一道面试题谈linux下fork的运行机制</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>并发</td>
+<td><a href="https://mp.weixin.qq.com/s/B7BbwTdfbojOXaGZvdy79Q">close-on-exec机制</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>数据结构</td>
+<td><a href="https://mp.weixin.qq.com/s/e1h5LURY5l7fNlGvcp925Q">LRU缓存</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>分布式数据库</td>
+<td><a href="https://mp.weixin.qq.com/s/mKdaPMEQEI7UxCSnA20e3g">什是线性一致性</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="面试官">面试官：</h2>
+<p>生产环境如何使用gdb调试发行Release版本程序？</p>
+<p>提示：</p>
+<ul>
+<li>
+<p><!-- raw HTML omitted -->先别急着直接回答问题,先提问在回答<!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>看看青铜(工作0-3年)到王者（工作5-10年)怎么提问的。</p>
+</li>
+</ul>
+<h2 id="青铜0-3年经验">青铜（0-3年经验)</h2>
+<p><img src="https://s2.loli.net/2025/08/12/wCrJAoa38xVHTqP.png" alt=""></p>
+<h3 id="提问1哪个服务core了">提问1：哪个服务core了</h3>
+<ul>
+<li>
+<p>一台物理机部署很多服务，我如何区分Coredump属于哪个服务？</p>
+</li>
+<li>
+<p>只有区分哪个服务才能执行 gdb ./my_program ./core.1234</p>
+</li>
+<li>
+<p><strong><code>/proc/sys/kernel/core_pattern</code></strong>：指定核心转储文件的路径和命名规则</p>
+</li>
+<li>
+<p><strong>刚罐装的操作系统</strong>  配置 可能指定 核心转储文件的路径 但是 <strong>命名规则</strong> 没有</p>
+</li>
+<li>
+<p>core生成的目录：/var/log/下，名为core.xxxx文件</p>
+</li>
+</ul>
+<h3 id="提问1-回答判断服务ceph-mds否debug版本">提问1 回答：判断服务ceph-mds否debug版本</h3>
+<p>首先进入/var/log目录下通过file命令查看是哪个程序出的core</p>
+<h4 id="file-core文件名">file &lt;core文件名&gt;</h4>
+<p>​示例输出​**​：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">/var/core/my_program.core: 
+ELF 64-bit LSB core file x86-64, 
+version 1 (SYSV), SVR4-style, 
+from &#39;/usr/bin/osd-xxxx&#39;
+</code></pre></td></tr></table>
+</div>
+</div><p>​<strong>​来源程序​</strong>​：<code>from '/usr/bin/osd-xxxxm'</code>
+显示生成 Core 文件的进程名称（即崩溃的程序名）。</p>
+<ul>
+<li>gdb /usr/bin/ceph-mds  core .370020 使用gdb进行调试</li>
+</ul>
+<h4 id="提示-file-usrbinceph-mds">提示： file usr/bin/ceph-mds</h4>
+<p>​<strong>​关键字段​</strong>​：<code>not stripped</code> 包含调试符号和调试信息。</p>
+<p><strong>关键字段​</strong>​：<code>stripped</code>表示符号表和调试信息已<strong>被移除。</strong></p>
+<p><strong>使用 <code>strip</code>剥离符号</strong></p>
+<p>剥离符号 strip hello</p>
+<p>//去掉符号表、调试节区，只保留运行所需部分</p>
+<p>再次查看文件信息 file hello</p>
+<p><code>hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=..., stripped</code></p>
+<table>
+<thead>
+<tr>
+<th><strong>状态​</strong>​</th>
+<th>​<strong>​用途​</strong>​</th>
+<th>​**​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​stripped​</strong>​</td>
+<td>生产环境部署，减小文件体积（约 20%-50%），提升运行效率</td>
+<td></td>
+</tr>
+<tr>
+<td>​<strong>​not stripped​</strong>​</td>
+<td>开发/测试环境调试，保留符号信息（如函数名、变量名）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="提问2-请管理员安装ceph-mds-debug包不然我无法定位">提问2 ：请管理员安装ceph-mds debug包，不然我无法定位</h3>
+<ul>
+<li>生产的 Release版本 开启 <code>-O2</code>/-O3 优化， 内联、循环展开、死代码消除、寄存器分配等全面启用</li>
+<li>运行速度通常比 Debug 版本快 <strong>3~50 倍</strong></li>
+<li>Release版本的程序 我根本无法定位core的原因？</li>
+<li><strong>请管理员给我安装 debug包</strong></li>
+</ul>
+<h4 id="提问2回答">提问2回答：</h4>
+<ul>
+<li>ceph 为例子 cmake工程 已经debug信息打包rpmp包</li>
+<li>直接rpm -ivh 安装xxxx即可</li>
+<li>例如 gdb 调试时候 自动加载同步下 usr/lib/debug/path/to/ceph-mds.debug</li>
+</ul>
+<p>也可以手工加载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp"># 启动 GDB 并加载符号
+</span><span class="cp"></span><span class="n">gdb</span> <span class="n">myapp_release</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">symbol</span><span class="o">-</span><span class="n">file</span> <span class="n">myapp_release</span><span class="p">.</span><span class="n">debug</span>  <span class="err">#</span> <span class="err">手动加载符号</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">set</span> <span class="n">debug</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">symbols</span>  <span class="err">#</span> <span class="err">设置符号搜索路径</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="黄金3-5-年">黄金（3-5 年）</h2>
+<h3 id="提问3gdb调试代码-bt显示问号">提问3：GDB调试代码 bt显示问号？？</h3>
+<p>我完全同意上面做法，</p>
+<p>但是不能在生产环境执行，安装debug符号 ，
+<!-- raw HTML omitted -->会导致整个服务响应 降低5-10倍<!-- raw HTML omitted -->，</p>
+<p>Ceph: A Journey to 1 TiB/s</p>
+<p>增加通过调整cmake 编译方式提升性能。</p>
+<ul>
+<li>
+<p>生产环境的core 迁移到 测试环境来定位</p>
+</li>
+<li>
+<p>但是 为什么 gdb  查看全部 ？？？怎么办？</p>
+</li>
+<li>
+<p>debug安装包 已经安装成功。</p>
+</li>
+</ul>
+<h3 id="回答3">回答3</h3>
+<h4 id="cpu类型">cpu类型</h4>
+<ul>
+<li>是不是cpu类型有关？debug版本对应cpu类型的</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+lscpu <span class="p">|</span> grep <span class="s1">&#39;Model name&#39;</span>
+Model name:  Intel<span class="o">(</span>R<span class="o">)</span> Xeon<span class="o">(</span>R<span class="o">)</span> Platinum 8255C CPU @ 2.50GHz
+
+Model name:  Hygon C86 <span class="m">7285</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><strong>海光（Hygon）CPU</strong></li>
+</ol>
+<ul>
+<li>海光是中国的国产CPU品牌，基于AMD Zen架构设计（其实是AMD的授权和定制版本）。
+<img src="https://s2.loli.net/2025/08/12/SBbA3tpfyKFomhJ.png" alt=""></li>
+</ul>
+<ol start="2">
+<li><strong>Intel CPU</strong></li>
+</ol>
+<p><img src="https://s2.loli.net/2025/08/12/jrwORX9WaSzBlEV.png" alt=""></p>
+<h4 id="栈破坏-汇编跟踪">栈破坏 汇编跟踪</h4>
+<ul>
+<li>不装逼</li>
+<li>面试时候不说因为我不懂。</li>
+</ul>
+<h3 id="提问4-gdb-bt堆栈打印出来-还是找不要出原因怎么办">提问4： gdb bt堆栈打印出来 ，还是找不要出原因怎么办？</h3>
+<ul>
+<li>查看寄存器状态 (gdb) info registers</li>
+<li>x/10x &amp;bind_var</li>
+<li>watch *0x7ffc12345678</li>
+<li>这命令全部了还是看不懂</li>
+</ul>
+<h3 id="回答4">回答4：</h3>
+<ul>
+<li>看代码，核心代码不懂，确实看不懂</li>
+</ul>
+<h2 id="王者5-10">王者(5-10)：</h2>
+<h3 id="提问5">提问5：</h3>
+<ul>
+<li>我同意上面做法，没有gdb 调试mysql redis等案例</li>
+<li>gdb 汇编 没有这么多经验怎么处理？</li>
+<li>我确实无法解决</li>
+</ul>
+<h3 id="回答5从被动解决到主动预防">回答5：从被动解决到主动预防</h3>
+<ul>
+<li>混沌工程（Chaos Engineering）</li>
+<li>混沌工程的概念很早之前就有，但是直到 2012 年，</li>
+<li>为了更好地推广混沌工程，Netflix 引入了一只猴子（Chaos Monkey），试想一只猴子在系统里面，平时是安安静静的，什么事情都不做，突然一天发疯开始在系统里到处捣乱，作为工程师，要干的一件事情就是逮住这只猴子，让它别捣乱，这大概就是混沌工程要表达的意思。</li>
+</ul>
+<h4 id="chaos-mesh--skywalking打造可观测的混沌工程">Chaos Mesh + SkyWalking，打造可观测的混沌工程</h4>
+<p><img src="https://tidb-blog.oss-cn-beijing.aliyuncs.com/media/architecture-76301820de324f79d79db310b11b9246-1677983470329.png" alt=""></p>
+<p>通过Chaos-Mesh打造更稳定TiDB数据库高可用架构</p>
+<p>Chaos Mesh 作为业内领先的混沌测试平台，具备以下核心优势：</p>
+<ul>
+<li>
+<p>核心能力稳固：Chaos Mesh 起源于 <a href="https://github.com/pingcap/tidb">TiDB</a> 的核心测试平台，发布初期即继承了大量 TiDB 已有的测试经验。</p>
+</li>
+<li>
+<p>被充分验证：Chaos Mesh 被众多公司以及组织所使用，例如腾讯和美团等；同时被用于众多知名分布式系统的测试体系中，例如 Apache APISIX 和 RabbitMQ 等。</p>
+</li>
+<li>
+<p>系统易用性强：图形化操作和基于 Kubernetes 的使用方式，充分利用了自动化能力。</p>
+</li>
+<li>
+<p>云原生：Chaos Mesh 原生支持 Kubernetes 环境，提供了强悍的自动化能力。</p>
+</li>
+<li>
+<p>丰富的故障模拟场景：Chaos Mesh 几乎涵盖了分布式测试体系中基础故障模拟的绝大多数场景。</p>
+</li>
+<li>
+<p>灵活的实验编排能力：用户可以通过平台设计自己的混沌实验场景，场景可包含多个混沌实验编排，以及应用状态检查等。</p>
+</li>
+<li>
+<p>安全性高：Chaos Mesh 具有多层次安全控制设计，提供高安全性。</p>
+</li>
+<li>
+<p>活跃的社区：Chaos Mesh 为全球知名开源混沌测试平台，CNCF 开源基金会孵化项目。</p>
+</li>
+<li>
+<p>强大的扩展能力：Chaos Mesh 为故障测试类型扩展和功能扩展提供了充分的扩展能力。</p>
+</li>
+</ul>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p> 1️⃣ 如果有更多疑问，联系小王，一起交流，进步</p>
+<p><img src="https://s2.loli.net/2025/08/13/veChAocQwJONWKE.png" alt="个人联系方式"></p>
+<p>2️⃣  关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）
+获取过去我<strong>全部面试录音</strong>和面试复盘。
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+<h4 id="低头走路一次专注做好一个小事">低头走路：一次专注做好一个小事</h4>
+<ul>
+<li>不扫一屋 何以扫天下。</li>
+<li>让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-07-26 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/c&#43;&#43;/day4-port/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">大厂面试题：如果判断一个服务是否可用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/book/2025/book2-202507-sleep/">
+            <span class="next-text nav-default">我们为什么要睡觉</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

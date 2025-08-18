@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>do book · Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="Troy&#39;s Blog" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/categories/do-book/" />
+  <link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="alternate" type="application/rss+xml" title="Troy的网络博客" />
+  <link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="feed" type="application/rss+xml" title="Troy的网络博客" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="do book" />
+<meta property="og:description" content="Troy&#39;s Blog" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://wangcy6.github.io/categories/do-book/" />
+
+<meta itemprop="name" content="do book">
+<meta itemprop="description" content="Troy&#39;s Blog"><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="do book"/>
+<meta name="twitter:description" content="Troy&#39;s Blog"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <section id="archive" class="archive">
+  
+
+  <div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/6-2025-14-spin_lock/" class="archive-post-link">
+          面试官最爱问的自旋锁，你真的懂了吗？一文带你从入门到精通
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%982/" class="archive-post-link">
+          面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术？
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day10-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%981/" class="archive-post-link">
+          面试官:io_uring 相比Linux AIO性能提高5%,为什么成为革命性技术（v1.0）？
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E4%BB%8E%E5%A4%A7%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%A6%82%E4%BD%95%E6%9F%A5%E8%AF%A2%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/" class="archive-post-link">
+          经典面试题：从大目录中如何查询一个文件
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/job/day3-find-job/" class="archive-post-link">
+          简历投递
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/job/day2-company/" class="archive-post-link">
+          神仙公司名单（济南）
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/job/day2-company-1/" class="archive-post-link">
+          神仙企业（分布式存储领域）
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/RockDB/day1-3fs-DeepSeek-3FS-io_uring/" class="archive-post-link">
+          源码解析：
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day15/" class="archive-post-link">
+          最佳实践：XSKY借助英特尔SPDK提升Ceph性能
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day16-gfs/" class="archive-post-link">
+          最佳实践：Google文件系统为何不关心小文件，不关心一致性
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/leetcode/2025/leecode-lur/" class="archive-post-link">
+          想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/7_2025-5-22-spin_lock/" class="archive-post-link">
+          如何设计一个高性能可扩展的自旋锁
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/ceph-blockdevice/" class="archive-post-link">
+          块设备
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/job/day8-job-rember/" class="archive-post-link">
+          后端开发工程师面经
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/job/1-2025-5-job/" class="archive-post-link">
+          后端开发工程师面经
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day17-system-desgin-03-dir-tree/" class="archive-post-link">
+          吊打面试官03:Mysql如何存储目录树
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day19-system-desgin-1/" class="archive-post-link">
+          企业案例04:AI时代分布式存储产品架构长什么样
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day18-system-desgin/" class="archive-post-link">
+          企业案例03：分布式存储产品架构性能优化总结
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/5-2025-05-14-3fs-ObjectPool/" class="archive-post-link">
+          从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/" class="archive-post-link">
+          从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos_1.0/" class="archive-post-link">
+          什么是顺序一致性，什么是分布式协议
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos-v1.0/" class="archive-post-link">
+          什么是顺序一致性，什么是分布式协议
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/habit/02-%E5%91%A8%E5%A4%8D%E7%9B%98/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/" class="archive-post-link">
+          不是不努力，而是不健康
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/job/day3-job-inter/" class="archive-post-link">
+          【换工作】别想太多--只管去面
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/RockDB/day2-rdma/" class="archive-post-link">
+          Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2024-08-07 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/interview/2025-4-26_ceph/" class="archive-post-link">
+          Ceph分布式锁的设计哲学与工程实践
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        0001-01-01 00:00
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/future_for_ai/03-%E5%A4%A7%E6%A8%A1%E5%9E%8B/day1-/" class="archive-post-link">
+          成为讲师：通过短视频锻炼自己表达能力
+        </a>
+      </span>
+    </div>
+</section>
+
+<nav class="pagination">
+  <a class="prev" href="/categories/do-book/">
+      <i class="iconfont icon-left"></i>
+      <span class="prev-text">上一页</span>
+    </a>
+  
+</nav>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

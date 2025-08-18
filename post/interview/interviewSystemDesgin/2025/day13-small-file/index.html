@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day13-small-file/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day13-small-file/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-07-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-07-06T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-07-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-07-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4208">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-07-06 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 4208 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一背景信息">一、背景信息</a>
+      <ul>
+        <li><a href="#浪潮as13000分布式存储在医疗影像场景实践案例">浪潮AS13000分布式存储在医疗影像场景实践案例</a></li>
+        <li><a href="#文件存储技关键技术说明">文件存储技关键技术说明</a></li>
+        <li><a href="#材料补充as13000g7存储取得mlperf佳绩扩展阅读">材料补充：AS13000G7存储取得MLPerf佳绩（扩展阅读）</a></li>
+      </ul>
+    </li>
+    <li><a href="#二小文件聚合技术简单了解">二、小文件聚合技术（简单了解）</a>
+      <ul>
+        <li><a href="#21-可视化演示-合并写入减少io次数">2.1 可视化演示： 合并写入减少IO次数</a></li>
+        <li><a href="#22小思考-假如从0实现一个聚合功能需要考虑哪些功能呢">2.2小思考： 假如从0实现一个聚合功能，需要考虑哪些功能呢？</a></li>
+      </ul>
+    </li>
+    <li><a href="#三数控分离重点">三、数控分离（重点）</a>
+      <ul>
+        <li><a href="#31-rdma数控分离是什么含义">3.1 RDMA数控分离是什么含义</a></li>
+        <li><a href="#32-rdma-没有解决什么问题">3.2 RDMA 没有解决什么问题</a></li>
+        <li><a href="#33--如何解决呢">3.3  如何解决呢</a></li>
+        <li><a href="#其他疑问">其他疑问</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>声明：文章涉及的数据和方案 均来官方公布的数据，如有偏差，属于个人理解有误。</p>
+<p><!-- raw HTML omitted -->基于一次只解决一个事情的原则 <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->本文重点描述 数控分离特征 <!-- raw HTML omitted --></p>
+<h2 id="一背景信息">一、背景信息</h2>
+<p><strong>海量小文件</strong>的元数据管理、存储性能以及访问效率等问题是目前学术界和工业界公认的难题。</p>
+<p>浪潮AS13000软件定义存储系统利用包括小文件聚合功能在内的独特技术，
+帮助用户应对存储资源浪费、效率低下等诸多挑战，
+成就大数据与人工智能时代的企业核心竞争力</p>
+<h3 id="浪潮as13000分布式存储在医疗影像场景实践案例">浪潮AS13000分布式存储在医疗影像场景实践案例</h3>
+<table>
+<thead>
+<tr>
+<th><strong>医院/场景​</strong>​</th>
+<th>​<strong>​核心问题​</strong>​</th>
+<th>​<strong>​解决方案​</strong>​</th>
+<th>​<strong>​关键技术​</strong>​</th>
+<th>​<strong>​性能提升效果​</strong>​</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​南华大学附属第二医院​</strong>​  <!-- raw HTML omitted -->（3D PACS影像）</td>
+<td>• 单次检查生成1000~2000个小文件（63%为200-300KB）  <!-- raw HTML omitted -->• 深目录层级导致元数据瓶颈  <!-- raw HTML omitted -->• 高峰期“图片喷涌式上传”</td>
+<td>• ​<strong>​目录分片技术​</strong>​哈希切分深层路径<!-- raw HTML omitted -->• ​<strong>​小文件聚合写入​</strong>​：合并为64MB大对象，​<strong>​4MB对齐落盘​</strong>​  <!-- raw HTML omitted -->• 双活容灾</td>
+<td>1. 元数据分布式管理  <!-- raw HTML omitted -->2. SSD写放大优化  <!-- raw HTML omitted -->3. 故障自动切换</td>
+<td>• 访问延迟​<strong>​&lt;1ms​</strong>​  <!-- raw HTML omitted -->• 单目录支持​<strong>​十亿级文件无性能衰减​</strong>​  <!-- raw HTML omitted -->• 3D影像加载效率​<strong>​提升50%​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​浙江省人民医院​</strong>​  <!-- raw HTML omitted -->（PACS热冷数据分层）</td>
+<td>• 年增数百TB影像数据  <!-- raw HTML omitted -->• 需兼顾1年内热数据高速访问与长期冷数据低成本存储</td>
+<td>• ​<strong>​分层存储架构​</strong>​-   •热数据：全闪存储HF5000（NVMe架构）  <!-- raw HTML omitted -->- 冷数据：AS13000（​<strong>​8+2纠删码​</strong>​）  <!-- raw HTML omitted -->• 独立资源池隔离PACS业务</td>
+<td>1. 智能数据迁移策略  <!-- raw HTML omitted -->2. 纠删码空间利用率80%  <!-- raw HTML omitted -->3. QoS保障关键业务</td>
+<td>• 热数据调阅延迟​<strong>​≤5ms​</strong>​  <!-- raw HTML omitted -->• 冷数据归档效率​<strong>​10GB/s​</strong>​  <!-- raw HTML omitted -->• 双活故障切换​<strong>​前端无感知​</strong>​</td>
+</tr>
+<tr>
+<td>​<strong>​武汉大学中南医院​</strong>​  <!-- raw HTML omitted -->（CT影像高并发）</td>
+<td>• 日均数万幅CT影像（单文件几十MB）  <!-- raw HTML omitted -->• PB级数据长期存储  <!-- raw HTML omitted -->• 520+台设备并发写入压力大</td>
+<td>• 5节点高密部署（35盘位/节点）  <!-- raw HTML omitted -->• ​<strong>​小文件聚合技术​</strong>​：200-300KB文件合并写入  <!-- raw HTML omitted -->• ​<strong>​三副本冗余​</strong>​保障安全</td>
+<td>1. 高密节点设计  <!-- raw HTML omitted -->2. 批量写入减少IO次数  <!-- raw HTML omitted -->3. 线性扩展架构</td>
+<td>• 影像调阅时间​<strong>​≤15秒​</strong>​（原分钟级）  <!-- raw HTML omitted -->• 支持​<strong>​520+设备并发写入​</strong>​  <!-- raw HTML omitted -->• 单目录千万文件无衰减</td>
+</tr>
+<tr>
+<td>​<strong>​MLPerf™ AI测试平台​</strong>​  <!-- raw HTML omitted -->（3D-Unet<strong>医疗模型训练</strong>）</td>
+<td>• 训练数据加载慢导致GPU闲置  <!-- raw HTML omitted -->• 检查点开销占训练时间12%~43%  <!-- raw HTML omitted -->• 万卡集群存储带宽瓶颈</td>
+<td>• ​<strong>​数控分离架构​</strong>​数据面直通NVMe SSD  <!-- raw HTML omitted -->• ​<strong>​内核亲和调度​</strong>​NUMA感知优化，IO线程绑定同节点  <!-- raw HTML omitted -->• RDMA网络加速</td>
+<td>1. 控制面/数据面解耦  <!-- raw HTML omitted -->2. 跨节点数据转发量​<strong>​降低80%​</strong>​  <!-- raw HTML omitted -->3. 本地NUMA内存访问</td>
+<td>• 集群聚合带宽​<strong>​360GB/s​</strong>​  <!-- raw HTML omitted -->• 单节点峰值​<strong>​120GB/s​</strong>​  <!-- raw HTML omitted -->• GPU利用率​<strong>​90%+​</strong>​，I/O开销占比​<strong>​&lt;10%​</strong>​</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文件存储技关键技术说明">文件存储技关键技术说明</h3>
+<h5 id="1--聚小文件聚合减少io次数性能提升核心">1.  聚：小文件聚合减少IO次数（性能提升核心）；</h5>
+<ul>
+<li>通过将KB级小文件合并为64MB大对象写入，减少元数据操作与磁盘IO次数，写入效率提升​<strong>​96.8%​</strong>​（128KB文件测试</li>
+<li>4MB对齐落盘​**​：适配SSD物理块大小，降低写放大，提升删除/重构性</li>
+</ul>
+<h5 id="2-分分层存储架构">2. 分：分层存储架构</h5>
+<ul>
+<li>热数据层采用全闪存（NVMe SSD），延迟≤5ms；</li>
+<li>冷数据层使用纠删码（如8+2），空间利用率达80%，成本降低40%</li>
+</ul>
+<h4 id="3-通数据通路和控制通路分离重点描述">3. 通：​​数据通路和控制通路分离【重点描述】</h4>
+<ul>
+<li>通：数控分离+直通存储缩短数据路径</li>
+<li> 采用全新数控分离架构。 数据面和控制面完全解耦，控制面实现数据管理和访问，数据面读写操作直通到盘，达到120 GB/s的单存储节点的超高性能，单存储节点支撑5台8卡计算节点规模，同时计算集群GPU利用率90%以上</li>
+<li>为了降低跨NUMA访问带来的时延，在全新数控分离架构下，使内核客户端可自主控制数据页缓存分配策略并主动接管用户下发的IO任务。这种方式能够更加灵活地实现各类客户端内核态到远端存储池的数据移动策略。</li>
+</ul>
+<h4 id="4-拆">4. 拆：</h4>
+<ul>
+<li>目录分片技术通过哈希算法分散深目录压力，支持单<strong>目录十亿级</strong>文件无性能衰减</li>
+<li>无论是读操作还是写操作，AS13000G7-N采取了字节级（Byte）分布式锁机制，粒度是主流并行文件系统锁机制粒度的几十分之一。</li>
+</ul>
+<h3 id="材料补充as13000g7存储取得mlperf佳绩扩展阅读">材料补充：AS13000G7存储取得MLPerf佳绩（扩展阅读）</h3>
+<p>最新发布的MLPerf AI存储基准评测中，<strong>浪潮信息分布式存储平台****AS13000G7</strong>通过一系列创新技术，显著提升数据处理效率，勇夺8项测试中5项性能最佳成绩，实现集群带宽360GB/s、单节点带宽达120GB/s</p>
+<p><img src="https://www.ieisystem.com/global/upload/2024-09-27/17274003433632c975afc9222caae921019231157743398a.jpg" alt=""></p>
+<ul>
+<li>MLPerf™ 是影响力最广的国际AI性能基准评测，由图灵奖得主大卫•帕特森（David Patterson）联合顶尖学术机构发起成立。2023年推出MLPerf™ 存储基准性能测试，旨在以架构中立、具有代表性和可重复的方式衡量机器学习（ML）工作负载的存储系统性</li>
+<li>本次MLPerf™ 存储基准评测（v1.0）吸引了全球13家领先存储厂商和研究机构参与。该评测围绕医学影像分割、图像分类、宇宙学参数预测三大AI存储应用场景，采用主流的3D-Unet、ResNet50、CosmoFlow三类模型</li>
+<li>本次测试，浪潮信息采用3台AS13000G7搭建分布式存储集群，搭载ICFS自研分布式文件系统，在3D-UNet和CosmoFlow两大评测任务中共获得五项最佳成绩。 其中，在图像分割3D-UNet多客户端2评测任务中，服务于10个客户端264个加速器，集群聚合带宽达到360GB/s，单个存储节点的带宽高达120GB/s； 在宇宙学分析CosmoFlow单客户端2和多客户端2评测任务中，分别提供了18 GB/s和52 GB/s的带宽最佳成绩。
+<!-- raw HTML omitted -->疑问：为什么最差18G最高360G差别是什么？<!-- raw HTML omitted -->
+<img src="https://file1.elecfans.com/web2/M00/E2/F6/wKgaomY61vyAA4lrAA_gCUBAFbQ125.jpg" alt="">
+<strong>硬件方面</strong></li>
+<li>AS13000G7-N是一款2U24盘位的全闪存储机型</li>
+<li>搭载英特尔®至强®第四、第五代可扩展处理器，</li>
+<li>支持400 Gb 网卡</li>
+<li>同时每盘位可配置15.36TB 大容量NVMe SSD。
+<strong>软件方面</strong></li>
+<li>通过集群控制服务将N个节点联成一套具有高扩展性的文件系统；</li>
+<li>通过分布式元数据服务提升海量小文件读写性能；</li>
+<li>通过数控分离架构，实现东西向网络优化，降低IO访问时延，提升单节点带宽。</li>
+<li>浪潮信息基于计算和存储协同的理念，依托<strong>自研分布式文件系统构</strong>建了新一代数据加速引擎DataTurbo，在缓存优化、空间均衡、缩短GPU与存储读取路径等方面进行了全面升级 【不是文件系统领域范围】</li>
+</ul>
+<h2 id="二小文件聚合技术简单了解">二、小文件聚合技术（简单了解）</h2>
+<h3 id="21-可视化演示-合并写入减少io次数">2.1 可视化演示： 合并写入减少IO次数</h3>
+<ul>
+<li>
+<p>聚合前：
+<img src="https://s2.loli.net/2025/07/18/AV4I9x3meHWTtYn.png" alt="image.png"></p>
+</li>
+<li>
+<p>聚合后：
+<img src="https://s2.loli.net/2025/07/18/vJZdirYwn1a4LCT.png" alt=""></p>
+</li>
+</ul>
+<h3 id="22小思考-假如从0实现一个聚合功能需要考虑哪些功能呢">2.2小思考： 假如从0实现一个聚合功能，需要考虑哪些功能呢？</h3>
+<h4 id="提问1什么时候开始聚合类比lsm">提问1：什么时候开始聚合？（类比lsm）</h4>
+<ul>
+<li>第一层： 根据数据生命周期管理，自然写SSD盘不需要聚合，直接读写（<strong>100万+ IOPS</strong>）</li>
+<li>第二层：数据不经常访问，移动机械硬盘 HDD 进行 聚合大文件。</li>
+<li>第三层：数据经常不访问，备进行归档处理。，继续聚合更大文件。</li>
+</ul>
+<h4 id="提问2普通的文件和聚合文件怎么区分">提问2：普通的文件和聚合文件怎么区分?</h4>
+<ul>
+<li>肯定保持到文件元数据中</li>
+<li>xattr 是文件扩展属性全称是一种以key-value 保存数据到文件系统中的技术。接口函数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">setxattr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span>   <span class="n">value</span><span class="p">[.</span><span class="n">size</span><span class="p">],</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>大小有区别，小文件会以 4K 对齐方式写入 4M 块，聚合大文件最大 512M</li>
+<li>3fs 都512k对齐写入，一看就是使用libaio库</li>
+<li><a href="https://mp.weixin.qq.com/s/10ekuMc38DndCk4k5isBbg">从青铜到王者系列：跟着文件系统学数据结构</a></li>
+</ul>
+<h4 id="提问3迁移接单故障怎么处理做到无状态">提问3：迁移接单故障怎么处理，做到无状态</h4>
+<ul>
+<li>将迁移结果持久化存储</li>
+</ul>
+<h2 id="三数控分离重点">三、数控分离（重点）</h2>
+<p>参考专利：# 一种分布式存储减少数据转发的方法、装置、设备及介质</p>
+<p><img src="https://s2.loli.net/2025/07/18/ySKwMdUsftH6jPA.png" alt="image.png"></p>
+<h3 id="31-rdma数控分离是什么含义">3.1 RDMA数控分离是什么含义</h3>
+<p><img src="https://s2.loli.net/2025/07/20/frc9y4uA7R1KwOa.png" alt="整体视图"></p>
+<p><img src="https://s2.loli.net/2025/07/20/KsPbpJgmyNUWh89.png" alt="整体视图"></p>
+<p><img src="https://s2.loli.net/2025/07/20/7JtCK2aDx6vIpS9.png" alt="默认5次数据拷贝，其中 2 3 4是必不可少的"></p>
+<p><img src="https://s2.loli.net/2025/07/20/6HRwlZYOb7ATLmW.png" alt="控制通路是什么"></p>
+<p><img src="https://s2.loli.net/2025/07/20/lV8mHgnFvGZC2hA.png" alt="编解码工作放到网卡去做了"></p>
+<p>①发送端网卡会通过DMA直接从用户空间内存复制数据到自己内部缓存中，并给数据添加各层头部和校验信息。</p>
+<p>②发送端网卡通过物理链路发送数据给对端的网卡。</p>
+<p>③接收端网卡接受到数据后，先把各层头部和校验信息剥离，然后将自己缓存中的数据包DMA拷贝到用户空间。</p>
+<p>通过和Socket的对比，我们可以明显看到，数据收发绕过了内核并且数据交换过程并不需要CPU参与，报文的组装和解析是由硬件完成的。</p>
+<p>明显可以看出 RDMA 方案的三个优点。</p>
+<ul>
+<li>本地内存零复制
+• 内核旁路（bypass）
+• 把数据包的封装和解析工作交由网卡来实现，降低了 CPU 负载。</li>
+</ul>
+<p>RDMA技术简介 RDMA的控制通路和数据通路方案</p>
+<p><img src="https://s2.loli.net/2025/07/20/AZiGmOsbBeIv3hd.png" alt="image.png"></p>
+<p>卡速率是一样的（比如都是10G/S），为什么要选择RDMA？或者RDMA有什么优势？
+RDMA的优势：每个Data只需要3个ns就可以到达对端网卡——即每个Data更低的时延。
+<img src="https://s2.loli.net/2025/07/20/cNPFsKUCT1mRMpo.png" alt="image.png">
+<img src="https://s2.loli.net/2025/07/20/UAV9Yjo754wykRP.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/20/lMnPKzCJhGTikgI.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2025/07/20/1Xskqlnjv7wdpO4.png" alt="write流程"></p>
+<p><img src="https://s2.loli.net/2025/07/20/yi1bK7fQJW4aHIR.png" alt="直接写物理地址需要解决什么问题"></p>
+<p><img src="https://s2.loli.net/2025/07/20/wYa34zcLgBls57G.png" alt="原理不变">
+<img src="https://s2.loli.net/2025/07/20/1cshbXSQ4AwN5qW.png" alt="image.png"></p>
+<p><img src="https://s2.loli.net/2025/07/20/r3dgcUD2HfJTuXB.png" alt="image.png"></p>
+<h3 id="32-rdma-没有解决什么问题">3.2 RDMA 没有解决什么问题</h3>
+<p>历史文章：# 2分钟论文：网卡直写磁盘，这项专利彻底绕过了 CPU！</p>
+<p>参考专利：CN117573043B
+发明名称 ：分布式存储数据的传输方法、装置、系统、设 备和介质</p>
+<ol>
+<li>在全闪存储产品中，远程直接数据存取（Remote Direct Memory Access，RDMA）技 术是比较常用的技术，数据跨节点传输卸载到RDMA网卡中，极大减少中央处理器（Central Processing Unit，CPU）接入，但是接收或者发送仍然</li>
+<li>需要主机内存的介入，落盘时由主机 内存通过直接存储器访问（Direct Memory Access，DMA）方式拷贝到盘的内存里然后落盘。 主机内存拷贝过程，对带宽需求量高，产生的时延也较高，导致数据传输效率偏低。 可见，如何提升数据传输效率，是本领域技术人员需要解决的问题。</li>
+</ol>
+<p>为什么 这么说，什么场景呢？</p>
+<ol>
+<li>机器1：读取本地本地文件，从网络发送</li>
+<li>机器2：从网络读取文件，写入本地文件</li>
+</ol>
+<p>网络传输用RDMA，写入文件呢？
+类似问题：# 如何将100Gbps的网络数据实时写入硬盘？
+<a href="https://www.zhihu.com/question/585959385">https://www.zhihu.com/question/585959385</a></p>
+<h3 id="33--如何解决呢">3.3  如何解决呢</h3>
+<ul>
+<li>参考专利：CN117573043B
+<img src="https://s2.loli.net/2025/07/20/7tmdRVCUkuwSXng.png" alt="# 固态硬盘 SSD当做内容"></li>
+<li>_<a href="https://aboutnetworks.net/nvme-and-nvmeof/_">https://aboutnetworks.net/nvme-and-nvmeof/_</a> RDMA-Based NVMe-oF # 一文读懂NVMe、NVMe-oF和RDMA</li>
+<li>NVMe将 SSD 设备视为内存，而不是硬盘驱动器</li>
+</ul>
+<h3 id="其他疑问">其他疑问</h3>
+<ul>
+<li>在RDMA单边传输和双边传输的差异</li>
+<li><a href="https://blog.csdn.net/m0_71540099/article/details/135704323">https://blog.csdn.net/m0_71540099/article/details/135704323</a></li>
+<li>小消息双边传输 :a. 将数据直接发送给主，再由主发送给子</li>
+<li>大消息单边传输</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>医疗PACS影像系统的数据存储性能优化</li>
+<li>基 MLPerf™ AI存储基准评测发榜，浪潮信息AS13000G7获多项测试最佳成绩</li>
+<li>一图读懂浪潮信息新一代分布式全闪存储AS13000G7-N系列</li>
+<li>时代和技术在变，但数控分离的架构设计理念未曾改变</li>
+<li>最佳实践 | SD-WAN与SDP-SASE框架下的数控分离</li>
+<li>一种分布式存储减少数据转发的方法、装置、设备及介质 <a href="https://max.book118.com/html/2023/0923/7102106122005161.shtm">https://max.book118.com/html/2023/0923/7102106122005161.shtm</a></li>
+<li>3FS优化 01 | 服务端优化 <a href="https://www.high-flyer.cn/blog/3fs-1/">https://www.high-flyer.cn/blog/3fs-1/</a></li>
+<li>分布式存储数据的传输方法、装置、系统、设备和介质</li>
+<li>【RDMA】qp数量和RDMA性能（节选翻译）|连接数</li>
+<li>RDMA DC QP工作原理介绍</li>
+<li>RDMA 单边模型</li>
+<li>布鲁斯的读书圈  <a href="https://mp.weixin.qq.com/s/5hKLfprjjlQLIYxHwLOc9A">https://mp.weixin.qq.com/s/5hKLfprjjlQLIYxHwLOc9A</a></li>
+<li>RDMA网卡相对于传统以太网卡的优势</li>
+<li>绕过CPU，英伟达让GPU直连存储设备</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-07-06 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v2.0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">大厂面试题精选:线性一致性本质这么回答就对了</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP01_string_view/">
+            <span class="next-text nav-default">一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

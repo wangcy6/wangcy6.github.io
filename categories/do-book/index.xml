@@ -6,7 +6,70 @@
     <description>Recent content in do book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 20 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 周刊（第一期) 写代码普通人的杠杆</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/ai_weekly/issue-01/</link>
+      <pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/ai_weekly/issue-01/</guid>
+      <description>质疑汤姆猫，理解汤姆猫，成为汤姆猫 秘诀是 不是汤姆猫有没有价值,真正的行动了。 生活中的乐趣在哪里，需要动身去寻找 周刊开源（Github：wat</description>
+    </item>
+    
+    <item>
+      <title>大厂面试题：如果判断一个服务是否可用</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day4-port/</link>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day4-port/</guid>
+      <description>面试官：如何判断一个服务是否可用？ 看你简历很擅长处理分布式高可用呀 请问在分布式环境下如何判断一个服务是否可用？ 我： 先排除一个错误答案，下面跟</description>
+    </item>
+    
+    <item>
+      <title>大厂面试题：如果判断一个服务是否可用</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day5-port-1/</link>
+      <pubDate>Sat, 26 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day5-port-1/</guid>
+      <description>https://yuanbao.tencent.com/chat/naQivTmsDa/7cef0fae-3ef3-4507-93db-bf214bd32602 腾讯一面:生产环境如何使用gdb调试Release发行版本的程序？ 大厂基础知识面试拆解第10篇文章 历史文章： 序号 知识地图 题目 1 网络 判断一个</description>
+    </item>
+    
+    <item>
+      <title>2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day14-rdma/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day14-rdma/</guid>
+      <description>声明：文章涉及的数据和方案 均来官方公布的数据， 如有偏差，属于个人理解有误。 基于一次只解决一个事情的原则 本文重点描述 专利：分布式存储数据的传输</description>
+    </item>
+    
+    <item>
+      <title>大厂面试题精选:分布式协议不保证线性一致性读如何解决？</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v3.0/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v3.0/</guid>
+      <description>知识地图:并发 把面试陪练 你会越战越勇， 本文深入剖析大厂面试， 希望对你有帮助。 如果有任何疑问，欢迎留言提问。 第一题：线性一致性与顺序一致性区别</description>
+    </item>
+    
+    <item>
+      <title>大厂面试题精选:线性一致性本质这么回答就对了</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v2.0/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v2.0/</guid>
+      <description>知识地图:并发 把面试陪练 你会越战越勇，大厂面试题精 每周一更新 本系列大约1万字左右，为了节约你的宝贵时间，总结成三页PPT 看完后拉倒文章末尾，</description>
+    </item>
+    
+    <item>
+      <title>浪潮AS13000分布式存储在医疗影像场景中如何优化小文件IO性能</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day13-small-file/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day13-small-file/</guid>
+      <description>声明：文章涉及的数据和方案 均来官方公布的数据，如有偏差，属于个人理解有误。 基于一次只解决一个事情的原则 本文重点描述 数控分离特征 一、背景信息 海</description>
+    </item>
+    
     <item>
       <title>一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view</title>
       <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP01_string_view/</link>
@@ -14,6 +77,24 @@
       
       <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP01_string_view/</guid>
       <description>#知识地图 #最佳实践 #CPP17 👋 各位老师好（老师是山东对人的一个尊称，就像称呼帅哥美女一样） C++周刊 （c++ weekly）第一期 EP01 开始了 主题： 今天</description>
+    </item>
+    
+    <item>
+      <title>一分钟讲透:面试官为什么爱问c&#43;&#43;新特性之std::string_view</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_view-1/</link>
+      <pubDate>Fri, 20 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_view-1/</guid>
+      <description>#知识地图 #最佳实践 #CPP17 👋 各位老师好（老师是山东对人的一个尊称，就像称呼帅哥美女一样） C++周刊 （c++ weekly）第一期 EP01 开始了 主题： 今天</description>
+    </item>
+    
+    <item>
+      <title>一道面试题关于malloc的面试题</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_mallolc%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Fri, 20 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/c&#43;&#43;_weekly_EP02_string_mallolc%E8%BF%87%E7%A8%8B/</guid>
+      <description>https://docs.qq.com/aio/DY3htdHJNSXZPdmV3?AIGenerate=1&amp;amp;p=9mb09rdApYUe9rSddYKjV5 #知识地图 #最佳实践 #CPP17 https://docs.qq.com/aio/DY3htdHJNSXZPdmV3?AIGenerate=1&amp;amp;p=9mb09rdApYUe9rSddYKjV5 https://moss.cs.iit.edu/cs351/slides/slides-malloc.pdf?utm_source=chatgpt.com 👋 各位老师好（老师是山东对人的一个尊称，就像称呼帅哥美女一样） C++周刊 （c++ weekly）第一期 EP01 开始了 https://www.elecfans.com/d/2284192.html malloc</description>
     </item>
     
     <item>
@@ -35,12 +116,39 @@
     </item>
     
     <item>
+      <title>ContextOS安装部署</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/temp/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/temp/</guid>
+      <description>一、参考官方资料 1. ContextOS 安装与开发 b站： 【ContextOS 安装与开发】 https://www.bilibili.com/video/BV1t78mz3EDe/?share_source=copy_web&amp;amp;vd_source=62b5a6463177c2d85b2a392f6a73d74a 腾讯会议： https://meeting.tencent.com/crm/lJoR0r9Y05 2. 根据视频资料产生大纲 1.20 精彩内容 主要源码安装，编译 并解决没</description>
+    </item>
+    
+    <item>
+      <title>ContextOS安装部署和代码说明</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day6-ContextOS-product/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day6-ContextOS-product/</guid>
+      <description>小王同学开发日记第四天 我的目标 成为 ContextOS布道师 ✅ 任务1： 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 任务2：熟悉框架：后端冰山架( Gola</description>
+    </item>
+    
+    <item>
+      <title>Golang简明教程（1）</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day5-ContextOS-golang/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day5-ContextOS-golang/</guid>
+      <description>小王同学开发日记第四天 我的目标 成为 ContextOS布道师 ✅ 任务1： 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 任务2：熟悉框架：后端冰山架( Gola</description>
+    </item>
+    
+    <item>
       <title>Trae从青铜到王者</title>
       <link>https://wangcy6.github.io/post/future_for_ai/01-%E6%8F%90%E7%A4%BA%E8%AF%8D/%E5%86%99%E4%BD%9C%E7%B1%BB/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/future_for_ai/01-%E6%8F%90%E7%A4%BA%E8%AF%8D/%E5%86%99%E4%BD%9C%E7%B1%BB/</guid>
-      <description>提示词： https://vxc3hj17dym.feishu.cn/wiki/YObBw7PjuiZiMmkeOG5cYIAanCe https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e https://g10npwhy4nv.feishu.cn/docx/U1Iqduc3mox5F8xmbUzcCC6qnof https://langgptai.feishu.cn/wiki/TWg2wkDSki8Tqxk0E5scxTwunbd 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62</description>
+      <description>提示词： https://vxc3hj17dym.feishu.cn/wiki/YObBw7PjuiZiMmkeOG5cYIAanCe https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e https://g10npwhy4nv.feishu.cn/docx/U1Iqduc3mox5F8xmbUzcCC6qnof https://langgptai.feishu.cn/wiki/TWg2wkDSki8Tqxk0E5scxTwunbd &amp;laquo;&amp;laquo;&amp;laquo;&amp;lt; HEAD 写作 润色 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 ### 角色（Person</description>
     </item>
     
     <item>
@@ -63,11 +171,20 @@
     
     <item>
       <title>Trae从青铜到王者</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/ContextOS/02-ContextOS-%E8%BF%90%E8%90%A5%E9%94%80%E5%94%AE%E7%BE%A4-%E8%90%A5%E9%94%80%E6%8E%A8%E5%B9%BF%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day3/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/future_for_ai/ContextOS/02-ContextOS-%E8%BF%90%E8%90%A5%E9%94%80%E5%94%AE%E7%BE%A4-%E8%90%A5%E9%94%80%E6%8E%A8%E5%B9%BF%E5%B0%8F%E7%A8%8B%E5%BA%8F/</guid>
-      <description>本文目标 ✅ 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法 ✅ 探索如何模块化方式 从0</description>
+      <guid>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day3/</guid>
+      <description>小义同学的开发日记第三天 我的目标 成为 ContextOS布道师 ✅ 任务1： 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 任务2：熟悉框架：后端冰山架( Gol</description>
+    </item>
+    
+    <item>
+      <title>Trae从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day4-ContextOS-product/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day4-ContextOS-product/</guid>
+      <description>小王同学开发日记第四天 我的目标 成为 ContextOS布道师 ✅ 任务1： 阅读 ContextOS 云操作系统 提供云研发小程序 ✅ 任务2：熟悉框架：后端冰山架( Gola</description>
     </item>
     
     <item>
@@ -81,20 +198,20 @@
     
     <item>
       <title>Trae从青铜到王者</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/template/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/Task/template-1-1/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/future_for_ai/template/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/Task/template-1-1/</guid>
       <description>我是谁 大家好，我是小义同学， 刚刚好，是最难得的美好 我就在这里 ，我刚刚好。 欢迎链接我。 个人微信：wang_cyi 我是一个15年c++开发经验工</description>
     </item>
     
     <item>
-      <title>三天从 0 到 1 实现一个编译器，你也可以</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/Task/template-1/</link>
+      <title>Trae从青铜到王者</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/template-1/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/future_for_ai/Task/template-1/</guid>
-      <description>一、 开发环境搭建 1. 云主机 Gitpod：一个基于云原生技术的在线集成开发环境（IDE） ，也是阅读和调试github源代码利器 ccls:vscode 插件 C/C++/ObjC language server supporting cross references,</description>
+      <guid>https://wangcy6.github.io/post/future_for_ai/template-1/</guid>
+      <description>最动人的作品，为自己而写，刚刚好打动别人 我在寻找一位积极上进的小伙伴， 一起参与神奇早起 30 天改变人生计划，做一个伟大产品取悦自己，不妨试试 抬头</description>
     </item>
     
     <item>
@@ -116,12 +233,57 @@
     </item>
     
     <item>
-      <title>如何制作个简历</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/01-action-2025/AI%E4%BB%A3%E5%86%99SOP-%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C/</link>
+      <title>企业级智能体dify</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/03-rust/2025-6%E6%9C%88%E4%B8%80%E9%B1%BC%E5%A4%9A%E5%90%83-1-1/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/future_for_ai/01-action-2025/AI%E4%BB%A3%E5%86%99SOP-%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/03-rust/2025-6%E6%9C%88%E4%B8%80%E9%B1%BC%E5%A4%9A%E5%90%83-1-1/</guid>
+      <description>企业级智能体dify 参考</description>
+    </item>
+    
+    <item>
+      <title>企业级智能体dify：不需要编程</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day1-agent-dify-v1.0/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day1-agent-dify-v1.0/</guid>
+      <description>开始时间：2025-7-28 结束时间： 一、用户需求 二、系统设计 2.1 从零开始学 Dify（一）：Dify架构是什么 1. 为什么要了解Dify架构，直接</description>
+    </item>
+    
+    <item>
+      <title>写出我心，写下去你就能活一次</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/04-AI-%E8%AF%BB%E4%B9%A6/template/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/04-AI-%E8%AF%BB%E4%B9%A6/template/</guid>
+      <description>各位老师好，这是小义同学A开发日记第13天(2025年7月1开始)， 质疑汤姆猫，理解汤姆猫，成为汤姆猫 秘诀是 不是汤姆猫有没有价值 成为AI 时代</description>
+    </item>
+    
+    <item>
+      <title>写出我心，写下去你就能活一次</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/ai_weekly/template-1/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/ai_weekly/template-1/</guid>
+      <description>各位老师好，这是小义同学A开发日记第13天(2025年7月1开始)， 质疑汤姆猫，理解汤姆猫，成为汤姆猫 秘诀是 不是汤姆猫有没有价值 成为AI 时代</description>
+    </item>
+    
+    <item>
+      <title>如何制作个简历</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/AI%E4%BB%A3%E5%86%99SOP-%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/AI%E4%BB%A3%E5%86%99SOP-%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C/</guid>
       <description>一、纠正一下制作简历常见误区 误区1：我公司不行，我环境不行，我能力不行，我需要努力 看书 读书运动&amp;ndash;没有任何关系，&amp;mdash;直接</description>
+    </item>
+    
+    <item>
+      <title>成为讲师：通过短视频锻炼自己表达能力</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/02-%E7%9F%AD%E8%A7%86%E9%A2%91/2025-08-06-ohter/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/02-%E7%9F%AD%E8%A7%86%E9%A2%91/2025-08-06-ohter/</guid>
+      <description># 故事:我做了个小网站,月入$4万 本期人物：Angus Chang（一人公司：我做了个小网站,月入$4万) 注意： - 使用同样方法 不可能达到同样收</description>
     </item>
     
     <item>
@@ -130,7 +292,7 @@
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/future_for_ai/02-%E7%9F%AD%E8%A7%86%E9%A2%91/2025-6%E6%9C%88%E4%B8%80%E9%B1%BC%E5%A4%9A%E5%90%83/</guid>
-      <description>功能1：youtube下载到模仿 步骤1.1 ： 1 2 3 4 yt-dlp -F &amp;#34;https://www.youtube.com/watch?v=E_AFbnsPBWk&amp;#34; yt-dlp -f 609+ 140 &amp;#34;https://www.youtube.com/watch?v=9VYKAv-43dc&amp;#34; 电脑录制中视频 工具 蓝牙耳机 录制视频：QuickTime Player Au2025</description>
+      <description>功能1：youtube下载到模仿 功能1：youtube下载到模仿 步骤1.1 ： 1 2 3 4 yt-dlp -F &amp;#34;https://www.youtube.com/watch?v=E_AFbnsPBWk&amp;#34; yt-dlp -f 609+ 140 &amp;#34;https://www.youtube.com/watch?v=9VYKAv-43dc&amp;#34; 电脑录制中视频 工具 蓝牙耳机 录制视频：Qu</description>
     </item>
     
     <item>
@@ -140,6 +302,24 @@
       
       <guid>https://wangcy6.github.io/post/future_for_ai/propmit/write/</guid>
       <description>疑问 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 ### 角色： 你是一名面试候选人，有擅长分布式存储，分布式数据 和 liun 源码， 根据面试官提</description>
+    </item>
+    
+    <item>
+      <title>日记：微信小程序开发</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/04-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/day1-small/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/04-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/day1-small/</guid>
+      <description>###参考资料 AI编程第一个产品：微信小程序开发到上线全局复盘 副本 https://passazurtyv.feishu.cn/docx/MsZfdUQ0DoVvkRxcNRMcmnGvnjh 原型设计 花生老师给出的提示词 2）找对标 3）手绘+画图工具缝合 1 2 3 4 5 6</description>
+    </item>
+    
+    <item>
+      <title>早起的奇迹</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/04-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/day2-get-up/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/04-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/day2-get-up/</guid>
+      <description>用户故事 工具 Excel xmind 这是一个 “神奇的早起” 计划，是一个晨间惯例，作者称之为改变人生的早起。 什么是晨间惯例 惯例是一连串有规律的行动，就像固定的程序</description>
     </item>
     
     <item>
@@ -188,33 +368,6 @@
     </item>
     
     <item>
-      <title>c&#43;&#43;代码编程规范</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_class/</link>
-      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_class/</guid>
-      <description>C++ string 成员函数 length() size() 和 C strlen() 的区别 当 string 中含有空字符’\0’，使用 strlen() 获取 string 的长度时会被截断，使用成员函数 length() 和 size() 可以返回 string 的真实长度。 // 构造时使用 string strTest(buf,</description>
-    </item>
-    
-    <item>
-      <title>c&#43;&#43;代码编程规范</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</link>
-      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/02_master_c&#43;&#43;_share_pointer/</guid>
-      <description>成为面试官 第一练 未了节省读者时间一句话解释 shared_ptr 的引用计数本身是安全且无锁的，但对象的读写则不是， 因为 shared_ptr 有两个数据成员，读写操作不能原子 一个 shared_ptr 对</description>
-    </item>
-    
-    <item>
-      <title>c&#43;&#43;入门指南</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/01_c&#43;&#43;_new/</link>
-      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangcy6.github.io/post/future_for_ai/c&#43;&#43;/01_c&#43;&#43;_new/</guid>
-      <description>内存管理 C++中通过new和delete两个关键字进行动态内存管理。 c语言通过 malloc 和free 两个关键字进行动态内存管理 函数支持重载，运算符同样</description>
-    </item>
-    
-    <item>
       <title>Ceph分布式锁的设计哲学与工程实践</title>
       <link>https://wangcy6.github.io/post/interview/2025-4-26_ceph/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
@@ -224,21 +377,57 @@
     </item>
     
     <item>
-      <title>不是不努力，而是不健康</title>
-      <link>https://wangcy6.github.io/post/habit/2025/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/</link>
+      <title>Linux高性能网络详解从 DPDK、RDMA 到 XDP（上）</title>
+      <link>https://wangcy6.github.io/post/interview/RockDB/day2-rdma/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/habit/2025/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/</guid>
+      <guid>https://wangcy6.github.io/post/interview/RockDB/day2-rdma/</guid>
+      <description>点击蓝色关注。 文末有福利，先到先得 一、明确学习目的和方式 1. 看招聘岗位 6.对Ceph、GPFS、3FS、JuiceFS有经验者优先 技术体验： 1</description>
+    </item>
+    
+    <item>
+      <title>【换工作】别想太多--只管去面</title>
+      <link>https://wangcy6.github.io/post/interview/job/day3-job-inter/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/job/day3-job-inter/</guid>
+      <description>帮你解决什么问题？ 如果你发现自己对某个岗位（比如分布式数据库、存储、AI自动驾驶、广告搜索领域，或是基础设施领域的独角兽公司）感兴趣， 但又觉</description>
+    </item>
+    
+    <item>
+      <title>不是不努力，而是不健康</title>
+      <link>https://wangcy6.github.io/post/habit/02-%E5%91%A8%E5%A4%8D%E7%9B%98/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/habit/02-%E5%91%A8%E5%A4%8D%E7%9B%98/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/</guid>
       <description>1. 只管去做目标九宫格 身体健康 6月 不是不努力，而是不健康， 6 月份我的目标是：20 点 30 彻底放下手机和电脑，执行 R90 睡眠准备。我控制不是 睡眠 ，我控制</description>
     </item>
     
     <item>
       <title>什么是顺序一致性，什么是分布式协议</title>
-      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos/</link>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos-v1.0/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos/</guid>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos-v1.0/</guid>
       <description>一、大纲 ✅ 阅读论文：Linearizability: A Correctness Condition for Concurrent Objects 回答是线程一致性 ✅ 跟着etcd学习如何使用etcd-raft实现线性化读 ✅ 读</description>
+    </item>
+    
+    <item>
+      <title>什么是顺序一致性，什么是分布式协议</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos_1.0/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos_1.0/</guid>
+      <description>吊打面试官系列:用1 个公式彻底理解线性一致性 一、 为什么要回答，通过模拟面试驱动，提前练习。 为了让激发你探索欲望，先拿出思考 60 秒下这个问题，期</description>
+    </item>
+    
+    <item>
+      <title>从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/</guid>
+      <description>https://wnso49yyot.feishu.cn/base/Wi37bwBTiaCpEZsFxavckkV5nbb?table=tblPUqR3ZoqKKLNW&amp;amp;view=vew40mV0G2 知识地图：操作系统&amp;ndash;文件子系统&amp;ndash;AI时时代分布式文件系统。 书接上回 企业案例:分布式存储产品架构性能优化总结 通过缝缝</description>
     </item>
     
     <item>
@@ -251,12 +440,48 @@
     </item>
     
     <item>
+      <title>企业案例03：分布式存储产品架构性能优化总结</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day18-system-desgin/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day18-system-desgin/</guid>
+      <description>一 、背景 假如现在你参与一个后端服务产品性能优化，该如何下手呢？ 上来直接优化那是万不行的，至少确定优化原则，重构，还是缝缝补补？ 目前我是要给普</description>
+    </item>
+    
+    <item>
+      <title>企业案例04:AI时代分布式存储产品架构长什么样</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day19-system-desgin-1/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day19-system-desgin-1/</guid>
+      <description>书接上回 企业案例03：分布式存储产品架构性能优化总结 是缝缝补补， 假如对一个模块重构有如何？ 这个你想到 c++中虚函数，java的接口类。 声明一</description>
+    </item>
+    
+    <item>
+      <title>吊打面试官03:Mysql如何存储目录树</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day17-system-desgin-03-dir-tree/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day17-system-desgin-03-dir-tree/</guid>
+      <description>一、青铜：前端开发展示一个多级菜单(目录) 1.1 题目描述 树状结构或层次结构的数据在企业应用里非常常见， 例如公司的组织架构、文档库的目录结构、 仓库</description>
+    </item>
+    
+    <item>
       <title>后端开发工程师面经</title>
       <link>https://wangcy6.github.io/post/interview/job/1-2025-5-job/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/interview/job/1-2025-5-job/</guid>
-      <description>第二次面试回顾 岗位信息 面试时间：2025-6-6 面试岗位 问题1： 什么是块存储? 我思考 不清楚不理解，面试官非要回答，面试不说卡，我就回答 我回答</description>
+      <description>第7次面试回顾 基本信息 时间：2025年7月3日，周三 地点：线上 岗位：分布式存储研发工程师 面试内容 第一题:你是怎么做优化的？ 1.1 我的回答 元数据：</description>
+    </item>
+    
+    <item>
+      <title>后端开发工程师面经</title>
+      <link>https://wangcy6.github.io/post/interview/job/day8-job-rember/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/job/day8-job-rember/</guid>
+      <description>第8次面试回顾： 一、 基本信息 1.1 公司：曙光信息产业股份有限公司 1.2 岗位：NVME全闪阵列高级研发工程师 岗位职责： 参与存储阵列的模块设计，配合架构</description>
     </item>
     
     <item>
@@ -275,6 +500,33 @@
       
       <guid>https://wangcy6.github.io/post/interview/7_2025-5-22-spin_lock/</guid>
       <description>网友提问： 为什么OB不采用 内核提供的 spin_lock() 自旋锁， 而是用户态态自己定义，并且还定义好多类型 ​ ​​短期临界区​​：优先ObSpinLock（轻量互</description>
+    </item>
+    
+    <item>
+      <title>想进大厂、想提升底层功力、想搞懂LRU缓存，这一篇就够了！</title>
+      <link>https://wangcy6.github.io/post/interview/leetcode/2025/leecode-lur/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/leetcode/2025/leecode-lur/</guid>
+      <description>点击蓝色关注。 文末有福利，先到先得 大厂面试手撸算法题已经是标配 ， 本文描述从青铜到王者不同阶段如何理解LRU缓 如果有更多疑问请留言 历史题目： Ceph</description>
+    </item>
+    
+    <item>
+      <title>最佳实践：Google文件系统为何不关心小文件，不关心一致性</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day16-gfs/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day16-gfs/</guid>
+      <description>知识地图: 项目架构&amp;ndash;Google文件系统 一、 GFS有很多特点，为何我只看为大文件存储设计这一个特点。 一次只解决一个问题 分布式文件</description>
+    </item>
+    
+    <item>
+      <title>最佳实践：XSKY借助英特尔SPDK提升Ceph性能</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day15/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day15/</guid>
+      <description>知识地图: 分布式存储&amp;ndash;Bluestore引擎 问：What SPDK can do to improve Ceph? 回答： 请看 Bluestore案例分享-扬子夜-王豪迈.pdf</description>
     </item>
     
     <item>
@@ -302,6 +554,15 @@
       
       <guid>https://wangcy6.github.io/post/interview/job/day2-company/</guid>
       <description>神仙公司（济南） 神仙公司系列 济南，速速安排 ，排名不分先后 先看 2024济南城市人才宣传片《我在济南刚刚好》 寻找一座刚刚好的城市 刚刚好的微风 刚刚</description>
+    </item>
+    
+    <item>
+      <title>简历投递</title>
+      <link>https://wangcy6.github.io/post/interview/job/day3-find-job/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/job/day3-find-job/</guid>
+      <description>点击蓝色关注。 文末有福利，先到先得 除了BOSS直聘，还有哪些简历投递方式？ 一、 内推（校招和社招） 通过内推发现不是没有面试机会，而是需要查缺补</description>
     </item>
     
     <item>
@@ -356,6 +617,15 @@
       
       <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/10-20250526-io-1.0/</guid>
       <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 阅读本文你将获得以下收益： 一、</description>
+    </item>
+    
+    <item>
+      <title>面试必备之深入理解thread local</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day16-sqlite-b&#43;&#43;/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day16-sqlite-b&#43;&#43;/</guid>
+      <description>知识地图：分布式数据库&amp;ndash; sqlite 参考来源：codedump 小思考 笔记 sqlite3.36版本 btree实现（零）- 起步及概述 来源：ht</description>
     </item>
     
     <item>
@@ -419,6 +689,15 @@
       
       <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025-05-29_v1.0_parll/</guid>
       <description>各位老师好，这是大厂面试拆解——项目实战系列的第8篇文章。 知识地图：深入理解计算机系统&amp;mdash;文件子系统 面试官提问：在高并发情况下，你</description>
+    </item>
+    
+    <item>
+      <title>成为讲师：通过短视频锻炼自己表达能力</title>
+      <link>https://wangcy6.github.io/post/future_for_ai/03-%E5%A4%A7%E6%A8%A1%E5%9E%8B/day1-/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/future_for_ai/03-%E5%A4%A7%E6%A8%A1%E5%9E%8B/day1-/</guid>
+      <description>7月3日 欢迎大家加入大模型技术方向夏令营助教天团！ 任务1： 10分钟完成 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 [昵称】小</description>
     </item>
     
   </channel>

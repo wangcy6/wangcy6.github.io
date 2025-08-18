@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>不是不努力，而是不健康 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/habit/02-%E5%91%A8%E5%A4%8D%E7%9B%98/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="不是不努力，而是不健康" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/habit/02-%E5%91%A8%E5%A4%8D%E7%9B%98/2025-%E5%B9%B4-6-%E6%9C%88-%E8%B5%B7%E5%BA%8A%E7%9B%AE%E6%A0%87/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="不是不努力，而是不健康">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3452">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="不是不努力，而是不健康"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">不是不努力，而是不健康</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 3452 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-工作会阻碍这个事情">2.1 工作会阻碍这个事情</a>
+      <ul>
+        <li><a href="#211-工作中直面最难一个问题是-什么">2.1.1 工作中直面最难一个问题是 什么</a></li>
+        <li><a href="#212--我是怎么思考的">2.1.2  我是怎么思考的</a></li>
+        <li><a href="#213-我潜在假设是什么">2.1.3 我潜在假设是什么</a></li>
+        <li><a href="#224-微调我假设">2.2.4 微调我假设</a></li>
+        <li><a href="#224-最小行动">2.2.4 最小行动</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-自己会阻碍这个事情">2.2 自己会阻碍这个事情</a>
+      <ul>
+        <li><a href="#221--自己为什么阻止实现早睡早起这个计划-最难一个问题是-什么">2.2.1  自己为什么阻止实现早睡早起这个计划 最难一个问题是 什么</a></li>
+        <li><a href="#222-我是怎么思考的">2.2.2 我是怎么思考的</a></li>
+        <li><a href="#223-我潜在假设是什么">2.2.3 我潜在假设是什么</a></li>
+        <li><a href="#224-微调我假设已经足够知识知识层面足够没说其他的">2.2.4 微调我假设：已经足够知识（知识层面足够）没说其他的</a></li>
+      </ul>
+    </li>
+    <li><a href="#23-各种手机厂商平台大-v-各种指标阻挡你">2.3 各种手机厂商，平台，大 V 各种指标阻挡你</a>
+      <ul>
+        <li><a href="#231--平台阻止入睡">2.3.1  平台阻止入睡</a></li>
+        <li><a href="#232-我思考是什么">2.3.2 我思考是什么</a></li>
+        <li><a href="#233-我假设是什么">2.3.3 我假设是什么</a></li>
+        <li><a href="#234-自己事情自己做">2.3.4 自己事情自己做</a></li>
+        <li><a href="#224-最小行动-1">2.2.4 最小行动</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#日期0608">日期：0608</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="1-只管去做目标九宫格-身体健康-6月">1. 只管去做目标九宫格 身体健康 6月</h1>
+<p><img src="https://s2.loli.net/2025/05/31/tADPyHg5u3r1ajl.png" alt="身体健康"></p>
+<p>不是不努力，而是不健康，</p>
+<p><!-- raw HTML omitted -->6 月份我的目标是：20 点 30 彻底放下手机和电脑，执行 R90 睡眠准备。我控制不是 睡眠 ，我控制 睡眠准备流程。<!-- raw HTML omitted --></p>
+<ul>
+<li>20 点35 完成： 放下手机和电脑（不记录不打卡），系好鞋带，进入电梯【5 分钟】</li>
+<li>21:30完成 ，刷牙洗脸剪指甲刮胡子，书桌移走显示器和笔记本（别嫌麻烦，这个事情累不着你）【30 分钟】</li>
+<li>21:45  完成 看一页书（看书不是我目的，主要隔离手机空间几分钟），拿出 2 分钟入睡宣言，去卧室读 1 次。（15 分钟）</li>
+<li>6:00 固定起床， 执行掀被子，穿衣服，脚落地面 动作（15 分钟）</li>
+<li>小孩睡我就睡（不低于），小孩起我就起（不低于），作息回答初中，高中状态</li>
+</ul>
+<p>通过反复执行 2 分钟睡前宣言，2 分钟自我起床自我激励宣言，</p>
+<ul>
+<li>让自己工作，学习，生活 全部 10 级水平</li>
+<li>让自己小孩每天快乐安心上学</li>
+<li>让自己父母方向少担心，健康长寿</li>
+<li>让邻居和睦相处</li>
+<li>然后教给 100个让他们这个方法收益</li>
+<li>然后教 1千 人让他们这个方法收益</li>
+<li>然后教 1万 人让他们这个方法收益</li>
+</ul>
+<h1 id="2-我已经目标这个是个目标全部条件有成长会支持我将直接实现这个目标遇到什么问题解决什么问题不找人任何借口">2. 我已经目标这个是个目标全部条件，有成长会支持，我将直接实现这个目标，遇到什么问题解决什么问题，不找人任何借口。</h1>
+<p>ABCC-PACE 思考框架 要主动去选择，不要陷入受害者模式
+觉察：现在发生了什么事情让我不舒服
+接纳：深呼吸，跳出情绪一点
+分析： 好奇地问自己发生了什么事情？定义清楚问题
+微调认知。微调原来想法
+聚焦行动（F - Focus）最小化行动
+<img src="https://s2.loli.net/2025/05/30/Ghbq9dfQ2nVNHDc.jpg" alt=""></p>
+<p>我可能遇到下面一个问题</p>
+<h2 id="21-工作会阻碍这个事情">2.1 工作会阻碍这个事情</h2>
+<h3 id="211-工作中直面最难一个问题是-什么">2.1.1 工作中直面最难一个问题是 什么</h3>
+<ul>
+<li>在工作中 ceo 每天百万千万行业，是战略，是方向 每天开会不停讨论，他们不关心什么睡眠，这样压力你 敢吗，变成对抗事情，别人把这个变成对抗事情</li>
+<li>在工作架构师，总监 每天处理 现场，重大问题，每天不停处理，他们不关心什么睡眠，这样压力你 敢吗，变成对抗事情，别人把这个变成对抗事情</li>
+<li>领导不停安排重复一个一个事情 不停处理。他们不关心什么睡眠，这样压力你 敢吗，变成对抗事情，别人把这个变成对抗事情</li>
+</ul>
+<p><strong>这事情无解，你换个思路</strong></p>
+<h3 id="212--我是怎么思考的">2.1.2  我是怎么思考的</h3>
+<ul>
+<li>别人开会，别人忙了解决问题，别人处理事情，作为公司一份子，我不吃喝玩乐</li>
+<li>别人看会我看着别人开会，别人处理问题看着别人处理问题，因此熬夜加班经常事情。</li>
+<li>管你屁事，别人开会不让参加，别人处理事情不让你参加，别人 事情完成不是完成。</li>
+<li><!-- raw HTML omitted -->结果陷入无穷无尽痛苦那种，从晚上忙碌晚上不说什么走做什么。变成最 懒那个人，最消极那个人<!-- raw HTML omitted --></li>
+</ul>
+<h3 id="213-我潜在假设是什么">2.1.3 我潜在假设是什么</h3>
+<p>学习不好，工作不好，最害怕领导批评，与公司违背，
+因此 100% 和他么保持一致，他们不高兴 ，失去公司，行业，
+做牛做马 ，
+这样可以避免不好事情方式。不</p>
+<p>他们就是希望能吵架能办事，他们过去10 年 20年 30 年形成一切期望方式。</p>
+<p>这个不你优势。</p>
+<p><strong>你价值 利用学习技术，学习方法，学习沟通处理，完成一个事情，</strong></p>
+<p><strong>这样能力 可以放到任何一个公司，一个平台，而不是不是说，我全力全力，不思考不公司不学，100 听话 可以，他们思考比你复杂的。</strong></p>
+<h3 id="224-微调我假设">2.2.4 微调我假设</h3>
+<ul>
+<li>不要说技术不行，我沟通不行能力不行你遇到这样情况，是全世界人都遇到这个情况。</li>
+<li>我让自己技术足够强，经过一个一个问题，一个一个项目，一个个公司连续，如果没有这联系，不行连续&mdash;&mdash;&mdash;公司不给你机会 他么承担不起，但是你自己想法找练习。</li>
+<li>让自己沟通掌握沟通方法，经过一个一个问题，一个一个项目，一个个公司连续，如果没有这联系你沟通枯萎，</li>
+<li>。。。。。。。。。。。</li>
+</ul>
+<h3 id="224-最小行动">2.2.4 最小行动</h3>
+<ul>
+<li>这个是早睡早起什么关系,你明白职场最大问题是什么，是跟假设有关系 的，你纠正假设，必须早睡早起就是做事情。你放心 是早睡早 就是绝对靠谱， 跟你 10000 % 有关系事情，其他不是</li>
+<li>这个过去上百次在这个反复复发，<strong>就是没有明确的问题，你需求</strong></li>
+</ul>
+<h2 id="22-自己会阻碍这个事情">2.2 自己会阻碍这个事情</h2>
+<h3 id="221--自己为什么阻止实现早睡早起这个计划-最难一个问题是-什么">2.2.1  自己为什么阻止实现早睡早起这个计划 最难一个问题是 什么</h3>
+<ul>
+<li>晚上好不容易时间，我学习考好大学</li>
+<li>晚上好不容易时间，我换工作，进入 bat</li>
+<li>晚上好不容易时间，我换方向，进入 新思考</li>
+<li>自然熬夜加班经常事情</li>
+</ul>
+<p>这个事情到这里无解。</p>
+<h3 id="222-我是怎么思考的">2.2.2 我是怎么思考的</h3>
+<ul>
+<li>我掌握足够知识，就可以</li>
+<li>我足够准备就可以了</li>
+<li>我足够就可以</li>
+</ul>
+<h3 id="223-我潜在假设是什么">2.2.3 我潜在假设是什么</h3>
+<ul>
+<li>害怕 新工作</li>
+<li>还没新 挑战</li>
+<li>还没新问题</li>
+<li>害怕失败，</li>
+<li>害怕努力无结果</li>
+<li>这样情况，不是你遇到，任何人都遇到，都同样 情况</li>
+<li>别人1 小时，1 天过去了，你 10 几年</li>
+</ul>
+<h3 id="224-微调我假设已经足够知识知识层面足够没说其他的">2.2.4 微调我假设：已经足够知识（知识层面足够）没说其他的</h3>
+<ul>
+<li>我足够知识，我去面试新工作，失败接受，不过再差不会比原来差，你接受新平台，公司，性行业洗礼，三个月 半年 都反馈结果</li>
+<li>在传统公司这样反馈很慢，可能 10 年工作，每天错误的，但是没有反馈你，最后反馈给你</li>
+<li>相比：18 年高考 努力 18 年 才说不合适，谁接受了，根本没时间调整</li>
+<li>相比：工作 3 年 5 年 10 年才说能力不好，沟通不好。用你时候不这么说。</li>
+<li>传统公司：找人 不经过考验马上招聘&mdash;&ndash;不浪费他们一点精力领导根本用心找人，他们从题目准备到</li>
+<li>传统公司：来项目 1 年 3 年 5 年日加班完成，&mdash;0 成本不叫人</li>
+<li>完成项目 取消部门公司人员&mdash;-0 成本。</li>
+<li>从开始到接受 0 成本投入，其他个一厢情愿。</li>
+<li>我必须快速失败，快速尝试 ，快去切入，任何公司，</li>
+<li>传统公司 9999% 他们自己不认为唯一，自己人物唯一。。</li>
+</ul>
+<h2 id="23-各种手机厂商平台大-v-各种指标阻挡你">2.3 各种手机厂商，平台，大 V 各种指标阻挡你</h2>
+<h3 id="231--平台阻止入睡">2.3.1  平台阻止入睡</h3>
+<ul>
+<li>别人提供百万千万手机，平台，综艺节目，电影，平台消息，通过他们收入看到</li>
+<li>我享受他们提供一切便利都是平台宣传的。</li>
+<li>例如 小米 华为 提供好看颜色手机，代养这样放哈</li>
+<li>例如：综艺 电影，电视剧 提供生活，</li>
+<li>各种大 V 直播，他们就是自己
+这个无解</li>
+</ul>
+<h3 id="232-我思考是什么">2.3.2 我思考是什么</h3>
+<ul>
+<li>他们提供什么我看什么，</li>
+<li>他们实现一切我有一切</li>
+<li>上事情一个 2 个事情，不是医护室</li>
+<li>现实痛苦的，遇到问题，无法解决</li>
+<li>别人解决一切问题，</li>
+<li>我从他们身上解决问题。</li>
+<li>这个假设 cow 的</li>
+</ul>
+<h3 id="233-我假设是什么">2.3.3 我假设是什么</h3>
+<ul>
+<li>他们提供手机，电视，电脑，我过去失败 1000 次，从手机不看开始，没有禁止电脑，电视，结果三个事情，1000% 看</li>
+<li>他们综艺，小小锁，电视剧，电影 ，我不看电影其他继续还是不行，</li>
+<li>我 0 定入睡改成 1 点  23 点 22 点 21 地点慢慢来结果 你还是 6 点看 7 点看 9 点看 21 点 23 点从来改变</li>
+<li>根本没变</li>
+</ul>
+<h3 id="234-自己事情自己做">2.3.4 自己事情自己做</h3>
+<ul>
+<li>只看恒温演员，导演大 v</li>
+<li>只看完成一切</li>
+<li>我</li>
+</ul>
+<h3 id="224-最小行动-1">2.2.4 最小行动</h3>
+<ul>
+<li>20 点放下一切手和电脑目标。</li>
+</ul>
+<h1 id="3-这个事情没有价值只自己赋予价值">3. 这个事情没有价值，只自己赋予价值，</h1>
+<p>最大问题是什么：</p>
+<p>在工作遇到问题，在生活遇到问题，交流遇到问题，上面问题出现，</p>
+<p>陷入痛上学疲累，
+陷入。。。</p>
+<p>你<strong>还想着  早睡早是个事情吗？不会</strong></p>
+<h1 id="4-只通过-2-分钟-有用吗">4. 只通过 2 分钟 有用吗？</h1>
+<p>谁出来 你不详细，</p>
+<p>工作：
+都是前面 百亿资源池，
+百亿用户
+，百亿就是，一切大学，
+还以为资源，
+别人 10 你积累 他们不相信。</p>
+<p>平台：
+百亿投入硬件厂商，平台 大 V 他们 不详细</p>
+<p>学习 生活</p>
+<p>他们不想</p>
+<p>但是解雇是</p>
+<h1 id="最有一步-不停练习">最有一步 不停练习</h1>
+<ul>
+<li>每天 2 分钟</li>
+<li>周五周六周天 1 周期 周二周周四一个走起</li>
+</ul>
+<h1 id="记录">记录</h1>
+<p>第一期：</p>
+<ul>
+<li>5 月 30 周五&mdash;&ndash;在沙发看手机，我卧室停客车</li>
+<li>5 月 31 周六&mdash;&mdash;为写文字 ，23 点 手机带卧室看 23</li>
+</ul>
+<p>日期：6月 1 日 周日
+入睡 时间 ：2 点
+起床时间 ：9 点：
+感觉：
+昨天：熬夜 2 点 看手机，避免直接入睡痛苦
+今天：9 点起床，最后一刻到了，虽然疲累但是避免起床痛苦
+晚睡晚起是避免痛苦 我的 我的问题就是 我的解决 方案，不选择，就是你选择</p>
+<p>昨天回顾
+1.20:30 到了 我知道离开手机 和 电脑，
+2.但是 为了写完 早睡计划结果 23 点 并且
+3 睡眠流程没准备，
+4 直接手机带入卧室，
+5 120 分钟 ： 手机带入卧室，自己双手拿着卧室，研究盯着 屏幕，不停 华东，还有良好网络，平台支持。6 个环节。
+5 你拿着手机 ，研究 看手机 结果看个不停</p>
+<p>6 第二天会议起立  什么内容都没有</p>
+<p>解决方案 ：
+必须 长期主义，
+20:30到休息时间了，为什么 不休息 ，一定把早睡计划写出来 就执念，结果写 23:00 &ndash;开始</p>
+<p>然后不洗刷，不 准备，然后带着手机进入卧室，结果网络，灯光，手不停拿着手机 ，研究看手机</p>
+<p>这个时候 理智很那起作用</p>
+<p><strong>2 分钟睡眠计划 没有准备好&mdash;没有打印出来，推迟好久，你从网络下载出来这个事情拖延没做</strong>。</p>
+<p>09 22</p>
+<h2 id="日期0608">日期：0608</h2>
+<p>入睡时间： 2点</p>
+<p>起床时间：10 点</p>
+<p>​睡觉状态：差，宁愿看手机 2 点，也不愿意拿出 R90 执行。23 点可以的，</p>
+<p>23 点睡前R90 没执行，结果直接拿手机到卧室，中断睡眠流程，微信视频号 在火 ，自己不在手机上，不主动手机看，你电脑上看 改变看方式。</p>
+<p>看千万次微信视频内容=0，我下载下来然后在看这就我要求。</p>
+<p>不在线看视频，下载看，短视频也是如此。</p>
+<p>最小行动</p>
+<ol>
+<li>手机不卧室必要条件 执行 R90 睡前准备，而不是告诉自己收不放入卧室，没有行动 一切告诫无用</li>
+<li>在电脑完成操作代替手机，大家都是微信好很火都挤过来，你手机看微信 视频好合情合理，和之前抖音各种一样，别人当成工具，输出 自己，你不听消费内容不一样，手机上原理，自己 2 个小时为研究上，这样算法控制更可怕</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/job/day3-job-inter/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">【换工作】别想太多--只管去面</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/day11-what-is-paxos-v1.0/">
+            <span class="next-text nav-default">什么是顺序一致性，什么是分布式协议</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

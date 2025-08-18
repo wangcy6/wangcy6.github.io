@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Datawhale AI夏令营第一期，大模型技术 方向 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/day2-Datawhale/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Datawhale AI夏令营第一期，大模型技术 方向" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/day2-Datawhale/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-05-09T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-05-09T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Datawhale AI夏令营第一期，大模型技术 方向">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3200">
+<meta itemprop="keywords" content="小而美,AIGC从青铜到王者," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Datawhale AI夏令营第一期，大模型技术 方向"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Datawhale AI夏令营第一期，大模型技术 方向</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-05-09 00:00 </span>
+        
+          <span class="more-meta"> 约 3200 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#2025-7-6">2025-7-6</a></li>
+    <li><a href="#今天的任务是什么">今天的任务是什么</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#环境搭建">环境搭建：</a></li>
+        <li><a href="#第三天-7月10日">第三天 7月10日</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="2025-7-6">2025-7-6</h2>
+<h2 id="今天的任务是什么">今天的任务是什么</h2>
+<p>话术：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">
+👏欢迎参加Datawhale夏令营，可以看一下群公告哦，【零基础】跑通一站式baseline！ 我们的学习已经开始了
+Step1：30分钟，零基础跑通Baseline获得结果
+【baseline链接】：https://www.datawhale.cn/activity/324/learn/191/4314/6/5
+
+Step2：完成打卡，打卡就在教程右侧哦
+
+🎁Tips：打卡完在群公告处有抽奖噢，先到先得～
+</code></pre></td></tr></table>
+</div>
+</div><p>任务地址：https://www.datawhale.cn/activity/324/learn/191/4314/6/5</p>
+<p>baseline出来啦！大家来测试一下，
+跑完的助教们接下龙说一下跑了多久+多少分+想法/反馈（专业助教们一定要跑哈）</p>
+<p>带货视频评论洞察baseline：https://datawhaler.feishu.cn/wiki/N4cLwvLJxiArbVkeyfAcBjOmnce</p>
+<p>宝子们！特大好消息来啦～🎉 今晚9点咱们要开启文字结营啦！从最开始的学习打卡，到攻克一个个知识难关，大家这段时间的努力真的超棒！不管是熬夜写笔记，还是反复抠知识点，每一份付出都闪闪发光～等晚上一起唠唠学习趣事，分享收获，不见不散！</p>
+<p>@所有人 夏令营活动上线啦，各个赛道助教可以报名自己负责的方向哦～所有助教必须报名哈，否则无法看到教程和打卡</p>
+<p>大模型技术https://www.datawhale.cn/activity/324?sourceId=1499
+机器学习https://www.datawhale.cn/activity/323
+MCP Serverhttps://www.datawhale.cn/activity/322</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="err">各位同学大家好！欢迎大家参加</span><span class="mi">2025</span> <span class="n">Datawhale</span> <span class="n">AI</span> <span class="err">夏令营</span><span class="o">-</span> <span class="err">大模型技术方向</span>
+<span class="err">请大家先改下群备注，姓名</span><span class="o">-</span><span class="err">学校</span><span class="o">/</span><span class="err">在职</span><span class="o">-</span><span class="err">专业</span><span class="o">/</span><span class="err">岗位</span>
+<span class="o">-----------------------</span>
+<span class="err">【开营预热】强烈推荐【零基础跑通</span><span class="n">baseline</span><span class="err">】并参与抽奖！</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//www.datawhale.cn/activity/324/learn/191/4314/6/5
+</span><span class="c1"></span>
+<span class="err">大家跑通</span><span class="n">baseline后记得在赛事网页提交获得分数</span><span class="err">，教程右侧进行打卡抽奖哦</span>
+
+<span class="err">【抽奖链接】</span>
+<span class="nl">https</span><span class="p">:</span><span class="c1">//exn8g66dnwu.feishu.cn/share/base/form/shrcnwWgdu6EheUUd2sY0seC7hf
+</span><span class="c1"></span><span class="o">-------------------------</span>
+<span class="err">【开营仪式】人满</span><span class="mi">200</span><span class="err">人之后我们在本群进行开营仪式哦</span>
+<span class="o">-------------------------</span>
+<span class="err">【本次学习完全免费，有任何人加你们好友说要付费</span><span class="o">/</span><span class="err">推荐付费课程，都是诈骗。如有遇到，欢迎举报信息给官方企微号：小鲸鱼@</span><span class="n">Datawhale</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="一赛事背景">一、赛事背景</h1>
+<p>在电商直播爆发式增长的数字化浪潮下，短视频平台积累了海量带货视频及用户互动数据。这些数据不仅是消费者对商品体验的直接反馈，更蕴含着驱动商业决策的深层价值。在此背景下，基于带货视频评论的用户洞察分析，已成为品牌优化选品策略、评估网红带货效能的关键突破口。</p>
+<p>带货视频评论用户洞察的核心逻辑，在于对视频内容与评论数据的联合深度挖掘。通过智能识别视频中推广的核心商品，结合评论区用户的情感表达与观点聚合，企业能够精准捕捉消费者对商品的真实态度与需求痛点。这种分析方式不仅能揭示用户对商品功能、价格、服务的多维评价，还可通过情感倾向聚类，构建消费者偏好画像，为选品策略优化和网红合作评估提供数据支撑。</p>
+<p>本挑战赛聚焦&quot;商品识别-情感分析-聚类洞察&quot;的完整链条：参赛者需先基于视频内容建立商品关联关系，进而从非结构化评论中提取情感倾向，最终通过聚类总结形成结构化洞察。这一研究路径将碎片化的用户评论转化为可量化分析的商业智能，既可帮助品牌穿透数据迷雾把握消费心理，又能科学评估网红的内容种草效果与带货转化潜力，实现从内容营销到消费决策的全链路价值提升。在直播电商竞争白热化的当下，此类分析能力正成为企业构建差异化竞争优势的核心武器。</p>
+<h1 id="二赛事任务">二、赛事任务</h1>
+<p>参赛者需基于提供的带货视频文本及评论文本数据，完成以下三阶段分析任务：</p>
+<p>1）【商品识别】精准识别推广商品；</p>
+<p>2）【情感分析】对评论文本进行多维度情感分析，涵盖维度见数据说明；</p>
+<p>3）【评论聚类】按商品对归属指定维度的评论进行聚类，并提炼类簇总结词。</p>
+<p><a href="https://www.datawhale.cn/activity/324/learn/191/4314/6/5">https://www.datawhale.cn/activity/324/learn/191/4314/6/5</a></p>
+<h3 id="环境搭建">环境搭建：</h3>
+<p><a href="https://www.modelscope.cn/my/mynotebook/preset">Step2：启动魔搭Notebook！</a></p>
+<p>新用户需要先注册魔搭</p>
+<p><img src="https://datawhale-business.oss-cn-hangzhou.aliyuncs.com/image/51bbb97d-df91-4ea8-abc8-ee66dc1d33f4.png" alt=""></p>
+<p><img src="https://datawhale-business.oss-cn-hangzhou.aliyuncs.com/image/20f46371-4f75-46e4-9005-c6555d4a8079.png" alt=""></p>
+<p>选择【方式一：CPU】、启动！</p>
+<p><img src="https://datawhale-business.oss-cn-hangzhou.aliyuncs.com/image/7b16e828-c925-4b07-bfde-2cfc21b74aaf.png" alt=""></p>
+<p><img src="https://datawhale-business.oss-cn-hangzhou.aliyuncs.com/image/7d8e88a8-016c-409b-af3d-40589ae72329.png" alt=""></p>
+<p>git lfs install
+git clone <a href="https://www.modelscope.cn/datasets/Datawhale/AISumerCamp_video_comments_insights_baseline.git">https://www.modelscope.cn/datasets/Datawhale/AISumerCamp_video_comments_insights_baseline.git</a></p>
+<p><img src="https://datawhale-business.oss-cn-hangzhou.aliyuncs.com/dashboard/dipwap/1751709456946/image.png" alt=""></p>
+<p>一键运行：
+<img src="https://datawhale-business.oss-cn-hangzhou.aliyuncs.com/dashboard/dipwap/1751709542940/image.png" alt=""></p>
+<p>恭喜！你已超越了80%新手、成功突破了**「用AI完成用户洞察」**的‘从0到1’：</p>
+<p>✅ 从视频描述中 <strong>抓出🔍商品</strong>（<strong>文本分类</strong>）</p>
+<p>✅ 自动<strong>标记</strong>用户<strong>情绪</strong>😄（多维度<strong>情感分析</strong>）</p>
+<p>✅ 把相似评论打包🗂️ 成组（<strong>聚类</strong>）</p>
+<p>稍等片刻后，刷新即可看到分数！分数应该在 176分左右~</p>
+<p>非常欢迎大家参加本期夏令营学习助教，大家有任何问题都可以提出来~千万不要害羞</p>
+<p>我们真诚的希望可以做到For the learner 和学习者一起学习，而这都依赖于大家的出色表现，给大家的福利加码！</p>
+<p>①助教只要表现优秀，都可以获得积分，积分可兑换夏令营专属文创礼品（后续会公布）
+②积分到一定门槛就可以直接获得【实习证明】（基本2次优秀助教就可以满足！）</p>
+<p>【优秀助教标准】
+硬指标：群打卡率40%以上
+软指标：认真负责，负责人安排的事项落实到位，学习者体验良好</p>
+<p>录制：助教培训回放
+日期：2025-07-06 19:38:38
+录制文件：https://meeting.tencent.com/crm/l6bG88b9f3</p>
+<p>各位助教们好，这里是群公告小助手（有助教手册、日程安排、助教激励、名单）
+助教手册：
+<a href="https://exn8g66dnwu.feishu.cn/docx/XHh2d5ngjo4bcBxgiHxcTFEJnne?from=from_copylink">https://exn8g66dnwu.feishu.cn/docx/XHh2d5ngjo4bcBxgiHxcTFEJnne?from=from_copylink</a></p>
+<p>【Task01_零基础跑通baseline】<br>
+截止时间：7月10日 24:00</p>
+<p>📍今晚24:00我们方向Task01就截止打卡了</p>
+<p>截止时间：7月10日 24：00</p>
+<p>⚠️结营证书、优秀学习者证书都是以打卡为准</p>
+<p>@</p>
+<p>今晚24:00我们方向Task01就截止打卡了
+Task1还没打卡，✅15分钟跑一下baseline，教程右侧打卡即可</p>
+<p><a href="https://www.datawhale.cn/activity/324/learn/191/4314/6/5">https://www.datawhale.cn/activity/324/learn/191/4314/6/5</a></p>
+<h3 id="第三天-7月10日">第三天 7月10日</h3>
+<p>目标：# 三、你能读懂多少Baseline信息？
+<a href="https://www.datawhale.cn/activity/324/learn/191/4314/6/5">https://www.datawhale.cn/activity/324/learn/191/4314/6/5</a></p>
+<p>打开服务端地址</p>
+<p><a href="https://www.modelscope.cn/my/mynotebook/preset">https://www.modelscope.cn/my/mynotebook/preset</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>核心信息</strong></td>
+<td><strong>信息详情</strong></td>
+</tr>
+<tr>
+<td><strong>赛事链接</strong></td>
+<td><a href="https://challenge.xfyun.cn/h5/detail?type=video-comment-insight&amp;ch=dwsfsp25-1">https://challenge.xfyun.cn/h5/detail?type=video-comment-insight&amp;ch=dwsfsp25-1</a></td>
+</tr>
+<tr>
+<td><strong>赛题任务类型</strong></td>
+<td>文本分类、文本聚类</td>
+</tr>
+<tr>
+<td><strong>Baseline 代码仓库</strong></td>
+<td><a href="https://www.modelscope.cn/datasets/Datawhale/AISumerCamp_video_comments_insights_baseline.git">https://www.modelscope.cn/datasets/Datawhale/AISumerCamp_video_comments_insights_baseline.git</a></td>
+</tr>
+<tr>
+<td><strong>Baseline概况</strong></td>
+<td>- 所用编程语言：python<!-- raw HTML omitted -->    <!-- raw HTML omitted -->- 使用的python库：pandas, sklearn<!-- raw HTML omitted -->    <!-- raw HTML omitted -->- 测评分数：约为176</td>
+</tr>
+<tr>
+<td><strong>代码运行环境</strong></td>
+<td>Python 3.8+8核CPU、约30分钟</td>
+</tr>
+<tr>
+<td><strong>方案要点</strong></td>
+<td>1. 读取数据：<code>origin_comments_data.csv</code> 和 <code>origin_videos_data.csv</code><!-- raw HTML omitted -->    <!-- raw HTML omitted -->2. 商品识别：使用视频文本信息，预测推广商品名称<!-- raw HTML omitted -->    <!-- raw HTML omitted -->    <code>&lt;br&gt;    1. 使用jieba进行中文分词&lt;br&gt;    2. 使用TF-IDF将文本转换为特征向量（限制最多50个特征）&lt;br&gt;    3. 使用SGDClassifier进行分类预测&lt;br&gt;    </code><!-- raw HTML omitted -->    <!-- raw HTML omitted -->3. 情感分析：对四个评论维度（情感倾向、用户场景、用户疑问、用户建议）进行分类预测<!-- raw HTML omitted -->    <!-- raw HTML omitted -->    <code>&lt;br&gt;    1. 使用jieba分词&lt;br&gt;    2. 使用TF-IDF向量化&lt;br&gt;    3. 使用SGDClassifier进行分类&lt;br&gt;    </code><!-- raw HTML omitted -->    <!-- raw HTML omitted -->4. 评论聚类：对五个聚类维度（正面、负面、用户场景、用户疑问、用户建议）聚类并生成聚类主题词<!-- raw HTML omitted -->    <!-- raw HTML omitted -->    <code>&lt;br&gt;    1. 使用jieba分词&lt;br&gt;    2. 使用TF-IDF向量化&lt;br&gt;    3. 使用KMeans聚类&lt;br&gt;    </code><!-- raw HTML omitted -->    <!-- raw HTML omitted -->5. 保存结果并压缩成提交文件 <code>submit.zip</code></td>
+</tr>
+<tr>
+<td><strong>相关知识点</strong></td>
+<td>1. <strong>文本编码（Text Encoding）</strong><!-- raw HTML omitted -->    <!-- raw HTML omitted -->2. <strong>文本分类（Text Classification）</strong></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://s2.loli.net/2025/07/10/hNJ6Tu3VFl4oALx.png" alt=""></p>
+<p>代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">video_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;origin_videos_data.csv&#34;</span><span class="p">)</span>
+<span class="n">comments_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;origin_comments_data.csv&#34;</span><span class="p">)</span>
+<span class="n">video_data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> 
+<span class="o">//</span><span class="err">功能：从序列</span><span class="n">a中随机抽取n个元素</span><span class="err">，并将</span><span class="n">n个元素生以list形式返回</span>
+
+<span class="n">comments_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="o">//</span><span class="n">Return</span> <span class="n">the</span> <span class="n">first</span> <span class="n">n</span> <span class="n">rows</span><span class="o">.</span>
+<span class="n">video_data</span><span class="p">[</span><span class="s2">&#34;text&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">video_data</span><span class="p">[</span><span class="s2">&#34;video_desc&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span> <span class="o">+</span> <span class="n">video_data</span><span class="p">[</span><span class="s2">&#34;video_tags&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+
+
+<span class="kn">import</span> <span class="nn">jieba</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+
+<span class="n">kmeans_predictor</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="n">jieba</span><span class="o">.</span><span class="n">lcut</span><span class="p">),</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">kmeans_predictor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">comments_data</span><span class="p">[</span><span class="n">comments_data</span><span class="p">[</span><span class="s2">&#34;user_question&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">1</span><span class="p">])][</span><span class="s2">&#34;comment_text&#34;</span><span class="p">])</span>
+
+
+<span class="n">kmeans_cluster_label</span> <span class="o">=</span> <span class="n">kmeans_predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">comments_data</span><span class="p">[</span><span class="n">comments_data</span><span class="p">[</span><span class="s2">&#34;user_question&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">1</span><span class="p">])][</span><span class="s2">&#34;comment_text&#34;</span><span class="p">])</span>
+
+<span class="n">kmeans_top_word</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">kmeans_predictor</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s1">&#39;tfidfvectorizer&#39;</span><span class="p">]</span>
+<span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">kmeans_predictor</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s1">&#39;kmeans&#39;</span><span class="p">]</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">cluster_centers_</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kmeans_model</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+    <span class="n">top_feature_indices</span> <span class="o">=</span> <span class="n">cluster_centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">top_word</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">feature_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">top_feature_indices</span><span class="p">[:</span><span class="n">top_n_words</span><span class="p">]])</span>
+    <span class="n">kmeans_top_word</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top_word</span><span class="p">)</span>
+
+<span class="n">comments_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">comments_data</span><span class="p">[</span><span class="s2">&#34;user_question&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="s2">&#34;question_cluster_theme&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">kmeans_top_word</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">kmeans_cluster_label</span><span class="p">]</span>
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>处理缺失值​</strong>​：</p>
+<ul>
+<li><code>fillna(&quot;&quot;)</code>：将 <code>video_desc</code> 和 <code>video_tags</code> 列中的缺失值（NaN）替换为空字符串</li>
+<li>避免因为 NaN 值导致字符串拼接失败（NaN + 字符串 = NaN）</li>
+</ul>
+<p><a href="https://scikit-learn.org/stable/">https://scikit-learn.org/stable/</a></p>
+<p>scikit-learn 是 Python 生态系统中广泛使用的一个开源库，专为机器学习相关任务而设计。</p>
+<p>它基于 NumPy、SciPy 和 Matplotlib 构建，提供一套强大的工具和算法，用于执行数据分析、预处理、模型开发和评估等机器学习任务。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-05-09 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          <a href="/tags/AIGC%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/">AIGC从青铜到王者</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/2025/05_draw_pic/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Ai工具Cursor 无限续杯,亲测可用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/2025/07-write-/">
+            <span class="next-text nav-default">一问多发</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>大厂面试题精选:分布式协议不保证线性一致性读如何解决？ - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v3.0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="大厂面试题精选:分布式协议不保证线性一致性读如何解决？" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v3.0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-07-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-07-06T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="大厂面试题精选:分布式协议不保证线性一致性读如何解决？">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-07-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-07-06T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4789">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="大厂面试题精选:分布式协议不保证线性一致性读如何解决？"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">大厂面试题精选:分布式协议不保证线性一致性读如何解决？</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-07-06 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 4789 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#知识地图并发">知识地图:并发</a>
+      <ul>
+        <li><a href="#第一题线性一致性与顺序一致性区别">第一题：线性一致性与顺序一致性区别</a></li>
+      </ul>
+    </li>
+    <li><a href="#一-为什么要回答通过模拟面试驱动提前练习">一、 为什么要回答，通过模拟面试驱动，提前练习。</a></li>
+    <li><a href="#二先定义清楚问题是什么学习路径">二、先定义清楚问题是什么，学习路径</a>
+      <ul>
+        <li><a href="#11-目标与学习方法-">1.1 目标与学习方法 ：</a></li>
+      </ul>
+    </li>
+    <li><a href="#三-tikv如何实现线性一致性">三. TiKV如何实现线性一致性</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#四-tikv源码阅读">四. TiKv源码阅读</a></li>
+    <li><a href="#一readindex-流程简述">一、ReadIndex 流程简述</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#一readindex-流程简述-1">一、ReadIndex 流程简述</a></li>
+    <li><a href="#二核心代码位置与实现">二、核心代码位置与实现</a>
+      <ul>
+        <li><a href="#1-入口peer-处理-readindex-请求peerrs">1. 入口：Peer 处理 ReadIndex 请求（peer.rs）</a></li>
+        <li><a href="#2-pending_reads-队列推进与回调peerrs">2. pending_reads 队列推进与回调（peer.rs）</a></li>
+        <li><a href="#3-apply-index-与-commit-index-的来源peer_storagers">3. apply index 与 commit index 的来源（peer_storage.rs）</a></li>
+        <li><a href="#4-相关元数据结构体kvproto">4. 相关元数据结构体（kvproto）</a></li>
+        <li><a href="#5-线性一致性保证的关键">5. 线性一致性保证的关键</a></li>
+      </ul>
+    </li>
+    <li><a href="#三流程图mermaid">三、流程图（Mermaid）</a></li>
+    <li><a href="#四总结">四、总结</a>
+      <ul>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="知识地图并发">知识地图:并发</h2>
+<p>把面试陪练 你会越战越勇，
+本文深入剖析大厂面试，
+希望对你有帮助。
+如果有任何疑问，欢迎留言提问。</p>
+<p><img src="https://s2.loli.net/2025/07/07/MjWQxaczJKXYGNp.png" alt="总结1-组队学习，打boss"></p>
+<h3 id="第一题线性一致性与顺序一致性区别">第一题：线性一致性与顺序一致性区别</h3>
+<p><img src="https://s2.loli.net/2025/07/06/beW9SKH5Ci7V2qr.jpg" alt="总结1-什么是线性一致性">
+问题1我的回答：</p>
+<p><img src="https://s2.loli.net/2025/07/07/gocyakhI9WfU4Pu.png" alt="总结3-并发领域"></p>
+<p>正式开始</p>
+<h2 id="一-为什么要回答通过模拟面试驱动提前练习">一、 为什么要回答，通过模拟面试驱动，提前练习。</h2>
+<p><img src="https://s2.loli.net/2025/07/01/qBsvenyjGwDcxPQ.png" alt=""></p>
+<p>面试官： 分布式协议工程优化实践？</p>
+<p>为了让激发你探索欲望，先拿出思考 60 秒下这个问题，期间。</p>
+<ul>
+<li>
+<p>暂停手机滑动</p>
+</li>
+<li>
+<p>停敲击键盘</p>
+</li>
+<li>
+<p>更不需要上网查询</p>
+</li>
+<li>
+<p>这里上来不会直接给出答案</p>
+</li>
+</ul>
+<p>你可以趁着下面时间想一样</p>
+<ul>
+<li>
+<p>中午倒茶水时间</p>
+</li>
+<li>
+<p>在中午吃饭路上</p>
+</li>
+<li>
+<p>下午溜达时候</p>
+</li>
+</ul>
+<blockquote>
+<p>想不出来没有任何关系，就当一60秒放松，</p>
+</blockquote>
+<blockquote>
+<p>这个不需要背诵，甚至花时间探索，<strong>我帮助你研究一些没用知识</strong>，</p>
+</blockquote>
+<p>60 秒思考结束</p>
+<p>先说什么公式，</p>
+<ul>
+<li>
+<p>如果2 个操A,B并发执行，</p>
+</li>
+<li>
+<p>他们执行顺序执行不是唯一的，可能AB 或者 BA</p>
+</li>
+</ul>
+<p>就是这么简单，开始。</p>
+<h2 id="二先定义清楚问题是什么学习路径">二、先定义清楚问题是什么，学习路径</h2>
+<h3 id="11-目标与学习方法-">1.1 目标与学习方法 ：</h3>
+<p>✅  <!-- raw HTML omitted -->目标：了解基本概念<!-- raw HTML omitted --></p>
+<p> 1. 什么是顺序一致性</p>
+<p> 2. 什么线程一致性</p>
+<p> 3. 顺序一致性与线程一致性他们之间区别？</p>
+<p> 4. 在工程实践中，做哪些优化（本章任务）</p>
+<p>✅  <!-- raw HTML omitted -->学习方法<!-- raw HTML omitted --></p>
+<ol>
+<li>
+<p>阅读 陈东明老师的&laquo;分布式系统与一致性&raquo;<img src="https://s2.loli.net/2025/07/01/AWGFEjxXuk58J2e.png" alt=""></p>
+</li>
+<li>
+<p>阅读唐伟志老师的 &laquo;深入理解分布式存储系统&raquo;<img src="https://s2.loli.net/2025/07/01/T1jWSK8xIpeoFiY.png" alt=""></p>
+</li>
+<li>
+<p>了解TiKV/Etcd源码实现过程，先模仿在创造。</p>
+</li>
+</ol>
+<p><img src="https://s2.loli.net/2025/07/01/FDpvi4VEamrBtKT.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/01/Yj9HPNXTgwcdsLo.png" alt="https://www.qiyacloud.cn"></p>
+<p><img src="https://files.mdnice.com/user/5197/b1b720b6-65dc-4e50-b418-452b97cbfac2.png" alt=""></p>
+<ol start="4">
+<li>动手练习 写无锁LRU 队列</li>
+</ol>
+<p>    阅读：C++并发编程实战，java并发编程实战</p>
+<p><img src="https://s2.loli.net/2025/07/01/YkAo54bWFZqBmhC.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/01/fEQxyumiSWvI7sw.png" alt=""></p>
+<ol start="5">
+<li>提交 pr,提交 pr（最关键关键一步）</li>
+</ol>
+<h2 id="三-tikv如何实现线性一致性">三. TiKV如何实现线性一致性</h2>
+<h4 id="21--readindex-解决什问题">2.1  ReadIndex 解决什问题：</h4>
+<p><img src="https://pic3.zhimg.com/v2-84de9e4012ca4d15b9bf6b67cfe0b9a2_1440w.jpg" alt=""></p>
+<p><!-- raw HTML omitted -->小青提问：采用共识算法，就一定保证线性一致性？<!-- raw HTML omitted --></p>
+<p>小义回答: 一个分布式系统正确实现了共识算法并不意味着能线性一致.</p>
+<p>如图上面一个写操作分为12 34 个步骤</p>
+<p>以 TiKV 为例整体架构如下图所示，
+consensus 就是 Raft 模块，
+state machine 就是 RocksDB 模块，
+两者通过 Log 进行交互</p>
+<p>一致性算法的任务是保证复制日志的一致性 解决2和3的问题</p>
+<p>以 Raft 为例，它只能保证不同节点对 Raft Log（以下简称 Log）能达成一致。</p>
+<p>那么 Log 后面的状态机（state machine）的一致性呢？</p>
+<p>并没有做详细规定，用户可以自由实现</p>
+<h5 id="font-colorff0000小青提问readindex-用于在-raft-协议中实现线性一致性的读请求如何理解font"><!-- raw HTML omitted -->小青提问：ReadIndex 用于在 Raft 协议中实现线性一致性的读请求？如何理解<!-- raw HTML omitted --></h5>
+<p>线性一致性 即，确保读取操作看到的日志状态至少与最新提交的状态一致</p>
+<p>readIndex read ：是一种读的请求，获取当前时刻能保证线性一致的 Raft log index，保证线性一致性</p>
+<p>参考资料：</p>
+<ul>
+<li>TiKV 源码解析系列文章（十九）read index 和 local read 情景分析
+<a href="https://cn.pingcap.com/blog/tikv-source-code-reading-19/">https://cn.pingcap.com/blog/tikv-source-code-reading-19/</a></li>
+</ul>
+<p><strong>ReadIndex 的流程本质是：用 commit index 作为读点，通过大多数节点确认 Leader 身份，并等待 apply index ≥ commit index，确保线性一致性。</strong></p>
+<h5 id="font-colorff0000小青提问2-raft算法日志复制过程中的applied和committed的区别font"><!-- raw HTML omitted -->小青提问2： raft算法日志复制过程中的applied和committed的区别<!-- raw HTML omitted --></h5>
+<p>资料：https://github.com/maemual/raft-zh_cn</p>
+<ul>
+<li>committed状态是什么呢【步骤2】</li>
+</ul>
+<p>论文原始定义就是一个entry完成了在大多数节点上，也就是超半数节点上完成了复制就可以称作为committed状态。</p>
+<ul>
+<li>applied 状态是什么？【步骤3】</li>
+</ul>
+<p>就是当commitIndex大于lastApplied的时候，自增lastApplied,然后将日志应用到状态机</p>
+<p>All Servers:
+If commitIndex &gt; lastApplied: increment lastApplied,
+apply log[lastApplied] to state machine (§5.3)</p>
+<ul>
+<li><strong>commit index</strong> 只保证“日志不会丢”，但还没被真正执行。</li>
+<li><strong>apply index</strong> 才保证“数据已经对外可见”，可以安全地读</li>
+</ul>
+<p>1. <strong>被大多数节点确认（commit index）</strong></p>
+<ul>
+<li>指的是：<strong>某条日志已经被 Raft 集群大多数节点写入本地日志文件</strong>，Leader 就可以把它标记为“已提交”（commit）。</li>
+<li>这个过程只保证了“日志数据已经安全地分发到大多数节点”，但还没有保证这些日志已经被状态机（比如 RocksDB）真正执行。</li>
+</ul>
+<p>2. <strong>本地应用（apply index）</strong></p>
+<ul>
+<li>指的是：<strong>本地状态机已经把这条日志真正执行了</strong>（比如写入 RocksDB）。</li>
+<li>只有 apply index ≥ commit index，才能保证你读到的数据是“线性一致”的。</li>
+</ul>
+<hr>
+<p>例子</p>
+<p>假设有一条日志 index=10：</p>
+<ul>
+<li>Leader 把日志 10 发送给 Follower，等大多数 Follower 都写入了日志文件，Leader 的 commit index 就可以推进到 10。</li>
+<li>但此时，Follower 可能还没来得及 apply 这条日志到 RocksDB（状态机），它的 apply index 还是 9。</li>
+<li>只有 apply 线程把日志 10 应用到 RocksDB 后，apply index 才变成 10。</li>
+</ul>
+<p>在标准 Raft 协议中, ReadIndex 操作用于确保线性一致性读取(linearizable read). 这个操作要求 Leader 在处理读请求前,</p>
+<ul>
+<li>确认自己的 leadership 是仍然合法的,</li>
+<li>且任何已被读到的 log (不论是在当前 node 还是在其他 node 上读到的)仍能被读到.</li>
+</ul>
+<h5 id="font-colorff0000小青提问3-具体流程是什么怎么保证在任何一个节点上读到都是正确的font"><!-- raw HTML omitted -->小青提问3： 具体流程是什么，怎么保证，在任何一个节点上读到都是正确的<!-- raw HTML omitted --></h5>
+<p>小义：</p>
+<p>在 Raft 中 ReadIndex 的标准处理步骤如下：</p>
+<ul>
+<li><strong>步骤-1</strong>. Leader 检查自己当前 Term 的 log 是否已提交. 如果没有, 放弃读, 返回, 等待当前 Term 的 log 提交.</li>
+<li><strong>步骤-2</strong>. Leader 取当前的 CommitIndex 作为 ReadIndex .</li>
+<li><strong>步骤-3</strong>. 向 quorum 发送 heartbeat , 确认自己是唯一的 Leader.</li>
+<li><strong>步骤-4</strong>. 等待 AppliedIndex 达到或超过 ReadIndex 再对 StateMachine 进行读取操作.</li>
+<li></li>
+</ul>
+<p>标准 Raft 实现的 ReadIndex 流程</p>
+<ol>
+<li>
+<p><strong>Leader 记录当前 commit index（ReadIndex</strong></p>
+<ul>
+<li>Leader 收到 ReadIndex 请求时，先记录当前 commit index，作为本次读请求的 ReadIndex。</li>
+</ul>
+</li>
+<li>
+<p><strong>Leader 向集群广播心跳（MsgReadIndex）</strong></p>
+<ul>
+<li>Leader 向所有 Follower 发送带有 context 的心跳（MsgReadIndex），请求大多数节点响应。</li>
+</ul>
+</li>
+<li>
+<p><strong>大多数节点响应，确认 Leader 身份</strong></p>
+<ul>
+<li>只有当大多数节点回复，Leader 才能确认自己仍然是合法 Leader，避免脑裂。</li>
+</ul>
+</li>
+<li>
+<p><strong>等待状态机应用到 ReadIndex</strong></p>
+<ul>
+<li>Leader 必须等待本地状态机（即 Region 的 apply index）至少应用到 ReadIndex 位置，确保所有已提交日志都已被应用。</li>
+</ul>
+</li>
+<li>
+<p><strong>执行读请求并返回结果</strong></p>
+<ul>
+<li>一旦状态机应用到 ReadIndex，Leader 执行读请求，将结果返回给客户端。 的数据也一定能在这次 read 中被读到, 也就是 Linearizable read</li>
+</ul>
+</li>
+</ol>
+<p>Raft 中为了保证线性一致性，有个安全原则叫：</p>
+<blockquote>
+<p>“Leader 必须在当前任期提交过日志，才能安全提供只读请求”。</p>
+</blockquote>
+<p>这是为了防止脑裂或 Leader 回退，避免数据不一致
+tikv-raft 的 ReadIndex 实现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/tikv/raft-rs/blob/65a00620d80a89603c3358fd4b90265a692ae767/src/raft.rs#L2108-L2145
+
+// 当收到 MsgReadIndex 类型的消息时（即客户端发起只读请求）
+MessageType::MsgReadIndex =&gt; {
+    // 检查当前 Leader 是否已经提交了当前任期（current_term）内的至少一条日志
+    if !self.commit_to_current_term() {
+        // 如果当前 Leader 尚未提交过任何属于当前任期的日志，
+        // 说明它可能是一个“未经确认的 Leader”（可能是网络分区后孤立产生的）
+        // 此时不能安全地处理只读请求，因为返回的数据可能不是线性一致的。
+        
+        // 因此，拒绝该只读请求，直接返回，不做处理
+        return Ok(());
+    }
+
+    // 否则，将继续处理 MsgReadIndex 请求（后续逻辑未展示）
+}
+在 Rust 中，`=&gt;` 是 `match` 表达式中的语法符号
+</code></pre></td></tr></table>
+</div>
+</div><p><!-- raw HTML omitted -->小青提问4： 只有本地 apply index ≥ read_index 时，才会真正回调返回结果，保证线性一致性<!-- raw HTML omitted --></p>
+<p>从节点可以读吗？</p>
+<p>在etcd-raft的实现中，​<strong>​从节点（Follower）是可以读取数据的​</strong>​，但需要注意以下几点：</p>
+<ol>
+<li>
+<p>​<strong>​读取的数据可能不是最新的​</strong>​<br>
+由于Follower的状态总是落后于Leader，Follower上的数据可能不是最新的。因此，如果不做特殊处理，从Follower读取的数据可能与从Leader读取的数据不一致。</p>
+</li>
+<li>
+<p>​<strong>​线性一致性读的要求​</strong>​<br>
+如果需要保证线性一致性读（即读取的数据是最新的，并且满足一致性要求），etcd-raft通过​<strong>​ReadIndex​</strong>​机制来实现。即使是从Follower读取数据，也需要通过ReadIndex机制来确保读取的数据是最新的。</p>
+</li>
+<li>
+<p>​<strong>​ReadIndex机制的工作原理​</strong>​</p>
+<ul>
+<li>当Follower收到读请求时，它会将请求转发给Leader，询问当前的Commit Index（即已经被应用到状态机的最新数据的索引）。</li>
+<li>Leader通过心跳机制确认自己仍然是Leader，并获取当前的Commit Index。</li>
+<li>Follower在收到Leader的响应后，会等待状态机将数据应用到Commit Index之后，才返回读取结果给客户端。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​总结​</strong>​<br>
+从节点（Follower）可以读取数据，但如果需要保证线性一致性读，必须通过ReadIndex机制来确保读取的数据是最新的。否则，从Follower读取的数据可能会落后于Leader上的数据。</p>
+</li>
+</ol>
+<h2 id="四-tikv源码阅读">四. TiKv源码阅读</h2>
+<p>TiKV 线性一致读（ReadIndex）流程与核心代码</p>
+<h2 id="一readindex-流程简述">一、ReadIndex 流程简述</h2>
+<ol>
+<li>
+<p><strong>客户端发起强一致读请求</strong></p>
+<ul>
+<li>客户端发送需要线性一致性的读请求（如 GET）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Peer 判断处理方式</strong></p>
+<ul>
+<li>如果可以本地读（如 Leader 持有有效 lease），直接返回。</li>
+<li>否则，走 ReadIndex 流程。</li>
+</ul>
+</li>
+<li>
+<p><strong>ReadIndex 请求入队</strong></p>
+<ul>
+<li>Peer 把请求加入 <code>pending_reads</code> 队列，等待一致性确认。</li>
+</ul>
+</li>
+<li>
+<p><strong>向 Raft 发起 ReadIndex</strong></p>
+<ul>
+<li>Peer 调用 <code>raft_group.read_index(...)</code>，Raft Leader 向集群广播心跳，确认自己还是 Leader，并记录当前 commit index（即 ReadIndex）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Raft 返回 read_states</strong></p>
+<ul>
+<li>Raft 层把 read_index 结果返回给 Peer，Peer 把结果写到 <code>pending_reads</code> 队列对应请求上。</li>
+</ul>
+</li>
+<li>
+<p><strong>等待本地 apply index ≥ read_index</strong></p>
+<ul>
+<li>Peer 检查本地状态机的 apply index 是否已经应用到 read_index。</li>
+<li>如果还没追上，继续等待。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回读结果</strong></p>
+<ul>
+<li>一旦 apply index ≥ read_index，Peer 执行读操作，回调返回结果给客户端。</li>
+</ul>
+</li>
+<li>
+<p><strong>线性一致性保证</strong></p>
+<ul>
+<li>只有 apply index ≥ read_index 时才返回，确保所有已提交写入都可见，保证线性一致</li>
+</ul>
+</li>
+</ol>
+<p>好的，下面将<strong>TiKV 线性一致读（ReadIndex）流程</strong>与相关核心代码实现（以 <code>peer.rs</code> 和 peer_storage.rs 为主）整理到一个文件说明，适合初学者理解和查阅。</p>
+<hr>
+<h1 id="tikv-线性一致读readindex流程与核心代码">TiKV 线性一致读（ReadIndex）流程与核心代码</h1>
+<h2 id="一readindex-流程简述-1">一、ReadIndex 流程简述</h2>
+<ol>
+<li>
+<p><strong>客户端发起强一致读请求</strong></p>
+<ul>
+<li>客户端发送需要线性一致性的读请求（如 GET）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Peer 判断处理方式</strong></p>
+<ul>
+<li>如果可以本地读（如 Leader 持有有效 lease），直接返回。</li>
+<li>否则，走 ReadIndex 流程。</li>
+</ul>
+</li>
+<li>
+<p><strong>ReadIndex 请求入队</strong></p>
+<ul>
+<li>Peer 把请求加入 <code>pending_reads</code> 队列，等待一致性确认。</li>
+</ul>
+</li>
+<li>
+<p><strong>向 Raft 发起 ReadIndex</strong></p>
+<ul>
+<li>Peer 调用 <code>raft_group.read_index(...)</code>，Raft Leader 向集群广播心跳，确认自己还是 Leader，并记录当前 commit index（即 ReadIndex）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Raft 返回 read_states</strong></p>
+<ul>
+<li>Raft 层把 read_index 结果返回给 Peer，Peer 把结果写到 <code>pending_reads</code> 队列对应请求上。</li>
+</ul>
+</li>
+<li>
+<p><strong>等待本地 apply index ≥ read_index</strong></p>
+<ul>
+<li>Peer 检查本地状态机的 apply index 是否已经应用到 read_index。</li>
+<li>如果还没追上，继续等待。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回读结果</strong></p>
+<ul>
+<li>一旦 apply index ≥ read_index，Peer 执行读操作，回调返回结果给客户端。</li>
+</ul>
+</li>
+<li>
+<p><strong>线性一致性保证</strong></p>
+<ul>
+<li>只有 apply index ≥ read_index 时才返回，确保所有已提交写入都可见，保证线性一致。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="二核心代码位置与实现">二、核心代码位置与实现</h2>
+<h3 id="1-入口peer-处理-readindex-请求peerrs">1. 入口：Peer 处理 ReadIndex 请求（peer.rs）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">read_index</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Transport</span><span class="o">&gt;</span><span class="p">(</span><span class="w">
+</span><span class="w">    </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">poll_ctx</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">PollContext</span><span class="o">&lt;</span><span class="n">EK</span><span class="p">,</span><span class="w"> </span><span class="n">ER</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="k">mut</span><span class="w"> </span><span class="n">req</span>: <span class="nc">RaftCmdRequest</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="k">mut</span><span class="w"> </span><span class="n">err_resp</span>: <span class="nc">RaftCmdResponse</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">cb</span>: <span class="nc">Callback</span><span class="o">&lt;</span><span class="n">EK</span>::<span class="n">Snapshot</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// ...省略前置检查...
+</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">monotonic_raw_now</span><span class="p">();</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 1. Leader 检查是否可以复用已有 pending_read，否则发起新的 ReadIndex
+</span><span class="c1"></span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">is_leader</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">lease_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">inspect_lease</span><span class="p">();</span><span class="w">
+</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">can_amend_read</span>::<span class="o">&lt;</span><span class="n">Callback</span><span class="o">&lt;</span><span class="n">EK</span>::<span class="n">Snapshot</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="w">
+</span><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">pending_reads</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span><span class="w">
+</span><span class="w">            </span><span class="o">&amp;</span><span class="n">req</span><span class="p">,</span><span class="w">
+</span><span class="w">            </span><span class="n">lease_state</span><span class="p">,</span><span class="w">
+</span><span class="w">            </span><span class="n">poll_ctx</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">raft_store_max_leader_lease</span><span class="p">(),</span><span class="w">
+</span><span class="w">            </span><span class="n">now</span><span class="p">,</span><span class="w">
+</span><span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">            </span><span class="c1">// 复用已有 pending_read
+</span><span class="c1"></span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">commit_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">get_store</span><span class="p">().</span><span class="n">commit_index</span><span class="p">();</span><span class="w">
+</span><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">read</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">pending_reads</span><span class="p">.</span><span class="n">back_mut</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">                </span><span class="n">read</span><span class="p">.</span><span class="n">push_command</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">cb</span><span class="p">,</span><span class="w"> </span><span class="n">commit_index</span><span class="p">);</span><span class="w">
+</span><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span><span class="w">            </span><span class="p">}</span><span class="w">
+</span><span class="w">        </span><span class="p">}</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">    </span><span class="c1">// 2. 发起新的 ReadIndex 请求
+</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">dropped</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">propose_read_index</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">as_ref</span><span class="p">());</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReadIndexRequest</span>::<span class="n">with_command</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">cb</span><span class="p">,</span><span class="w"> </span><span class="n">now</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="n">read</span><span class="p">.</span><span class="n">addition_request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">push_pending_read</span><span class="p">(</span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">is_leader</span><span class="p">());</span><span class="w">
+</span><span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">should_wake_up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">// ...
+</span><span class="c1"></span><span class="w">    </span><span class="kc">true</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="2-pending_reads-队列推进与回调peerrs">2. pending_reads 队列推进与回调（peer.rs）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="c1">// Follower 路径
+</span><span class="c1"></span><span class="k">fn</span> <span class="nf">post_pending_read_index_on_replica</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">ctx</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">PollContext</span><span class="o">&lt;</span><span class="n">EK</span><span class="p">,</span><span class="w"> </span><span class="n">ER</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">read</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">pending_reads</span><span class="p">.</span><span class="n">pop_front</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">read_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read</span><span class="p">.</span><span class="n">read_index</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">ready_to_handle_unsafe_replica_read</span><span class="p">(</span><span class="n">read_index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">response_read</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w">
+</span><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">get_store</span><span class="p">().</span><span class="n">applied_index</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">follower_read_max_log_gap</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">read_index</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">            </span><span class="c1">// 落后太多，报错
+</span><span class="c1"></span><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">respond_replica_read_error</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w">
+</span><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">            </span><span class="c1">// 还没追上，放回队列
+</span><span class="c1"></span><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">pending_reads</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="n">read</span><span class="p">);</span><span class="w">
+</span><span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span><span class="w">        </span><span class="p">}</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>只有 <code>applied_index &gt;= read_index</code> 时才会真正回调返回结果，保证线性一致性。</li>
+</ul>
+<hr>
+<h3 id="3-apply-index-与-commit-index-的来源peer_storagers">3. apply index 与 commit index 的来源（peer_storage.rs）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="c1">// 获取 apply index
+</span><span class="c1"></span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">applied_index</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">apply_state</span><span class="p">().</span><span class="n">get_applied_index</span><span class="p">()</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c1">// 获取 commit index
+</span><span class="c1"></span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">commit_index</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="bp">self</span><span class="p">.</span><span class="n">raft_state</span><span class="p">().</span><span class="n">get_hard_state</span><span class="p">().</span><span class="n">get_commit</span><span class="p">()</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="4-相关元数据结构体kvproto">4. 相关元数据结构体（kvproto）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="c1">// kvproto::raft_serverpb
+</span><span class="c1"></span><span class="n">message</span><span class="w"> </span><span class="n">RaftApplyState</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">applied_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="n">TruncatedState</span><span class="w"> </span><span class="n">truncated_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="n">message</span><span class="w"> </span><span class="n">RaftLocalState</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">HardState</span><span class="w"> </span><span class="n">hard_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">last_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">
+</span><span class="w">    </span><span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="5-线性一致性保证的关键">5. 线性一致性保证的关键</h3>
+<ul>
+<li><strong>只有 apply index ≥ read_index 时才返回读结果</strong>，这样可以确保所有已提交的写都已经被本地状态机应用，读请求不会漏掉任何已提交的数据，保证线性一致性。</li>
+</ul>
+<hr>
+<h2 id="三流程图mermaid">三、流程图（Mermaid）</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">flowchart TD
+    A[收到 ReadIndex 请求] --&gt; B{是否可以本地读?}
+    B -- 是 --&gt; C[直接返回]
+    B -- 否 --&gt; D[加入 pending_reads 队列]
+    D --&gt; E[向 Raft 发起 ReadIndex]
+    E --&gt; F[大多数节点响应]
+    F --&gt; G[Raft 返回 read_index]
+    G --&gt; H{本地 apply index &gt;= read_index?}
+    H -- 否 --&gt; I[等待 apply 线程推进]
+    H -- 是 --&gt; J[回调返回读结果]
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="四总结">四、总结</h2>
+<ul>
+<li>
+<p>TiKV 的 ReadIndex 线性一致读流程，核心是“Leader 确认身份，记录一致性点，等待本地状态机追上后再返回读结果”。</p>
+</li>
+<li>
+<p>代码实现围绕 <code>pending_reads</code> 队列、apply index、commit index 以及 Raft 状态推进展开。</p>
+</li>
+<li>
+<p>只有 apply index ≥ read_index 时才返回，确保线性一致。</p>
+<h3 id="参考">参考</h3>
+<ul>
+<li>可视化演示 <a href="https://thesecretlivesofdata.com/raft/">https://thesecretlivesofdata.com/raft/</a></li>
+<li><a href="https://blog.openacid.com/">https://blog.openacid.com/</a></li>
+<li>TiKV 源码阅读三部曲（二）读流程</li>
+</ul>
+</li>
+</ul>
+<p>我在寻找一位积极上进的小伙伴，</p>
+<p>一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事情，不妨 试试</p>
+<p>1️⃣ 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖</p>
+<p><img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt=""></p>
+<p>2️⃣ 关注公众号:后端开发成长指南(回复“面经”获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略</p>
+<p><img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<p>3️⃣ <strong>感兴趣的读者可以通过公众号获取老王的联系方式。</strong></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-07-06 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/day14-rdma/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">2分钟论：让网卡写磁盘，这项专利彻底绕过了 CPU！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/day12-what-is-paxos-v2.0/">
+            <span class="next-text nav-default">大厂面试题精选:线性一致性本质这么回答就对了</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

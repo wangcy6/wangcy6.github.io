@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>企业案例03：分布式存储产品架构性能优化总结 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day18-system-desgin/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="企业案例03：分布式存储产品架构性能优化总结" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day18-system-desgin/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="企业案例03：分布式存储产品架构性能优化总结">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="4267">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="企业案例03：分布式存储产品架构性能优化总结"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">企业案例03：分布式存储产品架构性能优化总结</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 4267 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一-背景">一 、背景</a></li>
+    <li><a href="#本文as13000-产品架构性能为例子在优化之前需要了解基架构组成">本文AS13000 产品架构性能为例子，在优化之前需要了解基架构组成</a></li>
+    <li><a href="#同时-你了解该产品未来10年规划相关电子书如下">同时 你了解该产品未来10年规划（相关电子书如下）</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21-客户端">2.1 客户端</a>
+      <ul>
+        <li></li>
+        <li><a href="#解决办法">解决办法</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-存储引擎-先写数据还是先写元数据在返回客户端">2.2 存储引擎： 先写数据，还是先写元数据？在返回客户端？</a>
+      <ul>
+        <li><a href="#存在问题-写入慢">存在问题 写入慢</a></li>
+        <li><a href="#优化策略">优化策略</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#性能优化-网络">性能优化： 网络</a></li>
+        <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h2 id="一-背景">一 、背景</h2>
+<p>假如现在你参与一个后端服务产品性能优化，该如何下手呢？</p>
+<p>上来直接优化那是万不行的，至少确定优化原则，重构，还是缝缝补补？</p>
+<p>目前我是要给普通开发工程师，直接舍去重构。</p>
+<h2 id="本文as13000-产品架构性能为例子在优化之前需要了解基架构组成">本文AS13000 产品架构性能为例子，在优化之前需要了解基架构组成</h2>
+<p><img src="https://docs.ceph.com/en/pacific/_images/stack.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/29/mINY3Je8y2Aal6G.png" alt="来源 一篇文章搞清Ceph的原理与架构"></p>
+<p><img src="https://s2.loli.net/2025/07/29/p236iwqOxXf1sWR.png" alt="存储引擎"></p>
+<p>三层架构</p>
+<ul>
+<li>用户层： 提供三种服务 对象存储，块存储，文件存储,LIBRADOS模块是客户端用来访问RADOS对象存储设备的</li>
+<li>中间层： Monitor ：负责整个集群状态 ，MDS，负责文件的元数据，OSD 提供存储池：</li>
+<li>存储引擎：RADOS是指Reliable Autonomic Distributed Object Store，
+<ol>
+<li>BlueStore，<strong>绕过文件系统</strong>：直接读写块设备，<strong>RocksDB 键值数据库</strong>存储对象元数</li>
+<li><strong>Seastore</strong>，下一代 <strong>存储引擎</strong>，替代 BlueStore，直接管理物理存储设备， 独立管理元数据，不再依赖 RocksDB。（Bluestore 在 NVMe 上最明显的瓶颈是 kv-sync-thread，即顺序提交元数据到 RocksDB 的线程）</li>
+<li><strong>Crimson</strong>，<strong>定位</strong>：基于 Seastar 框架重构的 <strong>OSD（对象存储守护进程）架构</strong>，替代传统多线程 OSD
+<img src="https://docs.ceph.com/en/quincy/_images/cephfs-architecture.svg" alt=""></li>
+</ol>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Seastore</strong></th>
+<th><strong>Crimson</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>架构重点</strong></td>
+<td>存储引擎（数据持久化层）</td>
+<td>OSD 服务框架（请求处理层）</td>
+</tr>
+<tr>
+<td><strong>核心技术</strong></td>
+<td>- 用自研 B+树管理元数据，取代 RocksDB  <!-- raw HTML omitted -->- 支持写时复制（Copy-on-Write）  <!-- raw HTML omitted -->- 支持 ZNS/SMR 磁盘<!-- raw HTML omitted --></td>
+<td>- 基于 <strong>Seastar 异步框架</strong>（Run-to-Completion 模型）  <!-- raw HTML omitted -->- 单线程 per core，避免锁竞争  <!-- raw HTML omitted -->- 兼容现有 ObjectStore 后端（如 BlueStore/Seastore）</td>
+</tr>
+<tr>
+<td><strong>性能优化方向</strong></td>
+<td>- 降低读放大，避免 RocksDB 的 Compaction 阻塞  <!-- raw HTML omitted -->- 提升全闪存集群的 IOPS 和延迟</td>
+<td>- 减少 CPU 上下文切换  <!-- raw HTML omitted -->- 利用多核并行处理请求，释放 NVMe 带宽潜力</td>
+</tr>
+<tr>
+<td><strong>依赖关系</strong></td>
+<td>可独立于 Crimson 部署（例如运行在经典 OSD 上）</td>
+<td>需搭配存储引擎（如 BlueStore 或 Seastore）使用</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Seastore 是 <strong>存储引擎</strong>，解决数据落盘效率问题；</p>
+</li>
+<li>
+<p>Crimson 是 <strong>OSD 服务框架</strong>，解决 CPU 多核扩展性问题</p>
+</li>
+</ul>
+<h2 id="同时-你了解该产品未来10年规划相关电子书如下">同时 你了解该产品未来10年规划（相关电子书如下）</h2>
+<p><img src="https://s2.loli.net/2025/07/29/LcM4lHuNXmnkOD1.png" alt="来源：Ceph Optimizations for NVMe"></p>
+<ul>
+<li>File Systems Unit as Distributed Storage:Lessons from 10 Years of Ceph Evolution 过去10年发展历史</li>
+<li>Ceph: 20 Years of Cutting-Edge Storage at the Edge # Ceph：20年尖端的边缘存储技术</li>
+</ul>
+<h1 id="二io-栈分层优化">二、IO 栈分层优化</h1>
+<p><img src="https://s2.loli.net/2025/07/29/ruq4ZpmfIXyiHoC.png" alt="最重要一个图"></p>
+<ul>
+<li>客户端拆锁</li>
+<li>客户端纠删</li>
+<li>存储池分层IO流程</li>
+<li>操作系统优化</li>
+</ul>
+<h2 id="21-客户端">2.1 客户端</h2>
+<h4 id="存在问题">存在问题</h4>
+<ul>
+<li>CephFS 客户端 并发方式时候，读写等操作使通一个全局锁，锁力度过大</li>
+<li>ceph 南北流量占用过大</li>
+</ul>
+<h3 id="解决办法">解决办法</h3>
+<ul>
+<li>CephFS 客户端 拆分，通过多个通道与存储池交互，自 <strong>Nautilus 版本</strong>起，<code>libcephfs</code> 支持多线程并发调用</li>
+<li>元数据锁分片（MDS）</li>
+<li>**纠删EC与数控分离。缩短网络传输路径，对读写 都有优势</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>厂商</strong></th>
+<th><strong>技术方案</strong></th>
+<th><strong>关键指标</strong></th>
+<th><strong>局限性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>浪潮存储</strong></td>
+<td>EC 12+4 + 数控分离</td>
+<td>冗余度1.33，支持小IO加速</td>
+<td>依赖自研智能调度引擎</td>
+</tr>
+<tr>
+<td><strong>阿里云盘古</strong></td>
+<td>EC 8+3 + Stripe Placement</td>
+<td>冗余度1.375，适配对象存储<!-- raw HTML omitted --></td>
+<td>跨AZ修复带宽开销大</td>
+</tr>
+<tr>
+<td><strong>Google Colossus</strong></td>
+<td>EC 6+3 + 动态条带</td>
+<td>低冗余高可靠，深空通信优化</td>
+<td>硬件依赖性强</td>
+</tr>
+<tr>
+<td><a href="https://mp.weixin.qq.com/s/dL3pWQfnGtOYDXqu_y0qZg">普通以太网无缘RDMA？数控分离架构实现传输路径“零中转”</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://pica.zhimg.com/v2-e141e9853bfd496a24f3ecab7c0175ea_1440w.jpg" alt=""></p>
+<ul>
+<li>通一个机柜 机架数据相互复制 【为什么做到，ceph配置有关系】</li>
+<li>CRUSH - 受控、可扩展、去中心化的复制数据放置</li>
+<li>CRUSH - Controlled, Scalable, Decentralized Placement of Replicated Data
+<img src="https://i-blog.csdnimg.cn/blog_migrate/403cf11333d37f66481bcc5c362247d5.png" alt=""></li>
+</ul>
+<h2 id="22-存储引擎-先写数据还是先写元数据在返回客户端">2.2 存储引擎： 先写数据，还是先写元数据？在返回客户端？</h2>
+<h3 id="存在问题-写入慢">存在问题 写入慢</h3>
+<p>BlueStore 可以理解为一个支持 ACID 的本地日志型文件系统。
+所有的读写都是以 Transaction 进行。</p>
+<p>BlueStore 通过状态机的方式控制整个 IO 流程</p>
+<p>通过 queue_transactions 接口封装 BlueStore 事务并驱动状态机执行。</p>
+<p>回顾：<a href="https://mp.weixin.qq.com/s/iIGui5RywsKC13daAogRJA">深入理解 BlueStore存储引擎，只需四步</a></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia37AOzFwuyToPx254LDqv434YBSEcBI2Nfyl2TkIvPDibu7YpetDmovMuJFVh8F2E0a82Bkm1MAxBXg/640?wx_fmt=png&amp;from=appmsg&amp;randomid=rqq746gr&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+<p>BlueStore事务状态流转</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/21898243-260a04dd4241fc61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/397/format/webp" alt="来源：https://www.jianshu.com/p/3e49cad62b78"></p>
+<p>STATE_PREPARE</p>
+<ul>
+<li>该阶段主要是 IO 前的准备工作，如果是<strong>对齐 IO</strong> ，</li>
+<li>置为 STATE_AIO_WAIT 并将数据提交到 aio ；</li>
+</ul>
+<p>STATE_AIO_WAIT</p>
+<ul>
+<li>该阶段等待 aio 的完成，</li>
+<li>aio 完成后在回调函数中将事务状态设置为STATE_IO_DONE 。</li>
+</ul>
+<p>STATE_IO_DONE</p>
+<ul>
+<li>该阶段完成对齐 IO 的处理，并对 IO 进行保序，保证 kv 事务的顺序性</li>
+<li>按顺序设置事务状态为 STATE_KV_QUEUED ，将事务放入 kv_queue</li>
+</ul>
+<p>STATE_KV_QUEUED</p>
+<ul>
+<li>该阶段主要在 kv_sync_thread 线程中把 aio 的元数据或者延迟 IO 数据和元数
+据写入 kv 数据库，并且将状态设置为 STATE_KV_SUBMITTED 。</li>
+<li>然后将事务放入 kv_committing_to_finalize 队列，并通知 _kv_finalize_thread 线程处理。</li>
+</ul>
+<p>STATE_KV_SUBMITTED</p>
+<ul>
+<li>该阶段主要在 _kv_finalize_thread 线程中将状态设置为 STATE_KV_DONE 并
+将回调函数放入 finisher 队列</li>
+<li>在 finisher 线程中给客户端返回 oncommit 应答</li>
+</ul>
+<h4 id="kv写入批处理与并行化"><strong>KV写入批处理与并行化</strong></h4>
+<ul>
+<li><strong>问题</strong>：kv_sync_thread单线程写入KV数据库（如RocksDB），无法发挥NVMe SSD的IOPS潜力。</li>
+<li><strong>方案</strong>：
+<ul>
+<li>
+<p><strong>批量提交</strong>：在STATE_KV_QUEUED阶段合并多个事务的元数据，单次写入多条KV记录（利用RocksDB的WriteBatch）。</p>
+</li>
+<li>
+<p><strong>分片并发</strong>：按事务哈希分片到多个kv_sync_worker线程，并行写入不同KV分片。</p>
+</li>
+<li>
+<p><strong>效果</strong>：KV写入吞吐量提升3-5倍（参考阿里云盘古优化案例）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="io流程优化">io流程优化</h4>
+<ul>
+<li>BlueStore IO 流程： Simple Write</li>
+<li>BlueStore IO 流程： Deferred Write</li>
+</ul>
+<p>对于 deferred write 场景，延迟 IO 数据封装在 k/v 事务中，写入 kv 数据库
+后给客户端返回应答，然后在后台执行延迟 IO 数据的写操作</p>
+<p>Ceph BlueStore
+Source：http://blog.wjin.org/posts/ceph-bluestore.html
+<img src="https://blog.wjin.org/assets/img/post/ceph_bluestore.png" alt=""></p>
+<ul>
+<li>AioContext 写设备都是通过libaio，首先需要了解回调函数的执行流程。AioContext派生了两种context，TransContext和DeferredBatch，前者对应simple write，简称为txc，后者对应deferred write</li>
+<li>对于用户或osd层面的一次IO写请求，到BlueStore这一层，可能是simple write，也可能是deferred write，还有可能既有simple write的场景，也有deferred write的场景</li>
+</ul>
+<h3 id="优化策略">优化策略</h3>
+<p><img src="https://s2.loli.net/2025/07/29/gchaM9WJLSsqGzV.png" alt="持久化方式"></p>
+<table>
+<thead>
+<tr>
+<th><strong>场景特征</strong></th>
+<th><strong>推荐模式</strong></th>
+<th><strong>原因与优化效果</strong></th>
+<th><strong>风险与限制</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>小 I/O 随机写</strong></td>
+<td>Simple Write</td>
+<td>避免缓冲区频繁刷新造成的碎片化，减少元数据更新压力（如 KV 事务竞争）</td>
+<td>高并发下 RocksDB WAL 可能成为瓶颈</td>
+</tr>
+<tr>
+<td><strong>大块顺序写</strong></td>
+<td>Deferred Write</td>
+<td>批量合并写入减少磁盘寻址，吞吐量提升 3-5 倍（如视频流、备份数据）</td>
+<td>宕机时可能丢失未刷新的数据（需额外日志）</td>
+</tr>
+<tr>
+<td><strong>低延迟事务型负载</strong></td>
+<td>Simple Write</td>
+<td>实时刷盘保证 ACID，适用于数据库在线事务（OLTP）</td>
+<td>吞吐量受限，不适合高带宽场景</td>
+</tr>
+<tr>
+<td><strong>高吞吐批处理</strong></td>
+<td>Deferred Write</td>
+<td>结合 AIO 回调与流水线技术，最大化 SSD 带宽利用率（如 AI 训练 checkpoint）</td>
+<td>需监控缓冲区溢出（OOM 风险）</td>
+</tr>
+<tr>
+<td><strong>混合读写负载</strong></td>
+<td><strong>动态切换</strong></td>
+<td>根据 I/O 大小阈值自动选择（如 4KB 以下用 Simple，以上用 Deferred）</td>
+<td>策略配置复杂，需压测调优</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三-操作系统优化与基准测试">三 、操作系统优化与基准测试</h1>
+<p><img src="https://s2.loli.net/2025/07/29/ygF5mBYD8KfPHEM.png" alt="direct"></p>
+<h4 id="性能优化-cpu多核架构">性能优化： CPU（多核架构）</h4>
+<ul>
+<li>top</li>
+<li>mpstat</li>
+</ul>
+<p>CPU每个核心CPU发生中断的数量查看
+mpstat -P ALL 1
+如果软中断集中在某一个核上，会导致 CPU 100%，影响整体性能</p>
+<p>mpstat -P ALL
+mpstat - Report processors related statistics.
+<strong>-P {</strong> <em>cpu_list</em> <strong>| ALL }</strong>
+Indicate the processors for which statistics are to be
+reported</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">      %iowait
+                     Show the percentage of time that the CPU or CPUs
+                     were idle during which the system had an outstanding
+                     disk I/O request.
+
+              %irq   Show the percentage of time spent by the CPU or CPUs
+                     to service hardware interrupts.
+
+              %soft  Show the percentage of time spent by the CPU or CPUs
+                     to service software interrupts.
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>手动执行 echo 3 &gt; /proc/sys/vm/drop_caches 会强制清空 Page Cache（文件缓存）和 Buffer Cache（块设备缓存）。</li>
+<li>减少自旋锁最大重试次数（默认 4096） echo 1000 &gt; /proc/sys/kernel/spin_retries</li>
+<li>[osd.0] bluestore_wal_path = /dev/nvme1n1 # 独立 WAL 设备</li>
+</ol>
+<blockquote>
+<p>Buffer/Cache 缓存缓存过它线程加锁时阻塞，而内核模块用的都是自旋锁（ _raw_spin_lock ），阻塞时间长了会导致 CPU 利用率变高</p>
+</blockquote>
+<h5 id="查看中断数高的cpu忙于处理哪些中断">查看中断数高的CPU忙于处理哪些中断</h5>
+<p>命令：cat /proc/interrupts</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">watchpoints</span> <span class="o">~</span><span class="p">]</span><span class="err">#</span> <span class="n">cat</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">interrupts</span>
+           <span class="n">CPU0</span>       <span class="n">CPU1</span>
+  <span class="mi">1</span><span class="o">:</span>        <span class="mi">604</span>          <span class="mi">0</span>   <span class="n">IO</span><span class="o">-</span><span class="n">APIC</span>   <span class="mi">1</span><span class="o">-</span><span class="n">edge</span>      <span class="n">i8042</span>
+  <span class="mi">4</span><span class="o">:</span>        <span class="mi">597</span>         <span class="mi">78</span>   <span class="n">IO</span><span class="o">-</span><span class="n">APIC</span>   <span class="mi">4</span><span class="o">-</span><span class="n">edge</span>      <span class="n">ttyS0</span>
+  <span class="mi">6</span><span class="o">:</span>          <span class="mi">0</span>          <span class="mi">3</span>   <span class="n">IO</span><span class="o">-</span><span class="n">APIC</span>   <span class="mi">6</span><span class="o">-</span><span class="n">edge</span>      <span class="n">floppy</span>
+  <span class="mi">8</span><span class="o">:</span>          <span class="mi">0</span>          <span class="mi">0</span>   <span class="n">IO</span><span class="o">-</span><span class="n">APIC</span>   <span class="mi">8</span><span class="o">-</span><span class="n">edge</span>      <span class="n">rtc0</span>
+  <span class="mi">9</span><span class="o">:</span>          <span class="mi">0</span>          <span class="mi">0</span>   <span class="n">IO</span><span class="o">-</span><span class="n">APIC</span>   <span class="mi">9</span><span class="o">-</span><span class="n">fasteoi</span>   <span class="n">acpi</span>
+ <span class="mi">11</span><span class="o">:</span>          <span class="mi">0</span>          <span class="mi">0</span>   <span class="n">IO</span><span class="o">-</span><span class="n">APIC</span>  <span class="mi">11</span><span class="o">-</span><span class="n">fasteoi</span>   <span class="nl">uhci_hcd</span><span class="p">:</span><span class="n">usb1</span><span class="p">,</span> 
+
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="查看网卡当前中断号绑定的cpu编号">查看网卡当前中断号绑定的CPU编号</h5>
+<p><strong>cat  /proc/irq/124/smp_affinity_list  查看绑定的CPU列表，(10进制表示)</strong></p>
+<h5 id="-将中断号绑定所有cpu">## 将中断号绑定所有CPU</h5>
+<ul>
+<li>echo 0,1,2,3 &gt;  /proc/irq/124/smp_affinity_lis</li>
+</ul>
+<p>参考：https://www.cnblogs.com/zhangmingda/p/15196363.html</p>
+<h5 id="numanon-uniform-memory-access">NUMA（Non-Uniform Memory Access）</h5>
+<p>运行 test_program 程序，参数是 argument，绑定到 node 0 的 CPU 和 node 1 的
+内存
+numactl &ndash;cpubind=0 &ndash;membind=1 test_program arguments</p>
+<h4 id="性能优化内存">性能优化：内存</h4>
+<ul>
+<li>限制缓存个数</li>
+</ul>
+<h4 id="性能优化磁盘">性能优化：磁盘</h4>
+<ul>
+<li>写入放大现象(WA: Write amplification)</li>
+<li> SSD与传统磁盘相比其有了很大的性能优势，以及较多的优点，但是事物总是有两面性的，擦除块之前需要将原有的还有效的数据先读出，然后在与新来的数据一起写入，</li>
+<li>举个最简单的例子：当要写入一个4KB的数据时，最坏的情况是一个块里已经没有干净空间了，但有无效的数据可以擦除，所以主控就把所有的数据读到缓存，擦除块，缓存里 更新整个块的数据，再把新数据写回去，这个操作带来的写入放大就是: 实际写4K的数据，造成了整个块（共512KB）的写入操作，那就是放大了128倍。</li>
+<li><strong>EC条带未对齐导致读改写</strong></li>
+<li><strong>第二层写放大：FileStore的clone_range机制冗余操作</strong></li>
+</ul>
+<p><strong>问题触发条件</strong><br>
+修改写（非追加写）触发FileStore的clone_range流程：</p>
+<ol>
+<li>
+<p><strong>克隆对象</strong>：创建临时副本（_touch + _clone_range）；</p>
+</li>
+<li>
+<p><strong>修改原对象</strong>：写操作施加于临时对象；</p>
+</li>
+<li>
+<p><strong>清理</strong>：删除旧对象并重命名临时对象（_remove + _collection_move_rename）。<br>
+此过程引入额外I/O（读克隆对象、写临时对象、删旧对象）。</p>
+</li>
+</ol>
+<ul>
+<li>如果通过 iotop 命令发现磁盘是因为写 journal 或访问 Leveldb/Rocksdb 引起的压力大，可以将 journal 和 omap 数据迁移到 SSD 上。</li>
+</ul>
+<h3 id="性能优化-网络">性能优化： 网络</h3>
+<ul>
+<li>万兆链路链路检测 : iperf –c</li>
+<li>检查网口速度 ethtool</li>
+<li>检测当前节点网络是否存在大量错包，丢包，重传  netstat -i | column -t<br>
+<code>sar -n ETCP 1</code></li>
+<li>​<strong>​<code>retrans/s</code>​</strong>​：​<strong>​每秒重传的 TCP 段数量​</strong>​
+<ul>
+<li>​<strong>​&gt; 0 值​</strong>​：表明网络丢包（发送方未收到 ACK 触发重传）。</li>
+<li>​<strong>​健康参考​</strong>​：
+<ul>
+<li><code>&lt; 1</code>：可接受（短时波动/正常丢包）。</li>
+<li><code>&gt; 1</code> 持续存在：可能网络拥塞或链路故障。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>​<strong>​<code>atmptf/s</code>​</strong>​：​<strong>​每秒失败的 TCP 连接尝试次数​</strong>​（如 SYN 超时）
+<ul>
+<li><code>&gt; 0</code> 表示握手失败（可能防火墙拦截、服务器过载或网络不通）。</li>
+</ul>
+</li>
+<li>​<strong>​<code>estres/s</code>​</strong>​：​<strong>​每秒被重置的 TCP 连接数​</strong>​（如意外断开）
+<ul>
+<li><code>&gt; 0</code> 表明连接异常终止（可能服务端错误或攻击）。</li>
+</ul>
+</li>
+<li>​<strong>​<code>isegerr/s</code>​</strong>​：​<strong>​每秒接收的错误 TCP 段数量​</strong>​（校验和错误等）
+<ul>
+<li><code>&gt; 0</code> 表示链路层错误（物理故障、驱动问题或干扰）</li>
+<li></li>
+</ul>
+</li>
+<li>ethtool -g 网卡名称，显示网卡的接收/发送环形参数</li>
+</ul>
+<h3 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h3>
+<p>我在寻找一位积极上进的小伙伴，
+一起参与<strong>神奇早起 30 天改变人生计划</strong>，发展个人事情，不妨 试试
+1️⃣ 加入我的技术交流群Offer 来碗里 (回复“面经”获取），一起抱团取暖
+<img src="https://s2.loli.net/2025/06/01/6qkOut3xrDHen8J.png" alt="">
+2️⃣ 关注公众号:后端开发成长指南(回复“面经”获取）获取过去我<strong>全部面试录音</strong>和大厂面试复盘攻略
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt="">
+3️⃣  回复 面经 获取全部电子书 或者购买正版书籍</p>
+<p><a href="https://mp.weixin.qq.com/s/y94rXLoJCllCXkhfL7d7Hg">分布式必读经典书籍</a></p>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;-我是黄金分割线&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光，</h4>
+<ul>
+<li><!-- raw HTML omitted -->我要通过技术拿到百万年薪P7职务<!-- raw HTML omitted -->，打通任督二脉。</li>
+<li>但是不要给自己这样假设：别人完成就等着自己完成了，这个逃避问题表现,裁员时候别人不会这么想。</li>
+</ul>
+<h5 id="低头走路">低头走路：</h5>
+<ul>
+<li>一次专注做好一个小事。</li>
+<li>不扫一屋 何以扫天下，让自己早睡，早起，锻炼身体，刷牙保持个人卫生，多喝水 ，表达清楚 ,把基本事情做好。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/5-2025-05-14-3fs-ObjectPool/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">从青铜到王者系列：一行代码解千愁：看DeepSeek-Ai/3FS对象池如何消除80%锁竞争</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/interviewSystemDesgin/2025/day19-system-desgin-1/">
+            <span class="next-text nav-default">企业案例04:AI时代分布式存储产品架构长什么样</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

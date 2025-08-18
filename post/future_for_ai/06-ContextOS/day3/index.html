@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Trae从青铜到王者 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Trae从青铜到王者" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-12T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Trae从青铜到王者">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1526">
+<meta itemprop="keywords" content="小而美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Trae从青铜到王者"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Trae从青铜到王者</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-12 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 1526 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#我的目标-成为---contextos布道师">我的目标 成为   ContextOS布道师</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#目标1创建属于自己的小程序了解用户名片">目标1：创建属于自己的小程序，了解用户名片</a></li>
+    <li><a href="#11-在电脑端-搜索-云轩领航-微信公共号-easy">1.1 在电脑端 搜索 云轩领航 微信公共号 【easy】</a></li>
+    <li><a href="#12-云轩领航-微信公共号-进入-云办公">1.2 云轩领航 微信公共号 进入 云办公</a></li>
+    <li><a href="#13-云轩领航-微信公共号-进入-产品迭代小程序类比微信群">1.3 云轩领航 微信公共号 进入 产品迭代小程序（类比微信群）</a></li>
+    <li><a href="#14-邀请别人进入你创建的群小程序">1.4 邀请别人进入你创建的群（小程序）</a></li>
+    <li><a href="#15-创建自己第一个产品">1.5 创建自己第一个产品</a></li>
+    <li><a href="#16-接单--原型设计流程">1.6 接单&ndash;原型设计流程</a></li>
+    <li><a href="#17-pm-设计原型并提交结果">1.7 PM 设计原型并提交结果</a></li>
+    <li><a href="#18-ui接单--界面设计">1.8 ui接单&ndash;界面设计</a></li>
+    <li><a href="#19-管理对界面设计进行评审">1.9 管理对界面设计进行评审</a></li>
+    <li><a href="#目标2平台-城市公司-与个人关系">目标2：平台 城市，公司 与个人关系</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>小义同学的开发日记第三天</p>
+<h2 id="我的目标-成为---contextos布道师">我的目标 成为   ContextOS布道师</h2>
+<p>✅ 任务1： 阅读 ContextOS 云操作系统 提供云研发小程序</p>
+<p>✅ 任务2：熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法</p>
+<p>✅ 任务3：探索如何模块化方式 从0到1快速开发一个小程序</p>
+<p>由于时间有限，如有误，恳请大家不吝指教，万分感激</p>
+<h1 id="什么是--contextos-应用平台跟你什么关系">什么是  ContextOS 应用平台，跟你什么关系</h1>
+<p>ContextOS-SaaS-AI 软件平台， 面向云社区、云教育、云办公、云研发等场景，免费提供各种各样的软件系统。</p>
+<p>遇到新概念 大家习惯和已有认知对比，方便加速理解，</p>
+<p>这里暂停一下意识行为，从软件本身去体会</p>
+<h2 id="目标1创建属于自己的小程序了解用户名片">目标1：创建属于自己的小程序，了解用户名片</h2>
+<blockquote>
+<p>个人感受：不用想，直接去看，用眼睛观察，
+不做说明默认一切操作在电脑端完成
+目前不是最新版本，与视频界面稍微不同</p>
+</blockquote>
+<h2 id="11-在电脑端-搜索-云轩领航-微信公共号-easy">1.1 在电脑端 搜索 云轩领航 微信公共号 【easy】</h2>
+<p><img src="https://s2.loli.net/2025/07/17/KdNtTuODIVxUySn.png" alt="">
+<img src="https://s2.loli.net/2025/07/17/RHFWZwM1cBtvrdT.png" alt=""></p>
+<h2 id="12-云轩领航-微信公共号-进入-云办公">1.2 云轩领航 微信公共号 进入 云办公</h2>
+<p>点击云办公&ndash;云轩领航</p>
+<p><img src="https://s2.loli.net/2025/07/17/HpLk9nUafiwDb1r.png" alt=""></p>
+<p>这个是 云轩领航公司名片。</p>
+<p><img src="https://s2.loli.net/2025/07/17/OqWsPStGh1rlzL4.png" alt=""></p>
+<p><strong>个人感受</strong></p>
+<ul>
+<li>
+<p>上面有各种小程序，每个小程序 有不同的功能</p>
+</li>
+<li>
+<p>一个小程序相当于一个微信群，楼主创建不同微信群。</p>
+</li>
+<li>
+<p>同样你也可以创建自己微信群，每个微信群 提供不同功能</p>
+</li>
+</ul>
+<h2 id="13-云轩领航-微信公共号-进入-产品迭代小程序类比微信群">1.3 云轩领航 微信公共号 进入 产品迭代小程序（类比微信群）</h2>
+<p>点击云办公&ndash;产品迭代</p>
+<ul>
+<li>说明：产品迭代 属于产品管理名词，
+迭代产品是指产品快速地适应不断变化的需求，不断推出新的版本满足或引领需求，永远快于对手一步。产品迭代是产品生命中非常重要的一环
+<img src="https://s2.loli.net/2025/07/18/n3yCRFWtgpXQAVP.png" alt=""></li>
+</ul>
+<p>第一次进入用户 界面是这样的。</p>
+<p><img src="https://s2.loli.net/2025/07/18/IpzuNEhCQOa4Jw3.png" alt="开始创建产品迭代小程序"></p>
+<p>大家都知道 加入一个群有2个方式
+方式1：自己创建一个群，邀请别人加入</p>
+<p>方式2：别人创建一个群，邀请你加入。</p>
+<p>这里从方式1开始，自己创建一个微信群，这个群作用是管理自己开发的产品</p>
+<p><img src="https://s2.loli.net/2025/07/18/R3JUhV9okLfSiGY.png" alt="创建属于自己产品迭代小程序"></p>
+<p>输入说明：</p>
+<ul>
+<li>城市 ：当前公司属于哪个城市，<strong>平台会自动聚合，城市下多少公司/个人</strong></li>
+<li>公司：真实的公司名称，正式名词。</li>
+<li>产品:自己创建的产品</li>
+</ul>
+<h2 id="14-邀请别人进入你创建的群小程序">1.4 邀请别人进入你创建的群（小程序）</h2>
+<p>创建产品完毕，
+然后点击我的<strong>场景码</strong>，这样邀请别人加入你创建的小程序（群）
+<img src="https://s2.loli.net/2025/07/18/hXeBcD9dIRk4bxP.png" alt=""></p>
+<p><img src="https://s2.loli.net/2025/07/18/S7MNblftekLKOCR.png" alt="我的邀请码，你扫一扫可以加入"></p>
+<p>我用我的另外一个微信号演示如何加入。</p>
+<p>手机端扫上面的二维 申请加入我刚创建的小程序（群）</p>
+<p><img src="https://s2.loli.net/2025/07/18/teZpv9TI3hK2YjE.jpg" alt=""></p>
+<p>作为管理员的小义同学 申请其他用户加入。</p>
+<p>点击：权限审批</p>
+<p><img src="https://s2.loli.net/2025/07/18/JP3rCYKGmHlefW4.png" alt=""></p>
+<p>审批加入</p>
+<p><img src="https://s2.loli.net/2025/07/18/WYAd7sE68btwjU1.png" alt=""></p>
+<p>个人感受：</p>
+<ul>
+<li>你可以看到 <strong>工作人员</strong>这个角色，群是分角色 创建人员属于管理人员</li>
+</ul>
+<p>点击返回按钮 返回小程序界面（返回按钮通用功能）</p>
+<p><img src="https://s2.loli.net/2025/07/18/NzmYKkCq8AOXIvt.png" alt=""></p>
+<p>点击项目成员 看到该项目成员。目前2个人</p>
+<p><img src="https://s2.loli.net/2025/07/18/pMg3q4lUF6eGoIQ.png" alt=""></p>
+<p>管理员 可以对 普通工人继续管理 ，晋升 或者打分</p>
+<h2 id="15-创建自己第一个产品">1.5 创建自己第一个产品</h2>
+<p>点击：迭代计划&ndash;创建迭代计划</p>
+<p>产品是迭代不断开发出来的，迭代计划 意思创建自己产品，</p>
+<p>我的第一个产品就是 就是如何接单如何成为PM。</p>
+<p><img src="https://s2.loli.net/2025/07/18/Jhy2MdtzlExpL3D.png" alt=""></p>
+<p>产品类型说明</p>
+<ul>
+<li>场景化：对用户来说提供服务 ，例如购物，点外卖，看病</li>
+<li>功能性：为了实现场景化需求 抽象通用功能 例如 支付系统，快递系统</li>
+<li>方向性：讨论进行产品规划安排</li>
+<li>方案型：组合不同小程序，提供对我服务，保证完整解决方案。</li>
+</ul>
+<p>创建完成之后 点击开始。</p>
+<p><img src="https://s2.loli.net/2025/07/18/eTJnhkZHL6W1I5V.png" alt=""></p>
+<blockquote>
+<p>小思考：一个web项目产品开发流程是什么？</p>
+</blockquote>
+<h2 id="16-接单--原型设计流程">1.6 接单&ndash;原型设计流程</h2>
+<blockquote>
+<p>原型设计的目的是验证产品的概念、功能和用户体验，以便在进一步的开发和生产中进行改进</p>
+</blockquote>
+<ul>
+<li>小义同学另外一个账号 模拟接单：如何成为一个PM</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/07/18/IMqPxuhiAdCXFjV.jpg" alt=""></p>
+<p>原型设计：是发布产品有，PM重新整理修改内容</p>
+<ul>
+<li>管理员同意 小义同学接单该项目</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/07/18/qc7MGreEu9DQWwT.png" alt=""></p>
+<ul>
+<li>原型设计完毕，请管理员评审</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/07/18/4ZPFHQCGDlNtzMo.png" alt=""></p>
+<p>四个操作</p>
+<ul>
+<li>驳回 ：不同意PM方案</li>
+<li>通过：同意PM方案，进入下一个流程</li>
+<li>约会：对方案有争议内容申请会议讨论。</li>
+</ul>
+<h2 id="17-pm-设计原型并提交结果">1.7 PM 设计原型并提交结果</h2>
+<p>pm 点击开始 开始干活。
+<img src="https://s2.loli.net/2025/07/18/bXdpzURAP4gBGNL.jpg" alt=""></p>
+<p>干活完毕上传自己草稿图</p>
+<p><img src="https://s2.loli.net/2025/07/18/Qh8wbUl3j7tSX2c.jpg" alt=""></p>
+<p>PM设计完成后 管理员对PM设计继续确认，然后支付费用，如果不同意继续约会讨论。</p>
+<p><img src="https://s2.loli.net/2025/07/18/ELvSOgNFB8Ti7fC.png" alt=""></p>
+<h2 id="18-ui接单--界面设计">1.8 ui接单&ndash;界面设计</h2>
+<p>UI 在小程序主界面点击 产品需求，界面设计接单</p>
+<p><img src="https://s2.loli.net/2025/07/18/iQOhtvDgZ8bG9lF.jpg" alt=""></p>
+<p>ui 完成之后上传自己 结果</p>
+<p>并且提交</p>
+<h2 id="19-管理对界面设计进行评审">1.9 管理对界面设计进行评审</h2>
+<ul>
+<li>管理员对UI设计继续评审</li>
+<li>然后完成，支付</li>
+</ul>
+<p>最后项目完成</p>
+<h2 id="目标2平台-城市公司-与个人关系">目标2：平台 城市，公司 与个人关系</h2>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/04-net-web-/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Trae从青铜到王者</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/06-ContextOS/day4-ContextOS-product/">
+            <span class="next-text nav-default">Trae从青铜到王者</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

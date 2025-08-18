@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Trae从青铜到王者 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day4-ContextOS-product/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Trae从青铜到王者" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/06-ContextOS/day4-ContextOS-product/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-12T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="Trae从青铜到王者">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1849">
+<meta itemprop="keywords" content="小而美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Trae从青铜到王者"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Trae从青铜到王者</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-12 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 1849 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#我的目标-成为---contextos布道师">我的目标 成为   ContextOS布道师</a></li>
+    <li><a href="#一从pm角度分析xx设计思维转变过来">一、从PM角度分析xx设计，思维转变过来</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21-我的开发环境">2.1 我的开发环境</a>
+      <ul>
+        <li><a href="#window-笔记本">window 笔记本</a></li>
+        <li><a href="#window-启动wsl2当做服务器理想状态-需要运桌面云服务器ubuntu-22045-lts">window 启动wsl2当做服务器（理想状态 需要运桌面，云服务器）ubuntu 22.04.5 LTS</a></li>
+        <li><a href="#启动contextos任何一个小程序都是一个contextos">启动ContextOS（任何一个小程序都是一个ContextOS）</a></li>
+        <li><a href="#参考官方产品迭代小程序">参考：官方<strong>产品迭代</strong>小程序</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-云主机centos平台-2c2g跨节点访问">2.2 <strong>云主机Centos平台 2c2g跨节点访问</strong></a></li>
+    <li><a href="#23--配置数据库链接默认是sqlite3">2.3  配置数据库链接（默认是sqlite3）</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>小王同学开发日记第四天</p>
+<h2 id="我的目标-成为---contextos布道师">我的目标 成为   ContextOS布道师</h2>
+<p>✅ 任务1： 阅读 ContextOS 云操作系统 提供云研发小程序</p>
+<p>✅ 任务2：熟悉框架：后端冰山架( Golang)，前端火山架(JS+CSS)使用方法</p>
+<p>✅ 任务3：探索如何模块化方式 从0到1快速开发一个小程序</p>
+<p><!-- raw HTML omitted -->由于时间有限，如有误，恳请大家不吝指教，万分感激<!-- raw HTML omitted --></p>
+<h2 id="一从pm角度分析xx设计思维转变过来">一、从PM角度分析xx设计，思维转变过来</h2>
+<ul>
+<li>待补充</li>
+</ul>
+<h1 id="二从程序员角度了解代码实现">二、从程序员角度了解代码实现</h1>
+<h2 id="21-我的开发环境">2.1 我的开发环境</h2>
+<h3 id="window-笔记本">window 笔记本</h3>
+<h3 id="window-启动wsl2当做服务器理想状态-需要运桌面云服务器ubuntu-22045-lts">window 启动wsl2当做服务器（理想状态 需要运桌面，云服务器）ubuntu 22.04.5 LTS</h3>
+<pre><code>    +-----------------------+
+	| Windows 11 操作系统   |
+	+-----------------------+
+              |
+              v
+	+-----------------------+
+	|       Hyper-V         |  &lt;- 提供虚拟化支持
+	+-----------------------+
+              |
+              v
+	+-----------------------+
+	|        WSL 2          |  &lt;- 运行Linux内核
+	+-----------------------+
+              |
+              v
+	+-----------------------+
+	|   Docker Desktop      |  &lt;- 管理容器
+	+-----------------------+
+              |
+              v
+	+-----------------------+
+	| Docker 容器（Linux）  |  &lt;- 运行应用程序
+	+-----------------------+
+
+启动：ubuntu22.04
+</code></pre>
+<h3 id="启动contextos任何一个小程序都是一个contextos">启动ContextOS（任何一个小程序都是一个ContextOS）</h3>
+<ul>
+<li>启动</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://shylinux.com/x/ContextOS
+
+<span class="nb">cd</span> /home/money/ContextOS
+<span class="nb">source</span> etc/miss.sh //golang依赖下载
+./bin/ice.bin //启动
+./bin/ice.bin admin space login 7f914c789dab8f73609ea80910ecf398
+访问：
+http://192.168.45.52:9020/?debug<span class="o">=</span><span class="nb">true</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="参考官方产品迭代小程序">参考：官方<strong>产品迭代</strong>小程序</h3>
+<p>官方地址：https://web.shylinux.com/s/20240903-operation
+<img src="https://s2.loli.net/2025/07/25/ALbzyPGQFMrIc7a.png" alt="产品迭代小程序来管理不同产品"></p>
+<p>在<strong>产品迭代</strong> 小程序
+不同公司 根据不同产品线 创建不同管理产品的，虽然是同一个小程序，不同产品线相互隔离。
+上图 创建了云社区，云监控，云教育 不同产品。都是产品迭代小程序下创建的。</p>
+<h4 id="下载-产品迭代-小程序-源码">下载 <strong>产品迭代</strong> 小程序 源码</h4>
+<p>方式1：源码直接下载 git clone <a href="https://shylinux.com/x/operation">https://shylinux.com/x/operation</a>
+方式2：从商店下载</p>
+<p><img src="https://s2.loli.net/2025/07/25/zFfYrEp3d7hVysx.png" alt="image.png"></p>
+<h2 id="22-云主机centos平台-2c2g跨节点访问">2.2 <strong>云主机Centos平台 2c2g跨节点访问</strong></h2>
+<ul>
+<li>MobaXterm window 远程登录</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">//Centos平台 2c2g跨节点访问
+
+git clone https://shylinux.com/x/ContextOS   //root//root/ContextOS
+<span class="nb">cd</span> ContextOS <span class="o">&amp;&amp;</span> <span class="nb">source</span> etc/miss.sh  
+
+./bin/ice.bin 
+
+// 远程登陆的，需要授权
+<span class="nb">cd</span> /root/ContextOS
+./bin/ice.bin admin space login 507d283a760ea8238c98b4bd2599e665
+
+登录地址：
+http://101.43.226.54:9020/?debug<span class="o">=</span><span class="nb">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>小提示：这个ip 是云主机内部的，需要改为对外访问的</p>
+<p>防火墙端口 [9020]开放</p>
+<h2 id="23--配置数据库链接默认是sqlite3">2.3  配置数据库链接（默认是sqlite3）</h2>
+<h4 id="231--你可能遇到错误1提示链接数据库报错">2.3.1  你可能遇到错误1：提示链接数据库报错</h4>
+<h5 id="错误日志">错误日志</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">http://192.168.45.52:9020/?debug=true
+❌ warn: err sql: unknown driver &#34;&#34; (forgotten import?)
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>没有配置数据库</li>
+</ul>
+<h5 id="解决办法安装数据库并配置链接">解决办法：安装数据库，并配置链接</h5>
+<p>GORM 是一款流行的 Go 语言 ORM 库，
+它极大地简化了数据库操作，
+使得开发者能够更加专注于业务逻辑而非 SQL 语句</p>
+<p>Ubuntu 22.04 LTS 上安装 MySQL</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 查看可使用的安装包 123
+sudo apt search mysql-server
+jammy-updates 8.0.42
+
+# 安装最新版本 
+sudo apt install -y mysql-server
+
+# 启动MySQL服务
+sudo systemctl start mysql
+
+## 设为开机启动
+sudo systemctl enable mysql
+
+sudo systemctl status mysql
+</code></pre></td></tr></table>
+</div>
+</div><p>修改 MySQL 密码</p>
+<p>默认安装是没有设置密码的，需要我们自己设置密码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 登录mysql，在默认安装时如果没有让我们设置密码，则直接回车就能登录成功。
+sudo mysql -uroot -p
+# 设置密码 mysql8.0
+
+ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;;
+FLUSH PRIVILEGES;
+
+//忘记密码情况
+sudo systemctl stop mysql # 停止服务 
+sudo mysqld_safe --skip-grant-tables --skip-networking &amp;
+# 跳过权限验证
+mysql -u root # 无密码登录
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+
+bind-address            <span class="o">=</span> 0.0.0.0
+
+sudo systemctl restart mysql
+
+mysql -u root -p -h 
+</code></pre></td></tr></table>
+</div>
+</div><p>如何解决 MySQL 错误：用户root@localhost的访问被拒绝</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sudo mysql -u root
+mysql&gt; CREATE USER &#39;admin&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;admin&#39;;
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO &#39;admin&#39;@&#39;localhost&#39; WITH GRANT OPTION;
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; exit;
+
+
+mysql -P 3306 -h localhost  -u root -p 成功
+mysql -P 3306 -h 127.0.0.1  -u root -p
+</code></pre></td></tr></table>
+</div>
+</div><p>|src/|production/issue.go|79|s.OrderItemList undefined (type Issue has no field or method OrderItemList)|</p>
+<p>遇到的问题：
+链接localhost 成功 ，链接 127.0.0.1失败，如何修改支持任意ip链接呢？</p>
+<p>端口配置错误：3306</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="cp">#
+</span><span class="cp"># * Basic Settings
+</span><span class="cp">#
+</span><span class="cp"></span><span class="n">user</span>            <span class="o">=</span> <span class="n">mysql</span>
+<span class="cp"># pid-file      = /var/run/mysqld/mysqld.pid
+</span><span class="cp"># socket        = /var/run/mysqld/mysqld.sock
+</span><span class="cp"># port          = 3306
+</span><span class="cp"># datadir       = /var/lib/mysql
+</span><span class="cp"></span>
+
+<span class="cp"># If MySQL is running as a replication slave, this should be
+</span><span class="cp"># changed. Ref https:</span><span class="c1">//dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_tmpdir
+</span><span class="c1"></span><span class="cp"># tmpdir                = /tmp
+</span><span class="cp">#
+</span><span class="cp"># Instead of skip-networking the default is now to listen only on
+</span><span class="cp"># localhost which is more compatible and is not less secure.
+</span><span class="cp"></span><span class="n">bind</span><span class="o">-</span><span class="n">address</span>            <span class="o">=</span> <span class="mf">0.0.0.0</span>
+<span class="n">mysqlx</span><span class="o">-</span><span class="n">bind</span><span class="o">-</span><span class="n">address</span>     <span class="o">=</span> <span class="mf">127.0.0.1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="231--你可能遇到错误2不知道从哪里配置配置如何维护">2.3.1  你可能遇到错误2：不知道从哪里配置，配置如何维护</h4>
+<h5 id="现象描述">现象描述：</h5>
+<p>❌ warn: err Error 1049 (42000): Unknown database &lsquo;operation&rsquo;</p>
+<h5 id="原因分析">原因分析</h5>
+<ul>
+<li>正常项目，数据库建表是DBA事情，这个增加复杂性gorm框架解决了这个问题</li>
+<li>在 Go 语言中，GORM支持Migration特性，</li>
+</ul>
+<p>支持根据Go Struct结构自动生成对应的表结构,</p>
+<p>使用 <code>GORM</code> ORM 库的 <code>AutoMigrate</code> 方法可以自动创建数据库表，确保数据库结构与定义的模型结构一致。</p>
+<p><code>AutoMigrate</code> 方法非常方便，特别适合在开发阶段进行快速迭代</p>
+<h5 id="解决办法">解决办法：</h5>
+<p>如何配置数据库链接: 文件：main.py [文本也能执行代码]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">field web.code.mysql.client
+
+field web.code.mysql.query args `mysql operation` 
+</code></pre></td></tr></table>
+</div>
+</div><p>如何类和表进行映射</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Note</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nx">Model</span>
+	<span class="nx">Content</span>     <span class="kt">string</span> <span class="s">`gorm:&#34;type:text&#34;`</span>
+	<span class="nx">CompanyUID</span>  <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">StoryUID</span>    <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">PlanUID</span>     <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">IssueUID</span>    <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">FromUserUID</span> <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">ToUserUID</span>   <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">File</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nx">Model</span>
+	<span class="nx">Content</span>    <span class="kt">string</span> <span class="s">`gorm:&#34;type:text&#34;`</span>
+	<span class="nx">CompanyUID</span> <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">StoryUID</span>   <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">PlanUID</span>    <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">IssueUID</span>   <span class="kt">string</span> <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">Link</span>       <span class="kt">string</span> <span class="s">`gorm:&#34;type:varchar(255)&#34;`</span>
+	<span class="nx">Name</span>       <span class="kt">string</span> <span class="s">`gorm:&#34;type:varchar(128)&#34;`</span>
+	<span class="nx">Type</span>       <span class="kt">uint8</span>  <span class="s">`gorm:&#34;default:0&#34;`</span>
+	<span class="nx">Size</span>       <span class="kt">int</span>    <span class="s">`gorm:&#34;default:0&#34;`</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Meet</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nx">Model</span>
+	<span class="nx">Content</span>     <span class="kt">string</span>  <span class="s">`gorm:&#34;type:text&#34;`</span>
+	<span class="nx">CompanyUID</span>  <span class="kt">string</span>  <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">StoryUID</span>    <span class="kt">string</span>  <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">PlanUID</span>     <span class="kt">string</span>  <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">IssueUID</span>    <span class="kt">string</span>  <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">FromUserUID</span> <span class="kt">string</span>  <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">ToUserUID</span>   <span class="kt">string</span>  <span class="s">`gorm:&#34;type:char(32);index&#34;`</span>
+	<span class="nx">Link</span>        <span class="kt">string</span>  <span class="s">`gorm:&#34;type:varchar(255)&#34;`</span>
+	<span class="nx">Type</span>        <span class="kt">uint8</span>   <span class="s">`gorm:&#34;default:0&#34;`</span>
+	<span class="nx">Score</span>       <span class="kt">uint8</span>   <span class="s">`gorm:&#34;default:0&#34;`</span>
+	<span class="nx">BeginTime</span>   <span class="nx">db</span><span class="p">.</span><span class="nx">Time</span>
+	<span class="nx">EndTime</span>     <span class="nx">db</span><span class="p">.</span><span class="nx">Time</span>
+<span class="p">}</span>
+
+<span class="c1">//`init()` 是 Go 语言包初始化的核心机制，​用于在导入包时自动执行准备工作​
+</span><span class="c1">//​​在模型注册（如 ORM 框架）等场景中尤为常见
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nf">CmdModels</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span>  <span class="c1">// 空字符串参数通常表示默认操作（如注册表名）
+</span><span class="c1"></span>        <span class="c1">// 核心业务模型组（产品规划）
+</span><span class="c1"></span>        <span class="o">&amp;</span><span class="nx">UserStory</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Story</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Plan</span><span class="p">{},</span>
+        <span class="c1">// 任务与问题追踪组
+</span><span class="c1"></span>        <span class="o">&amp;</span><span class="nx">Issue</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Design</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Task</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Case</span><span class="p">{},</span>
+        <span class="c1">// 协作与资源组
+</span><span class="c1"></span>        <span class="o">&amp;</span><span class="nx">Note</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">File</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Meet</span><span class="p">{},</span>
+        <span class="c1">// 交易与缺陷组
+</span><span class="c1"></span>        <span class="o">&amp;</span><span class="nx">Deal</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">Bug</span><span class="p">{},</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/06-ContextOS/day3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Trae从青铜到王者</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/github/template-1/">
+            <span class="next-text nav-default">Trae从青铜到王者</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
