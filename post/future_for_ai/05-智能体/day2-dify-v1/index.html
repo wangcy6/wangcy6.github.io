@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>企业级智能体dify：不需要编程 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day2-dify-v1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="企业级智能体dify：不需要编程" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day2-dify-v1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-04-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-04-12T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="企业级智能体dify：不需要编程">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1351">
+<meta itemprop="keywords" content="小而美," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="企业级智能体dify：不需要编程"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">企业级智能体dify：不需要编程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-04-12 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 1351 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一需求分析-">一、需求分析 ：</a></li>
+    <li><a href="#-提示词-prompts">📋 提示词 (Prompts)</a></li>
+    <li><a href="#-dify-工作流-workflows-与使用方法">🔧 Dify 工作流 (Workflows) 与使用方法</a></li>
+    <li><a href="#-核心理念">🎯 核心理念</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21----dify入门系列1部署-dify云服务-vs-本地-docker">2.1    Dify入门系列（1）部署 Dify：云服务 vs 本地 Docker</a>
+      <ul>
+        <li><a href="#step1-请你做出选择因为自己家里环境公司环境mac-和-windows-环境来回切换自己选择云服务">step1 请你做出选择，因为自己家里环境，公司环境，mac 和 Windows 环境来回切换，自己选择云服务</a></li>
+        <li><a href="#step2了解什么应用">step2：了解什么应用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><a href="https://github.com/wyh0626/resumeFilter">https://github.com/wyh0626/resumeFilter</a></p>
+<p>v1: 案例学习/源码学习
+v2:服务个人产生适用记录
+v3:文章变成视频让大家使用</p>
+<h2 id="一需求分析-">一、需求分析 ：</h2>
+<p>我们正在尝试打造一个 <strong>求职者</strong> 与 <strong>招聘方</strong> 之间精准高效的连接通道。</p>
+<p>基于Github Issue打造的完全透明的求职和招聘平台, 完全透明, 完全公开</p>
+<ul>
+<li>
+<p><a href="https://github.com/TokenRollAI/talent-hub-cn/issues">https://github.com/TokenRollAI/talent-hub-cn/issues</a></p>
+</li>
+<li>
+<p>求职者：如果你认为自己足够优秀，不妨带着你的简历/博客/开源贡献来这里寻找优秀的工作机会。</p>
+</li>
+<li>
+<p>招聘方：如果你认为你的产品/工作岗位拥有动人的产品力，不妨带上你的jd来这里会一会各路英豪</p>
+</li>
+</ul>
+<h2 id="-提示词-prompts">📋 提示词 (Prompts)</h2>
+<p>我们提供了多个版本的提示词，以适应不同场景的需求。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">语言</th>
+<th style="text-align:left">描述 / 区别</th>
+<th style="text-align:left">文件链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">简历评估</td>
+<td style="text-align:left">🇨🇳 中文</td>
+<td style="text-align:left"><strong>简历警察</strong>：核心提示词，用于全面审查和修改简历，采用“批判-解析-建议”模型。</td>
+<td style="text-align:left"><a href="./prompt/resume_police_Zh.md"><code>resume_police_Zh.md</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">面试问题生成</td>
+<td style="text-align:left">🇨🇳 中文</td>
+<td style="text-align:left"><strong>面试官视角 V1</strong>: 传奇CTO人设，采用四步勘探法和P.O.S.E.R.模型，生成体系化、带陷阱的深度面试问题。</td>
+<td style="text-align:left"><a href="./prompt/question_v1_Zh.md"><code>question_v1_Zh.md</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">面试问题生成</td>
+<td style="text-align:left">🇨🇳 中文</td>
+<td style="text-align:left"><strong>面试官视角 V2</strong>: 传奇CTO人设，采用三步勘探法，风格更直接，产出更精简的面试问题清单。</td>
+<td style="text-align:left"><a href="./prompt/question_v2_Zh.md"><code>question_v2_Zh.md</code></a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-dify-工作流-workflows-与使用方法">🔧 Dify 工作流 (Workflows) 与使用方法</h2>
+<p>为了方便在 Dify 平台使用，我们提供了以下工作流文件。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">版本</th>
+<th style="text-align:left">主要特点</th>
+<th style="text-align:left">文件链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">简历警察</td>
+<td style="text-align:left">早期版本，基础工作流。</td>
+<td style="text-align:left"><a href="./workflow/%E7%AE%80%E5%8E%86%E8%AD%A6%E5%AF%9F.yml"><code>简历警察.yml</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">简历警察 V2</td>
+<td style="text-align:left">优化了提示词和流程的版本。</td>
+<td style="text-align:left"><a href="./workflow/%E7%AE%80%E5%8E%86%E8%AD%A6%E5%AF%9FV2.yml"><code>简历警察V2.yml</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">简历警察 V3</td>
+<td style="text-align:left"><strong>（推荐）</strong> 当前最稳定的文本生成工作流，内置了最新的简历警察提示词。</td>
+<td style="text-align:left"><a href="./workflow/%E7%AE%80%E5%8E%86%E8%AD%A6%E5%AF%9FV3.yml"><code>简历警察V3.yml</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">简历警察 Chat</td>
+<td style="text-align:left"><strong>（推荐）</strong> 对话式工作流，支持与简历警察进行多轮对话，进行追问和修改。</td>
+<td style="text-align:left"><a href="./workflow/%E7%AE%80%E5%8E%86%E8%AD%A6%E5%AF%9FChat.yml"><code>简历警察Chat.yml</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">简历警察(笔录版)V1</td>
+<td style="text-align:left">对应 <strong>面试官视角 V1</strong> 提示词，用于生成深度面试问题的文本生成工作流。</td>
+<td style="text-align:left"><a href="./workflow/%E7%AE%80%E5%8E%86%E8%AD%A6%E5%AF%9F(%E7%AC%94%E5%BD%95%E7%89%88)V1.yml"><code>简历警察(笔录版)V1.yml</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left">简历警察(笔录版)V2</td>
+<td style="text-align:left">对应 <strong>面试官视角 V2</strong> 提示词，用于生成精简面试问题清单的文本生成工作流。</td>
+<td style="text-align:left"><a href="./workflow/%E7%AE%80%E5%8E%86%E8%AD%A6%E5%AF%9F(%E7%AC%94%E5%BD%95%E7%89%88)V2.yml"><code>简历警察(笔录版)V2.yml</code></a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-核心理念">🎯 核心理念</h2>
+<p>简历警察采用&quot;批判-解析-建议&quot;三位一体模型：</p>
+<ul>
+<li>❓ <strong>批判</strong> - 直接指出问题</li>
+<li>🤔 <strong>解析</strong> - 解释负面影响</li>
+<li>💡 <strong>建议</strong> - 提供具体方案</li>
+</ul>
+<h1 id="二-最少知识">二、 最少知识</h1>
+<h2 id="21----dify入门系列1部署-dify云服务-vs-本地-docker">2.1    Dify入门系列（1）部署 Dify：云服务 vs 本地 Docker</h2>
+<h3 id="step1-请你做出选择因为自己家里环境公司环境mac-和-windows-环境来回切换自己选择云服务">step1 请你做出选择，因为自己家里环境，公司环境，mac 和 Windows 环境来回切换，自己选择云服务</h3>
+<p>如果后面有机会在本地部署</p>
+<p>访问 <a href="https://zhida.zhihu.com/search?content_id=261557083&amp;content_type=Article&amp;match_order=1&amp;q=Dify&amp;zhida_source=entity">Dify</a> 官网 → 点击「免费开始」→ 用邮箱/GitHub 账号注册 2 分钟完成</p>
+<h3 id="step2了解什么应用">step2：了解什么应用</h3>
+<p>你可以通过 3 种方式在 Dify 的工作室内创建应用：</p>
+<ul>
+<li>基于应用模板创建（新手推荐）</li>
+<li>创建一个空白应用</li>
+<li>通过 DSL 文件（本地/在线）创建应用</li>
+</ul>
+<p>Dify 上可以创建 5 种不同的应用类型，
+分别是</p>
+<ul>
+<li>
+<p>聊天助手</p>
+<p>对话型应用采用一问一答模式与用户持续对话。</p>
+</li>
+</ul>
+<p>适用场景</p>
+<p>对话型应用可以用在客户服务、在线教育、医疗保健、金融服务等领域。</p>
+<p>这些应用可以帮助组织提高工作效率、减少人工成本和提供更好的用户体验</p>
+<ul>
+<li>文本生成应用</li>
+<li>Agent</li>
+</ul>
+<p>智能助手（Agent Assistant），利用大语言模型的推理能力，
+能够自主对复杂的人类任务进行目标规划、任务拆解、工具调用、过程迭代，
+并在没有人类干预的情况下完成任务</p>
+<ul>
+<li>
+<p><strong>Chatflow</strong>：面向对话类情景，包括客户服务、语义搜索、以及其他需要在构建响应时进行多步逻辑的对话式应用程序。</p>
+</li>
+<li>
+<p><strong>Workflow</strong>：面向自动化和批处理情景，适合高质量翻译、数据分析、内容生成、电子邮件自动化等应用程序。</p>
+</li>
+</ul>
+<p>参考官方文档：https://docs.dify.ai/zh-hans/guides/workflow/readme</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a href="https://z0yrmerhgi8.feishu.cn/wiki/O4qFwwWfnipjcgkHwLocYIvHnAb">https://z0yrmerhgi8.feishu.cn/wiki/O4qFwwWfnipjcgkHwLocYIvHnAb</a></li>
+<li><a href="https://www.youtube.com/watch?v=Cr7laD5kQD0&amp;ab_channel=AI%E5%AD%A6%E9%95%BF%E5%B0%8F%E6%9E%97">https://www.youtube.com/watch?v=Cr7laD5kQD0&amp;ab_channel=AI%E5%AD%A6%E9%95%BF%E5%B0%8F%E6%9E%97</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-04-12 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/05-%E6%99%BA%E8%83%BD%E4%BD%93/day1-agent-dify-v1.0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">企业级智能体dify：不需要编程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/04-AI-%E8%AF%BB%E4%B9%A6/template/">
+            <span class="next-text nav-default">写出我心，写下去你就能活一次</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>如何判断面试公司是不是在“骗方案” - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/job/day9-false/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="如何判断面试公司是不是在“骗方案”" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/job/day9-false/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-07T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2024-08-07T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="如何判断面试公司是不是在“骗方案”">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2024-08-07T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1594">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何判断面试公司是不是在“骗方案”"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">如何判断面试公司是不是在“骗方案”</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-08-07 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 1594 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#21-把企业真实问题当考题来问最常见">2.1 把企业真实问题当“考题”来问（最常见）</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-要求回家写完整方案试稿却不承诺评审或反馈">2.2 要求回家写“完整方案/试稿”，却不承诺评审或反馈</a></li>
+    <li><a href="#23---只问怎么做细节不询问为什么权衡上下文">2.3   只问“怎么做/细节”，不询问“为什么/权衡/上下文”</a></li>
+    <li><a href="#24--面试时长流程异常例如标注-60-分钟但实际-30-分钟">2.4  面试时长/流程异常（例如标注 60 分钟但实际 30 分钟）</a></li>
+    <li><a href="#24--要求提供公司内部数据竞品信息或敏感资料">2.4  要求提供公司内部数据、竞品信息或敏感资料</a></li>
+    <li><a href="#三总结">三、总结</a></li>
+    <li><a href="#31-如何定义一次好面试">3.1 如何定义一次好面试</a></li>
+    <li><a href="#32-增加反问环节">3.2 增加反问环节</a></li>
+    <li><a href="#33-面试试岗时如何辨别一个公司是不是骗子公司">3.3 面试试岗时如何辨别一个公司是不是骗子公司</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>【注意】最后更新于 <span class="timeago" datetime="2024-08-07T00:00:00" title="August 7, 2024">August 7, 2024</span>，文中内容可能已过时，请谨慎使用。</p>
+    </div>
+  </div>
+    <div class="post-content">
+      <h1 id="一一次不愉快-30-分钟面试">一、一次不愉快 30 分钟面试</h1>
+<p>不愉快定义 无法通过面试获得进步，让自己查缺补漏，</p>
+<p>如果有同样经历是否判断只面试，不招人</p>
+<p>​<strong>​奇怪 1：预约​</strong>​</p>
+<p>周一早上，我收到“H3C”的面试邀请邮件，
+标题醒目地写着：​<strong>​【初面 - 技术交流 - 约30分钟】​</strong>​。
+我的心轻轻一沉——​<strong>​技术交流只安排30分钟？这不太正常​</strong>​。</p>
+<p>在我的经验里，即使初级技术面，45分钟到1小时才是常态，</p>
+<p>才能充分交流项目经验和考察基本能力。30分钟够干嘛？</p>
+<p>转念一想，​<strong>​“面试不通过不要紧，就当是次学习交流”​</strong>​，</p>
+<p>权当探探市场行情，学习一下也行。抱着这样的平和心态，我准时点击了视频会议链接。</p>
+<p>​<strong>​奇怪2：开场不安套路来（这个是 1 面）​</strong></p>
+<p>我深吸一口气，按照惯例挂上职业微笑，准备简短自我介绍：“您好陈工，我是XX，有5年存储系统开发经验，主要负责过……”</p>
+<p>话刚起头，​<strong>​陈工直接抬手打断，语气生硬：“小李是吧？时间比较紧，我们直接进入重点！”​</strong>​</p>
+<p>他目光直接钉在我的简历上“</p>
+<p>我看你提到主导过一个核心系统的存储性能优化？​**​</p>
+<p>你存储那块具体是怎么做性能优化的？​**​ 重点说下你的核心方案和技术细节。”</p>
+<p>​<strong>​奇怪 3：单向的知识输出，没任何反问​</strong>​</p>
+<p>虽然开场被打断让我略感不适，</p>
+<p>“在那个项目里，我们突破性地采用了 ​<strong>​‘数控分离’架构​</strong>​ 作为基础核心思路。”</p>
+<p>然后<strong>Perf-CPU 架构</strong>，最后QPS提升40%，延迟降低60%+</p>
+<p>好了，时间到了，今天就到这吧。”</p>
+<p><strong>​完全无视我追问的细节，没有丝毫想要多解释一句或进一步交流的意思。</strong></p>
+<ul>
+<li><strong>流程异常压缩</strong>：硬性 30 分钟，使自我介绍被强行跳过。</li>
+<li><strong>提问单一且方向明确</strong>：整场只在一个项目细节上深挖，且深度停留在可落地的方案层面。</li>
+<li><strong>交流方式偏单向</strong>：面试官不参与讨论</li>
+<li>无反问，反问时候回答的一点没技术含量：对我反问的价值判断含糊其辞，回避关键事实。</li>
+<li><strong>时间控制极其精确</strong>：会议在 30 分钟</li>
+</ul>
+<h1 id="二常见骗方案的套">二、常见骗方案的套</h1>
+<h3 id="21-把企业真实问题当考题来问最常见">2.1 把企业真实问题当“考题”来问（最常见）</h3>
+<p><strong>表现</strong>：</p>
+<p>面试官不怎么问你过往的职责与成果，</p>
+<p>而是直接掏出公司现在遇到的具体问题，</p>
+<p>让你分析并给出可落地的解决方案。</p>
+<p><strong>本质/动机</strong>：</p>
+<ul>
+<li>企业想借面试的机会收集外部思路或可直接搬用的解决办法，</li>
+<li>而非真评估候选人是否合适或能长期做事。</li>
+<li>该类情况在知乎讨论中频繁被提及，是最典型的“骗方案”信号。</li>
+</ul>
+<h2 id="22-要求回家写完整方案试稿却不承诺评审或反馈">2.2 要求回家写“完整方案/试稿”，却不承诺评审或反馈</h2>
+<p><strong>表现</strong>：</p>
+<ul>
+<li>面试结束后被要求把详细方案、PPT、产品/运营/设计稿等做成“作业”并提交，</li>
+<li>但对方不说明谁会评审、是否有报酬或后续安排。</li>
+</ul>
+<p><strong>本质/动机</strong>：</p>
+<ul>
+<li>面试方用“作业”把研发/设计工作外包给候选人</li>
+<li>或用作业筛选但不承担对等的评审/付费义务</li>
+<li>这是被举报和投诉最多的做法。</li>
+</ul>
+<h2 id="23---只问怎么做细节不询问为什么权衡上下文">2.3   只问“怎么做/细节”，不询问“为什么/权衡/上下文”</h2>
+<p><strong>表现</strong>：</p>
+<ul>
+<li>
+<p>面试官追问具体实现步骤、参数、执行计划，但几乎不问你如何做决策、如何权衡利弊、团队如何配合。<br>
+<strong>本质/动机</strong>：</p>
+</li>
+<li>
+<p>想拿到可直接复用的执行细则而非评估你的思路深度。</p>
+</li>
+<li>
+<p>这类表现常与把公司问题当题目一起出现。</p>
+</li>
+</ul>
+<h2 id="24--面试时长流程异常例如标注-60-分钟但实际-30-分钟">2.4  面试时长/流程异常（例如标注 60 分钟但实际 30 分钟）</h2>
+<p><strong>表现</strong>：</p>
+<ul>
+<li>
+<p>日历/邀请写着“技术交流”，但时长异常短；</p>
+</li>
+<li>
+<p>或者面试刻意压缩自我介绍和候选人反问环节，只留“输出”时间。<br>
+<strong>本质/动机</strong>：</p>
+</li>
+<li>
+<p>短时窗口更便于高密度“收割”候选人思路，且减少了双向交流的机会，是常见的预警信号。</p>
+</li>
+</ul>
+<h2 id="24--要求提供公司内部数据竞品信息或敏感资料">2.4  要求提供公司内部数据、竞品信息或敏感资料</h2>
+<p><strong>表现</strong>：</p>
+<ul>
+<li>面试过程中或作业要求中索要你以前公司的具体数据、流程、客户信息</li>
+<li>或要求对方的内部产品做详细改进（涉及尚未公开的业务细节）。</li>
+</ul>
+<h2 id="三总结">三、总结</h2>
+<h2 id="31-如何定义一次好面试">3.1 如何定义一次好面试</h2>
+<ul>
+<li>面试通过提问 发现候选人 基本知识，动手能力，解决问题能力，分析问题能力</li>
+<li>候选人 能通过反问 发现自身缺点，有的领导每年请猎头评估自己实力也是如此</li>
+</ul>
+<h2 id="32-增加反问环节">3.2 增加反问环节</h2>
+<ul>
+<li>贵司 当前最大痛点是什么</li>
+<li>团队近半年排障怎么处理的</li>
+<li>你是如何做的</li>
+</ul>
+<h2 id="33-面试试岗时如何辨别一个公司是不是骗子公司">3.3 面试试岗时如何辨别一个公司是不是骗子公司</h2>
+<ul>
+<li>最简单的方法就是，登入当地工商局官网查企业信用</li>
+<li>去实地考察下，公司是不是在写字楼里面，不是很偏僻的地方</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2024-08-07 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/interview/interviewSystemDesgin/2025/ceph-blockdevice/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">块设备</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/interview/7_2025-5-22-spin_lock/">
+            <span class="next-text nav-default">如何设计一个高性能可扩展的自旋锁</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
