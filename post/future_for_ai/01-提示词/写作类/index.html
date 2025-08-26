@@ -48,7 +48,7 @@
 <meta itemprop="name" content="Trae从青铜到王者">
 <meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-04-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2025-04-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2548">
+<meta itemprop="wordCount" content="3538">
 <meta itemprop="keywords" content="小而美," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Trae从青铜到王者"/>
 <meta name="twitter:description" content="c&#43;&#43;"/>
@@ -130,8 +130,8 @@
         <div class="post-category">
             <a href="/categories/do-book/"> do book </a>
             </div>
-          <span class="more-meta"> 约 2548 字 </span>
-          <span class="more-meta"> 预计阅读 6 分钟 </span>
+          <span class="more-meta"> 约 3538 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -141,6 +141,7 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
+    <li><a href="#技术文章">技术文章：</a></li>
     <li><a href="#润色">润色</a>
       <ul>
         <li><a href="#角色">角色：</a></li>
@@ -168,9 +169,271 @@
 <li><a href="https://g10npwhy4nv.feishu.cn/docx/U1Iqduc3mox5F8xmbUzcCC6qnof">https://g10npwhy4nv.feishu.cn/docx/U1Iqduc3mox5F8xmbUzcCC6qnof</a></li>
 <li><a href="https://langgptai.feishu.cn/wiki/TWg2wkDSki8Tqxk0E5scxTwunbd">https://langgptai.feishu.cn/wiki/TWg2wkDSki8Tqxk0E5scxTwunbd</a></li>
 </ul>
-<p>&laquo;&laquo;&laquo;&lt; HEAD</p>
 <h1 id="写作">写作</h1>
-<h2 id="润色">润色</h2>
+<h2 id="技术文章">技术文章：</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">写一篇公众号文章，主要面向程序员，2000字左右，要求文章有一定的洞察力
+
+如果不清楚，不不会
+一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+
+二、这个技术的优势和劣势分别是什么 
+
+三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+四、技术的组成部分和关键点。
+
+五、技术的底层原理和关键实现
+
+六、已有的实现和它之间的对比
+
+
+
+  
+
+### 【大纲】
+
+面试：如何为类自定义 new delete 实现？
+
+  
+
+小青（ 0-3 年回答）
+
+不清楚 ，概念理清楚
+
+  
+
+- 普通函数理解：函数重载（同类 参数不同），，隐藏（不同类，不同参数） 覆盖（虚函数 ） 符号
+
+参考：**序员的自我修养：链接、装载与库**
+
+- 普通函数，库函数，系统调用
+
+  
+
+- 再想一下：new运算符，operaoe new 函数 与 malloc 区别？
+
+new --运算符 --不支持重载（语法报错）
+
+operator new c++ 静态类成员/全家函数 ，没有this，指针覆盖  
+libstdc++ 标准库， malloc 是 **c glibc** 标准库 brk nnmap 是系统调用
+
+  
+
+- 排除法：通过 虚函数 **operator new/delete不是虚函数，它们和普通静态成员函数一样，在编译期就决定了调用哪个版**
+- **编译判断 弱符号**
+
+  
+
+**小白（3-5年 白银）： Class Specific new and delete**
+
+- LD_PRELOAD
+
+**_GLIBCXX_WEAK_DEFINITION**
+
+- 这是GCC标准库里自定义的宏，意思是“弱符号定义”（weak definition）。
+- **用途**：允许该符号（函数）被用户/其他库“覆盖”重定义——比如你自己实现了一个全局 operator ne
+
+  
+
+**小王（5-19年 白银） 结合 3fs 代码 怎么实现的**
+
+[**https://open.oceanbase.com/blog/19719224352**](https://open.oceanbase.com/blog/19719224352)
+
+  
+
+  
+
+### 角色：
+
+  
+
+你是一个面试官，擅长分布式数据存储 和分布式数据库，精通 liunx c++
+
+希望筛选同样厉害的面试候选人，请根据面试岗位信息 ，根据输入题目 给出答案
+
+  
+
+  
+
+## ​​任务
+
+  
+
+请按照【大纲】 按照【要求】写 一篇自媒体文章
+
+  
+
+  
+
+## [要求]
+
+  
+
+1. 从项目，技术角度出发，采用什么技术，获得什么收益
+
+2. 请给出参考来源，不清楚就回答 不清楚
+
+3. 按照下面格式回答
+
+  
+
+ 一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+
+  
+
+二、这个技术的优势和劣势分别是什么 
+
+  
+
+三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+  
+
+四、技术的组成部分和关键点。
+
+  
+
+五、技术的底层原理和关键实现
+
+  
+
+六、已有的实现和它之间的对比
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="润色">润色</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -279,21 +542,6 @@ https://mp.weixin.qq.com/s/Zr-8CHOxMSl67FsKihsoTQ
 <p>五、技术的底层原理和关键实现</p>
 <p>六、已有的实现和它之间的对比</p>
 <p>最后优化3次后，润色，同样方便 小白理解  给出5个标题</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>997b2afada26e8cba441316dd4588e810e40ba32</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1

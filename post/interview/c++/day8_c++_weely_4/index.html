@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面试官:指针和应用区别 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/c&#43;&#43;/day8_c&#43;&#43;_weely_4/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面试官:指针和应用区别" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/c&#43;&#43;/day8_c&#43;&#43;_weely_4/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-08-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-08-25T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="面试官:指针和应用区别">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-08-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-08-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="6325">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试官:指针和应用区别"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面试官:指针和应用区别</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-08-25 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 6325 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#11--普通的函数函数特性-重载overload隐藏hide覆盖override">1.1  普通的函数：函数特性 重载（overload），隐藏（hide），覆盖（override）</a></li>
+    <li><a href="#12---普通函数库函数系统调用">1.2   普通函数，库函数，系统调用</a></li>
+    <li><a href="#如何验证-libstdc-的-operator-new-是弱符号"><strong>如何验证 libstdc++ 的 operator new 是弱符号</strong></a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#21-深入理解-c-newdelete类内静态绑定-vs-全局弱符号机制">2.1 深入理解 C++ new/delete：类内静态绑定 vs 全局弱符号机制</a></li>
+    <li><a href="#22-编译期链接期运行期">2.2 编译期，链接期，运行期</a>
+      <ul>
+        <li></li>
+        <li><a href="#-全局-operator-newdelete弱符号覆盖链接期">② 全局 <code>operator new/delete</code>（弱符号覆盖，链接期）</a></li>
+        <li><a href="#-ld_preload--tcmalloc动态链接优先级运行期">③ <code>LD_PRELOAD</code> + tcmalloc（动态链接优先级，运行期）</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#41--deepseek-3fs-灵活内存池实现策略">4.1  DeepSeek 3FS 灵活内存池实现策略</a>
+      <ul>
+        <li></li>
+        <li><a href="#3--dlopen方式加载-动态库">3.  dlopen方式加载 动态库</a></li>
+        <li><a href="#42-疑问智能指针在自定义分配器情况不能调用默认的-delete-操作">4.2 疑问：智能指针在自定义分配器情况不能调用默认的 delete 操作</a></li>
+        <li><a href="#要点">要点</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#-犹豫不前准备到天荒地老"><strong>① 犹豫不前：准备到天荒地老</strong></a></li>
+        <li><a href="#-盲目回答机会就在眼前却抓不住"><strong>② 盲目回答：机会就在眼前，却抓不住</strong></a></li>
+        <li><a href="#更残酷的是"><strong>更残酷的是</strong></a></li>
+        <li><a href="#核心方法论"><strong>核心方法论</strong>：</a></li>
+      </ul>
+    </li>
+    <li><a href="#21天你会获得什么"><strong>21天，你会获得什么？</strong></a></li>
+    <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>各位老师好！</p>
+<p>这是CPP面试冲刺周刊 （c++ weekly）
+陪你一起快速冲击大厂面试 第四期</p>
+<p><strong>周刊目标</strong>：</p>
+<ul>
+<li>不是成为C++专家，而是成为C++面试专家</li>
+</ul>
+<p><strong>本期内容</strong>：</p>
+<ul>
+<li>如何为一个类自定义new/delete</li>
+</ul>
+<p><strong>一页PPT 解释：</strong> （回答有逻辑）</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>① 类内 new/delete</th>
+<th>② 全局 new/delete（弱符号）</th>
+<th>③ LD_PRELOAD + tcmalloc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生效时机</td>
+<td><strong>编译期</strong>（静态绑定）</td>
+<td><strong>链接期</strong>（符号强弱覆盖）</td>
+<td><strong>运行期</strong>（动态装载器优先级）</td>
+</tr>
+<tr>
+<td>作用范围</td>
+<td>仅该类/基类查找链</td>
+<td>全局（除已绑定到类内的 new）</td>
+<td>全局（动态库与主程序）</td>
+</tr>
+<tr>
+<td>机制</td>
+<td>作用域查找 + 非虚（无 vtable）</td>
+<td>弱符号 vs 强符号</td>
+<td>预加载库先解析同名符号</td>
+</tr>
+<tr>
+<td>是否依赖弱符号</td>
+<td>否</td>
+<td>是（libstdc++ 默认全局 new 为 weak）</td>
+<td>否（依赖 ld.so 解析顺序）</td>
+</tr>
+<tr>
+<td>源码是否需改动</td>
+<td>需要（在类内写函数）</td>
+<td>需要（提供全局 operator new/delete）</td>
+<td>不需要（设置环境变量即可）</td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>类级内存池、对齐、对象复用</td>
+<td>全局策略（统计/替换分配器/统一注入）</td>
+<td>线上快速切换分配器/排查内存/零侵入部署</td>
+</tr>
+</tbody>
+</table>
+<p><strong>题目来源</strong>： <strong>C++ Prime</strong>r 第 18 章节</p>
+<ul>
+<li>Exercise 18.9: Declare members new and delete for the QueueItem class.</li>
+<li>18.1.6 Class Specific new and delete</li>
+<li>Exercise 18.6: Reimplement your Vector class to use operator new, operator delete, placement new, and direct calls to the destructor.</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/08/25/Wzr3ceEmvY9dFwL.png" alt="课本上的题目绝对经典"></p>
+<p><strong>整体知识看板</strong>（看文末）：</p>
+<ul>
+<li>第一周:c++基础知识高频面试题解析【当前位置】</li>
+<li>第二周: 专注分布式存储,数据库广告搜索 Ai 辅助驾驶 大厂热门后端开发岗位拆解。</li>
+<li>第三周：系统架构设计，用未来 10 年发展目标，重新设计原来系统</li>
+</ul>
+<p>开始</p>
+<h1 id="一面试官如何为一个类自定义newdelete">一、面试官：如何为一个类自定义new/delete</h1>
+<p>C++ 对象的内存分配默认依赖 <strong>全局 <code>operator new</code> / <code>operator delete</code></strong>，
+本质上调用 <strong>libc malloc/free</strong>，最终走 <strong>系统调用 brk/mmap</strong></p>
+<p>答案可能很简单（这绝对不是最终结果，面试官要反问的）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span> <span class="n">sz</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A::operator new, size = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">sz</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">::</span><span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="n">sz</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A::operator delete&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="o">::</span><span class="k">operator</span> <span class="k">delete</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">A</span><span class="o">*</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">A</span><span class="p">;</span>  <span class="c1">// 输出: A::operator new, size = 1
+</span><span class="c1"></span>    <span class="k">delete</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 输出: A::operator delete
+</span><span class="c1"></span><span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>如何和已有知识，一步步结合起来，</p>
+<p>下面是我推导过程，可能意想不到发现</p>
+<h1 id="二小青回答工作0-3-年-青铜">二、小青回答（工作0-3 年 青铜）</h1>
+<p>如何如何为一个类自定义new/delete
+完全之前从来没有遇到过问题，
+很简单，平时不总结，别指望 面试当成超常发挥，</p>
+<p>我猜 你可能这样回顾之前准备</p>
+<ul>
+<li>new 和 malloc 有什么区别</li>
+<li>new 申请失败返回 NULL 还是抛出异常</li>
+<li>自定义一个类函数，虚函数可以吗，好像不行</li>
+<li>operator new 还是选择  placement new</li>
+</ul>
+<p><strong>暂停 思绪无限发散</strong>，</p>
+<p>重新整理 历史题目的的关系</p>
+<h2 id="11--普通的函数函数特性-重载overload隐藏hide覆盖override">1.1  普通的函数：函数特性 重载（overload），隐藏（hide），覆盖（override）</h2>
+<ul>
+<li>
+<p>重载（overload):在相同访问内（一个类），函数名相同,参数不同（<strong>c 语言不支持这样重载</strong>）</p>
+</li>
+<li>
+<p>隐藏（hide): 不同范围内 ,派生类定义与基类同名非虚函数时，基类同名函数被隐藏</p>
+</li>
+<li>
+<p>**覆盖 / 重写（Override）****：基类虚函数被派生类虚函数覆盖，运行期判断</p>
+<p>C++多态必要条件
+① 继承（this 指针)
+② 虚函数重写 ,
+③ 父类指针/引用指向子类对象</p>
+</li>
+</ul>
+<blockquote>
+<p>画外音：重新整理c++函数基本特性 目前就是动态绑定无法解决这个问题，</p>
+</blockquote>
+<ul>
+<li>因为new 是运算符 不是函数，不支持重载</li>
+<li>更重要的 operator new  是默认 static 函数，static 函数无法访问 this 指针，不支持运行时多态</li>
+</ul>
+<h2 id="12---普通函数库函数系统调用">1.2   普通函数，库函数，系统调用</h2>
+<p>参考：<strong>序员的自我修养：链接、装载与库</strong></p>
+<ul>
+<li><strong>new</strong> 是c++运算符，不能重载，语法规定的</li>
+<li>operator new 是c++ libstdc++ 标准库函数，静态函数，静态函数自然是不能是虚函数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">_GLIBCXX_WEAK_DEFINITION</span> <span class="kt">void</span> <span class="o">*</span>
+<span class="k">operator</span> <span class="k">new</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">sz</span><span class="p">)</span> <span class="n">_GLIBCXX_THROW</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bad_alloc</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>malloc 是 c 语言 glibc 标准库的库函数</li>
+<li>brk是系统调用</li>
+</ul>
+<p>演示：</p>
+<p>new 实现调用2个函数</p>
+<ol>
+<li>内存分配 调用全局的 operator new 函数为对象分配足够大小的内存。（4字节）</li>
+<li>调用 Foo构造对象</li>
+<li>返回对象指针 构造完毕后返回分配并初始化后的对象指针。</li>
+</ol>
+<p><img src="https://developer.qcloudimg.com/http-save/yehe-1640143/35cc51fabf2e08f0c39d39a8b732a6eb.png" alt=""></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c">
+ <span class="n">Foo</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Foo</span><span class="p">();</span>
+   <span class="err">│</span>
+   <span class="err">▼</span>
+<span class="err">查找类内</span> <span class="n">operator</span> <span class="n">new</span>
+   <span class="err">│</span>
+   <span class="err">├─存在</span> <span class="err">→</span> <span class="err">调用类内</span> <span class="n">new</span>
+   <span class="err">└─不存在</span> <span class="err">→</span> <span class="err">调用全局</span> <span class="o">::</span><span class="n">operator</span> <span class="n">new</span>
+   <span class="err">│</span>
+   <span class="err">▼</span>
+<span class="err">内存分配（</span><span class="n">malloc</span> <span class="o">/</span> <span class="err">内存池</span> <span class="o">/</span> <span class="err">用户态栈）</span>
+   <span class="err">│</span>
+   <span class="err">▼</span>
+<span class="err">调用构造函数</span>
+   <span class="err">│</span>
+   <span class="err">▼</span>
+<span class="err">返回对象指针</span>
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://img-blog.csdn.net/20170115234108145?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQXBvbGxvbl9rcmo=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="">_</p>
+<p>1.3 c++角度无法解决这个问题了，c 语言不支持重载，如何解决重载问题 弱符号，编译期静态绑定</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>实现方式</th>
+<th>发生时机</th>
+<th>影响范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>函数重载 (overloading)</strong></td>
+<td>同一作用域内多个函数签名不同</td>
+<td><strong>编译期</strong></td>
+<td>仅 C++ 语法</td>
+</tr>
+<tr>
+<td><strong>虚函数覆盖 (overriding)</strong></td>
+<td>子类重写父类虚函数</td>
+<td><strong>运行时</strong></td>
+<td>仅多态场景</td>
+</tr>
+<tr>
+<td><strong>符号覆盖 (symbol overriding)</strong></td>
+<td>通过弱符号 + 链接器选择强符号</td>
+<td><strong>链接期</strong></td>
+<td>整个可执行文件/动态库</td>
+</tr>
+</tbody>
+</table>
+<h2 id="如何验证-libstdc-的-operator-new-是弱符号"><strong>如何验证 libstdc++ 的 operator new 是弱符号</strong></h2>
+<p>我们可以直接用 <code>nm</code> 命令验证：</p>
+<p><code>nm -C /usr/lib/x86_64-linux-gnu/libstdc++.so | grep &quot;operator new&quot;</code></p>
+<p>典型输出类似：</p>
+<p><code>0000000000098e80 W operator new(unsigned long) 0000000000098ed0 W operator new[](unsigned long) 0000000000098f20 W operator delete(void*)</code></p>
+<p>这里的 <code>W</code> 就表示 <strong>weak symbol</strong>。</p>
+<p><strong>为什么 libstdc++ 把 operator new/delete 定义为弱符号</strong></p>
+<p>来看 libstdc++ 的源码（以 GCC 13.x 为例）：</p>
+<p>注意到 <code>_GLIBCXX_WEAK_DEFINITION</code>，在 GCC 平台上一般展开为：</p>
+<p><code>#define _GLIBCXX_WEAK_DEFINITION __attribute__ ((weak))</code></p>
+<p>这意味着 <strong>libstdc++ 提供的 operator new 是弱符号</strong>。</p>
+<p>原因：为了支持用户自定义重载</p>
+<p>在 Linux 下，符号解析遵循 <strong>ELF 链接规则</strong>：</p>
+<ul>
+<li>
+<p><strong>弱符号（weak）</strong>：如果存在同名的<strong>强符号（strong）</strong>，那么最终可执行文件会绑定到强符号。</p>
+</li>
+<li>
+<p><strong>强符号（strong）</strong>：用户自己实现的 <code>operator new</code> 会被视为强符号。</p>
+</li>
+</ul>
+<p><strong>因此：</strong></p>
+<ul>
+<li>如果用户自己实现了全局 <code>operator new</code>，<strong>会自动覆盖</strong> libstdc++ 提供的版本。</li>
+<li>如果用户没有实现，则默认使用 libstdc++ 的弱符号实现。</li>
+</ul>
+<p>这就是为什么 libstdc++ 必须把它们标记为弱符号，否则用户无法重载</p>
+<blockquote>
+<p>到这里你是否感觉找到最终答案 NO，c++继承复杂之处在这里，
+上面operator new是全局符号，如果有继承的类呢？</p>
+</blockquote>
+<h1 id="三-小白回答工作-3-5-年-白银">三 、小白回答(工作 3-5 年 白银)</h1>
+<p>如果面试官问：</p>
+<blockquote>
+<p>“为什么类内 <code>operator new/delete</code> 是静态绑定，而全局 <code>operator new/delete</code> 是弱符号？”</p>
+</blockquote>
+<p>可以回答：</p>
+<ol>
+<li>
+<p><strong>全局版本</strong>是由 <strong>libstdc++</strong> 提供的默认实现，在源码中标记了 <code>__attribute__((weak))</code>，用户可以通过定义自己的全局版本来覆盖默认实现 → <strong>弱符号机制</strong>。</p>
+</li>
+<li>
+<p><strong>类内版本</strong>是一个 <strong>普通静态成员函数</strong>，绑定过程在 <strong>编译期</strong>完成，属于 <strong>静态绑定</strong>，不会走虚函数表，也不会受弱符号影响。</p>
+</li>
+<li>
+<p>当类内和全局版本同时存在，<strong>类内优先</strong></p>
+</li>
+</ol>
+<p>30 秒总结自定义类实现 new 和/delete：</p>
+<ul>
+<li>
+<p>第一是类内 operator new/delete，纯编译期静态绑定，作用域查找，不涉及弱符号；</p>
+</li>
+<li>
+<p>第二层是全局 operator new/delete，libstdc++ 默认实现是弱符号，你提供强符号即可链接期覆盖；</p>
+</li>
+<li>
+<p>第三层是LD_PRELOAD + tcmalloc，通过动态装载器在运行时优先解析同名符号，实现零改码劫持。</p>
+</li>
+</ul>
+<p>三者分别对应编译期、链接期、运行期三个阶段，</p>
+<p>优先级依次是：类内静态绑定 &gt; 运行期预加载 &gt; 链接期弱符号</p>
+<h2 id="21-深入理解-c-newdelete类内静态绑定-vs-全局弱符号机制">2.1 深入理解 C++ new/delete：类内静态绑定 vs 全局弱符号机制</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>类内 <code>operator new/delete</code></strong></th>
+<th><strong>全局 <code>::operator new/delete</code></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>作用域</strong></td>
+<td>限于该类及其派生类</td>
+<td>全局可见</td>
+</tr>
+<tr>
+<td><strong>绑定时机</strong></td>
+<td>编译期静态绑定</td>
+<td>链接期符号解析</td>
+</tr>
+<tr>
+<td><strong>多态性</strong></td>
+<td>❌ 无多态</td>
+<td>❌ 无多态</td>
+</tr>
+<tr>
+<td><strong>弱符号</strong></td>
+<td>❌ 不依赖弱符号</td>
+<td>✅ 是弱符号</td>
+</tr>
+<tr>
+<td><strong>优先级</strong></td>
+<td>优先于全局 <code>::operator new</code></td>
+<td>最后兜底</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>位置</strong></th>
+<th><strong>示例</strong></th>
+<th><strong>作用范围</strong></th>
+<th><strong>绑定类型</strong></th>
+<th><strong>多态性</strong></th>
+<th><strong>弱符号相关性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>全局的</strong></td>
+<td><code>void* operator new(std::size_t size)</code></td>
+<td>所有未被类内覆盖的 <code>new</code> 表达式</td>
+<td><strong>弱符号</strong></td>
+<td>无</td>
+<td>✅ 和弱符号有关</td>
+</tr>
+<tr>
+<td><strong>类内的</strong></td>
+<td><code>static void* operator new(std::size_t size)</code></td>
+<td>仅限该类及其派生类的 <code>new</code> 表达式</td>
+<td><strong>静态绑定</strong></td>
+<td>❌</td>
+<td>❌ 与弱符号无关</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>类内 <code>operator new/delete</code></th>
+<th>全局 <code>operator new/delete</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绑定方式</td>
+<td><strong>静态绑定</strong>，编译期决定</td>
+<td>链接时通过 <strong>弱符号</strong> 可被覆盖</td>
+</tr>
+<tr>
+<td>是否虚函数</td>
+<td>否</td>
+<td>否（但全局版本可被替换）</td>
+</tr>
+<tr>
+<td>重载可见性</td>
+<td>类内作用域</td>
+<td>全局作用域</td>
+</tr>
+<tr>
+<td>标准库实现</td>
+<td>普通函数</td>
+<td><code>_GLIBCXX_WEAK_DEFINITION</code></td>
+</tr>
+<tr>
+<td>可否被用户替换</td>
+<td>仅在类作用域可自定义</td>
+<td><strong>用户可定义全局重载</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;new&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="k">struct</span> <span class="nc">Base</span>
+<span class="p">{</span>
+	<span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Base new</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+		<span class="k">return</span> <span class="o">::</span><span class="k">operator</span> <span class="k">new</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="n">Base</span> <span class="p">{</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="c1">//A class-specific operator new is looked up in the scope of the class and is not virtual.
+</span><span class="c1"></span>	
+	<span class="n">Derived</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Derived</span><span class="p">;</span> <span class="c1">// 调用 Base::operator new 还是 Derived::operator new？
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>编译期静态绑定</strong><br>
+<code>new Derived</code> 的查找顺序是：
+<ol>
+<li>在 <code>Derived</code> 中查找 <code>operator new</code></li>
+<li>如果没找到，查找 <code>Base</code></li>
+<li>如果都没找到，最后使用全局 <code>::operator new</code></li>
+</ol>
+</li>
+<li><code>Derived</code> 没有定义 <code>operator new</code>，所以直接用到了 <strong><code>Base::operator new</code></strong>。</li>
+<li><strong>这不是多态</strong>，不需要虚函数表。</li>
+</ul>
+<p><strong>最终结论</strong></p>
+<ul>
+<li><strong>类内 <code>operator new/delete</code></strong>：
+<ul>
+<li>是静态成员函数</li>
+<li>编译期静态绑定</li>
+<li>和弱符号无关</li>
+</ul>
+</li>
+<li><strong>全局 <code>operator new/delete</code></strong>：
+<ul>
+<li>libstdc++ 提供默认实现</li>
+<li>被标记为 <strong>weak symbol</strong></li>
+<li>用户可覆盖</li>
+</ul>
+</li>
+</ul>
+<h2 id="22-编译期链接期运行期">2.2 编译期，链接期，运行期</h2>
+<p><img src="https://developer.qcloudimg.com/http-save/yehe-1640143/a004cb2bddbf854cd28b7970f77aea99.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>① 类内 new/delete</th>
+<th>② 全局 new/delete（弱符号）</th>
+<th>③ LD_PRELOAD + tcmalloc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生效时机</td>
+<td><strong>编译期</strong>（静态绑定）</td>
+<td><strong>链接期</strong>（符号强弱覆盖）</td>
+<td><strong>运行期</strong>（动态装载器优先级）</td>
+</tr>
+<tr>
+<td>作用范围</td>
+<td>仅该类/基类查找链</td>
+<td>全局（除已绑定到类内的 new）</td>
+<td>全局（动态库与主程序）</td>
+</tr>
+<tr>
+<td>机制</td>
+<td>作用域查找 + 非虚（无 vtable）</td>
+<td>弱符号 vs 强符号</td>
+<td>预加载库先解析同名符号</td>
+</tr>
+<tr>
+<td>是否依赖弱符号</td>
+<td>否</td>
+<td>是（libstdc++ 默认全局 new 为 weak）</td>
+<td>否（依赖 ld.so 解析顺序）</td>
+</tr>
+<tr>
+<td>源码是否需改动</td>
+<td>需要（在类内写函数）</td>
+<td>需要（提供全局 operator new/delete）</td>
+<td>不需要（设置环境变量即可）</td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>类级内存池、对齐、对象复用</td>
+<td>全局策略（统计/替换分配器/统一注入）</td>
+<td>线上快速切换分配器/排查内存/零侵入部署</td>
+</tr>
+</tbody>
+</table>
+<h4 id="-类内-operator-newdelete静态绑定">① 类内 <code>operator new/delete</code>（静态绑定）</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">源码：</span>
+<span class="k">struct</span> <span class="n">Base</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">operator</span> <span class="n">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="k">struct</span> <span class="nl">Derived</span> <span class="p">:</span> <span class="n">Base</span> <span class="p">{};</span>
+
+<span class="n">new</span> <span class="n">Derived</span>
+   <span class="err">│</span>
+   <span class="err">├─</span> <span class="err">编译器做“名字查找”（先</span> <span class="n">Derived</span><span class="err">，后</span> <span class="n">Base</span><span class="err">）</span>
+   <span class="err">│</span>
+   <span class="err">├─</span> <span class="err">若</span> <span class="n">Derived</span> <span class="err">未定义</span> <span class="err">→</span> <span class="err">绑定到</span> <span class="n">Base</span><span class="o">::</span><span class="n">operator</span> <span class="n">new</span>   <span class="err">←←←</span> <span class="err">静态绑定（非多态）</span>
+   <span class="err">│</span>
+   <span class="err">└─</span> <span class="err">生成直接调用指令（无</span> <span class="n">vtable</span><span class="err">，无符号覆盖参与）</span>
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>要点</strong></p>
+<ul>
+<li>编译期决定，<strong>不走弱符号</strong>、不走 vtable。</li>
+<li>仅影响该类（及查找到的基类作用域），<strong>优先级高于全局</strong>。</li>
+</ul>
+<h3 id="-全局-operator-newdelete弱符号覆盖链接期">② 全局 <code>operator new/delete</code>（弱符号覆盖，链接期）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="err">源文件们</span>  <span class="err">──</span><span class="p">(</span><span class="err">编译</span><span class="p">)</span><span class="err">──►</span> <span class="err">目标文件们（含符号表）</span> <span class="err">──</span><span class="p">(</span><span class="err">链接</span><span class="p">)</span><span class="err">──►</span> <span class="err">可执行文件</span> <span class="o">/</span> <span class="n">so</span>
+
+<span class="n">libstdc</span><span class="o">++</span> <span class="err">提供：</span>
+  <span class="n">_GLIBCXX_WEAK_DEFINITION</span>
+  <span class="kt">void</span><span class="o">*</span> <span class="o">::</span><span class="n">operator</span> <span class="n">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">);</span>     <span class="err">←</span> <span class="err">弱符号（</span><span class="n">weak</span><span class="err">）</span>
+
+<span class="err">你的工程若提供：</span>
+  <span class="kt">void</span><span class="o">*</span> <span class="o">::</span><span class="n">operator</span> <span class="n">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">);</span>     <span class="err">←</span> <span class="err">强符号（</span><span class="n">strong</span><span class="err">）</span>
+
+<span class="err">链接器规则：</span>
+
+  <span class="err">若同名强符号存在</span> <span class="err">→</span> <span class="err">选择强符号（你的全局</span> <span class="n">new</span><span class="err">）</span>
+  
+  <span class="err">否则</span> <span class="err">→</span> <span class="err">选择弱符号（</span><span class="n">libstdc</span><span class="o">++</span> <span class="err">默认</span> <span class="n">new</span><span class="err">）</span>
+
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="-ld_preload--tcmalloc动态链接优先级运行期">③ <code>LD_PRELOAD</code> + tcmalloc（动态链接优先级，运行期）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="err">运行命令：</span>
+  <span class="n">LD_PRELOAD</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libtcmalloc</span><span class="p">.</span><span class="n">so</span> <span class="p">.</span><span class="o">/</span><span class="n">app</span>
+
+<span class="err">动态装载器</span> <span class="n">ld</span><span class="p">.</span><span class="n">so</span> <span class="err">加载顺序：</span>
+  <span class="mi">1</span><span class="p">)</span> <span class="err">先装载</span> <span class="n">LD_PRELOAD</span> <span class="err">指定的</span> <span class="n">so</span><span class="err">（优先级最高）</span>
+  <span class="mi">2</span><span class="p">)</span> <span class="err">再装载主程序与其依赖的其它</span> <span class="n">so</span><span class="err">（</span><span class="n">libc</span><span class="p">,</span> <span class="n">libstdc</span><span class="o">++</span><span class="p">,</span> <span class="p">...</span><span class="err">）</span>
+
+<span class="err">符号解析：</span>
+  <span class="err">当需要解析</span> <span class="s">&#34;malloc/free/new/delete&#34;</span> <span class="err">时</span>
+  <span class="err">├─</span> <span class="err">如果在预加载的</span> <span class="n">tcmalloc</span><span class="p">.</span><span class="n">so</span> <span class="err">中已定义</span> <span class="err">→</span> <span class="err">直接绑定到</span> <span class="n">tcmalloc</span> <span class="err">版本</span>
+  <span class="err">└─</span> <span class="err">否则继续在后续库中查找（如</span> <span class="n">libc</span><span class="err">）</span>
+
+<span class="err">效果：</span>
+  <span class="err">不改源码，即可把</span> <span class="n">malloc</span><span class="o">/</span><span class="n">free</span><span class="o">/</span><span class="k">new</span><span class="o">/</span><span class="k">delete</span> <span class="err">劫持到</span> <span class="n">tcmalloc</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>要点</strong></p>
+<ul>
+<li><strong>运行时</strong>生效，由<strong>动态装载器</strong>决定符号优先级。</li>
+<li>对主程序和动态库均可生效（除非静态链接/受限环境）。</li>
+<li>常用于<strong>快速切换分配器/排查内存问题</strong>。</li>
+</ul>
+<h1 id="四小王回答-工作-5-10-年-用起来">四、小王回答( 工作 5-10 年 )：用起来</h1>
+<blockquote>
+<p>工作 10 年和工作 3 年 在知识不会任何新增 ,结合 3fs 代码说明</p>
+</blockquote>
+<h2 id="41--deepseek-3fs-灵活内存池实现策略">4.1  DeepSeek 3FS 灵活内存池实现策略</h2>
+<ul>
+<li>自定义：用默认系统的</li>
+<li>自定义：用第三方库的</li>
+<li>自定义：自己实现，这个不是分布式存储重点，没有实现。</li>
+</ul>
+<p>代码分析：</p>
+<h4 id="1-定义宏开关-cmakeliststxt">1. 定义宏开关 CMakeLists.txt</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">option(OVERRIDE_CXX_NEW_DELETE &#34;Override C++ new/delete operator&#34; OFF)
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="2-重载全局函数-operator-newdelete">2. 重载全局函数 operator new/delete</h4>
+<ul>
+<li>src\memory\common\OverrideCppNewDelete.h</li>
+<li>代码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="cp">#ifdef OVERRIDE_CXX_NEW_DELETE
+</span><span class="cp"></span>
+<span class="c1">// Override global new/delete with custom memory allocator.
+</span><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="k">operator</span> <span class="nf">new</span><span class="p">(</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">hf3fs</span><span class="o">::</span><span class="n">memory</span><span class="o">::</span><span class="n">allocate</span><span class="p">(</span><span class="n">size</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="k">operator</span> <span class="nf">delete</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">mem</span><span class="p">)</span> <span class="k">noexcept</span> <span class="p">{</span> <span class="n">hf3fs</span><span class="o">::</span><span class="n">memory</span><span class="o">::</span><span class="n">deallocate</span><span class="p">(</span><span class="n">mem</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="cp">#endif
+</span><span class="cp"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3--dlopen方式加载-动态库">3.  dlopen方式加载 动态库</h3>
+<ul>
+<li>src/memory/common/GlobalMemoryAllocator.cc</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">loadMemoryAllocatorLib</span><span class="p">()</span>
+	<span class="kt">void</span> <span class="o">*</span><span class="n">mallocLib</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+	<span class="n">GetMemoryAllocatorFunc</span> <span class="n">getMemoryAllocatorFunc</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+	<span class="n">mallocLib</span> <span class="o">=</span> <span class="o">::</span><span class="n">dlopen</span><span class="p">(</span><span class="n">mallocLibPath</span><span class="p">,</span> <span class="n">RTLD_NOW</span> <span class="o">|</span> <span class="n">RTLD_GLOBAL</span><span class="p">);</span>
+	
+	<span class="n">gAllocator</span> <span class="o">=</span> <span class="n">getMemoryAllocatorFunc</span><span class="p">();</span>
+
+<span class="c1">//
+</span><span class="c1">//这里通过环境变量 MEMORY_ALLOCATOR_LIB_PATH 来指定要加载的内存分配器库。 
+</span><span class="c1">//例如，如果你想使用jemalloc.tcmalloc： 
+</span><span class="c1">//set MEMORY_ALLOCATOR_LIB_PATH=D:\path\to\jemalloc.dll 
+</span><span class="c1">//set MEMORY_ALLOCATOR_LIB_PATH=D:\path\to\tcmalloc.dll
+</span><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">allocate</span><span class="p">(</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">gAllocator</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+	
+		<span class="n">mem</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">allocateSize</span><span class="p">);</span>
+	
+	<span class="k">else</span>
+		<span class="n">mem</span> <span class="o">=</span> <span class="n">gAllocator</span><span class="o">-&gt;</span><span class="n">allocate</span><span class="p">(</span><span class="n">allocateSize</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>提供 GetMemoryAllocatorFunc 函数指针类型用于通过固定导出符号加载实现（如 dlsym(&ldquo;getMemoryAllocator&rdquo;)）:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="k">class</span> <span class="nc">MemoryAllocatorInterface</span> <span class="p">{</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+	<span class="k">virtual</span> <span class="o">~</span><span class="n">MemoryAllocatorInterface</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+	
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">allocate</span><span class="p">(</span><span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">deallocate</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">mem</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">memalign</span><span class="p">(</span><span class="n">size_t</span> <span class="n">alignment</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">logstatus</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+	<span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">profiling</span><span class="p">(</span><span class="kt">bool</span> <span class="n">active</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prefix</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">};</span>
+	<span class="k">using</span> <span class="n">GetMemoryAllocatorFunc</span> <span class="o">=</span> <span class="n">MemoryAllocatorInterface</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="p">)();</span>
+
+<span class="p">}</span> <span class="c1">// namespace hf3fs::memory
+</span><span class="c1"></span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="42-疑问智能指针在自定义分配器情况不能调用默认的-delete-操作">4.2 疑问：智能指针在自定义分配器情况不能调用默认的 delete 操作</h3>
+<h3 id="要点">要点</h3>
+<ul>
+<li>谁分配，谁释放；分配与释放函数必须匹配。</li>
+<li>对象池/自定义分配接口返回的内存，务必使用自定义 deleter；默认 delete 不适用。</li>
+<li>启用 3FS 全局 new/delete 重载时，默认智能指针 deleter 可直接用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">void</span><span class="o">*</span> <span class="n">mem</span> <span class="o">=</span> <span class="n">hf3fs</span><span class="o">::</span><span class="n">memory</span><span class="o">::</span><span class="n">memalign</span><span class="p">(</span><span class="k">alignof</span><span class="p">(</span><span class="n">My</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">My</span><span class="p">));</span>
+  <span class="n">My</span><span class="o">*</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">mem</span><span class="p">)</span> <span class="n">My</span><span class="p">(...);</span>
+  
+  <span class="k">auto</span> <span class="n">deleter</span> <span class="o">=</span> <span class="p">[](</span><span class="n">My</span><span class="o">*</span> <span class="n">p</span><span class="p">){</span>
+    <span class="n">p</span><span class="o">-&gt;~</span><span class="n">My</span><span class="p">();</span> <span class="c1">//可以直接调用析构函数
+</span><span class="c1"></span>    <span class="n">hf3fs</span><span class="o">::</span><span class="n">memory</span><span class="o">::</span><span class="n">deallocate</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="c1">//归还到内存池
+</span><span class="c1"></span>  <span class="p">};</span>
+  
+  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">My</span><span class="p">,</span> <span class="k">decltype</span><span class="p">(</span><span class="n">deleter</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">up</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">deleter</span><span class="p">);</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="五广告时间">五、广告时间</h1>
+<p>c++周刊目的陪你一起快速冲击大厂面试</p>
+<blockquote>
+<p>小提示：不要把他看成一个出售给你产品，我只出售给自己
+在公司做任何事情事情，
+都必须清楚拆解需求功能，开发周期，最后得到什么结果，
+同样面试准备也是如此，给自己一个期限 21 天，给自己大纲，然后给自己 21 天学习结果，这样自己才能安心准备下去。</p>
+</blockquote>
+<p>曾经有一个<strong>让我心跳加速的岗位</strong>放在我面前，<br>
+我没有珍惜。<br>
+等到别人拿到 offer 的那一刻，<br>
+我才追悔莫及！</p>
+<p>人世间，最痛苦的事情，<br>
+不是没钱吃饭，<br>
+也不是没房没车，<br>
+而是——<strong>错过了那个能让我逆天改命的机会！</strong></p>
+<p>如果上天再给我一次机会，<br>
+我一定会对那个岗位说三个字：<br>
+<strong>“我要你！”</strong></p>
+<p>如果非要在这份“心动”上加一个期限，<br>
+<strong>一万年太久了……</strong><br>
+<strong>我只想要——21天！</strong></p>
+<p><strong>你可能面临两种选择</strong></p>
+<h3 id="-犹豫不前准备到天荒地老"><strong>① 犹豫不前：准备到天荒地老</strong></h3>
+<p>“这个岗位太难了，我先准备一下吧。”<br>
+于是你准备1天、1周、1个月、1年……<br>
+等再回头，<strong>3年就这样过去了</strong>。</p>
+<ul>
+<li>每天忙着搬砖，没时间系统复习</li>
+<li>每次想起要准备，又感觉心里没底</li>
+<li>面试知识点更新太快，拿着旧地图找新机会
+最后，错过了一次又一次心动的岗位。</li>
+</ul>
+<h3 id="-盲目回答机会就在眼前却抓不住"><strong>② 盲目回答：机会就在眼前，却抓不住</strong></h3>
+<p>终于等来一场面试，<br>
+你觉得问题很简单，张口就答，<br>
+结果用“几千元思维”回答“百万年薪岗位”。</p>
+<ul>
+<li>面试官问到C++底层实现，答不上来</li>
+<li>设计题说到高并发架构，没实战经验</li>
+<li>一紧张，连项目里真实做过的东西都讲不清</li>
+</ul>
+<p>一次面试失利，也许就意味着和理想岗位失之交臂。</p>
+<h3 id="更残酷的是"><strong>更残酷的是</strong></h3>
+<p>在你犹豫的这几年里，<br>
+找工作的成本越来越高：</p>
+<ul>
+<li>一个部门、一个领导，可能坚持一年就被解散</li>
+<li>一个项目，可能在10年、20年后，<br>
+曾经复杂的业务规则、先进的架构，早已被淘汰</li>
+<li>市场上新的技术和面试要求，每年都在不断升级</li>
+</ul>
+<p>等你回过头来，发现不仅机会没了，<br>
+<strong>连准备的方向都变了</strong>。</p>
+<p><strong>21天C++面试冲刺周刊</strong>
+<img src="https://s2.loli.net/2025/08/24/AMq3IdPaloSnBpv.png" alt="​一万年太久，只争三周​"></p>
+<p>不是让你成为<strong>C++专家</strong>，  而是让你成为<strong>C++面试专家</strong>。</p>
+<p>不是让你疯狂学习新知识，  而是帮你<strong>重新整理已有知识</strong>，<br>
+让你的能力与面试题精准对齐。</p>
+<p>因为，21天就够了，<br>
+足够让我火力全开，</p>
+<ul>
+<li>一边补齐 C++ 知识点，</li>
+<li>一边刷爆经典面试题，</li>
+<li>一边撸穿开源项目，</li>
+<li>让自己变得不可替代！</li>
+</ul>
+<h3 id="核心方法论"><strong>核心方法论</strong>：</h3>
+<blockquote>
+<p>让你学到每个 c++知识，都关联一个经典面试，并对对应开源项目实践</p>
+</blockquote>
+<ul>
+<li><strong>系统备战</strong><br>
+每天 20~30 分钟，聚焦 C++ 核心知识，<br>
+三周时间完成高效梳理。</li>
+<li><strong>经典面试题</strong><br>
+每个知识点都关联一个<strong>高频面试题</strong>，<br>
+让你知道“为什么考”和“怎么答”。</li>
+<li><strong>开源项目实践</strong><br>
+通过真实项目理解底层原理，<br>
+不背答案，而是用<strong>实践打动面试官</strong>。</li>
+<li><strong>场景驱动学习</strong><br>
+还原真实面试场景，<br>
+帮你学会“怎么说服面试官”。</li>
+</ul>
+<h2 id="21天你会获得什么"><strong>21天，你会获得什么？</strong></h2>
+<ul>
+<li>一份<strong>完整的C++面试知识地图</strong></li>
+<li>一套<strong>高频题+解析+项目实践</strong>组合拳</li>
+<li>一次<strong>全链路模拟面试体验</strong></li>
+<li>三周后，面对面试官，你能自信说出：<br>
+<strong>“问吧，准备好了。”</strong></li>
+</ul>
+<blockquote>
+<p>这也是我的面试方法：</p>
+</blockquote>
+<ul>
+<li>
+<p>如果一开始就直接学某个知识点，我常常感觉不到它的实际价值。</p>
+</li>
+<li>
+<p>所以我会先尝试树立一个整体的大局观，就算过程中被现实“啪啪打脸”了又怎样？</p>
+</li>
+<li>
+<p>把每一次面试都当成一场陪练，用面试官的专业视角和真实项目来反推和校正自己的理解，不是更好吗？这种即时、高质量的反馈，是你看多少书、自己一个人闷头琢磨多久，都很难获得的。
+整体知识看板（欢迎提供更多线索）：</p>
+</li>
+<li>
+<p>第一周:c++基础知识高频面试题解析【当前位置】
+<img src="https://s2.loli.net/2025/08/24/ZKvcR4F1yoe9th8.png" alt=""></p>
+</li>
+<li>
+<p>第二周: 专注分布式存储,数据库广告搜索 Ai 辅助驾驶 大厂热门后端领域项目（基本功)拆解
+<img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia37yjSL2xfQSbz0QT05IVAvsibibvAT7xFUzAhCqEKviblv6YpjuPT2VCCzZgMLDtDzGnFmHjuKOjHtTg/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+</li>
+<li>
+<p>第三周：系统架构设计，用未来 10 年发展目标，重新设计原来系统</p>
+</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia36iaMAgdk7ib4vIrpf6urrNhdmqVHib41GQAGXDMTPDvib0Ue3LROIocBSCflxytXXVoiap04lR7kOMfwA/640?wx_fmt=png&amp;from=appmsg&amp;wxfrom=5&amp;wx_lazy=1&amp;tp=webp" alt="">
+历史题目:c++高频面试题</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>知识地图</th>
+<th>题目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>新特性</td>
+<td><a href="https://mp.weixin.qq.com/s/zBf1Dwp6e4wzXgRXJXrA5w?token=134003807&amp;lang=zh_CN">一分钟讲透:c++新特性string_view</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>库的编译链接</td>
+<td><a href="https://mp.weixin.qq.com/s/AVlpGxdHK953l_wqVgTu4Q?token=134003807&amp;lang=zh_CN">如何给一个高速行驶的汽车换轮胎（实现一个可扩展c++服务）</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>STL</td>
+<td><a href="https://mp.weixin.qq.com/s/6_oyn6aGUX8M0SmjlL8qWw">Traits 技术</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>新特性</td>
+<td><a href="https://mp.weixin.qq.com/s/JAfX1o-_CWmLU_Yg5mne8Q">if constexpr</a><!-- raw HTML omitted --></td>
+</tr>
+<tr>
+<td>5</td>
+<td>新特性</td>
+<td><a href="https://mp.weixin.qq.com/s/9HT9sOzf7Nq-qHIOGtjxSQ">面试题：C++中shared_ptr是线程安全的吗?</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>模板</td>
+<td><a href="https://mp.weixin.qq.com/s/DwbLC8DYaR2AFzreQQv3CQ">C++17 新特性 std::optional</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>class</td>
+<td><a href="https://mp.weixin.qq.com/s/HXmCFhUP73c7A6OyN10qZQ">c++类的成员函数，能作为线程的参数吗</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>编译器</td>
+<td><a href="https://mp.weixin.qq.com/s/ZrAB-LUBtSvoknsn5vPfVQ?">const 如何保证const不变</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>值语义</td>
+<td><a href="https://mp.weixin.qq.com/s/c1udiVd-0QPO2W9IyowoHg">一道面试题看深拷贝构造函数问题</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td>值语义</td>
+<td><a href="https://mp.weixin.qq.com/s/_-ZG4oMugRTlBnA0zm7g0g"> 智能指针究竟在考什么</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>指针</td>
+<td><a href="https://mp.weixin.qq.com/s/pZdxMguvojG0iFRqDaI2Ig?">使用 C++ 智能指针遇到的坑</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td>指针</td>
+<td><a href="https://mp.weixin.qq.com/s/98IBKr74VAP9fo-vgBttmQ">指针与引用区别</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p> 1️⃣ 如果有更多疑问，联系小王，一起交流，进步</p>
+<p><img src="https://s2.loli.net/2025/08/13/veChAocQwJONWKE.png" alt="个人联系方式"></p>
+<p>2️⃣  关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）获取过去我<strong>全部面试录音</strong>和面试复盘。
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-08-25 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/future_for_ai/02-%E7%9F%AD%E8%A7%86%E9%A2%91/day3-Charles/">
+            <span class="next-text nav-default">Charles入门教程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
