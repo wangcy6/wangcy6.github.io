@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！ - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/08-blog/03_how_to_use_notebooklkm/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/08-blog/03_how_to_use_notebooklkm/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-05-09T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-05-09T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="954">
+<meta itemprop="keywords" content="小而美,AIGC从青铜到王者," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-05-09 00:00 </span>
+        
+          <span class="more-meta"> 约 954 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#小宇宙">小宇宙</a></li>
+      </ul>
+    </li>
+    <li><a href="#功能开发-把mp3变成mp4视频">功能开发： 把mp3变成mp4视频</a></li>
+    <li><a href="#上传到自媒体平台">上传到自媒体平台</a></li>
+    <li><a href="#链接我">链接我</a></li>
+    <li><a href="#references-第一手资料">References 第一手资料</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>playwright codegen <a href="https://www.nowcoder.com/?type=follow">https://www.nowcoder.com/?type=follow</a>
+各位老师好， 我是007，</p>
+<p>目标：
+<!-- raw HTML omitted -->1. 截止2028年通过Ai争取人生100万<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->2. 然后毫无保留分享自己经验。<!-- raw HTML omitted --></p>
+<p>方法：</p>
+<ol>
+<li>不要说每天加班没时，不要说我太菜，</li>
+<li>说出来 我自己都不相信，每天专注投入15分钟，就是我做事情。</li>
+<li>每天聚焦一个小事，每天改进一点点</li>
+</ol>
+<p>今天第2天，2025年5月09日，</p>
+<blockquote>
+<p>今天主要任务 ：学习谷歌推出Notebook LM怎么使用</p>
+</blockquote>
+<p>开始</p>
+<p>上篇文章： 谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能</p>
+<h3 id="小宇宙">小宇宙</h3>
+<p>_小宇宙是即刻团队推出一款中文播客工_具</p>
+<ol>
+<li>创建节目：https://podcaster.xiaoyuzhoufm.com/create/free</li>
+</ol>
+<p><img src="https://s2.loli.net/2025/05/09/GRLxzo9cNODEvJg.png" alt="创建节目"></p>
+<p>小提示：需要实名认证</p>
+<p><img src="https://s2.loli.net/2025/05/09/GRLxzo9cNODEvJg.png" alt="实名认证">
+2 录音转文字</p>
+<ul>
+<li><a href="https://tingwu.aliyun.com/home">https://tingwu.aliyun.com/home</a></li>
+<li><a href="https://q0sq2eaorn.feishu.cn/minutes/home">https://q0sq2eaorn.feishu.cn/minutes/home</a></li>
+</ul>
+<h2 id="功能开发-把mp3变成mp4视频">功能开发： 把mp3变成mp4视频</h2>
+<p>功能：
+从配置文件读取图片地址，音地址，还有文字描述
+请使用moviepy把多个图片和音频变mp4视频。pyhton实现</p>
+<p>环境准备：cursor+ python</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="err">无效：</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">wangchuanyi</span><span class="o">/</span><span class="n">money</span><span class="o">/</span><span class="n">years</span><span class="o">/</span><span class="n">p1_good_night</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="n">source</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">deactivate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">moviepy</span>
+
+
+<span class="n">brew</span> <span class="n">install</span> <span class="n">moviepy</span>
+
+<span class="n">export</span> <span class="n">https_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">7890</span> 
+<span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">7890</span> <span class="n">all_proxy</span><span class="o">=</span><span class="n">socks5</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">7890</span>
+
+
+<span class="n">brew</span> <span class="n">reinstall</span> <span class="n">pipx</span>
+<span class="n">pipx</span> <span class="n">install</span> <span class="n">moviepy</span><span class="o">//</span><span class="err">❎</span> <span class="err">这个方式不行</span>
+
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">moviepy</span>
+
+<span class="n">pip</span> <span class="n">install</span> <span class="n">playwright</span>
+<span class="n">playwright</span> <span class="n">install</span> <span class="n">Chromium</span> <span class="n">Firefox</span> <span class="n">WebKit</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="上传到自媒体平台">上传到自媒体平台</h2>
+<ul>
+<li>小红书</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+<span class="n">source</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">playwright</span>
+<span class="n">playwright</span> <span class="n">install</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">requests</span>
+<span class="n">playwright</span> <span class="n">codegen</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">xiaohongshu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">explore</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://s2.loli.net/2025/05/09/lUOQ5YE7MaJdu2v.png" alt="自动获取内容"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;ql-editor ql-blank&#34;</span>
+     <span class="na">aria-owns</span><span class="o">=</span><span class="s">&#34;quill-mention-list&#34;</span>
+     <span class="na">data-placeholder</span><span class="o">=</span><span class="s">&#34;输入正文描述&#34;</span>
+     <span class="na">data-gramm</span><span class="o">=</span><span class="s">&#34;false&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+
+page.locator(&#34;css=.ql-editor.ql-blank&#34;).fill(artile_content)
+
+ <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;d-button-content&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>
+            发布
+        <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+page1.get_by_role(&#34;button&#34;, name=&#34;发布&#34;).click()
+
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>知乎</li>
+</ul>
+<p>page.get_by_role(&ldquo;button&rdquo;, name=&ldquo;上传视频&rdquo;).click()</p>
+<p>page.get_by_role(&ldquo;button&rdquo;, name=&ldquo;绑定话题（至少添加一个）&quot;).click()
+page.get_by_placeholder(&ldquo;绑定相关话题可以被更多人看到&rdquo;).fill(&ldquo;读书笔记&rdquo;)
+page.get_by_placeholder(&ldquo;绑定相关话题可以被更多人看到&rdquo;).press(&ldquo;Enter&rdquo;)</p>
+<p><img src="https://s2.loli.net/2025/05/09/8MbnRlx31uN5LCc.png" alt="下拉菜单"></p>
+<h2 id="链接我">链接我</h2>
+<p><strong>刚刚好，是最难得的美好</strong></p>
+<p>正在挑战365天认知马拉松：<br>
+✍️ 晨间写作（6:30-7:30）<br>
+🏃 夜间健行（20:00-21:00）</p>
+<p>与你分享工程师的跨界成长地图<br>
+关注公众号「 后端开发成长指南」</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="如果有疑问添加个人微信"></p>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下点赞 按钮，
+您的点赞 将是我最大的写作动力</p>
+<h2 id="references-第一手资料">References 第一手资料</h2>
+<!-- raw HTML omitted -->
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-05-09 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          <a href="/tags/AIGC%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/">AIGC从青铜到王者</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/01-%E6%8F%90%E7%A4%BA%E8%AF%8D/template-1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">知识卡片制作</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/08-blog/2025-05-03-contestos-window/">
+            <span class="next-text nav-default">ContextOS 模块开发与架构解析笔记</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

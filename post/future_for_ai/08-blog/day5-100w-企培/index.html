@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title> - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/08-blog/day5-100w-%E4%BC%81%E5%9F%B9/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/08-blog/day5-100w-%E4%BC%81%E5%9F%B9/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-05-09T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-05-09T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7845">
+<meta itemprop="keywords" content="小而美,AIGC从青铜到王者," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title"></h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-05-09 00:00 </span>
+        
+          <span class="more-meta"> 约 7845 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#day12">day12</a></li>
+    <li><a href="#-国内的ai公益计划">🔹 国内的AI公益计划</a>
+      <ul>
+        <li><a href="#1-百度ai公益项目">1. <strong>百度AI公益项目</strong></a></li>
+        <li><a href="#2-腾讯ai-lab-公益计划">2. <strong>腾讯AI Lab 公益计划</strong></a></li>
+        <li><a href="#3-阿里巴巴达摩院-ai公益平台">3. <strong>阿里巴巴达摩院 AI公益平台</strong></a></li>
+        <li><a href="#4-清华大学-x-智源研究院的ai公益计划">4. <strong>清华大学 x 智源研究院的AI公益计划</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-国际性的ai公益计划">🔹 国际性的AI公益计划</a>
+      <ul>
+        <li><a href="#5-google-ai-for-social-good">5. <strong>Google AI for Social Good</strong></a></li>
+        <li><a href="#6-microsoft-ai-for-good">6. <strong>Microsoft AI for Good</strong></a></li>
+        <li><a href="#7-openaichatgpt-教育和公益计划">7. <strong>OpenAI/ChatGPT 教育和公益计划</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-小结如何开始参与">✅ 小结：如何开始参与</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#三真人版deepseek发音练习法让你像模像样地说英语">三、“真人版”DeepSeek发音练习法🌟让你像模像样地说英语</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#企培">企培：</a></li>
+    <li><a href="#ai-编程">AI 编程</a></li>
+    <li><a href="#ai-写作写手端">AI 写作写手端</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#写作">写作</a>
+      <ul>
+        <li><a href="#资料">资料</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#代写">代写</a></li>
+    <li><a href="#ai编程">Ai编程</a>
+      <ul>
+        <li><a href="#企业培训">企业培训</a></li>
+      </ul>
+    </li>
+    <li><a href="#day321-6-月-8-日">day3/21 6 月 8 日</a>
+      <ul>
+        <li><a href="#编程">编程</a></li>
+        <li><a href="#企业培训-1">企业培训</a></li>
+      </ul>
+    </li>
+    <li><a href="#-ai公益课的常见类型基于图片案例归纳">📌 AI公益课的常见类型（基于图片案例归纳）</a>
+      <ul>
+        <li><a href="#代写-1">代写</a></li>
+      </ul>
+    </li>
+    <li><a href="#day521-6--月-11-日">day5/21 6  月 11 日</a></li>
+    <li><a href="#链接我">链接我</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <ul>
+<li><a href="https://breakout.findyiai.com/action">https://breakout.findyiai.com/action</a></li>
+</ul>
+<h2 id="day12">day12</h2>
+<p>今日行动：</p>
+<ol>
+<li>阅读行动手册 ：如何成为 AI 讲师</li>
+<li>整理简历</li>
+</ol>
+<p>今日收获 关键：ip +培训  日更 预突破自己</p>
+<p>成为企培讲师需要什么特质
+学会沟通，学会互动
+经验丰富，能实际结合
+自己会使用各种工具，并且启发思考
+因为我自己学习各种工具，并分享自己思考</p>
+<p>如何成为机构推荐的 AI 讲师</p>
+<ol>
+<li>写好简历&mdash;现在找工作在写简历</li>
+<li>必备信息 个人信息&ndash;注意不写私人联系方式 教育背景 成果</li>
+<li>简明扼要 例如 <a href="https://magpzdco9hb.feishu.cn/wiki/MfFrwJTzQiSQcPkh6aAcUQutnmb">https://magpzdco9hb.feishu.cn/wiki/MfFrwJTzQiSQcPkh6aAcUQutnmb</a></li>
+</ol>
+<p>如何制作 一个课程大纲
+不要技术化&ndash;这个我不太理解，不是宣传 AI 但是不写太多 深度学习 这样内容
+不空谈</p>
+<p>关键：ip +培训</p>
+<p>一人公司的关键是分好钱</p>
+<p>Ai 培训 可以是个标准课程 同样离不开相关人</p>
+<p>讲师 培训公司，hr hr 的领导 4 个角色</p>
+<p>分好钱 确定边界（你上级是什么）</p>
+<p>上千个节点怎么提效?—抓关键路径 耗时最长的</p>
+<p>做企培的路径</p>
+<ol>
+<li>参加破局的行动</li>
+</ol>
+<p>• 2. 在你的城市参加分享（代写，数字人，公共号报文，公开课）</p>
+<p>#行动日报-Day10</p>
+<p>🚩【行动好事】
+①落尘 顺利完成龙岗工会课
+②Jeff 今天给AI企业参访做了一小时分享
+③Yiyi 与企业家做A丨人工智能分享。
+④礼东韦 受单位邀请，今天在单位内部进行了一次百人以上的AI应用培训。
+⑤晓燕 已经走出去谈了第二家合作，能否成功，坚持➕努力必定成功，先做第一场公益课开始。
+🎉更多精彩好事可查看链接:
+<a href="https://breakout.findyiai.com/all-good-things">https://breakout.findyiai.com/all-good-things</a></p>
+<p>📚《破局行动 | 实战学习手册》：
+<a href="https://breakout.findyiai.com/s/c750b63e">https://breakout.findyiai.com/s/c750b63e</a></p>
+<p>📺《教练分享 | 直播回放》：</p>
+<p>知识之外：AI企培的价值新定位-【栗子】</p>
+<p>🔗直播链接：https://zg371.xetslk.com/sl/2QJ7x3</p>
+<p>如何从0到1打开本地企培市场-【Jony】</p>
+<p>🔗直播链接：https://zg371.xetslk.com/sl/45Kid4</p>
+<p>如何0-1拓展公开课，实现公益到商业的转化-【李先森】</p>
+<p>🔗直播链接：https://zg371.xetslk.com/sl/3U4XXI</p>
+<p>如何成为机构和客户最优选的AI讲师-【洪河林/洪帮主】</p>
+<p>🔗直播链接：https://zg371.xetslk.com/sl/3HP3tv</p>
+<p>如何做好一节让多方满意的公开课-【新姐】</p>
+<p>🔗直播链接：https://zg371.xetslk.com/sl/3SzqIo</p>
+<p>社区公益课从0-1-【圣僧】</p>
+<p>🔗直播链接：
+<a href="https://zg371.xetslk.com/sl/8ZiJh">https://zg371.xetslk.com/sl/8ZiJh</a></p>
+<p>AI讲师最佳路径分享：左手IP、右手企培-Sky陈天</p>
+<p>🔗直播链接：https://zg371.xetslk.com/sl/2IGLd2</p>
+<p>【睡前审视 | 打卡链接】：
+<a href="https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/fa796d17-1d14-49c9-8f06-283cab1b98f3">https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/fa796d17-1d14-49c9-8f06-283cab1b98f3</a></p>
+<p>⏰宝子们，今天是行动营的#第11天，大家记得打卡，早打早轻松哟～@所有人 </p>
+<p>&laquo;&laquo;&laquo;&lt; HEAD</p>
+<ol>
+<li>了解腾讯公益信息，并注册志愿者</li>
+<li>寻找到合适项目 ，要求技能 人工智能 和后端前端开发</li>
+<li></li>
+</ol>
+<p>欢迎大家加入AI破局俱乐部行动营实战。<br>
+这里是「 AI 企培全链路增值行动营」</p>
+<ol>
+<li>了解腾讯技术公益参与
+今日目标：</li>
+</ol>
+<ul>
+<li><a href="https://breakout.findyiai.com/action">https://breakout.findyiai.com/action</a></li>
+</ul>
+<p>当然可以，以下是目前（截至2025年）一些你可能可以<strong>免费参加的AI公益计划或项目</strong>，特别适合学生、开发者、教育工作者或公益机构：</p>
+<hr>
+<h2 id="-国内的ai公益计划">🔹 国内的AI公益计划</h2>
+<h3 id="1-百度ai公益项目">1. <strong>百度AI公益项目</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：百度推出了多个与AI相关的公益项目，比如“百度AI寻人”、“AI助盲”等。</p>
+</li>
+<li>
+<p><strong>参与方式</strong>：可以通过百度AI官网申请，开发者也可以加入其AI Studio平台进行模型训练和公益应用开发。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://ai.baidu.com/">https://ai.baidu.com/</a></p>
+</li>
+</ul>
+<hr>
+<h3 id="2-腾讯ai-lab-公益计划">2. <strong>腾讯AI Lab 公益计划</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：腾讯设有“AI for Good”项目，如“腾讯觅影”医疗AI和“腾讯小微”智能音箱为视障人士服务。</p>
+</li>
+<li>
+<p><strong>适合人群</strong>：开发者、研究者、医疗从业者。</p>
+</li>
+<li>
+<p><strong>参与方式</strong>：关注腾讯AI Lab发布的项目或通过腾讯云申请AI开发资源。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://ai.tencent.com/">https://ai.tencent.com/</a></p>
+</li>
+</ul>
+<hr>
+<h3 id="3-阿里巴巴达摩院-ai公益平台">3. <strong>阿里巴巴达摩院 AI公益平台</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：包括“AI防疫预测”、“AI助农”等公益方向项目。</p>
+</li>
+<li>
+<p><strong>支持对象</strong>：高校学生、研究人员、公益组织。</p>
+</li>
+<li>
+<p><strong>参与方式</strong>：可通过阿里云AI平台申请免费资源。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://damo.alibaba.com/">https://damo.alibaba.com/</a></p>
+</li>
+</ul>
+<hr>
+<h3 id="4-清华大学-x-智源研究院的ai公益计划">4. <strong>清华大学 x 智源研究院的AI公益计划</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：比如智源大会（BAAI Conference）中会发布一些公益科研方向，如中文大模型对公益的应用。</p>
+</li>
+<li>
+<p><strong>适合人群</strong>：学生、科研人员、对大模型方向感兴趣者。</p>
+</li>
+<li>
+<p><strong>参与方式</strong>：报名活动、参与社区、提交研究项目等。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.baai.ac.cn/">https://www.baai.ac.cn/</a></p>
+</li>
+</ul>
+<hr>
+<h2 id="-国际性的ai公益计划">🔹 国际性的AI公益计划</h2>
+<h3 id="5-google-ai-for-social-good">5. <strong>Google AI for Social Good</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：谷歌发起的AI公益项目，支持教育、气候、健康等方向的公益组织和个人。</p>
+</li>
+<li>
+<p><strong>支持形式</strong>：提供云计算资源、AI技术支持。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://ai.google/social-good/">https://ai.google/social-good/</a></p>
+</li>
+</ul>
+<hr>
+<h3 id="6-microsoft-ai-for-good">6. <strong>Microsoft AI for Good</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：微软支持可持续发展、残障辅助、健康、文化遗产保护等方向的AI公益项目。</p>
+</li>
+<li>
+<p><strong>申请方式</strong>：非营利组织、研究者可申请Azure资源等支持。</p>
+</li>
+<li>
+<p><strong>链接</strong>：<a href="https://www.microsoft.com/ai/ai-for-good">https://www.microsoft.com/ai/ai-for-good</a></p>
+</li>
+</ul>
+<hr>
+<h3 id="7-openaichatgpt-教育和公益计划">7. <strong>OpenAI/ChatGPT 教育和公益计划</strong></h3>
+<ul>
+<li>
+<p><strong>介绍</strong>：OpenAI有计划为教育和非营利用途提供API优惠或免费额度，特别是在教育、语言平权、无障碍访问等方面。</p>
+</li>
+<li>
+<p><strong>目前状态</strong>：可关注<a href="https://openai.com/">https://openai.com</a>上的新闻发布和开发者计划。</p>
+</li>
+</ul>
+<hr>
+<h2 id="-小结如何开始参与">✅ 小结：如何开始参与</h2>
+<table>
+<thead>
+<tr>
+<th>参与方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>注册AI平台账号（如百度AI Studio、腾讯云AI Lab）</td>
+<td>免费资源+比赛项目</td>
+</tr>
+<tr>
+<td>关注大学或研究院相关科研项目</td>
+<td>往往对学生/研究者开放</td>
+</tr>
+<tr>
+<td>申请公益支持资源（云资源、API、模型等）</td>
+<td>多数对非营利组织或公益项目免费</td>
+</tr>
+<tr>
+<td>参加线上/线下AI公益比赛</td>
+<td>比如黑客松、算法挑战赛等</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>如果你能告诉我你的身份（比如学生/公益从业者/程序员），我可以推荐更适合你的项目资源。是否要我帮你筛选一下适合你的计划？</p>
+<p>=======
+行动营Day8/21 天</p>
+<p>今日行动</p>
+<ol>
+<li>报名公益活动 帮助有视觉障碍学英语，报名要求 录制一段英语</li>
+<li>通过写提示词 纠正个人发音，学英语。虽然培训不是企业，从辅导别人开始</li>
+</ol>
+<p>今日收获</p>
+<p>搜集半天跟着 AI 学口语的应用发现都是收费的，这个不坑人吗，有的备注发音纠正还是人工的
+这个和Builder.ai一样。凡事帮助别人学习 和时间管理 app 收费
+Google Read Along（前身为 Bolo）是 Google 在 2019 年推出的一款 <strong>面向儿童的语音朗读与阅读辅导应用</strong>
+因此自己手工打造闭环</p>
+<p>步骤 1 搜索因为资料 这个公开免费 不需要花钱 <a href="https://github.com/knowledgefxg/learning-english">https://github.com/knowledgefxg/learning-english</a>
+步骤 2 谷歌翻译 朗读发音 或者其他 免费 tts <a href="https://translate.google.com/?sl=en&amp;tl=zh-CN&amp;op=translate">https://translate.google.com/?sl=en&amp;tl=zh-CN&amp;op=translate</a>
+步骤 3：录音回放法 听一句原声 → 暂停 → 自己模仿 → 对比
+步骤 4: 然 DeepSeek/ChatGpt 给出发音纠正。
+提示：语音输入不行，必须上传自己录音
+你是一个英语口老师，擅长帮助0 基础人纠正英语口语发音问题，
+我输入一段我英语录音，帮帮助纠正我发音问题，并且1 对 1 的纠正</p>
+<p><a href="https://www.naturalreaders.com/online/">https://www.naturalreaders.com/online/</a></p>
+<h1 id="开源自荐--aienglish-在阅读中渐进式学习英语7027">【开源自荐】- AiEnglish ：在阅读中渐进式学习英语 #7027</h1>
+<h1 id="aienglish-在阅读中渐进式学习英语702">AiEnglish ：在阅读中渐进式学习英语 #702</h1>
+<p>其他可用：
+<a href="https://readalong.google.com/book/sw_1042">https://readalong.google.com/book/sw_1042</a></p>
+<p><a href="https://www.youtube.com/watch?v=b6XasW4E3g4">https://www.youtube.com/watch?v=b6XasW4E3g4</a></p>
+<p><a href="https://translate.google.com/?sl=en&amp;tl=zh-CN&amp;op=translate">https://translate.google.com/?sl=en&amp;tl=zh-CN&amp;op=translate</a>
+<a href="https://readalong.google.com/book/sw_1042">https://readalong.google.com/book/sw_1042</a></p>
+<p><a href="https://app.getpronounce.com/quiz/language">https://app.getpronounce.com/quiz/language</a>  这个收费 直接放弃</p>
+<table>
+<thead>
+<tr>
+<th>训练方法</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模仿训练</strong></td>
+<td>听一句原声 → 暂停 → 自己模仿 → 对比</td>
+</tr>
+<tr>
+<td><strong>影子跟读（Shadowing）</strong></td>
+<td>跟着原声一起说，不暂停，模仿节奏语调</td>
+</tr>
+<tr>
+<td><strong>录音回放法</strong></td>
+<td>用手机录下自己 → 听自己的发音 → 改正</td>
+</tr>
+<tr>
+<td><strong>AI 评分反馈</strong></td>
+<td>用 ELSA、Speechling 获得客观评分与指</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.toolify.ai/zh/ai-news-cn/elsa-speak%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8elsa%E6%8F%90%E9%AB%98%E8%8B%B1%E8%AF%AD%E5%8F%A3%E8%AF%AD%E8%83%BD%E5%8A%9B-1297699">https://www.toolify.ai/zh/ai-news-cn/elsa-speak%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8elsa%E6%8F%90%E9%AB%98%E8%8B%B1%E8%AF%AD%E5%8F%A3%E8%AF%AD%E8%83%BD%E5%8A%9B-1297699</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="三真人版deepseek发音练习法让你像模像样地说英语">三、“真人版”DeepSeek发音练习法🌟让你像模像样地说英语</h2>
+<p>为了让DeepSeek更好地发挥作用，这里推荐一种简单实用的方法——“真人版”发音练习法。具体步骤如下：<br>
+第一步：挑选一首你喜欢的英文歌曲或者一段经典电影台词作为素材。确保这段材料既有挑战性又能激发兴趣。<br>
+第二步：打开DeepSeek应用程序，开启录音功能，并大声朗读选定的内容。注意保持自然流畅的语速，不要急于求成。<br>
+第三步：当完成一轮录音后，仔细聆听回放并与原声进行对比。重点关注那些你觉得困难的地方，比如元音长度、辅音爆破等细节。<br>
+第四步：重复上述过程多次，直至达到理想的效果为止。期间还可以尝试改变语调表情，使表达更具感染力。<br>
+通过这种方法，不仅能够有效提升个人英语口语能力，同时也能培养良好的听说习惯</p>
+<p><a href="https://learn.microsoft.com/zh-cn/azure/ai-services/speech-service/how-to-pronunciation-assessment?pivots=programming-language-cpp">https://learn.microsoft.com/zh-cn/azure/ai-services/speech-service/how-to-pronunciation-assessment?pivots=programming-language-cpp</a></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>f561aa5a7ebcae647b9e1c508de985629e7f9a6f
+各位老师好， 我是007</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>今天是 2025年6月07日 每天定投15分钟  实现百万梦想的第7天（2025 年 6 月 1 日）</p>
+<p>今天开始参加破局俱乐部行动营</p>
+<h1 id="课程表">课程表</h1>
+<p><img src="https://s2.loli.net/2025/06/07/9A8xutSUa4OvcBz.jpg" alt=""></p>
+<h2 id="企培">企培：</h2>
+<ul>
+<li><a href="https://breakout.findyiai.com/docx/fa796d17-1d14-49c9-8f06-283cab1b98f3/Lgp7dTEfKo666xx6sLFcF0NXn9c?from=from_copylink">https://breakout.findyiai.com/docx/fa796d17-1d14-49c9-8f06-283cab1b98f3/Lgp7dTEfKo666xx6sLFcF0NXn9c?from=from_copylink</a></li>
+</ul>
+<p>自己沟通不擅长，但是听到AI企培发展方向，一定克服自己害怕说话的缺点，抓住机会，发挥自己软件工程师特点 ，解决企业客户的痛点。传统的公司 每天处理原有业务，转型慢，从上到下管理策略，因此自己开发到产品 销售 全部提高自己。</p>
+<h2 id="ai-编程">AI 编程</h2>
+<ul>
+<li><a href="https://breakout.findyiai.com/action">https://breakout.findyiai.com/action</a></li>
+<li><a href="https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/3e6bca5e-e149-4fef-a3d4-06fc43c01306">https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/3e6bca5e-e149-4fef-a3d4-06fc43c01306</a></li>
+</ul>
+<h2 id="ai-写作写手端">AI 写作写手端</h2>
+<ul>
+<li><a href="https://breakout.findyiai.com/action">https://breakout.findyiai.com/action</a></li>
+<li><a href="https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/4b618f4c-5cbc-4738-a9a0-6c05c0633fca">https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/4b618f4c-5cbc-4738-a9a0-6c05c0633fca</a></li>
+</ul>
+<h1 id="21天-第-1-天-6-月7日">21天 第 1 天 6 月7日</h1>
+<p>🎪欢迎大家加入AI破局俱乐部行动营实战。<br>
+这里是「 AI 企培全链路增值行动营」<br>
+🏅本次行动营的保证金机制是「12-21」即：【在 21 天学习周期内，完成不少于 12 次打卡记录】<br>
+📚《破局行动 | 实战学习手册》：https://breakout.findyiai.com/docx/fa796d17-1d14-49c9-8f06-283cab1b98f3/Lgp7dTEfKo666xx6sLFcF0NXn9c?from=from_copylink<br>
+✍🏻破局行动网站：https://breakout.findyiai.com/action</p>
+<p>⏰学员指南丨06期破局行动：https://d16rg8unadx.feishu.cn/wiki/TT6QwKnlXiiamtkUTSMcHK1rn0c</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 阅读完成 学员指南丨06期破局行动 耗时 10 分钟
+事关#打卡要求和退还保证金，大家务必要仔细阅读一下<br>
+🚩本次行动营，下列事情请大家知晓并遵守：<br>
+1、请认真对自己的每一次行动负责，认真打卡、不水日志<br>
+2、不违反破局行动准则，如有不以学习为目的的行为，一经发现，将被移出行动群<br>
+3、本群不能聊敏感词汇,不能讨论上网魔法等相关话题，如发现，抱出#群聊冷静24小时，感谢大家的配合❤️<br>
+4、有问题群里 #举手+问题，提问描述要尽可能详细一些，遇事不决，可以先问 AI<br>
+5、群内🚫禁止任何接龙，如发现#移群处理<br>
+6、与他人建立有效链接，不得恶意爆粉，批量添加他人微信，甚至发营销内容；不支持任何目地的引流行为；不得未经许可群内发外部链接、发自己账号/产品；如被#发现或被举报，将抱出项目群<br>
+🎯期待21天后大家都能成功结营，让本次行动成为你的成就之旅、难忘之旅、利他之旅。</li>
+</ul>
+<p><img src="https://s2.loli.net/2025/06/07/KU3nkW25bEHQGxT.jpg" alt=""></p>
+<p>李老师对话记录</p>
+<ol>
+<li>最大的红利就是效率提升加能力补位。对比过去做项目 10 年 200w，现在不需要了</li>
+<li>势能放大，研究平台平台推荐算法规则，行业发生了是你们事情，硅谷发生什么事情</li>
+<li>互动：多看评论区内容，他们代表他们一批人，自己不熟悉的圈子的人</li>
+<li>共创：和同行一起做事情，而不是同行对骂，避免单打独斗</li>
+<li>普通人打造AIP其实核心不是有多牛，而是你要把自己真实的厉害持续的放在网上进行AI加持对吧？AI能让你能力倍增，内容让你被看见无限，让你能活成一个有力量的人。</li>
+<li>其实未来两年是超级个体爆发的窗口期，不要观望太久。从今天开始动手去打造自己的AIP，未来一定有自己的一席之地</li>
+</ol>
+<p>#行动日报-Day1</p>
+<p>🚩【行动好事】
+①  使用Youware做出了拖延症任务拆解器 @tree
+②  完成了手册中4个mcp案例 @奕</p>
+<p>📚《破局行动 | 实战学习手册》：https://breakout.findyiai.com/s/9a90017c</p>
+<p>📺《教练分享 | 直播回放》：</p>
+<p>6月7日小林教练——开营+AI 编程的变现，深度思考，未来预判
+<a href="https://zg371.xetslk.com/sl/9Vj6y">https://zg371.xetslk.com/sl/9Vj6y</a></p>
+<p>[月亮]【睡前审视 | 打卡链接】：
+<a href="https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/3e6bca5e-e149-4fef-a3d4-06fc43c01306">https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/3e6bca5e-e149-4fef-a3d4-06fc43c01306</a></p>
+<p>⭐️【备用打卡链接】：
+<a href="https://breakout.findyiai.com/action">https://breakout.findyiai.com/action</a></p>
+<h2 id="写作">写作</h2>
+<h3 id="资料">资料</h3>
+<ul>
+<li>6月7号 桃姐姐 ：https://zg371.xetslk.com/sl/4bYcl7</li>
+</ul>
+<p>今日行动：</p>
+<ol>
+<li>回顾 昨天行动营开营仪式</li>
+<li>阅读写手打卡规则</li>
+<li>参加 6月7号 桃姐姐 ：https://zg371.xetslk.com/sl/4bYcl7</li>
+</ol>
+<p>今日收获</p>
+<ul>
+<li>昨天</li>
+</ul>
+<h1 id="21天-第-2-天-6-月8日">21天 第 2 天 6 月8日</h1>
+<h2 id="代写">代写</h2>
+<ol>
+<li>代写唯一标准就是客户满意，你才是 boss，ai 不是</li>
+<li>找到客户新增完美样本，搞清楚到底想什么样子 （3 个方法  给客户要，模版，找专家请教）</li>
+<li>​格式：​角色：​背景：​​任务：​<strong>​ ​</strong>​要求：​**​</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">### 角色：
+
+你是一名资深读者，有着丰富的阅读经验，擅长依据用户输入的信息编写符合用户需求的读后感。
+
+### 背景：
+
+《鲁滨逊漂流记》（_Robinson Crusoe_）是英国作家丹尼尔·笛福（Daniel Defoe）于1719年创作的小说。这部小说被认为是现实主义小说的先驱之作，也是西方文学中第一部真正意义上的小说。  
+故事讲述了主人公鲁滨逊·克鲁索（Robinson Crusoe）的冒险经历。他是一个英国人……
+
+### 任务/目标：
+
+- 根据[要求]撰写符合用户需求的读后感。
+
+### 要求：
+
+- 800字左右。
+- 像素级模仿[示例]进行撰写。
+
+### 示例：
+
+在这个静谧的午后，我轻轻合上了《鲁滨逊漂流记》的最后一页，心中涌动的情感如同海浪般起伏不定。这部由丹尼尔·福所著的经典之作，不仅讲述了一个关于生存与冒险的传奇故事，更深刻地探讨了人性中的勇气、智慧与自立精神……
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>三个技巧 <strong>客户需求分析​</strong>​  <strong>用AI快速学习​</strong> <strong>用AI实现交付</strong></p>
+</li>
+<li>
+<p>看 3 遍 有声剧为例子接单的过程  1客户需求分析​2 用AI快速学习​ 3  用AI实现交付 绝对是 手把手教学，30 分钟 完成商业单子：模仿逃出大英博物馆，自己仿照做 1 次。</p>
+</li>
+<li>
+<p>提示词：角色：​背景：​​任务：​<strong>​ ​</strong>​要求：​格式 仿写 读书读后感</p>
+</li>
+</ul>
+<h2 id="ai编程">Ai编程</h2>
+<ul>
+<li>小林老师 如何解决焦虑问题 没有赚到钱&mdash;利用 ai 编程帮助挣钱&ndash;你的用户是谁，你筹码是谁</li>
+<li>小程序最容易变现，相比 app 和网站，激励式广告才是主要收入</li>
+<li>用户凭什么点击你广告，从人性角度出发，多巴胺分泌 复活</li>
+<li>AI 编程核心是什么：x轴技术  y 轴 元能力 出题家脚色，解决生活中痛点</li>
+<li>Ai 编程终极意义是什么?为了生活更美好，降本增效，围绕人</li>
+</ul>
+<h3 id="企业培训">企业培训</h3>
+<p><a href="https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/fa796d17-1d14-49c9-8f06-283cab1b98f3">https://breakout.findyiai.com/details/26d07f1b-acac-4f81-8daf-525922fbd461/fa796d17-1d14-49c9-8f06-283cab1b98f3</a></p>
+<p>21天 第 2 天 6 月8日企业培训
+行动1：直播会看 企业培训 价值定位 完成</p>
+<ol>
+<li>AI 时代 培训什么？思路 01 从市场出发，需要什么，我就学什么，思路 2 从自身出发 我会 什么，就教什么</li>
+<li>定位赋能：我在那个位置，如何定义 我起点，谁帮助我</li>
+<li>企业缺什么？与业务 结合和跨部门协作 和基础设施建设，企业培训需求动态是的
+<ol>
+<li>企业缺什么？1 管理变革 2清晰 投资回报率（ROI）论证 公司需要证明</li>
+</ol>
+</li>
+<li>如何突破？构建企业级 AI 流程（全面 AI 知识库 例如词语） 与专家协作 提供额外价值</li>
+</ol>
+<p>大家中午好呀，今晚20: 30 咱们企培的第二次教练直播分享来啦，我先来预告下~</p>
+<p>#行动营教练分享 —— Time 2</p>
+<p>📕分享主题：《如何从0到1打开本地企培市场》
+🗣分享教练：jony教练
+🕐分享时间：6月8日 (周日)｜20：30
+📺分享形式：小鹅通直播
+🔗直播链接：</p>
+<h2 id="day321-6-月-8-日">day3/21 6 月 8 日</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">### 角色：
+
+你是一名面试候选人，有擅长分布式存储，分布式数据 和 liun 源码， 根据面试官提出问题进行回答
+
+### 背景：
+这是面试，面试 bat 核心岗位，岗位百万年薪
+
+### 任务/目标：
+
+- 根据[要求]EB大文件inodes数据怎么表示 （extent tree）
+
+### 要求：
+- 回答简洁，领导汇报一样
+- 思路清晰，有原理，有例子 ，让青铜到王者不同不同级别人了解
+- 考虑面试反问 你掌握知识正确性
+
+### 示例：
+一、这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题
+
+二、这个技术的优势和劣势分别是什么 
+
+ 三、这个技术适用的场景。任何技术都有其适用的场景，离开了这个场景
+
+ 四、技术的组成部分和关键点。
+
+五、技术的底层原理和关键实现
+
+ 六、已有的实现和它之间的对比
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="编程">编程</h3>
+<p>了解什么是 MCP</p>
+<h3 id="企业培训-1">企业培训</h3>
+<p>今日行动：</p>
+<p>✅阅读：行动手册1.1-1.4 章节  为什么做公益培训 获取进准客户，最高级的商业来源公益
+✅ 回听：如何从 0 到 1 打开本地企培市场</p>
+<p>今日收获：</p>
+<ol>
+<li>思考：为什么要做Ai公益课，有 哪些公益课 ？ Google的“AI for Social Good”计划（资助非营利组织应用AI），百度的“AI科普中国行”（免费AI课程走进高校），微软的“AI for Earth”（起初资助环保机构）​​ 腾讯的“AI编程第一课“</li>
+<li>思考：个人能力定位  需要什么能力 熟悉工具（不具备） ，资源与人脉（不满足），行业经验（15+工作），定位讲师</li>
+<li>我的切入点是什么？成为讲师，成为培训机构（不具备），成为经纪人（不具备）可以从拉几个人组成一个群，开始分享。同城组局</li>
+<li>输出倒逼输入：主动组局（这个不是闲聊）挖掘职场办公需求。只讲一个 飞书表格也可以</li>
+<li>主动参与活动：群启动，线下活动，联盟，ai 夜校</li>
+<li>分工：助教  ，AI 讲师 合作机构 （不具备）区域负责人（不具备）</li>
+<li>互动：培训最重要是互动</li>
+<li>不敢上讲台怎么办？迈出第一步就不紧张了。突破自我</li>
+</ol>
+<p>根据您上传的图片信息，图中主要展示了​<strong>​企业主导型​</strong>​AI公益课的战略价值与商业转化路径，并提供了几个具体案例。关于您询问的“AI公益课类型”和“如何参与”，图片本身并未直接详细列出所有常见类型和统一参与步骤，但我们可以从图片提供的案例和信息中归纳出关键内容：</p>
+<h2 id="-ai公益课的常见类型基于图片案例归纳">📌 AI公益课的常见类型（基于图片案例归纳）</h2>
+<ol>
+<li>
+<p>​<strong>​社会问题导向型：​</strong>​</p>
+<ul>
+<li>​<strong>​目的：​</strong>​ 应用AI技术解决环境、医疗健康、农业等社会挑战。</li>
+<li>​<strong>​案例：​</strong>​ Google的“AI for Social Good”计划（资助非营利组织应用AI）。</li>
+<li>​<strong>​公益课可能内容：​</strong>​ 向非营利组织、学生、研究人员提供如何使用AI解决特定社会问题的培训或工作坊。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​技术普及与人才培养型：​</strong>​</p>
+<ul>
+<li>​<strong>​目的：​</strong>​ 面向缺乏资源的人群（如学生、职场新人、偏远地区居民）普及AI基础知识，挖掘和培养潜在人才。</li>
+<li>​<strong>​案例：​</strong>​ 百度的“AI科普中国行”（免费AI课程走进高校）。</li>
+<li>​<strong>​公益课可能内容：​</strong>​ 基础AI知识科普、编程入门、特定AI工具应用等。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​行业赋能与合作型：​</strong>​</p>
+<ul>
+<li>​<strong>​目的：​</strong>​ 与特定行业（如图中的环保🌿）合作，培训相关机构应用AI技术。</li>
+<li>​<strong>​案例：​</strong>​ 微软的“AI for Earth”（起初资助环保机构）。</li>
+<li>​<strong>​公益课可能内容：​</strong>​ 针对环保、教育、农业等行业从业者提供的、结合行业痛点的AI应用培训。</li>
+</ul>
+</li>
+<li>
+<p>​<strong>​特定人群赋能型：​</strong>​</p>
+<ul>
+<li>​<strong>​目的：​</strong>​ 针对特定群体（如图中的乡村青少年）提供教育机会和技能启蒙。</li>
+<li>​<strong>​案例：​</strong>​ 腾讯的“AI编程第一课”（面向乡村学校免费开放）。</li>
+<li>​<strong>​公益课可能内容：​</strong>​ 青少年编程启蒙、兴趣培养等。</li>
+</ul>
+</li>
+</ol>
+<p>==<strong>AI for Social Good 指通过人工智能技术解决社会与环境挑战，核心应用领域涵盖气候变化应对、医疗健康、教育公平、灾害管理、消除贫困</strong>==</p>
+<h3 id="代写-1">代写</h3>
+<p>今日行动：
+✅阅读行动手册 第二部分：淘宝接单实战  2.1 章节 了解应聘写手流程
+✅ 打卡淘宝 申请写手</p>
+<p>申请写手的模版</p>
+<ul>
+<li>汉语言文学专业 → “硕士 | 汉语言文学 | 自由职业 | 擅长文案写作、学术辅导”​**​</li>
+<li>法律专业 → ​<strong>​“硕士 | 法律 | 名企在职 | 擅长法律文件修改、各类文章写作”​</strong>​</li>
+<li>商务英语专业 → ​**​“硕士 | 商务英语 | 外贸行业 | 擅长英语翻译、英语学术辅导“</li>
+</ul>
+<h2 id="day521-6--月-11-日">day5/21 6  月 11 日</h2>
+<p>day5/21  6 月11 日</p>
+<p>今日行动</p>
+<p>✅ 找工作面试，看企业Ai 需求在 AI 大模型 和智能体全流程搭建
+✅  回看：李老师 课程&lt;如何0-1拓展公开课，实现公益到商业的转化&gt;
+✅ 行动手册 看到 1.4 企业为何需要内训 学习是反人性的</p>
+<p>视频：
+<a href="https://app8aplieli4282.xet.citv.cn/v3/course/alive/l_684405e0e4b0694ca0c27fd6?app_id=app8aplieli4282&amp;alive_mode=0&amp;pro_id=&amp;type=2">https://app8aplieli4282.xet.citv.cn/v3/course/alive/l_684405e0e4b0694ca0c27fd6?app_id=app8aplieli4282&amp;alive_mode=0&amp;pro_id=&amp;type=2</a></p>
+<ol>
+<li>
+<p>看到群里有专注讲师机会，自掏腰包全国飞，佩服。</p>
+</li>
+<li>
+<p>看到 李老师 培训政府等企业单位 ，之前都不敢想，榜样，像他学习。</p>
+</li>
+<li>
+<p>Ai 企业培训对个人影响？提高公开表达能力，费曼学习方法 ，挖掘 客户需求，实现商单装换，而不是销售身份</p>
+</li>
+<li>
+<p>那些人更容易 AI 企培商业闭环？懂专业（电商，医疗，金融教育背景，AI 工程师，AI 从业者），有资源</p>
+</li>
+<li>
+<p>普通人面临挑战是什么？变现慢（招标），缺乏实践（上百厂），缺品牌（个人单子不好拿到）</p>
+</li>
+<li>
+<p>解决：公益，是 最高的商业模式，极致的利他必然起来极致的价值，免费，收费，是最高效的商业路径之一</p>
+</li>
+<li>
+<p>如何解决，让 别人看到你，不要敷衍，不要敷衍，商业课标准来交付</p>
+</li>
+<li>
+<p>企业使用 AI5 个层次 办公到自动化到数据分析，智能化 生态重构</p>
+</li>
+<li>
+<p>个人使用 Ai 的 5 个层次</p>
+</li>
+<li>
+<p>如果一场公益课没有带来商单，那么再来一场</p>
+<p><img src="https://s2.loli.net/2025/06/11/AzKyptDaCMX8H9Y.png" alt=""></p>
+</li>
+</ol>
+<h2 id="链接我">链接我</h2>
+<p>正在挑战365天认知马拉松：<br>
+✍️ 晨间写作（6:30-7:30）<br>
+🏃 夜间健行（20:00-21:00）</p>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-05-09 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          <a href="/tags/AIGC%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/">AIGC从青铜到王者</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/08-blog/day5-100w-%E4%BB%A3%E5%86%99/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default"></span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/08-blog/day5-100w-%E7%BC%96%E7%A8%8B/">
+            <span class="next-text nav-default"></span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

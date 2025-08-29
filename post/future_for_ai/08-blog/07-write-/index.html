@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>一问多发 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="c&#43;&#43;" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/future_for_ai/08-blog/07-write-/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="一问多发" />
+<meta property="og:description" content="c&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/future_for_ai/08-blog/07-write-/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-05-09T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-05-09T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="一问多发">
+<meta itemprop="description" content="c&#43;&#43;"><meta itemprop="datePublished" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-05-09T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1256">
+<meta itemprop="keywords" content="小而美,AIGC从青铜到王者," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一问多发"/>
+<meta name="twitter:description" content="c&#43;&#43;"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">一问多发</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-05-09 00:00 </span>
+        
+          <span class="more-meta"> 约 1256 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#打假专栏">打假专栏</a></li>
+      </ul>
+    </li>
+    <li><a href="#了解wechatsync代码结构">了解wechatsync代码结构</a></li>
+    <li><a href="#二-动手操作">二、 动手操作</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#artipub">ArtiPub</a></li>
+    <li><a href="#链接我">链接我</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>各位老师好， 我是007</p>
+<p>今天是 2025年5月13日，每天定投15分钟  实现百万梦想的第四天</p>
+<h3 id="打假专栏">打假专栏</h3>
+<p>有网友提问，看到有人在宣传 :Wechatsync：一键同步公众号文章到23个平台的自媒体人</p>
+<p>结果安装半天按照不上，</p>
+<p>我打开一看</p>
+<p><img src="https://s2.loli.net/2025/05/19/65cxBIvw4aFojS1.png" alt="都停更4年了"></p>
+<p>看着是不是很酷？</p>
+<p>支持国内23+个平台同步发布，最高速度解放生产力，一键同步。</p>
+<p>但是最大的问题，就是停更4年了</p>
+<p>打开官网：https://www.wechatsync.com/</p>
+<p><img src="https://s2.loli.net/2025/05/19/xnB9S6EUouW83rq.png" alt="image.png"></p>
+<blockquote>
+<p>锤石 无法使用，https://github.com/wechatsync/Wechatsync/issues/127其他小伙伴也给出疑问</p>
+</blockquote>
+<p>就是，当一件事，如果需要毫无意义的重复3次以上。</p>
+<p>那就必须把这个流程，想尽一切办法自动化。</p>
+<p>无论是AI、是RPA、是开发插件等等，都可以。</p>
+<p>我们自己的精力是有限的，一定要把时间和精力，放在更有价值的事情上。</p>
+<p>开搞</p>
+<h2 id="了解wechatsync代码结构">了解wechatsync代码结构</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>DeepWiki</th>
+<th>GitMCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主要优势</td>
+<td>可视化、文档生成</td>
+<td>消除AI幻觉、精准搜索</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>初次了解项目结构</td>
+<td>AI辅助编程、精准API查询</td>
+</tr>
+<tr>
+<td>支持平台</td>
+<td>浏览器直接访问</td>
+<td>需配合AI工具使用</td>
+</tr>
+<tr>
+<td>源码处理</td>
+<td>已索引30,000+热门仓库</td>
+<td>动态访问任何公开仓库</td>
+</tr>
+</tbody>
+</table>
+<p><strong>我的使用流程</strong>：</p>
+<ol>
+<li>
+<ol>
+<li>首先用DeepWiki获取项目全局视图和架构理解</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>然后配置GitMCP到Cursor，进行具体功能开发和问题解决</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>对于复杂问题，两者结合使用：DeepWiki提供结构理解，GitMCP提供实现细节</li>
+</ol>
+</li>
+</ol>
+<p>最近，独角兽 AI 公司 Cognition AI（Cognition Labs）推出了一个开源项目——DeepWiki，旨在为 GitHub 上的公共代码仓库生成 AI 驱动的交互式文档，堪称「GitHub 仓库的免费百科全书」</p>
+<p>它通过分析代码、README 和配置文件，自动生成结构化的技术文档、交互式图表，并提供一个对话式 AI 助手，帮助开发者快速理解项目结构和逻辑——无需反复查阅稀少的 README 文件或晦涩的注释信息！
+DeepWiki的使用方式极为便捷： 你只需要将 GitHub 仓库的 URL 中的 &ldquo;github&rdquo; 替换为 &ldquo;deepwiki&rdquo; 即可生成类似维基百科的文档页面，无需注册即可免费访问公共仓库的文档。</p>
+<p>结果不行</p>
+<p>打开官网：https://deepwiki.org/</p>
+<p><a href="https://deepwiki.com/wechatsync/Wechatsync/1.1-architecture-overview">https://deepwiki.com/wechatsync/Wechatsync/1.1-architecture-overview</a></p>
+<p>后记：发现这个事情有人完成了</p>
+<h2 id="二-动手操作">二、 动手操作</h2>
+<h4 id="开发者模式安装">开发者模式安装</h4>
+<p>fork项目  <a href="https://github.com/watchpoints/Wechatsync">https://github.com/watchpoints/Wechatsync</a> 并下载【改为 关注公共号，回复 同步 获取下载地址】
+<img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/mac/20250519202326.png" alt=""></p>
+<p>打开 chrome://extensions</p>
+<p>右上角“开启开发者模式”</p>
+<p><img src="https://s2.loli.net/2025/05/19/KUH74wTuMZ5fCFB.png" alt=""></p>
+<p>拖入解压后的文件夹到浏览器插件页</p>
+<ul>
+<li>小贴士 官方开发教程 <a href="https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world?hl=zh-cn">https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world?hl=zh-cn</a></li>
+</ul>
+<h1 id="同类一文多发的产品">同类一文多发的产品</h1>
+<h2 id="artipub">ArtiPub</h2>
+<ul>
+<li><a href="https://juejin.cn/post/7032117046716399652">https://juejin.cn/post/7032117046716399652</a> # 【开发教程】如何为文章同步助手适配某个平台?</li>
+</ul>
+<p><a href="https://juejin.cn/user/2101921963339816/posts">fun0</a></p>
+<ul>
+<li>
+<p><a href="https://github.com/crawlab-team/artipub">https://github.com/crawlab-team/artipub</a></p>
+</li>
+<li>
+<p>OpenWrite 收费的
+<a href="https://openwrite.cn/">https://openwrite.cn/</a></p>
+</li>
+</ul>
+<p>这是由一群来自互联网公司的技术自媒体人搭建的自媒体运营管理工具。比起图文编辑器，我们更爱用Markdown写文章；比起刷头条抖音，我们更爱看CSDN、博客园、开源中国；比起重复的劳力，我们更爱思考是否有更高效的技术解决方案！因此，我们开始了的努力，如果您在写文和运营过程中有什么不爽，不如试试我们的产品吧！
+<a href="https://news.qq.com/rain/a/20241120A01N6Y00">https://news.qq.com/rain/a/20241120A01N6Y00</a></p>
+<h2 id="链接我">链接我</h2>
+<p>正在挑战365天认知马拉松：<br>
+✍️ 晨间写作（6:30-7:30）<br>
+🏃 夜间健行（20:00-21:00）</p>
+<p><img src="https://money-1256465252.cos.ap-beijing.myqcloud.com/2025/20250331222159.png" alt="如果有疑问添加个人微信"></p>
+<p>如果您觉得阅读本文对您有帮助，
+请点一下“<strong>点赞，转发</strong>” 按钮
+您的“<strong>点赞，转发</strong>” 将是我最大的写作动力！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-05-09 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%B0%8F%E8%80%8C%E7%BE%8E/">小而美</a>
+          <a href="/tags/AIGC%E4%BB%8E%E9%9D%92%E9%93%9C%E5%88%B0%E7%8E%8B%E8%80%85/">AIGC从青铜到王者</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/future_for_ai/01-web%E5%BC%80%E5%8F%91-ruanyf-weekly/day2-Datawhale/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Datawhale AI夏令营第一期，大模型技术 方向</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/future_for_ai/08-blog/10-health/">
+            <span class="next-text nav-default">将个人跑步数据可视化</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

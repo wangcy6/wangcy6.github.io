@@ -6,7 +6,43 @@
     <description>Recent content in do book on Troy的网络博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 25 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wangcy6.github.io/categories/do-book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43;面试周刊(5):程序员必须知道的数字｜搞定长尾延迟青铜秒变王者</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day9_c&#43;&#43;_weely_5/</link>
+      <pubDate>Tue, 26 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day9_c&#43;&#43;_weely_5/</guid>
+      <description>各位老师好！ 这是CPP面试冲刺周刊 （c++ weekly） 陪你一起快速冲击大厂面试 第5期 周刊目标： 不是成为C++专家，而是成为C++面试专家 本</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;面试周刊(6):constexpr、内联函数、编译期元编程</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day11_c&#43;&#43;_weely_7/</link>
+      <pubDate>Tue, 26 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day11_c&#43;&#43;_weely_7/</guid>
+      <description>各位老师好！ 这是CPP面试冲刺周刊 （c++ weekly） 陪你一起快速冲击大厂面试 第7期 周刊目标： 不是成为C++专家，而是成为C++面试专家 本</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;面试周刊(6):字节一面 移动语义与完美转发区别</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day9_c&#43;&#43;_weely_6/</link>
+      <pubDate>Tue, 26 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day9_c&#43;&#43;_weely_6/</guid>
+      <description>各位老师好！ 这是CPP面试冲刺周刊 （c++ weekly） 陪你一起快速冲击大厂面试 第6期 周刊目标： 不是成为C++专家，而是成为C++面试专家 本</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;面试周刊(9):C&#43;&#43;20 协程 让 AI 推理引擎的任务调度零拷贝又高效</title>
+      <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day12_c&#43;&#43;_weely_9/</link>
+      <pubDate>Tue, 26 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangcy6.github.io/post/interview/c&#43;&#43;/day12_c&#43;&#43;_weely_9/</guid>
+      <description>各位老师好！ 这是CPP面试冲刺周刊 （c++ weekly） 陪你一起快速冲击大厂面试 第7期 周刊目标： 不是成为C++专家，而是成为C++面试专家 本</description>
+    </item>
+    
     <item>
       <title>面试官:指针和应用区别</title>
       <link>https://wangcy6.github.io/post/interview/c&#43;&#43;/day8_c&#43;&#43;_weely_4/</link>
@@ -274,7 +310,7 @@
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
       <guid>https://wangcy6.github.io/post/future_for_ai/01-%E6%8F%90%E7%A4%BA%E8%AF%8D/%E5%BE%AE%E4%BF%A1%E5%85%AC%E5%85%B1%E5%8F%B7%E9%80%89%E9%A2%98%E5%88%A9-%E6%B5%81%E7%A8%8B/</guid>
-      <description>提示词： https://vxc3hj17dym.feishu.cn/wiki/YObBw7PjuiZiMmkeOG5cYIAanCe https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e https://g10npwhy4nv.feishu.cn/docx/U1Iqduc3mox5F8xmbUzcCC6qnof https://langgptai.feishu.cn/wiki/TWg2wkDSki8Tqxk0E5scxTwunbd 一、对标账号 task1 如何订阅微信号 https://github.com/cooderl/wewe-rss https://weixin.sogou.com/ https://breakout.findyiai.com/docx/72c95724-ac3b-40e3-86e7-d61f9a6322b6/HmPPdqTCxowj1NxfU2Ac2g0Anoc?from=from_copylink 取标题 虎嗅 二、 选题 三、 大纲 我以为 std::is_invocable 没什么用，直到救了同事的项目 列举大纲从新手到大师帮会理解</description>
+      <description>提示词： https://vxc3hj17dym.feishu.cn/wiki/YObBw7PjuiZiMmkeOG5cYIAanCe https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e https://g10npwhy4nv.feishu.cn/docx/U1Iqduc3mox5F8xmbUzcCC6qnof https://langgptai.feishu.cn/wiki/TWg2wkDSki8Tqxk0E5scxTwunbd 一、对标账号 task1 如何订阅微信号 https://github.com/cooderl/wewe-rss https://weixin.sogou.com/ https://breakout.findyiai.com/docx/72c95724-ac3b-40e3-86e7-d61f9a6322b6/HmPPdqTCxowj1NxfU2Ac2g0Anoc?from=from_copylink 取标题 虎嗅 二、 选题 三、 大纲 翻译 逐段对照：每个英文段落后面紧跟中文译文（推荐，便于对照阅读）</description>
     </item>
     
     <item>
@@ -396,10 +432,10 @@
     
     <item>
       <title>谷歌NotebookLM: 最聪明的AI笔记工具, 15分钟内学会全部功能！</title>
-      <link>https://wangcy6.github.io/post/future_for_ai/2025/02_how_to_use_notebooklkm/</link>
+      <link>https://wangcy6.github.io/post/future_for_ai/08-blog/02_how_to_use_notebooklkm/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/future_for_ai/2025/02_how_to_use_notebooklkm/</guid>
+      <guid>https://wangcy6.github.io/post/future_for_ai/08-blog/02_how_to_use_notebooklkm/</guid>
       <description>各位老师好， 我是007， 目标： 截止2028年通过Ai争取人生100万 然后毫无保留分享自己经验。 方法： 不要说每天加班没时，不要说我太菜， 说出来</description>
     </item>
     
@@ -476,12 +512,12 @@
     </item>
     
     <item>
-      <title>从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的,符合常识吗?</title>
-      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/</link>
+      <title>从零开发分布式文件系统(一) :100G读写带宽,百万IO请求文件系统怎么实现的</title>
+      <link>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day22-system-desgin-1.0/</link>
       <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day20-system-desgin-small_1.0/</guid>
-      <description>https://wnso49yyot.feishu.cn/base/Wi37bwBTiaCpEZsFxavckkV5nbb?table=tblPUqR3ZoqKKLNW&amp;amp;view=vew40mV0G2 知识地图：操作系统&amp;ndash;文件子系统&amp;ndash;AI时时代分布式文件系统。 书接上回 企业案例:分布式存储产品架构性能优化总结 通过缝缝</description>
+      <guid>https://wangcy6.github.io/post/interview/interviewSystemDesgin/2025/day22-system-desgin-1.0/</guid>
+      <description>https://wnso49yyot.feishu.cn/base/Wi37bwBTiaCpEZsFxavckkV5nbb?table=tblPUqR3ZoqKKLNW&amp;amp;view=vew40mV0G2 书接上回： 从零实现分布式文件系统(二) 如何在不升级硬件的前提下,小文件并发读写性能提升十倍 *C++周刊系统设篇 目标： 不是让你成为C++专家</description>
     </item>
     
     <item>

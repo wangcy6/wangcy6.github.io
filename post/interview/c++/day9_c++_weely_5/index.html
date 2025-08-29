@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>C&#43;&#43;面试周刊(5):程序员必须知道的数字｜搞定长尾延迟青铜秒变王者 - Troy的网络博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Troy" /><meta name="description" content="do book" /><meta name="keywords" content="daily-interview-question, Github, c&#43;&#43;, Leetcode 题解, 后端面试" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.83.1 with theme even" />
+
+
+<link rel="canonical" href="https://wangcy6.github.io/post/interview/c&#43;&#43;/day9_c&#43;&#43;_weely_5/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="C&#43;&#43;面试周刊(5):程序员必须知道的数字｜搞定长尾延迟青铜秒变王者" />
+<meta property="og:description" content="do book" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangcy6.github.io/post/interview/c&#43;&#43;/day9_c&#43;&#43;_weely_5/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2025-08-26T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2025-08-26T00:00:00&#43;00:00" />
+
+<meta itemprop="name" content="C&#43;&#43;面试周刊(5):程序员必须知道的数字｜搞定长尾延迟青铜秒变王者">
+<meta itemprop="description" content="do book"><meta itemprop="datePublished" content="2025-08-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2025-08-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="7009">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C&#43;&#43;面试周刊(5):程序员必须知道的数字｜搞定长尾延迟青铜秒变王者"/>
+<meta name="twitter:description" content="do book"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="https://github.com/wangcy6/weekly/tree/master/book">
+        <li class="mobile-menu-item">阅读清单</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://github.com/wangcy6/weekly/tree/master/book">阅读清单</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">C&#43;&#43;面试周刊(5):程序员必须知道的数字｜搞定长尾延迟青铜秒变王者</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-08-26 00:00 </span>
+        <div class="post-category">
+            <a href="/categories/do-book/"> do book </a>
+            </div>
+          <span class="more-meta"> 约 7009 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-为什么关心操作系统内核版本">2.1 为什么关心操作系统内核版本</a>
+      <ul>
+        <li><a href="#案例1centos-76--79-升级导致redis性能雪崩">案例1：CentOS 7.6 → 7.9 升级导致Redis性能雪崩</a></li>
+        <li><a href="#案例-2--io_uring-导致-ngin-短链性能下降"><strong>案例 2</strong>  io_uring 导致 Ngin 短链性能下降</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-内核版本查看">2.2 内核版本查看</a>
+      <ul>
+        <li><a href="#-重要总结与建议">⚠️ 重要总结与建议</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#31-gcc与c标准库有关">3.1 gcc与c++标准库有关</a></li>
+    <li><a href="#32-为什么要了解">3.2 为什么要了解</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#41-以-redis-为例">4.1 以 Redis 为例</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#51--基本数字">5.1  基本数字</a></li>
+    <li><a href="#52--长尾延迟--p99-比平均值更重要">5.2  长尾延迟 → P99 比平均值更重要</a>
+      <ul>
+        <li></li>
+        <li><a href="#案例-1ceph-集群长尾">案例 1：Ceph 集群长尾</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#-犹豫不前准备到天荒地老"><strong>① 犹豫不前：准备到天荒地老</strong></a></li>
+        <li><a href="#-盲目回答机会就在眼前却抓不住"><strong>② 盲目回答：机会就在眼前，却抓不住</strong></a></li>
+        <li><a href="#更残酷的是"><strong>更残酷的是</strong></a></li>
+        <li><a href="#核心方法论"><strong>核心方法论</strong>：</a></li>
+      </ul>
+    </li>
+    <li><a href="#21天你会获得什么"><strong>21天，你会获得什么？</strong></a></li>
+    <li><a href="#最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>各位老师好！</p>
+<p>这是CPP面试冲刺周刊 （c++ weekly）
+陪你一起快速冲击大厂面试 第5期</p>
+<p><strong>周刊目标</strong>：</p>
+<ul>
+<li>不是成为C++专家，而是成为C++面试专家</li>
+</ul>
+<p><strong>本期内容</strong>：</p>
+<ul>
+<li>程序员必须知道的数字，不知道就会被坑</li>
+</ul>
+<p><strong>避坑指南：</strong></p>
+<ul>
+<li>如果你熟悉C++17/20特性，你说用的GCC版本是4.8，这个就是说谎！至少需要7.x</li>
+<li>假如你研究分布式存储，提供io_uring、NUMA架构，操作系统内核版本如果是3.x，你说谎！至少需要5.x</li>
+<li>延迟数据的“温柔陷阱”：99% vs 99.99%</li>
+</ul>
+<p><strong>历史文章：</strong></p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/wSP672RIfzRZhMTU-YotkQ"># 面试周刊(4):类自定义 new/delete ？三阶段（编译/链接/运行）一口气讲透</a></li>
+<li><a href="https://mp.weixin.qq.com/s/mLAtjpUBMwUXY5O8fpI0Vw">C++面试周刊(3):面试不慌,这样回答指针与引用，青铜秒变王者</a></li>
+</ul>
+<h1 id="一背景">一、背景</h1>
+<p>在大规模分布式系统和高并发场景下，
+很多线上故障的根源都不是“代码写错”，而是交付一个产品 依赖环境信息太多了</p>
+<p>你必须知道的数字包括：</p>
+<ul>
+<li>操作系统版本（Linux Kernel）</li>
+<li>glibc 版本（GNU C Library）</li>
+<li>软件依赖版本（例如 Redis、MySQL、Kafka）</li>
+<li>核心性能指标（延迟、P99、P999）</li>
+<li>系统资源限制（<code>ulimit</code>、文件描述符数量）</li>
+</ul>
+<p>这些数字看似琐碎，但在实际生产环境中，<strong>99% 的线上事故都和版本、性能指标、依赖库相关</strong>。</p>
+<table>
+<thead>
+<tr>
+<th><strong>案例</strong></th>
+<th><strong>版本变化</strong></th>
+<th><strong>问题</strong></th>
+<th><strong>损失</strong></th>
+<th><strong>解决办法</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>美团 tcache 内存膨胀</td>
+<td>glibc 2.28</td>
+<td>新增 tcache 导致内存暴涨</td>
+<td>宕机 4 小时</td>
+<td>降级 glibc，关闭 tcache</td>
+</tr>
+<tr>
+<td>某券商内核升级</td>
+<td>Linux 4.18 → 5.10</td>
+<td>epoll 退化</td>
+<td>TPS 降低 30%</td>
+<td>打补丁 + 参数调优</td>
+</tr>
+<tr>
+<td>Redis ACL 性能劣化</td>
+<td>Redis 5.0 → 6.2</td>
+<td>ACL 权限校验开销大</td>
+<td>CPU+200%</td>
+<td>关闭 ACL 或升级客户端</td>
+</tr>
+<tr>
+<td>Kafka 客户端崩溃</td>
+<td>Kafka 2.3 → 3.1</td>
+<td>协议版本不兼容</td>
+<td>整个集群不可用</td>
+<td>降级客户端</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="二操作系统内核版本决定你能用哪些特性">二、<strong>操作系统内核版本：决定你能用哪些特性</strong></h1>
+<h2 id="21-为什么关心操作系统内核版本">2.1 为什么关心操作系统内核版本</h2>
+<p>Linux 内核和发行版不是“版本号”，而是“能力边界”。</p>
+<p>操作系统版本不仅仅是一个数字，它直接决定了 <strong>glibc</strong>、<strong>IO 栈</strong>、<strong>内核调度</strong> 等底层行为。</p>
+<h3 id="案例1centos-76--79-升级导致redis性能雪崩">案例1：CentOS 7.6 → 7.9 升级导致Redis性能雪崩</h3>
+<p><strong>案例背景</strong><br>
+一家互联网公司在线上环境把 <strong>CentOS 7.6 → 7.9</strong>，glibc 从 <code>2.17</code> 升级到了 <code>2.28</code>。
+升级完成后，Redis QPS 从 <strong>10w/s</strong> 掉到 <strong>2w/s</strong>，延迟从 <strong>0.3ms</strong> 飙升到 <strong>2ms+</strong>。
+<strong>排查过程</strong></p>
+<ul>
+<li>怀疑 Redis 自身问题，重启无效</li>
+<li>怀疑内核参数，调整 TCP backlog 无效</li>
+<li>最终通过 <code>perf top</code> 和 <code>strace</code> 发现，大量线程阻塞在 <code>malloc_trim</code> → <code>madvise(MADV_DONTNEED)</code> 系统调用上</li>
+<li>根因：<strong>glibc 2.28 引入了 <code>malloc_trim</code> 的 aggressive 策略</strong>，导致频繁释放内存到 OS，引起内核锁竞争</li>
+<li><strong>根因分析：glibc 升级至 .28</strong> 后，<code>malloc_trim</code> 策略更激进，大量内存回收触发频繁锁竞争。
+大量大键在短时间内过期，触发了 Redis 的延迟删除机制，而随后触发的 glibc malloc_trim 操作阻塞了主线程，导致命令响应超时。</li>
+<li><strong>解决</strong>：通过 <code>MALLOC_TRIM_THRESHOLD_=0</code> 禁用自动 trim，性能恢复。 export MALLOC_TRIM_THRESHOLD_=0</li>
+<li>禁用自动trim的潜在代价是，Redis进程可能会比之前占用更多的常驻内存（RSS），因为很少主动将空闲内存归还OS</li>
+<li><strong>效果​</strong>​： 在启动Redis服务前设置此环境变量后，Redis的内存分配器不再频繁尝试将内存交还操作系统，从而避免了激烈的锁竞争。测试表明，此操作后​<strong>​Redis的QPS立即恢复到了升级前的10万/s水平​</strong>​，系统态CPU占用也回归正常。</li>
+<li>对于Redis这类高性能内存数据库，社区普遍推荐使用 ​<strong>​<code>jemalloc</code>​</strong>​ 作为默认内存分配器，其性能和多线程扩展性通常优于ptmalloc2。在编译Redis时可通过<code>make MALLOC=jemalloc</code>指定，这可以从根本上避免此类ptmalloc2的问题。</li>
+</ul>
+<p><strong>搜索关键词​</strong>​：</p>
+<ul>
+<li>CentOS 7.6 7.9 Redis 性能下降</li>
+<li>glibc 2.28 malloc_trim  <a href="https://github.com/mruby/mruby/issues/5047">https://github.com/mruby/mruby/issues/5047</a></li>
+<li>内存泄漏之malloc_trim</li>
+<li>MALLOC_TRIM_THRESHOLD_ Redis 性能</li>
+<li>在 nosql 系统中发现的内存暴增现象及其潜在原因</li>
+<li><a href="https://www.slideshare.net/slideshow/glibc-memory-management/10455454">https://www.slideshare.net/slideshow/glibc-memory-management/10455454</a></li>
+</ul>
+<p>总结：</p>
+<ul>
+<li>最少知识：</li>
+</ul>
+<ol>
+<li>在标准C库中，提供了malloc/free函数分配释放内存，这两个函数底层是由brk，mmap 这些系统调用实现的</li>
+<li>mmap：glibc大内存是128k,majflt对于性能的损害是致命的，随机读一次磁盘的耗时数量级在几个毫秒</li>
+<li>当最高地址空间的空闲内存超过128K（可由M_TRIM_THRESHOLD选项调节）时，执行内存紧缩操作（trim)导致 cpu 增加，缓存不命中</li>
+<li>禁止malloc调用mmap分配内存，禁止内存紧缩</li>
+</ol>
+<h3 id="案例-2--io_uring-导致-ngin-短链性能下降"><strong>案例 2</strong>  io_uring 导致 Ngin 短链性能下降</h3>
+<p>2021 年某金融交易系统升级内核从 <strong>4.18 → 5.10</strong>，结果导致  ​<strong>​Nginx</strong> 性能下降 30%，</p>
+<p>因为新内核默认启用了 <code>io_uring</code>，但是应用并没有适配。</p>
+<ul>
+<li>io_uring在网络编程方面的优化更适合长连接场景，在长连接场景下最高有20%多的提升。短连接场景还有待优化，短连接场景，io uring相对于event poll非但没有提升，甚至在某些场景下有5%~10%的性能下降</li>
+<li>epoll：<img src="https://s2.loli.net/2025/08/26/kWoPQV8MTbD9sKB.png" alt=""></li>
+<li>io_uring  <img src="https://s2.loli.net/2025/08/26/1xYHPWF6vDiw9Xd.png" alt="image.png"></li>
+</ul>
+<p>我们曾帮某公司做 TiDB 集群迁移，开发同事为了追求高性能，在 5.4 内核上开发并启用了 <strong>io_uring</strong>。<br>
+结果一上线，RHEL7（内核 3.10）直接报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="nl">io_uring_setup</span><span class="p">:</span> <span class="n">Function</span> <span class="n">not</span> <span class="n">implemented</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>原因</strong>：3.10 内核根本不支持 io_uring 系统调用。<br>
+<strong>代价</strong>：紧急回滚 + 重写 IO 模型，损失一周时间。</p>
+<h2 id="22-内核版本查看">2.2 内核版本查看</h2>
+<table>
+<thead>
+<tr>
+<th><strong>发行版</strong></th>
+<th><strong>代表版本</strong></th>
+<th><strong>为什么重要</strong></th>
+<th><strong>查看命令</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CentOS/RHEL 7</strong></td>
+<td>内核 3.10，glibc 2.17</td>
+<td>大量生产环境仍在用，缺少 <code>io_uring</code>、<code>statx</code> 等系统调用</td>
+<td>name -r</td>
+</tr>
+<tr>
+<td><strong>CentOS/RHEL 8</strong></td>
+<td>内核 4.18，glibc 2.28</td>
+<td>引入 <code>cgroup v2</code>、内核 eBPF 增强</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>Ubuntu 20.04</strong></td>
+<td>内核 5.4，glibc 2.31</td>
+<td>io_uring 支持良好</td>
+<td><code>lsb_release -a</code></td>
+</tr>
+<tr>
+<td><strong>Ubuntu 22.04</strong></td>
+<td>内核 5.15，glibc 2.35</td>
+<td>高性能 IO、BPF tracing、密钥管理更完善</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>Alpine</strong></td>
+<td>3.17+</td>
+<td>轻量 Docker 基础镜像，但用 <code>musl</code> 而非 glibc，兼容性坑点多</td>
+<td><code>cat /etc/alpine-release</code></td>
+</tr>
+</tbody>
+</table>
+<p>更多信息：https://www.kernel.org/</p>
+<table>
+<thead>
+<tr>
+<th>内核版本</th>
+<th>重点特性/改动</th>
+<th>应用关注点/影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>3.x</strong> (2011-2015)</td>
+<td>- 改进了 Ext4、Btrfs 文件系统  <!-- raw HTML omitted -->- 支持新的硬件架构（ARM、PowerPC）  <!-- raw HTML omitted -->- 引入了 <code>perf_event</code> 性能计数器增强  <!-- raw HTML omitted -->- 初步支持 cgroups v1</td>
+<td>- 文件系统优化对 I/O 性能有影响  <!-- raw HTML omitted -->- cgroups 可用于资源限制和容器化</td>
+</tr>
+<tr>
+<td><strong>4.x</strong> (2015-2019)</td>
+<td>- 支持 <code>overlayfs</code>，为容器提供文件系统支持  <!-- raw HTML omitted -->- 改进 TCP/IP 网络栈  <!-- raw HTML omitted -->- 引入 <code>io_uring</code> 的初步概念（4.19 预备接口）  <!-- raw HTML omitted -->- 支持更大内存 (&gt;64GB) 和 NUMA 改进  <!-- raw HTML omitted -->- 安全增强：Seccomp、Live Patching 初步支持</td>
+<td>- 容器和微服务性能提升  <!-- raw HTML omitted -->- 高并发网络应用受 TCP 栈优化影响  <!-- raw HTML omitted -->- 高性能异步 I/O 可预期，但需适配</td>
+</tr>
+<tr>
+<td><strong>5.x</strong> (2019-至今)</td>
+<td>- 正式引入 <code>io_uring</code> 异步 I/O（5.1）  <!-- raw HTML omitted -->- 增强多队列支持，减少内核锁竞争（5.6+）  <!-- raw HTML omitted -->- 改进 cgroups v2、BPF 功能  <!-- raw HTML omitted -->- 支持 CPU 架构优化（AMD Zen、ARM64 SVE）  <!-- raw HTML omitted -->- 内核增强安全特性：Lockdown 模式、堆隔离、KASLR 强化  <!-- raw HTML omitted -->- 支持更高效的 epoll/wait queue、内存管理优化</td>
+<td>- 高频交易、低延迟应用可通过 io_uring 获取性能优势  <!-- raw HTML omitted -->- 容器化、资源管理更灵活  <!-- raw HTML omitted -->- 系统调用行为微调可能影响老应用性能</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-重要总结与建议">⚠️ 重要总结与建议</h3>
+<ul>
+<li>
+<p>​<strong>​CentOS 7​</strong>​：已结束官方支持</p>
+</li>
+<li>
+<p><strong>​CentOS 8​</strong>​：​<strong>​已提前终止维护​</strong>​，不应在任何新环境部署。</p>
+<ol>
+<li>​<strong>​替代方案​</strong>​：原 CentOS 的继任者是 ​<strong>​CentOS Stream​</strong>​（滚动发布版本）。对于需要稳定、免费且与 RHEL 二进制兼容的用户，</li>
+<li>推荐迁移至：​<strong>​Rocky Linux​</strong>​</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h1 id="三gcc-版本是多少">三、gcc 版本是多少？</h1>
+<h2 id="31-gcc与c标准库有关">3.1 gcc与c++标准库有关</h2>
+<table>
+<thead>
+<tr>
+<th>GCC 版本</th>
+<th>默认 C++ 标准</th>
+<th>支持 libstdc++ 特性</th>
+<th>对应 glibc 兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.8</td>
+<td>C++11</td>
+<td>智能指针、<code>std::thread</code></td>
+<td>glibc ≥ 2.17</td>
+</tr>
+<tr>
+<td>4.9</td>
+<td>C++11/C++14部分</td>
+<td><code>std::make_unique</code></td>
+<td>glibc ≥ 2.18</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>C++14</td>
+<td>完整 C++14 支持</td>
+<td>glibc ≥ 2.19</td>
+</tr>
+<tr>
+<td>6.x</td>
+<td>C++14/C++17部分</td>
+<td><code>std::optional</code>（部分）</td>
+<td>glibc ≥ 2.23</td>
+</tr>
+<tr>
+<td>7.x</td>
+<td>C++17</td>
+<td><strong>完整 C++17 支持</strong></td>
+<td>glibc ≥ 2.25</td>
+</tr>
+<tr>
+<td>8.x</td>
+<td>C++17/C++20部分</td>
+<td><code>std::span</code>（部分）</td>
+<td>glibc ≥ 2.28</td>
+</tr>
+<tr>
+<td>9.x</td>
+<td>C++17/C++20</td>
+<td>完整 C++20 支持</td>
+<td>glibc ≥ 2.28</td>
+</tr>
+<tr>
+<td>10.x+</td>
+<td>C++20</td>
+<td>完整 C++20/部分 C++23</td>
+<td>glibc ≥ 2.30</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果你学习 c++20 语法，你说用的 gcc 版本是 4.8 这个就是说谎呀？</p>
+</blockquote>
+<p>gcc &ndash;version</p>
+<p>gcc (GCC) 8.5.0 20210514 (Tencent 8.5.0-23）</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>glibc</th>
+<th>GCC</th>
+<th>C++ 标准</th>
+<th>问题/注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RHEL7 / CentOS7</td>
+<td>2.17</td>
+<td>4.8</td>
+<td>C++11</td>
+<td><code>std::make_unique</code> 需要 backport；<code>std::filesystem</code> 不可用</td>
+</tr>
+<tr>
+<td>Ubuntu 18.04</td>
+<td>2.27</td>
+<td>7.5</td>
+<td>C++17</td>
+<td>完整支持 C++17；IO/线程性能稳定</td>
+</tr>
+<tr>
+<td>Ubuntu 20.04</td>
+<td>2.31</td>
+<td>9.3</td>
+<td>C++20</td>
+<td>默认可用 <code>std::span</code>、<code>std::format</code>；注意向下兼容</td>
+</tr>
+<tr>
+<td>Debian 11</td>
+<td>2.31</td>
+<td>10.2</td>
+<td>C++20</td>
+<td>适合新特性，但需注意部分 glibc API 对 kernel 要求</td>
+</tr>
+</tbody>
+</table>
+<h2 id="32-为什么要了解">3.2 为什么要了解</h2>
+<ul>
+<li>系统化的编译，<strong>为 Ceph 带来 15%-30% 的综合性能提升是完全可行的​</strong>​，尤其是在 CPU 密集型和内存密集型工作负载下</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2025/png/215144/1756179802597-864da385-fc79-4db7-9afa-3f2e1732d845.png?x-oss-process=image%2Fformat%2Cwebp" alt=""></p>
+<blockquote>
+<p><strong>命令速查</strong></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ldd --version                               <span class="c1"># 查看 glibc 版本</span>
+strings /lib64/libc.so.6 <span class="p">|</span> grep GLIBC       <span class="c1"># 查看支持的 ABI</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Ceph 性能极度依赖 CPU 效率，尤其是对数据路径（如 OSD 的 <code>librados</code>）的编译优化至关重要。</p>
+<table>
+<thead>
+<tr>
+<th>优化策略</th>
+<th>具体命令/配置</th>
+<th>预期收益</th>
+<th>风险与故障</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​1. 使用新版编译器​</strong>​</td>
+<td>使用 GCC 11/12 或 Clang 15+ 替代系统旧版 GCC（如 4.8.5）。</td>
+<td>新编译器对现代 CPU（如 Zen 3, Ice Lake）支持更好，自动向量化优化可带来 ​<strong>​~5%​</strong>​ 的性能提升。</td>
+<td>新编译器可能引入极少数未知 bug，需通过完整功能测试。</td>
+</tr>
+<tr>
+<td>​<strong>​2. 激进优化选项​</strong>​</td>
+<td><code>CFLAGS=&quot;-O3 -march=native -mtune=native&quot;</code>  <!-- raw HTML omitted --><code>CXXFLAGS=&quot;-O3 -march=native -mtune=native&quot;</code></td>
+<td><code>-march=native</code>生成最适合当前 CPU 指令集的二进制码，可提升 ​<strong>​~10-15%​</strong>​ 的计算密集型任务性能。</td>
+<td>​<strong>​致命风险​</strong>​：二进制码与当前 CPU 强绑定，迁移到不同架构（如从 Intel 迁至 AMD）会导致非法指令崩溃。</td>
+</tr>
+<tr>
+<td>​<strong>​3. 链接时优化 (LTO)​</strong>​</td>
+<td><code>CFLAGS=&quot;-flto=auto&quot;</code>并在链接时也添加 <code>-flto=auto</code>。</td>
+<td>允许编译器跨文件优化，消除未使用的代码路径，减小二进制体积并提升性能 ​<strong>​~1-3%​</strong>​。</td>
+<td>大幅增加编译时间和内存消耗，可能遇到链接器 bug。</td>
+</tr>
+<tr>
+<td>​<strong>​4. 性能导向优化 (PGO)​</strong>​</td>
+<td>分三步：  <!-- raw HTML omitted -->1. 编译插桩版本：<code>-fprofile-generate</code>  <!-- raw HTML omitted -->2. 用真实负载训练（如 <code>cosbench</code>）  <!-- raw HTML omitted -->3. 用采集数据重新编译：<code>-fprofile-use</code></td>
+<td>编译器根据真实运行 profile 优化热点代码，可获得 ​<strong>​~10%​</strong>​ 以上的最大性能收益。</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ceph 是内存和锁密集型应用，尤其 OSD 进程频繁分配/释放内存。</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>优化策略</th>
+<th>具体命令/配置</th>
+<th>预期收益</th>
+<th>风险与故障</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>​<strong>​1. 替换内存分配器​</strong>​</td>
+<td>使用 <code>jemalloc</code>或 <code>tcmalloc</code>替代 glibc 的 <code>ptmalloc2</code>。  <!-- raw HTML omitted --><code>./configure --with-jemalloc</code></td>
+<td>解决多线程内存分配锁竞争，​<strong>​显著降低内存碎片​</strong>​。提升高并发场景性能 ​<strong>​~5-20%​</strong>​，并稳定延迟。</td>
+<td>增加依赖复杂性。极端情况下，分配器自身可能成为瓶颈（需监控）。</td>
+</tr>
+<tr>
+<td>​<strong>​2. 调整 glibc malloc 行为​</strong>​</td>
+<td>针对仍使用 <code>ptmalloc2</code>的场景：  <!-- raw HTML omitted --><code>export MALLOC_ARENA_MAX=4</code>  <!-- raw HTML omitted --><code>export MALLOC_MMAP_THRESHOLD_=131072</code></td>
+<td><code>MALLOC_ARENA_MAX</code>限制内存域数量，​<strong>​控制内存碎片化​</strong>​和总内存占用。<code>MMAP_THRESHOLD_</code>调整分配策略。</td>
+<td><code>MALLOC_ARENA_MAX</code>设置过低可能增加锁竞争，需根据线程数调整。</td>
+</tr>
+<tr>
+<td>​<strong>​3. 禁用自动内存归还​</strong>​</td>
+<td><code>export MALLOC_TRIM_THRESHOLD_=0</code></td>
+<td>​<strong>​彻底阻止 glibc 频繁调用 <code>malloc_trim</code>​</strong>​，消除由此引发的性能毛刺和锁竞争。对 RocksDB（Ceph 后端）等性能提升显著</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="四-软件版本">四、 软件版本：</h1>
+<p>除了操作系统和 glibc，应用软件的版本差异同样会坑你。</p>
+<h2 id="41-以-redis-为例">4.1 以 Redis 为例</h2>
+<p><strong>案例1 背景</strong><br>
+某公司 Redis 4.0 在 RHEL7 上运行正常，
+但迁移到 Debian11（glibc 2.31）后，
+CPU 占用率暴涨到原来的 3 倍。</p>
+<p><strong>原因</strong></p>
+<ul>
+<li>Redis 内部大量使用 <code>jemalloc</code>，但 glibc 2.31 在 <code>mmap</code> + <code>munmap</code> 策略上和老版本差异极大</li>
+<li>jemalloc 老版本未适配新 glibc 的 <code>madvise</code> 策略，导致频繁 Page Fault
+<strong>结论</strong></li>
+<li><strong>数字</strong>：Redis 4.0 + glibc 2.17 → CPU 20%</li>
+<li><strong>数字</strong>：Redis 4.0 + glibc 2.31 → CPU 60%</li>
+<li><strong>解决</strong>：升级 Redis 至 6.2，jemalloc 新版优化了 mmap 行为</li>
+</ul>
+<hr>
+<h1 id="五-延迟">五 、延迟</h1>
+<h2 id="51--基本数字">5.1  基本数字</h2>
+<p>什么是延迟？指 API 响应请求所需的时间</p>
+<p><strong>P99</strong>（也称为 <strong>99th percentile，99百分位数</strong>）是衡量系统响应时间分布的一个 <strong>统计指标</strong>，
+代表在所有请求中，<strong>99%的请求的响应时间</strong> <strong>小于或等于该值</strong>，
+而只有<strong>1%的请求比它慢</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>含义</th>
+<th>优缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>平均响应时间</td>
+<td>所有请求响应时间的平均值</td>
+<td>易受极端值影响，<a href="https://d.hatena.ne.jp/keyword/%C9%D4%C7%BD">不能</a>反映尾部延迟</td>
+</tr>
+<tr>
+<td>P99响应时间</td>
+<td>99%的请求响应时间小于该值</td>
+<td>更能反映极端情况下的性能瓶颈</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>操作</strong></th>
+<th><strong>耗时</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 Cache</td>
+<td>~1ns</td>
+<td>CPU 最近缓存</td>
+</tr>
+<tr>
+<td>L2 Cache</td>
+<td>~4ns</td>
+<td></td>
+</tr>
+<tr>
+<td>L3 Cache</td>
+<td>~10ns</td>
+<td>多核共享</td>
+</tr>
+<tr>
+<td>DRAM</td>
+<td>~100ns</td>
+<td>大量随机访问会爆慢</td>
+</tr>
+<tr>
+<td>本地 NVMe 读</td>
+<td>50μs - 150μs</td>
+<td>Ceph、TiDB IO 核心</td>
+</tr>
+<tr>
+<td>10GbE RTT</td>
+<td>~100μs</td>
+<td>数据中心常见</td>
+</tr>
+<tr>
+<td>RDMA RTT</td>
+<td>1-2μs</td>
+<td>极限低延迟</td>
+</tr>
+<tr>
+<td>系统调用</td>
+<td>100ns - 1μs</td>
+<td><code>futex()</code>、<code>getpid()</code></td>
+</tr>
+<tr>
+<td>磁盘落地写</td>
+<td>1-10ms</td>
+<td>WAL / Binlog 性能关键</td>
+</tr>
+</tbody>
+</table>
+<p>L1 cache reference &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;. 0.5 ns
+Branch mispredict &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;. 5 ns
+L2 cache reference &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; 7 ns</p>
+<p>Mutex lock/unlock &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; 25 ns
+Main memory reference &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;. 100 ns</p>
+<p>Compress 1K bytes with Zippy &hellip;&hellip;&hellip;&hellip;. 3,000 ns  =   3 µs
+Send 2K bytes over 1 Gbps network &hellip;&hellip;. 20,000 ns  =  20 µs
+SSD random read &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; 150,000 ns  = 150 µs</p>
+<p>Read 1 MB sequentially from memory &hellip;.. 250,000 ns  = 250 µs
+Round trip within same datacenter &hellip;&hellip; 500,000 ns  = 0.5 ms
+Read 1 MB sequentially from SSD* &hellip;.. 1,000,000 ns  =   1 ms</p>
+<p>Disk seek &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip; 10,000,000 ns  =  10 ms
+Read 1 MB sequentially from disk &hellip;. 20,000,000 ns  =  20 ms
+Send packet CA-&gt;Netherlands-&gt;CA &hellip;. 150,000,000 ns  = 150 ms</p>
+<h2 id="52--长尾延迟--p99-比平均值更重要">5.2  长尾延迟 → P99 比平均值更重要</h2>
+<p>线上系统调优时，<strong>平均耗时毫无意义</strong>，必须盯住 <strong>P99 / P999</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P99定义</strong></td>
+<td>99%的请求响应时间低于该值</td>
+</tr>
+<tr>
+<td><strong>作用</strong></td>
+<td>定位尾部延迟，优化极端慢请求</td>
+</tr>
+<tr>
+<td><strong>监控方式</strong></td>
+<td>使用 Prometheus/Grafana/Datadog + Tracing</td>
+</tr>
+<tr>
+<td><strong>优化手段</strong></td>
+<td>限流、缓存、异步化、输入优化、模型推理优化</td>
+</tr>
+</tbody>
+</table>
+<h4 id="p99与p999的区别"><strong>P99与P999的区别</strong>​</h4>
+<ul>
+<li>​<strong>P99</strong>​：关注99%的请求（容忍1%的慢请求）。</li>
+<li>​<strong>P999</strong>​：更严格，99.9%的请求需达标（如金融交易系统）。
+​</li>
+</ul>
+<h3 id="案例-1ceph-集群长尾">案例 1：Ceph 集群长尾</h3>
+<p>某 Ceph 集群平均 IO 延迟只有 <strong>5ms</strong>，但用户经常投诉“慢”。<br>
+分析 P999 后发现，<strong>1‰ 的请求耗时高达 1.2s</strong>。</p>
+<p>最后定位到：</p>
+<ul>
+<li>页缓存回收</li>
+<li>NUMA 跨节点访问</li>
+<li>futex 竞争</li>
+</ul>
+<p>通过优化线程绑核 + 提升 glibc futex 实现，P999 降低 70%。</p>
+<h4 id="案例2-redis-作为高性能缓存数据库的典型案例来看">案例2 Redis 作为高性能缓存数据库的典型案例来看：</h4>
+<ul>
+<li>
+<p><strong>场景</strong>：金融交易系统使用 Redis 缓存热点数据，要求 P99 &lt; 5ms，P999 &lt; 20ms。</p>
+</li>
+<li>
+<p><strong>问题</strong>：在高并发下发现 P999 达到 50ms，远高于 P99。</p>
+</li>
+<li>
+<p><strong>原因分析</strong>：</p>
+<ol>
+<li>
+<p><strong>大 key 阻塞</strong>：偶尔存在大对象 GET 操作阻塞其他请求。</p>
+</li>
+<li>
+<p><strong>内存碎片/GC</strong>：频繁过期或大对象回收导致延迟尖峰。</p>
+</li>
+<li>
+<p><strong>网络抖动</strong>：少数节点网络延迟增加尾部请求时间。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>优化措施</strong>：</p>
+<ul>
+<li>
+<p>对大 key 使用异步分片读取或拆分策略</p>
+</li>
+<li>
+<p>调整 Redis maxmemory 策略和碎片整理策略</p>
+</li>
+<li>
+<p>在高峰期增加节点，避免单点热点阻塞</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>效果</strong>：</p>
+<ul>
+<li>P99 从 4.5ms 降至 4ms</li>
+<li>P999 从 50ms 降至 18ms</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✅ 实践表明，Redis 的尾部延迟优化必须结合系统设计、缓存策略和网络条件综合考虑。</p>
+</blockquote>
+<h1 id="六总结">六、<strong>总结</strong></h1>
+<ul>
+<li><strong>操作系统版本</strong> → 决定能不能用 io_uring、eBPF 等现代特性</li>
+<li><strong>glibc 版本</strong> → 决定二进制是否能跑</li>
+<li><strong>软件版本</strong> → 不同内核和依赖的兼容坑</li>
+<li><strong>性能耗时数字</strong> → 提前知道数量级，少走弯路</li>
+<li><strong>长尾延迟</strong> → P99 比平均值更重要</li>
+</ul>
+<h1 id="广告时间">广告时间</h1>
+<p>c++周刊目的陪你一起快速冲击大厂面试</p>
+<blockquote>
+<p>小提示：不要把他看成一个出售给你产品，我只出售给自己
+在公司做任何事情事情，
+都必须清楚拆解需求功能，开发周期，最后得到什么结果，
+同样面试准备也是如此，给自己一个期限 21 天，给自己大纲，然后给自己 21 天学习结果，这样自己才能安心准备下去。</p>
+</blockquote>
+<p>曾经有一个<strong>让我心跳加速的岗位</strong>放在我面前，<br>
+我没有珍惜。<br>
+等到别人拿到 offer 的那一刻，<br>
+我才追悔莫及！</p>
+<p>人世间，最痛苦的事情，<br>
+不是没钱吃饭，<br>
+也不是没房没车，<br>
+而是——<strong>错过了那个能让我逆天改命的机会！</strong></p>
+<p>如果上天再给我一次机会，<br>
+我一定会对那个岗位说三个字：<br>
+<strong>“我要你！”</strong></p>
+<p>如果非要在这份“心动”上加一个期限，<br>
+<strong>一万年太久了……</strong><br>
+<strong>我只想要——21天！</strong></p>
+<p><strong>你可能面临两种选择</strong></p>
+<h3 id="-犹豫不前准备到天荒地老"><strong>① 犹豫不前：准备到天荒地老</strong></h3>
+<p>“这个岗位太难了，我先准备一下吧。”<br>
+于是你准备1天、1周、1个月、1年……<br>
+等再回头，<strong>3年就这样过去了</strong>。</p>
+<ul>
+<li>每天忙着搬砖，没时间系统复习</li>
+<li>每次想起要准备，又感觉心里没底</li>
+<li>面试知识点更新太快，拿着旧地图找新机会
+最后，错过了一次又一次心动的岗位。</li>
+</ul>
+<h3 id="-盲目回答机会就在眼前却抓不住"><strong>② 盲目回答：机会就在眼前，却抓不住</strong></h3>
+<p>终于等来一场面试，<br>
+你觉得问题很简单，张口就答，<br>
+结果用“几千元思维”回答“百万年薪岗位”。</p>
+<ul>
+<li>面试官问到C++底层实现，答不上来</li>
+<li>设计题说到高并发架构，没实战经验</li>
+<li>一紧张，连项目里真实做过的东西都讲不清</li>
+</ul>
+<p>一次面试失利，也许就意味着和理想岗位失之交臂。</p>
+<h3 id="更残酷的是"><strong>更残酷的是</strong></h3>
+<p>在你犹豫的这几年里，<br>
+找工作的成本越来越高：</p>
+<ul>
+<li>一个部门、一个领导，可能坚持一年就被解散</li>
+<li>一个项目，可能在10年、20年后，<br>
+曾经复杂的业务规则、先进的架构，早已被淘汰</li>
+<li>市场上新的技术和面试要求，每年都在不断升级</li>
+</ul>
+<p>等你回过头来，发现不仅机会没了，<br>
+<strong>连准备的方向都变了</strong>。</p>
+<p><strong>21天C++面试冲刺周刊</strong>
+<img src="https://s2.loli.net/2025/08/24/AMq3IdPaloSnBpv.png" alt="​一万年太久，只争三周​"></p>
+<p>不是让你成为<strong>C++专家</strong>，  而是让你成为<strong>C++面试专家</strong>。</p>
+<p>不是让你疯狂学习新知识，  而是帮你<strong>重新整理已有知识</strong>，<br>
+让你的能力与面试题精准对齐。</p>
+<p>因为，21天就够了，<br>
+足够让我火力全开，</p>
+<ul>
+<li>一边补齐 C++ 知识点，</li>
+<li>一边刷爆经典面试题，</li>
+<li>一边撸穿开源项目，</li>
+<li>让自己变得不可替代！</li>
+</ul>
+<h3 id="核心方法论"><strong>核心方法论</strong>：</h3>
+<blockquote>
+<p>让你学到每个 c++知识，都关联一个经典面试，并对对应开源项目实践</p>
+</blockquote>
+<ul>
+<li><strong>系统备战</strong><br>
+每天 20~30 分钟，聚焦 C++ 核心知识，<br>
+三周时间完成高效梳理。</li>
+<li><strong>经典面试题</strong><br>
+每个知识点都关联一个<strong>高频面试题</strong>，<br>
+让你知道“为什么考”和“怎么答”。</li>
+<li><strong>开源项目实践</strong><br>
+通过真实项目理解底层原理，<br>
+不背答案，而是用<strong>实践打动面试官</strong>。</li>
+<li><strong>场景驱动学习</strong><br>
+还原真实面试场景，<br>
+帮你学会“怎么说服面试官”。</li>
+</ul>
+<h2 id="21天你会获得什么"><strong>21天，你会获得什么？</strong></h2>
+<ul>
+<li>一份<strong>完整的C++面试知识地图</strong></li>
+<li>一套<strong>高频题+解析+项目实践</strong>组合拳</li>
+<li>一次<strong>全链路模拟面试体验</strong></li>
+<li>三周后，面对面试官，你能自信说出：<br>
+<strong>“问吧，准备好了。”</strong></li>
+</ul>
+<blockquote>
+<p>这也是我的面试方法：</p>
+</blockquote>
+<ul>
+<li>
+<p>如果一开始就直接学某个知识点，我常常感觉不到它的实际价值。</p>
+</li>
+<li>
+<p>所以我会先尝试树立一个整体的大局观，就算过程中被现实“啪啪打脸”了又怎样？</p>
+</li>
+<li>
+<p>把每一次面试都当成一场陪练，用面试官的专业视角和真实项目来反推和校正自己的理解，不是更好吗？这种即时、高质量的反馈，是你看多少书、自己一个人闷头琢磨多久，都很难获得的。
+整体知识看板（欢迎提供更多线索）：</p>
+</li>
+<li>
+<p>第一周:c++基础知识高频面试题解析【当前位置】
+<img src="https://s2.loli.net/2025/08/24/ZKvcR4F1yoe9th8.png" alt=""></p>
+</li>
+<li>
+<p>第二周: 专注分布式存储,数据库广告搜索 Ai 辅助驾驶 大厂热门后端领域项目（基本功)拆解
+<img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia37yjSL2xfQSbz0QT05IVAvsibibvAT7xFUzAhCqEKviblv6YpjuPT2VCCzZgMLDtDzGnFmHjuKOjHtTg/640?wx_fmt=png&amp;from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt=""></p>
+</li>
+<li>
+<p>第三周：系统架构设计，用未来 10 年发展目标，重新设计原来系统</p>
+</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/DMCnyCrhia36iaMAgdk7ib4vIrpf6urrNhdmqVHib41GQAGXDMTPDvib0Ue3LROIocBSCflxytXXVoiap04lR7kOMfwA/640?wx_fmt=png&amp;from=appmsg&amp;wxfrom=5&amp;wx_lazy=1&amp;tp=webp" alt=""></p>
+<h2 id="最动人的作品为自己而写刚刚好打动别人">最动人的作品，为自己而写，刚刚好打动别人</h2>
+<p> 1️⃣ 如果有更多疑问，联系小王，一起交流，进步</p>
+<p><img src="https://s2.loli.net/2025/08/13/veChAocQwJONWKE.png" alt="个人联系方式"></p>
+<p>2️⃣  关注公众号:后端开发成长指南(回复&quot;面经&quot;获取）获取过去我<strong>全部面试录音</strong>和面试复盘。
+<img src="https://s2.loli.net/2025/05/31/GRgOTiQHI456VWD.png" alt=""></p>
+<h4 id="抬头看天走暗路耕瘦田进窄门见微光">抬头看天：走暗路、耕瘦田、进窄门、见微光</h4>
+<ul>
+<li><strong>不要给自己这样假设</strong>：别人完成就等着自己完成了，大家都在一个集团，一个公司，分工不同，不，这个懒惰表现，这个逃避问题表现。</li>
+<li>别人不这么假设，至少本月绩效上不会写成自己的，至少晋升不是你，裁员淘汰就是你。</li>
+<li>目标：在跨越最后一道坎，拿百万年薪，进大厂。</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Troy</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2025-08-26 00:00
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a target="_blank" rel="license noopener" href="https://github.com/nusr/blog/blob/master/LICENSE">MIT</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/interview/c&#43;&#43;/day11_c&#43;&#43;_weely_7/">
+            <span class="next-text nav-default">C&#43;&#43;面试周刊(6):constexpr、内联函数、编译期元编程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="wangcy6/wangcy6.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:wang_cyi@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangcy6" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangcy6.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2025
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Troy</span>
+  </span>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-138883536-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
